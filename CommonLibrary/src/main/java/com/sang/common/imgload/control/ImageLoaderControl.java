@@ -1,4 +1,4 @@
-package com.hongniu.supply.imgload.control;
+package com.sang.common.imgload.control;
 
 import android.content.Context;
 import android.widget.ImageView;

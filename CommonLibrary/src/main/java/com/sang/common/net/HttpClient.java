@@ -1,4 +1,4 @@
-package com.hongniu.supply.net;
+package com.sang.common.net;
 
 
 import retrofit2.Retrofit;

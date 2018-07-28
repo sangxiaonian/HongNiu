@@ -1,10 +1,10 @@
-package com.hongniu.supply.imgload;
+package com.sang.common.imgload;
 
 import android.content.Context;
 import android.widget.ImageView;
 
-import com.hongniu.supply.imgload.control.ImageLoaderControl;
-import com.hongniu.supply.imgload.loader.GlideLoader;
+import com.sang.common.imgload.control.ImageLoaderControl;
+import com.sang.common.imgload.loader.GlideLoader;
 
 
 /**

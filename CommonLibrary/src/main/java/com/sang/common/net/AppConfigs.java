@@ -1,4 +1,4 @@
-package com.hongniu.supply.net;
+package com.sang.common.net;
 
 /**
  * 作者： ${桑小年} on 2017/12/2.

@@ -1,4 +1,4 @@
-package com.hongniu.supply.imgload.loader;
+package com.sang.common.imgload.loader;
 
 import android.content.Context;
 import android.widget.ImageView;
@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.hongniu.supply.imgload.control.ImageLoaderControl;
+import com.sang.common.imgload.control.ImageLoaderControl;
 
 /**
  * 作者： ${桑小年} on 2018/7/28.

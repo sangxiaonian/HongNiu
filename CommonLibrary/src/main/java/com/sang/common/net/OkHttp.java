@@ -1,4 +1,4 @@
-package com.hongniu.supply.net;
+package com.sang.common.net;
 
 import java.util.concurrent.TimeUnit;
 
