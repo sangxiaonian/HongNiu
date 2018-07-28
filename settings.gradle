@@ -1,2 +1,2 @@
-include ':app', ':BaseLibrary', ':CommonLibrary', ':ResLibrary', ':ThirdLibrary'
+include ':app', ':CommonLibrary', ':ResLibrary', ':ThirdLibrary', ':BaseLibrary'
 
