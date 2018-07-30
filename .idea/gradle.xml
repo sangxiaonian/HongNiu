@@ -10,6 +10,9 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/BaseLibrary" />
             <option value="$PROJECT_DIR$/CommonLibrary" />
+            <option value="$PROJECT_DIR$/ModuleLogin" />
+            <option value="$PROJECT_DIR$/ModuleOrder" />
+            <option value="$PROJECT_DIR$/ModulePersonalCenter" />
             <option value="$PROJECT_DIR$/ResLibrary" />
             <option value="$PROJECT_DIR$/ThirdLibrary" />
             <option value="$PROJECT_DIR$/app" />
