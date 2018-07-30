@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+
+
+    <color name="color_tran">#00000000</color>
+
+
+    <!--App中主要的亮色调-->
+    <color name="color_light">#F06F28</color>
+
+
+    <!--主要标题颜色-->
+    <color name="color_title_dark">#333333</color>
+
+    <!--标题浅色-->
+    <color name="color_content_light">#999999</color>
+    <color name="color_line">#dddddd</color>
+
+    <!--Editext的hide颜色-->
+    <color name="color_et_hide">#c8c8c8</color>
+
+
+
+
+
+
+</resources>

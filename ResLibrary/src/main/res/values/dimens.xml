@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Splash-->
+    <dimen name="splash_img_width">150dp</dimen>
+    <dimen name="splash_img_height">40dp</dimen>
+    <dimen name="splash_img_bottom">35dp</dimen>
+
+
+    <!--Login-->
+    <!--登录界面左右间距-->
+    <dimen name="login_margin">45dp</dimen>
+
+
+
+
+    <!--TextSize-->
+    <dimen name="text_login_title">24sp</dimen>
+    <dimen name="text_login_btn">18sp</dimen>
+
+</resources>

@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">ResLibrary</string>
+
+    <!--Login-->
+    <string name="login_title">欢迎登录泓牛</string>
+    <string name="login_input_phone">请输入手机号</string>
+    <string name="login_consent">进入泓牛代表你已同意《相关条款》</string>
+    <string name="login_get_sms">获取短信验证码</string>
+
 </resources>
