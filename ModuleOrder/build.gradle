@@ -22,7 +22,7 @@ android {
                 arguments = [moduleName: project.getName()]
             }
         }
-
+        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {

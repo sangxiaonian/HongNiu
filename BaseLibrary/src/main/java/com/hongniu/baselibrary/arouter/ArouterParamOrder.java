@@ -6,4 +6,6 @@ package com.hongniu.baselibrary.arouter;
  * 订单模块路由参数
  */
 public class ArouterParamOrder {
+
+    public static final String activity_order_main="/order/activity_order_main";
 }

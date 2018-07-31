@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
+import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 
@@ -14,7 +15,7 @@ public class SplashActivity extends BaseActivity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-              ArouterUtils.getInstance().builder(ArouterParamLogin.activity_login).navigation(mContext);
+              ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_main).navigation(mContext);
         }
     };
 

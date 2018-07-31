@@ -11,4 +11,7 @@
     <string name="login_up_sms_veri">秒后重获取验证码</string>
     <string name="login_get_sms_veri">重获取验证码</string>
 
+    <!--Order-->
+    <string name="order_main_title">我是货主</string>
+
 </resources>
