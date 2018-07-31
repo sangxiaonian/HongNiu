@@ -3,7 +3,8 @@
     package="com.hongniu.modulelogin">
 
     <application>
-        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".LoginSmsVerifyActivity"></activity>
     </application>
 
 </manifest>
