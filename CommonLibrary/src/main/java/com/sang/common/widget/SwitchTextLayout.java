@@ -2,10 +2,10 @@ package com.sang.common.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -38,11 +38,11 @@ public class SwitchTextLayout extends FrameLayout implements View.OnClickListene
 
 
     public SwitchTextLayout(@NonNull Context context) {
-        super(context);
+        this(context,null,0);
     }
 
     public SwitchTextLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs,0);
     }
 
     public SwitchTextLayout(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
@@ -51,12 +51,17 @@ public class SwitchTextLayout extends FrameLayout implements View.OnClickListene
 
     }
 
+
+    public void setListener(OnSwitchListener listener) {
+        this.listener = listener;
+    }
+
     private void initView(Context context, AttributeSet attrs) {
 
-        closeColor = getResources().getColor(R.color.color_title_dark);
         openColor = getResources().getColor(R.color.color_light);
-        closeIcon = R.drawable.icon_arrow_down_333;
         openIcon = R.drawable.icon_arrow_down_f06f28;
+        closeColor = getResources().getColor(R.color.color_title_dark);
+        closeIcon = R.drawable.icon_arrow_down_333;
 
 
         if (attrs != null) {
@@ -65,8 +70,8 @@ public class SwitchTextLayout extends FrameLayout implements View.OnClickListene
             textSize = typedArray.getDimension(R.styleable.SwitchTextLayout_titleSize, 0);
             openColor = typedArray.getColor(R.styleable.SwitchTextLayout_openColor, openColor);
             closeColor = typedArray.getColor(R.styleable.SwitchTextLayout_closeColor, closeColor);
-            closeIcon = typedArray.getResourceId(R.styleable.SwitchTextLayout_closeColor, closeIcon);
-            openIcon = typedArray.getResourceId(R.styleable.SwitchTextLayout_closeColor, openIcon);
+            closeIcon = typedArray.getResourceId(R.styleable.SwitchTextLayout_closeIcon, closeIcon);
+            openIcon = typedArray.getResourceId(R.styleable.SwitchTextLayout_openIcon, openIcon);
             typedArray.recycle();
         }
 
@@ -77,23 +82,33 @@ public class SwitchTextLayout extends FrameLayout implements View.OnClickListene
         inflate.setOnClickListener(this);
         closeSwitch();
         setTitle(title);
+        setTextSize(textSize);
+        setSelect(false);
 
     }
 
 
     public void openSwitch() {
         open=true;
-        tvTitle.setTextColor(openColor);
-        imageView.setImageResource(openIcon);
-        imageView.setRotation(0);
+
+        imageView.setRotation(180);
     }
 
     public void closeSwitch() {
         open=false;
-        tvTitle.setTextColor(closeColor);
-        imageView.setImageResource(closeIcon);
-        imageView.setRotation(180);
+        imageView.setRotation(0);
     }
+
+    public void setSelect(boolean select){
+        if (select){
+            tvTitle.setTextColor(openColor);
+            imageView.setImageResource(openIcon);
+        }else {
+            tvTitle.setTextColor(closeColor);
+            imageView.setImageResource(closeIcon);
+        }
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -101,29 +116,36 @@ public class SwitchTextLayout extends FrameLayout implements View.OnClickListene
         if (open) {
             openSwitch();
             if (listener != null) {
-                listener.onOpen(inflate);
+                listener.onOpen(this,inflate);
             }
         } else {
             closeSwitch();
             if (listener != null) {
-                listener.onClose(inflate);
+                listener.onClose(this,inflate);
             }
         }
 
     }
 
     public void setTitle(String title) {
-        this.title = title;
         if (title!=null){
+            this.title = title;
             tvTitle.setText(title);
+        }
+    }
+
+    public void setTextSize(float textSize) {
+        if (textSize>0){
+            this.textSize = textSize;
+            tvTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX,textSize);
         }
     }
 
 
     public interface OnSwitchListener {
-        void onOpen(View view);
+        void onOpen(SwitchTextLayout switchTextLayout, View view);
 
-        void onClose(View view);
+        void onClose(SwitchTextLayout switchTextLayout, View view);
     }
 
 }

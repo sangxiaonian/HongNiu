@@ -13,8 +13,9 @@
         android:background="@color/color_bg">
 
         <com.sang.common.widget.SwitchTextLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:id="@+id/switch_title"
             android:layout_centerInParent="true"
             app:closeColor="@color/color_title_dark"
             app:closeIcon="@drawable/icon_arrow_down_333"
@@ -31,15 +32,25 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             app:titleSize="14sp"
+            android:id="@+id/switch_left"
+            app:openIcon="@drawable/icon_arrow_down_f06f28"
+            app:closeIcon="@drawable/icon_arrow_down_d8d8d8"
+            app:openColor="@color/color_light"
+            app:closeColor="@color/color_title_dark"
             android:layout_height="match_parent"
-            app:title="@string/order_main_title" />
+            app:title="发车时间" />
 
         <com.sang.common.widget.SwitchTextLayout
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="match_parent"
             app:titleSize="14sp"
-            app:title="@string/order_main_title" />
+            android:id="@+id/switch_right"
+            app:openIcon="@drawable/icon_arrow_down_f06f28"
+            app:closeIcon="@drawable/icon_arrow_down_d8d8d8"
+            app:openColor="@color/color_light"
+            app:closeColor="@color/color_title_dark"
+            android:layout_height="match_parent"
+            app:title="运输中" />
     </LinearLayout>
 
 </LinearLayout>
