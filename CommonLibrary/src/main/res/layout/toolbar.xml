@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="45dp">
+
+        <FrameLayout
+            android:id="@+id/toolbar_left"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <ImageButton
+                android:scaleType="fitCenter"
+                android:layout_gravity="center"
+                android:id="@+id/toolbar_src_left"
+                android:src="@mipmap/icon_back_36"
+                android:background="@color/color_tran"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+        </FrameLayout>
+
+
+        <TextView
+            android:gravity="center"
+            android:singleLine="true"
+            android:textSize="@dimen/text_toolbar_title"
+            android:textColor="@color/color_title_dark"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:id="@+id/toolbar_title"
+            android:layout_height="match_parent" />
+
+        <FrameLayout
+            android:layout_alignParentRight="true"
+            android:id="@+id/toolbar_right"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <ImageButton
+                android:scaleType="fitCenter"
+                android:layout_gravity="center"
+                android:id="@+id/toolbar_src_right"
+                android:background="@color/color_tran"
+                android:layout_width="20dp"
+                android:layout_height="20dp"/>
+        </FrameLayout>
+
+
+
+
+</RelativeLayout>

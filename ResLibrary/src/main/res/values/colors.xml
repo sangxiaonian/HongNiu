@@ -11,6 +11,7 @@
 
     <!--App中主要的亮色调-->
     <color name="color_light">#F06F28</color>
+    <color name="color_bg">#ffffff</color>
 
 
     <!--主要标题颜色-->

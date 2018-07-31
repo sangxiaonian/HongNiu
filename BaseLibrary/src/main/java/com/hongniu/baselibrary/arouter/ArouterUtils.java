@@ -2,6 +2,7 @@ package com.hongniu.baselibrary.arouter;
 
 import android.content.Context;
 
+import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.launcher.ARouter;
 
 /**
@@ -14,6 +15,9 @@ public class ArouterUtils {
     private String path;
 
 
+    public static ArouterUtils getInstance(){
+        return new ArouterUtils();
+    }
 
     public ArouterUtils() {
     }
@@ -24,10 +28,11 @@ public class ArouterUtils {
      * @param path
      * @return
      */
-    public ArouterUtils builder(String path){
-        this.path=path;
-        return this;
+    public Postcard builder(String path){
+       return ARouter.getInstance().build(path);
     }
+
+
 
     /**
      * 跳转界面

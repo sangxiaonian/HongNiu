@@ -4,7 +4,11 @@
     <!--Login-->
     <string name="login_title">欢迎登录泓牛</string>
     <string name="login_input_phone">请输入手机号</string>
+    <string name="login_input_sms_verify">请输入验证码</string>
     <string name="login_consent">进入泓牛代表你已同意《相关条款》</string>
     <string name="login_get_sms">获取短信验证码</string>
+    <string name="login_phone_error">请输入正确手机号码</string>
+    <string name="login_up_sms_veri">秒后重获取验证码</string>
+    <string name="login_get_sms_veri">重获取验证码</string>
 
 </resources>

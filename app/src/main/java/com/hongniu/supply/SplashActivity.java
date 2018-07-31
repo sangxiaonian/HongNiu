@@ -14,7 +14,7 @@ public class SplashActivity extends BaseActivity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            new ArouterUtils().builder(ArouterParamLogin.activity_login).navigation(mContext);
+              ArouterUtils.getInstance().builder(ArouterParamLogin.activity_login).navigation(mContext);
         }
     };
 

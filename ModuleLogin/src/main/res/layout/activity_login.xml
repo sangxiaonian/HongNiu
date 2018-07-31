@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/login_margin"
     android:paddingRight="@dimen/login_margin"
+    android:background="@color/color_bg"
     tools:context=".LoginActivity">
 
     <TextView
@@ -27,6 +28,10 @@
         android:layout_marginTop="50dp"
         android:background="@color/color_tran"
         android:hint="@string/login_input_phone"
+        android:inputType="phone"
+        android:maxLength="11"
+        android:maxLines="1"
+        android:singleLine="true"
         android:textColorHint="@color/color_et_hide"
         android:textCursorDrawable="@drawable/et_cursor"
         android:textSize="18sp"
@@ -45,13 +50,13 @@
         app:layout_constraintTop_toBottomOf="@+id/et_phone" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/tv_clause"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="@string/login_consent"
-        android:textSize="11sp"
         android:textColor="@color/color_content_light"
+        android:textSize="11sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/line" />
@@ -61,13 +66,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="@string/login_get_sms"
-        android:textSize="@dimen/text_login_btn"
-        android:textColor="#fff"
         android:background="@drawable/bt_radius_2_333_999"
+        android:text="@string/login_get_sms"
+        android:textColor="#fff"
+        android:textSize="@dimen/text_login_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_clause" />
 
 
 </android.support.constraint.ConstraintLayout>

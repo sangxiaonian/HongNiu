@@ -15,6 +15,7 @@
 
 
     <!--TextSize-->
+    <dimen name="text_toolbar_title">18sp</dimen>
     <dimen name="text_login_title">24sp</dimen>
     <dimen name="text_login_btn">18sp</dimen>
 

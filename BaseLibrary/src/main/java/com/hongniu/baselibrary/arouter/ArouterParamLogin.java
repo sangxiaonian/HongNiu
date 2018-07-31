@@ -7,6 +7,14 @@ package com.hongniu.baselibrary.arouter;
  */
 public class ArouterParamLogin {
 
+    /**
+     * 手机号登陆页面
+     */
     public static final String activity_login="/login/activity_login";
+
+    /**
+     * 短信验证码
+     */
+    public static final String activity_sms_verify="/login/activity_sms_verify";
 
 }
