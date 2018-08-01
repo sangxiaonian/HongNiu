@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="pop_ani" parent="android:Animation">  <!--name为调用这个style动画的名字，自己设置的-->
+        <!--<item name="android:windowExitAnimation">@anim/pop_exit</item>&lt;!&ndash; 退出动画&ndash;&gt;-->
+        <!--<item name="android:windowEnterAnimation">@anim/pop_in</item>-->
+        <item name="android:windowExitAnimation">@anim/lib_pophidden_anim</item><!-- 退出动画-->
+        <item name="android:windowEnterAnimation">@anim/lib_popshow_anim</item>
+    </style>
+    <style name="dialog_ani" parent="android:Animation">  <!--name为调用这个style动画的名字，自己设置的-->
+        <!--<item name="android:windowExitAnimation">@anim/pop_exit</item>&lt;!&ndash; 退出动画&ndash;&gt;-->
+        <!--<item name="android:windowEnterAnimation">@anim/pop_in</item>-->
+        <item name="android:windowExitAnimation">@anim/actionsheet_dialog_out</item><!-- 退出动画-->
+        <item name="android:windowEnterAnimation">@anim/actionsheet_dialog_in</item>
+    </style>
+
+</resources>

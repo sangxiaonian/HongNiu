@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".OrderMainActivity">
+     >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -51,6 +51,58 @@
             app:closeColor="@color/color_title_dark"
             android:layout_height="match_parent"
             app:title="运输中" />
+    </LinearLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp"/>
+
+
+    <LinearLayout
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="45dp"
+            android:id="@+id/src_finance"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/icon_finance_90"
+            android:layout_marginLeft="22dp"
+            android:layout_marginRight="22dp"
+            android:layout_height="45dp" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:background="@drawable/bt_radius_2_333_999"
+            android:layout_height="45dp">
+            
+            <ImageView
+                android:layout_width="12dp"
+                android:src="@mipmap/icon_addorder_24"
+                android:layout_height="12dp" />
+
+            <TextView
+                android:layout_marginLeft="3dp"
+                android:textSize="15sp"
+                android:textColor="#fff"
+                android:text="我要下单"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <ImageView
+            android:layout_width="45dp"
+            android:id="@+id/src_me"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/icon_me_90"
+            android:layout_marginLeft="22dp"
+            android:layout_marginRight="22dp"
+            android:layout_height="45dp" />
+
     </LinearLayout>
 
 </LinearLayout>

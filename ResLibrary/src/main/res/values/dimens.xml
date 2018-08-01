@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <dimen name="app_item_gap">5dp</dimen>
+
+
     <!--Splash-->
     <dimen name="splash_img_width">150dp</dimen>
     <dimen name="splash_img_height">40dp</dimen>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="245dp"
+        android:gravity="center"
+        android:background="@color/color_bg"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ll_left"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.sang.common.widget.CircularFramlayout
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:showBorder="true"
+                app:borderColor="@color/color_line"
+                app:viewradius="25dp">
+
+                <ImageView
+                    android:layout_width="21dp"
+                    android:layout_height="21dp"
+                    android:layout_gravity="center" />
+            </com.sang.common.widget.CircularFramlayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_item_gap"
+                android:text="货主"
+                android:textColor="@color/color_title_dark"
+                android:textSize="14sp" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.sang.common.widget.CircularFramlayout
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:showBorder="true"
+                app:borderColor="@color/color_line"
+                app:viewradius="25dp">
+
+                <ImageView
+                    android:layout_width="21dp"
+                    android:layout_height="21dp"
+                    android:layout_gravity="center" />
+            </com.sang.common.widget.CircularFramlayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_item_gap"
+                android:text="车主"
+                android:textColor="@color/color_title_dark"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_right"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.sang.common.widget.CircularFramlayout
+                android:layout_width="50dp"
+                app:showBorder="true"
+                android:layout_height="50dp"
+                app:borderColor="@color/color_line"
+                app:viewradius="25dp">
+
+                <ImageView
+                    android:layout_width="21dp"
+                    android:layout_height="21dp"
+                    android:layout_gravity="center" />
+            </com.sang.common.widget.CircularFramlayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_item_gap"
+                android:text="司机"
+                android:textColor="@color/color_title_dark"
+                android:textSize="14sp" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view_out"
+        android:layout_width="match_parent"
+        android:background="#55000000"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>
