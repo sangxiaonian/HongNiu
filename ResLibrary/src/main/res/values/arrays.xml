@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="order_main_time">
+
+        <item>全部</item>
+        <item>今天</item>
+        <item>明天</item>
+        <item>本周</item>
+        <item>下周</item>
+    </string-array>
+    <string-array name="order_main_state">
+        <item>全部</item>
+        <item>待支付</item>
+        <item>待发车</item>
+        <item>运输中</item>
+        <item>已送达</item>
+        <item>已收货</item>
+    </string-array>
+
+</resources>

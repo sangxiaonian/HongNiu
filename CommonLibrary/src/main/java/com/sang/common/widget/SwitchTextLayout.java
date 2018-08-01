@@ -141,6 +141,10 @@ public class SwitchTextLayout extends FrameLayout implements View.OnClickListene
         }
     }
 
+    public String getTitle() {
+        return title;
+    }
+
 
     public interface OnSwitchListener {
         void onOpen(SwitchTextLayout switchTextLayout, View view);

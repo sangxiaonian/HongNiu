@@ -6,11 +6,14 @@ import android.view.View;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.moduleorder.widget.OrderMainPop;
 import com.hongniu.moduleorder.widget.OrderMainTitlePop;
-import com.sang.common.utils.JLog;
 import com.sang.common.widget.SwitchTextLayout;
 import com.sang.common.widget.popu.BasePopu;
 import com.sang.common.widget.popu.inter.OnPopuDismissListener;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 订单中心主页
@@ -23,6 +26,9 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
     private SwitchTextLayout switchRight;
 
     private OrderMainTitlePop titlePop;
+    private OrderMainPop<String> orderMainPop;
+    private List<String> times;
+    private List<String> states;
 
 
     @Override
@@ -38,9 +44,19 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
     protected void initView() {
         super.initView();
         titlePop = new OrderMainTitlePop(this);
+        orderMainPop = new OrderMainPop<>(this);
+
+
         switchTitle = findViewById(R.id.switch_title);
         switchLeft = findViewById(R.id.switch_left);
         switchRight = findViewById(R.id.switch_right);
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+        states = Arrays.asList(getResources().getStringArray(R.array.order_main_state));
+        times = Arrays.asList(getResources().getStringArray(R.array.order_main_time));
     }
 
     @Override
@@ -55,28 +71,60 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
 
     @Override
     public void onOpen(SwitchTextLayout switchTextLayout, View view) {
-        changeState(switchTextLayout);
+        changeState(switchTextLayout,true);
 
-        titlePop.show(switchTitle);
+
     }
 
     @Override
     public void onClose(SwitchTextLayout switchTextLayout, View view) {
-        changeState(switchTextLayout);
-        titlePop.dismiss();
+        changeState(switchTextLayout,false);
     }
 
 
-    private void changeState(View view) {
+    private void changeState(View view, boolean open) {
         if (view.getId() == R.id.switch_left) {
             switchLeft.setSelect(true);
             switchRight.setSelect(false);
             switchRight.closeSwitch();
 
+            if (open){
+                for (int i = 0; i < times.size(); i++) {
+                    if (times.get(i).equals(switchLeft.getTitle())){
+                        orderMainPop.setSelectPosition(i);
+                        break;
+                    };
+                }
+                orderMainPop.upDatas(times);
+                orderMainPop.show(view);
+            }else {
+                orderMainPop.dismiss();
+            }
+
         } else if (view.getId() == R.id.switch_right) {
             switchRight.setSelect(true);
             switchLeft.setSelect(false);
             switchLeft.closeSwitch();
+            if (open){
+                for (int i = 0; i < states.size(); i++) {
+                    if (states.get(i).equals(switchRight.getTitle())){
+                        orderMainPop.setSelectPosition(i);
+                        break;
+                    };
+                }
+
+                orderMainPop.upDatas(states);
+                orderMainPop.show(view);
+            }else {
+                orderMainPop.dismiss();
+            }
+        }else {
+            if (open) {
+                titlePop.show(view);
+            }else {
+                titlePop.dismiss();
+            }
+
         }
     }
 
@@ -115,6 +163,8 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
     public void onBackPressed() {
         if (titlePop.isShow()) {
             titlePop.dismiss();
+        } else if (orderMainPop.isShow()) {
+            orderMainPop.dismiss();
         } else {
             super.onBackPressed();
         }
@@ -128,7 +178,7 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
      */
     @Override
     public void onPopuDismsss(BasePopu popu, View target) {
-        if (target instanceof SwitchTextLayout){
+        if (target instanceof SwitchTextLayout) {
             ((SwitchTextLayout) target).closeSwitch();
         }
     }
