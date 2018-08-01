@@ -8,6 +8,8 @@ import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.moduleorder.widget.OrderMainPop;
 import com.hongniu.moduleorder.widget.OrderMainTitlePop;
+import com.sang.common.utils.JLog;
+import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.SwitchTextLayout;
 import com.sang.common.widget.popu.BasePopu;
 import com.sang.common.widget.popu.inter.OnPopuDismissListener;
@@ -19,7 +21,7 @@ import java.util.List;
  * 订单中心主页
  */
 @Route(path = ArouterParamOrder.activity_order_main)
-public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.OnSwitchListener, OrderMainTitlePop.OnOrderMainClickListener, OnPopuDismissListener {
+public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.OnSwitchListener, OrderMainTitlePop.OnOrderMainClickListener, OnPopuDismissListener, OrderMainPop.OnPopuClickListener {
 
     private SwitchTextLayout switchTitle;
     private SwitchTextLayout switchLeft;
@@ -45,8 +47,6 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
         super.initView();
         titlePop = new OrderMainTitlePop(this);
         orderMainPop = new OrderMainPop<>(this);
-
-
         switchTitle = findViewById(R.id.switch_title);
         switchLeft = findViewById(R.id.switch_left);
         switchRight = findViewById(R.id.switch_right);
@@ -67,6 +67,9 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
         switchLeft.setListener(this);
         titlePop.setListener(this);
         titlePop.setOnDismissListener(this);
+        orderMainPop.setOnDismissListener(this);
+
+        orderMainPop.setListener(this);
     }
 
     @Override
@@ -87,14 +90,9 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
             switchLeft.setSelect(true);
             switchRight.setSelect(false);
             switchRight.closeSwitch();
-
+            orderMainPop.setSelectPosition(-1);
             if (open){
-                for (int i = 0; i < times.size(); i++) {
-                    if (times.get(i).equals(switchLeft.getTitle())){
-                        orderMainPop.setSelectPosition(i);
-                        break;
-                    };
-                }
+                orderMainPop.setSelectPosition(times.indexOf(switchLeft.getTitle()));
                 orderMainPop.upDatas(times);
                 orderMainPop.show(view);
             }else {
@@ -106,20 +104,17 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
             switchLeft.setSelect(false);
             switchLeft.closeSwitch();
             if (open){
-                for (int i = 0; i < states.size(); i++) {
-                    if (states.get(i).equals(switchRight.getTitle())){
-                        orderMainPop.setSelectPosition(i);
-                        break;
-                    };
-                }
 
+                orderMainPop.setSelectPosition(states.indexOf(switchRight.getTitle()));
                 orderMainPop.upDatas(states);
                 orderMainPop.show(view);
             }else {
                 orderMainPop.dismiss();
+
             }
         }else {
             if (open) {
+                orderMainPop.dismiss();
                 titlePop.show(view);
             }else {
                 titlePop.dismiss();
@@ -178,8 +173,19 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
      */
     @Override
     public void onPopuDismsss(BasePopu popu, View target) {
-        if (target instanceof SwitchTextLayout) {
-            ((SwitchTextLayout) target).closeSwitch();
+        switchLeft.closeSwitch();
+        switchRight.closeSwitch();
+        switchTitle.closeSwitch();
+    }
+
+    @Override
+    public void onPopuClick(OrderMainPop pop, View view, int position) {
+        ToastUtils.showTextToast(position+"");
+        if (view.getId() == R.id.switch_left) {
+             switchLeft.setTitle(times.get(position));
+        } else if (view.getId() == R.id.switch_right) {
+            switchRight.setTitle(states.get(position));
+
         }
     }
 }

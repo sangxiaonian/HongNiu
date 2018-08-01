@@ -51,6 +51,9 @@ public class SwitchTextLayout extends FrameLayout implements View.OnClickListene
 
     }
 
+    public boolean isOpen() {
+        return open;
+    }
 
     public void setListener(OnSwitchListener listener) {
         this.listener = listener;

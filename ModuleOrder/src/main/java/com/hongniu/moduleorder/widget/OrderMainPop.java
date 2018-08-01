@@ -24,7 +24,7 @@ public class OrderMainPop<T> extends BasePopu {
 
 
     RecyclerView rv;
-    private List<SelectBean<T>> datas ;
+    private List<SelectBean<T>> datas;
     XAdapter<SelectBean<T>> adapter;
 
     public OrderMainPop(Context context) {
@@ -79,7 +79,7 @@ public class OrderMainPop<T> extends BasePopu {
 
                         tvTitle.setText(data.t.toString());
 
-                        if ( selectPosition==position) {
+                        if (selectPosition == position) {
                             img.setVisibility(View.VISIBLE);
                             tvTitle.setTextColor(context.getResources().getColor(R.color.color_light));
                         } else {
@@ -90,11 +90,14 @@ public class OrderMainPop<T> extends BasePopu {
                         itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                if (selectPosition != position) {
+                                    if (listener != null) {
+                                        listener.onPopuClick(OrderMainPop.this, tragetView, position);
+                                    }
+                                    selectPosition = position;
+                                    adapter.notifyDataSetChanged();
+                                }
 
-
-
-                                 selectPosition=position;
-                                 adapter.notifyDataSetChanged();
                             }
                         });
                     }
@@ -141,6 +144,16 @@ public class OrderMainPop<T> extends BasePopu {
             this.t = t;
             this.select = select;
         }
+    }
+
+    OnPopuClickListener listener;
+
+    public void setListener(OnPopuClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnPopuClickListener {
+        void onPopuClick(OrderMainPop pop, View target, int position);
     }
 
 

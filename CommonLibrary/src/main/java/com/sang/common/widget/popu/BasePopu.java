@@ -27,7 +27,7 @@ public class BasePopu {
         pop.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         pop.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         pop.setBackgroundDrawable(new ColorDrawable(0x00000000));
-        pop.setOutsideTouchable(true);
+        pop.setOutsideTouchable(false);
         pop.setAnimationStyle(R.style.pop_ani);
         pop.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
