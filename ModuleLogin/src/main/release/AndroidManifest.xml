@@ -4,7 +4,8 @@
 
     <application>
         <activity android:name=".LoginActivity" />
-        <activity android:name=".LoginSmsVerifyActivity"></activity>
+        <activity android:name=".LoginSmsVerifyActivity" />
+        <activity android:name=".ui.LoginCarListActivity"></activity>
     </application>
 
 </manifest>

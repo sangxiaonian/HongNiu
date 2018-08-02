@@ -13,5 +13,6 @@
 
     <!--Order-->
     <string name="order_main_title">我是货主</string>
+    <string name="car_title">我的车辆</string>
 
 </resources>

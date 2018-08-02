@@ -17,4 +17,9 @@ public class ArouterParamLogin {
      */
     public static final String activity_sms_verify="/login/activity_sms_verify";
 
+    /**
+     * 車輛列表
+     */
+    public static final String activity_car_list="/login/activity_car_list";
+
 }

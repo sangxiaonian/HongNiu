@@ -41,7 +41,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/tv_car_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -60,10 +60,10 @@
             android:text="82545618561"
             android:textColor="@color/color_title_dark"
             android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView2"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_car_num"
             app:layout_constraintEnd_toStartOf="@+id/tv_state"
-            app:layout_constraintStart_toEndOf="@+id/textView2"
-            app:layout_constraintTop_toTopOf="@+id/textView2" />
+            app:layout_constraintStart_toEndOf="@+id/tv_car_num"
+            app:layout_constraintTop_toTopOf="@+id/tv_car_num" />
 
         <TextView
             android:id="@+id/tv_state"

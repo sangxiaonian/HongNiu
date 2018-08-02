@@ -11,7 +11,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.moduleorder.widget.OrderMainPop;
 import com.hongniu.moduleorder.widget.OrderMainTitlePop;
@@ -314,7 +316,8 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
         } else if (i == R.id.ll_about_us) {
             ToastUtils.showTextToast("关于我们");
         } else if (i == R.id.ll_my_car) {
-            ToastUtils.showTextToast("我的车辆");
+//            ToastUtils.showTextToast("我的车辆");
+            ArouterUtils.getInstance().builder(ArouterParamLogin.activity_car_list).navigation(mContext);
         } else if (i == R.id.ll_person_infor) {
             ToastUtils.showTextToast("个人资料");
         } else if (i == R.id.ll_pay_method) {

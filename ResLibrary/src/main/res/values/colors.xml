@@ -12,6 +12,7 @@
     <color name="color_light">#F06F28</color>
     <color name="color_bg">#ffffff</color>
     <color name="color_white">#ffffff</color>
+    <color name="color_bg_dark">#f7f7f7</color>
 
 
     <!--主要标题颜色-->
@@ -29,6 +30,8 @@
 
     <!--订单列表中文字主要颜色-->
     <color name="color_order_color">#6a6a6a</color>
+
+    <color name="color_tv_bg">#797C8B</color>
 
 
 </resources>
