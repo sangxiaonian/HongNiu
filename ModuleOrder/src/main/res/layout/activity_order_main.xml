@@ -1,109 +1,291 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-     >
+   >
 
-    <RelativeLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@color/color_bg">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <com.sang.common.widget.SwitchTextLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/switch_title"
-            android:layout_centerInParent="true"
-            app:closeColor="@color/color_title_dark"
-            app:closeIcon="@drawable/icon_arrow_down_333"
-            app:openColor="@color/color_title_dark"
-            app:openIcon="@drawable/icon_arrow_down_333"
-            app:title="@string/order_main_title" />
-    </RelativeLayout>
+            android:layout_height="45dp"
+            android:background="@color/color_bg">
 
-    <LinearLayout
-        android:background="@color/color_bg"
-        android:layout_width="match_parent"
-        android:layout_height="40dp">
-        <com.sang.common.widget.SwitchTextLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            app:titleSize="14sp"
-            android:id="@+id/switch_left"
-            app:openIcon="@drawable/icon_arrow_down_f06f28"
-            app:closeIcon="@drawable/icon_arrow_down_d8d8d8"
-            app:openColor="@color/color_light"
-            app:closeColor="@color/color_title_dark"
-            android:layout_height="match_parent"
-            app:title="发车时间" />
-
-        <com.sang.common.widget.SwitchTextLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            app:titleSize="14sp"
-            android:id="@+id/switch_right"
-            app:openIcon="@drawable/icon_arrow_down_f06f28"
-            app:closeIcon="@drawable/icon_arrow_down_d8d8d8"
-            app:openColor="@color/color_light"
-            app:closeColor="@color/color_title_dark"
-            android:layout_height="match_parent"
-            app:title="运输中" />
-    </LinearLayout>
-
-
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:id="@+id/rv"
-        android:layout_height="0dp"/>
-
-
-    <LinearLayout
-        android:layout_marginBottom="10dp"
-        android:layout_width="match_parent"
-        android:gravity="center_vertical"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:layout_width="45dp"
-            android:id="@+id/src_finance"
-            android:scaleType="fitCenter"
-            android:src="@mipmap/icon_finance_90"
-            android:layout_marginLeft="22dp"
-            android:layout_marginRight="22dp"
-            android:layout_height="45dp" />
+            <com.sang.common.widget.SwitchTextLayout
+                android:id="@+id/switch_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                app:closeColor="@color/color_title_dark"
+                app:closeIcon="@drawable/icon_arrow_down_333"
+                app:openColor="@color/color_title_dark"
+                app:openIcon="@drawable/icon_arrow_down_333"
+                app:title="@string/order_main_title" />
+        </RelativeLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:background="@drawable/bt_radius_2_333_999"
-            android:layout_height="45dp">
-            
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/color_bg">
+
+            <com.sang.common.widget.SwitchTextLayout
+                android:id="@+id/switch_left"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:closeColor="@color/color_title_dark"
+                app:closeIcon="@drawable/icon_arrow_down_d8d8d8"
+                app:openColor="@color/color_light"
+                app:openIcon="@drawable/icon_arrow_down_f06f28"
+                app:title="发车时间"
+                app:titleSize="14sp" />
+
+            <com.sang.common.widget.SwitchTextLayout
+                android:id="@+id/switch_right"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:closeColor="@color/color_title_dark"
+                app:closeIcon="@drawable/icon_arrow_down_d8d8d8"
+                app:openColor="@color/color_light"
+                app:openIcon="@drawable/icon_arrow_down_f06f28"
+                app:title="运输中"
+                app:titleSize="14sp" />
+        </LinearLayout>
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical">
+
             <ImageView
-                android:layout_width="12dp"
-                android:src="@mipmap/icon_addorder_24"
-                android:layout_height="12dp" />
+                android:id="@+id/src_finance"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="22dp"
+                android:layout_marginRight="22dp"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/icon_finance_90" />
+
+            <LinearLayout
+                android:id="@+id/ll_order"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_weight="1"
+                android:background="@drawable/bt_radius_2_333_999"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:src="@mipmap/icon_addorder_24" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:text="我要下单"
+                    android:textColor="#fff"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/src_me"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="22dp"
+                android:layout_marginRight="22dp"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/icon_me_90" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_left"
+        android:layout_gravity="start"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_white"
+        android:orientation="vertical"
+        android:paddingLeft="30dp">
+
+        <TextView
+            android:layout_marginTop="80dp"
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="@color/color_title_dark"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/tv_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="55dp"
+            android:text="15515555555"
+
+            android:textColor="@color/color_order_color"
+            android:textSize="13sp" />
+
+
+        <ScrollView
+            android:layout_width="250dp"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/ll_pay_method"
+                    style="@style/draw_item">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/icon_me_skfs_32" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/app_gap"
+                        android:text="收款方式"
+                        android:textColor="@color/color_title_dark"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_person_infor"
+                    style="@style/draw_item">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/icon_me_grzl_32" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/app_gap"
+                        android:text="个人资料"
+                        android:textColor="@color/color_title_dark"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_my_car"
+                    style="@style/draw_item">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/icon_me_wdcl_32" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/app_gap"
+                        android:text="我的车辆"
+                        android:textColor="@color/color_title_dark"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="190dp"
+                    android:layout_height="1dp"
+                    android:background="@color/color_line" />
+
+                <LinearLayout
+                    android:id="@+id/ll_about_us"
+                    style="@style/draw_item">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/icon_me_gywm_32" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/app_gap"
+                        android:text="关于我们"
+                        android:textColor="@color/color_title_dark"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_contact_service"
+                    style="@style/draw_item">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/icon_me_kfdh_32" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/app_gap"
+                        android:text="联系客服"
+                        android:textColor="@color/color_title_dark"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/ll_login_out"
+
+            style="@style/draw_item"
+            android:layout_marginBottom="40dp">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/icon_me_tcdl_32" />
 
             <TextView
-                android:layout_marginLeft="3dp"
-                android:textSize="15sp"
-                android:textColor="#fff"
-                android:text="我要下单"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/app_gap"
+                android:text="退出账号"
+                android:textColor="@color/color_title_dark"
+                android:textSize="15sp" />
         </LinearLayout>
-        <ImageView
-            android:layout_width="45dp"
-            android:id="@+id/src_me"
-            android:scaleType="fitCenter"
-            android:src="@mipmap/icon_me_90"
-            android:layout_marginLeft="22dp"
-            android:layout_marginRight="22dp"
-            android:layout_height="45dp" />
+
 
     </LinearLayout>
 
-</LinearLayout>
+</android.support.v4.widget.DrawerLayout>

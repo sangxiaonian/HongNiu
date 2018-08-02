@@ -1,10 +1,13 @@
 package com.hongniu.moduleorder;
 
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -28,18 +31,29 @@ import java.util.List;
  * 订单中心主页
  */
 @Route(path = ArouterParamOrder.activity_order_main)
-public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.OnSwitchListener, OrderMainTitlePop.OnOrderMainClickListener, OnPopuDismissListener, OrderMainPop.OnPopuClickListener {
+public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.OnSwitchListener, OrderMainTitlePop.OnOrderMainClickListener, OnPopuDismissListener, OrderMainPop.OnPopuClickListener, View.OnClickListener {
 
     private SwitchTextLayout switchTitle;
     private SwitchTextLayout switchLeft;
     private SwitchTextLayout switchRight;
     private RecyclerView rv;
+    private DrawerLayout drawerLayout;
 
     private OrderMainTitlePop titlePop;
     private OrderMainPop<String> orderMainPop;
     private List<String> times;
     private List<String> states;
 
+    private LinearLayout llOrder;//我要下单
+    private LinearLayout llLoginOut;//退出登录
+    private LinearLayout llContactService;//联系客服
+    private LinearLayout llAboutUs;//关于我们
+    private LinearLayout llMyCar;//我的车辆
+    private LinearLayout llPersonInfor;//个人资料
+    private LinearLayout llPayMethod;//收款方式
+
+    private ImageView srcFinance;
+    private ImageView srcPersonCenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +72,19 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
         switchTitle = findViewById(R.id.switch_title);
         switchLeft = findViewById(R.id.switch_left);
         switchRight = findViewById(R.id.switch_right);
-        rv=findViewById(R.id.rv);
+        drawerLayout = findViewById(R.id.drawer);
+        rv = findViewById(R.id.rv);
+        srcFinance = findViewById(R.id.src_finance);
+        srcPersonCenter = findViewById(R.id.src_me);
+        llOrder = findViewById(R.id.ll_order);
+        llLoginOut = findViewById(R.id.ll_login_out);
+        llContactService = findViewById(R.id.ll_contact_service);
+        llAboutUs = findViewById(R.id.ll_about_us);
+        llMyCar = findViewById(R.id.ll_my_car);
+        llPersonInfor = findViewById(R.id.ll_person_infor);
+        llPayMethod = findViewById(R.id.ll_pay_method);
+
+
     }
 
     @Override
@@ -66,39 +92,39 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
         super.initData();
         states = Arrays.asList(getResources().getStringArray(R.array.order_main_state));
         times = Arrays.asList(getResources().getStringArray(R.array.order_main_time));
-        LinearLayoutManager manager =new LinearLayoutManager(mContext);
+        LinearLayoutManager manager = new LinearLayoutManager(mContext);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         rv.setLayoutManager(manager);
         List<String> data = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             data.add("");
         }
-        XAdapter<String> adapter = new XAdapter<String>(mContext,data) {
+        XAdapter<String> adapter = new XAdapter<String>(mContext, data) {
             @Override
             public BaseHolder<String> initHolder(ViewGroup parent, int viewType) {
-                return new BaseHolder<String>(mContext,parent,R.layout.order_item){
+                return new BaseHolder<String>(mContext, parent, R.layout.order_item) {
                     @Override
                     public void initView(View itemView, int position, String data) {
                         super.initView(itemView, position, data);
-                        TextView tvIdentity         = itemView.findViewById(R.id.tv_identity);//身份角色
-                        TextView tv_order           = itemView.findViewById(R.id.tv_order);//订单号
-                        TextView tv_state           = itemView.findViewById(R.id.tv_state);//待发车状态
-                        TextView tv_time            = itemView.findViewById(R.id.tv_time);//发车时间
+                        TextView tvIdentity = itemView.findViewById(R.id.tv_identity);//身份角色
+                        TextView tv_order = itemView.findViewById(R.id.tv_order);//订单号
+                        TextView tv_state = itemView.findViewById(R.id.tv_state);//待发车状态
+                        TextView tv_time = itemView.findViewById(R.id.tv_time);//发车时间
                         TextView tv_start_loaction = itemView.findViewById(R.id.tv_start_loaction);//发车地点
-                        TextView tv_end_loaction         = itemView.findViewById(R.id.tv_end_loaction);//到达地点
-                        TextView tv_price           = itemView.findViewById(R.id.tv_price);//运费
-                        TextView bt_left            = itemView.findViewById(R.id.bt_left);//左侧按钮
-                        TextView bt_right           = itemView.findViewById(R.id.bt_right);//右侧按钮
-                        TextView tv_order_detail           = itemView.findViewById(R.id.tv_order_detail);//右侧按钮
+                        TextView tv_end_loaction = itemView.findViewById(R.id.tv_end_loaction);//到达地点
+                        TextView tv_price = itemView.findViewById(R.id.tv_price);//运费
+                        TextView bt_left = itemView.findViewById(R.id.bt_left);//左侧按钮
+                        TextView bt_right = itemView.findViewById(R.id.bt_right);//右侧按钮
+                        TextView tv_order_detail = itemView.findViewById(R.id.tv_order_detail);//右侧按钮
 
 
-                        tvIdentity       .setText("货主");
-                        tv_order         .setText("80080018000");
-                        tv_state         .setText("运输中");
-                        tv_time          .setText("发车时间：2017-08-05");
+                        tvIdentity.setText("货主");
+                        tv_order.setText("80080018000");
+                        tv_state.setText("运输中");
+                        tv_time.setText("发车时间：2017-08-05");
                         tv_start_loaction.setText("上海虹桥机场国际物流中心");
-                        tv_end_loaction  .setText("青岛市国际物流中心");
-                        tv_price         .setText("1520");
+                        tv_end_loaction.setText("青岛市国际物流中心");
+                        tv_price.setText("1520");
 
                         StringBuffer buffer = new StringBuffer();
                         buffer
@@ -108,7 +134,6 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
                                 .append("货物：医疗器材").append("\n")
                                 .append("司机：杨先生 13795244936");
                         tv_order_detail.setText(buffer.toString());
-
 
 
                     }
@@ -125,23 +150,41 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
         switchTitle.setListener(this);
         switchRight.setListener(this);
         switchLeft.setListener(this);
+        srcFinance.setOnClickListener(this);
+        srcPersonCenter.setOnClickListener(this);
+        llOrder.setClickable(true);
+        llLoginOut.setClickable(true);
+        llContactService.setClickable(true);
+        llAboutUs.setClickable(true);
+        llMyCar.setClickable(true);
+        llPersonInfor.setClickable(true);
+        llPayMethod.setClickable(true);
+
+
+        llOrder.setOnClickListener(this);
+        llLoginOut.setOnClickListener(this);
+        llContactService.setOnClickListener(this);
+        llAboutUs.setOnClickListener(this);
+        llMyCar.setOnClickListener(this);
+        llPersonInfor.setOnClickListener(this);
+        llPayMethod.setOnClickListener(this);
+
         titlePop.setListener(this);
         titlePop.setOnDismissListener(this);
         orderMainPop.setOnDismissListener(this);
-
         orderMainPop.setListener(this);
     }
 
     @Override
     public void onOpen(SwitchTextLayout switchTextLayout, View view) {
-        changeState(switchTextLayout,true);
+        changeState(switchTextLayout, true);
 
 
     }
 
     @Override
     public void onClose(SwitchTextLayout switchTextLayout, View view) {
-        changeState(switchTextLayout,false);
+        changeState(switchTextLayout, false);
     }
 
 
@@ -151,11 +194,11 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
             switchRight.setSelect(false);
             switchRight.closeSwitch();
             orderMainPop.setSelectPosition(-1);
-            if (open){
+            if (open) {
                 orderMainPop.setSelectPosition(times.indexOf(switchLeft.getTitle()));
                 orderMainPop.upDatas(times);
                 orderMainPop.show(view);
-            }else {
+            } else {
                 orderMainPop.dismiss();
             }
 
@@ -163,20 +206,20 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
             switchRight.setSelect(true);
             switchLeft.setSelect(false);
             switchLeft.closeSwitch();
-            if (open){
+            if (open) {
 
                 orderMainPop.setSelectPosition(states.indexOf(switchRight.getTitle()));
                 orderMainPop.upDatas(states);
                 orderMainPop.show(view);
-            }else {
+            } else {
                 orderMainPop.dismiss();
 
             }
-        }else {
+        } else {
             if (open) {
                 orderMainPop.dismiss();
                 titlePop.show(view);
-            }else {
+            } else {
                 titlePop.dismiss();
             }
 
@@ -240,12 +283,42 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
 
     @Override
     public void onPopuClick(OrderMainPop pop, View view, int position) {
-        ToastUtils.showTextToast(position+"");
+        ToastUtils.showTextToast(position + "");
         if (view.getId() == R.id.switch_left) {
-             switchLeft.setTitle(times.get(position));
+            switchLeft.setTitle(times.get(position));
         } else if (view.getId() == R.id.switch_right) {
             switchRight.setTitle(states.get(position));
 
+        }
+    }
+
+    /**
+     * Called when a view has been clicked.
+     *
+     * @param v The view that was clicked.
+     */
+    @Override
+    public void onClick(View v) {
+        int i = v.getId();
+        if (i == R.id.src_finance) {
+            ToastUtils.showTextToast("财务");
+        } else if (i == R.id.src_me) {
+            ToastUtils.showTextToast("个人中心");
+        } else if (i == R.id.ll_order) {
+            ToastUtils.showTextToast("我要下单");
+
+        } else if (i == R.id.ll_login_out) {
+            ToastUtils.showTextToast("退出登录");
+        } else if (i == R.id.ll_contact_service) {
+            ToastUtils.showTextToast("联系客服");
+        } else if (i == R.id.ll_about_us) {
+            ToastUtils.showTextToast("关于我们");
+        } else if (i == R.id.ll_my_car) {
+            ToastUtils.showTextToast("我的车辆");
+        } else if (i == R.id.ll_person_infor) {
+            ToastUtils.showTextToast("个人资料");
+        } else if (i == R.id.ll_pay_method) {
+            ToastUtils.showTextToast("收款方式");
         }
     }
 }
