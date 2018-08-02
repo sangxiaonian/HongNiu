@@ -8,4 +8,7 @@ public class Param {
 
     public static final String TRAN = "tran";
 
+    public static final String CAR_ADD = "caradd";
+    public static final String CAR_CHANGE = "CAR_CHANGE";
+
 }

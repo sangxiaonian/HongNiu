@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_bg_dark"
+    android:orientation="vertical"
+    tools:context=".ui.LoginCarInforActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <com.sang.common.widget.ItemView
+        android:id="@+id/item_car_type"
+        style="@style/itemview"
+        android:layout_marginTop="@dimen/app_gap"
+        app:editable="false"
+        app:textcenterhide="请选择车辆类型"
+        app:textleft="车辆类型" />
+
+    <com.sang.common.widget.ItemView
+        android:id="@+id/item_car_num"
+        style="@style/itemview"
+        app:textcenterhide="请输入车牌号"
+        app:showline="false"
+        app:textleft="车牌号" />
+
+    <com.sang.common.widget.ItemView
+        android:id="@+id/item_car_owner"
+        style="@style/itemview"
+        android:layout_marginTop="@dimen/app_item_gap"
+        app:textcenterhide="请输入车主姓名"
+        app:textleft="车主姓名" />
+
+    <com.sang.common.widget.ItemView
+        android:id="@+id/item_car_phone"
+        style="@style/itemview"
+        app:centerType="phone"
+        app:textcenterhide="请输入车主手机"
+        app:showline="false"
+        app:textleft="车主手机" />
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="@dimen/app_gap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/app_gap"
+        android:text="添加车辆后，在下单时可快速选择车辆信"
+        android:textColor="@color/color_content_light"
+        android:textSize="13sp" />
+
+    <Button
+        style="@style/bt_sum"
+        android:id="@+id/bt_save"
+        android:text="保存" />
+</LinearLayout>

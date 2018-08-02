@@ -22,4 +22,9 @@ public class ArouterParamLogin {
      */
     public static final String activity_car_list="/login/activity_car_list";
 
+    /**
+     * 新增修改车辆信息
+     */
+    public static final String activity_car_infor="/login/activity_car_infor";
+
 }

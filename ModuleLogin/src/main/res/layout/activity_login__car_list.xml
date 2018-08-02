@@ -4,17 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-
     android:background="@color/color_bg_dark"
+    android:orientation="vertical"
     tools:context=".ui.LoginCarListActivity">
 
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar" />
 
     <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
         android:id="@+id/rv"
-        android:layout_height="match_parent"/>
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp" />
 
+    <Button
+        android:id="@+id/bt_save"
+        android:text="添加车辆"
+        style="@style/bt_sum" />
 
 </LinearLayout>

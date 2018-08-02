@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/app_gap"
-    android:layout_marginRight="@dimen/app_gap"
+    android:layout_marginLeft="12dp"
+    android:layout_marginRight="12dp"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
     app:cardBackgroundColor="@color/color_white"
@@ -68,8 +68,8 @@
 
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
+            android:layout_width="@dimen/img_go_size"
+            android:layout_height="@dimen/img_go_size"
             android:src="@mipmap/icon_gary_arrowmore_20"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

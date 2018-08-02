@@ -9,7 +9,9 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.config.Param;
 import com.hongniu.modulelogin.R;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
@@ -18,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Route(path = ArouterParamLogin.activity_car_list)
-public class LoginCarListActivity extends BaseActivity {
+public class LoginCarListActivity extends BaseActivity implements View.OnClickListener {
 
     private RecyclerView recyclerView;
     private List<String> datas;
@@ -37,6 +39,7 @@ public class LoginCarListActivity extends BaseActivity {
     @Override
     protected void initView() {
         super.initView();
+        findViewById(R.id.bt_save).setOnClickListener(this);
         recyclerView=findViewById(R.id.rv);
         LinearLayoutManager manager =new LinearLayoutManager(mContext);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -71,7 +74,7 @@ public class LoginCarListActivity extends BaseActivity {
                         itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-
+                                ArouterUtils.getInstance().builder(ArouterParamLogin.activity_car_infor) .navigation(mContext);
                             }
                         });
                     }
@@ -81,5 +84,11 @@ public class LoginCarListActivity extends BaseActivity {
 
         recyclerView.setAdapter(adapter);
 
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        ArouterUtils.getInstance().builder(ArouterParamLogin.activity_car_infor) .navigation(mContext);
     }
 }

@@ -25,4 +25,21 @@
     </style>
 
 
+    <style name="bt_sum">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:background">@drawable/bt_radius_2_333_999</item>
+        <item name="android:textColor">@color/color_white</item>
+        <item name="android:textSize">@dimen/text_toolbar_title</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">@dimen/app_gap</item>
+    </style>
+
+    <style name="itemview">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:paddingLeft">@dimen/app_gap</item>
+        <item name="android:paddingRight">@dimen/app_gap</item>
+        <item name="android:background">@color/color_bg</item>
+    </style>
 </resources>
