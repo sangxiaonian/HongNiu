@@ -5,13 +5,13 @@
     <color name="colorAccent">#FF4081</color>
 
 
-
     <color name="color_tran">#00000000</color>
 
 
     <!--App中主要的亮色调-->
     <color name="color_light">#F06F28</color>
     <color name="color_bg">#ffffff</color>
+    <color name="color_white">#ffffff</color>
 
 
     <!--主要标题颜色-->
@@ -24,9 +24,11 @@
     <!--Editext的hide颜色-->
     <color name="color_et_hide">#c8c8c8</color>
 
+    <!--订单首页身份背景颜色-->
+    <color name="color_identity_bg">#797c8b</color>
 
-
-
+    <!--订单列表中文字主要颜色-->
+    <color name="color_order_color">#6a6a6a</color>
 
 
 </resources>

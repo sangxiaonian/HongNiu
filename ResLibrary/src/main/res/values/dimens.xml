@@ -2,6 +2,7 @@
 <resources>
 
     <dimen name="app_item_gap">5dp</dimen>
+    <dimen name="app_gap">15dp</dimen>
 
 
     <!--Splash-->

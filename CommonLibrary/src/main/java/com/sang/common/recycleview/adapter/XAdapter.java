@@ -144,7 +144,7 @@ public abstract class XAdapter<T> extends RecyclerView.Adapter implements IXAdap
      * @param viewType holder类型,在{@link XAdapter#getItemViewType(int)}处使用
      * @return BaseHolder或者其父类
      */
-    public abstract BaseHolder initHolder(ViewGroup parent, final int viewType);
+    public abstract BaseHolder<T> initHolder(ViewGroup parent, final int viewType);
 
     /**
      * 初始化XAdapter 的viewType,且此处已经经过处理,去除Header等的影响,可以直接从0开始使用

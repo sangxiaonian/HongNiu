@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="5dp"
+    app:cardCornerRadius="4dp"
+    android:layout_marginLeft="@dimen/app_item_gap"
+    android:layout_marginRight="@dimen/app_item_gap"
+    android:layout_marginTop="@dimen/app_item_gap"
+    app:cardPreventCornerOverlap="false">
+
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/app_gap"
+        android:paddingTop="@dimen/app_gap">
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="28dp" />
+
+        <TextView
+            android:id="@+id/tv_identity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/color_identity_bg"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:text="货主"
+            android:textColor="@color/color_white"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="订单号："
+            android:textColor="@color/color_title_dark"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_identity"
+            app:layout_constraintStart_toEndOf="@+id/tv_identity"
+            app:layout_constraintTop_toTopOf="@+id/tv_identity" />
+
+        <TextView
+            android:id="@+id/tv_order"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="82545618561"
+            android:textColor="@color/color_title_dark"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView2"
+            app:layout_constraintEnd_toStartOf="@+id/tv_state"
+            app:layout_constraintStart_toEndOf="@+id/textView2"
+            app:layout_constraintTop_toTopOf="@+id/textView2" />
+
+        <TextView
+            android:id="@+id/tv_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/app_gap"
+            android:text="待发车"
+            android:textColor="@color/color_order_color"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_order"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_order" />
+
+        <TextView
+            android:id="@+id/line_top"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/app_gap"
+            android:background="@color/color_line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_order" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_time"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="@+id/tv_time"
+            app:srcCompat="@mipmap/icon_cartime_20" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="@dimen/app_gap"
+            android:text="发车时间：2018-8-8"
+            android:textColor="@color/color_order_color"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/line_top" />
+
+        <TextView
+            android:id="@+id/tv_start_loaction"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_item_gap"
+            android:text="上海虹桥物流中心"
+            android:textColor="@color/color_title_dark"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@+id/tv_time"
+            app:layout_constraintStart_toStartOf="@+id/tv_time"
+            app:layout_constraintTop_toBottomOf="@+id/tv_time" />
+
+        <TextView
+            android:id="@+id/tv_order_detail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:lineSpacingExtra="10dp"
+            android:layout_marginTop="@dimen/app_item_gap"
+            android:text="\n
+n
+n
+n
+n
+n"
+            android:textColor="@color/color_order_color"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tv_start_loaction"
+            app:layout_constraintTop_toBottomOf="@+id/tv_start_loaction" />
+
+        <TextView
+            android:id="@+id/tv_end_loaction"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="@dimen/app_item_gap"
+            android:text="上海虹桥物流中心"
+            android:textColor="@color/color_title_dark"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tv_order_detail"
+            app:layout_constraintTop_toBottomOf="@+id/tv_order_detail" />
+
+        <View
+            android:id="@+id/progress"
+            android:layout_width="5dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/color_line"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_end_loaction"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="@+id/tv_start_loaction" />
+
+        <View
+            android:id="@+id/line_bottom"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/app_gap"
+            android:background="@color/color_line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_end_loaction" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/app_gap"
+            android:paddingRight="@dimen/app_gap"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/line_bottom">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="运费：￥"
+                android:textColor="@color/color_title_dark"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="1200"
+                android:textColor="@color/color_title_dark"
+                android:textSize="13sp" />
+
+            <com.sang.common.widget.CircularFramlayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:borderColor="@color/color_line"
+                app:showBorder="true"
+
+                app:viewradius="2dp">
+
+                <TextView
+                    android:id="@+id/bt_left"
+                    android:layout_width="72dp"
+                    android:layout_height="27dp"
+                    android:gravity="center"
+                    android:text="取消订单"
+                    android:textSize="13sp" />
+            </com.sang.common.widget.CircularFramlayout>
+
+            <com.sang.common.widget.CircularFramlayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="13dp"
+                app:borderColor="@color/color_line"
+                app:showBorder="false"
+                app:viewradius="2dp">
+
+                <TextView
+                    android:id="@+id/bt_right"
+                    android:layout_width="72dp"
+                    android:layout_height="27dp"
+                    android:background="@color/color_light"
+                    android:gravity="center"
+                    android:text="继续付款"
+                    android:textColor="@color/color_white"
+                    android:textSize="13sp" />
+
+            </com.sang.common.widget.CircularFramlayout>
+
+
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>
