@@ -98,15 +98,15 @@ public class CircularFramlayout extends FrameLayout {
         xfermode = new PorterDuffXfermode(PorterDuff.Mode.DST_IN);
 
         if (attrs != null) {
-            TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.CircularView);
-            borderColor = ta.getColor(R.styleable.CircularView_borderColor, Color.WHITE);
-            showBorder = ta.getBoolean(R.styleable.CircularView_showBorder, false);
-            borderWidth = (int) ta.getDimension(R.styleable.CircularView_borderWidth, DeviceUtils.dip2px(context, 1));
-            radiusLeftTop = (int) ta.getDimension(R.styleable.CircularView_radiusLeftTop, 0);
-            radiusRightTop = (int) ta.getDimension(R.styleable.CircularView_radiusRightTop, 0);
-            radiusRightBottom = (int) ta.getDimension(R.styleable.CircularView_radiusRightBottom, 0);
-            radiusLeftBottom = (int) ta.getDimension(R.styleable.CircularView_radiusLeftBottom, 0);
-            final int radius = (int) ta.getDimension(R.styleable.CircularView_viewradius, -1);
+            TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.CircularFramlayout);
+            borderColor = ta.getColor(R.styleable.CircularFramlayout_borderColor, Color.WHITE);
+            showBorder = ta.getBoolean(R.styleable.CircularFramlayout_showBorder, false);
+            borderWidth = (int) ta.getDimension(R.styleable.CircularFramlayout_borderWidth, DeviceUtils.dip2px(context, 1));
+            radiusLeftTop = (int) ta.getDimension(R.styleable.CircularFramlayout_radiusLeftTop, 0);
+            radiusRightTop = (int) ta.getDimension(R.styleable.CircularFramlayout_radiusRightTop, 0);
+            radiusRightBottom = (int) ta.getDimension(R.styleable.CircularFramlayout_radiusRightBottom, 0);
+            radiusLeftBottom = (int) ta.getDimension(R.styleable.CircularFramlayout_radiusLeftBottom, 0);
+            final int radius = (int) ta.getDimension(R.styleable.CircularFramlayout_viewradius, -1);
             ta.recycle();
             if (radius >= 0) {
                 post(new Runnable() {

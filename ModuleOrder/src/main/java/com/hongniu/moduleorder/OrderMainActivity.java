@@ -290,7 +290,7 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
 
     @Override
     public void onPopuClick(OrderMainPop pop, View view, int position) {
-        ToastUtils.showTextToast(position + "");
+
         if (view.getId() == R.id.switch_left) {
             switchLeft.setTitle(times.get(position));
         } else if (view.getId() == R.id.switch_right) {
@@ -308,12 +308,12 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.src_finance) {
-            ToastUtils.showTextToast("财务");
+            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL) .show("财务");
         } else if (i == R.id.src_me) {
-            ToastUtils.showTextToast("个人中心");
+            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL) .show("个人中心");
             drawerLayout.openDrawer(Gravity.START);
         } else if (i == R.id.ll_order) {
-            ToastUtils.showTextToast("我要下单");
+            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL) .show("我要下单");
 
         } else if (i == R.id.ll_login_out) {
 //            ToastUtils.showTextToast("退出登录");
@@ -360,14 +360,14 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
                     }).creatDialog(mContext).show();
 
         } else if (i == R.id.ll_about_us) {
-            ToastUtils.showTextToast("关于我们");
+            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL) .show("关于我们");
         } else if (i == R.id.ll_my_car) {
 //            ToastUtils.showTextToast("我的车辆");
             ArouterUtils.getInstance().builder(ArouterParamLogin.activity_car_list).navigation(mContext);
         } else if (i == R.id.ll_person_infor) {
-            ToastUtils.showTextToast("个人资料");
+            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL) .show("个人资料");
         } else if (i == R.id.ll_pay_method) {
-            ToastUtils.showTextToast("收款方式");
+            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL) .show("收款方式");
         }
     }
 }

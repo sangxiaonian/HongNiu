@@ -3,6 +3,7 @@ package com.hongniu.modulelogin.ui;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.EventLog;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -13,6 +14,8 @@ import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.modulelogin.R;
+import com.hongniu.modulelogin.entity.LoginEvent;
+import com.sang.common.event.BusFactory;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 
@@ -74,6 +77,7 @@ public class LoginCarListActivity extends BaseActivity implements View.OnClickLi
                         itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                BusFactory.getBus().postSticky(new LoginEvent.CarEvent(1));
                                 ArouterUtils.getInstance().builder(ArouterParamLogin.activity_car_infor) .navigation(mContext);
                             }
                         });
@@ -89,6 +93,8 @@ public class LoginCarListActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
+        //添加车辆
+        BusFactory.getBus().postSticky(new LoginEvent.CarEvent(0));
         ArouterUtils.getInstance().builder(ArouterParamLogin.activity_car_infor) .navigation(mContext);
     }
 }

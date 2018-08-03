@@ -20,6 +20,10 @@
     <!--Order-->
     <string name="order_main_title">我是货主</string>
     <string name="car_title">我的车辆</string>
+    <string name="login_modification_car">编辑车辆</string>
+    <string name="login_add_car">新增车辆</string>
+    <string name="login_add_car_success">添加成功</string>
+    <string name="login_add_car_modification">修改成功</string>
 
 
 </resources>

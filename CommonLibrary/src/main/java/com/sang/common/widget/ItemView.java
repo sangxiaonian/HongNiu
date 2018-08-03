@@ -171,4 +171,24 @@ public class ItemView extends FrameLayout {
         this.textLeft = textLeft;
         tvLeft.setText(textLeft == null ? "" : textLeft);
     }
+
+    public String getTextLeft() {
+        return textLeft;
+    }
+
+    public String getTextCenter() {
+        return textCenter;
+    }
+
+    public String getTextRight() {
+        return textRight;
+    }
+
+    public boolean isEditable() {
+        return editable;
+    }
+
+    public String getTextCenterHide() {
+        return textCenterHide;
+    }
 }

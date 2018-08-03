@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.sang.common.event.BusFactory;
 import com.sang.common.net.listener.TaskControl;
 
 import io.reactivex.disposables.Disposable;
@@ -38,6 +39,25 @@ public class BaseFragment extends Fragment implements TaskControl.OnTaskListener
         initListener();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (getUseEventBus()){
+            BusFactory.getBus().register(this);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (getUseEventBus()){
+            BusFactory.getBus().unregister(this);
+        }
+    }
+
+    protected boolean getUseEventBus(){
+        return false;
+    }
 
     private View initView(LayoutInflater inflater) {
         return null;

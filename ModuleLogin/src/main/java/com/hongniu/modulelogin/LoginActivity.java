@@ -80,7 +80,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         .withString(Param.TRAN,phone)
                         .navigation(mContext);
             }else {
-                ToastUtils.showTextToast(R.string.login_phone_error);
+                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show(R.string.login_phone_error);
             }
 
         } else if (i == R.id.tv_clause) {

@@ -11,7 +11,7 @@
     </declare-styleable>
 
     <!--圆形控件 CircularImageView  CirculaViewFramlayout-->
-    <declare-styleable name="CircularView">
+    <declare-styleable name="CircularFramlayout">
         <!--是否显示边框，true 显示，false 不显示-->
         <attr name="showBorder" format="boolean" />
         <!--边框颜色，默认为白色-->

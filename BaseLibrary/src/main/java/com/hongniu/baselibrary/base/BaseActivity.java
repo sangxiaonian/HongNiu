@@ -1,5 +1,6 @@
 package com.hongniu.baselibrary.base;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,7 +13,9 @@ import android.widget.QuickContactBadge;
 import android.widget.TextView;
 
 import com.hongniu.baselibrary.R;
+import com.sang.common.event.BusFactory;
 import com.sang.common.net.listener.TaskControl;
+import com.sang.common.widget.dialog.CenterDialog;
 
 import io.reactivex.disposables.Disposable;
 
@@ -34,6 +37,26 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
         super.onCreate(savedInstanceState);
         mContext = this;
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (getUseEventBus()){
+            BusFactory.getBus().register(this);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (getUseEventBus()){
+            BusFactory.getBus().unregister(this);
+        }
+    }
+
+    protected boolean getUseEventBus(){
+        return false;
     }
 
     @Override
@@ -99,6 +122,24 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
             });
         }
     }
+
+
+    protected void showAleart(String msg){
+        new CenterDialog.Builder()
+                .setRightClickListener(new CenterDialog.OnButtonRightClickListener() {
+                    @Override
+                    public void onRightClick(View view, Dialog dialog) {
+                        dialog.dismiss();
+                    }
+                })
+                .hideBtLeft()
+                .hideContent()
+                .setDialogTitle(msg)
+                .creatDialog(mContext)
+                .show();
+    }
+
+
     protected void initView() {
     }
 
