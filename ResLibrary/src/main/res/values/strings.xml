@@ -24,6 +24,9 @@
     <string name="login_add_car">新增车辆</string>
     <string name="login_add_car_success">添加成功</string>
     <string name="login_add_car_modification">修改成功</string>
+    <string name="login_car_select">选择车辆类型</string>
+    <string name="deleted">删除</string>
+    <string name="deleted_success">删除成功</string>
 
 
 </resources>

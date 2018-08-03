@@ -26,11 +26,12 @@ import io.reactivex.disposables.Disposable;
 public class BaseActivity extends AppCompatActivity implements TaskControl.OnTaskListener {
 
     protected Context mContext;
-    private FrameLayout llToolbarLeft;
-    private FrameLayout llToolbarRight;
-    private ImageButton imgToolbarLeft;
-    private ImageButton imgToolbarRight;
-    private TextView tvToolbarTitle;
+    protected FrameLayout llToolbarLeft;
+    protected FrameLayout llToolbarRight;
+    protected ImageButton imgToolbarLeft;
+    protected ImageButton imgToolbarRight;
+    protected TextView tvToolbarTitle;
+    protected TextView tvToolbarRight;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,7 +43,7 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
     @Override
     protected void onStart() {
         super.onStart();
-        if (getUseEventBus()){
+        if (getUseEventBus()) {
             BusFactory.getBus().register(this);
         }
     }
@@ -50,12 +51,12 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (getUseEventBus()){
+        if (getUseEventBus()) {
             BusFactory.getBus().unregister(this);
         }
     }
 
-    protected boolean getUseEventBus(){
+    protected boolean getUseEventBus() {
         return false;
     }
 
@@ -67,8 +68,9 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
         imgToolbarLeft = findViewById(R.id.toolbar_src_left);
         imgToolbarRight = findViewById(R.id.toolbar_src_right);
         tvToolbarTitle = findViewById(R.id.toolbar_title);
+        tvToolbarRight = findViewById(R.id.tv_toolbar_right);
 
-        if (llToolbarLeft!=null){
+        if (llToolbarLeft != null) {
             llToolbarLeft.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -78,18 +80,18 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
         }
     }
 
-    protected void setToolbarTitle(String title){
-        if (tvToolbarTitle!=null){
+    protected void setToolbarTitle(String title) {
+        if (tvToolbarTitle != null) {
             tvToolbarTitle.setText(title);
         }
     }
 
-    protected void setToolBarLeftClick(final View.OnClickListener leftClick){
-        if (llToolbarLeft!=null){
+    protected void setToolBarLeftClick(final View.OnClickListener leftClick) {
+        if (llToolbarLeft != null) {
             llToolbarLeft.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (leftClick!=null){
+                    if (leftClick != null) {
                         leftClick.onClick(view);
                     }
                 }
@@ -97,25 +99,36 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
         }
     }
 
-    protected void setToolbarSrcLeft(int resID){
-        if (imgToolbarLeft!=null) {
+    protected void setToolbarSrcLeft(int resID) {
+        if (imgToolbarLeft != null) {
             imgToolbarLeft.setImageResource(resID);
+
         }
     }
 
 
     protected void setToolbarSrcRight(int resID) {
-        if (imgToolbarRight!=null) {
+        if (imgToolbarRight != null) {
             imgToolbarRight.setImageResource(resID);
         }
     }
 
-    protected void setLlToolbarRightClick(final View.OnClickListener listener){
-        if (llToolbarRight!=null){
+    protected void setToolbarSrcRight(String msg) {
+        if (imgToolbarRight != null) {
+            imgToolbarRight.setVisibility(View.GONE);
+        }
+        if (tvToolbarRight!=null){
+            tvToolbarRight.setVisibility(View.VISIBLE);
+            tvToolbarRight.setText(msg==null?"":msg);
+        }
+    }
+
+    protected void setToolbarRightClick(final View.OnClickListener listener) {
+        if (llToolbarRight != null) {
             llToolbarRight.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (listener!=null){
+                    if (listener != null) {
                         listener.onClick(view);
                     }
                 }
@@ -124,7 +137,7 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
     }
 
 
-    protected void showAleart(String msg){
+    protected void showAleart(String msg) {
         new CenterDialog.Builder()
                 .setRightClickListener(new CenterDialog.OnButtonRightClickListener() {
                     @Override

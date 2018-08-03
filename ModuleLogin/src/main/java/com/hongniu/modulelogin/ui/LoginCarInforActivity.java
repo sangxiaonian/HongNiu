@@ -6,8 +6,10 @@ import android.view.View;
 import android.widget.Button;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.bigkoo.pickerview.OptionsPickerView;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.utils.PickerDialogUtils;
 import com.hongniu.modulelogin.R;
 import com.hongniu.modulelogin.entity.LoginEvent;
 import com.sang.common.utils.ToastUtils;
@@ -16,11 +18,14 @@ import com.sang.common.widget.ItemView;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 车辆新增、修改界面
  */
 @Route(path = ArouterParamLogin.activity_car_infor)
-public class LoginCarInforActivity extends BaseActivity implements View.OnClickListener {
+public class LoginCarInforActivity extends BaseActivity implements View.OnClickListener, OptionsPickerView.OnOptionsSelectListener {
 
     private ItemView itemCarType;//车辆类型
     private ItemView itemCarNum;//车牌号
@@ -29,12 +34,14 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
 
     private Button button;
     private boolean isAdd;//是否是添加车辆
+    private OptionsPickerView.Builder pickerDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_car_infor);
         initView();
+        initData();
         initListener();
     }
 
@@ -46,6 +53,34 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
         itemCarOwner = findViewById(R.id.item_car_owner);
         itemCarPhone = findViewById(R.id.item_car_phone);
         button = findViewById(R.id.bt_save);
+        pickerDialog = PickerDialogUtils.creatPickerDialog(mContext, this).setTitleText(getString(R.string.login_car_select));
+        tvToolbarRight.setTextColor(getResources().getColor(R.color.tool_right));
+        setToolbarSrcRight(getString(R.string.deleted));
+        setToolbarRightClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show(getString(R.string.deleted_success));
+                finish();
+            }
+        });
+
+
+    }
+
+    private List<String> cars;
+
+    @Override
+    protected void initData() {
+        super.initData();
+        cars = new ArrayList<>();
+        cars.add("特种车");
+        cars.add("小货车");
+        cars.add("大货车");
+        cars.add("法拉利");
+        cars.add("保时捷");
+        cars.add("布加迪威龙");
+
+
     }
 
     @Override
@@ -88,15 +123,17 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
                 if (isAdd) {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show(R.string.login_add_car_success);
 
-                }else {
+                } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show(R.string.login_add_car_modification);
                 }
+                finish();
             }
 
 
         } else if (i == R.id.item_car_type) {
-            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show(R.string.login_add_car_success);
-
+            OptionsPickerView build = pickerDialog.build();
+            build.setPicker(cars);
+            build.show(v);
 
         }
     }
@@ -120,5 +157,12 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void onOptionsSelect(int options1, int options2, int options3, View v) {
+        if (v instanceof ItemView) {
+            ((ItemView) v).setTextCenter(cars.get(options1));
+        }
     }
 }

@@ -173,15 +173,16 @@ public class ItemView extends FrameLayout {
     }
 
     public String getTextLeft() {
-        return textLeft;
+
+        return textLeft=tvLeft.getText().toString().trim();
     }
 
     public String getTextCenter() {
-        return textCenter;
+        return textCenter=etCenter.getText().toString().trim();
     }
 
     public String getTextRight() {
-        return textRight;
+        return textRight=tvRight.getText().toString().trim();
     }
 
     public boolean isEditable() {
@@ -189,6 +190,6 @@ public class ItemView extends FrameLayout {
     }
 
     public String getTextCenterHide() {
-        return textCenterHide;
+        return textCenterHide=etCenter.getHint().toString().trim();
     }
 }

@@ -2,12 +2,8 @@ package com.sang.common.toast;
 
 import android.content.Context;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.sang.common.R;
 
 /**
  * 作者： ${PING} on 2018/8/3.
@@ -25,7 +21,7 @@ public class ToastCenter implements IToast {
     }
 
     private Toast creatToast(Context context) {
-        Toast toast =Toast.makeText(context,"",Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(context, "", Toast.LENGTH_SHORT);
         //设置Toast要显示的位置，水平居中并在底部，X轴偏移0个单位，Y轴偏移70个单位，
         toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
         //设置显示时间
