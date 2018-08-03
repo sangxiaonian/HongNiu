@@ -68,6 +68,11 @@ public class ToastNormal implements IToast {
     }
 
     @Override
+    public void show() {
+        toast.show();
+    }
+
+    @Override
     public void show(Context context, int msg) {
         Toast toast = creatToast(context);
         toast.setText(msg);

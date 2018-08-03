@@ -26,6 +26,7 @@ public interface IToast {
 
     void show(String msg);
     void show(int msg);
+    void show();
     void show(Context context,int msg);
     void show(Context context,String msg);
 }

@@ -360,13 +360,19 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
                     }).creatDialog(mContext).show();
 
         } else if (i == R.id.ll_about_us) {
+            drawerLayout.closeDrawer(Gravity.START);
             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL) .show("关于我们");
         } else if (i == R.id.ll_my_car) {
+            drawerLayout.closeDrawer(Gravity.START);
 //            ToastUtils.showTextToast("我的车辆");
             ArouterUtils.getInstance().builder(ArouterParamLogin.activity_car_list).navigation(mContext);
         } else if (i == R.id.ll_person_infor) {
-            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL) .show("个人资料");
+            drawerLayout.closeDrawer(Gravity.START);
+//            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL) .show("个人资料");
+            ArouterUtils.getInstance().builder(ArouterParamLogin.activity_person_infor).navigation(mContext);
+
         } else if (i == R.id.ll_pay_method) {
+            drawerLayout.closeDrawer(Gravity.START);
             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL) .show("收款方式");
         }
     }

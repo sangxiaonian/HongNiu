@@ -77,6 +77,11 @@ public class ToastSuccess implements IToast {
     }
 
     @Override
+    public void show() {
+        toast.show();
+    }
+
+    @Override
     public void show(Context context, int msg) {
         View inflate = LayoutInflater.from(context).inflate(R.layout.layout_toast_success, null);
         Toast toast = creatToast(context, inflate);

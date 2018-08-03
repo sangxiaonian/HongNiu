@@ -23,7 +23,10 @@
         <item name="android:textColor">@color/color_white</item>
         <item name="android:textSize">@dimen/text_toolbar_title</item>
         <item name="android:gravity">center</item>
-        <item name="android:layout_margin">@dimen/app_gap</item>
+        <item name="android:layout_marginLeft">@dimen/app_gap</item>
+        <item name="android:layout_marginRight">@dimen/app_gap</item>
+        <item name="android:layout_marginTop">@dimen/app_gap</item>
+        <item name="android:layout_marginBottom">@dimen/app_gap</item>
     </style>
 
     <style name="itemview">

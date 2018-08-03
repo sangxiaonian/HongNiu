@@ -99,6 +99,11 @@ public class ToastUtils implements IToast {
     }
 
     @Override
+    public void show() {
+        toast.show();
+    }
+
+    @Override
     public void show(Context context, int msg) {
         toast.show(context, msg);
     }

@@ -177,6 +177,10 @@ public class ItemView extends FrameLayout {
         return textLeft=tvLeft.getText().toString().trim();
     }
 
+    public void setSingleLine(boolean sing){
+        etCenter.setSingleLine(showLine);
+    }
+
     public String getTextCenter() {
         return textCenter=etCenter.getText().toString().trim();
     }

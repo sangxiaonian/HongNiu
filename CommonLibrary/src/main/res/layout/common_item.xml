@@ -24,6 +24,7 @@
             android:layout_marginLeft="@dimen/app_item_gap"
             android:layout_marginRight="@dimen/app_item_gap"
             android:layout_weight="1"
+            android:singleLine="true"
             android:background="@color/color_tran"
             android:textColor="@color/color_title_dark"
             android:textColorHint="@color/color_et_hide"

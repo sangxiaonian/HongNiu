@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">ResLibrary</string>
     <string name="hongniu_phone">4000000000</string>
+    <string name="save">保存</string>
+    <string name="deleted">删除</string>
 
 
     <!--Login-->
@@ -25,8 +27,13 @@
     <string name="login_add_car_success">添加成功</string>
     <string name="login_add_car_modification">修改成功</string>
     <string name="login_car_select">选择车辆类型</string>
-    <string name="deleted">删除</string>
     <string name="deleted_success">删除成功</string>
+    <string name="login_car_entry_deleted">确认要删除车辆吗？</string>
+
+
+    <!--个人资料-->
+    <string name="login_person">个人资料</string>
+    <string name="login_person_improve_infor">购买货物保险前，需完善个人信息</string>
 
 
 </resources>

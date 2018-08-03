@@ -142,11 +142,15 @@ public class BottomDialog extends Dialog implements View.OnClickListener {
         if (i == R.id.bt_bottom) {
             if (bottomClickListener != null) {
                 bottomClickListener.onBottomClick(v, this);
+            }else {
+                dismiss();
             }
 
         } else if (i == R.id.bt_top) {
             if (topClickListener != null) {
                 topClickListener.onTopClick(v, this);
+            }else {
+                dismiss();
             }
 
         }
