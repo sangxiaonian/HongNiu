@@ -36,8 +36,9 @@
         android:textCursorDrawable="@drawable/et_cursor"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_identity" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <View
         android:id="@+id/line"

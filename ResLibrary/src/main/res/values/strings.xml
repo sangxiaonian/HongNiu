@@ -1,8 +1,11 @@
 <resources>
     <string name="app_name">ResLibrary</string>
+    <string name="hongniu_phone">4000000000</string>
+
 
     <!--Login-->
     <string name="login_title">欢迎登录泓牛</string>
+    <string name="login_out_entry">确认要退出登录吗？</string>
     <string name="login_input_phone">请输入手机号</string>
     <string name="login_input_sms_verify">请输入验证码</string>
     <string name="login_consent">进入泓牛代表你已同意《相关条款》</string>
@@ -10,9 +13,13 @@
     <string name="login_phone_error">请输入正确手机号码</string>
     <string name="login_up_sms_veri">秒后重获取验证码</string>
     <string name="login_get_sms_veri">重获取验证码</string>
+    <string name="login_contact_service">联系客服</string>
+    <string name="login_contact_phone">400 000 0000</string>
+
 
     <!--Order-->
     <string name="order_main_title">我是货主</string>
     <string name="car_title">我的车辆</string>
+
 
 </resources>

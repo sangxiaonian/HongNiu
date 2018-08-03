@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.hongniu.baselibrary.R;
 
 /**
  * 作者： ${桑小年} on 2018/7/30.
@@ -29,7 +30,10 @@ public class ArouterUtils {
      * @return
      */
     public Postcard builder(String path){
-       return ARouter.getInstance().build(path);
+//          .withTransition(R.anim.slide_in_bottom, R.anim.slide_out_bottom)
+       return ARouter.getInstance().build(path)
+//               .withTransition(R.anim.activity_entry_en,R.anim.activity_entry_out)
+               ;
     }
 
 

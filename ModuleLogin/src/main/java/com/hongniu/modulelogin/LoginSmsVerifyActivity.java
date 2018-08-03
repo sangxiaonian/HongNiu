@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
+import com.hongniu.baselibrary.arouter.ArouterParamOrder;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.sang.common.utils.ToastUtils;
@@ -101,8 +103,7 @@ public class LoginSmsVerifyActivity extends BaseActivity implements VericationVi
      */
     @Override
     public void onComplete(String content) {
-        ToastUtils.showTextToast(content);
-        
+        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_main).navigation(mContext);
     }
 
 

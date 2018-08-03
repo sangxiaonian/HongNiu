@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:showBorder="false"
+    android:padding="10dp"
+    android:orientation="vertical"
+     >
+    <com.sang.common.widget.CircularFramlayout
+        android:layout_width="match_parent"
+        app:showBorder="false"
+        app:viewradius="13dp"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:background="@color/color_white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="13dp"
+                android:text="标题"
+                android:textColor="#999999"
+                android:textSize="13sp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#dddddd" />
+            <TextView
+                android:id="@+id/bt_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="16dp"
+                android:text="确认"
+                android:textColor="#FF3A30" />
+        </LinearLayout>
+
+
+    </com.sang.common.widget.CircularFramlayout>
+    <com.sang.common.widget.CircularFramlayout
+        android:layout_width="match_parent"
+        app:showBorder="false"
+        app:viewradius="13dp"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/bt_bottom"
+            android:background="@color/color_white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="取消"
+            android:textColor="#007AFF" />
+    </com.sang.common.widget.CircularFramlayout>
+</LinearLayout>

@@ -1,9 +1,11 @@
 package com.hongniu.moduleorder;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -19,9 +21,12 @@ import com.hongniu.moduleorder.widget.OrderMainPop;
 import com.hongniu.moduleorder.widget.OrderMainTitlePop;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
+import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.SwitchTextLayout;
+import com.sang.common.widget.dialog.BottomDialog;
+import com.sang.common.widget.dialog.CenterDialog;
 import com.sang.common.widget.popu.BasePopu;
 import com.sang.common.widget.popu.inter.OnPopuDismissListener;
 
@@ -306,13 +311,54 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
             ToastUtils.showTextToast("财务");
         } else if (i == R.id.src_me) {
             ToastUtils.showTextToast("个人中心");
+            drawerLayout.openDrawer(Gravity.START);
         } else if (i == R.id.ll_order) {
             ToastUtils.showTextToast("我要下单");
 
         } else if (i == R.id.ll_login_out) {
-            ToastUtils.showTextToast("退出登录");
+//            ToastUtils.showTextToast("退出登录");
+            drawerLayout.closeDrawer(Gravity.START);
+            new BottomDialog.Builder()
+                    .setDialogTitle(getString(R.string.login_out_entry))
+                    .setTopClickListener(new BottomDialog.OnButtonTopClickListener() {
+                        @Override
+                        public void onTopClick(View view, Dialog dialog) {
+                            dialog.dismiss();
+                            ArouterUtils.getInstance().builder(ArouterParamLogin.activity_login).navigation(mContext);
+                            finish();
+                        }
+                    })
+                    .setBottomClickListener(new BottomDialog.OnButtonBottomClickListener() {
+                        @Override
+                        public void onBottomClick(View view, Dialog dialog) {
+                            dialog.dismiss();
+                        }
+                    }).creatDialog(mContext).show();
+
+
+
+
         } else if (i == R.id.ll_contact_service) {
-            ToastUtils.showTextToast("联系客服");
+//            ToastUtils.showTextToast("联系客服");
+            drawerLayout.closeDrawer(Gravity.START);
+            new CenterDialog.Builder()
+                    .setDialogTitle(getString(R.string.login_contact_service))
+                    .setDialogContent(getString(R.string.login_contact_phone))
+                    .setLeftClickListener(new CenterDialog.OnButtonLeftClickListener() {
+                        @Override
+                        public void onLeftClick(View view, Dialog dialog) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setRightClickListener(new CenterDialog.OnButtonRightClickListener() {
+                        @Override
+                        public void onRightClick(View view, Dialog dialog) {
+                            dialog.dismiss();
+                            CommonUtils.toDial(mContext,getString(R.string.hongniu_phone));
+
+                        }
+                    }).creatDialog(mContext).show();
+
         } else if (i == R.id.ll_about_us) {
             ToastUtils.showTextToast("关于我们");
         } else if (i == R.id.ll_my_car) {

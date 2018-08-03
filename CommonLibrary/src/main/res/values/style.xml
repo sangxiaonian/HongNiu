@@ -14,4 +14,11 @@
         <item name="android:windowEnterAnimation">@anim/actionsheet_dialog_in</item>
     </style>
 
+    <style name="activity_ani" parent="android:Animation">  <!--name为调用这个style动画的名字，自己设置的-->
+        <item name="android:activityOpenEnterAnimation">@anim/activity_entry_en</item>
+        <item name="android:activityOpenExitAnimation">@anim/activity_entry_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/activity_out_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/activity_out_out</item>
+    </style>
+
 </resources>
