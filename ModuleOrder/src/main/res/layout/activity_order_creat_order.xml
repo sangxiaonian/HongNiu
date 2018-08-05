@@ -88,7 +88,7 @@
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@color/color_line" />
+                                android:background="#43BFA3" />
                         </com.sang.common.widget.CircularFramlayout>
 
 
@@ -126,7 +126,7 @@
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@color/color_line" />
+                                android:background="#F06F28" />
                         </com.sang.common.widget.CircularFramlayout>
 
 
