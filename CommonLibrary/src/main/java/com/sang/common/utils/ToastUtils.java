@@ -59,7 +59,7 @@ public class ToastUtils implements IToast {
     }
 
     private ToastUtils() {
-
+        toast=toastNormal;
     }
 
 

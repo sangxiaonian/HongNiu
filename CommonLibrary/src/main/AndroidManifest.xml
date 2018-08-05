@@ -1,2 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.sang.common" />
+    package="com.sang.common" >
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+</manifest>

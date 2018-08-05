@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ModuleLogin</string>
+    <string name="login_about_us">关于我们</string>
 </resources>

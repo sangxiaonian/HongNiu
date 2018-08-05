@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/color_bg_dark"
+    tools:context=".ui.LoginAboutUsActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <com.sang.common.widget.ItemView
+        android:layout_marginTop="@dimen/app_gap"
+        android:id="@+id/item_terms_of_service"
+        style="@style/itemview"
+        app:editable="false"
+        app:textcenterhide=""
+        app:textleft="服务条款" />
+
+    <com.sang.common.widget.ItemView
+        android:id="@+id/item_about_hongniu"
+        style="@style/itemview"
+        app:editable="false"
+        app:showline="false"
+        app:textcenterhide=""
+        app:textleft="关于泓牛" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="45dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@mipmap/icon_gywm_logo_80" />
+
+            <TextView
+                android:layout_marginTop="@dimen/img_go_size"
+                android:id="@+id/tv_version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_line"
+                android:textSize="12sp" />
+
+
+            <TextView
+                android:layout_marginTop="@dimen/app_item_gap"
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_line"
+                android:text="@string/app_name"
+                android:textSize="12sp" />
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

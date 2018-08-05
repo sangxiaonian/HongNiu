@@ -17,11 +17,11 @@ public class BaseHolder<T> extends RecyclerView.ViewHolder {
     /**
      * holder 的根View
      */
-    protected View itemView;
+    protected View rootView;
 
-    public BaseHolder(View itemView) {
-        super(itemView);
-        this.itemView = itemView;
+    public BaseHolder(View rootView) {
+        super(rootView);
+        this.rootView = rootView;
     }
 
     public BaseHolder(Context context,ViewGroup parent,  int layoutID) {
@@ -39,8 +39,8 @@ public class BaseHolder<T> extends RecyclerView.ViewHolder {
      *
      * @return
      */
-    public View getItemView() {
-        return itemView;
+    public View getRootView() {
+        return rootView;
     }
 
     /**

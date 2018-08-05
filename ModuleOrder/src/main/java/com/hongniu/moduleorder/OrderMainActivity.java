@@ -310,7 +310,7 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
         if (i == R.id.src_finance) {
             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL) .show("财务");
         } else if (i == R.id.src_me) {
-            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL) .show("个人中心");
+//            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL) .show("个人中心");
             drawerLayout.openDrawer(Gravity.START);
         } else if (i == R.id.ll_order) {
             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL) .show("我要下单");
@@ -361,7 +361,9 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
 
         } else if (i == R.id.ll_about_us) {
             drawerLayout.closeDrawer(Gravity.START);
-            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL) .show("关于我们");
+//            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL) .show("关于我们");
+
+            ArouterUtils.getInstance().builder(ArouterParamLogin.activity_about_us).navigation(mContext);
         } else if (i == R.id.ll_my_car) {
             drawerLayout.closeDrawer(Gravity.START);
 //            ToastUtils.showTextToast("我的车辆");
@@ -373,7 +375,9 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
 
         } else if (i == R.id.ll_pay_method) {
             drawerLayout.closeDrawer(Gravity.START);
-            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL) .show("收款方式");
+//            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL) .show("收款方式");
+            ArouterUtils.getInstance().builder(ArouterParamLogin.activity_pay_ways).navigation(mContext);
+
         }
     }
 }

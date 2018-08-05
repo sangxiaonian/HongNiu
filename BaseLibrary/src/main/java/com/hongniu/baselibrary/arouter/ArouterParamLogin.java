@@ -30,5 +30,13 @@ public class ArouterParamLogin {
      * 设置个人信息
      */
     public static final String activity_person_infor = "/login/activity_person_infor";
+    /**
+     * 关于我们
+     */
+    public static final String activity_about_us = "/login/activity_about_us";
+    /**
+     * 收款方式
+     */
+    public static final String activity_pay_ways = "/login/activity_pay_ways";
 
 }

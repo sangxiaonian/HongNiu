@@ -4,12 +4,13 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.recycleview.holder.PeakHolder;
 import com.sang.common.recycleview.inter.IXAdapter;
+import com.sang.common.recycleview.inter.OnItemTouchHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -18,7 +19,8 @@ import java.util.List;
  * 带看记录使用的ViewPager
  */
 
-public abstract class XAdapter<T> extends RecyclerView.Adapter implements IXAdapter<T> {
+public abstract class XAdapter<T> extends RecyclerView.Adapter implements IXAdapter<T> ,OnItemTouchHelper {
+
 
     public Context context;
     protected List<T> list;
@@ -124,7 +126,7 @@ public abstract class XAdapter<T> extends RecyclerView.Adapter implements IXAdap
         } else {//一般布局
             position -= heads.size();
             BaseHolder holder1 = (BaseHolder) holder;
-            holder1.initView(holder1.getItemView(), position, list.get(position));
+            holder1.initView(holder1.getRootView(), position, list.get(position));
         }
 
 
@@ -164,5 +166,31 @@ public abstract class XAdapter<T> extends RecyclerView.Adapter implements IXAdap
 
     public List<PeakHolder> getHeads() {
         return heads;
+    }
+
+    @Override
+    public void onMove(int fromPosition, int toPosition) {
+        Collections.swap(list,fromPosition,toPosition);
+        notifyItemMoved(fromPosition,toPosition);
+    }
+
+    @Override
+    public void onSwipe(int position) {
+        list.remove(position);
+        /**
+         * 通知移除
+         */
+        notifyItemRemoved(position);
+    }
+
+    private RecyclerView.ViewHolder selectHolder;
+    @Override
+    public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
+        if (viewHolder!=null&&actionState==2) {
+            selectHolder=viewHolder;
+            viewHolder.itemView.animate().scaleX(0.9f).scaleY(0.9f).start();
+        }else if (selectHolder!=null&&actionState==0){
+            selectHolder.itemView.animate().scaleX(1f).scaleY(1f).start();
+        }
     }
 }
