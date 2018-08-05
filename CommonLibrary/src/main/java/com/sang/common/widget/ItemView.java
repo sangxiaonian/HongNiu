@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.sang.common.R;
 import com.sang.common.utils.DeviceUtils;
+import com.sang.common.utils.PointLengthFilter;
 
 /**
  * 作者： ${桑小年} on 2018/8/2.
@@ -127,6 +128,10 @@ public class ItemView extends FrameLayout {
             etCenter.setInputType(InputType.TYPE_CLASS_NUMBER);
             etCenter.setFilters( new InputFilter[]{new InputFilter.LengthFilter(18)});
             etCenter.setKeyListener(DigitsKeyListener.getInstance("0123456789xX"));
+        }else if (centerType==3){//数字
+            etCenter.setInputType(InputType.TYPE_CLASS_NUMBER);
+            etCenter.setFilters( new InputFilter[]{new PointLengthFilter()});
+            etCenter.setKeyListener(DigitsKeyListener.getInstance("0123456789."));
         } else {
             if (maxLength>0){
                 etCenter.setFilters( new InputFilter[]{new InputFilter.LengthFilter(maxLength)});

@@ -170,6 +170,7 @@
                     style="@style/itemview"
                     app:textcenterhide="请输入货物面积"
                     app:textleft="货物面积"
+                    app:centerType="number"
                     app:textright="方" />
 
                 <com.sang.common.widget.ItemView
@@ -177,6 +178,7 @@
                     style="@style/itemview"
                     app:textcenterhide="请输入货物重量"
                     app:textleft="货物重量"
+                    app:centerType="number"
                     app:textright="吨" />
 
                 <com.sang.common.widget.ItemView
@@ -184,6 +186,7 @@
                     style="@style/itemview"
                     app:showline="false"
                     app:textright="元"
+                    app:centerType="number"
                     app:textcenterhide="请输入运费"
                     app:textleft="运费" />
 
@@ -208,6 +211,7 @@
                 <com.sang.common.widget.ItemView
                     android:id="@+id/item_car_phone"
                     style="@style/itemview"
+                    app:centerType="phone"
                     app:textcenterhide="请输入车主手机"
                     app:textleft="车主手机" />
 
@@ -232,6 +236,7 @@
                     android:id="@+id/item_driver_phone"
                     style="@style/itemview"
                     app:textcenterhide="请输入司机手机"
+                    app:centerType="phone"
                     app:textleft="司机手机" />
 
                 <com.sang.common.widget.ItemView
