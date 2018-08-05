@@ -3,7 +3,10 @@
     package="com.hongniu.moduleorder">
 
     <application>
-        <activity android:name=".OrderMainActivity" android:launchMode="singleTask"/>
+        <activity
+            android:name=".OrderMainActivity"
+            android:launchMode="singleTask" />
+        <activity android:name=".ui.OrderCreatOrderActivity"></activity>
     </application>
 
 </manifest>

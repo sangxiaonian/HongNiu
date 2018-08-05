@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_bg_dark"
+    android:orientation="vertical"
+    tools:context=".ui.OrderCreatOrderActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <com.sang.common.widget.CircularFramlayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/app_gap"
+                android:layout_marginLeft="@dimen/app_item_gap"
+                android:layout_marginRight="@dimen/app_item_gap"
+                android:layout_marginTop="@dimen/app_gap"
+
+                app:viewradius="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:background="@color/color_white"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/app_gap">
+
+                        <com.sang.common.widget.CircularFramlayout
+                            android:layout_width="7dp"
+                            android:layout_height="7dp"
+                            app:viewradius="3.5dp">
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@color/color_line" />
+                        </com.sang.common.widget.CircularFramlayout>
+
+
+                        <com.sang.common.widget.ItemView
+                            android:id="@+id/item_start_time"
+                            style="@style/itemview"
+                            android:paddingLeft="@dimen/app_item_gap"
+                            app:editable="false"
+                            app:showline="false"
+                            app:srcshow="false"
+                            app:textcenterhide="请选择发车时间" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_marginLeft="@dimen/app_gap"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/color_line" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:background="@color/color_white"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/app_gap">
+
+                        <com.sang.common.widget.CircularFramlayout
+                            android:layout_width="7dp"
+                            android:layout_height="7dp"
+                            app:viewradius="3.5dp">
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@color/color_line" />
+                        </com.sang.common.widget.CircularFramlayout>
+
+
+                        <com.sang.common.widget.ItemView
+                            android:id="@+id/item_start_loaction"
+                            style="@style/itemview"
+                            android:paddingLeft="@dimen/app_item_gap"
+                            app:editable="false"
+                            app:showline="false"
+                            app:srcshow="false"
+                            app:textcenterhide="请选择发货地" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_marginLeft="@dimen/app_gap"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/color_line" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:background="@color/color_white"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/app_gap">
+
+                        <com.sang.common.widget.CircularFramlayout
+                            android:layout_width="7dp"
+                            android:layout_height="7dp"
+                            app:viewradius="3.5dp">
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@color/color_line" />
+                        </com.sang.common.widget.CircularFramlayout>
+
+
+                        <com.sang.common.widget.ItemView
+                            android:id="@+id/item_end_loaction"
+                            style="@style/itemview"
+                            android:paddingLeft="@dimen/app_item_gap"
+                            app:editable="false"
+                            app:showline="false"
+                            app:srcshow="false"
+                            app:textcenterhide="请选择收货地" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </com.sang.common.widget.CircularFramlayout>
+
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/app_item_gap"
+                android:background="@color/color_white">
+
+                <com.sang.common.widget.ItemView
+                    android:id="@+id/item_start_car_num"
+                    style="@style/itemview"
+                    app:textcenterhide="请输入发车编号"
+                    app:textleft="发车编号" />
+
+                <com.sang.common.widget.ItemView
+                    android:id="@+id/item_cargo_name"
+                    style="@style/itemview"
+                    app:textcenterhide="请输入货物名称"
+                    app:textleft="货物名称" />
+
+                <com.sang.common.widget.ItemView
+                    android:id="@+id/item_cargo_size"
+                    style="@style/itemview"
+                    app:textcenterhide="请输入货物面积"
+                    app:textleft="货物面积"
+                    app:textright="方" />
+
+                <com.sang.common.widget.ItemView
+                    android:id="@+id/item_cargo_weight"
+                    style="@style/itemview"
+                    app:textcenterhide="请输入货物重量"
+                    app:textleft="货物重量"
+                    app:textright="吨" />
+
+                <com.sang.common.widget.ItemView
+                    android:id="@+id/item_price"
+                    style="@style/itemview"
+                    app:showline="false"
+                    app:textright="元"
+                    app:textcenterhide="请输入运费"
+                    app:textleft="运费" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:orientation="vertical"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/app_item_gap"
+                android:background="@color/color_white">
+
+                <com.sang.common.widget.ItemView
+                    android:id="@+id/item_car_num"
+                    style="@style/itemview"
+                    app:textcenterhide="请输入车牌号"
+                    app:textleft="车牌号" />
+
+                <com.sang.common.widget.ItemView
+                    android:id="@+id/item_car_phone"
+                    style="@style/itemview"
+                    app:textcenterhide="请输入车主手机"
+                    app:textleft="车主手机" />
+
+                <com.sang.common.widget.ItemView
+                    android:id="@+id/item_car_name"
+                    style="@style/itemview"
+                    app:showline="false"
+                    app:textcenterhide="请输入车主姓名"
+                    app:textleft="车主姓名" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/app_item_gap"
+                android:background="@color/color_white">
+
+                <com.sang.common.widget.ItemView
+                    android:id="@+id/item_driver_phone"
+                    style="@style/itemview"
+                    app:textcenterhide="请输入司机手机"
+                    app:textleft="司机手机" />
+
+                <com.sang.common.widget.ItemView
+                    android:id="@+id/item_driver_name"
+                    style="@style/itemview"
+                    app:showline="false"
+                    app:textcenterhide="请输入司机姓名"
+                    app:textleft="司机姓名" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/bt_entry"
+        style="@style/bt_sum"
+        android:text="确定下单" />
+
+
+</LinearLayout>

@@ -15,6 +15,7 @@
         style="@style/itemview"
         android:layout_marginTop="@dimen/app_gap"
         app:editable="false"
+        app:srcshow="true"
         app:textcenterhide="请选择车辆类型"
         app:textleft="车辆类型" />
 

@@ -29,18 +29,41 @@
         <attr name="viewradius" format="dimension" />
     </declare-styleable>
 
+   <!-- &lt;!&ndash;圆形控件 CircularImageView  CirculaViewFramlayout&ndash;&gt;
+    <declare-styleable name="CircularImageView" parent="CircularFramlayout">
+        &lt;!&ndash;是否显示边框，true 显示，false 不显示&ndash;&gt;
+        <attr name="showBorder" format="boolean" />
+        &lt;!&ndash;边框颜色，默认为白色&ndash;&gt;
+        <attr name="borderColor" format="color" />
+        &lt;!&ndash;边框宽度，默认为1dp&ndash;&gt;
+        <attr name="borderWidth" format="dimension" />
+
+        &lt;!&ndash;左上、右上、右下、左下圆角 半径&ndash;&gt;
+        <attr name="radiusLeftTop" format="dimension" />
+        <attr name="radiusRightTop" format="dimension" />
+        <attr name="radiusRightBottom" format="dimension" />
+        <attr name="radiusLeftBottom" format="dimension" />
+
+        &lt;!&ndash;四个圆角的角度，当其他四个同时存在时候，以此为准&ndash;&gt;
+        <attr name="viewradius" format="dimension" />
+    </declare-styleable>
+-->
+
     <declare-styleable name="ItemView">
-        <attr name="textleft" format="string"/>
-        <attr name="textcenter" format="string"/>
-        <attr name="textcenterhide" format="string"/>
-        <attr name="textright" format="string"/>
-        <attr name="editable" format="boolean"/>
-        <attr name="centerLength" format="integer"/>
-        <attr name="showline" format="boolean"/>
+        <attr name="textleft" format="string" />
+        <attr name="textcenter" format="string" />
+        <attr name="textcenterhide" format="string" />
+        <attr name="textright" format="string" />
+        <attr name="editable" format="boolean" />
+        <attr name="centerLength" format="integer" />
+        <attr name="showline" format="boolean" />
+        <attr name="srcLeft" format="reference" />
+        <attr name="srcRight" format="reference" />
+        <attr name="srcshow" format="boolean" />
         <attr name="centerType" format="enum">
-            <enum name="phone" value="1"/>
-            <enum name="idcard" value="2"/>
-            <enum name="normal" value="0"/>
+            <enum name="phone" value="1" />
+            <enum name="idcard" value="2" />
+            <enum name="normal" value="0" />
         </attr>
     </declare-styleable>
 

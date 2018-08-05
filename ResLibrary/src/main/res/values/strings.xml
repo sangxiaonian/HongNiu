@@ -36,6 +36,7 @@
     <string name="login_person_improve_infor">购买货物保险前，需完善个人信息</string>
     <string name="login_pay_title">我的收款方式</string>
     <string name="login_pay_aleart">您的收入将默认转账到此微信账号</string>
+    <string name="order_create_order">创建订单</string>
 
 
 </resources>

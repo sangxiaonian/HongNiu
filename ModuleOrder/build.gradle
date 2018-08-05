@@ -7,7 +7,7 @@ if (IsBuildMudle.toBoolean()) {
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
-        if(IsBuildMudle.toBoolean()){
+        if (IsBuildMudle.toBoolean()) {
             applicationId "com.hongniu.moduleorder"
         }
         minSdkVersion rootProject.ext.minSdkVersion
@@ -19,7 +19,7 @@ android {
         vectorDrawables.useSupportLibrary = true
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [ moduleName : project.getName() ]
+                arguments = [moduleName: project.getName()]
             }
         }
 

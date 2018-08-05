@@ -15,6 +15,7 @@
         android:id="@+id/item_terms_of_service"
         style="@style/itemview"
         app:editable="false"
+        app:srcshow="true"
         app:textcenterhide=""
         app:textleft="服务条款" />
 
@@ -23,6 +24,7 @@
         style="@style/itemview"
         app:editable="false"
         app:showline="false"
+        app:srcshow="true"
         app:textcenterhide=""
         app:textleft="关于泓牛" />
 

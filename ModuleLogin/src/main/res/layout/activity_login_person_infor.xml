@@ -41,6 +41,7 @@
         android:id="@+id/item_address"
         style="@style/itemview"
         app:editable="false"
+        app:srcshow="true"
         app:textcenterhide="请选择省市区"
         app:textleft="选择地区" />
 

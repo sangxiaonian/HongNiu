@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.text.method.DigitsKeyListener;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -44,6 +45,9 @@ public class ItemView extends FrameLayout {
     Paint mPaint;
     private boolean showLine;
 
+    private int srcRight=-1;
+    private boolean srcshow;
+
     public ItemView(@NonNull Context context) {
         this(context, null, 0);
     }
@@ -75,6 +79,8 @@ public class ItemView extends FrameLayout {
             showLine = ta.getBoolean(R.styleable.ItemView_showline, true);
             maxLength = ta.getInt(R.styleable.ItemView_centerLength, -1);
             centerType = ta.getInt(R.styleable.ItemView_centerType, 0);
+            srcRight = ta.getInt(R.styleable.ItemView_srcRight, -1);
+            srcshow = ta.getBoolean(R.styleable.ItemView_srcshow, false);
             ta.recycle();
         }
 
@@ -92,7 +98,16 @@ public class ItemView extends FrameLayout {
         setTextCenter(textCenter);
         setEditable(editable);
         setCenter(maxLength,centerType);
+        setSrcRight(srcRight);
+        setSrcshow(srcshow);
 
+    }
+
+    public void setSrcRight(int srcRight) {
+        this.srcRight = srcRight;
+        if (srcRight>0) {
+            imgGo.setImageResource(srcRight);
+        }
     }
 
     @Override
@@ -123,7 +138,6 @@ public class ItemView extends FrameLayout {
 
     public void setEditable(boolean editable) {
         this.editable = editable;
-        imgGo.setVisibility(editable?GONE:VISIBLE);
         if (editable){
             viewFound.setOnClickListener(new OnClickListener() {
                 @Override
@@ -144,6 +158,11 @@ public class ItemView extends FrameLayout {
                 }
             });
         }
+    }
+
+    public void setSrcshow(boolean srcshow){
+        this.srcshow=srcshow;
+        imgGo.setVisibility(!srcshow?GONE:VISIBLE);
     }
 
     @Override
@@ -170,6 +189,11 @@ public class ItemView extends FrameLayout {
     public void setTextLeft(String textLeft) {
         this.textLeft = textLeft;
         tvLeft.setText(textLeft == null ? "" : textLeft);
+        if (TextUtils.isEmpty(textLeft)){
+            tvLeft.setVisibility(GONE);
+        }else {
+            tvLeft.setVisibility(VISIBLE);
+        }
     }
 
     public String getTextLeft() {

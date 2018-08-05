@@ -313,7 +313,8 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
 //            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL) .show("个人中心");
             drawerLayout.openDrawer(Gravity.START);
         } else if (i == R.id.ll_order) {
-            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL) .show("我要下单");
+//            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL) .show("我要下单");
+            ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_create).navigation(mContext);
 
         } else if (i == R.id.ll_login_out) {
 //            ToastUtils.showTextToast("退出登录");

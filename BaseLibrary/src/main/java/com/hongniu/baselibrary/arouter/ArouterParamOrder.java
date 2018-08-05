@@ -7,5 +7,11 @@ package com.hongniu.baselibrary.arouter;
  */
 public class ArouterParamOrder {
 
-    public static final String activity_order_main="/order/activity_order_main";
+    public static final String activity_order_main = "/order/activity_order_main";
+
+    /**
+     * 我要下单
+     */
+    public static final String activity_order_create = "/order/activity_order_create";
+
 }
