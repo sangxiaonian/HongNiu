@@ -2,6 +2,7 @@ package com.hongniu.baselibrary.base;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +33,7 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
     protected ImageButton imgToolbarRight;
     protected TextView tvToolbarTitle;
     protected TextView tvToolbarRight;
+    protected View tool;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,6 +71,7 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
         imgToolbarRight = findViewById(R.id.toolbar_src_right);
         tvToolbarTitle = findViewById(R.id.toolbar_title);
         tvToolbarRight = findViewById(R.id.tv_toolbar_right);
+        tool = findViewById(R.id.tool);
 
         if (llToolbarLeft != null) {
             llToolbarLeft.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +85,19 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
 
     protected void setToolbarTitle(String title) {
         if (tvToolbarTitle != null) {
+            tvToolbarTitle.setText(title);
+        }
+    }
+
+    protected void setToolbarDarkTitle(String title) {
+        if (tvToolbarTitle != null) {
+            if (tool!=null){
+                tool.setBackgroundColor(getResources().getColor(R.color.color_title_dark));
+            }
+            tvToolbarTitle.setTextColor(Color.WHITE);
+            if (imgToolbarLeft!=null){
+                imgToolbarLeft.setImageResource(R.mipmap.icon_back_w_36);
+            }
             tvToolbarTitle.setText(title);
         }
     }

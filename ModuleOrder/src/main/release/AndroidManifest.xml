@@ -6,7 +6,8 @@
         <activity
             android:name=".OrderMainActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".ui.OrderCreatOrderActivity"></activity>
+        <activity android:name=".ui.OrderCreatOrderActivity" />
+        <activity android:name=".ui.OrderPayActivity"></activity>
     </application>
 
 </manifest>

@@ -13,5 +13,6 @@ public class ArouterParamOrder {
      * 我要下单
      */
     public static final String activity_order_create = "/order/activity_order_create";
+    public static final String activity_order_pay = "/order/activity_order_pay";
 
 }

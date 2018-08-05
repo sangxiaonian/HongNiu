@@ -143,6 +143,12 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
                         tv_order_detail.setText(buffer.toString());
 
 
+                        itemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_pay).navigation(mContext);
+                            }
+                        });
                     }
                 };
             }
