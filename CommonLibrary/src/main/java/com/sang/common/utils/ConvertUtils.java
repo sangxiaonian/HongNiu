@@ -8,7 +8,7 @@ import java.util.Random;
 public class ConvertUtils {
 
     public static int getRandom(int start,int end){
-        return new Random().nextInt(end);
+        return start+new Random().nextInt(end);
     }
 
 }
