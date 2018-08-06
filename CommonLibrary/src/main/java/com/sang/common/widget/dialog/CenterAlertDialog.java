@@ -3,7 +3,6 @@ package com.sang.common.widget.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Typeface;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.LayoutInflater;

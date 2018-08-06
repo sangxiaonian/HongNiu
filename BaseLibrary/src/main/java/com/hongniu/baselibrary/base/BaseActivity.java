@@ -1,6 +1,5 @@
 package com.hongniu.baselibrary.base;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -91,11 +90,11 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
 
     protected void setToolbarDarkTitle(String title) {
         if (tvToolbarTitle != null) {
-            if (tool!=null){
+            if (tool != null) {
                 tool.setBackgroundColor(getResources().getColor(R.color.color_title_dark));
             }
             tvToolbarTitle.setTextColor(Color.WHITE);
-            if (imgToolbarLeft!=null){
+            if (imgToolbarLeft != null) {
                 imgToolbarLeft.setImageResource(R.mipmap.icon_back_w_36);
             }
             tvToolbarTitle.setText(title);
@@ -133,9 +132,9 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
         if (imgToolbarRight != null) {
             imgToolbarRight.setVisibility(View.GONE);
         }
-        if (tvToolbarRight!=null){
+        if (tvToolbarRight != null) {
             tvToolbarRight.setVisibility(View.VISIBLE);
-            tvToolbarRight.setText(msg==null?"":msg);
+            tvToolbarRight.setText(msg == null ? "" : msg);
         }
     }
 
@@ -155,7 +154,7 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
 
     protected void showAleart(String msg) {
         new CenterAlertBuilder()
-                .setRightClickListener(new  DialogControl.OnButtonRightClickListener() {
+                .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
                     @Override
                     public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
                         dialog.dismiss();

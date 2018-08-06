@@ -21,7 +21,7 @@ import com.sang.common.widget.dialog.inter.DialogControl;
  */
 
 public class BottomAlertDialog
-        implements View.OnClickListener ,DialogControl.IBottomDialog{
+        implements View.OnClickListener, DialogControl.IBottomDialog {
     TextView btTop;
     TextView btBottom;
     TextView tvTitle;
@@ -35,7 +35,7 @@ public class BottomAlertDialog
 
 
     public BottomAlertDialog(@NonNull Context context, int themeResId) {
-        initView(context ,themeResId);
+        initView(context, themeResId);
     }
 
     private void initView(Context context, int themeResId) {
@@ -46,12 +46,11 @@ public class BottomAlertDialog
         dialog = new Dialog(context, themeResId);
         dialog.setContentView(inflate);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        dialog. getWindow().setWindowAnimations(R.style.dialog_ani);
-        dialog. getWindow().setGravity(Gravity.BOTTOM);
-        dialog. getWindow().setBackgroundDrawable(new ColorDrawable(0x00000000));
+        dialog.getWindow().setWindowAnimations(R.style.dialog_ani);
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0x00000000));
 
     }
-
 
 
     public void setBtBottom(String btBottomString, int btRightColor, final DialogControl.OnButtonBottomClickListener bottomClickListener) {
@@ -89,7 +88,7 @@ public class BottomAlertDialog
     public void setTitle(String title, int titleColor, int textSize, boolean titleBold) {
         if (tvTitle != null) {
             if (TextUtils.isEmpty(title)) {
-               hideTitle(true);
+                hideTitle(true);
             } else {
                 hideTitle(false);
                 tvTitle.setText(title);
@@ -117,17 +116,14 @@ public class BottomAlertDialog
     }
 
 
-
-
-
-
     public void setBtTopBgRes(int btTopBgRes) {
-        if (btTopBgRes!=0)
-        btTop.setBackgroundResource(btTopBgRes);
+        if (btTopBgRes != 0)
+            btTop.setBackgroundResource(btTopBgRes);
     }
+
     public void setBtBottomBgRes(int btBottomBgRes) {
-        if (btBottomBgRes!=0)
-        btBottom.setBackgroundResource(btBottomBgRes);
+        if (btBottomBgRes != 0)
+            btBottom.setBackgroundResource(btBottomBgRes);
     }
 
     /**
@@ -141,14 +137,14 @@ public class BottomAlertDialog
         if (i == R.id.bt_bottom) {
             if (bottomClickListener != null) {
                 bottomClickListener.onBottomClick(v, this);
-            }else {
+            } else {
                 dismiss();
             }
 
         } else if (i == R.id.bt_top) {
             if (topClickListener != null) {
                 topClickListener.onTopClick(v, this);
-            }else {
+            } else {
                 dismiss();
             }
 
