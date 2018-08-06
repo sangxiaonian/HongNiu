@@ -204,42 +204,27 @@ n"
                 android:textColor="@color/color_title_dark"
                 android:textSize="13sp" />
 
-            <com.sang.common.widget.CircularFramlayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:borderColor="@color/color_line"
-                app:showBorder="true"
-
-                app:viewradius="2dp">
 
                 <TextView
+                    android:background="@drawable/shape_2_stoke_dddddd"
                     android:id="@+id/bt_left"
                     android:layout_width="72dp"
                     android:layout_height="27dp"
                     android:gravity="center"
                     android:text="取消订单"
                     android:textSize="13sp" />
-            </com.sang.common.widget.CircularFramlayout>
 
-            <com.sang.common.widget.CircularFramlayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="13dp"
-                app:borderColor="@color/color_line"
-                app:showBorder="false"
-                app:viewradius="2dp">
 
                 <TextView
                     android:id="@+id/bt_right"
                     android:layout_width="72dp"
                     android:layout_height="27dp"
-                    android:background="@color/color_light"
+                    android:background="@drawable/shape_2_f06f28"
                     android:gravity="center"
                     android:text="继续付款"
                     android:textColor="@color/color_white"
                     android:textSize="13sp" />
 
-            </com.sang.common.widget.CircularFramlayout>
 
 
         </LinearLayout>

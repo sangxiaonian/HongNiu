@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.OrderInsuranceActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="230dp"
+            android:layout_height="157dp"
+            android:src="@mipmap/img_scbd_ct" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/order_insurance_creating"
+            android:textColor="@color/color_title_dark"
+            android:textSize="19sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_item_gap"
+            android:text="@string/order_insurance_creating_wait"
+            android:textColor="@color/color_content_light"
+            android:textSize="13sp" />
+
+
+        <com.sang.common.widget.ColorProgress
+            android:id="@+id/color_progress"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+
+            android:layout_marginTop="20dp" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

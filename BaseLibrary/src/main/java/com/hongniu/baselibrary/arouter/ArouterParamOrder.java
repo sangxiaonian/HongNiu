@@ -13,6 +13,18 @@ public class ArouterParamOrder {
      * 我要下单
      */
     public static final String activity_order_create = "/order/activity_order_create";
+    /**
+     * 订单支付
+     */
     public static final String activity_order_pay = "/order/activity_order_pay";
+
+    /**
+     * 保单生成中
+     */
+    public static final String activity_insurance_creat= "/order/activity_insurance_creat";
+/**
+     * 保单生成结果
+     */
+    public static final String activity_insurance_creat_result= "/order/activity_insurance_creat_result";
 
 }

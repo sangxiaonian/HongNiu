@@ -38,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/app_item_gap"
-                android:text="完成支付司机即可开始发车"
+                android:text="@string/order_pay_success_driver_start"
                 android:textColor="@color/color_white"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -63,15 +63,16 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
             <android.support.constraint.ConstraintLayout
-                android:layout_width="match_parent"
                 android:id="@+id/con_buy"
-                android:layout_height="match_parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="您可能需要"
+                    android:text="@string/order_pay_you_maybe_need"
                     android:textColor="@color/color_title_dark"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -101,14 +102,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="远恒挂网用货运综合险"
+                        android:text="@string/order_pay_insurance_name"
                         android:textColor="@color/color_title_dark"
                         android:textSize="17sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="低保费，运货更安心"
+                        android:text="@string/order_pay_insurance_detail"
                         android:textColor="@color/color_content_light"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -119,14 +120,100 @@
                     android:layout_height="30dp"
                     android:background="@drawable/shape_2_stoke_f06f28"
                     android:gravity="center"
-                    android:text="购买保险"
-                    android:textSize="13sp"
+                    android:text="@string/order_pay_bus_insurance"
                     android:textColor="@color/color_light"
+                    android:textSize="13sp"
                     app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/linearLayout2" />
             </android.support.constraint.ConstraintLayout>
 
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/con_insurance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/order_pay_insurance_name"
+                    android:textColor="@color/color_title_dark"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="保险金额："
+                    android:textColor="@color/color_title_dark"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView2"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_insurance_price"
+                    app:layout_constraintTop_toTopOf="@+id/textView2" />
+
+                <TextView
+                    android:id="@+id/tv_insurance_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="18dp"
+                    android:textColor="@color/color_light"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView3" />
+
+                <TextView
+                    android:id="@+id/tv_cargo_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="13dp"
+                    android:text="货物金额"
+                    android:textColor="@color/color_title_dark"
+                    android:textSize="17sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="@string/order_pay_insurance_detail"
+                    android:textColor="@color/color_content_light"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_cargo_price" />
+
+                <TextView
+                    android:id="@+id/tv_change_cargo_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/app_item_gap"
+                    android:background="@drawable/shape_2_stoke_dddddd"
+                    android:text="@string/order_pay_change_cargo_price"
+                    app:layout_constraintBottom_toBottomOf="@+id/bt_cancle_insurance"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/bt_cancle_insurance" />
+
+                <TextView
+                    android:id="@+id/bt_cancle_insurance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:padding="@dimen/app_item_gap"
+                    android:background="@drawable/shape_2_stoke_dddddd"
+                    android:text="@string/order_pay_cancle_insurance"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView6"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_change_cargo_price"
+                    app:layout_constraintTop_toTopOf="@+id/tv_cargo_price" />
+
+
+            </android.support.constraint.ConstraintLayout>
 
         </android.support.v7.widget.CardView>
 
@@ -151,9 +238,9 @@
 
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -163,14 +250,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="运费支付渠道"
+                    android:text="@string/order_pay_pay_ways"
                     android:textColor="@color/color_order_color"
                     android:textSize="12sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="运费金额 "
+                    android:text="@string/order_pay_charge"
                     android:textColor="@color/color_title_dark"
                     android:textSize="12sp" />
 
@@ -187,36 +274,36 @@
 
             <RadioGroup
                 android:id="@+id/rg"
-                android:layout_marginTop="@dimen/app_item_gap"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="50dp"
+                android:layout_marginTop="@dimen/app_item_gap"
+                android:orientation="horizontal">
 
                 <RadioButton
-                    android:layout_marginRight="3dp"
-                    android:textColor="@drawable/rb_txt_color"
-                    android:background="@drawable/rb_bg"
-                    android:gravity="center"
-                    android:button="@null"
                     android:id="@+id/rb_online"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_marginRight="3dp"
                     android:layout_weight="1"
-                    android:textSize="15sp"
-                    android:text="线上支付" />
+                    android:background="@drawable/rb_bg"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="@string/order_pay_online"
+                    android:textColor="@drawable/rb_txt_color"
+                    android:textSize="15sp" />
 
                 <RadioButton
-                    android:layout_marginLeft="3dp"
-                    android:textColor="@drawable/rb_txt_color"
-                    android:background="@drawable/rb_bg"
-                    android:gravity="center"
-                    android:button="@null"
-                    android:textSize="15sp"
                     android:id="@+id/rb_offline"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_marginLeft="3dp"
                     android:layout_weight="1"
-                    android:text="线下支付" />
+                    android:background="@drawable/rb_bg"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="@string/order_pay_offline"
+                    android:textColor="@drawable/rb_txt_color"
+                    android:textSize="15sp" />
 
 
             </RadioGroup>
@@ -227,73 +314,72 @@
     </android.support.v7.widget.CardView>
 
     <TextView
-        android:textSize="12sp"
-        android:textColor="@color/color_order_color"
-        android:text="选择支付方式"
-        android:layout_marginTop="@dimen/app_gap"
-        android:layout_marginBottom="@dimen/app_item_gap"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/app_item_gap"
         android:layout_marginLeft="@dimen/app_gap"
-        android:layout_height="wrap_content" />
+        android:layout_marginTop="@dimen/app_gap"
+        android:text="@string/order_pay_chose_pay_ways"
+        android:textColor="@color/color_order_color"
+        android:textSize="12sp" />
 
 
     <com.sang.common.widget.CircularFramlayout
         android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:layout_marginLeft="7dp"
-        android:layout_marginRight="7dp"
-        android:layout_height="60dp">
+        android:layout_marginRight="7dp">
 
         <RelativeLayout
             android:id="@+id/rl_wechact"
-            android:paddingLeft="17sp"
-            android:paddingRight="17sp"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@color/color_white"
-            android:layout_height="match_parent">
+            android:paddingLeft="17sp"
+            android:paddingRight="17sp">
 
             <ImageView
                 android:id="@+id/img_icon"
-                android:layout_centerVertical="true"
                 android:layout_width="20dp"
-                android:src="@mipmap/icon_wechat_40"
-                android:layout_height="20dp" />
-
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_wechat_40" />
 
 
             <LinearLayout
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/img_icon"
-                android:layout_toEndOf="@id/img_icon"
-                android:layout_marginLeft="@dimen/app_item_gap"
                 android:layout_width="wrap_content"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/app_item_gap"
+                android:layout_toEndOf="@id/img_icon"
+                android:layout_toRightOf="@id/img_icon"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:text="微信支付"
+                    android:layout_height="wrap_content"
+                    android:text="@string/order_pay_wechat"
                     android:textColor="@color/color_title_dark"
-                    android:textSize="14sp"
-                    android:layout_height="wrap_content" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:text="微信安全支付"
+                    android:layout_height="wrap_content"
+                    android:text="@string/order_pay_wechat_discribe"
                     android:textColor="@color/color_content_light"
-                    android:textSize="12sp"
-                    android:layout_height="wrap_content" />
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
 
             <CheckBox
                 android:id="@+id/checkbox"
-                android:button="@null"
                 android:layout_width="18dp"
-                android:background="@drawable/selector_check_bg"
-                android:layout_centerVertical="true"
+                android:layout_height="18dp"
                 android:layout_alignParentRight="true"
-                android:layout_height="18dp" />
+                android:layout_centerVertical="true"
+                android:background="@drawable/selector_check_bg"
+                android:button="@null" />
         </RelativeLayout>
 
     </com.sang.common.widget.CircularFramlayout>
@@ -301,41 +387,42 @@
 
     <View
         android:layout_width="wrap_content"
-        android:layout_weight="1"
-        android:layout_height="0dp"/>
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
     <LinearLayout
-        android:padding="@dimen/app_item_gap"
-        android:background="@color/color_white"
         android:layout_width="match_parent"
-        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:background="@color/color_white"
         android:gravity="center"
-        android:layout_height="wrap_content">
+        android:orientation="horizontal"
+        android:padding="@dimen/app_item_gap">
 
         <TextView
             android:layout_width="wrap_content"
-            android:textSize="14sp"
+            android:layout_height="wrap_content"
+            android:text="@string/order_pay_all_price"
             android:textColor="@color/color_title_dark"
-            android:text="支付总额 "
-            android:layout_height="wrap_content" />
+            android:textSize="14sp" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:text="￥1200"
-            android:textColor="@color/color_light"
             android:id="@+id/tv_pay_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_height="wrap_content" />
+            android:text="￥1200"
+            android:textColor="@color/color_light" />
 
 
         <Button
-            android:background="@drawable/shape_radius_2_f06f28"
-            android:layout_width="wrap_content"
             android:id="@+id/bt_pay"
-            android:text="支付订单"
-            android:textColor="@color/color_white"
-            android:layout_height="wrap_content" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_radius_2_f06f28"
+            android:text="@string/order_pay_order_pay"
+            android:textColor="@color/color_white" />
 
 
     </LinearLayout>
-    
+
 </LinearLayout>

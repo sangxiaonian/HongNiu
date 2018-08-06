@@ -3,6 +3,8 @@
     <string name="hongniu_phone">4000000000</string>
     <string name="save">保存</string>
     <string name="deleted">删除</string>
+    <string name="deleted_success">删除成功</string>
+    <string name="sumbit">提交</string>
 
 
     <!--Login-->
@@ -18,25 +20,51 @@
     <string name="login_contact_service">联系客服</string>
     <string name="login_contact_phone">400 000 0000</string>
 
-
-    <!--Order-->
-    <string name="order_main_title">我是货主</string>
+    <!--车辆管理-->
+    <string name="login_car_entry_deleted">确认要删除车辆吗？</string>
     <string name="car_title">我的车辆</string>
     <string name="login_modification_car">编辑车辆</string>
     <string name="login_add_car">新增车辆</string>
     <string name="login_add_car_success">添加成功</string>
     <string name="login_add_car_modification">修改成功</string>
     <string name="login_car_select">选择车辆类型</string>
-    <string name="deleted_success">删除成功</string>
-    <string name="login_car_entry_deleted">确认要删除车辆吗？</string>
-
-
     <!--个人资料-->
     <string name="login_person">个人资料</string>
     <string name="login_person_improve_infor">购买货物保险前，需完善个人信息</string>
     <string name="login_pay_title">我的收款方式</string>
     <string name="login_pay_aleart">您的收入将默认转账到此微信账号</string>
-    <string name="order_create_order">创建订单</string>
 
+    <!--Order-->
+    <string name="order_create_order">创建订单</string>
+    <string name="order_main_title">我是货主</string>
+
+    <!--订单支付-->
+    <string name="order_pay">支付订单</string>
+    <string name="order_pay_success_driver_start">完成支付司机即可开始发车</string>
+    <string name="order_pay_you_maybe_need">您可能需要</string>
+    <string name="order_pay_insurance_name">远恒挂网用货运综合险</string>
+    <string name="order_pay_insurance_detail">低保费，运货更安心</string>
+    <string name="order_pay_insurance_notice_title">中国人保财险公路货物运输保险</string>
+    <string name="order_pay_insurance_notice_content">中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险</string>
+    <string name="order_pay_insurance_notice_bt">同意以上，开始投保</string>
+    <string name="order_pay_bus_insurance">购买保险</string>
+    <string name="order_pay_pay_ways">运费支付渠道</string>
+    <string name="order_pay_online">线上支付</string>
+    <string name="order_pay_offline">线下支付</string>
+    <string name="order_pay_charge">运费金额</string>
+    <string name="order_pay_chose_pay_ways">选择支付方式</string>
+    <string name="order_pay_wechat">微信支付</string>
+    <string name="order_pay_wechat_discribe">微信安全支付</string>
+    <string name="order_pay_all_price">支付总额</string>
+    <string name="order_pay_order_pay">支付订单</string>
+    <string name="order_pay_change_cargo_price">修改金额</string>
+    <string name="order_pay_cancle_insurance">取消保险</string>
+    <!--保单生成-->
+    <string name="order_insurance_creating">系统正在拼命为您生成保单</string>
+    <string name="order_insurance_creating_wait">请耐心等待保单生成完成</string>
+    <string name="order_insurance_creat_success">保单生成成功</string>
+    <string name="order_insurance_creat_fail">保单生成失败</string>
+    <string name="order_insurance_check_insurance">查看保单</string>
+    <string name="finish">完成</string>
 
 </resources>
