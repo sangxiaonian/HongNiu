@@ -22,11 +22,13 @@ import com.hongniu.moduleorder.widget.OrderMainTitlePop;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.utils.CommonUtils;
-import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.SwitchTextLayout;
-import com.sang.common.widget.dialog.BottomDialog;
-import com.sang.common.widget.dialog.CenterDialog;
+import com.sang.common.widget.dialog.BottomAlertDialog;
+import com.sang.common.widget.dialog.CenterAlertDialog;
+import com.sang.common.widget.dialog.builder.BottomAlertBuilder;
+import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
+import com.sang.common.widget.dialog.inter.DialogControl;
 import com.sang.common.widget.popu.BasePopu;
 import com.sang.common.widget.popu.inter.OnPopuDismissListener;
 
@@ -325,22 +327,25 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
         } else if (i == R.id.ll_login_out) {
 //            ToastUtils.showTextToast("退出登录");
             drawerLayout.closeDrawer(Gravity.START);
-            new BottomDialog.Builder()
+            new BottomAlertBuilder()
                     .setDialogTitle(getString(R.string.login_out_entry))
-                    .setTopClickListener(new BottomDialog.OnButtonTopClickListener() {
+                    .setTopClickListener(new  DialogControl.OnButtonTopClickListener() {
                         @Override
-                        public void onTopClick(View view, Dialog dialog) {
+                        public void onTopClick(View view, DialogControl.IBottomDialog dialog) {
                             dialog.dismiss();
                             ArouterUtils.getInstance().builder(ArouterParamLogin.activity_login).navigation(mContext);
                             finish();
                         }
+
                     })
-                    .setBottomClickListener(new BottomDialog.OnButtonBottomClickListener() {
+                    .setBottomClickListener(new  DialogControl.OnButtonBottomClickListener() {
                         @Override
-                        public void onBottomClick(View view, Dialog dialog) {
+                        public void onBottomClick(View view, DialogControl.IBottomDialog dialog) {
                             dialog.dismiss();
+
                         }
-                    }).creatDialog(mContext).show();
+
+                    }).creatDialog(new BottomAlertDialog(mContext)).show();
 
 
 
@@ -348,23 +353,26 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
         } else if (i == R.id.ll_contact_service) {
 //            ToastUtils.showTextToast("联系客服");
             drawerLayout.closeDrawer(Gravity.START);
-            new CenterDialog.Builder()
+            new CenterAlertBuilder()
                     .setDialogTitle(getString(R.string.login_contact_service))
                     .setDialogContent(getString(R.string.login_contact_phone))
-                    .setLeftClickListener(new CenterDialog.OnButtonLeftClickListener() {
+                    .setLeftClickListener(new  DialogControl.OnButtonLeftClickListener() {
                         @Override
-                        public void onLeftClick(View view, Dialog dialog) {
+                        public void onLeftClick(View view, DialogControl.ICenterDialog dialog) {
                             dialog.dismiss();
+
                         }
+
+
                     })
-                    .setRightClickListener(new CenterDialog.OnButtonRightClickListener() {
+                    .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
                         @Override
-                        public void onRightClick(View view, Dialog dialog) {
+                        public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
                             dialog.dismiss();
                             CommonUtils.toDial(mContext,getString(R.string.hongniu_phone));
 
                         }
-                    }).creatDialog(mContext).show();
+                    }).creatDialog(new CenterAlertDialog(mContext)).show();
 
         } else if (i == R.id.ll_about_us) {
             drawerLayout.closeDrawer(Gravity.START);

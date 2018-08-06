@@ -15,7 +15,9 @@ import com.hongniu.modulelogin.R;
 import com.hongniu.modulelogin.entity.LoginEvent;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.ItemView;
-import com.sang.common.widget.dialog.BottomDialog;
+import com.sang.common.widget.dialog.BottomAlertDialog;
+import com.sang.common.widget.dialog.builder.BottomAlertBuilder;
+import com.sang.common.widget.dialog.inter.DialogControl;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -61,16 +63,18 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
         setToolbarRightClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new BottomDialog.Builder()
-                        .setTopClickListener(new BottomDialog.OnButtonTopClickListener() {
+                new BottomAlertBuilder()
+                        .setTopClickListener(new DialogControl.OnButtonTopClickListener() {
                             @Override
-                            public void onTopClick(View view, Dialog dialog) {
+                            public void onTopClick(View view, DialogControl.IBottomDialog dialog) {
                                 ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show(getString(R.string.deleted_success));
                                 finish();
                             }
+
+
                         })
                         .setDialogTitle(getString(R.string.login_car_entry_deleted))
-                        .creatDialog(mContext)
+                        .creatDialog(new BottomAlertDialog(mContext))
                         .show();
 
             }

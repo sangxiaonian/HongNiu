@@ -9,14 +9,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.QuickContactBadge;
 import android.widget.TextView;
 
 import com.hongniu.baselibrary.R;
 import com.sang.common.event.BusFactory;
 import com.sang.common.net.listener.TaskControl;
-import com.sang.common.widget.dialog.CenterDialog;
+import com.sang.common.widget.dialog.CenterAlertDialog;
+import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
+import com.sang.common.widget.dialog.inter.DialogControl;
 
 import io.reactivex.disposables.Disposable;
 
@@ -154,17 +154,19 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
 
 
     protected void showAleart(String msg) {
-        new CenterDialog.Builder()
-                .setRightClickListener(new CenterDialog.OnButtonRightClickListener() {
+        new CenterAlertBuilder()
+                .setRightClickListener(new  DialogControl.OnButtonRightClickListener() {
                     @Override
-                    public void onRightClick(View view, Dialog dialog) {
+                    public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
                         dialog.dismiss();
+
                     }
+
                 })
                 .hideBtLeft()
                 .hideContent()
                 .setDialogTitle(msg)
-                .creatDialog(mContext)
+                .creatDialog(new CenterAlertDialog(mContext))
                 .show();
     }
 
