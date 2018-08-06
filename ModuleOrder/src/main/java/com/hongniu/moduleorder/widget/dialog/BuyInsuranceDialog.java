@@ -5,13 +5,11 @@ import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.os.Message;
-import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.text.method.DigitsKeyListener;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,7 +50,7 @@ public class BuyInsuranceDialog extends Dialog {
                 bt_sum.setEnabled(true && checkbox.isChecked());
             } else {
                 tv_insurance.setText("");
-                insurancePrice=0;
+                insurancePrice = 0;
                 bt_sum.setEnabled(false);
             }
         }
@@ -115,7 +113,7 @@ public class BuyInsuranceDialog extends Dialog {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 String trim = et_price.getText().toString().trim();
-                bt_sum.setEnabled(!TextUtils.isEmpty(trim)&&isChecked);
+                bt_sum.setEnabled(!TextUtils.isEmpty(trim) && isChecked);
 
             }
         });
@@ -125,7 +123,7 @@ public class BuyInsuranceDialog extends Dialog {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
-                    listener.noticeClick(BuyInsuranceDialog.this, checkbox.isChecked(),String.valueOf(insurancePrice));
+                    listener.noticeClick(BuyInsuranceDialog.this, checkbox.isChecked(), String.valueOf(insurancePrice));
                 }
             }
         });
@@ -134,7 +132,7 @@ public class BuyInsuranceDialog extends Dialog {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
-                    listener.entryClick(BuyInsuranceDialog.this, checkbox.isChecked(), String.valueOf(insurancePrice));
+                    listener.entryClick(BuyInsuranceDialog.this, checkbox.isChecked(), String.valueOf(insurancePrice), et_price.getText().toString().trim());
                 }
             }
         });
@@ -162,7 +160,16 @@ public class BuyInsuranceDialog extends Dialog {
     }
 
     public interface OnBuyInsuranceClickListener {
-        void entryClick(Dialog dialog, boolean checked, String price);
+
+        /**
+         * 购买保险点击确定按钮
+         *
+         * @param dialog
+         * @param checked    是否阅读条款
+         * @param price      保险金额
+         * @param cargoPrice 货物金额
+         */
+        void entryClick(Dialog dialog, boolean checked, String price, String cargoPrice);
 
         void noticeClick(BuyInsuranceDialog buyInsuranceDialog, boolean checked, String price);
     }
