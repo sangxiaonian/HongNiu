@@ -85,7 +85,7 @@ public class CenterAlertBuilder {
     }
 
 
-    public CenterAlertBuilder setBtLeftColor(String btLeftString) {
+    public CenterAlertBuilder setBtLeftColor(int  btLeftColor) {
         this.btLeftColor = btLeftColor;
         return this;
 

@@ -21,7 +21,11 @@ import com.hongniu.moduleorder.control.SwitchStateListener;
 import com.hongniu.moduleorder.widget.OrderMainPop;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
+import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.SwitchTextLayout;
+import com.sang.common.widget.dialog.CenterAlertDialog;
+import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
+import com.sang.common.widget.dialog.inter.DialogControl;
 import com.sang.common.widget.popu.BasePopu;
 import com.sang.common.widget.popu.inter.OnPopuDismissListener;
 
@@ -34,7 +38,7 @@ import java.util.Random;
  * 订单列表Fragment
  */
 @Route(path = ArouterParamOrder.fragment_order_main)
-public class OrderMainFragmet extends BaseFragment implements SwitchStateListener, SwitchTextLayout.OnSwitchListener, OrderMainPop.OnPopuClickListener, OnPopuDismissListener {
+public class OrderMainFragmet extends BaseFragment implements SwitchStateListener, SwitchTextLayout.OnSwitchListener, OrderMainPop.OnPopuClickListener, OnPopuDismissListener, OrderDetailItemControl.OnOrderDetailBtClickListener {
     private SwitchTextLayout switchLeft;
     private SwitchTextLayout switchRight;
     private RecyclerView rv;
@@ -121,6 +125,7 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
                         item.setContent(data.getDepartNum(),data.getCarnum(),data.getUserName(),data.getUserPhone()
                         ,data.getGoodName(),data.getDrivername(),data.getDrivermobile());
 
+                        item.setOnButtonClickListener(OrderMainFragmet.this);
                         item.buildButton(data.isInsurance());
                         itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -229,6 +234,118 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
     public void setRoalState(OrderDetailItemControl.RoleState state) {
         this.roleState = state;
     }
+
+
+    /**
+     * "取消订单";
+     */
+    @Override
+    public void onOrderCancle() {
+        creatDialog("确认要取消订单？","订单一旦去取消，无法恢复","返回订单","取消订单")
+        .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
+            @Override
+            public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
+                dialog.dismiss();
+                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("取消订单");
+            }
+        }).creatDialog(new CenterAlertDialog(getContext()))
+        .show();
+        ;
+    }
+
+    /**
+     * 购买保险
+     */
+    @Override
+    public void onOrderBuyInsurance() {
+
+    }
+
+    /**
+     * ORDER_PAY 继续付款
+     */
+    @Override
+    public void onOrderPay() {
+
+    }
+
+    /**
+     * ORDER_CHECK_INSURANCE 查看保单
+     */
+    @Override
+    public void onCheckInsruance() {
+
+    }
+
+    /**
+     * ORDER_CHECK_PATH 查看轨迹
+     */
+    @Override
+    public void onCheckPath() {
+
+    }
+
+    /**
+     * ORDER_ENTRY_ORDER 确认收货
+     */
+    @Override
+    public void onEntryOrder() {
+
+    }
+
+    /**
+     * ORDER_START_CAR           ="开始发车";
+     */
+    @Override
+    public void onStartCar() {
+        creatDialog("确认要开始发车？","发车时请记得安全驾车哦","返回订单","开始发车")
+                .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
+                    @Override
+                    public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
+                        dialog.dismiss();
+                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("开始发车");
+                    }
+                }).creatDialog(new CenterAlertDialog(getContext()))
+                .show();
+    }
+
+    /**
+     * ORDER_CHECK_ROUT          ="查看路线";
+     */
+    @Override
+    public void onCheckRout() {
+
+    }
+
+    /**
+     * ORDER_ENTRY_ARRIVE        ="确认到达";
+     */
+    @Override
+    public void onEntryArrive() {
+        creatDialog("确认已到达目的地？","感谢您的辛苦付出","返回订单","确定到达")
+                .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
+                    @Override
+                    public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
+                        dialog.dismiss();
+                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("确认已到达目的地");
+                    }
+                }).creatDialog(new CenterAlertDialog(getContext()))
+                .show();
+    }
+
+    private CenterAlertBuilder creatDialog(String title, String content, String btleft, String btRight){
+       return new CenterAlertBuilder()
+                .setDialogTitle(title)
+                .setDialogContent(content)
+                .setBtLeft(btleft)
+                .setBtRight(btRight)
+                .setBtLeftColor(getResources().getColor(R.color.color_title_dark))
+                .setBtRightColor(getResources().getColor(R.color.color_white))
+                .setBtRightBgRes(R.drawable.shape_f06f28);
+    }
+
+
+
 
 
 }

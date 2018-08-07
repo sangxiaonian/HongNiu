@@ -227,11 +227,22 @@ public class CircularFramlayout extends FrameLayout {
 
     private void initRadios(int w, int h, Path borderPath, int borderWidth) {
         borderPath.reset();
-        int left = (int) Math.ceil(borderWidth);
-        int top = (int) Math.ceil(borderWidth);
+        int left ;
+        int top ;
+        int right;
+        int bottom;
 
-        int right = (int) Math.ceil(w - borderWidth);
-        int bottom = (int) Math.ceil(h - borderWidth);
+        if (showBorder) {
+              left = (int) Math.ceil(borderWidth);
+              top = (int) Math.ceil(borderWidth);
+              right = (int) Math.ceil(w - borderWidth);
+              bottom = (int) Math.ceil(h - borderWidth);
+        }else {
+            left = 0;
+            top = 0;
+            right = w;
+            bottom = h;
+        }
         //左上
         borderPath.moveTo(left, top + radiusLeftTop);
         rectLeftTop.left = left;

@@ -3,6 +3,7 @@ package com.sang.common.widget.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -49,6 +50,7 @@ public class CenterAlertDialog
         line = inflate.findViewById(R.id.img_line);
         dialog = new Dialog(context, themeResId);
         dialog.setContentView(inflate);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0x00000000));
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
 
@@ -218,11 +220,15 @@ public class CenterAlertDialog
         if (i == R.id.btn_left) {
             if (leftClickListener != null) {
                 leftClickListener.onLeftClick(v, this);
+            }else {
+                dismiss();
             }
 
         } else if (i == R.id.btn_right) {
             if (rightClickListener != null) {
                 rightClickListener.onRightClick(v, this);
+            }else {
+                dismiss();
             }
 
         }
