@@ -154,13 +154,12 @@ n"
             app:layout_constraintStart_toStartOf="@+id/tv_order_detail"
             app:layout_constraintTop_toBottomOf="@+id/tv_order_detail" />
 
-        <View
+        <com.hongniu.baselibrary.widget.OrderProgress
             android:id="@+id/progress"
-            android:layout_width="5dp"
+            android:layout_width="25dp"
             android:layout_height="0dp"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
-            android:background="@color/color_line"
             app:layout_constraintBottom_toBottomOf="@+id/tv_end_loaction"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="@+id/guideline"

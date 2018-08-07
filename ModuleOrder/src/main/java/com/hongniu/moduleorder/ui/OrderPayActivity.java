@@ -84,7 +84,6 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
         //此处判断是否是购买保险
           isInsurance = getIntent().getBooleanExtra(Param.TRAN, false);
         if (isInsurance){//如果是购买保险
-            rbOffline.performClick();
             switchPayLine(false);
             rl_tran.setVisibility(View.GONE);
             switchToBuyInsurance(false);//切换为购买保险UI
