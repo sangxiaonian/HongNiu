@@ -59,17 +59,17 @@ public class BaseFragment extends Fragment implements TaskControl.OnTaskListener
         return false;
     }
 
-    private View initView(LayoutInflater inflater) {
+    protected View initView(LayoutInflater inflater) {
         return null;
     }
 
 
 
-    private void initListener() {
+    protected void initListener() {
 
     }
 
-    private void initDataa() {
+    protected void initDataa() {
     }
 
     @Override

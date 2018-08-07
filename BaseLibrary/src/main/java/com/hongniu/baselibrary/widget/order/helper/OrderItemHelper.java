@@ -1,27 +1,29 @@
-package com.sang.common.widget.orderitem.helper;
+package com.hongniu.baselibrary.widget.order.helper;
 
-import com.sang.common.widget.orderitem.OrderItemView;
+import com.hongniu.baselibrary.widget.order.OrderState;
+import com.hongniu.baselibrary.widget.order.RoleState;
 
 /**
  * 作者： ${PING} on 2018/8/2.
  */
-public class OrderItemHelper implements IOrderItemHelper{
+public class OrderItemHelper implements IOrderItemHelper {
 
-    IOrderItemHelper helper ;
+    IOrderItemHelper helper;
 
-    public OrderItemHelper(OrderItemView.OrderState state, OrderItemView.RoleState roleState) {
-        switch (roleState){
+    public OrderItemHelper(OrderState state, RoleState roleState) {
+        switch (roleState) {
             case CAR_OWNER:
-                helper=new CargoOwnerOrder(state,roleState);
+                helper = new CargoOwnerOrder(state, roleState);
                 break;
             case CARGO_OWNER:
-                helper=new CargoOwnerOrder(state, roleState);
+                helper = new CargoOwnerOrder(state, roleState);
                 break;
             case DRIVER:
-                helper=new DriveOwnerOrder(state, roleState);
+                helper = new DriveOwnerOrder(state, roleState);
                 break;
         }
     }
+
     @Override
     public int getLeftVisibility() {
         return helper.getLeftVisibility();
@@ -34,7 +36,6 @@ public class OrderItemHelper implements IOrderItemHelper{
 
     /**
      * 获取左侧按钮信息
-     *
      */
     @Override
     public String getBtLeftInfor() {
@@ -48,7 +49,7 @@ public class OrderItemHelper implements IOrderItemHelper{
      */
     @Override
     public String getBtRightInfor() {
-        return    helper.getBtRightInfor();
+        return helper.getBtRightInfor();
     }
 
     /**

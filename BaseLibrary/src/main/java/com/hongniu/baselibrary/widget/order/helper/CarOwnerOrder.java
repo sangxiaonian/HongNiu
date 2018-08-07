@@ -1,34 +1,35 @@
-package com.sang.common.widget.orderitem.helper;
+package com.hongniu.baselibrary.widget.order.helper;
 
 import android.text.TextUtils;
 import android.view.View;
 
-import com.sang.common.widget.orderitem.OrderItemView;
-import com.sang.common.widget.orderitem.OrderUtils;
+import com.hongniu.baselibrary.widget.order.OrderState;
+import com.hongniu.baselibrary.widget.order.OrderUtils;
+import com.hongniu.baselibrary.widget.order.RoleState;
 
 /**
  * 作者： ${PING} on 2018/8/2.
- *  货主订单
+ * 车主订单
  */
-public class CargoOwnerOrder implements IOrderItemHelper {
+public class CarOwnerOrder implements IOrderItemHelper {
 
 
-    private OrderItemView.OrderState state;
-    private OrderItemView.RoleState roleState;
+    private OrderState state;
+    private RoleState roleState;
 
-    public CargoOwnerOrder(OrderItemView.OrderState state, OrderItemView.RoleState roleState) {
+    public CarOwnerOrder(OrderState state, RoleState roleState) {
         this.state = state;
         this.roleState = roleState;
     }
 
     @Override
     public int getLeftVisibility() {
-        return TextUtils.isEmpty(getBtLeftInfor())?View.VISIBLE:View.GONE;
+        return TextUtils.isEmpty(getBtLeftInfor()) ? View.VISIBLE : View.GONE;
     }
 
     @Override
     public int getRightVisibility() {
-        return TextUtils.isEmpty(getBtRightInfor())?View.VISIBLE:View.GONE;
+        return TextUtils.isEmpty(getBtRightInfor()) ? View.VISIBLE : View.GONE;
     }
 
     /**
@@ -39,10 +40,8 @@ public class CargoOwnerOrder implements IOrderItemHelper {
         String stateMsg;
         switch (state) {
             case WAITE_PAY://待支付
-                stateMsg="取消订单";
-                break;
             case WAITE_START_NO_INSURANCE://待发车(未购买保险)
-                stateMsg=null;
+                stateMsg = null;
                 break;
             case WAITE_START://待发车(已买保险)
                 stateMsg = "查看保单";
@@ -72,10 +71,9 @@ public class CargoOwnerOrder implements IOrderItemHelper {
     @Override
     public String getBtRightInfor() {
 
-        String stateMsg=null;
+        String stateMsg = null;
         switch (state) {
             case WAITE_PAY://待支付
-                stateMsg="继续付款";
                 break;
             case WAITE_START_NO_INSURANCE://待发车(未购买保险)
                 stateMsg = "购买保险";
@@ -86,7 +84,6 @@ public class CargoOwnerOrder implements IOrderItemHelper {
                 stateMsg = "查看轨迹";
                 break;
             case HAS_ARRIVED://已到达
-                stateMsg="确认收货";
                 break;
             case RECEIPT://已收货
                 break;
@@ -95,7 +92,6 @@ public class CargoOwnerOrder implements IOrderItemHelper {
         }
         return stateMsg;
     }
-
 
 
     @Override

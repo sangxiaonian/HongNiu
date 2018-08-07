@@ -1,11 +1,15 @@
-package com.sang.common.widget.orderitem;
+package com.hongniu.baselibrary.widget.order;
+
 
 /**
  * 作者： ${PING} on 2018/8/2.
  */
 public class OrderUtils {
-    public static String getOrderState(OrderItemView.OrderState state) {
+    public static String getOrderState(OrderState state) {
         String stateMsg;
+        if (state==null){
+            return "无效状态";
+        }
         switch (state) {
 
             case WAITE_PAY://待支付
@@ -34,8 +38,11 @@ public class OrderUtils {
     }
 
 
-    public static String getRoleState(OrderItemView.RoleState roleState) {
+    public static String getRoleState( RoleState roleState) {
         String role;
+        if (roleState==null){
+            return "未知";
+        }
         switch (roleState) {
 
             case CAR_OWNER:

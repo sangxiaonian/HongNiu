@@ -1,16 +1,17 @@
 package com.hongniu.moduleorder;
 
-import android.app.Dialog;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
@@ -18,12 +19,16 @@ import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.widget.order.OrderDetailItem;
+import com.hongniu.moduleorder.control.SwitchStateListener;
+import com.hongniu.moduleorder.ui.fragment.OrderMainFragmet;
 import com.hongniu.moduleorder.widget.OrderMainPop;
 import com.hongniu.moduleorder.widget.OrderMainTitlePop;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.utils.CommonUtils;
-import com.sang.common.utils.ToastUtils;
+import com.sang.common.utils.JLog;
 import com.sang.common.widget.SwitchTextLayout;
 import com.sang.common.widget.dialog.BottomAlertDialog;
 import com.sang.common.widget.dialog.CenterAlertDialog;
@@ -41,18 +46,13 @@ import java.util.List;
  * 订单中心主页
  */
 @Route(path = ArouterParamOrder.activity_order_main)
-public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.OnSwitchListener, OrderMainTitlePop.OnOrderMainClickListener, OnPopuDismissListener, OrderMainPop.OnPopuClickListener, View.OnClickListener {
+public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.OnSwitchListener, OrderMainTitlePop.OnOrderMainClickListener, OnPopuDismissListener, View.OnClickListener {
 
     private SwitchTextLayout switchTitle;
-    private SwitchTextLayout switchLeft;
-    private SwitchTextLayout switchRight;
-    private RecyclerView rv;
+
     private DrawerLayout drawerLayout;
 
     private OrderMainTitlePop titlePop;
-    private OrderMainPop<String> orderMainPop;
-    private List<String> times;
-    private List<String> states;
 
     private LinearLayout llOrder;//我要下单
     private LinearLayout llLoginOut;//退出登录
@@ -65,6 +65,9 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
     private ImageView srcFinance;
     private ImageView srcPersonCenter;
 
+    private Fragment cargoFragment, carOwnerFragmeng, driverFragmeng, currentFragmeng;
+    private SwitchStateListener switchStateListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,18 +75,17 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
         initView();
         initData();
         initListener();
+//        changeStaff(0);
     }
 
     @Override
     protected void initView() {
         super.initView();
         titlePop = new OrderMainTitlePop(this);
-        orderMainPop = new OrderMainPop<>(this);
+
         switchTitle = findViewById(R.id.switch_title);
-        switchLeft = findViewById(R.id.switch_left);
-        switchRight = findViewById(R.id.switch_right);
+
         drawerLayout = findViewById(R.id.drawer);
-        rv = findViewById(R.id.rv);
         srcFinance = findViewById(R.id.src_finance);
         srcPersonCenter = findViewById(R.id.src_me);
         llOrder = findViewById(R.id.ll_order);
@@ -100,72 +102,12 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
     @Override
     protected void initData() {
         super.initData();
-        states = Arrays.asList(getResources().getStringArray(R.array.order_main_state));
-        times = Arrays.asList(getResources().getStringArray(R.array.order_main_time));
-        LinearLayoutManager manager = new LinearLayoutManager(mContext);
-        manager.setOrientation(LinearLayoutManager.VERTICAL);
-        rv.setLayoutManager(manager);
-        List<String> data = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            data.add("");
-        }
-        XAdapter<String> adapter = new XAdapter<String>(mContext, data) {
-            @Override
-            public BaseHolder<String> initHolder(ViewGroup parent, int viewType) {
-                return new BaseHolder<String>(mContext, parent, R.layout.order_item) {
-                    @Override
-                    public void initView(View itemView, int position, String data) {
-                        super.initView(itemView, position, data);
-                        TextView tvIdentity = itemView.findViewById(R.id.tv_identity);//身份角色
-                        TextView tv_order = itemView.findViewById(R.id.tv_order);//订单号
-                        TextView tv_state = itemView.findViewById(R.id.tv_state);//待发车状态
-                        TextView tv_time = itemView.findViewById(R.id.tv_time);//发车时间
-                        TextView tv_start_loaction = itemView.findViewById(R.id.tv_start_loaction);//发车地点
-                        TextView tv_end_loaction = itemView.findViewById(R.id.tv_end_loaction);//到达地点
-                        TextView tv_price = itemView.findViewById(R.id.tv_price);//运费
-                        TextView bt_left = itemView.findViewById(R.id.bt_left);//左侧按钮
-                        TextView bt_right = itemView.findViewById(R.id.bt_right);//右侧按钮
-                        TextView tv_order_detail = itemView.findViewById(R.id.tv_order_detail);//右侧按钮
-
-
-                        tvIdentity.setText("货主");
-                        tv_order.setText("80080018000");
-                        tv_state.setText("运输中");
-                        tv_time.setText("发车时间：2017-08-05");
-                        tv_start_loaction.setText("上海虹桥机场国际物流中心");
-                        tv_end_loaction.setText("青岛市国际物流中心");
-                        tv_price.setText("1520");
-
-                        StringBuffer buffer = new StringBuffer();
-                        buffer
-                                .append("发车编号：2831929482").append("\n")
-                                .append("车牌号：沪A666888").append("\n")
-                                .append("车主：李先生 17602150486").append("\n")
-                                .append("货物：医疗器材").append("\n")
-                                .append("司机：杨先生 13795244936");
-                        tv_order_detail.setText(buffer.toString());
-
-
-                        itemView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_pay).navigation(mContext);
-                            }
-                        });
-                    }
-                };
-            }
-        };
-        rv.setAdapter(adapter);
-
     }
 
     @Override
     protected void initListener() {
         super.initListener();
         switchTitle.setListener(this);
-        switchRight.setListener(this);
-        switchLeft.setListener(this);
         srcFinance.setOnClickListener(this);
         srcPersonCenter.setOnClickListener(this);
         llOrder.setClickable(true);
@@ -187,60 +129,9 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
 
         titlePop.setListener(this);
         titlePop.setOnDismissListener(this);
-        orderMainPop.setOnDismissListener(this);
-        orderMainPop.setListener(this);
-    }
-
-    @Override
-    public void onOpen(SwitchTextLayout switchTextLayout, View view) {
-        changeState(switchTextLayout, true);
-
 
     }
 
-    @Override
-    public void onClose(SwitchTextLayout switchTextLayout, View view) {
-        changeState(switchTextLayout, false);
-    }
-
-
-    private void changeState(View view, boolean open) {
-        if (view.getId() == R.id.switch_left) {
-            switchLeft.setSelect(true);
-            switchRight.setSelect(false);
-            switchRight.closeSwitch();
-            orderMainPop.setSelectPosition(-1);
-            if (open) {
-                orderMainPop.setSelectPosition(times.indexOf(switchLeft.getTitle()));
-                orderMainPop.upDatas(times);
-                orderMainPop.show(view);
-            } else {
-                orderMainPop.dismiss();
-            }
-
-        } else if (view.getId() == R.id.switch_right) {
-            switchRight.setSelect(true);
-            switchLeft.setSelect(false);
-            switchLeft.closeSwitch();
-            if (open) {
-
-                orderMainPop.setSelectPosition(states.indexOf(switchRight.getTitle()));
-                orderMainPop.upDatas(states);
-                orderMainPop.show(view);
-            } else {
-                orderMainPop.dismiss();
-
-            }
-        } else {
-            if (open) {
-                orderMainPop.dismiss();
-                titlePop.show(view);
-            } else {
-                titlePop.dismiss();
-            }
-
-        }
-    }
 
     /**
      * 顶部角色类型被选中点击的时候
@@ -251,6 +142,7 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
     @Override
     public void onMainClick(OrderMainTitlePop popu, int position) {
         popu.dismiss();
+        JLog.e("-----------"+position);
         changeStaff(position);
     }
 
@@ -260,25 +152,72 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
      * @param position
      */
     private void changeStaff(int position) {
+
         switch (position) {
             case 0:
+
                 switchTitle.setTitle("我是货主");
                 break;
             case 1:
                 switchTitle.setTitle("我是车主");
+
                 break;
             case 2:
                 switchTitle.setTitle("我是司机");
+
                 break;
         }
+
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        if (currentFragmeng != null) {
+            fragmentTransaction.hide(currentFragmeng);
+        }
+        if (position==0){
+            if (cargoFragment == null) {
+//                    cargoFragment= (Fragment) ArouterUtils.getInstance().builder(ArouterParamOrder.fragment_order_main).navigation(this);
+                cargoFragment = new OrderMainFragmet();
+                fragmentTransaction.add(R.id.content, cargoFragment);
+            } else {
+                fragmentTransaction.show(cargoFragment);
+            }
+            currentFragmeng = carOwnerFragmeng;
+        }else if (position==1){
+            if (carOwnerFragmeng == null) {
+                carOwnerFragmeng = new OrderMainFragmet();
+
+                fragmentTransaction.add(R.id.content, carOwnerFragmeng);
+            } else {
+                fragmentTransaction.show(carOwnerFragmeng);
+            }
+            currentFragmeng = carOwnerFragmeng;
+        }else if (position==2){
+            if (driverFragmeng == null) {
+//                    driverFragmeng = (Fragment) ArouterUtils.getInstance().builder(ArouterParamOrder.fragment_order_main).navigation(this);
+                driverFragmeng = new OrderMainFragmet();
+                fragmentTransaction.add(R.id.content, driverFragmeng);
+            } else {
+                fragmentTransaction.show(driverFragmeng);
+            }
+            currentFragmeng = driverFragmeng;
+        }
+
+        if (currentFragmeng != null && currentFragmeng instanceof SwitchStateListener) {
+            switchStateListener = (SwitchStateListener) currentFragmeng;
+        }
+
+        fragmentTransaction.commit();
+
+
+
     }
 
     @Override
     public void onBackPressed() {
         if (titlePop.isShow()) {
             titlePop.dismiss();
-        } else if (orderMainPop.isShow()) {
-            orderMainPop.dismiss();
+        } else if (switchStateListener != null && switchStateListener.isShowing()) {
+            switchStateListener.closePop();
         } else {
             super.onBackPressed();
         }
@@ -292,21 +231,10 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
      */
     @Override
     public void onPopuDismsss(BasePopu popu, View target) {
-        switchLeft.closeSwitch();
-        switchRight.closeSwitch();
+
         switchTitle.closeSwitch();
     }
 
-    @Override
-    public void onPopuClick(OrderMainPop pop, View view, int position) {
-
-        if (view.getId() == R.id.switch_left) {
-            switchLeft.setTitle(times.get(position));
-        } else if (view.getId() == R.id.switch_right) {
-            switchRight.setTitle(states.get(position));
-
-        }
-    }
 
     /**
      * Called when a view has been clicked.
@@ -331,7 +259,7 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
             drawerLayout.closeDrawer(Gravity.START);
             new BottomAlertBuilder()
                     .setDialogTitle(getString(R.string.login_out_entry))
-                    .setTopClickListener(new  DialogControl.OnButtonTopClickListener() {
+                    .setTopClickListener(new DialogControl.OnButtonTopClickListener() {
                         @Override
                         public void onTopClick(View view, DialogControl.IBottomDialog dialog) {
                             dialog.dismiss();
@@ -340,7 +268,7 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
                         }
 
                     })
-                    .setBottomClickListener(new  DialogControl.OnButtonBottomClickListener() {
+                    .setBottomClickListener(new DialogControl.OnButtonBottomClickListener() {
                         @Override
                         public void onBottomClick(View view, DialogControl.IBottomDialog dialog) {
                             dialog.dismiss();
@@ -350,15 +278,13 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
                     }).creatDialog(new BottomAlertDialog(mContext)).show();
 
 
-
-
         } else if (i == R.id.ll_contact_service) {
 //            ToastUtils.showTextToast("联系客服");
             drawerLayout.closeDrawer(Gravity.START);
             new CenterAlertBuilder()
                     .setDialogTitle(getString(R.string.login_contact_service))
                     .setDialogContent(getString(R.string.login_contact_phone))
-                    .setLeftClickListener(new  DialogControl.OnButtonLeftClickListener() {
+                    .setLeftClickListener(new DialogControl.OnButtonLeftClickListener() {
                         @Override
                         public void onLeftClick(View view, DialogControl.ICenterDialog dialog) {
                             dialog.dismiss();
@@ -371,7 +297,7 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
                         @Override
                         public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
                             dialog.dismiss();
-                            CommonUtils.toDial(mContext,getString(R.string.hongniu_phone));
+                            CommonUtils.toDial(mContext, getString(R.string.hongniu_phone));
 
                         }
                     }).creatDialog(new CenterAlertDialog(mContext)).show();
@@ -396,5 +322,20 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
             ArouterUtils.getInstance().builder(ArouterParamLogin.activity_pay_ways).navigation(mContext);
 
         }
+    }
+
+    @Override
+    public void onOpen(SwitchTextLayout switchTextLayout, View view) {
+        if (switchStateListener != null) {
+            switchStateListener.closePop();
+        }
+        titlePop.show(view);
+
+    }
+
+    @Override
+    public void onClose(SwitchTextLayout switchTextLayout, View view) {
+
+        titlePop.dismiss();
     }
 }

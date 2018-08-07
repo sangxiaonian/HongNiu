@@ -9,6 +9,8 @@ public class ArouterParamOrder {
 
     public static final String activity_order_main = "/order/activity_order_main";
 
+    public static final String fragment_order_main = "/order/fragment_order_main";
+
     /**
      * 我要下单
      */

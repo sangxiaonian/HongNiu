@@ -31,42 +31,11 @@
                 app:title="@string/order_main_title" />
         </RelativeLayout>
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@color/color_bg">
-
-            <com.sang.common.widget.SwitchTextLayout
-                android:id="@+id/switch_left"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                app:closeColor="@color/color_title_dark"
-                app:closeIcon="@drawable/icon_arrow_down_d8d8d8"
-                app:openColor="@color/color_light"
-                app:openIcon="@drawable/icon_arrow_down_f06f28"
-                app:title="发车时间"
-                app:titleSize="14sp" />
-
-            <com.sang.common.widget.SwitchTextLayout
-                android:id="@+id/switch_right"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                app:closeColor="@color/color_title_dark"
-                app:closeIcon="@drawable/icon_arrow_down_d8d8d8"
-                app:openColor="@color/color_light"
-                app:openIcon="@drawable/icon_arrow_down_f06f28"
-                app:title="运输中"
-                app:titleSize="14sp" />
-        </LinearLayout>
-
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:id="@+id/content"
+            android:layout_height="0dp"/>
 
 
         <LinearLayout

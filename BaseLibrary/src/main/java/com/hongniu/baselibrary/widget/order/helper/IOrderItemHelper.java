@@ -1,6 +1,4 @@
-package com.sang.common.widget.orderitem.helper;
-
-import android.view.View;
+package com.hongniu.baselibrary.widget.order.helper;
 
 /**
  * 作者： ${PING} on 2018/8/2.
