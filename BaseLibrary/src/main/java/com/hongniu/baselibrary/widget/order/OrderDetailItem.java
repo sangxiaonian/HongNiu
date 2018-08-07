@@ -1,10 +1,8 @@
 package com.hongniu.baselibrary.widget.order;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -18,9 +16,21 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.hongniu.baselibrary.R;
+import com.hongniu.baselibrary.widget.order.helper.OrderItemHelper;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.JLog;
+import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.CenteredImageSpan;
+
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_BUY_INSURANCE;
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_CANCLE;
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_CHECK_INSURANCE;
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_CHECK_PATH;
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_CHECK_ROUT;
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_ENTRY_ARRIVE;
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_ENTRY_ORDER;
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_PAY;
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_START_CAR;
 
 /**
  * 作者： ${PING} on 2018/8/7.
@@ -40,9 +50,10 @@ public class OrderDetailItem extends FrameLayout {
     private TextView tv_order_detail;
 
     //当前角色 货主、车主、司机
-    private RoleState roleState;
+    private OrderDetailItemControl.RoleState roleState;
     //订单状态
-    private OrderState orderState;
+    private OrderDetailItemControl.OrderState orderState;
+    private OrderDetailItemControl.OnOrderDetailBtClickListener listener;
 
 
     public OrderDetailItem(@NonNull Context context) {
@@ -97,7 +108,7 @@ public class OrderDetailItem extends FrameLayout {
      *
      * @param roleState 角色 货主、车主、司机
      */
-    public void setIdentity(RoleState roleState) {
+    public void setIdentity(OrderDetailItemControl.RoleState roleState) {
         this.roleState = roleState;
         tvIdentity.setText(OrderUtils.getRoleState(roleState));
         JLog.i(OrderUtils.getRoleState(roleState));
@@ -159,10 +170,30 @@ public class OrderDetailItem extends FrameLayout {
      *
      * @param orderState
      */
-    public void setOrderState(OrderState orderState) {
+    public void setOrderState(OrderDetailItemControl.OrderState orderState) {
         this.orderState = orderState;
+        tv_state.setText(OrderUtils.getOrderState(orderState));
     }
 
+
+    /**
+     * 获取中间内容
+     *
+     * @param startNum      发车变化
+     * @param carNum        车牌号
+     * @param carOwnerName  车主姓名
+     * @param carOwnerPhone 车主电话
+     * @param cargo         货物
+     * @param driverName    司机姓名
+     * @param driverPhone   司机电话
+     */
+    public void setContent(String startNum, String carNum, String carOwnerName,
+                           final String carOwnerPhone, String cargo,
+                           String driverName, final String driverPhone) {
+        tv_order_detail.setText(getContent(startNum, carNum, carOwnerName, carOwnerPhone, cargo
+                , driverName, driverPhone
+        ));
+    }
 
     /**
      * 获取中间内容
@@ -241,6 +272,104 @@ public class OrderDetailItem extends FrameLayout {
 
         return builder;
 
+    }
+
+
+    public void buildButton(boolean b) {
+        final OrderDetailItemControl.IOrderItemHelper helper = new OrderItemHelper(orderState, roleState, b);
+        bt_left.setVisibility(helper.getLeftVisibility());
+        bt_right.setVisibility(helper.getRightVisibility());
+
+        if (bt_right.getVisibility() == VISIBLE) {
+            bt_right.setText(helper.getBtRightInfor());
+            bt_right.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    clickEvent(helper.getBtRightInfor());
+                }
+            });
+        }
+        if (bt_left.getVisibility() == VISIBLE) {
+            bt_left.setText(helper.getBtLeftInfor());
+            bt_left.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    clickEvent(helper.getBtLeftInfor());
+                }
+            });
+        }
+    }
+
+    public void setOnButtonClickListener(OrderDetailItemControl.OnOrderDetailBtClickListener listener){
+        this.listener=listener;
+    }
+
+    private void clickEvent(String msg) {
+        switch (msg) {
+            case ORDER_CANCLE://    = "取消订单";
+                if (listener!=null){
+                    listener.onOrderCancle();
+                }else {
+                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("取消订单");
+                }
+                break;
+            case ORDER_PAY://    = "继续付款";
+                if (listener!=null){
+                    listener.onOrderPay();
+                }else {
+                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("继续付款");
+                }
+                break;
+            case ORDER_BUY_INSURANCE://    = "购买保险";
+                if (listener!=null){
+                    listener.onOrderBuyInsurance();
+                }else {
+                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("购买保险");
+                }
+                break;
+            case ORDER_CHECK_INSURANCE://    = "查看保单";
+                if (listener!=null){
+                    listener.onCheckInsruance();
+                }else {
+                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("查看保单");
+                }
+                break;
+            case ORDER_CHECK_PATH://    = "查看轨迹";
+                if (listener!=null){
+                    listener.onCheckPath();
+                }else {
+                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("查看轨迹");
+                }                break;
+            case ORDER_ENTRY_ORDER://    = "确认收货";
+                if (listener!=null){
+                    listener.onCheckPath();
+                }else {
+                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("确认收货");
+                }
+                break;
+            case ORDER_START_CAR://    = "开始发车";
+                if (listener!=null){
+                    listener.onStartCar();
+                }else {
+                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("开始发车");
+                }
+                break;
+            case ORDER_CHECK_ROUT://    = "查看路线";
+                if (listener!=null){
+                    listener.onCheckRout();
+                }else {
+                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("查看路线");
+                }
+                break;
+            case ORDER_ENTRY_ARRIVE://    = "确认到达";
+                if (listener!=null){
+                    listener.onEntryArrive();
+                }else {
+                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("确认到达");
+                }
+                break;
+
+        }
     }
 
 

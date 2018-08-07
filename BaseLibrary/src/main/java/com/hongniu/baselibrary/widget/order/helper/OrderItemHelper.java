@@ -1,25 +1,24 @@
 package com.hongniu.baselibrary.widget.order.helper;
 
-import com.hongniu.baselibrary.widget.order.OrderState;
-import com.hongniu.baselibrary.widget.order.RoleState;
+import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 
 /**
  * 作者： ${PING} on 2018/8/2.
  */
-public class OrderItemHelper implements IOrderItemHelper {
+public class OrderItemHelper implements OrderDetailItemControl.IOrderItemHelper {
 
-    IOrderItemHelper helper;
+    OrderDetailItemControl.IOrderItemHelper helper;
 
-    public OrderItemHelper(OrderState state, RoleState roleState) {
+    public OrderItemHelper(OrderDetailItemControl.OrderState state, OrderDetailItemControl.RoleState roleState, boolean insurance) {
         switch (roleState) {
             case CAR_OWNER:
-                helper = new CargoOwnerOrder(state, roleState);
+                helper = new CarOwnerOrder(state, insurance);
                 break;
             case CARGO_OWNER:
-                helper = new CargoOwnerOrder(state, roleState);
+                helper = new CargoOwnerOrder(state, insurance);
                 break;
             case DRIVER:
-                helper = new DriveOwnerOrder(state, roleState);
+                helper = new DriveOwnerOrder(state, insurance);
                 break;
         }
     }
@@ -61,4 +60,6 @@ public class OrderItemHelper implements IOrderItemHelper {
     public String getOrderState() {
         return helper.getOrderState();
     }
+
+
 }

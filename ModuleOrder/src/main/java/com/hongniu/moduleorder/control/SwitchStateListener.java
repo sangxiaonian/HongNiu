@@ -1,11 +1,11 @@
 package com.hongniu.moduleorder.control;
 
-import com.hongniu.baselibrary.widget.order.RoleState;
+import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 
 public interface SwitchStateListener {
-        boolean isShowing();
+    boolean isShowing();
 
-        void closePop();
+    void closePop();
 
-        void setRoalState(RoleState state);
-    }
+    void setRoalState(OrderDetailItemControl.RoleState state);
+}

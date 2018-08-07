@@ -3,33 +3,39 @@ package com.hongniu.baselibrary.widget.order.helper;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.hongniu.baselibrary.widget.order.OrderState;
+import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.baselibrary.widget.order.OrderUtils;
-import com.hongniu.baselibrary.widget.order.RoleState;
+
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_BUY_INSURANCE;
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_CANCLE;
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_CHECK_INSURANCE;
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_CHECK_PATH;
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_ENTRY_ORDER;
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_PAY;
 
 /**
  * 作者： ${PING} on 2018/8/2.
- *  货主订单
+ * 货主订单
  */
-public class CargoOwnerOrder implements IOrderItemHelper {
+public class CargoOwnerOrder implements OrderDetailItemControl.IOrderItemHelper {
 
 
-    private OrderState state;
-    private RoleState roleState;
+    private OrderDetailItemControl.OrderState state;
+    private boolean insurance;//是否购买保险
 
-    public CargoOwnerOrder(OrderState state, RoleState roleState) {
+    public CargoOwnerOrder(OrderDetailItemControl.OrderState state, boolean insurance) {
         this.state = state;
-        this.roleState = roleState;
+        this.insurance = insurance;
     }
 
     @Override
     public int getLeftVisibility() {
-        return TextUtils.isEmpty(getBtLeftInfor())?View.VISIBLE:View.GONE;
+        return !TextUtils.isEmpty(getBtLeftInfor()) ? View.VISIBLE : View.GONE;
     }
 
     @Override
     public int getRightVisibility() {
-        return TextUtils.isEmpty(getBtRightInfor())?View.VISIBLE:View.GONE;
+        return !TextUtils.isEmpty(getBtRightInfor()) ? View.VISIBLE : View.GONE;
     }
 
     /**
@@ -37,28 +43,33 @@ public class CargoOwnerOrder implements IOrderItemHelper {
      */
     @Override
     public String getBtLeftInfor() {
-        String stateMsg;
+        String stateMsg = "";
         switch (state) {
             case WAITE_PAY://待支付
-                stateMsg="取消订单";
+                stateMsg = ORDER_CANCLE;
                 break;
-            case WAITE_START_NO_INSURANCE://待发车(未购买保险)
-                stateMsg=null;
-                break;
-            case WAITE_START://待发车(已买保险)
-                stateMsg = "查看保单";
+            case WAITE_START://待发车
+                if (insurance) {
+                    stateMsg = ORDER_CHECK_INSURANCE;
+                }
                 break;
             case IN_TRANSIT://运输中
-                stateMsg = "查看保单";
+                if (insurance) {
+                    stateMsg = ORDER_CHECK_INSURANCE;
+                }
                 break;
             case HAS_ARRIVED://已到达
-                stateMsg = "查看保单";
+                if (insurance) {
+                    stateMsg = ORDER_CHECK_INSURANCE;
+                }
                 break;
             case RECEIPT://已收货
-                stateMsg = "查看保单";
+                if (insurance) {
+                    stateMsg = ORDER_CHECK_INSURANCE;
+                }
                 break;
             default:
-                stateMsg = null;
+                stateMsg = "";
                 break;
         }
         return stateMsg;
@@ -73,21 +84,22 @@ public class CargoOwnerOrder implements IOrderItemHelper {
     @Override
     public String getBtRightInfor() {
 
-        String stateMsg=null;
+        String stateMsg = "";
         switch (state) {
             case WAITE_PAY://待支付
-                stateMsg="继续付款";
+                stateMsg = ORDER_PAY;
                 break;
-            case WAITE_START_NO_INSURANCE://待发车(未购买保险)
-                stateMsg = "购买保险";
-                break;
+
             case WAITE_START://待发车(已买保险)
+                if (!insurance) {
+                    stateMsg = ORDER_BUY_INSURANCE;
+                }
                 break;
             case IN_TRANSIT://运输中
-                stateMsg = "查看轨迹";
+                stateMsg = ORDER_CHECK_PATH;
                 break;
             case HAS_ARRIVED://已到达
-                stateMsg="确认收货";
+                stateMsg = ORDER_ENTRY_ORDER;
                 break;
             case RECEIPT://已收货
                 break;
@@ -96,7 +108,6 @@ public class CargoOwnerOrder implements IOrderItemHelper {
         }
         return stateMsg;
     }
-
 
 
     @Override

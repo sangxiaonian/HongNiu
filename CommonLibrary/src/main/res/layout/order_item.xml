@@ -35,10 +35,11 @@
             android:text="货主"
             android:textColor="@color/color_white"
             android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_car_num"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.461"
             app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/tv_car_num" />
 
         <TextView
             android:id="@+id/tv_car_num"
@@ -48,9 +49,8 @@
             android:text="订单号："
             android:textColor="@color/color_title_dark"
             android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_identity"
             app:layout_constraintStart_toEndOf="@+id/tv_identity"
-            app:layout_constraintTop_toTopOf="@+id/tv_identity" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_order"
@@ -222,6 +222,7 @@ n"
                     android:background="@drawable/shape_2_f06f28"
                     android:gravity="center"
                     android:text="继续付款"
+                    android:layout_marginLeft="@dimen/app_gap"
                     android:textColor="@color/color_white"
                     android:textSize="13sp" />
 

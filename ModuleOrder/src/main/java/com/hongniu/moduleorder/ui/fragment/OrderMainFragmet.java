@@ -12,8 +12,10 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.base.BaseFragment;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.widget.order.OrderDetailItem;
-import com.hongniu.baselibrary.widget.order.RoleState;
+import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
+import com.hongniu.baselibrary.widget.order.OrderUtils;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.SwitchStateListener;
 import com.hongniu.moduleorder.widget.OrderMainPop;
@@ -26,6 +28,7 @@ import com.sang.common.widget.popu.inter.OnPopuDismissListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 /**
  * 订单列表Fragment
@@ -42,8 +45,8 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
     private List<String> times;
     private List<String> states;
 
-    private RoleState roleState;//角色
-    private XAdapter<String> adapter;
+    private OrderDetailItemControl.RoleState roleState;//角色
+    private XAdapter<OrderDetailBean> adapter;
 
 
     public OrderMainFragmet() {
@@ -55,13 +58,13 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
         int anInt = args.getInt(Param.TRAN);
         switch (anInt) {
             case 0:
-                roleState = RoleState.CARGO_OWNER;
+                roleState = OrderDetailItemControl.RoleState.CARGO_OWNER;
                 break;
             case 1:
-                roleState = RoleState.CAR_OWNER;
+                roleState = OrderDetailItemControl.RoleState.CAR_OWNER;
                 break;
             case 2:
-                roleState = RoleState.DRIVER;
+                roleState = OrderDetailItemControl.RoleState.DRIVER;
                 break;
         }
 
@@ -89,21 +92,36 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         rv.setLayoutManager(manager);
-        List<String> data = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            data.add("");
-        }
-        adapter = new XAdapter<String>(getContext(), data) {
+        List<OrderDetailBean> data = new ArrayList<>();
+        boolean insurance = new Random().nextBoolean();
+        data.add(OrderUtils.creatBean(1,insurance));
+        data.add(OrderUtils.creatBean(2,insurance));
+        data.add(OrderUtils.creatBean(3,insurance));
+        data.add(OrderUtils.creatBean(4,insurance));
+        data.add(OrderUtils.creatBean(5,insurance));
+
+        adapter = new XAdapter<OrderDetailBean>(getContext(), data) {
             @Override
-            public BaseHolder<String> initHolder(ViewGroup parent, int viewType) {
-                return new BaseHolder<String>(getContext(), parent, R.layout.order_main_item) {
+            public BaseHolder<OrderDetailBean> initHolder(ViewGroup parent, int viewType) {
+                return new BaseHolder<OrderDetailBean>(getContext(), parent, R.layout.order_main_item) {
                     @Override
-                    public void initView(View itemView, int position, String data) {
+                    public void initView(View itemView, int position, OrderDetailBean data) {
                         super.initView(itemView, position, data);
                         OrderDetailItem item = itemView.findViewById(R.id.order_detail);//身份角色
                         item.setDebug();
                         item.setIdentity(roleState);
+                        item.setEndLocation(data.getDestinationInfo());
+                        item.setStartLocation(data.getStratPlaceInfo());
+                        item.setOrder(data.getOrderNum());
+                        item.setTiem(data.getDeliverydate());
+                        item.setPrice(data.getMoney());
 
+                        item.setOrderState(data.getOrderState());
+
+                        item.setContent(data.getDepartNum(),data.getCarnum(),data.getUserName(),data.getUserPhone()
+                        ,data.getGoodName(),data.getDrivername(),data.getDrivermobile());
+
+                        item.buildButton(data.isInsurance());
                         itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -116,6 +134,7 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
         };
         rv.setAdapter(adapter);
     }
+
 
     @Override
     protected void initListener() {
@@ -207,7 +226,7 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
     }
 
     @Override
-    public void setRoalState(RoleState state) {
+    public void setRoalState(OrderDetailItemControl.RoleState state) {
         this.roleState = state;
     }
 
