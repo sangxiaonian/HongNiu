@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.TextView;
 
 import com.sang.common.R;
@@ -49,6 +50,7 @@ public class CenterAlertDialog
         tvContent = inflate.findViewById(R.id.tv_content);
         line = inflate.findViewById(R.id.img_line);
         dialog = new Dialog(context, themeResId);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(inflate);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0x00000000));
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
