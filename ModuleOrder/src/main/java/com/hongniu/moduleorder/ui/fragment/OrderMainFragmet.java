@@ -1,10 +1,7 @@
 package com.hongniu.moduleorder.ui.fragment;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,7 +19,6 @@ import com.hongniu.moduleorder.control.SwitchStateListener;
 import com.hongniu.moduleorder.widget.OrderMainPop;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
-import com.sang.common.utils.JLog;
 import com.sang.common.widget.SwitchTextLayout;
 import com.sang.common.widget.popu.BasePopu;
 import com.sang.common.widget.popu.inter.OnPopuDismissListener;
@@ -35,7 +31,7 @@ import java.util.List;
  * 订单列表Fragment
  */
 @Route(path = ArouterParamOrder.fragment_order_main)
-public class OrderMainFragmet extends BaseFragment implements SwitchStateListener,SwitchTextLayout.OnSwitchListener, OrderMainPop.OnPopuClickListener, OnPopuDismissListener {
+public class OrderMainFragmet extends BaseFragment implements SwitchStateListener, SwitchTextLayout.OnSwitchListener, OrderMainPop.OnPopuClickListener, OnPopuDismissListener {
     private SwitchTextLayout switchLeft;
     private SwitchTextLayout switchRight;
     private RecyclerView rv;
@@ -57,20 +53,18 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
     public void setArguments(@Nullable Bundle args) {
         super.setArguments(args);
         int anInt = args.getInt(Param.TRAN);
-        switch (anInt){
+        switch (anInt) {
             case 0:
-                roleState=RoleState.CARGO_OWNER;
+                roleState = RoleState.CARGO_OWNER;
                 break;
             case 1:
-                roleState=RoleState.CAR_OWNER;
+                roleState = RoleState.CAR_OWNER;
+                break;
             case 2:
-                roleState=RoleState.DRIVER;
+                roleState = RoleState.DRIVER;
                 break;
         }
-        if (adapter!=null){
-            adapter.notifyDataSetChanged();
-        }
-        JLog.i(anInt+">>>>>>>"+this);
+
 
     }
 
@@ -99,7 +93,7 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
         for (int i = 0; i < 5; i++) {
             data.add("");
         }
-       adapter = new XAdapter<String>(getContext(), data) {
+        adapter = new XAdapter<String>(getContext(), data) {
             @Override
             public BaseHolder<String> initHolder(ViewGroup parent, int viewType) {
                 return new BaseHolder<String>(getContext(), parent, R.layout.order_main_item) {
@@ -214,7 +208,7 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
 
     @Override
     public void setRoalState(RoleState state) {
-        this.roleState=state;
+        this.roleState = state;
     }
 
 

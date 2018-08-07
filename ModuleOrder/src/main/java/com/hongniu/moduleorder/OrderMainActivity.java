@@ -4,12 +4,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -20,15 +16,9 @@ import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
-import com.hongniu.baselibrary.widget.order.OrderDetailItem;
 import com.hongniu.moduleorder.control.SwitchStateListener;
-import com.hongniu.moduleorder.ui.fragment.OrderMainFragmet;
-import com.hongniu.moduleorder.widget.OrderMainPop;
 import com.hongniu.moduleorder.widget.OrderMainTitlePop;
-import com.sang.common.recycleview.adapter.XAdapter;
-import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.utils.CommonUtils;
-import com.sang.common.utils.JLog;
 import com.sang.common.widget.SwitchTextLayout;
 import com.sang.common.widget.dialog.BottomAlertDialog;
 import com.sang.common.widget.dialog.CenterAlertDialog;
@@ -37,10 +27,6 @@ import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
 import com.sang.common.widget.popu.BasePopu;
 import com.sang.common.widget.popu.inter.OnPopuDismissListener;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * 订单中心主页
@@ -75,7 +61,7 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
         initView();
         initData();
         initListener();
-//        changeStaff(0);
+        changeStaff(0);
     }
 
     @Override
@@ -142,7 +128,6 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
     @Override
     public void onMainClick(OrderMainTitlePop popu, int position) {
         popu.dismiss();
-        JLog.e("-----------"+position);
         changeStaff(position);
     }
 
@@ -153,48 +138,43 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
      */
     private void changeStaff(int position) {
 
-        switch (position) {
-            case 0:
-
-                switchTitle.setTitle("我是货主");
-                break;
-            case 1:
-                switchTitle.setTitle("我是车主");
-
-                break;
-            case 2:
-                switchTitle.setTitle("我是司机");
-
-                break;
-        }
-
-
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         if (currentFragmeng != null) {
             fragmentTransaction.hide(currentFragmeng);
         }
-        if (position==0){
+        if (position == 0) {
+            switchTitle.setTitle("我是货主");
+
             if (cargoFragment == null) {
-//                    cargoFragment= (Fragment) ArouterUtils.getInstance().builder(ArouterParamOrder.fragment_order_main).navigation(this);
-                cargoFragment = new OrderMainFragmet();
+                cargoFragment = (Fragment) ArouterUtils.getInstance().builder(ArouterParamOrder.fragment_order_main).navigation(this);
+                Bundle bundle = new Bundle();
+                bundle.putInt(Param.TRAN, 0);
+                cargoFragment.setArguments(bundle);
                 fragmentTransaction.add(R.id.content, cargoFragment);
             } else {
                 fragmentTransaction.show(cargoFragment);
             }
-            currentFragmeng = carOwnerFragmeng;
-        }else if (position==1){
+            currentFragmeng = cargoFragment;
+        } else if (position == 1) {
+            switchTitle.setTitle("我是车主");
             if (carOwnerFragmeng == null) {
-                carOwnerFragmeng = new OrderMainFragmet();
-
+                carOwnerFragmeng = (Fragment) ArouterUtils.getInstance().builder(ArouterParamOrder.fragment_order_main).navigation(this);
+                Bundle bundle = new Bundle();
+                bundle.putInt(Param.TRAN, 1);
+                carOwnerFragmeng.setArguments(bundle);
                 fragmentTransaction.add(R.id.content, carOwnerFragmeng);
             } else {
                 fragmentTransaction.show(carOwnerFragmeng);
             }
             currentFragmeng = carOwnerFragmeng;
-        }else if (position==2){
+        } else if (position == 2) {
+            switchTitle.setTitle("我是司机");
+
             if (driverFragmeng == null) {
-//                    driverFragmeng = (Fragment) ArouterUtils.getInstance().builder(ArouterParamOrder.fragment_order_main).navigation(this);
-                driverFragmeng = new OrderMainFragmet();
+                driverFragmeng = (Fragment) ArouterUtils.getInstance().builder(ArouterParamOrder.fragment_order_main).navigation(this);
+                Bundle bundle = new Bundle();
+                bundle.putInt(Param.TRAN, 2);
+                driverFragmeng.setArguments(bundle);
                 fragmentTransaction.add(R.id.content, driverFragmeng);
             } else {
                 fragmentTransaction.show(driverFragmeng);
@@ -207,9 +187,6 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
         }
 
         fragmentTransaction.commit();
-
-
-
     }
 
     @Override

@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:paddingLeft="25dp"
     android:paddingRight="25dp"
+    android:background="@color/color_white"
     android:paddingTop="@dimen/app_gap">
 
 
