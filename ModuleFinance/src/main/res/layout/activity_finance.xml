@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_bg"
+    android:orientation="vertical"
+    tools:context=".ui.FinanceActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:paddingBottom="3dp"
+        android:paddingTop="3dp"
+        android:background="@color/color_title_dark"
+        android:orientation="horizontal">
+
+        <com.sang.common.widget.SwitchTextLayout
+            android:id="@+id/switch_title"
+            android:layout_width="85dp"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            app:closeColor="@color/color_white"
+            app:closeIcon="@drawable/icon_arrow_down_fff"
+            app:openColor="@color/color_white"
+            app:openIcon="@drawable/icon_arrow_down_fff"
+            app:title="2018年8月"
+            app:titleSize="15sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"/>
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:gravity="center"
+                android:id="@+id/rb_left"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="支出"
+                android:background="@drawable/selector_bg_line_fff"
+                android:button="@null"
+                android:textSize="15sp"
+                android:layout_marginRight="25dp"
+                android:textColor="@drawable/selector_color_6d6d6d_fff" />
+
+            <RadioButton
+                android:gravity="center"
+                android:id="@+id/rb_right"
+                android:background="@drawable/selector_bg_line_fff"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="收入"
+                android:button="@null"
+                android:textSize="15sp"
+                android:textColor="@drawable/selector_color_6d6d6d_fff" />
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+</LinearLayout>

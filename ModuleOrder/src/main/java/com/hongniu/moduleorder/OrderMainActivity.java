@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
+import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.moduleorder.widget.OrderMainPop;
@@ -316,7 +317,8 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.src_finance) {
-            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL) .show("财务");
+//            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL) .show("财务");
+            ArouterUtils.getInstance().builder(ArouterParamsFinance.activity_finance_activity).navigation(mContext);
         } else if (i == R.id.src_me) {
 //            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL) .show("个人中心");
             drawerLayout.openDrawer(Gravity.START);

@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/BaseLibrary/BaseLibrary.iml" filepath="$PROJECT_DIR$/BaseLibrary/BaseLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/CommonLibrary/CommonLibrary.iml" filepath="$PROJECT_DIR$/CommonLibrary/CommonLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/ModuleFinance/ModuleFinance.iml" filepath="$PROJECT_DIR$/ModuleFinance/ModuleFinance.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ModuleFinance/ModuleFinance.iml" filepath="$PROJECT_DIR$/ModuleFinance/ModuleFinance.iml" />
       <module fileurl="file://$PROJECT_DIR$/ModuleLogin/ModuleLogin.iml" filepath="$PROJECT_DIR$/ModuleLogin/ModuleLogin.iml" />
       <module fileurl="file://$PROJECT_DIR$/ModuleOrder/ModuleOrder.iml" filepath="$PROJECT_DIR$/ModuleOrder/ModuleOrder.iml" />
       <module fileurl="file://$PROJECT_DIR$/ModulePersonalCenter/ModulePersonalCenter.iml" filepath="$PROJECT_DIR$/ModulePersonalCenter/ModulePersonalCenter.iml" />

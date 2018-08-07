@@ -66,5 +66,6 @@
     <string name="order_insurance_creat_fail">保单生成失败</string>
     <string name="order_insurance_check_insurance">查看保单</string>
     <string name="finish">完成</string>
+    <string name="finance">财务</string>
 
 </resources>
