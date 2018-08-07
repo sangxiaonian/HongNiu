@@ -138,7 +138,7 @@ public class BuyInsuranceDialog extends Dialog {
         });
 
 
-        et_price.setFilters(new InputFilter[]{new PointLengthFilter()});
+        et_price.setFilters(new InputFilter[]{new InputFilter.LengthFilter(8),new PointLengthFilter()});
         setContentView(inflate);
         getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         getWindow().setWindowAnimations(R.style.dialog_ani);

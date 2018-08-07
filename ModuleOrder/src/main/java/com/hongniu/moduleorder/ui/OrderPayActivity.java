@@ -14,6 +14,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.config.Param;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.widget.dialog.BuyInsuranceDialog;
 import com.hongniu.moduleorder.widget.dialog.InsuranceNoticeDialog;
@@ -48,6 +49,7 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
     private TextView tvPayAll;//支付总额
 
     private ViewGroup conInsurance;//保险条目
+    private ViewGroup rl_tran;//运费显示条目
     private TextView tv_insurance_price;//保险金额
     private TextView tv_cargo_price;//货物金额
     private TextView bt_cancle_insurance;//取消保险
@@ -66,6 +68,9 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
     private BuyInsuranceDialog buyInsuranceDialog;
     private InsuranceNoticeDialog noticeDialog;
 
+    //是否为单独的购买保险界面
+    private boolean isInsurance;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +80,21 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
         initView();
         initData();
         initListener();
-        rbOnline.performClick();
+
+        //此处判断是否是购买保险
+          isInsurance = getIntent().getBooleanExtra(Param.TRAN, false);
+        if (isInsurance){//如果是购买保险
+            rbOffline.performClick();
+            switchPayLine(false);
+            rl_tran.setVisibility(View.GONE);
+            switchToBuyInsurance(false);//切换为购买保险UI
+            buyInsuranceDialog.show();
+
+        }else {
+            rbOnline.performClick();
+
+        }
+
     }
 
     @Override
@@ -96,6 +115,7 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
         tv_cargo_price = findViewById(R.id.tv_cargo_price);
         bt_cancle_insurance = findViewById(R.id.bt_cancle_insurance);
         tv_change_cargo_price = findViewById(R.id.tv_change_cargo_price);
+        rl_tran = findViewById(R.id.rl_tran);
 
 
         buyInsuranceDialog = new BuyInsuranceDialog(mContext);
@@ -235,22 +255,59 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
             checkbox.setChecked(!checkbox.isChecked());
         } else if (i == R.id.bt_pay) {//支付订单
 
-            if (onLine || buyInsurance) {//线上支付或者购买保险时候，需要使用微信付款
+            if (!isInsurance) {//订单支付界面
+                if (onLine){//线上支付
+                    if (buyInsurance){//购买保险
+                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("线上支付，购买保险");
+
+                    }else {//不购买保险
+                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("线上支付，不购买保险");
+
+                    }
+
+                    if (checkbox.isChecked()) {
+                        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_insurance_creat).navigation(mContext);
+                    }else {
+                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("请选择支付方式");
+
+                    }
+
+                }else {//线下支付
+                    if (buyInsurance){//购买保险
+                        if (checkbox.isChecked()) {
+                            ArouterUtils.getInstance().builder(ArouterParamOrder.activity_insurance_creat).navigation(mContext);
+                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("线下支付，购买保险");
+                        }else {
+                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("请选择支付方式");
+                        }
+
+                    }else {//不购买保险
+                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("线下支付，不购买保险");
+                        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_insurance_creat).navigation(mContext);
+
+                    }
+
+
+                }
+            }else {//保险购买界面
                 if (checkbox.isChecked()) {
-                    //TODO 此时调用支付，支付完成之后方可跳转到生成保单界面，调试情况下，直接跳转
-                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("支付订单");
                     ArouterUtils.getInstance().builder(ArouterParamOrder.activity_insurance_creat).navigation(mContext);
-                } else {
+                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("单独购买保险");
+                }else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("请选择支付方式");
 
                 }
-            } else {//直接完成订单
-                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("完成订单");
-                ArouterUtils.getInstance().builder(ArouterParamOrder.activity_insurance_creat).navigation(mContext);
+
             }
 
         } else if (i == R.id.bt_cancle_insurance) {//取消保险
-            switchToBuyInsurance(true);
+
+            if (!isInsurance) {
+                switchToBuyInsurance(true);
+            }else {
+                finish();
+            }
+
         } else if (i == R.id.tv_change_cargo_price) {//修改保险金额
             buyInsuranceDialog.show();
         }

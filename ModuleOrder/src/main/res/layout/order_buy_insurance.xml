@@ -74,7 +74,7 @@
             android:layout_weight="1"
             android:background="@color/color_tran"
             android:padding="@dimen/app_item_gap"
-            android:maxLength="11"
+            android:maxLength="9"
             android:textColor="@color/color_title_dark"
             android:textCursorDrawable="@drawable/et_cursor"
             android:textSize="17sp" />

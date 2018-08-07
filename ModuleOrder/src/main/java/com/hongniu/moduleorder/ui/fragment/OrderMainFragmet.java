@@ -9,7 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseFragment;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
@@ -258,7 +260,7 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
      */
     @Override
     public void onOrderBuyInsurance() {
-
+        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_pay).withBoolean(Param.TRAN,true).navigation(getContext());
     }
 
     /**
@@ -266,6 +268,7 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
      */
     @Override
     public void onOrderPay() {
+        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_pay).navigation(getContext());
 
     }
 
