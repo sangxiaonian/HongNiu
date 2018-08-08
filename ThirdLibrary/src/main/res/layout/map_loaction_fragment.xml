@@ -11,10 +11,14 @@
         android:gravity="center">
 
         <EditText
+            android:imeOptions="actionSearch"
+            android:id="@+id/et_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/shape_2_gray"
             android:textColor="#333333"
+            android:singleLine="true"
+            android:padding="5dp"
             android:layout_marginRight="15dp"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="5dp"
