@@ -10,6 +10,8 @@
         <activity android:name=".ui.OrderPayActivity" />
         <activity android:name=".ui.OrderInsuranceActivity" />
         <activity android:name=".ui.OrderInsuranceResultActivity"></activity>
+        <activity android:name=".ui.OrderMapLocationActivity"></activity>
+
     </application>
 
 </manifest>

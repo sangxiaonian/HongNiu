@@ -18,10 +18,35 @@ android {
         }
 
     }
-    buildTypes {
+    //签名
+    signingConfigs {
+        debug {
+            storeFile file('../hongniu.jks')
+            storePassword 'hongniu'
+            keyAlias '泓牛供应链'
+            keyPassword 'hongniu'
+        }
         release {
+            storeFile file('../hongniu.jks')
+            storePassword 'hongniu'
+            keyAlias '泓牛供应链'
+            keyPassword 'hongniu'
+        }
+    }
+
+
+    buildTypes {
+
+        debug {
+
+            signingConfig signingConfigs.release
+        }
+        release {
+
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            signingConfig signingConfigs.release
+            // proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
@@ -37,9 +62,9 @@ dependencies {
         implementation project(':ModuleOrder')
         implementation project(':ModulePersonalCenter')
         implementation project(':BaseLibrary')
+        implementation project(':ModuleFinance')
     } else {
         implementation project(':BaseLibrary')
 
     }
-    implementation project(':ModuleFinance')
 }

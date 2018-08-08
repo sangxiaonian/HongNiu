@@ -23,10 +23,14 @@ public class ArouterParamOrder {
     /**
      * 保单生成中
      */
-    public static final String activity_insurance_creat= "/order/activity_insurance_creat";
-/**
+    public static final String activity_insurance_creat = "/order/activity_insurance_creat";
+    /**
      * 保单生成结果
      */
-    public static final String activity_insurance_creat_result= "/order/activity_insurance_creat_result";
+    public static final String activity_insurance_creat_result = "/order/activity_insurance_creat_result";
+    /**
+     * 地图定位选择地点
+     */
+    public static final String activity_map_loaction = "/order/activity_map_loaction";
 
 }

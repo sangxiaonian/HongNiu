@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseFragment;
@@ -100,11 +99,11 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
         rv.setLayoutManager(manager);
         List<OrderDetailBean> data = new ArrayList<>();
         boolean insurance = new Random().nextBoolean();
-        data.add(OrderUtils.creatBean(1,insurance));
-        data.add(OrderUtils.creatBean(2,insurance));
-        data.add(OrderUtils.creatBean(3,insurance));
-        data.add(OrderUtils.creatBean(4,insurance));
-        data.add(OrderUtils.creatBean(5,insurance));
+        data.add(OrderUtils.creatBean(1, insurance));
+        data.add(OrderUtils.creatBean(2, insurance));
+        data.add(OrderUtils.creatBean(3, insurance));
+        data.add(OrderUtils.creatBean(4, insurance));
+        data.add(OrderUtils.creatBean(5, insurance));
 
         adapter = new XAdapter<OrderDetailBean>(getContext(), data) {
             @Override
@@ -124,8 +123,8 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
 
                         item.setOrderState(data.getOrderState());
 
-                        item.setContent(data.getDepartNum(),data.getCarnum(),data.getUserName(),data.getUserPhone()
-                        ,data.getGoodName(),data.getDrivername(),data.getDrivermobile());
+                        item.setContent(data.getDepartNum(), data.getCarnum(), data.getUserName(), data.getUserPhone()
+                                , data.getGoodName(), data.getDrivername(), data.getDrivermobile());
 
                         item.setOnButtonClickListener(OrderMainFragmet.this);
                         item.buildButton(data.isInsurance());
@@ -243,15 +242,15 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
      */
     @Override
     public void onOrderCancle() {
-        creatDialog("确认要取消订单？","订单一旦去取消，无法恢复","返回订单","取消订单")
-        .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
-            @Override
-            public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
-                dialog.dismiss();
-                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("取消订单");
-            }
-        }).creatDialog(new CenterAlertDialog(getContext()))
-        .show();
+        creatDialog("确认要取消订单？", "订单一旦去取消，无法恢复", "返回订单", "取消订单")
+                .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
+                    @Override
+                    public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
+                        dialog.dismiss();
+                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("取消订单");
+                    }
+                }).creatDialog(new CenterAlertDialog(getContext()))
+                .show();
         ;
     }
 
@@ -260,7 +259,7 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
      */
     @Override
     public void onOrderBuyInsurance() {
-        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_pay).withBoolean(Param.TRAN,true).navigation(getContext());
+        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_pay).withBoolean(Param.TRAN, true).navigation(getContext());
     }
 
     /**
@@ -301,7 +300,7 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
      */
     @Override
     public void onStartCar() {
-        creatDialog("确认要开始发车？","发车时请记得安全驾车哦","返回订单","开始发车")
+        creatDialog("确认要开始发车？", "发车时请记得安全驾车哦", "返回订单", "开始发车")
                 .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
                     @Override
                     public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
@@ -325,7 +324,7 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
      */
     @Override
     public void onEntryArrive() {
-        creatDialog("确认已到达目的地？","感谢您的辛苦付出","返回订单","确定到达")
+        creatDialog("确认已到达目的地？", "感谢您的辛苦付出", "返回订单", "确定到达")
                 .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
                     @Override
                     public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
@@ -336,8 +335,8 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
                 .show();
     }
 
-    private CenterAlertBuilder creatDialog(String title, String content, String btleft, String btRight){
-       return new CenterAlertBuilder()
+    private CenterAlertBuilder creatDialog(String title, String content, String btleft, String btRight) {
+        return new CenterAlertBuilder()
                 .setDialogTitle(title)
                 .setDialogContent(content)
                 .setBtLeft(btleft)
@@ -346,9 +345,6 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
                 .setBtRightColor(getResources().getColor(R.color.color_white))
                 .setBtRightBgRes(R.drawable.shape_f06f28);
     }
-
-
-
 
 
 }
