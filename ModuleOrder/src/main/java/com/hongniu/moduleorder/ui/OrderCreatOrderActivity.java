@@ -8,10 +8,16 @@ import com.bigkoo.pickerview.TimePickerView;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.utils.PickerDialogUtils;
 import com.hongniu.moduleorder.R;
+import com.hongniu.moduleorder.control.OrderEvent;
+import com.sang.common.event.BusFactory;
 import com.sang.common.utils.JLog;
 import com.sang.common.widget.ItemView;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -80,9 +86,9 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         if (id == R.id.item_start_time) {
             timePickerView.show();
         } else if (id == R.id.item_start_loaction) {
-            ArouterUtils.getInstance().builder(ArouterParamOrder.activity_map_loaction).navigation(mContext);
+            ArouterUtils.getInstance().builder(ArouterParamOrder.activity_map_loaction).withBoolean(Param.TRAN,true).navigation(mContext);
         } else if (id == R.id.item_end_loaction) {
-            ArouterUtils.getInstance().builder(ArouterParamOrder.activity_map_loaction).navigation(mContext);
+            ArouterUtils.getInstance().builder(ArouterParamOrder.activity_map_loaction).withBoolean(Param.TRAN,false).navigation(mContext);
 
         }
     }
@@ -93,4 +99,26 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         String data = format.format(date);
         itemStartTime.setTextCenter(data);
     }
+
+    @Override
+    protected boolean getUseEventBus() {
+        return true;
+    }
+
+
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    public void onStartEvent(   OrderEvent.StartLoactionEvent startLoactionEvent){
+        if (startLoactionEvent!=null&&startLoactionEvent.t!=null) {
+            itemStartLocation.setTextCenter(startLoactionEvent.t.getTitle());
+        }
+    }
+
+
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    public void onEndEvent(   OrderEvent.EndLoactionEvent endLoactionEvent){
+        if (endLoactionEvent!=null&&endLoactionEvent.t!=null) {
+            itemEndLocation.setTextCenter(endLoactionEvent.t.getTitle());
+        }
+    }
+
 }

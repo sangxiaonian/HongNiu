@@ -1,8 +1,5 @@
 package com.sang.thirdlibrary.map;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.location.Location;
 
 import com.amap.api.maps.AMap;
@@ -11,17 +8,11 @@ import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.BitmapDescriptor;
-import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
-import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.services.core.PoiItem;
-import com.sang.common.utils.JLog;
-import com.sang.thirdlibrary.R;
-
-import java.util.List;
 
 /**
  * 作者： ${PING} on 2018/8/8.
