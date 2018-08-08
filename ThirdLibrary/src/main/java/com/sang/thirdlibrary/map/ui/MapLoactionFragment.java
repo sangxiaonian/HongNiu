@@ -1,10 +1,13 @@
 package com.sang.thirdlibrary.map.ui;
 
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -12,22 +15,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdate;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
-import com.amap.api.maps.model.BitmapDescriptor;
-import com.amap.api.maps.model.MyLocationStyle;
+import com.amap.api.maps.model.BitmapDescriptorFactory;
+import com.amap.api.maps.model.CameraPosition;
+import com.amap.api.maps.model.LatLng;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
+import com.sang.common.recycleview.adapter.XAdapter;
+import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 import com.sang.thirdlibrary.R;
 import com.sang.thirdlibrary.map.LoactionMapUtils;
+import com.sang.thirdlibrary.map.MapDialog;
 import com.sang.thirdlibrary.utils.XLog;
+
+import java.util.ArrayList;
 
 /**
  * 作者： ${PING} on 2018/8/8.
@@ -40,6 +50,10 @@ public class MapLoactionFragment extends Fragment implements AMap.OnMyLocationCh
     MapView mMapView = null;
     private EditText etSearch;
     private PoiSearch.Query query;
+    private ArrayList<PoiItem> poiItems = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private int selectPositio = -1;
+    private XAdapter<PoiItem> adapter;
 
     @Nullable
     @Override
@@ -47,6 +61,8 @@ public class MapLoactionFragment extends Fragment implements AMap.OnMyLocationCh
         View inflate = inflater.inflate(R.layout.map_loaction_fragment, container, false);
         mMapView = inflate.findViewById(R.id.map);
         etSearch = inflate.findViewById(R.id.et_search);
+        recyclerView = inflate.findViewById(R.id.rv);
+        recyclerView.setVisibility(View.GONE);
         return inflate;
     }
 
@@ -88,6 +104,46 @@ public class MapLoactionFragment extends Fragment implements AMap.OnMyLocationCh
 
 
     private void initView() {
+        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(manager);
+        adapter = new XAdapter<PoiItem>(getContext(), poiItems) {
+            @Override
+            public BaseHolder<PoiItem> initHolder(ViewGroup parent, int viewType) {
+                return new BaseHolder<PoiItem>(context, parent, R.layout.map_select_item) {
+                    @Override
+                    public void initView(View itemView, final int position, final PoiItem data) {
+                        super.initView(itemView, position, data);
+                        TextView tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
+                        TextView tvDes = (TextView) itemView.findViewById(R.id.tv_des);
+                        ImageView img = itemView.findViewById(R.id.img);
+                        if (selectPositio == position) {
+                            img.setVisibility(View.VISIBLE);
+                        } else {
+                            img.setVisibility(View.GONE);
+                        }
+
+                        tvDes.setText(data.getSnippet());
+                        tvTitle.setText(data.getTitle());
+                        itemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (selectPositio != position) {
+                                    selectPositio = position;
+                                    adapter.notifyDataSetChanged();
+                                    LoactionMapUtils.getInstance().moveTo(data);
+                                    LoactionMapUtils.getInstance().addMark(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                                            .decodeResource(getResources(), R.drawable.vector_drawable_start)),data);
+
+                                }
+
+                            }
+                        });
+                    }
+                };
+            }
+        };
+        recyclerView.setAdapter(adapter);
         etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -103,9 +159,9 @@ public class MapLoactionFragment extends Fragment implements AMap.OnMyLocationCh
 
     private void searchPio() {
         String trim = etSearch.getText().toString().trim();
-        if (TextUtils.isEmpty(trim)){
+        if (TextUtils.isEmpty(trim)) {
             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("请输入搜索地址");
-        }else {
+        } else {
             query = new PoiSearch.Query(trim, "", "");
 //keyWord表示搜索字符串，
 //第二个参数表示POI搜索类型，二者选填其一，选用POI搜索类型时建议填写类型代码，码表可以参考下方（而非文字）
@@ -128,7 +184,16 @@ public class MapLoactionFragment extends Fragment implements AMap.OnMyLocationCh
 
     @Override
     public void onPoiSearched(PoiResult poiResult, int i) {
-        JLog.i(poiResult.toString());
+        if (i == 1000) {
+            poiItems.clear();
+            poiItems.addAll(poiResult.getPois());
+            adapter.notifyDataSetChanged();
+
+            recyclerView.setVisibility(View.VISIBLE);
+        } else {
+            recyclerView.setVisibility(View.GONE);
+            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("搜索失败");
+        }
     }
 
     @Override

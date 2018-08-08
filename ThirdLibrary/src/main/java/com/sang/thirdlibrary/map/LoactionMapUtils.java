@@ -1,12 +1,26 @@
 package com.sang.thirdlibrary.map;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdate;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.UiSettings;
+import com.amap.api.maps.model.BitmapDescriptor;
+import com.amap.api.maps.model.BitmapDescriptorFactory;
+import com.amap.api.maps.model.CameraPosition;
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.Marker;
+import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
+import com.amap.api.services.core.PoiItem;
+import com.sang.thirdlibrary.R;
+
+import java.util.List;
 
 /**
  * 作者： ${PING} on 2018/8/8.
@@ -17,6 +31,36 @@ public class LoactionMapUtils implements AMap.OnMyLocationChangeListener {
     private MyLocationStyle myLocationStyle;
     private UiSettings mUiSettings;//定义一个UiSettings对象
     private AMap.OnMyLocationChangeListener onMyLocationChangeListener;
+
+    public void moveTo(PoiItem data) {
+//        CameraUpdate mCameraUpdate = CameraUpdateFactory.newCameraPosition(new CameraPosition(new LatLng(data.getLatLonPoint().getLatitude(),data.getLatLonPoint().getLatitude()),18,30,0));
+        LatLng latLng = new LatLng(data.getLatLonPoint().getLatitude(), data.getLatLonPoint().getLongitude());
+        CameraUpdate mCameraUpdate = CameraUpdateFactory.newCameraPosition(new CameraPosition(latLng, 18, 30, 0));
+
+
+        aMap.moveCamera(mCameraUpdate);
+    }
+
+    public void addMark(BitmapDescriptor bitmap, PoiItem data) {
+        LatLng latLng = new LatLng(data.getLatLonPoint().getLatitude(), data.getLatLonPoint().getLongitude());
+
+        List<Marker> markers = aMap.getMapScreenMarkers();
+        if (markers != null && markers.size() > 1) {
+            Marker marker = markers.get(1);
+            marker.setTitle(data.getTitle());
+            marker.setPosition(latLng);
+        } else {
+            MarkerOptions markerOption = new MarkerOptions();
+            markerOption.position(latLng);
+            markerOption.title(data.getTitle());
+            markerOption.draggable(true);//设置Marker可拖动
+            markerOption.icon(bitmap);
+            // 将Marker设置为贴地显示，可以双指下拉地图查看效果
+            markerOption.setFlat(true);//设置marker平贴地图效果
+            aMap.addMarker(markerOption);
+
+        }
+    }
 
 
     private static class InnerMpa {
@@ -62,12 +106,13 @@ public class LoactionMapUtils implements AMap.OnMyLocationChangeListener {
     }
 
     public void setOnMyLocationChangeListener(AMap.OnMyLocationChangeListener listener) {
-        this.onMyLocationChangeListener=listener;
+        this.onMyLocationChangeListener = listener;
     }
+
     @Override
     public void onMyLocationChange(Location location) {
         aMap.moveCamera(CameraUpdateFactory.zoomTo(18));
-        if (onMyLocationChangeListener!=null){
+        if (onMyLocationChangeListener != null) {
             onMyLocationChangeListener.onMyLocationChange(location);
         }
     }
