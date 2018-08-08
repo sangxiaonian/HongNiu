@@ -28,14 +28,12 @@
             android:textSize="13sp" />
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
         <com.amap.api.maps.MapView
             android:id="@+id/map"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_weight="1"
+            android:layout_height="0dp"/>
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
@@ -45,7 +43,6 @@
 
         </android.support.v7.widget.RecyclerView>
 
-    </RelativeLayout>
 
 
 

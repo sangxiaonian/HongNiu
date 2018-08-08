@@ -18,6 +18,7 @@ import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.services.core.PoiItem;
+import com.sang.common.utils.JLog;
 import com.sang.thirdlibrary.R;
 
 import java.util.List;
@@ -43,23 +44,16 @@ public class LoactionMapUtils implements AMap.OnMyLocationChangeListener {
 
     public void addMark(BitmapDescriptor bitmap, PoiItem data) {
         LatLng latLng = new LatLng(data.getLatLonPoint().getLatitude(), data.getLatLonPoint().getLongitude());
+        MarkerOptions markerOption = new MarkerOptions();
+        markerOption.position(latLng);
+        markerOption.title(data.getTitle());
+        markerOption.draggable(false);//设置Marker可拖动
+        markerOption.icon(bitmap);
+        // 将Marker设置为贴地显示，可以双指下拉地图查看效果
+        markerOption.setFlat(true);//设置marker平贴地图效果
+        aMap.clear();
+        aMap.addMarker(markerOption);
 
-        List<Marker> markers = aMap.getMapScreenMarkers();
-        if (markers != null && markers.size() > 1) {
-            Marker marker = markers.get(1);
-            marker.setTitle(data.getTitle());
-            marker.setPosition(latLng);
-        } else {
-            MarkerOptions markerOption = new MarkerOptions();
-            markerOption.position(latLng);
-            markerOption.title(data.getTitle());
-            markerOption.draggable(true);//设置Marker可拖动
-            markerOption.icon(bitmap);
-            // 将Marker设置为贴地显示，可以双指下拉地图查看效果
-            markerOption.setFlat(true);//设置marker平贴地图效果
-            aMap.addMarker(markerOption);
-
-        }
     }
 
 
