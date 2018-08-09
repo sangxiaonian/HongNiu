@@ -37,8 +37,8 @@ public class FinanceExpendFragment extends BaseFragment {
     }
 
     @Override
-    protected void initDataa() {
-        super.initDataa();
+    protected void initData() {
+        super.initData();
 
         datas=new ArrayList<>();
         for (int i = 0; i < 10; i++) {

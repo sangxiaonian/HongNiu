@@ -87,8 +87,8 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
     }
 
     @Override
-    protected void initDataa() {
-        super.initDataa();
+    protected void initData() {
+        super.initData();
         orderMainPop = new OrderMainPop<>(getContext());
         states = Arrays.asList(getResources().getStringArray(R.array.order_main_state));
         times = Arrays.asList(getResources().getStringArray(R.array.order_main_time));

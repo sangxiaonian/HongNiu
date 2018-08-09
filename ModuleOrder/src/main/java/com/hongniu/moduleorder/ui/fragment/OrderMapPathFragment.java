@@ -2,14 +2,14 @@ package com.hongniu.moduleorder.ui.fragment;
 
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.MapView;
-import com.amap.api.maps.model.LatLng;
 import com.hongniu.baselibrary.base.BaseFragment;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderMapListener;
@@ -22,6 +22,14 @@ public class OrderMapPathFragment extends BaseFragment implements OrderMapListen
 
     private MapView mapView;
     private MapCalculateHelper helper;
+
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            helper.moveToStart();
+        }
+    };
 
 
 
@@ -45,15 +53,16 @@ public class OrderMapPathFragment extends BaseFragment implements OrderMapListen
 
 
     @Override
-    protected void initDataa() {
-        super.initDataa();
+    protected void initData() {
+        super.initData();
         helper = new MapCalculateHelper();
         helper.initMap(getContext(), mapView);
-
         helper.setOnMyLocationChangeListener(new AMap.OnMyLocationChangeListener() {
             @Override
             public void onMyLocationChange(Location location) {
-
+                if (moveToStar){
+                    handler.sendEmptyMessageDelayed(0,200);
+                }
             }
         });
     }
@@ -71,9 +80,15 @@ public class OrderMapPathFragment extends BaseFragment implements OrderMapListen
 
     }
 
+
+    private boolean moveToStar;
+
     @Override
     public void calculate(String carNum){
         helper.calculate(carNum);
+        helper.moveToStart();
+        moveToStar=true;
+
     }
 
 

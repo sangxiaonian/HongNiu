@@ -125,6 +125,8 @@ public class BaseMapHelper implements AMap.OnMyLocationChangeListener {
 
     public void setStartMarker(double latitude, double longitude, String title) {
         mStartMarker.setPosition(new LatLng( latitude,longitude));
+        sList.clear();
+        sList.add(new NaviLatLng(latitude,longitude));
         if (!TextUtils.isEmpty(title)){
             mStartMarker.setTitle(title);
         }
@@ -132,6 +134,8 @@ public class BaseMapHelper implements AMap.OnMyLocationChangeListener {
 
     public void setEndMarker(double latitude, double longitude, String title) {
         mEndMarker.setPosition(new LatLng(latitude, longitude));
+        eList.clear();
+        eList.add(new NaviLatLng(latitude,longitude));
         if (!TextUtils.isEmpty(title)){
             mEndMarker.setTitle(title);
         }

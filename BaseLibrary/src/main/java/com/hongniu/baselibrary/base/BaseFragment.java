@@ -35,7 +35,7 @@ public class BaseFragment extends Fragment implements TaskControl.OnTaskListener
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initDataa();
+        initData();
         initListener();
     }
 
@@ -69,7 +69,7 @@ public class BaseFragment extends Fragment implements TaskControl.OnTaskListener
 
     }
 
-    protected void initDataa() {
+    protected void initData() {
     }
 
     @Override

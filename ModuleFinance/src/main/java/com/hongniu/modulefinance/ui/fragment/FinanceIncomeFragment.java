@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hongniu.baselibrary.base.BaseFragment;
@@ -38,8 +37,8 @@ public class FinanceIncomeFragment extends BaseFragment {
     }
 
     @Override
-    protected void initDataa() {
-        super.initDataa();
+    protected void initData() {
+        super.initData();
 
         datas=new ArrayList<>();
         for (int i = 0; i < 10; i++) {

@@ -78,6 +78,12 @@ public class MapCalculateHelper extends BaseMapHelper implements AMap.OnMyLocati
     private boolean calculateSuccess = false;
     private boolean chooseRouteSuccess = false;
 
+    public void moveToStart() {
+        if (!sList.isEmpty()){
+            moveTo(sList.get(0).getLatitude(),sList.get(0).getLongitude());
+        }
+    }
+
 
     private static class InnerMpa {
         public static MapCalculateHelper utils = new MapCalculateHelper();
@@ -96,7 +102,6 @@ public class MapCalculateHelper extends BaseMapHelper implements AMap.OnMyLocati
 
     @Override
     public void setDebug() {
-        super.setDebug();
         setStartPoint(31.275837, 121.457689);
         setEndtPoint(31.315814, 121.393459);
         moveTo(31.275837, 121.457689);
@@ -147,7 +152,6 @@ public class MapCalculateHelper extends BaseMapHelper implements AMap.OnMyLocati
             mAMapNavi.calculateDriveRoute(sList, eList, mWayPointList, strategyFlag);
         }
 
-        moveTo(sList.get(0).getLatitude(),sList.get(0).getLongitude());
 
     }
 

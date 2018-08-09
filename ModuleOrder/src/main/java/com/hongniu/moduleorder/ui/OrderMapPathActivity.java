@@ -21,10 +21,16 @@ public class OrderMapPathActivity extends BaseActivity {
         setToolbarTitle("查看轨迹");
 
         OrderMapPathFragment fragment = new OrderMapPathFragment();
-        helper=fragment;
+        helper = fragment;
         getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
 
     }
 
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        helper.setStartMarker(31.275837, 121.457689, "");
+        helper.setEndtMarker(31.315814, 121.393459, null);
+        helper.calculate("");
+    }
 }
