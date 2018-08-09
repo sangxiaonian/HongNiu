@@ -23,4 +23,10 @@ public class OrderEvent {
             this.t = t;
         }
     }
+
+    public static class MapStartPoint{
+
+    }
+
+
 }

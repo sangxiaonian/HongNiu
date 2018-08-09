@@ -1,6 +1,5 @@
 package com.hongniu.moduleorder.ui;
 
-import android.app.Fragment;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,12 +19,9 @@ import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
-import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
-import com.hongniu.moduleorder.control.OrderMapListener;
-import com.hongniu.moduleorder.ui.fragment.OrderMapPathFragment;
 import com.sang.common.event.BusFactory;
 import com.sang.common.event.IBus;
 import com.sang.common.recycleview.adapter.XAdapter;
@@ -41,8 +37,8 @@ import java.util.ArrayList;
  *
  *
  */
-@Route(path = ArouterParamOrder.activity_map_loaction)
-public class OrderMapLocationActivity extends BaseActivity implements PoiSearch.OnPoiSearchListener {
+//@Route(path = ArouterParamOrder.activity_map_loaction)
+public class OrderMapLocationActivity1 extends BaseMapActivity implements PoiSearch.OnPoiSearchListener {
 
 
     private EditText etSearch;
@@ -52,7 +48,7 @@ public class OrderMapLocationActivity extends BaseActivity implements PoiSearch.
     private int selectPositio = -1;
     private XAdapter<PoiItem> adapter;
     private boolean start;
-    private OrderMapListener helper;
+    private MapCalculateHelper helper;
 
 
     @Override
@@ -61,12 +57,22 @@ public class OrderMapLocationActivity extends BaseActivity implements PoiSearch.
         setContentView(R.layout.activity_order_map_location_ativity);
         setToolbarTitle("位置");
         setToolbarSrcRight("确定");
-        OrderMapPathFragment orderMapPathFragment = new OrderMapPathFragment();
-        helper=orderMapPathFragment;
-        getSupportFragmentManager().beginTransaction().replace(R.id.content, orderMapPathFragment).commit();
         initView();
+        mMapView.onCreate(savedInstanceState);
         initData();
         initListener();
+
+        helper = new MapCalculateHelper();
+        helper.initMap(this, mMapView);
+        helper.setDebug();
+        helper.setOnMyLocationChangeListener(new AMap.OnMyLocationChangeListener() {
+            @Override
+            public void onMyLocationChange(Location location) {
+                helper.moveTo(location.getLatitude(), location.getLongitude());
+                helper.calculate("");
+            }
+        });
+
 
     }
 
@@ -120,8 +126,10 @@ public class OrderMapLocationActivity extends BaseActivity implements PoiSearch.
 
                                     if (start) {
                                         helper.setStartMarker(data.getLatLonPoint().getLatitude(), data.getLatLonPoint().getLongitude(), data.getTitle());
+                                        helper.moveTo(data.getLatLonPoint().getLatitude(), data.getLatLonPoint().getLongitude());
                                     } else {
-                                        helper.setEndtMarker(data.getLatLonPoint().getLatitude(), data.getLatLonPoint().getLongitude(), data.getTitle());
+                                        helper.setEndMarker(data.getLatLonPoint().getLatitude(), data.getLatLonPoint().getLongitude(), data.getTitle());
+                                        helper.moveTo(data.getLatLonPoint().getLatitude(), data.getLatLonPoint().getLongitude());
 
                                     }
                                     JLog.i(data.getLatLonPoint().getLatitude() + "????" + data.getLatLonPoint().getLongitude());
@@ -145,8 +153,6 @@ public class OrderMapLocationActivity extends BaseActivity implements PoiSearch.
             }
         });
     }
-
-
 
     @Override
     protected void initListener() {

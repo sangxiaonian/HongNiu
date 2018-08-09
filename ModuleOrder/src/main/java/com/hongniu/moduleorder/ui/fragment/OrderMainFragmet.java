@@ -276,7 +276,7 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
      */
     @Override
     public void onCheckInsruance() {
-
+        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("查看保单");
     }
 
     /**
@@ -284,6 +284,7 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
      */
     @Override
     public void onCheckPath() {
+        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_navigation).navigation(getContext());
 
     }
 
@@ -292,6 +293,7 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
      */
     @Override
     public void onEntryOrder() {
+        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("确认收货");
 
     }
 
@@ -316,6 +318,7 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
      */
     @Override
     public void onCheckRout() {
+        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_map_path).navigation(getContext());
 
     }
 

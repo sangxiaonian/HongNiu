@@ -32,5 +32,13 @@ public class ArouterParamOrder {
      * 地图定位选择地点
      */
     public static final String activity_map_loaction = "/order/activity_map_loaction";
+    /**
+     * 地图导航
+     */
+    public static final String activity_order_navigation = "/order/activity_order_navigation";
+    /**
+     * 地图查看轨迹
+     */
+    public static final String activity_order_map_path = "/order/activity_order_map_path";
 
 }

@@ -34,4 +34,5 @@ dependencies {
     api files('libs/AMap_Location_V4.1.0_20180619.jar')
     api files('libs/AMap_Search_V6.1.0_20180330.jar')
     implementation project(':CommonLibrary')
+    api files('libs/Msc.jar')
 }
