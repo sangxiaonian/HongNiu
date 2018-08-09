@@ -9,9 +9,10 @@
             android:id="@+id/toolbar_left"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
+            android:clickable="true"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
-            <ImageButton
+            <ImageView
                 android:scaleType="fitCenter"
                 android:layout_gravity="center"
                 android:id="@+id/toolbar_src_left"
@@ -40,7 +41,7 @@
             android:paddingRight="15dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
-            <ImageButton
+            <ImageView
                 android:scaleType="fitCenter"
                 android:layout_gravity="center"
                 android:id="@+id/toolbar_src_right"

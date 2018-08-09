@@ -1,7 +1,5 @@
 package com.hongniu.moduleorder.ui;
 
-import android.app.Fragment;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.amap.api.maps.AMap;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
@@ -32,14 +29,11 @@ import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
-import com.sang.thirdlibrary.map.MapCalculateHelper;
 
 import java.util.ArrayList;
 
 /**
- * 定位，选择当前所在点的Activity，以及查看路线，查看看轨迹
- *
- *
+ * 定位，选择当前所在点的Activity，
  */
 @Route(path = ArouterParamOrder.activity_map_loaction)
 public class OrderMapLocationActivity extends BaseActivity implements PoiSearch.OnPoiSearchListener {
@@ -62,7 +56,7 @@ public class OrderMapLocationActivity extends BaseActivity implements PoiSearch.
         setToolbarTitle("位置");
         setToolbarSrcRight("确定");
         OrderMapPathFragment orderMapPathFragment = new OrderMapPathFragment();
-        helper=orderMapPathFragment;
+        helper = orderMapPathFragment;
         getSupportFragmentManager().beginTransaction().replace(R.id.content, orderMapPathFragment).commit();
         initView();
         initData();
@@ -145,7 +139,6 @@ public class OrderMapLocationActivity extends BaseActivity implements PoiSearch.
             }
         });
     }
-
 
 
     @Override

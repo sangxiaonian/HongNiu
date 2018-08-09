@@ -62,10 +62,12 @@ public class FinanceIncomeFragment extends BaseFragment {
                         TextView tvOrder = itemView.findViewById(R.id.tv_order);
                         TextView tvCarNum = itemView.findViewById(R.id.tv_car_num);
                         TextView tvTime = itemView.findViewById(R.id.tv_time);
+                        TextView tvPrice = itemView.findViewById(R.id.tv_price);
 
-                        tvOrder.setText("订单号："+"1212136484");
-                        tvCarNum.setText("车牌号："+"沪A125356");
-                        tvTime.setText("付费时间："+"2017-7-8");
+                        tvOrder.setText("订单号：" + "1212136484");
+                        tvCarNum.setText("车牌号：" + "沪A125356");
+                        tvTime.setText("付费时间：" + "2017-7-8");
+                        tvPrice.setText("1200.0");
                         itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {

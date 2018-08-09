@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hongniu.baselibrary.R;
@@ -28,8 +29,8 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
     protected Context mContext;
     protected FrameLayout llToolbarLeft;
     protected FrameLayout llToolbarRight;
-    protected ImageButton imgToolbarLeft;
-    protected ImageButton imgToolbarRight;
+    protected ImageView imgToolbarLeft;
+    protected ImageView imgToolbarRight;
     protected TextView tvToolbarTitle;
     protected TextView tvToolbarRight;
     protected View tool;

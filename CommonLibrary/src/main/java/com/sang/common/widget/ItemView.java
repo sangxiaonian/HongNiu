@@ -15,6 +15,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,7 +36,7 @@ public class ItemView extends FrameLayout {
     private boolean editable;
     private String textCenterHide;
     TextView tvLeft;
-    TextView etCenter;
+    EditText etCenter;
     TextView tvRight;
     ImageView imgGo;
     private View viewFound;
@@ -148,8 +149,8 @@ public class ItemView extends FrameLayout {
                 @Override
                 public void onClick(View v) {
                     etCenter.requestFocus();
-                    InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.showSoftInput(etCenter,InputMethodManager.SHOW_FORCED);
+                    DeviceUtils.openSoft(etCenter);
+
                 }
             });
         }else {

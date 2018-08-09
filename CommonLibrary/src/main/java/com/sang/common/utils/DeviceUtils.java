@@ -7,6 +7,9 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -23,8 +26,6 @@ public class DeviceUtils {
     public DeviceUtils(Context context) {
         this.mContext = context;
     }
-
-
 
 
     /**
@@ -56,10 +57,6 @@ public class DeviceUtils {
     }
 
 
-
-
-
-
     /**
      * 获取手机厂商
      *
@@ -86,7 +83,7 @@ public class DeviceUtils {
         int version = 0;
         try {
             packInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
-              version = packInfo.versionCode;
+            version = packInfo.versionCode;
 
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
@@ -108,5 +105,15 @@ public class DeviceUtils {
     public static int px2dip(Context context, float pxValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (pxValue / scale + 0.5f);
+    }
+
+    public static void openSoft(EditText etCenter) {
+        InputMethodManager imm = (InputMethodManager) etCenter.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(etCenter, InputMethodManager.SHOW_FORCED);
+    }
+
+    public static void hideSoft(EditText etCenter) {
+        InputMethodManager inputMethodManager = (InputMethodManager) etCenter.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(etCenter.getWindowToken(), 0);
     }
 }

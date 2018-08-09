@@ -15,11 +15,7 @@ import com.hongniu.modulefinance.R;
 import com.hongniu.modulefinance.ui.adapter.FinanceExpendHeadHolder;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
-import com.sang.common.recycleview.holder.PeakHolder;
-import com.sang.common.utils.ToastUtils;
-import com.sang.common.widget.dialog.BottomAlertDialog;
 import com.sang.common.widget.dialog.builder.BottomAlertBuilder;
-import com.sang.common.widget.dialog.inter.DialogControl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,11 +69,12 @@ public class FinanceExpendFragment extends BaseFragment implements RadioGroup.On
                         TextView tvOrder = itemView.findViewById(R.id.tv_order);
                         TextView tvCarNum = itemView.findViewById(R.id.tv_car_num);
                         TextView tvTime = itemView.findViewById(R.id.tv_time);
+                        TextView tvPrice = itemView.findViewById(R.id.tv_price);
 
                         tvOrder.setText("订单号：" + "1212136484");
                         tvCarNum.setText("车牌号：" + "沪A125356");
-                        tvOrder.setText("付费时间：" + "2017-7-8");
-
+                        tvTime.setText("付费时间：" + "2017-7-8");
+                        tvPrice.setText("1200.0");
                         itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {

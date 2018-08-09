@@ -11,5 +11,10 @@ public class ArouterParamsFinance {
      */
     public final static String activity_finance_activity = "/finance/finance_activity";
 
+    /**
+     * 订单搜索列表
+     */
+    public final static String activity_finance_search = "/finance/activity_finance_search";
+
 
 }

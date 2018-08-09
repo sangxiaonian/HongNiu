@@ -8,6 +8,7 @@ import android.widget.RadioGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.BaseFragment;
 import com.hongniu.modulefinance.R;
@@ -62,7 +63,7 @@ public class FinanceActivity extends BaseActivity implements RadioGroup.OnChecke
         setToolbarRightClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ArouterUtils.getInstance().builder(ArouterParamsFinance.activity_finance_search).navigation(mContext);
             }
         });
     }
