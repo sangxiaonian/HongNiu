@@ -6,10 +6,27 @@
 
     <include layout="@layout/toolbar" />
 
-    <FrameLayout
-        android:id="@+id/content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp">
+        <FrameLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.hongniu.baselibrary.widget.order.OrderDetailItem
+            android:layout_width="match_parent"
+            android:id="@+id/item_order"
+            android:layout_alignParentBottom="true"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+    <Button
+        android:text="开始导航"
+        android:id="@+id/bt"
+        style="@style/bt_sum"/>
 
 </LinearLayout>

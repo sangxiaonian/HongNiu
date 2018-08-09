@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.MapView;
+import com.amap.api.navi.view.RouteOverLay;
 import com.hongniu.baselibrary.base.BaseFragment;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderMapListener;
@@ -91,6 +92,12 @@ public class OrderMapPathFragment extends BaseFragment implements OrderMapListen
 
     }
 
+    @Override
+    public RouteOverLay getNavigation() {
+
+        return  helper.getAMapNaviViewOptions();
+    }
+
 
     public void onResume() {
         super.onResume();
@@ -102,6 +109,7 @@ public class OrderMapPathFragment extends BaseFragment implements OrderMapListen
     public void onPause() {
         super.onPause();
         mapView.onPause();
+        helper.onDestroy();
     }
 
     /**
@@ -111,7 +119,6 @@ public class OrderMapPathFragment extends BaseFragment implements OrderMapListen
     public void onDestroy() {
         super.onDestroy();
         mapView.onDestroy();
-        helper.onDestroy();
 
     }
 

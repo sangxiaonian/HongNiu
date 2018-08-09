@@ -33,7 +33,7 @@ import java.util.List;
 /**
  * 作者： ${PING} on 2018/8/9.
  */
-public class NavigationUtils implements  AMapNaviListener, AMapNaviViewListener {
+public class NavigationUtils implements AMapNaviListener, AMapNaviViewListener {
 
 
     //起点坐标
@@ -44,7 +44,7 @@ public class NavigationUtils implements  AMapNaviListener, AMapNaviViewListener 
     protected List<NaviLatLng> mWayPointList;//途经地点
     private AMapNavi mAMapNavi;
 
-    private int type= NaviType.GPS;//导航模式
+    private int type = NaviType.GPS;//导航模式
 
 
     private MapControl.OnMapInitListener listener;
@@ -62,12 +62,12 @@ public class NavigationUtils implements  AMapNaviListener, AMapNaviViewListener 
         mAMapNavi.setUseInnerVoice(true);
     }
 
-    public void setDebug(){
+    public void setDebug() {
         //设置模拟导航的行车速度
         mAMapNavi.setEmulatorNaviSpeed(75);
-         setStartPoint(31.275837,121.457689);
-         setEndtPoint(31.315814,121.393459);
-        type=NaviType.EMULATOR;
+        setStartPoint(31.275837, 121.457689);
+        setEndtPoint(31.315814, 121.393459);
+        type = NaviType.EMULATOR;
     }
 
 
@@ -146,7 +146,7 @@ public class NavigationUtils implements  AMapNaviListener, AMapNaviViewListener 
     @Override
     public void onCalculateRouteSuccess(int[] ints) {
         //多路径算路成功回调
-        if (listener!=null){
+        if (listener != null) {
             listener.onCalculateRouteSuccess();
         }
     }
@@ -154,11 +154,16 @@ public class NavigationUtils implements  AMapNaviListener, AMapNaviViewListener 
     @Override
     public void onCalculateRouteSuccess(AMapCalcRouteResult aMapCalcRouteResult) {
         //单一路径算路成功回调
-        if (listener!=null){
+        if (listener != null) {
             listener.onCalculateRouteSuccess();
         }
-//        mAMapNavi.startNavi(type);
     }
+
+    public void startNavi(){
+        mAMapNavi.startNavi(type);
+
+    }
+
 
     //地图初始化完成，此处开始设置路径计算策略
     @Override
@@ -186,7 +191,7 @@ public class NavigationUtils implements  AMapNaviListener, AMapNaviViewListener 
             e.printStackTrace();
         }
         mAMapNavi.calculateDriveRoute(sList, eList, mWayPointList, strategy);
-        if (listener!=null){
+        if (listener != null) {
             listener.onInitSuccess();
         }
     }
@@ -351,18 +356,18 @@ public class NavigationUtils implements  AMapNaviListener, AMapNaviViewListener 
     public void notifyParallelRoad(int i) {
         if (i == 0) {
             Log.d("wlx", "当前在主辅路过渡");
-            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show( "当前在主辅路过渡");
+            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("当前在主辅路过渡");
 
             return;
         }
         if (i == 1) {
-            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show( "当前在主路");
+            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("当前在主路");
 
             Log.d("wlx", "当前在主路");
             return;
         }
         if (i == 2) {
-            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show( "当前在辅路");
+            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("当前在辅路");
             Log.d("wlx", "当前在辅路");
         }
     }
@@ -435,7 +440,6 @@ public class NavigationUtils implements  AMapNaviListener, AMapNaviViewListener 
     public void showLaneInfo(AMapLaneInfo aMapLaneInfo) {
 
     }
-
 
 
     @Override

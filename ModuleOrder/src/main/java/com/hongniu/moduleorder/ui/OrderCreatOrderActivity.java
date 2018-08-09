@@ -106,7 +106,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     }
 
 
-    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    @Subscribe(  threadMode = ThreadMode.MAIN)
     public void onStartEvent(   OrderEvent.StartLoactionEvent startLoactionEvent){
         if (startLoactionEvent!=null&&startLoactionEvent.t!=null) {
             itemStartLocation.setTextCenter(startLoactionEvent.t.getTitle());
@@ -114,7 +114,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     }
 
 
-    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    @Subscribe( threadMode = ThreadMode.MAIN)
     public void onEndEvent(   OrderEvent.EndLoactionEvent endLoactionEvent){
         if (endLoactionEvent!=null&&endLoactionEvent.t!=null) {
             itemEndLocation.setTextCenter(endLoactionEvent.t.getTitle());

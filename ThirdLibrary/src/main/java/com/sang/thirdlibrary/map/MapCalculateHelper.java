@@ -4,18 +4,10 @@ import android.content.Context;
 import android.location.Location;
 import android.text.TextUtils;
 import android.util.SparseArray;
-import android.widget.Toast;
 
 import com.amap.api.maps.AMap;
-import com.amap.api.maps.CameraUpdate;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
-import com.amap.api.maps.UiSettings;
-import com.amap.api.maps.model.BitmapDescriptor;
-import com.amap.api.maps.model.CameraPosition;
-import com.amap.api.maps.model.LatLng;
-import com.amap.api.maps.model.MarkerOptions;
-import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.navi.AMapNavi;
 import com.amap.api.navi.AMapNaviListener;
 import com.amap.api.navi.model.AMapCalcRouteResult;
@@ -34,15 +26,11 @@ import com.amap.api.navi.model.AMapServiceAreaInfo;
 import com.amap.api.navi.model.AimLessModeCongestionInfo;
 import com.amap.api.navi.model.AimLessModeStat;
 import com.amap.api.navi.model.NaviInfo;
-import com.amap.api.navi.model.NaviLatLng;
 import com.amap.api.navi.view.RouteOverLay;
-import com.amap.api.services.core.PoiItem;
 import com.autonavi.tbt.TrafficFacilityInfo;
 import com.sang.common.utils.ToastUtils;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * 作者： ${PING} on 2018/8/8.
@@ -77,11 +65,18 @@ public class MapCalculateHelper extends BaseMapHelper implements AMap.OnMyLocati
      */
     private boolean calculateSuccess = false;
     private boolean chooseRouteSuccess = false;
+    private AMapCalcRouteResult aMapCalcRouteResult;
 
     public void moveToStart() {
         if (!sList.isEmpty()){
             moveTo(sList.get(0).getLatitude(),sList.get(0).getLongitude());
         }
+    }
+
+    public RouteOverLay getAMapNaviViewOptions() {
+
+
+        return routeOverlays.get(routeIndex);
     }
 
 
@@ -228,6 +223,7 @@ public class MapCalculateHelper extends BaseMapHelper implements AMap.OnMyLocati
          */
         mAMapNavi.removeAMapNaviListener(this);
         mAMapNavi.destroy();
+        mAMapNavi=null;
         routeOverlays.clear();
     }
 
@@ -247,7 +243,7 @@ public class MapCalculateHelper extends BaseMapHelper implements AMap.OnMyLocati
     @Override
     public void onCalculateRouteSuccess(AMapCalcRouteResult aMapCalcRouteResult) {
         routeOverlays.clear();
-
+        this.aMapCalcRouteResult=aMapCalcRouteResult;
         int[] routeid = aMapCalcRouteResult.getRouteid();
         HashMap<Integer, AMapNaviPath> paths = mAMapNavi.getNaviPaths();
         for (int i = 0; i < routeid.length; i++) {
