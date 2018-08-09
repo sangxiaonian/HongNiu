@@ -215,6 +215,10 @@ public class ItemView extends FrameLayout {
         return textCenter=etCenter.getText().toString().trim();
     }
 
+    public EditText getEtCenter() {
+        return etCenter;
+    }
+
     public String getTextRight() {
         return textRight=tvRight.getText().toString().trim();
     }

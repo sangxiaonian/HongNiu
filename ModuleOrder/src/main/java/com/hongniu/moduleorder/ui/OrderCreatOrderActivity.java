@@ -1,10 +1,16 @@
 package com.hongniu.moduleorder.ui;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bigkoo.pickerview.TimePickerView;
+import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
@@ -12,21 +18,45 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.utils.PickerDialogUtils;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
+import com.hongniu.moduleorder.widget.CarNumPop;
 import com.sang.common.event.BusFactory;
 import com.sang.common.utils.JLog;
 import com.sang.common.widget.ItemView;
+import com.sang.common.widget.dialog.BottomAlertDialog;
+import com.sang.common.widget.dialog.builder.BottomAlertBuilder;
+import com.sang.common.widget.dialog.inter.DialogControl;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 创建订单
  */
 @Route(path = ArouterParamOrder.activity_order_create)
 public class OrderCreatOrderActivity extends BaseActivity implements View.OnClickListener, TimePickerView.OnTimeSelectListener {
+
+    public Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            String mark = "沪";
+            List<String> datas = new ArrayList<>();
+            datas.add("沪A1245855");
+            datas.add("沪A245855");
+            datas.add("沪A45855");
+            datas.add("沪A5855");
+            datas.add("沪A1245855");
+            datas.add("沪A1245855");
+            pop.upData(mark,datas);
+            pop.show(itemCarNum);
+        }
+    };
+
 
     private ItemView itemStartTime;         //发货时间
     private ItemView itemStartLocation;     //发货地点
@@ -43,6 +73,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     private ItemView itemDriverPhone;         //司机手机
     private TimePickerView timePickerView;
 
+    private CarNumPop pop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +100,8 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         itemCarName = findViewById(R.id.item_car_name);
         itemDriverName = findViewById(R.id.item_driver_name);
         timePickerView = PickerDialogUtils.initTimePicker(mContext, this, new boolean[]{true, true, true, false, false, false});
+        pop = new CarNumPop(mContext);
+
     }
 
     @Override
@@ -77,6 +110,27 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         itemStartTime.setOnClickListener(this);
         itemStartLocation.setOnClickListener(this);
         itemEndLocation.setOnClickListener(this);
+
+        itemCarNum.getEtCenter().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                handler.removeMessages(0);
+                if (!TextUtils.isEmpty(itemCarNum.getTextCenter())) {
+                    handler.sendEmptyMessageDelayed(0, 300);
+                }
+            }
+        });
+
     }
 
 
@@ -86,9 +140,9 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         if (id == R.id.item_start_time) {
             timePickerView.show();
         } else if (id == R.id.item_start_loaction) {
-            ArouterUtils.getInstance().builder(ArouterParamOrder.activity_map_loaction).withBoolean(Param.TRAN,true).navigation(mContext);
+            ArouterUtils.getInstance().builder(ArouterParamOrder.activity_map_loaction).withBoolean(Param.TRAN, true).navigation(mContext);
         } else if (id == R.id.item_end_loaction) {
-            ArouterUtils.getInstance().builder(ArouterParamOrder.activity_map_loaction).withBoolean(Param.TRAN,false).navigation(mContext);
+            ArouterUtils.getInstance().builder(ArouterParamOrder.activity_map_loaction).withBoolean(Param.TRAN, false).navigation(mContext);
 
         }
     }
@@ -106,19 +160,41 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     }
 
 
-    @Subscribe(  threadMode = ThreadMode.MAIN)
-    public void onStartEvent(   OrderEvent.StartLoactionEvent startLoactionEvent){
-        if (startLoactionEvent!=null&&startLoactionEvent.t!=null) {
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onStartEvent(OrderEvent.StartLoactionEvent startLoactionEvent) {
+        if (startLoactionEvent != null && startLoactionEvent.t != null) {
             itemStartLocation.setTextCenter(startLoactionEvent.t.getTitle());
         }
     }
 
 
-    @Subscribe( threadMode = ThreadMode.MAIN)
-    public void onEndEvent(   OrderEvent.EndLoactionEvent endLoactionEvent){
-        if (endLoactionEvent!=null&&endLoactionEvent.t!=null) {
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEndEvent(OrderEvent.EndLoactionEvent endLoactionEvent) {
+        if (endLoactionEvent != null && endLoactionEvent.t != null) {
             itemEndLocation.setTextCenter(endLoactionEvent.t.getTitle());
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        new BottomAlertBuilder()
+                .setDialogTitle( "确认要放弃下单吗？")
+                .setTopClickListener(new DialogControl.OnButtonTopClickListener() {
+                    @Override
+                    public void onTopClick(View view, DialogControl.IBottomDialog dialog) {
+                        dialog.dismiss();
+                        finish();
+                    }
+
+                })
+                .setBottomClickListener(new DialogControl.OnButtonBottomClickListener() {
+                    @Override
+                    public void onBottomClick(View view, DialogControl.IBottomDialog dialog) {
+                        dialog.dismiss();
+
+                    }
+
+                }).creatDialog(new BottomAlertDialog(mContext)).show();
+
+    }
 }
