@@ -2,6 +2,7 @@ package com.hongniu.modulefinance.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -50,12 +51,20 @@ public class FinanceActivity extends BaseActivity implements RadioGroup.OnChecke
         rg=findViewById(R.id.rg);
         rbLeft=findViewById(R.id.rb_left);
         rbRight=findViewById(R.id.rb_right);
+        setToolbarSrcRight(R.mipmap.icon_search_w_36);
+
     }
 
     @Override
     protected void initListener() {
         super.initListener();
         rg.setOnCheckedChangeListener(this);
+        setToolbarRightClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
 

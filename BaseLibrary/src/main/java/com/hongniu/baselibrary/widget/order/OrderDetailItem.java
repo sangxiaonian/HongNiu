@@ -105,6 +105,17 @@ public class OrderDetailItem extends FrameLayout {
         }
     }
 
+    private boolean hideButton;
+    public void hideButton(boolean hideButton){
+        this.hideButton=hideButton;
+        if (hideButton){
+            bt_left.setVisibility(GONE);
+            bt_right.setVisibility(GONE);
+
+            return;
+        }
+
+    }
 
     /**
      * 设置当前角色
@@ -279,6 +290,14 @@ public class OrderDetailItem extends FrameLayout {
 
 
     public void buildButton(boolean b) {
+
+        if (hideButton){
+            bt_left.setVisibility(GONE);
+            bt_right.setVisibility(GONE);
+
+            return;
+        }
+
         final OrderDetailItemControl.IOrderItemHelper helper = new OrderItemHelper(orderState, roleState, b);
         bt_left.setVisibility(helper.getLeftVisibility());
         bt_right.setVisibility(helper.getRightVisibility());

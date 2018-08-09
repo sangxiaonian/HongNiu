@@ -45,8 +45,8 @@ public class BottomAlertDialog
         btBottom = inflate.findViewById(R.id.bt_bottom);
         tvTitle = inflate.findViewById(R.id.tv_title);
         dialog = new Dialog(context, themeResId);
-        dialog.setContentView(inflate);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(inflate);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setWindowAnimations(R.style.dialog_ani);
         dialog.getWindow().setGravity(Gravity.BOTTOM);

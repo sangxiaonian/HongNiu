@@ -46,7 +46,7 @@ public class OrderMapPathActivity extends BaseActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
         item = findViewById(R.id.item_order);
         item.setDebug();
-
+        item.hideButton(true);
 
         bt = findViewById(R.id.bt);
 

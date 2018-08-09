@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.hongniu.baselibrary.widget.order.OrderDetailItem xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:id="@+id/order_detail"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/app_item_gap"
+    android:layout_marginRight="@dimen/app_item_gap"
+    android:layout_marginTop="@dimen/app_item_gap"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="5dp"
+    app:cardPreventCornerOverlap="false">
 
-</com.hongniu.baselibrary.widget.order.OrderDetailItem>
+    <com.hongniu.baselibrary.widget.order.OrderDetailItem
+        android:id="@+id/order_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</android.support.v7.widget.CardView>
+
+
