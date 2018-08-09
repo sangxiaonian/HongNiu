@@ -10,6 +10,7 @@ import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.navi.AMapNavi;
 import com.amap.api.navi.AMapNaviListener;
+import com.amap.api.navi.enums.NaviType;
 import com.amap.api.navi.model.AMapCalcRouteResult;
 import com.amap.api.navi.model.AMapCarInfo;
 import com.amap.api.navi.model.AMapLaneInfo;
@@ -94,15 +95,6 @@ public class MapCalculateHelper extends BaseMapHelper implements AMap.OnMyLocati
         mAMapNavi.addAMapNaviListener(this);
         return super.initMap(context, mMapView);
     }
-
-    @Override
-    public void setDebug() {
-        setStartPoint(31.275837, 121.457689);
-        setEndtPoint(31.315814, 121.393459);
-        moveTo(31.275837, 121.457689);
-
-    }
-
 
     @Override
     public void onMyLocationChange(Location location) {
@@ -238,6 +230,7 @@ public class MapCalculateHelper extends BaseMapHelper implements AMap.OnMyLocati
                 drawRoutes(ints[i], path,mContext);
             }
         }
+
     }
 
     @Override

@@ -6,6 +6,9 @@ package com.hongniu.baselibrary.config;
  */
 public class Param {
 
+    public static boolean isDebug=true;
+
+
     public static final String TRAN = "tran";
 
     public static final String CAR_ADD = "caradd";

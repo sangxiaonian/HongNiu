@@ -284,7 +284,7 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
      */
     @Override
     public void onCheckPath() {
-        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_navigation).navigation(getContext());
+        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_map_path).withBoolean(Param.TRAN,true).navigation(getContext());
 
     }
 

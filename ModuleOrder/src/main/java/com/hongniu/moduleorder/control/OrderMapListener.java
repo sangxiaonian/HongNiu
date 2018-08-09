@@ -12,5 +12,5 @@ public interface OrderMapListener {
 
     void calculate(String carNum);
 
-    RouteOverLay getNavigation();
+
 }

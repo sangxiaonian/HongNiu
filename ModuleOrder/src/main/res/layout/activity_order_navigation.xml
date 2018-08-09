@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.OrderNavigationActivity">
-    <include layout="@layout/toolbar"/>
     <com.amap.api.navi.AMapNaviView
         android:id="@+id/navi_view"
         android:layout_width="match_parent"

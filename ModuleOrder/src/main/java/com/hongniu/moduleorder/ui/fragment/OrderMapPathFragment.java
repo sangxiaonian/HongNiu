@@ -92,11 +92,6 @@ public class OrderMapPathFragment extends BaseFragment implements OrderMapListen
 
     }
 
-    @Override
-    public RouteOverLay getNavigation() {
-
-        return  helper.getAMapNaviViewOptions();
-    }
 
 
     public void onResume() {

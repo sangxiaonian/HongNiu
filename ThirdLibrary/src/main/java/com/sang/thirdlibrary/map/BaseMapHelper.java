@@ -104,20 +104,12 @@ public class BaseMapHelper implements AMap.OnMyLocationChangeListener {
         return markerOption;
     }
 
-
-
-
     public void onDestroy() {
         sList.clear();
         mWayPointList.clear();
         eList.clear();
     }
 
-    public void setDebug() {
-        //设置模拟导航的行车速度
-        setStartPoint(31.275837, 121.457689);
-        setEndtPoint(31.315814, 121.393459);
-    }
 
     public void setStartMarker(double latitude, double longitude) {
         setStartMarker( latitude,longitude,"");

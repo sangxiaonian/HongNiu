@@ -7,10 +7,12 @@ import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.navi.AMapNaviView;
 import com.amap.api.navi.AMapNaviViewOptions;
 import com.amap.api.navi.model.NaviLatLng;
+import com.amap.api.navi.model.RouteOverlayOptions;
 import com.amap.api.navi.view.RouteOverLay;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.config.Param;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.sang.thirdlibrary.map.MapControl;
@@ -33,34 +35,32 @@ public class OrderNavigationActivity extends BaseActivity implements MapControl.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_navigation);
-        setToolbarTitle("查看轨迹");
-
-
         initView();
-        mAMapNaviView.onCreate(savedInstanceState);
+
+
+
         navigationUtils = new NavigationUtils(this);
         navigationUtils.setListener(this);
-        navigationUtils.setDebug();
+        if (Param.isDebug) {
+            navigationUtils.setDebug();
+        }
 
         mAMapNaviView.setAMapNaviViewListener(navigationUtils);
 
         AMapNaviViewOptions options = new AMapNaviViewOptions();
         options.setTilt(0);
         mAMapNaviView.setViewOptions(options);
+        mAMapNaviView.onCreate(savedInstanceState);
+
 
 
     }
 
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onEndEvent(OrderEvent.MapNavigationEvent event) {
-        if (event != null && event.options != null) {
-//            RouteOverLay options1 = event.options;
-//            options1.addToMap();
-
-//            options.setRouteOverlayOptions(options1.getRouteOverlayOptions());
-
-
-
+        if (event != null ) {
+            navigationUtils. setStartPoint(event.getStart().latitude, event.getStart().longitude);
+            navigationUtils. setEndtPoint(event.getEnd().latitude, event.getEnd().longitude);
         }
     }
 

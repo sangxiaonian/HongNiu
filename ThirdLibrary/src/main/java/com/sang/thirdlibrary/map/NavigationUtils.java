@@ -1,5 +1,6 @@
 package com.sang.thirdlibrary.map;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
@@ -41,6 +42,7 @@ public class NavigationUtils implements AMapNaviListener, AMapNaviViewListener {
     //终点坐标
     protected final List<NaviLatLng> eList = new ArrayList<NaviLatLng>();
     private final TTSController mTtsManager;
+    private final Context context;
     protected List<NaviLatLng> mWayPointList;//途经地点
     private AMapNavi mAMapNavi;
 
@@ -54,6 +56,7 @@ public class NavigationUtils implements AMapNaviListener, AMapNaviViewListener {
     }
 
     public NavigationUtils(Context context) {
+        this.context=context;
         mTtsManager = TTSController.getInstance(context.getApplicationContext());
         mTtsManager.init();
         mAMapNavi = AMapNavi.getInstance(context.getApplicationContext());
@@ -63,10 +66,9 @@ public class NavigationUtils implements AMapNaviListener, AMapNaviViewListener {
     }
 
     public void setDebug() {
+
         //设置模拟导航的行车速度
-        mAMapNavi.setEmulatorNaviSpeed(75);
-        setStartPoint(31.275837, 121.457689);
-        setEndtPoint(31.315814, 121.393459);
+        mAMapNavi.setEmulatorNaviSpeed(175);
         type = NaviType.EMULATOR;
     }
 
@@ -279,7 +281,9 @@ public class NavigationUtils implements AMapNaviListener, AMapNaviViewListener {
 
     @Override
     public void onNaviCancel() {
-//        finish();
+        if (context!=null&&context instanceof Activity) {
+            ((Activity) context).finish();
+        }
     }
 
 

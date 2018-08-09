@@ -1,5 +1,6 @@
 package com.hongniu.moduleorder.control;
 
+import com.amap.api.maps.model.LatLng;
 import com.amap.api.navi.view.RouteOverLay;
 import com.amap.api.services.core.PoiItem;
 import com.sang.common.event.IBus;
@@ -26,10 +27,24 @@ public class OrderEvent {
     }
 
     public static class MapNavigationEvent implements IBus.IEvent {
-        public RouteOverLay options;
+        LatLng start;
 
-        public MapNavigationEvent(RouteOverLay options) {
-            this.options = options;
+        LatLng end;
+
+        public void setStart(double latitude, double longitude) {
+            start = new LatLng(latitude, longitude);
+        }
+
+        public void setEnd(double latitude, double longitude) {
+            end = new LatLng(latitude, longitude);
+        }
+
+        public LatLng getStart() {
+            return start;
+        }
+
+        public LatLng getEnd() {
+            return end;
         }
     }
 

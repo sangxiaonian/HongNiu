@@ -45,6 +45,9 @@ public class OrderMapPathActivity extends BaseActivity {
         helper = fragment;
         getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
         item = findViewById(R.id.item_order);
+        item.setDebug();
+
+
         bt = findViewById(R.id.bt);
 
     }
@@ -69,8 +72,12 @@ public class OrderMapPathActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
+
                 ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_navigation).navigation(mContext);
-                BusFactory.getBus().postSticky(new OrderEvent.MapNavigationEvent(helper.getNavigation()));
+                OrderEvent.MapNavigationEvent event = new OrderEvent.MapNavigationEvent();
+                event.setStart(31.275837, 121.457689);
+                event.setEnd(31.315814, 121.393459);
+                BusFactory.getBus().postSticky(event);
                 finish();
             }
         });

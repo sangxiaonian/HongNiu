@@ -16,6 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.hongniu.baselibrary.R;
+import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.widget.order.helper.OrderItemHelper;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.JLog;
@@ -87,19 +88,21 @@ public class OrderDetailItem extends FrameLayout {
 
     public void setDebug() {
 
-        tvIdentity.setText("货主");
-        tv_order.setText("80080018000");
-        tv_state.setText("运输中");
-        tv_time.setText("发车时间：2017-08-05");
-        tv_start_loaction.setText("上海虹桥机场国际物流中心");
-        tv_end_loaction.setText("青岛市国际物流中心");
-        tv_price.setText("1520");
+        if (Param.isDebug) {
+            tvIdentity.setText("货主");
+            tv_order.setText("80080018000");
+            tv_state.setText("运输中");
+            tv_time.setText("发车时间：2017-08-05");
+            tv_start_loaction.setText("上海虹桥机场国际物流中心");
+            tv_end_loaction.setText("青岛市国际物流中心");
+            tv_price.setText("1520");
 
 
-        tv_order_detail.setText(getContent("2831929482", "沪A666888",
-                "李先生", "17602150486",
-                "医疗器材", "杨先生", "13795244936"));
-        tv_order_detail.setMovementMethod(LinkMovementMethod.getInstance());
+            tv_order_detail.setText(getContent("2831929482", "沪A666888",
+                    "李先生", "17602150486",
+                    "医疗器材", "杨先生", "13795244936"));
+            tv_order_detail.setMovementMethod(LinkMovementMethod.getInstance());
+        }
     }
 
 
