@@ -1,15 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <View
+    <com.sang.common.widget.VistogramView
         android:layout_width="match_parent"
         android:layout_height="150dp"
+        android:id="@+id/vistorgram"
         android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:background="#abcdef" />
+        android:layout_marginRight="25dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/app_model_gap"
+        android:gravity="center">
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:background="@color/color_light" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/app_item_gap"
+            android:text="@string/order_pay_online"
+            android:textColor="#6d6d6d"
+            android:textSize="11sp" />
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_marginLeft="@dimen/app_gap"
+            android:background="#007AFF" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/app_item_gap"
+            android:text="@string/order_pay_offline"
+            android:textColor="#6d6d6d"
+            android:textSize="11sp" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tv_des"

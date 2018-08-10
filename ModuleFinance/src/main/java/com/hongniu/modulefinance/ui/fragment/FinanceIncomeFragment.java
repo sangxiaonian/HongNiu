@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.hongniu.baselibrary.base.BaseFragment;
 import com.hongniu.baselibrary.widget.order.OrderDetailDialog;
 import com.hongniu.modulefinance.R;
+import com.hongniu.modulefinance.ui.adapter.FinanceExpendHeadHolder;
+import com.hongniu.modulefinance.ui.adapter.FinanceIncomHeadHolder;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.recycleview.holder.PeakHolder;
@@ -29,6 +31,7 @@ public class FinanceIncomeFragment extends BaseFragment {
 
     XAdapter<String> adapter;
     private List<String> datas;
+    private FinanceIncomHeadHolder headHolder;
 
 
     @Override
@@ -83,7 +86,8 @@ public class FinanceIncomeFragment extends BaseFragment {
                 };
             }
         };
-        adapter.addHeard(new PeakHolder(getContext(),recycleView,R.layout.finance_item_head_incom));
+        headHolder = new FinanceIncomHeadHolder(getContext(), recycleView);
+        adapter.addHeard(headHolder);
         recycleView.setAdapter(adapter);
 
     }

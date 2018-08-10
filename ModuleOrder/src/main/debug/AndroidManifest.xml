@@ -16,11 +16,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.OrderCreatOrderActivity" />
-        <activity android:name=".ui.OrderPayActivity" />
-        <activity android:name=".ui.OrderInsuranceActivity" />
-        <activity android:name=".ui.OrderInsuranceResultActivity" />
-        <activity android:name=".ui.OrderMapLocationActivity"></activity>
+        <activity android:name=".ui.OrderCreatOrderActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.OrderPayActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.OrderInsuranceActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.OrderInsuranceResultActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.OrderMapLocationActivity" android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

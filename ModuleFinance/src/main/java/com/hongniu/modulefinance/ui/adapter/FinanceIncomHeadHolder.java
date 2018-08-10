@@ -18,29 +18,27 @@ import java.util.List;
 /**
  * 作者： ${PING} on 2018/8/9.
  */
-public class FinanceExpendHeadHolder extends PeakHolder {
+public class FinanceIncomHeadHolder extends PeakHolder {
     private TextView tvDes;
     private String title;
     private VistogramView vist;
 
-    public FinanceExpendHeadHolder(View itemView) {
+    public FinanceIncomHeadHolder(View itemView) {
         super(itemView);
     }
 
-    public FinanceExpendHeadHolder(Context context, int layoutID) {
+    public FinanceIncomHeadHolder(Context context, int layoutID) {
         super(context, layoutID);
     }
 
-    public FinanceExpendHeadHolder(Context context, ViewGroup parent) {
-        super(context, parent, R.layout.finance_item_head_expend);
+    public FinanceIncomHeadHolder(Context context, ViewGroup parent) {
+        super(context, parent, R.layout.finance_item_head_incom);
 
 
         if (Param.isDebug) {
             final List<List<VistogramView.VistogramBean>> debugDatas = new ArrayList<>();
             for (int i = 0; i < 12; i++) {
                 List<VistogramView.VistogramBean> list = new ArrayList<>();
-                int random = ConvertUtils.getRandom(1, 3);
-
                 list.add(new VistogramView.VistogramBean(Color.parseColor("#F06F28"), ConvertUtils.getRandom(10000, 15000), (i + 1) + "月"));
                 list.add(new VistogramView.VistogramBean(Color.parseColor("#007AFF"), ConvertUtils.getRandom(5000, 8000), (i + 1) + "月"));
                 debugDatas.add(list);

@@ -3,13 +3,13 @@
     package="com.hongniu.modulelogin">
 
     <application>
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".LoginSmsVerifyActivity" />
-        <activity android:name=".ui.LoginCarListActivity" />
-        <activity android:name=".ui.LoginCarInforActivity" />
-        <activity android:name=".ui.LoginPersonInforActivity" />
-        <activity android:name=".ui.LoginAboutUsActivity" />
-        <activity android:name=".ui.LoginPayWaysActivity"></activity>
+        <activity android:name=".LoginActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".LoginSmsVerifyActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.LoginCarListActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.LoginCarInforActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.LoginPersonInforActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.LoginAboutUsActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.LoginPayWaysActivity" android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

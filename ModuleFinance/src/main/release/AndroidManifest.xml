@@ -3,8 +3,8 @@
     package="com.hongniu.modulefinance">
 
     <application>
-        <activity android:name=".ui.FinanceActivity" />
-        <activity android:name=".ui.FinanceSearchActivity"></activity>
+        <activity android:name=".ui.FinanceActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.FinanceSearchActivity" android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
