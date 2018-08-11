@@ -7,6 +7,7 @@
     <string name="deleted_success">删除成功</string>
     <string name="sumbit">提交</string>
 
+    <string name="splash_title">更快 更好 更懂你</string>
 
     <!--Login-->
     <string name="login_title">欢迎登录泓牛</string>
@@ -68,5 +69,6 @@
     <string name="order_insurance_check_insurance">查看保单</string>
     <string name="finish">完成</string>
     <string name="finance">财务</string>
+
 
 </resources>

@@ -60,6 +60,7 @@
         <attr name="srcLeft" format="reference" />
         <attr name="srcRight" format="reference" />
         <attr name="srcshow" format="boolean" />
+        <attr name="colorRight" format="color" />
         <attr name="centerType" format="enum">
             <enum name="normal" value="0" />
             <enum name="phone" value="1" />

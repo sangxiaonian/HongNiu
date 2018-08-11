@@ -49,6 +49,7 @@ public class ItemView extends FrameLayout {
 
     private int srcRight=-1;
     private boolean srcshow;
+    private int colorRight;
 
     public ItemView(@NonNull Context context) {
         this(context, null, 0);
@@ -82,6 +83,7 @@ public class ItemView extends FrameLayout {
             maxLength = ta.getInt(R.styleable.ItemView_centerLength, -1);
             centerType = ta.getInt(R.styleable.ItemView_centerType, 0);
             srcRight = ta.getInt(R.styleable.ItemView_srcRight, -1);
+            colorRight = ta.getInt(R.styleable.ItemView_colorRight, 0);
             srcshow = ta.getBoolean(R.styleable.ItemView_srcshow, false);
             ta.recycle();
         }
@@ -102,7 +104,15 @@ public class ItemView extends FrameLayout {
         setCenter(maxLength,centerType);
         setSrcRight(srcRight);
         setSrcshow(srcshow);
+        setColorRight(colorRight);
 
+    }
+
+    private void setColorRight(int colorRight) {
+        this.colorRight=colorRight;
+        if (colorRight!=0){
+            tvRight.setTextColor(colorRight);
+        }
     }
 
     public void setSrcRight(int srcRight) {

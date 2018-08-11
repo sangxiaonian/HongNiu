@@ -42,7 +42,7 @@ public class LoginAboutUsActivity extends BaseActivity implements View.OnClickLi
     protected void initData() {
         super.initData();
         try {
-            tvVersion.setText(DeviceUtils.getVersionName(mContext));
+            itemAobutHongNiu.setTextRight(DeviceUtils.getVersionName(mContext));
         } catch (Exception e) {
             e.printStackTrace();
         }

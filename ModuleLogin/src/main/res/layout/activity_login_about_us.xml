@@ -17,16 +17,18 @@
         app:editable="false"
         app:srcshow="true"
         app:textcenterhide=""
-        app:textleft="服务条款" />
+        app:textleft="泓牛供应链软件许可及服务协议" />
 
     <com.sang.common.widget.ItemView
         android:id="@+id/item_about_hongniu"
         style="@style/itemview"
         app:editable="false"
         app:showline="false"
-        app:srcshow="true"
+
+        app:srcshow="false"
+        app:colorRight="#c8c8c8"
         app:textcenterhide=""
-        app:textleft="关于泓牛" />
+        app:textleft="版本信息" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -49,6 +51,7 @@
             <TextView
                 android:layout_marginTop="@dimen/img_go_size"
                 android:id="@+id/tv_version"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/color_line"
@@ -56,7 +59,7 @@
 
 
             <TextView
-                android:layout_marginTop="@dimen/app_item_gap"
+                android:layout_marginTop="@dimen/app_model_gap"
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
