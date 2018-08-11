@@ -3,18 +3,9 @@ package com.sang.common.utils;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.net.wifi.WifiManager;
 import android.os.Build;
-import android.provider.Settings;
-import android.telephony.TelephonyManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.TextView;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
-import static android.content.Context.TELEPHONY_SERVICE;
 
 /**
  * Created by appdevzhang on 16/9/23.
@@ -115,5 +106,20 @@ public class DeviceUtils {
     public static void hideSoft(EditText etCenter) {
         InputMethodManager inputMethodManager = (InputMethodManager) etCenter.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(etCenter.getWindowToken(), 0);
+    }
+
+
+    /**
+     * 手机系统版本名称
+     */
+    public static String getSdkVersionName() {
+        return android.os.Build.VERSION.RELEASE;
+    }
+
+    /**
+     * SDK版本号
+     */
+    public static int getSdkVersion() {
+        return android.os.Build.VERSION.SDK_INT;
     }
 }

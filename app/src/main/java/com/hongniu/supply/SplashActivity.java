@@ -16,7 +16,7 @@ public class SplashActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
               ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_main).navigation(mContext);
-//              finish();
+              finish();
         }
     };
 

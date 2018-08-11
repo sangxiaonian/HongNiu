@@ -58,6 +58,7 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_main);
+        setToolbarTitle("");
         initView();
         initData();
         initListener();

@@ -55,6 +55,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
             datas.add("沪A1245855");
             datas.add("沪A1245855");
             pop.upData(mark,datas);
+            JLog.i("===========");
             pop.show(itemCarNum);
         }
     };

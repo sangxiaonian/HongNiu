@@ -60,7 +60,12 @@ public class CarNumPop  {
         rv.post(new Runnable() {
             @Override
             public void run() {
-                pop.update((location[0] + tragetView.getWidth() / 2) - rv.getWidth() / 2, location[1] - rv.getHeight(),rv.getWidth(),rv.getHeight());
+                if (tragetView!=null) {
+                    pop.update((location[0] + tragetView.getWidth() / 2) - rv.getWidth() / 2, location[1] - rv.getHeight(), rv.getWidth(), rv.getHeight());
+                }else {
+                    pop.update((location[0]  ) - rv.getWidth() / 2, location[1] - rv.getHeight(), rv.getWidth(), rv.getHeight());
+
+                }
             }
         });
         LinearLayoutManager manager =new LinearLayoutManager(context);
@@ -118,12 +123,12 @@ public class CarNumPop  {
 
     public void show(final View view) {
         tragetView=view;
-//        pop.showAsDropDown(view);
 
         view.getLocationOnScreen(location);
 
         pop.showAtLocation(view, Gravity.NO_GRAVITY, (location[0] + view.getWidth() / 2) - rv.getWidth() / 2, location[1] - rv.getHeight());
 
+//        pop.showAsDropDown(view);
 
     }
 

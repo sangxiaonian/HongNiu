@@ -47,6 +47,7 @@ public class LoginSmsVerifyActivity extends BaseActivity implements VericationVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_sms_verify);
+        setToolbarTitle("");
         phone=getIntent().getStringExtra(Param.TRAN);
         initView();
         initData();

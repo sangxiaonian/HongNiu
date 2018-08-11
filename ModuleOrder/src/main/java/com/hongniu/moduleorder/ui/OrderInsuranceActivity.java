@@ -56,6 +56,7 @@ public class OrderInsuranceActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_insurance);
+        setToolbarTitle("");
         progress = findViewById(R.id.color_progress);
         handler.sendEmptyMessageDelayed(0, 200);
     }

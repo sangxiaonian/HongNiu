@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.githang.statusbar.StatusBarCompat;
 import com.hongniu.baselibrary.R;
 import com.sang.common.event.BusFactory;
 import com.sang.common.net.listener.TaskControl;
@@ -87,6 +88,7 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
         if (tvToolbarTitle != null) {
             tvToolbarTitle.setText(title);
         }
+        StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.color_bg), true);
     }
 
     protected void setToolbarDarkTitle(String title) {
@@ -100,6 +102,10 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
             }
             tvToolbarTitle.setText(title);
         }
+
+        StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.color_title_dark), false);
+
+
     }
 
     protected void setToolBarLeftClick(final View.OnClickListener leftClick) {

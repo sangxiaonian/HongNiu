@@ -28,6 +28,7 @@ public class OrderInsuranceResultActivity extends BaseActivity implements View.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_insurance_result);
+        setToolbarTitle("");
         success= getIntent().getBooleanExtra(Param.TRAN, false);
         initView();
         initData();

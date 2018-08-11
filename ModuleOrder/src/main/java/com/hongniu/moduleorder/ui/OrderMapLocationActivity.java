@@ -118,8 +118,6 @@ public class OrderMapLocationActivity extends BaseActivity implements PoiSearch.
                                         helper.setEndtMarker(data.getLatLonPoint().getLatitude(), data.getLatLonPoint().getLongitude(), data.getTitle());
 
                                     }
-                                    JLog.i(data.getLatLonPoint().getLatitude() + "????" + data.getLatLonPoint().getLongitude());
-
                                 }
 
                             }
