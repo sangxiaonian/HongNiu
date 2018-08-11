@@ -8,8 +8,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="245dp"
-        android:gravity="center"
         android:background="@color/color_bg"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -20,18 +20,12 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <com.sang.common.widget.CircularFramlayout
+
+            <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                app:showBorder="true"
-                app:borderColor="@color/color_line"
-                app:viewradius="25dp">
-
-                <ImageView
-                    android:layout_width="21dp"
-                    android:layout_height="21dp"
-                    android:layout_gravity="center" />
-            </com.sang.common.widget.CircularFramlayout>
+                android:layout_gravity="center"
+                android:src="@mipmap/icon_hz_100" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -53,18 +47,11 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <com.sang.common.widget.CircularFramlayout
+            <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                app:showBorder="true"
-                app:borderColor="@color/color_line"
-                app:viewradius="25dp">
-
-                <ImageView
-                    android:layout_width="21dp"
-                    android:layout_height="21dp"
-                    android:layout_gravity="center" />
-            </com.sang.common.widget.CircularFramlayout>
+                android:layout_gravity="center"
+                android:src="@mipmap/icon_cz_100" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -83,18 +70,12 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <com.sang.common.widget.CircularFramlayout
-                android:layout_width="50dp"
-                app:showBorder="true"
-                android:layout_height="50dp"
-                app:borderColor="@color/color_line"
-                app:viewradius="25dp">
 
-                <ImageView
-                    android:layout_width="21dp"
-                    android:layout_height="21dp"
-                    android:layout_gravity="center" />
-            </com.sang.common.widget.CircularFramlayout>
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:src="@mipmap/icon_sj_100" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -111,7 +92,7 @@
     <View
         android:id="@+id/view_out"
         android:layout_width="match_parent"
-        android:background="#55000000"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:background="#55000000" />
 
 </LinearLayout>
