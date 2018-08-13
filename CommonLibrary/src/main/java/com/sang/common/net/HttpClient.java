@@ -1,6 +1,8 @@
 package com.sang.common.net;
 
 
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -15,28 +17,36 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class HttpClient {
 
 
-    private static HttpClient client;
-    private static Retrofit retrofit;
+    private static Retrofit.Builder retrofit;
+    private OkHttpClient.Builder builder;
+
+    private static class InnerClient {
+        private static HttpClient client = new HttpClient();
+    }
+
 
     public static HttpClient getClient() {
 
-        if (client == null) {
-            synchronized (HttpClient.class) {
-                if (client == null) {
-                    retrofit = new Retrofit.Builder()
-                            .client(OkHttp.getOkHttp().getBuilder().build())
-                            .addConverterFactory(GsonConverterFactory.create())
-                            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                            .baseUrl(AppConfigs.base_url)
-                            .build();
-                }
-            }
-        }
-        return client;
+
+        return InnerClient.client;
+    }
+
+    private HttpClient() {
+        builder = OkHttp.getOkHttp().getBuilder();
+        retrofit = new Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .baseUrl(AppConfigs.base_url)
+        ;
     }
 
     public <T> T creatService(Class<T> t) {
-        return retrofit.create(t);
+        retrofit.client(builder.build());
+        return retrofit.build().create(t);
+    }
+
+    public void addInterceptor(Interceptor interceptor) {
+        builder.addInterceptor(interceptor);
     }
 
 

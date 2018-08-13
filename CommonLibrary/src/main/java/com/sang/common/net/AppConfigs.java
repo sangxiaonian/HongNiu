@@ -6,5 +6,7 @@ package com.sang.common.net;
  */
 
 public class AppConfigs {
-    public final static String base_url="http://120.79.33.198:50002/";
+    //网络请求网址
+    public final static String base_url="https://www.qdyunguan.com/";
+
 }

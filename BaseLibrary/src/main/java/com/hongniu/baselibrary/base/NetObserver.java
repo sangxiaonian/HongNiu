@@ -1,17 +1,17 @@
-package com.sang.common.net.rx;
-
+package com.hongniu.baselibrary.base;
 
 import com.sang.common.net.listener.TaskControl;
+import com.sang.common.net.rx.BaseObserver;
 
 /**
- * 作者： ${桑小年} on 2017/11/26.
- * 努力，为梦长留
+ * 作者： ${PING} on 2018/8/13.
  */
-
 public class NetObserver<T> extends BaseObserver<T> {
-
 
     public NetObserver(TaskControl.OnTaskListener listener) {
         super(listener);
     }
+
+
+
 }

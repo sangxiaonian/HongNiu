@@ -6,6 +6,9 @@ package com.hongniu.baselibrary.config;
  */
 public class Param {
 
+    //秘钥
+    public static String key="85274113a1ce1c39";
+
     public static boolean isDebug=true;
 
 

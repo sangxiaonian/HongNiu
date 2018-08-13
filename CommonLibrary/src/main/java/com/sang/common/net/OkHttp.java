@@ -2,6 +2,7 @@ package com.sang.common.net;
 
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 
@@ -43,5 +44,8 @@ public class OkHttp {
         return interceptor;
     }
 
+    public void addInterceptor(Interceptor interceptor){
+        builder.addInterceptor(interceptor);
+    }
 
 }

@@ -1,7 +1,6 @@
 package com.hongniu.modulelogin;
 
 import android.os.Bundle;
-import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -11,9 +10,10 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
-import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
-import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.base.NetObserver;
+import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.sang.common.utils.ToastUtils;
 
 @Route(path = ArouterParamLogin.activity_login)
@@ -35,9 +35,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     protected void initView() {
         super.initView();
-        etPhone=findViewById(R.id.et_phone);
-        bt=findViewById(R.id.bt_login);
-        tvCaluse=findViewById(R.id.tv_clause);
+        etPhone = findViewById(R.id.et_phone);
+        bt = findViewById(R.id.bt_login);
+        tvCaluse = findViewById(R.id.tv_clause);
         bt.setEnabled(false);
         bt.setOnClickListener(this);
     }
@@ -59,9 +59,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (etPhone.getText().toString().length()==11){
+                if (etPhone.getText().toString().length() == 11) {
                     bt.setEnabled(true);
-                }else {
+                } else {
                     if (bt.isEnabled()) {
                         bt.setEnabled(false);
                     }
@@ -75,12 +75,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         int i = view.getId();
         if (i == R.id.bt_login) {
             String phone = etPhone.getText().toString().trim();
-            if (phone.length()==11&&phone.startsWith("1")){
-                ArouterUtils.getInstance()
-                        .builder(ArouterParamLogin.activity_sms_verify)
-                        .withString(Param.TRAN,phone)
-                        .navigation(mContext);
-            }else {
+            if (phone.length() == 11 && phone.startsWith("1")) {
+//                ArouterUtils.getInstance()
+//                        .builder(ArouterParamLogin.activity_sms_verify)
+//                        .withString(Param.TRAN, phone)
+//                        .navigation(mContext);
+
+                HttpLoginFactory.getSmsCode(phone)
+                        .subscribe(new NetObserver<CommonBean<String>>(this) {
+
+                        });
+
+
+            } else {
                 ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show(R.string.login_phone_error);
             }
 

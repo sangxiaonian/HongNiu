@@ -1,10 +1,12 @@
 package com.hongniu.baselibrary.base;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -16,6 +18,7 @@ import com.hongniu.baselibrary.R;
 import com.sang.common.event.BusFactory;
 import com.sang.common.net.listener.TaskControl;
 import com.sang.common.widget.dialog.CenterAlertDialog;
+import com.sang.common.widget.dialog.LoadDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
 
@@ -35,6 +38,9 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
     protected TextView tvToolbarTitle;
     protected TextView tvToolbarRight;
     protected View tool;
+    private LoadDialog loading;
+    private Disposable disposable;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -188,12 +194,13 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
 
     @Override
     public void onTaskStart(Disposable d) {
-
+        showLoad();
+        this.disposable=d;
     }
 
     @Override
     public void onTaskSuccess() {
-
+        hideLoad();
     }
 
     @Override
@@ -203,6 +210,38 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
 
     @Override
     public void onTaskFail(Throwable e, String code, String msg) {
+        hideLoad();
+    }
 
+    public void initLoading() {
+        if (loading == null) {
+            loading = new LoadDialog(this);
+            loading.setImageLoad(R.raw.loading);
+            loading.setOnKeyListener(new DialogInterface.OnKeyListener() {
+                @Override
+                public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                    if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
+                        hideLoad();
+                        if (disposable != null) {
+                            disposable.dispose();
+                        }
+                        return true;
+                    }
+                    return false;
+                }
+            });
+        }
+
+    }
+    public void showLoad() {
+        if (loading != null && !loading.isShowing()) {
+            loading.show();
+        }
+    }
+
+    public void hideLoad() {
+        if (loading != null && loading.isShowing()) {
+            loading.dismiss();
+        }
     }
 }
