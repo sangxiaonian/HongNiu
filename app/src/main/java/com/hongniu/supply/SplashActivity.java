@@ -17,15 +17,20 @@ public class SplashActivity extends BaseActivity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            boolean aBoolean = SharedPreferencesUtils.getInstance().getBoolean(Param.showGuideActicity);
-            if (!aBoolean){
-                SharedPreferencesUtils.getInstance().putBoolean(Param.showGuideActicity,true);
-                ArouterUtils.getInstance().builder(ArouterParamsApp.activity_guide_activity).navigation(mContext);
+            if (msg.what==0) {
+                boolean aBoolean = SharedPreferencesUtils.getInstance().getBoolean(Param.showGuideActicity);
+                if (!aBoolean){
+                    SharedPreferencesUtils.getInstance().putBoolean(Param.showGuideActicity,true);
+                    ArouterUtils.getInstance().builder(ArouterParamsApp.activity_guide_activity).navigation(mContext);
 
+                }else {
+                    ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_main).navigation(mContext);
+                }
+                sendEmptyMessageDelayed(1,500);
             }else {
-                ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_main).navigation(mContext);
+                finish();
             }
-            finish();
+//            finish();
         }
     };
 
@@ -34,7 +39,7 @@ public class SplashActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setToolbarTitle("");
-        handler.sendEmptyMessageDelayed(1, 500);
+        handler.sendEmptyMessageDelayed(0, 1500);
     }
 
 
@@ -42,6 +47,7 @@ public class SplashActivity extends BaseActivity {
     protected void onDestroy() {
 
         handler.removeMessages(0);
+        handler.removeMessages(1);
         handler = null;
 
         super.onDestroy();

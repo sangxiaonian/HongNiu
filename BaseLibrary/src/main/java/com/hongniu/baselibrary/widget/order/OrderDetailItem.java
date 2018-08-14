@@ -125,7 +125,6 @@ public class OrderDetailItem extends FrameLayout {
     public void setIdentity(OrderDetailItemControl.RoleState roleState) {
         this.roleState = roleState;
         tvIdentity.setText(OrderUtils.getRoleState(roleState));
-        JLog.i(OrderUtils.getRoleState(roleState));
     }
 
     /**

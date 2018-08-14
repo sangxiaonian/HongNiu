@@ -2,26 +2,34 @@ package com.hongniu.modulefinance.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.bigkoo.pickerview.TimePickerView;
+import com.bigkoo.pickerview.listener.OnDismissListener;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.BaseFragment;
+import com.hongniu.baselibrary.utils.PickerDialogUtils;
 import com.hongniu.modulefinance.R;
 import com.hongniu.modulefinance.ui.fragment.FinanceExpendFragment;
 import com.hongniu.modulefinance.ui.fragment.FinanceIncomeFragment;
 import com.sang.common.utils.JLog;
 import com.sang.common.widget.SwitchTextLayout;
+import com.sang.common.widget.guideview.BaseGuide;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * 财务界面
  */
 @Route(path = ArouterParamsFinance.activity_finance_activity)
-public class FinanceActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
+public class FinanceActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, TimePickerView.OnTimeSelectListener, SwitchTextLayout.OnSwitchListener, OnDismissListener {
 
 
 
@@ -32,6 +40,7 @@ public class FinanceActivity extends BaseActivity implements RadioGroup.OnChecke
     private RadioGroup rg;
     private RadioButton rbLeft;
     private RadioButton rbRight;
+    private TimePickerView timePickerView;
 
 
     @Override
@@ -53,6 +62,8 @@ public class FinanceActivity extends BaseActivity implements RadioGroup.OnChecke
         rbLeft=findViewById(R.id.rb_left);
         rbRight=findViewById(R.id.rb_right);
         setToolbarSrcRight(R.mipmap.icon_search_w_36);
+        timePickerView = PickerDialogUtils.initTimePicker(mContext, this, new boolean[]{true, true, false, false, false, false});
+        timePickerView.setOnDismissListener(this);
 
     }
 
@@ -66,6 +77,8 @@ public class FinanceActivity extends BaseActivity implements RadioGroup.OnChecke
                 ArouterUtils.getInstance().builder(ArouterParamsFinance.activity_finance_search).navigation(mContext);
             }
         });
+        switcTime.setListener(this);
+
     }
 
 
@@ -93,5 +106,27 @@ public class FinanceActivity extends BaseActivity implements RadioGroup.OnChecke
             currentFragment=incomeFragment;
         }
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public void onTimeSelect(Date date, View v) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月");
+        String data = format.format(date);
+        switcTime.setTitle(data);
+    }
+
+    @Override
+    public void onOpen(SwitchTextLayout switchTextLayout, View view) {
+        timePickerView.show();
+    }
+
+    @Override
+    public void onClose(SwitchTextLayout switchTextLayout, View view) {
+        timePickerView.dismiss();
+    }
+
+    @Override
+    public void onDismiss(Object o) {
+        switcTime.closeSwitch();
     }
 }

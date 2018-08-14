@@ -25,6 +25,7 @@ import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.BottomAlertBuilder;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
+import com.sang.common.widget.guideview.BaseGuide;
 import com.sang.common.widget.popu.BasePopu;
 import com.sang.common.widget.popu.inter.OnPopuDismissListener;
 
@@ -53,6 +54,7 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
 
     private Fragment cargoFragment, carOwnerFragmeng, driverFragmeng, currentFragmeng;
     private SwitchStateListener switchStateListener;
+    private BaseGuide guideTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,12 +85,51 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
         llPersonInfor = findViewById(R.id.ll_person_infor);
         llPayMethod = findViewById(R.id.ll_pay_method);
 
+        guideTitle=new BaseGuide();
+        guideTitle.setMsg("这里可以切换角色哦")
+                .setView(switchTitle)
+                .setHighTargetGraphStyle(0)
+                .setActivity(this)
+                .setShowTop(false)
+                .setSharedPreferencesKey(Param.ORDER_MAIN_TITLE_GUIDE)
+                 ;
+        BaseGuide guideFinance = new BaseGuide();
+        guideFinance.setMsg("支出&收入，一目了然")
+                .setView(srcFinance)
+                .setHighTargetGraphStyle(1)
+                .setActivity(this)
+                .setShowTop(true)
+                .setSharedPreferencesKey(Param.ORDER_MAIN_FINANCE_GUIDE)
+        ;
+        guideTitle.setNextGuide(guideFinance);
 
+
+
+    }
+
+    private BaseGuide creatGuide(final View view, final String msg, boolean showTop, final String key) {
+        BaseGuide guidexffx = new BaseGuide();
+        guidexffx.setMsg(msg)
+                .setView(view)
+                .setHighTargetGraphStyle(0)
+                .setActivity(this)
+                .setShowTop(showTop)
+                .setSharedPreferencesKey(key)
+                .setMsg(msg);
+
+        return guidexffx;
     }
 
     @Override
     protected void initData() {
         super.initData();
+
+        switchTitle.post(new Runnable() {
+            @Override
+            public void run() {
+                guideTitle.showGuide();
+            }
+        });
     }
 
     @Override

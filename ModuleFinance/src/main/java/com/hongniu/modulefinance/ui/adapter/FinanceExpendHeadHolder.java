@@ -1,5 +1,6 @@
 package com.hongniu.modulefinance.ui.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
@@ -11,6 +12,7 @@ import com.hongniu.modulefinance.R;
 import com.sang.common.recycleview.holder.PeakHolder;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.widget.VistogramView;
+import com.sang.common.widget.guideview.BaseGuide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,9 +68,19 @@ public class FinanceExpendHeadHolder extends PeakHolder {
         if (title != null) {
             tvDes.setText(title);
         }
-
-
     }
+
+    public void showGuide(Activity activity){
+        BaseGuide guidexffx = new BaseGuide();
+        guidexffx.setMsg("左右滑动，查看每月对比")
+                .setView(vist)
+                .setHighTargetGraphStyle(0)
+                .setActivity(activity)
+                .setShowTop(true)
+                .setSharedPreferencesKey(Param.FINACNE_HISTOGRAM)
+                .showGuide();
+    }
+
 
     public void setTitle(String title) {
         this.title = title;

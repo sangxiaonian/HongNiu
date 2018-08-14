@@ -12,7 +12,7 @@ import retrofit2.http.POST;
  */
 public interface LoginService {
 
-    @POST("/api/user/getcheckcode")
+    @POST("/hongniu//api/user/getcheckcode")
     Observable<CommonBean<String>> getSmsCode(@Body LoginSMSParams params);
 
 

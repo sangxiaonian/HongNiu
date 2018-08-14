@@ -16,6 +16,7 @@ import com.hongniu.modulefinance.ui.adapter.FinanceExpendHeadHolder;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.widget.dialog.builder.BottomAlertBuilder;
+import com.sang.common.widget.guideview.BaseGuide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +51,8 @@ public class FinanceExpendFragment extends BaseFragment implements RadioGroup.On
     @Override
     protected void initData() {
         super.initData();
+
+
 
         datas = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
@@ -101,6 +104,13 @@ public class FinanceExpendFragment extends BaseFragment implements RadioGroup.On
         super.initListener();
         rg.setOnCheckedChangeListener(this);
         rbLeft.performClick();
+
+        recycleView.post(new Runnable() {
+            @Override
+            public void run() {
+                headHolder.showGuide(getActivity());
+            }
+        });
     }
 
 
