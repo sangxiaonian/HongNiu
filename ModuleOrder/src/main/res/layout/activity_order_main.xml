@@ -22,7 +22,7 @@
             <com.sang.common.widget.SwitchTextLayout
                 android:id="@+id/switch_title"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 app:closeColor="@color/color_title_dark"
                 app:closeIcon="@drawable/icon_arrow_down_333"

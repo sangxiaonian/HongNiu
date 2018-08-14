@@ -15,12 +15,16 @@ import android.widget.TextView;
 
 import com.githang.statusbar.StatusBarCompat;
 import com.hongniu.baselibrary.R;
+import com.hongniu.baselibrary.entity.CloseActivityEvent;
 import com.sang.common.event.BusFactory;
 import com.sang.common.net.listener.TaskControl;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.LoadDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import io.reactivex.disposables.Disposable;
 
@@ -67,8 +71,16 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
     }
 
     protected boolean getUseEventBus() {
-        return false;
+        return true;
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(CloseActivityEvent event) {
+        if (event != null) {
+            finish();
+        }
+    }
+
 
     @Override
     public void setContentView(int layoutResID) {
@@ -195,7 +207,7 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
 
     @Override
     public void onTaskStart(Disposable d) {
-        this.disposable=d;
+        this.disposable = d;
         showLoad();
     }
 
@@ -235,6 +247,7 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
         }
 
     }
+
     public void showLoad() {
         if (loading != null && !loading.isShowing()) {
             loading.show();

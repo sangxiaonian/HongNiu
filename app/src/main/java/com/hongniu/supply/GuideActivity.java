@@ -1,6 +1,9 @@
 package com.hongniu.supply;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -17,9 +20,11 @@ import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.config.Param;
 import com.sang.common.imgload.ImageLoader;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.JLog;
+import com.sang.common.utils.SharedPreferencesUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +37,14 @@ public class GuideActivity extends BaseActivity {
     ViewPager vp;
     LinearLayout llIndex;
     private List<GuideBean> datas = new ArrayList<>();
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
 
+                finish();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +122,19 @@ public class GuideActivity extends BaseActivity {
         return view;
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        handler.sendEmptyMessageDelayed(0,500);
+    }
+
+    @Override
+    protected void onDestroy() {
+        handler.removeMessages(0);
+        super.onDestroy();
+
+    }
+
     private class GuideAdapter extends PagerAdapter {
 
         /**
@@ -165,7 +190,7 @@ public class GuideActivity extends BaseActivity {
 
     private void jumpNext() {
         ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_main).navigation(mContext);
-        finish();
+//        finish();
     }
 
     private class GuideBean {
