@@ -1,5 +1,6 @@
 package com.hongniu.supply;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,7 +10,9 @@ import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
+import com.sang.common.utils.JLog;
 import com.sang.common.utils.SharedPreferencesUtils;
+import com.sang.common.widget.guideview.Guide;
 
 public class SplashActivity extends BaseActivity {
 
@@ -21,8 +24,7 @@ public class SplashActivity extends BaseActivity {
                 boolean aBoolean = SharedPreferencesUtils.getInstance().getBoolean(Param.showGuideActicity);
                 if (!aBoolean){
                     SharedPreferencesUtils.getInstance().putBoolean(Param.showGuideActicity,true);
-                    ArouterUtils.getInstance().builder(ArouterParamsApp.activity_guide_activity).navigation(mContext);
-
+                    startActivity(new Intent(SplashActivity.this, GuideActivity.class));
                 }else {
                     ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_main).navigation(mContext);
                 }
@@ -30,7 +32,6 @@ public class SplashActivity extends BaseActivity {
             }else {
                 finish();
             }
-//            finish();
         }
     };
 
