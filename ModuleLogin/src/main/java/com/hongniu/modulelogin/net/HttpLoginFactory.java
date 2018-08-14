@@ -27,16 +27,7 @@ public class HttpLoginFactory {
         LoginSMSParams params = new LoginSMSParams();
         params.setMobile(mobile);
         params.setCode(ConvertUtils.MD5(mobile, Param.key));
-
-
-        params.setMobile("18721624696");
-
-        params.setCode("11333429b491eaf00ab8e5183e829465");
-
-        JLog.i(ConvertUtils.MD5(mobile, Param.key));
-
         return LoginClient.getInstance().getLoginService()
-//                .
                 .getSmsCode(params)
                 .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer())
                 ;
