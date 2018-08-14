@@ -17,4 +17,12 @@ public class Param {
     public static final String CAR_ADD = "caradd";
     public static final String CAR_CHANGE = "CAR_CHANGE";
 
+    /**
+     * 是否已经展示新手引导页面
+     */
+    public static final String showGuideActicity="showGuideActicity";
+
+
+
+
 }

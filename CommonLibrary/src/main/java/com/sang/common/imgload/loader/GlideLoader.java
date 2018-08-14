@@ -36,7 +36,7 @@ public class GlideLoader implements ImageLoaderControl.IImageLoader {
      */
     @Override
     public void load(Context context, ImageView imageView, Object img) {
-        Glide.with(context).applyDefaultRequestOptions(getOptions(placeholder,errorImg)).load(imageView);
+        Glide.with(context).load(img).apply(getOptions(placeholder, errorImg)).into(imageView);
     }
 
     /**
@@ -48,7 +48,7 @@ public class GlideLoader implements ImageLoaderControl.IImageLoader {
      */
     @Override
     public void loadHeaed(Context context, ImageView imageView, Object img) {
-        Glide.with(context).applyDefaultRequestOptions(getOptions(headPlaceholder, headErrorImg)).load(imageView);
+        Glide.with(context).load(img).apply(getOptions(headPlaceholder, headErrorImg)).into(imageView);
     }
 
     /**
@@ -58,7 +58,7 @@ public class GlideLoader implements ImageLoaderControl.IImageLoader {
      */
     @Override
     public void placeholder(int imgID) {
-        this.placeholder=imgID;
+        this.placeholder = imgID;
 
     }
 
@@ -69,7 +69,7 @@ public class GlideLoader implements ImageLoaderControl.IImageLoader {
      */
     @Override
     public void errorImg(int imgID) {
-        this.errorImg=imgID;
+        this.errorImg = imgID;
     }
 
     /**
@@ -79,7 +79,7 @@ public class GlideLoader implements ImageLoaderControl.IImageLoader {
      */
     @Override
     public void headPlaceholder(int imgID) {
-        this.headPlaceholder=imgID;
+        this.headPlaceholder = imgID;
     }
 
     /**
@@ -89,7 +89,7 @@ public class GlideLoader implements ImageLoaderControl.IImageLoader {
      */
     @Override
     public void headErrorImg(int imgID) {
-        this.headErrorImg=imgID;
+        this.headErrorImg = imgID;
     }
 
     /**
@@ -97,21 +97,21 @@ public class GlideLoader implements ImageLoaderControl.IImageLoader {
      */
     @Override
     public void skipMemoryCache() {
-      skipMemoryCache=true;
+        skipMemoryCache = true;
     }
 
     public RequestOptions getOptions(int placeholder, int errorImg) {
         RequestOptions options = new RequestOptions();
         options.fitCenter();
-        if ( placeholder !=0) {
-            options.placeholder( placeholder);
+        if (placeholder != 0) {
+            options.placeholder(placeholder);
         }
-        if ( errorImg !=0) {
-            options.placeholder( errorImg);
+        if (errorImg != 0) {
+            options.placeholder(errorImg);
         }
-        if (skipMemoryCache){
+        if (skipMemoryCache) {
             options.skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE);
-            skipMemoryCache=false;
+            skipMemoryCache = false;
         }
 
         return options;

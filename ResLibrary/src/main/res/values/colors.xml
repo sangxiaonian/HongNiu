@@ -33,6 +33,8 @@
 
     <color name="color_tv_bg">#797C8B</color>
     <color name="tool_right">#FF3A30</color>
+    <!--新手引导页下标颜色-->
+    <color name="color_guide">#eaeaea</color>
 
 
 </resources>

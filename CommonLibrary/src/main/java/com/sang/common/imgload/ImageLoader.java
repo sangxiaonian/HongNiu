@@ -20,7 +20,7 @@ public class ImageLoader implements ImageLoaderControl.IImageLoader {
     public static ImageLoader getLoader() {
         if (loader == null) {
             synchronized (ImageLoader.class) {
-                if (loader != null) {
+                if (loader == null) {
                     loader = new ImageLoader();
                 }
             }
