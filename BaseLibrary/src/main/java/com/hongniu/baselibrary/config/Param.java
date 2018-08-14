@@ -29,4 +29,6 @@ public class Param {
     public static final String ORDER_MAIN_TITLE_GUIDE="ORDER_MAIN_TITLE_GUIDE";//角色切换
     public static final String ORDER_MAIN_FINANCE_GUIDE="ORDER_MAIN_FINANCE_GUIDE";//财务按钮按钮
     public static final String FINACNE_HISTOGRAM="FINACNE_HISTOGRAM";//财务柱状图
+    //登陆信息储存key
+    public static final String LOGIN_ONFOR="LOGIN_ONFOR";
 }

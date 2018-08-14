@@ -7,6 +7,7 @@
     android:layout_marginLeft="@dimen/app_item_gap"
     android:layout_marginRight="@dimen/app_item_gap"
     android:layout_marginTop="@dimen/app_item_gap"
+    android:layout_marginBottom="@dimen/app_item_gap"
     app:cardCornerRadius="4dp"
     app:cardElevation="5dp"
     app:cardPreventCornerOverlap="false">

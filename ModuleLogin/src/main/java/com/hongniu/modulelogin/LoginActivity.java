@@ -79,10 +79,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             final String phone = etPhone.getText().toString().trim();
             if (phone.length() == 11 && phone.startsWith("1")) {
                 HttpLoginFactory.getSmsCode(phone)
-                        .subscribe(new NetObserver<CommonBean<String>>(this) {
+                        .subscribe(new NetObserver<String>(this) {
                             @Override
-                            public void onNext(CommonBean<String> result) {
-                                super.onNext(result);
+                            public void doOnSuccess(String data) {
                                 ArouterUtils.getInstance()
                                         .builder(ArouterParamLogin.activity_sms_verify)
                                         .withString(Param.TRAN, phone)

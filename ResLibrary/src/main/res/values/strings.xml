@@ -69,6 +69,8 @@
     <string name="order_insurance_check_insurance">查看保单</string>
     <string name="finish">完成</string>
     <string name="finance">财务</string>
+    <string name="login_sms_reget_code">重新获取验证码</string>
+    <string name="order_main_creat_order">我要下单</string>
 
 
 </resources>

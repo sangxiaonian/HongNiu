@@ -15,6 +15,8 @@ public class LoginSMSParams {
      * 校验码，（手机号+秘钥）进行MD5加密
      */
     private String code;
+    private String openId="111111";
+
 
     public String getMobile() {
         return mobile;

@@ -16,7 +16,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="?actionBarSize"
             android:background="@color/color_bg">
 
             <com.sang.common.widget.SwitchTextLayout
@@ -71,7 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
-                    android:text="我要下单"
+                    android:text="@string/order_main_creat_order"
                     android:textColor="#fff"
                     android:textSize="15sp" />
             </LinearLayout>

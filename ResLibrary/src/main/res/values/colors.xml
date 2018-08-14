@@ -21,6 +21,7 @@
     <!--标题浅色-->
     <color name="color_content_light">#999999</color>
     <color name="color_line">#dddddd</color>
+    <color name="color_line_eeeeee">#eeeeee</color>
 
     <!--Editext的hide颜色-->
     <color name="color_et_hide">#c8c8c8</color>
@@ -30,6 +31,7 @@
 
     <!--订单列表中文字主要颜色-->
     <color name="color_order_color">#6a6a6a</color>
+    <color name="color_order_color_6d6d6d">#6d6d6d</color>
 
     <color name="color_tv_bg">#797C8B</color>
     <color name="tool_right">#FF3A30</color>

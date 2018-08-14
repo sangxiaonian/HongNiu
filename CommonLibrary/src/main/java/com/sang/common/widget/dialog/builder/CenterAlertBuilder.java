@@ -1,6 +1,5 @@
 package com.sang.common.widget.dialog.builder;
 
-import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.inter.DialogControl;
 
 /**
@@ -85,7 +84,7 @@ public class CenterAlertBuilder {
     }
 
 
-    public CenterAlertBuilder setBtLeftColor(int  btLeftColor) {
+    public CenterAlertBuilder setBtLeftColor(int btLeftColor) {
         this.btLeftColor = btLeftColor;
         return this;
 

@@ -17,8 +17,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
             <com.sang.common.widget.CircularFramlayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -30,9 +31,9 @@
                 app:viewradius="4dp">
 
                 <LinearLayout
-                    android:background="@color/color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/color_white"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -67,10 +68,10 @@
                     </LinearLayout>
 
                     <View
-                        android:layout_marginLeft="@dimen/app_gap"
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/color_line" />
+                        android:layout_height="@dimen/line_height"
+                        android:layout_marginLeft="@dimen/app_gap"
+                        android:background="@color/color_line_eeeeee" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -104,11 +105,11 @@
                     </LinearLayout>
 
                     <View
-                        android:layout_marginLeft="@dimen/app_gap"
-
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/color_line" />
+
+                        android:layout_height="@dimen/line_height"
+                        android:layout_marginLeft="@dimen/app_gap"
+                        android:background="@color/color_line_eeeeee" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -148,11 +149,11 @@
 
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/app_item_gap"
-                android:background="@color/color_white">
+                android:background="@color/color_white"
+                android:orientation="vertical">
 
                 <com.sang.common.widget.ItemView
                     android:id="@+id/item_start_car_num"
@@ -169,39 +170,39 @@
                 <com.sang.common.widget.ItemView
                     android:id="@+id/item_cargo_size"
                     style="@style/itemview"
-                    app:textcenterhide="请输入货物面积"
-                    app:textleft="货物面积"
                     app:centerType="number"
+                    app:textcenterhide="请输入货物面积"
+                    app:textleft="货物体积"
                     app:textright="方" />
 
                 <com.sang.common.widget.ItemView
                     android:id="@+id/item_cargo_weight"
                     style="@style/itemview"
+                    app:centerType="number"
                     app:textcenterhide="请输入货物重量"
                     app:textleft="货物重量"
-                    app:centerType="number"
                     app:textright="吨" />
 
                 <com.sang.common.widget.ItemView
                     android:id="@+id/item_price"
                     style="@style/itemview"
-                    app:showline="false"
-                    app:textright="元"
                     app:centerType="number"
+                    app:showline="false"
                     app:textcenterhide="请输入运费"
-                    app:textleft="运费" />
+                    app:textleft="运费"
+                    app:textright="元" />
 
 
             </LinearLayout>
 
 
             <LinearLayout
-                android:orientation="vertical"
-
                 android:layout_width="match_parent"
+
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/app_item_gap"
-                android:background="@color/color_white">
+                android:background="@color/color_white"
+                android:orientation="vertical">
 
                 <com.sang.common.widget.ItemView
                     android:id="@+id/item_car_num"
@@ -227,17 +228,17 @@
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/app_item_gap"
-                android:background="@color/color_white">
+                android:background="@color/color_white"
+                android:orientation="vertical">
 
                 <com.sang.common.widget.ItemView
                     android:id="@+id/item_driver_phone"
                     style="@style/itemview"
-                    app:textcenterhide="请输入司机手机"
                     app:centerType="phone"
+                    app:textcenterhide="请输入司机手机"
                     app:textleft="司机手机" />
 
                 <com.sang.common.widget.ItemView

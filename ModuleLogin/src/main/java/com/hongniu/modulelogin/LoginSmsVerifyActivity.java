@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.google.gson.Gson;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
@@ -17,6 +18,7 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.modulelogin.entity.respond.LoginBean;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
+import com.sang.common.utils.SharedPreferencesUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.VericationView;
 
@@ -28,7 +30,7 @@ public class LoginSmsVerifyActivity extends BaseActivity implements VericationVi
     private Button btGetNewVeri;
     private VericationView vericationView;
 
-    private final int originTime=10;
+    private final int originTime=60;
     private int currentTime;
 
     private Handler handler=new Handler(){
@@ -111,11 +113,12 @@ public class LoginSmsVerifyActivity extends BaseActivity implements VericationVi
 
         HttpLoginFactory
                 .loginBySms(phone,content)
-                .subscribe(new NetObserver<CommonBean<LoginBean>>(this){
+                .subscribe(new NetObserver<LoginBean>(this) {
                     @Override
-                    public void onNext(CommonBean<LoginBean> result) {
-                        super.onNext(result);
+                    public void doOnSuccess(LoginBean data) {
+                        SharedPreferencesUtils.getInstance().putString(Param.LOGIN_ONFOR,new Gson().toJson(data));
                         ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_main).navigation(mContext);
+
                     }
                 });
     }

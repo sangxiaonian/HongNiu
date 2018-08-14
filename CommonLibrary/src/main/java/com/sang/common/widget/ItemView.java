@@ -69,7 +69,7 @@ public class ItemView extends FrameLayout {
     private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
 
         mPaint=new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaint.setStrokeWidth(DeviceUtils.dip2px(context,1));
+        mPaint.setStrokeWidth(getResources().getDimension(R.dimen.line_height));
         mPaint.setColor(getResources().getColor(R.color.color_line));
 
         if (attrs != null) {

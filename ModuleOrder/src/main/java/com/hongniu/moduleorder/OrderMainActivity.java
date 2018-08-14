@@ -107,18 +107,6 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
 
     }
 
-    private BaseGuide creatGuide(final View view, final String msg, boolean showTop, final String key) {
-        BaseGuide guidexffx = new BaseGuide();
-        guidexffx.setMsg(msg)
-                .setView(view)
-                .setHighTargetGraphStyle(0)
-                .setActivity(this)
-                .setShowTop(showTop)
-                .setSharedPreferencesKey(key)
-                .setMsg(msg);
-
-        return guidexffx;
-    }
 
     @Override
     protected void initData() {

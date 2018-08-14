@@ -15,8 +15,11 @@
 
     <!--Login-->
     <!--登录界面左右间距-->
-    <dimen name="login_margin">45dp</dimen>
+    <dimen name="login_margin_left">45dp</dimen>
+    <dimen name="login_margin_right">30dp</dimen>
+    <dimen name="login_sms_gap">40dp</dimen>
 
+    <dimen name="line_height">0.5dp</dimen>
 
 
 
@@ -24,5 +27,9 @@
     <dimen name="text_toolbar_title">18sp</dimen>
     <dimen name="text_login_title">24sp</dimen>
     <dimen name="text_login_btn">18sp</dimen>
+    <dimen name="text_login_et">18sp</dimen>
+    <dimen name="text_min_11sp">11sp</dimen>
+    <dimen name="text_small">13sp</dimen>
+    <dimen name="text_small_14">14sp</dimen>
 
 </resources>

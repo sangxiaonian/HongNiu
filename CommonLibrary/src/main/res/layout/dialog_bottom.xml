@@ -28,8 +28,8 @@
                 android:textSize="13sp" />
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#dddddd" />
+                android:layout_height="0.5dp"
+                android:background="#eeeeee" />
             <TextView
                 android:id="@+id/bt_top"
                 android:layout_width="match_parent"
@@ -37,6 +37,7 @@
                 android:gravity="center"
                 android:padding="16dp"
                 android:text="确认"
+                android:textSize="18dp"
                 android:textColor="#FF3A30" />
         </LinearLayout>
 
@@ -55,7 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="16dp"
+            android:textSize="18dp"
             android:text="取消"
             android:textColor="#007AFF" />
     </com.sang.common.widget.CircularFramlayout>

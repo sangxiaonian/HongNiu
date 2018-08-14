@@ -23,9 +23,8 @@
         android:background="@color/color_identity_bg"
         android:paddingLeft="2dp"
         android:paddingRight="2dp"
-        android:text="货主"
         android:textColor="@color/color_white"
-        android:textSize="11sp"
+        android:textSize="@dimen/text_min_11sp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_car_num"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintHorizontal_bias="0.461"
@@ -39,7 +38,7 @@
         android:layout_marginStart="5dp"
         android:text="订单号："
         android:textColor="@color/color_title_dark"
-        android:textSize="14sp"
+        android:textSize="@dimen/text_small_14"
         app:layout_constraintStart_toEndOf="@+id/tv_identity"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -50,7 +49,7 @@
         android:layout_marginEnd="8dp"
         android:text="82545618561"
         android:textColor="@color/color_title_dark"
-        android:textSize="14sp"
+        android:textSize="@dimen/text_small_14"
         app:layout_constraintBottom_toBottomOf="@+id/tv_car_num"
         app:layout_constraintEnd_toStartOf="@+id/tv_state"
         app:layout_constraintStart_toEndOf="@+id/tv_car_num"
@@ -61,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/app_gap"
-        android:text="待发车"
+        android:textSize="@dimen/text_small_14"
         android:textColor="@color/color_order_color"
         app:layout_constraintBottom_toBottomOf="@+id/tv_order"
         app:layout_constraintEnd_toEndOf="parent"
@@ -70,17 +69,17 @@
     <TextView
         android:id="@+id/line_top"
         android:layout_width="0dp"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/line_height"
         android:layout_marginTop="@dimen/app_gap"
-        android:background="@color/color_line"
+        android:background="@color/color_line_eeeeee"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_order" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/app_model_gap"
+        android:layout_height="@dimen/app_model_gap"
         app:layout_constraintBottom_toBottomOf="@+id/tv_time"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -94,9 +93,8 @@
         android:layout_marginEnd="15dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="@dimen/app_gap"
-        android:text="发车时间：2018-8-8"
-        android:textColor="@color/color_order_color"
-        android:textSize="14sp"
+        android:textColor="@color/color_order_color_6d6d6d"
+        android:textSize="@dimen/text_small_14"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/line_top" />
@@ -105,10 +103,9 @@
         android:id="@+id/tv_start_loaction"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/app_item_gap"
-        android:text="上海虹桥物流中心"
+        android:layout_marginTop="6.5dp"
         android:textColor="@color/color_title_dark"
-        android:textSize="14sp"
+        android:textSize="@dimen/text_small_14"
         app:layout_constraintEnd_toEndOf="@+id/tv_time"
         app:layout_constraintStart_toStartOf="@+id/tv_time"
         app:layout_constraintTop_toBottomOf="@+id/tv_time" />
@@ -119,15 +116,9 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="15dp"
         android:layout_marginTop="@dimen/app_item_gap"
-        android:lineSpacingExtra="10dp"
-        android:text="\n
-n
-n
-n
-n
-n"
+        android:lineSpacingMultiplier="1.25"
         android:textColor="@color/color_order_color"
-        android:textSize="14sp"
+        android:textSize="@dimen/text_small_14"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tv_start_loaction"
         app:layout_constraintTop_toBottomOf="@+id/tv_start_loaction" />
@@ -137,10 +128,9 @@ n"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="15dp"
-        android:layout_marginTop="@dimen/app_item_gap"
-        android:text="上海虹桥物流中心"
+        android:layout_marginTop="6.5dp"
         android:textColor="@color/color_title_dark"
-        android:textSize="14sp"
+        android:textSize="@dimen/text_small_14"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tv_order_detail"
         app:layout_constraintTop_toBottomOf="@+id/tv_order_detail" />
@@ -159,9 +149,9 @@ n"
     <View
         android:id="@+id/line_bottom"
         android:layout_width="0dp"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/line_height"
         android:layout_marginTop="@dimen/app_gap"
-        android:background="@color/color_line"
+        android:background="@color/color_line_eeeeee"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_end_loaction" />
@@ -190,7 +180,6 @@ n"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="1200"
             android:textColor="@color/color_title_dark"
             android:textSize="13sp" />
 
