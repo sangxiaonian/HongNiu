@@ -10,8 +10,10 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
+import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.sang.common.utils.ToastUtils;
@@ -74,16 +76,18 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     public void onClick(View view) {
         int i = view.getId();
         if (i == R.id.bt_login) {
-            String phone = etPhone.getText().toString().trim();
+            final String phone = etPhone.getText().toString().trim();
             if (phone.length() == 11 && phone.startsWith("1")) {
-//                ArouterUtils.getInstance()
-//                        .builder(ArouterParamLogin.activity_sms_verify)
-//                        .withString(Param.TRAN, phone)
-//                        .navigation(mContext);
-
                 HttpLoginFactory.getSmsCode(phone)
                         .subscribe(new NetObserver<CommonBean<String>>(this) {
-
+                            @Override
+                            public void onNext(CommonBean<String> result) {
+                                super.onNext(result);
+                                ArouterUtils.getInstance()
+                                        .builder(ArouterParamLogin.activity_sms_verify)
+                                        .withString(Param.TRAN, phone)
+                                        .navigation(mContext);
+                            }
                         });
 
 

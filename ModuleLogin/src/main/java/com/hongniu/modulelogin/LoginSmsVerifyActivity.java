@@ -12,7 +12,11 @@ import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.modulelogin.entity.respond.LoginBean;
+import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.VericationView;
 
@@ -104,7 +108,16 @@ public class LoginSmsVerifyActivity extends BaseActivity implements VericationVi
      */
     @Override
     public void onComplete(String content) {
-        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_main).navigation(mContext);
+
+        HttpLoginFactory
+                .loginBySms(phone,content)
+                .subscribe(new NetObserver<CommonBean<LoginBean>>(this){
+                    @Override
+                    public void onNext(CommonBean<LoginBean> result) {
+                        super.onNext(result);
+                        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_main).navigation(mContext);
+                    }
+                });
     }
 
 

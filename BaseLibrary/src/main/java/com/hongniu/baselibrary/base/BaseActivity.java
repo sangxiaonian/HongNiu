@@ -46,6 +46,7 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
+        initLoading();
 
     }
 
@@ -194,8 +195,8 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
 
     @Override
     public void onTaskStart(Disposable d) {
-        showLoad();
         this.disposable=d;
+        showLoad();
     }
 
     @Override
@@ -211,6 +212,7 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
     @Override
     public void onTaskFail(Throwable e, String code, String msg) {
         hideLoad();
+        showAleart(msg);
     }
 
     public void initLoading() {

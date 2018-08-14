@@ -123,7 +123,6 @@ public class VistogramView extends View implements DynamicAnimation.OnAnimationE
         bigGap = (int) (vistogramWidth * 1.0f / numbersX);
         maxWidth = bigGap * datas.size();
 
-        JLog.i(maxWidth+"     "+vistogramWidth+"    "+bigGap);
 
     }
 
@@ -383,7 +382,6 @@ public class VistogramView extends View implements DynamicAnimation.OnAnimationE
                 for (VistogramBean datum : data) {
                     max = max > datum.value ? max : (int) datum.value;
                     min = min > datum.value ? (int) datum.value : min;
-                    JLog.d(max + "     " + min);
                 }
             }
         }

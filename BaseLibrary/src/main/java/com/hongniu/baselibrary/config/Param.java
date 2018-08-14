@@ -8,10 +8,10 @@ public class Param {
 //    AppKey: c33fbf23b76246bf8ee4a3d00b621e03
 //    AppSecret: a7735d245d4241ff9f94-a3ecf7b5fedc
     //秘钥
-    public static String key="c33fbf23b76246bf8ee4a3d00b621e03";
-    public static String AppSecret="a7735d245d4241ff9f94-a3ecf7b5fedc";
-
-    public static boolean isDebug=true;
+    public static final String key="85274113a1ce1c39";
+    public static final String AppKey="c33fbf23b76246bf8ee4a3d00b621e03";
+    public static final String AppSecret="a7735d245d4241ff9f94-a3ecf7b5fedc";
+    public static final boolean isDebug=true;
 
 
     public static final String TRAN = "tran";
@@ -26,7 +26,7 @@ public class Param {
 
 
     //新手引导遮罩
-    public static String ORDER_MAIN_TITLE_GUIDE="ORDER_MAIN_TITLE_GUIDE";//角色切换
-    public static String ORDER_MAIN_FINANCE_GUIDE="ORDER_MAIN_FINANCE_GUIDE";//财务按钮按钮
-    public static String FINACNE_HISTOGRAM="FINACNE_HISTOGRAM";//财务柱状图
+    public static final String ORDER_MAIN_TITLE_GUIDE="ORDER_MAIN_TITLE_GUIDE";//角色切换
+    public static final String ORDER_MAIN_FINANCE_GUIDE="ORDER_MAIN_FINANCE_GUIDE";//财务按钮按钮
+    public static final String FINACNE_HISTOGRAM="FINACNE_HISTOGRAM";//财务柱状图
 }

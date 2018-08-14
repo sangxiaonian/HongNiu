@@ -26,7 +26,7 @@ public class LoadDialog extends Dialog {
     private ImageView img;
 
     public LoadDialog(@NonNull Context context) {
-        this(context,0);
+        this(context, 0);
     }
 
     public LoadDialog(@NonNull Context context, @StyleRes int themeResId) {
@@ -40,14 +40,10 @@ public class LoadDialog extends Dialog {
     }
 
     private void initView(Context context) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.layout_loading);
         View view = getWindow().getDecorView();
-          img = (ImageView) view.findViewById(R.id.iv);
-
-
-
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(view);
+        img = (ImageView) view.findViewById(R.id.iv);
         getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         getWindow().setGravity(Gravity.CENTER);
         getWindow().setBackgroundDrawable(new ColorDrawable(0x00000000));
@@ -56,8 +52,8 @@ public class LoadDialog extends Dialog {
 
     }
 
-    public LoadDialog setImageLoad(int res){
-        ImageLoader.getLoader().load( getContext(),img, res);
+    public LoadDialog setImageLoad(int res) {
+        ImageLoader.getLoader().load(getContext(), img, res);
         return this;
 
     }
