@@ -16,6 +16,9 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
+import com.hjq.permissions.OnPermission;
+import com.hjq.permissions.Permission;
+import com.hjq.permissions.XXPermissions;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
@@ -31,6 +34,7 @@ import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 定位，选择当前所在点的Activity，
@@ -61,6 +65,9 @@ public class OrderMapLocationActivity extends BaseActivity implements PoiSearch.
         initView();
         initData();
         initListener();
+
+
+
 
     }
 
@@ -112,11 +119,13 @@ public class OrderMapLocationActivity extends BaseActivity implements PoiSearch.
                                     selectPositio = position;
                                     adapter.notifyDataSetChanged();
 
-                                    if (start) {
-                                        helper.setStartMarker(data.getLatLonPoint().getLatitude(), data.getLatLonPoint().getLongitude(), data.getTitle());
-                                    } else {
-                                        helper.setEndtMarker(data.getLatLonPoint().getLatitude(), data.getLatLonPoint().getLongitude(), data.getTitle());
+                                    if (helper!=null) {
+                                        if (start) {
+                                            helper.setStartMarker(data.getLatLonPoint().getLatitude(), data.getLatLonPoint().getLongitude(), data.getTitle());
+                                        } else {
+                                            helper.setEndtMarker(data.getLatLonPoint().getLatitude(), data.getLatLonPoint().getLongitude(), data.getTitle());
 
+                                        }
                                     }
                                 }
 

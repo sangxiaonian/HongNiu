@@ -9,12 +9,15 @@ import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItem;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.control.OrderMapListener;
 import com.hongniu.moduleorder.ui.fragment.OrderMapPathFragment;
 import com.sang.common.event.BusFactory;
+
+import java.util.List;
 
 @Route(path = ArouterParamOrder.activity_order_map_path)
 public class OrderMapPathActivity extends BaseActivity {
@@ -71,14 +74,23 @@ public class OrderMapPathActivity extends BaseActivity {
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                PermissionUtils.applyMap(OrderMapPathActivity.this, new PermissionUtils.onApplyPermission() {
+                    @Override
+                    public void hasPermission(List<String> granted, boolean isAll) {
+                        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_navigation).navigation(mContext);
+                        OrderEvent.MapNavigationEvent event = new OrderEvent.MapNavigationEvent();
+                        event.setStart(31.275837, 121.457689);
+                        event.setEnd(31.315814, 121.393459);
+                        BusFactory.getBus().postSticky(event);
+                        finish();
+                    }
 
+                    @Override
+                    public void noPermission(List<String> denied, boolean quick) {
 
-                ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_navigation).navigation(mContext);
-                OrderEvent.MapNavigationEvent event = new OrderEvent.MapNavigationEvent();
-                event.setStart(31.275837, 121.457689);
-                event.setEnd(31.315814, 121.393459);
-                BusFactory.getBus().postSticky(event);
-                finish();
+                    }
+                });
+
             }
         });
     }

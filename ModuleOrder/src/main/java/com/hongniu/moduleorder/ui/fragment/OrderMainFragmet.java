@@ -14,6 +14,7 @@ import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseFragment;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
+import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItem;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.baselibrary.widget.order.OrderUtils;
@@ -284,8 +285,20 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
      */
     @Override
     public void onCheckPath() {
-        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_map_path).withBoolean(Param.TRAN,true).navigation(getContext());
 
+
+        PermissionUtils.applyMap(getActivity(), new PermissionUtils.onApplyPermission() {
+            @Override
+            public void hasPermission(List<String> granted, boolean isAll) {
+                ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_map_path).withBoolean(Param.TRAN,true).navigation(getContext());
+
+            }
+
+            @Override
+            public void noPermission(List<String> denied, boolean quick) {
+
+            }
+        });
     }
 
     /**
@@ -293,8 +306,15 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
      */
     @Override
     public void onEntryOrder() {
-        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("确认收货");
-
+        creatDialog("确认已收到货物？", "收货请务必检查货物完好无损", "返回订单", "确定收货")
+                .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
+                    @Override
+                    public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
+                        dialog.dismiss();
+                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("确认收货");
+                    }
+                }).creatDialog(new CenterAlertDialog(getContext()))
+                .show();
     }
 
     /**
@@ -318,7 +338,18 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
      */
     @Override
     public void onCheckRout() {
-        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_map_path).withBoolean(Param.TRAN,false).navigation(getContext());
+        PermissionUtils.applyMap(getActivity(), new PermissionUtils.onApplyPermission() {
+            @Override
+            public void hasPermission(List<String> granted, boolean isAll) {
+                ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_map_path).withBoolean(Param.TRAN,false).navigation(getContext());
+
+            }
+
+            @Override
+            public void noPermission(List<String> denied, boolean quick) {
+
+            }
+        });
 
     }
 

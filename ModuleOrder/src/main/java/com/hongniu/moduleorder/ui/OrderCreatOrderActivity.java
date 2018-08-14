@@ -11,11 +11,15 @@ import android.widget.Button;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bigkoo.pickerview.TimePickerView;
+import com.hjq.permissions.OnPermission;
+import com.hjq.permissions.Permission;
+import com.hjq.permissions.XXPermissions;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.utils.PickerDialogUtils;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
@@ -146,10 +150,33 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         if (id == R.id.item_start_time) {
             timePickerView.show();
         } else if (id == R.id.item_start_loaction) {
-            ArouterUtils.getInstance().builder(ArouterParamOrder.activity_map_loaction).withBoolean(Param.TRAN, true).navigation(mContext);
-        } else if (id == R.id.item_end_loaction) {
-            ArouterUtils.getInstance().builder(ArouterParamOrder.activity_map_loaction).withBoolean(Param.TRAN, false).navigation(mContext);
+            PermissionUtils.applyMap(this, new PermissionUtils.onApplyPermission() {
+                @Override
+                public void hasPermission(List<String> granted, boolean isAll) {
+                    ArouterUtils.getInstance().builder(ArouterParamOrder.activity_map_loaction).withBoolean(Param.TRAN, true).navigation(mContext);
 
+                }
+
+                @Override
+                public void noPermission(List<String> denied, boolean quick) {
+
+                }
+            });
+
+
+        } else if (id == R.id.item_end_loaction) {
+            PermissionUtils.applyMap(this, new PermissionUtils.onApplyPermission() {
+                @Override
+                public void hasPermission(List<String> granted, boolean isAll) {
+                    ArouterUtils.getInstance().builder(ArouterParamOrder.activity_map_loaction).withBoolean(Param.TRAN, false).navigation(mContext);
+
+                }
+
+                @Override
+                public void noPermission(List<String> denied, boolean quick) {
+
+                }
+            });
         }else if (id==R.id.bt_entry){
             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
             finish();

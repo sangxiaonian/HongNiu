@@ -48,4 +48,5 @@ dependencies {
     api 'com.contrarywind:Android-PickerView:3.2.7'
     api 'com.android.support:support-v4:27.1.1'
     api 'com.githang:status-bar-compat:latest.integration'
+    api 'com.hjq:xxpermissions:3.5'
 }
