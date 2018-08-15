@@ -22,7 +22,9 @@ public class OrderDetailDialog implements DialogControl.IBottomDialog {
     public OrderDetailDialog(Context context) {
         OrderDetailItem item = new OrderDetailItem(context);
         item.setDebug();
-        item.hideButton(true);
+//        item.hideButton(true);
+        item.hideBottom(true);
+
         dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(item);

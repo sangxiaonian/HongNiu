@@ -19,6 +19,7 @@ import com.hongniu.baselibrary.R;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.widget.order.helper.OrderItemHelper;
 import com.sang.common.utils.CommonUtils;
+import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.CenteredImageSpan;
@@ -49,6 +50,8 @@ public class OrderDetailItem extends FrameLayout {
     private TextView bt_left;
     private TextView bt_right;
     private TextView tv_order_detail;
+    private View llBottom;
+    private View lineBottom;
 
     //当前角色 货主、车主、司机
     private OrderDetailItemControl.RoleState roleState;
@@ -82,6 +85,9 @@ public class OrderDetailItem extends FrameLayout {
         bt_left = itemView.findViewById(R.id.bt_left);//左侧按钮
         bt_right = itemView.findViewById(R.id.bt_right);//右侧按钮
         tv_order_detail = itemView.findViewById(R.id.tv_order_detail);//右侧按钮
+        llBottom = itemView.findViewById(R.id.ll_bottom);//右侧按钮
+        lineBottom = itemView.findViewById(R.id.line_bottom);//右侧按钮
+
         addView(itemView);
     }
 
@@ -259,7 +265,9 @@ public class OrderDetailItem extends FrameLayout {
         }
 
         if (firstPoint > 0) {
-            ImageSpan imageSpan = new CenteredImageSpan(getContext(), R.mipmap.icon_call_30);
+           final int size= DeviceUtils.dip2px(getContext(), 15);
+            CenteredImageSpan imageSpan = new CenteredImageSpan(getContext(), R.mipmap.icon_call_30);
+            imageSpan.setSpanSize(size,size);
             builder.setSpan(imageSpan, firstPoint - 1, firstPoint, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
             ClickableSpan carOwnerClick = new ClickableSpan() {
                 @Override
@@ -271,7 +279,9 @@ public class OrderDetailItem extends FrameLayout {
 
         }
         if (secondPoint > 0) {
-            ImageSpan imageSpan2 = new CenteredImageSpan(getContext(), R.mipmap.icon_call_30);
+            final int size= DeviceUtils.dip2px(getContext(), 15);
+            CenteredImageSpan imageSpan2 = new CenteredImageSpan(getContext(), R.mipmap.icon_call_30);
+            imageSpan2.setSpanSize(size,size);
             builder.setSpan(imageSpan2, secondPoint - 1, secondPoint, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
             ClickableSpan driverClick = new ClickableSpan() {
                 @Override
@@ -394,4 +404,12 @@ public class OrderDetailItem extends FrameLayout {
     }
 
 
+    /**
+     * 隐藏最底部数据
+     * @param b
+     */
+    public void hideBottom(boolean b) {
+            llBottom.setVisibility(b?GONE:VISIBLE);
+            lineBottom.setVisibility(b?GONE:VISIBLE);
+    }
 }
