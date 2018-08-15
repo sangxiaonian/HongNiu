@@ -57,6 +57,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="18dp"
+            android:padding="16dp"
             android:text="取消"
             android:textColor="#007AFF" />
     </com.sang.common.widget.CircularFramlayout>

@@ -249,14 +249,15 @@
                     app:textleft="司机姓名" />
 
             </LinearLayout>
+            <Button
+                android:id="@+id/bt_entry"
+                style="@style/bt_sum"
+                android:text="确定下单" />
         </LinearLayout>
 
     </ScrollView>
 
-    <Button
-        android:id="@+id/bt_entry"
-        style="@style/bt_sum"
-        android:text="确定下单" />
+
 
 
 </LinearLayout>
