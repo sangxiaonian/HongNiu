@@ -6,7 +6,7 @@ import java.security.PrivateKey;
  * 作者： ${PING} on 2018/8/15.
  * 新增修改车辆
  */
-public class LoginAddCarBean {
+public class LoginCarInforBean {
 
 
     /**
@@ -34,6 +34,45 @@ public class LoginAddCarBean {
      * true	string	车辆联系人手机号
      */
     private String contactMobile;
+
+    private int userId;
+    private long createTime;
+    private int state;
+    private String cartypename;
+
+
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public long getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(long createTime) {
+        this.createTime = createTime;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public String getCartypename() {
+        return cartypename;
+    }
+
+    public void setCartypename(String cartypename) {
+        this.cartypename = cartypename;
+    }
 
     public String getCarNumber() {
         return carNumber;

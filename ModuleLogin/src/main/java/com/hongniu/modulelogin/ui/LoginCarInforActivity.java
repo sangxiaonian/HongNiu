@@ -17,7 +17,7 @@ import com.hongniu.baselibrary.entity.CarTypeBean;
 import com.hongniu.baselibrary.utils.PickerDialogUtils;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.modulelogin.R;
-import com.hongniu.modulelogin.entity.LoginAddCarBean;
+import com.hongniu.modulelogin.entity.LoginCarInforBean;
 import com.hongniu.modulelogin.entity.LoginEvent;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.sang.common.event.BusFactory;
@@ -50,7 +50,7 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
     private Button button;
     private boolean isAdd;//是否是添加车辆
     private OptionsPickerView.Builder pickerDialog;
-    private LoginAddCarBean carBean;
+    private LoginCarInforBean carBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,13 +112,14 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
         this.isAdd = event.type == 0;
         if (event.type == 0) {
             setToolbarTitle(getString(R.string.login_add_car));
-            carBean = new LoginAddCarBean();
+            carBean = new LoginCarInforBean();
         } else {
             setToolbarTitle(getString(R.string.login_modification_car));
-            itemCarType.setTextCenter("豪华法拉利");
-            itemCarNum.setTextCenter("沪A9999");
-            itemCarOwner.setTextCenter("男神一号");
-            itemCarPhone.setTextCenter("15555555555");
+            carBean=event.bean;
+            itemCarNum.setTextCenter(carBean.getCarNumber()==null?"":carBean.getCarNumber());
+            itemCarType.setTextCenter(carBean.getCartypename()==null?"":carBean.getCartypename());
+            itemCarOwner.setTextCenter(carBean.getContactName()==null?"":carBean.getContactName());
+            itemCarPhone.setTextCenter(carBean.getContactMobile()==null?"":carBean.getContactMobile());
         }
 
         if (!isAdd) {
@@ -199,7 +200,7 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
         }
     }
 
-    private LoginAddCarBean getValue() {
+    private LoginCarInforBean getValue() {
         carBean.setCarNumber(itemCarNum.getTextCenter());
         carBean.setContactMobile(itemCarPhone.getTextCenter());
         carBean.setContactName(itemCarOwner.getTextCenter());

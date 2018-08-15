@@ -2,15 +2,10 @@ package com.hongniu.supply.net;
 
 import com.hongniu.baselibrary.entity.CarTypeBean;
 import com.hongniu.baselibrary.entity.CommonBean;
-import com.hongniu.baselibrary.entity.LoginBean;
-import com.hongniu.modulelogin.entity.LoginAddCarBean;
-import com.hongniu.modulelogin.entity.LoginPersonInfor;
-import com.hongniu.modulelogin.entity.LoginSMSParams;
 
 import java.util.List;
 
 import io.reactivex.Observable;
-import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 /**

@@ -39,4 +39,8 @@ public class Param {
      * 车辆类型
      */
     public static final String CAR_TYPE="CAR_TYPE";
+    /**
+     * 分页查找每页数据数量
+     */
+    public static final int PAGE_SIZE=20;
 }

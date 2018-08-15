@@ -2,7 +2,9 @@ package com.hongniu.modulelogin.net;
 
 import com.hongniu.baselibrary.entity.CarTypeBean;
 import com.hongniu.baselibrary.entity.CommonBean;
-import com.hongniu.modulelogin.entity.LoginAddCarBean;
+import com.hongniu.baselibrary.entity.PagerParambean;
+import com.hongniu.modulelogin.entity.LoginCarInforBean;
+import com.hongniu.modulelogin.entity.LoginCarListBean;
 import com.hongniu.modulelogin.entity.LoginSMSParams;
 import com.hongniu.baselibrary.entity.LoginBean;
 import com.hongniu.modulelogin.entity.LoginPersonInfor;
@@ -41,7 +43,7 @@ public interface LoginService {
      * 新增车辆信息
      */
     @POST("hongniu/api/car/savecar")
-    Observable<CommonBean<ResponseBody>> addCar(@Body LoginAddCarBean infor);
+    Observable<CommonBean<ResponseBody>> addCar(@Body LoginCarInforBean infor);
 
     /**
      * 获取车辆类型
@@ -49,6 +51,12 @@ public interface LoginService {
      */
     @POST("hongniu//api/car/vehicletype")
     Observable<CommonBean<List<CarTypeBean>>> getCarType();
+  /**
+     * 获取车辆类型
+     * @return
+     */
+    @POST("hongniu/api/car/selectpagecar")
+    Observable<CommonBean<LoginCarListBean>> getCarList(@Body PagerParambean parambean);
 
 
 }

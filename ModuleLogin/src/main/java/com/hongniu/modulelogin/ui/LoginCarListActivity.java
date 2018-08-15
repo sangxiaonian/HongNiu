@@ -12,9 +12,14 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.entity.CarTypeBean;
 import com.hongniu.modulelogin.R;
+import com.hongniu.modulelogin.entity.LoginCarInforBean;
+import com.hongniu.modulelogin.entity.LoginCarListBean;
 import com.hongniu.modulelogin.entity.LoginEvent;
+import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.sang.common.event.BusFactory;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
@@ -26,7 +31,9 @@ import java.util.List;
 public class LoginCarListActivity extends BaseActivity implements View.OnClickListener {
 
     private RecyclerView recyclerView;
-    private List<String> datas;
+    private  List<LoginCarInforBean> datas;
+    private int currentPage=1;
+    private XAdapter<LoginCarInforBean> adapter;
 
 
     @Override
@@ -55,29 +62,29 @@ public class LoginCarListActivity extends BaseActivity implements View.OnClickLi
         super.initData();
         datas=new ArrayList<>();
 
-        for (int i = 0; i < 10; i++) {
-            datas.add("");
-        }
-        XAdapter<String> adapter =new XAdapter<String>(mContext,datas) {
+
+          adapter =new XAdapter<LoginCarInforBean>(mContext,datas) {
             @Override
-            public BaseHolder<String> initHolder(ViewGroup parent, int viewType) {
-                return new BaseHolder<String>(mContext,parent,R.layout.login_item_car_list){
+            public BaseHolder<LoginCarInforBean> initHolder(ViewGroup parent, int viewType) {
+                return new BaseHolder<LoginCarInforBean>(mContext,parent,R.layout.login_item_car_list){
                     @Override
-                    public void initView(View itemView, int position, String data) {
+                    public void initView(View itemView, int position, final LoginCarInforBean data) {
                         super.initView(itemView, position, data);
                         TextView tvCarNum = itemView.findViewById(R.id.tv_car_num);//车牌号
                         TextView tvCarType= itemView.findViewById(R.id.tv_cat_type);//车辆类型
                         TextView tvOwner= itemView.findViewById(R.id.tv_owner);//车主电话信息
 
-                        tvCarNum.setText("沪A999999");
-                        tvCarType.setText("豪华法拉利");
-                        tvOwner.setText("男神1号");
+                        tvCarNum.setText(data.getCarNumber()==null?"":data.getCarNumber());
+                        tvCarType.setText(data.getCartypename()==null?"":data.getCartypename());
+                        tvOwner.setText(data.getContactName()==null?"":data.getContactName());
 
 
                         itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                BusFactory.getBus().postSticky(new LoginEvent.CarEvent(1));
+                                LoginEvent.CarEvent carEvent = new LoginEvent.CarEvent(1);
+                                carEvent.bean=data;
+                                BusFactory.getBus().postSticky(carEvent);
                                 ArouterUtils.getInstance().builder(ArouterParamLogin.activity_car_infor) .navigation(mContext);
                             }
                         });
@@ -87,6 +94,27 @@ public class LoginCarListActivity extends BaseActivity implements View.OnClickLi
         };
 
         recyclerView.setAdapter(adapter);
+
+
+        HttpLoginFactory.getCarList(currentPage)
+                .subscribe(new NetObserver<LoginCarListBean>(this) {
+
+
+                    @Override
+                    public void doOnSuccess(LoginCarListBean data) {
+                        List<LoginCarInforBean> list = data.getList();
+                        datas.clear();
+                        if (list!=null){
+                            datas.addAll(list);
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+
+
+
+
+                });
+
 
     }
 

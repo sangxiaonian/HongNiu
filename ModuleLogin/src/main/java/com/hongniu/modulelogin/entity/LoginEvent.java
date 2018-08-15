@@ -14,6 +14,7 @@ public class LoginEvent {
     public static class  CarEvent implements IBus.IEvent{
         //消息类型 0 新增车辆 1 修改车辆
         public int type;
+        public LoginCarInforBean bean;
 
         public CarEvent(int type) {
             this.type = type;

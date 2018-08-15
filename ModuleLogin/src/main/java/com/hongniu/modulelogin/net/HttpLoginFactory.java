@@ -3,7 +3,9 @@ package com.hongniu.modulelogin.net;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CarTypeBean;
 import com.hongniu.baselibrary.entity.CommonBean;
-import com.hongniu.modulelogin.entity.LoginAddCarBean;
+import com.hongniu.baselibrary.entity.PagerParambean;
+import com.hongniu.modulelogin.entity.LoginCarInforBean;
+import com.hongniu.modulelogin.entity.LoginCarListBean;
 import com.hongniu.modulelogin.entity.LoginSMSParams;
 import com.hongniu.baselibrary.entity.LoginBean;
 import com.hongniu.modulelogin.entity.LoginPersonInfor;
@@ -80,22 +82,31 @@ public class HttpLoginFactory {
 
     /**
      * 新增车辆
-     *
      */
-    public static Observable<CommonBean<ResponseBody>> addCar(LoginAddCarBean infor) {
+    public static Observable<CommonBean<ResponseBody>> addCar(LoginCarInforBean infor) {
 
         return LoginClient.getInstance().getLoginService()
                 .addCar(infor)
                 .compose(RxUtils.<CommonBean<ResponseBody>>getSchedulersObservableTransformer())
                 ;
     }
+
     /**
      * 获取车辆类型
-     *
      */
     public static Observable<CommonBean<List<CarTypeBean>>> getCarType() {
 
         return LoginClient.getInstance().getLoginService().getCarType().compose(RxUtils.<CommonBean<List<CarTypeBean>>>getSchedulersObservableTransformer());
+
+    }
+
+    /**
+     * 获取车辆类型
+     */
+    public static Observable<CommonBean<LoginCarListBean>>  getCarList(int currentPage) {
+
+        PagerParambean bean=new PagerParambean(currentPage);
+        return LoginClient.getInstance().getLoginService().getCarList(bean).compose(RxUtils.<CommonBean<LoginCarListBean>> getSchedulersObservableTransformer());
 
     }
 
