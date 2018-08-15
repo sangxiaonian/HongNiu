@@ -23,6 +23,8 @@ import com.hongniu.moduleorder.control.SwitchStateListener;
 import com.hongniu.moduleorder.widget.OrderMainPop;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
+import com.sang.common.recycleview.holder.PeakHolder;
+import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.SwitchTextLayout;
 import com.sang.common.widget.dialog.CenterAlertDialog;
@@ -129,16 +131,16 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
 
                         item.setOnButtonClickListener(OrderMainFragmet.this);
                         item.buildButton(data.isInsurance());
-                        itemView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-//                                ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_pay).navigation(mContext);
-                            }
-                        });
+
                     }
                 };
             }
         };
+
+        View view=new View(getContext());
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DeviceUtils.dip2px(getContext(),75));
+        view.setLayoutParams(params);
+        adapter.addFoot(new PeakHolder(view));
         rv.setAdapter(adapter);
     }
 
