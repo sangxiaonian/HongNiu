@@ -3,6 +3,7 @@ package com.hongniu.modulelogin.net;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.modulelogin.entity.request.LoginSMSParams;
 import com.hongniu.baselibrary.entity.LoginBean;
+import com.hongniu.modulelogin.entity.respond.LoginPersonInfor;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
@@ -24,7 +25,7 @@ public interface LoginService {
      * @return
      */
     @POST("hongniu/api/user/finduserinfo")
-    Observable<CommonBean<LoginBean>> getPersonInfor();
+    Observable<CommonBean<LoginPersonInfor>> getPersonInfor();
 
 
 }

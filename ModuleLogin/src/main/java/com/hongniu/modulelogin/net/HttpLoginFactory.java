@@ -4,6 +4,7 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.modulelogin.entity.request.LoginSMSParams;
 import com.hongniu.baselibrary.entity.LoginBean;
+import com.hongniu.modulelogin.entity.respond.LoginPersonInfor;
 import com.sang.common.net.rx.RxUtils;
 import com.sang.common.utils.ConvertUtils;
 
@@ -51,11 +52,11 @@ public class HttpLoginFactory {
     /**
      * 获取个人信息
      */
-    public static Observable<CommonBean<LoginBean>> getPersonInfor() {
+    public static Observable<CommonBean<LoginPersonInfor>> getPersonInfor() {
 
         return LoginClient.getInstance().getLoginService()
                 .getPersonInfor()
-                .compose(RxUtils.<CommonBean<LoginBean>>getSchedulersObservableTransformer())
+                .compose(RxUtils.<CommonBean<LoginPersonInfor>>getSchedulersObservableTransformer())
                 ;
     }
 
