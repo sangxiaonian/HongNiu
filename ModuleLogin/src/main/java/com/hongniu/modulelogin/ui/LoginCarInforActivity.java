@@ -9,9 +9,13 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.utils.PickerDialogUtils;
+import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.modulelogin.R;
+import com.hongniu.modulelogin.entity.LoginAddCarBean;
 import com.hongniu.modulelogin.entity.LoginEvent;
+import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.sang.common.event.BusFactory;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.ItemView;
@@ -39,6 +43,7 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
     private Button button;
     private boolean isAdd;//是否是添加车辆
     private OptionsPickerView.Builder pickerDialog;
+    private LoginAddCarBean carBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +101,7 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
         this.isAdd = event.type == 0;
         if (event.type == 0) {
             setToolbarTitle(getString(R.string.login_add_car));
-
+            carBean = new LoginAddCarBean();
         } else {
             setToolbarTitle(getString(R.string.login_modification_car));
             itemCarType.setTextCenter("豪华法拉利");
@@ -141,12 +146,20 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
         if (i == R.id.bt_save) {
             if (check()) {
                 if (isAdd) {
-                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show(R.string.login_add_car_success);
+                    HttpLoginFactory.addCar(getValue())
+                            .subscribe(new NetObserver<String>(this) {
+                                @Override
+                                public void doOnSuccess(String data) {
+                                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show(R.string.login_add_car_success);
+                                    finish();
 
+                                }
+                            });
                 } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show(R.string.login_add_car_modification);
+                    finish();
+
                 }
-                finish();
             }
 
 
@@ -156,6 +169,15 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
             build.show(v);
 
         }
+    }
+
+    private LoginAddCarBean getValue() {
+        carBean.setCarCode("1");
+        carBean.setCarNumber(itemCarNum.getTextCenter());
+        carBean.setContactMobile(itemCarPhone.getTextCenter());
+        carBean.setContactName(itemCarOwner.getTextCenter());
+        carBean.setCarOwnerId(Utils.getPgetPersonInfor().getId() + "");
+        return carBean;
     }
 
     private boolean check() {

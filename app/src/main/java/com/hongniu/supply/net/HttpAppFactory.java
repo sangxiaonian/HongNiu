@@ -1,11 +1,11 @@
-package com.hongniu.modulelogin.net;
+package com.hongniu.supply.net;
 
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
-import com.hongniu.modulelogin.entity.LoginAddCarBean;
-import com.hongniu.modulelogin.entity.LoginSMSParams;
 import com.hongniu.baselibrary.entity.LoginBean;
+import com.hongniu.modulelogin.entity.LoginAddCarBean;
 import com.hongniu.modulelogin.entity.LoginPersonInfor;
+import com.hongniu.modulelogin.entity.LoginSMSParams;
 import com.sang.common.net.rx.RxUtils;
 import com.sang.common.utils.ConvertUtils;
 
@@ -16,7 +16,7 @@ import io.reactivex.Observable;
  * <p>
  * 登录使用的App
  */
-public class HttpLoginFactory {
+public class HttpAppFactory {
 
 
     /**
@@ -28,7 +28,7 @@ public class HttpLoginFactory {
         LoginSMSParams params = new LoginSMSParams();
         params.setMobile(mobile);
         params.setCode(ConvertUtils.MD5(mobile, Param.key));
-        return LoginClient.getInstance().getLoginService()
+        return AppClient.getInstance().getLoginService()
                 .getSmsCode(params)
                 .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer())
                 ;
@@ -44,7 +44,7 @@ public class HttpLoginFactory {
         LoginSMSParams params = new LoginSMSParams();
         params.setMobile(mobile);
         params.setCheckCode(code);
-        return LoginClient.getInstance().getLoginService()
+        return AppClient.getInstance().getLoginService()
                 .loginBySms(params)
                 .compose(RxUtils.<CommonBean<LoginBean>>getSchedulersObservableTransformer())
                 ;
@@ -55,7 +55,7 @@ public class HttpLoginFactory {
      */
     public static Observable<CommonBean<LoginPersonInfor>> getPersonInfor() {
 
-        return LoginClient.getInstance().getLoginService()
+        return AppClient.getInstance().getLoginService()
                 .getPersonInfor()
                 .compose(RxUtils.<CommonBean<LoginPersonInfor>>getSchedulersObservableTransformer())
                 ;
@@ -68,7 +68,7 @@ public class HttpLoginFactory {
      */
     public static Observable<CommonBean<String>> changePersonInfor(LoginPersonInfor infor) {
 
-        return LoginClient.getInstance().getLoginService()
+        return AppClient.getInstance().getLoginService()
                 .changePersonInfor(infor)
                 .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer())
                 ;
@@ -80,7 +80,7 @@ public class HttpLoginFactory {
      */
     public static Observable<CommonBean<String>> addCar(LoginAddCarBean infor) {
 
-        return LoginClient.getInstance().getLoginService()
+        return AppClient.getInstance().getLoginService()
                 .addCar(infor)
                 .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer())
                 ;

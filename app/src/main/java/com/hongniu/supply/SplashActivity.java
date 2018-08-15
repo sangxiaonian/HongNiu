@@ -47,6 +47,8 @@ public class SplashActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         setToolbarTitle("");
         handler.sendEmptyMessageDelayed(0, 1500);
+
+
     }
 
     @Override

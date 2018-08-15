@@ -1,4 +1,4 @@
-package com.hongniu.modulelogin.entity.request;
+package com.hongniu.modulelogin.entity;
 
 /**
  * 作者： ${PING} on 2018/8/13.

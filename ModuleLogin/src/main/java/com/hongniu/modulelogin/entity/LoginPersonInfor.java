@@ -1,4 +1,4 @@
-package com.hongniu.modulelogin.entity.respond;
+package com.hongniu.modulelogin.entity;
 
 /**
  * 作者： ${PING} on 2018/8/15.
@@ -6,25 +6,8 @@ package com.hongniu.modulelogin.entity.respond;
  */
 public class LoginPersonInfor {
 
-    /**
-     * company : null
-     * contact : null
-     * email : null
-     * phone : null
-     * province : null
-     * city : null
-     * district : null
-     * address : null
-     * mobile : 15515871516
-     * organization : null
-     * idnumber : null
-     * nickname : null
-     * gender : null
-     * logo : null
-     * remarks : null
-     * /
-     * <p>
-     * /**
+
+     /**
      * true	string	公司名称
      */
     private String company;

@@ -10,7 +10,7 @@ import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.modulelogin.R;
-import com.hongniu.modulelogin.entity.respond.LoginPersonInfor;
+import com.hongniu.modulelogin.entity.LoginPersonInfor;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.ItemView;
