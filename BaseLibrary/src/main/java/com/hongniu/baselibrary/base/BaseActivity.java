@@ -71,7 +71,7 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
     }
 
     protected boolean getUseEventBus() {
-        return true;
+        return false;
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

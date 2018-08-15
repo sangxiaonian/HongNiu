@@ -1,5 +1,7 @@
 package com.hongniu.modulefinance.ui.fragment;
 
+import android.app.usage.UsageEvents;
+import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,14 +12,23 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.hongniu.baselibrary.base.BaseFragment;
+import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.widget.order.OrderDetailDialog;
 import com.hongniu.modulefinance.R;
+import com.hongniu.modulefinance.event.FinanceEvent;
 import com.hongniu.modulefinance.ui.adapter.FinanceExpendHeadHolder;
+import com.sang.common.event.BusFactory;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
+import com.sang.common.utils.ConvertUtils;
+import com.sang.common.widget.VistogramView;
 import com.sang.common.widget.dialog.builder.BottomAlertBuilder;
 import com.sang.common.widget.guideview.BaseGuide;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +47,7 @@ public class FinanceExpendFragment extends BaseFragment implements RadioGroup.On
     private List<String> datas;
     private FinanceExpendHeadHolder headHolder;
 
+    List<List<VistogramView.VistogramBean>>  debugDatas;
 
     @Override
     protected View initView(LayoutInflater inflater) {
@@ -51,14 +63,10 @@ public class FinanceExpendFragment extends BaseFragment implements RadioGroup.On
     @Override
     protected void initData() {
         super.initData();
-
-
-
         datas = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             datas.add("");
         }
-
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         recycleView.setLayoutManager(manager);
@@ -95,6 +103,25 @@ public class FinanceExpendFragment extends BaseFragment implements RadioGroup.On
         };
         headHolder = new FinanceExpendHeadHolder(getContext(), recycleView);
         adapter.addHeard(headHolder);
+
+        debugDatas = new ArrayList<>();
+        if (Param.isDebug) {
+            for (int i = 0; i < 12; i++) {
+                List<VistogramView.VistogramBean> list = new ArrayList<>();
+                list.add(new VistogramView.VistogramBean(Color.parseColor("#F06F28"), ConvertUtils.getRandom(10000, 15000), (i + 1) + "月"));
+                list.add(new VistogramView.VistogramBean(Color.parseColor("#007AFF"), ConvertUtils.getRandom(5000, 8000), (i + 1) + "月"));
+                debugDatas.add(list);
+            }
+
+            recycleView.post(new Runnable() {
+                @Override
+                public void run() {
+                    headHolder.setDatas(debugDatas);
+                }
+            })
+            ;
+        }
+
         recycleView.setAdapter(adapter);
 
     }
@@ -123,4 +150,32 @@ public class FinanceExpendFragment extends BaseFragment implements RadioGroup.On
 
         }
     }
+
+
+    @Override
+    protected boolean getUseEventBus() {
+        return true;
+    }
+
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    public void onEndEvent(FinanceEvent.SelectMonthEvent event) {
+        if (event != null) {
+            SimpleDateFormat format = new SimpleDateFormat("MM月");
+            String data = format.format(event.date);
+            if (data.startsWith("0")){
+               data= data.substring(1);
+            }
+            if (debugDatas!=null&&debugDatas.size()>0){
+                for (List<VistogramView.VistogramBean> debugData : debugDatas) {
+                    if (debugData!=null&&debugData.size()>0){
+                        if (debugData.get(0).xMark.equals(data)){
+                            headHolder.setCurrentX(debugDatas.indexOf(debugData));
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
 }

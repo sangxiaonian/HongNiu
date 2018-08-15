@@ -16,14 +16,10 @@ import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 
-import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.JLog;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Set;
 
 /**
  * 作者： ${PING} on 2018/8/10.
@@ -40,6 +36,7 @@ public class VistogramView extends View implements DynamicAnimation.OnAnimationE
 
     private Point hValue;
     private int colorLine;
+    private int textColor;
 
     private PointF orginPoint;//坐标源点，左下角
     private PointF endPoint;//坐标终点，右上角
@@ -47,6 +44,13 @@ public class VistogramView extends View implements DynamicAnimation.OnAnimationE
 
     private int numbersX = 3;//X轴上面所能显示的坐标数
     private float textLineGap;//文字和坐标之间的距离
+
+    private int alpha = 100;
+
+    /**
+     * 当前X坐标
+     */
+    private int currentX;
 
     List<List<VistogramBean>> datas = new ArrayList<>();
 
@@ -79,7 +83,8 @@ public class VistogramView extends View implements DynamicAnimation.OnAnimationE
         cellWidth = DeviceUtils.dip2px(context, 20);
         textLineGap = DeviceUtils.dip2px(context, 15);
         hValue = new Point();
-        colorLine = Color.parseColor("#6d6d6d");
+        colorLine = Color.parseColor("#eeeeee");
+        textColor = Color.parseColor("#6d6d6d");
         orginPoint = new PointF();
         endPoint = new PointF();
 
@@ -202,7 +207,8 @@ public class VistogramView extends View implements DynamicAnimation.OnAnimationE
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
+        //绘制坐标线
+        drawLine(canvas);
         //绘制柱状图
         if (!datas.isEmpty()) {
             canvas.save();
@@ -216,13 +222,13 @@ public class VistogramView extends View implements DynamicAnimation.OnAnimationE
             }
             canvas.restore();
         }
+
         //绘制Y坐标
         drawCoordinateY(canvas);
         drawCoordinateX(canvas);
         //最后绘制一层遮罩
-        drawShade(canvas);
-        //绘制坐标线
-        drawLine(canvas);
+//        drawShade(canvas);
+
     }
 
     private void drawCoordinateX(Canvas canvas) {
@@ -233,9 +239,14 @@ public class VistogramView extends View implements DynamicAnimation.OnAnimationE
         rect.right = (int) endPoint.x;
         rect.bottom = getMeasuredHeight();
         canvas.clipRect(rect);
-        mPaint.setColor(colorLine);
+        mPaint.setColor(textColor);
         mPaint.setTextAlign(Paint.Align.CENTER);
         for (int i = 0; i < datas.size(); i++) {
+            if (i==currentX){
+                mPaint.setAlpha(255);
+            }else {
+                mPaint.setAlpha(alpha);
+            }
             final int start = (int) (orginPoint.x + i * bigGap) + startX;
             List<VistogramBean> list = datas.get(i);
             if (list != null && list.size() > 0) {
@@ -275,21 +286,23 @@ public class VistogramView extends View implements DynamicAnimation.OnAnimationE
 
         final Paint.FontMetrics fontMetrics = mPaint.getFontMetrics();
 
-
         for (int j = 0; j < vistogramBeans.size(); j++) {
             VistogramBean vistogramBean = vistogramBeans.get(j);
             mPaint.setStyle(Paint.Style.FILL);
             mPaint.setColor(vistogramBean.color);
+            if (i==currentX){
+                mPaint.setAlpha(255);
+            }else {
+                mPaint.setAlpha(alpha);
+            }
+
             final float present = vistogramBean.value / hValue.x;
             rect.left = cellX + cellWidth * j + gap * j;
             rect.top = (int) (orginPoint.y - (orginPoint.y - endPoint.y) * present * 3 / 4);
             rect.right = rect.left + cellWidth;
             rect.bottom = (int) orginPoint.y;
             canvas.drawRect(rect, mPaint);
-
-
             mPaint.setStyle(Paint.Style.FILL);
-            mPaint.setColor(vistogramBean.color);
             rect.left = cellX + cellWidth * j + gap * j;
             rect.top = (int) (orginPoint.y - (orginPoint.y - endPoint.y) * present * 3 / 4);
             rect.right = rect.left + cellWidth;
@@ -308,7 +321,7 @@ public class VistogramView extends View implements DynamicAnimation.OnAnimationE
 
 
     private void drawLine(Canvas canvas) {
-
+        mPaint.setAlpha(255);
         //绘制纵向线
         mPaint.setColor(colorLine);
         final int YstartX = (int) (orginPoint.x - mPaint.getStrokeWidth() / 2);
@@ -330,12 +343,14 @@ public class VistogramView extends View implements DynamicAnimation.OnAnimationE
         //绘制纵坐标
         final float cellY = (orginPoint.y - endPoint.y) / 4;
         mPaint.setTextAlign(Paint.Align.RIGHT);
-        mPaint.setColor(colorLine);
+        mPaint.setColor(textColor);
+
+        mPaint.setAlpha(alpha);
+
         final Paint.FontMetrics fontMetrics = mPaint.getFontMetrics();
         float textHight = fontMetrics.top / 2 + fontMetrics.bottom / 2;
         for (int i = 0; i < 4; i++) {
             final float y = orginPoint.y - cellY * i;
-            canvas.drawLine(orginPoint.x, y, endPoint.x, y, mPaint);
             canvas.drawText(String.valueOf(hValue.x * (i) / 3), textRectY.width(), (y - textHight), mPaint);
         }
     }
@@ -345,6 +360,14 @@ public class VistogramView extends View implements DynamicAnimation.OnAnimationE
         super.onDetachedFromWindow();
         cancleFling();
     }
+
+
+    public void setCurrentSelect(int currentSelect){
+        currentX=currentSelect;
+        changeStartX(-(currentX-2)*bigGap);
+        postInvalidate();
+    }
+
 
 
     /**
@@ -393,9 +416,9 @@ public class VistogramView extends View implements DynamicAnimation.OnAnimationE
 
 
     public static class VistogramBean {
-        int color;
-        float value;
-        String xMark = "12月";
+        public int color;
+        public float value;
+        public String xMark = "12月";
 
         /**
          * 颜色

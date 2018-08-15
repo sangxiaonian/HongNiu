@@ -15,6 +15,7 @@ import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
+import com.sang.common.event.BusFactory;
 import com.sang.thirdlibrary.map.MapControl;
 import com.sang.thirdlibrary.map.NavigationUtils;
 
@@ -63,6 +64,7 @@ public class OrderNavigationActivity extends BaseActivity implements MapControl.
             navigationUtils. setStartPoint(event.getStart().latitude, event.getStart().longitude);
             navigationUtils. setEndtPoint(event.getEnd().latitude, event.getEnd().longitude);
         }
+        BusFactory.getBus().removeStickyEvent(event);
     }
 
 

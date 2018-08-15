@@ -12,6 +12,7 @@ import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.utils.PickerDialogUtils;
 import com.hongniu.modulelogin.R;
 import com.hongniu.modulelogin.entity.LoginEvent;
+import com.sang.common.event.BusFactory;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.ItemView;
 import com.sang.common.widget.dialog.BottomAlertDialog;
@@ -123,6 +124,7 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
             itemCarOwner.setTextCenter("男神一号");
             itemCarPhone.setTextCenter("15555555555");
         }
+        BusFactory.getBus().removeStickyEvent(event);
     }
 
     /**

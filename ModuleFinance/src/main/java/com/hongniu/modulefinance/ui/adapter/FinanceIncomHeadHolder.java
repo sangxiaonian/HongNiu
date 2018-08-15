@@ -22,6 +22,7 @@ public class FinanceIncomHeadHolder extends PeakHolder {
     private TextView tvDes;
     private String title;
     private VistogramView vist;
+    private int currentX;
 
     public FinanceIncomHeadHolder(View itemView) {
         super(itemView);
@@ -33,26 +34,6 @@ public class FinanceIncomHeadHolder extends PeakHolder {
 
     public FinanceIncomHeadHolder(Context context, ViewGroup parent) {
         super(context, parent, R.layout.finance_item_head_incom);
-
-
-        if (Param.isDebug) {
-            final List<List<VistogramView.VistogramBean>> debugDatas = new ArrayList<>();
-            for (int i = 0; i < 12; i++) {
-                List<VistogramView.VistogramBean> list = new ArrayList<>();
-                list.add(new VistogramView.VistogramBean(Color.parseColor("#F06F28"), ConvertUtils.getRandom(10000, 15000), (i + 1) + "月"));
-                list.add(new VistogramView.VistogramBean(Color.parseColor("#007AFF"), ConvertUtils.getRandom(5000, 8000), (i + 1) + "月"));
-                debugDatas.add(list);
-            }
-
-            itemView.post(new Runnable() {
-                @Override
-                public void run() {
-                    setDatas(debugDatas);
-                }
-            })
-            ;
-        }
-
 
     }
 
@@ -79,4 +60,15 @@ public class FinanceIncomHeadHolder extends PeakHolder {
         vist.setDatas(datas);
     }
 
+    public void setCurrentX(int i) {
+        this.currentX=i;
+        itemView.post(new Runnable() {
+            @Override
+            public void run() {
+                vist.setCurrentSelect(currentX);
+            }
+        });
+
+
+    }
 }

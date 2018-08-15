@@ -16,8 +16,10 @@ import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.BaseFragment;
 import com.hongniu.baselibrary.utils.PickerDialogUtils;
 import com.hongniu.modulefinance.R;
+import com.hongniu.modulefinance.event.FinanceEvent;
 import com.hongniu.modulefinance.ui.fragment.FinanceExpendFragment;
 import com.hongniu.modulefinance.ui.fragment.FinanceIncomeFragment;
+import com.sang.common.event.BusFactory;
 import com.sang.common.utils.JLog;
 import com.sang.common.widget.SwitchTextLayout;
 import com.sang.common.widget.guideview.BaseGuide;
@@ -52,6 +54,9 @@ public class FinanceActivity extends BaseActivity implements RadioGroup.OnChecke
         initData();
         initListener();
         rbLeft.performClick();
+
+        onTimeSelect(new Date(),null);
+
     }
 
     @Override
@@ -113,6 +118,7 @@ public class FinanceActivity extends BaseActivity implements RadioGroup.OnChecke
         SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月");
         String data = format.format(date);
         switcTime.setTitle(data);
+        BusFactory.getBus().postSticky(new FinanceEvent.SelectMonthEvent(date));
     }
 
     @Override
