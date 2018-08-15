@@ -16,8 +16,10 @@ import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.entity.CloseActivityEvent;
 import com.hongniu.moduleorder.control.SwitchStateListener;
 import com.hongniu.moduleorder.widget.OrderMainTitlePop;
+import com.sang.common.event.BusFactory;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.widget.SwitchTextLayout;
@@ -149,6 +151,11 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        BusFactory.getBus().post(new CloseActivityEvent());
+    }
 
     /**
      * 顶部角色类型被选中点击的时候
@@ -229,6 +236,11 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected boolean reciveClose() {
+        return false;
     }
 
     /**

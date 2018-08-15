@@ -83,7 +83,7 @@ public class FinanceExpendFragment extends BaseFragment implements RadioGroup.On
                         TextView tvPrice = itemView.findViewById(R.id.tv_price);
 
                         tvOrder.setText("订单号：" + "1212136484");
-                        tvCarNum.setText("车牌号：" + "沪A125356");
+                        tvCarNum.setText("车牌号码：" + "沪A125356");
                         tvTime.setText("付费时间：" + "2017-7-8");
                         tvPrice.setText("1200.0");
                         itemView.setOnClickListener(new View.OnClickListener() {

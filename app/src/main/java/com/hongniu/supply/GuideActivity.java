@@ -57,6 +57,11 @@ public class GuideActivity extends BaseActivity {
     }
 
     @Override
+    protected boolean reciveClose() {
+        return true;
+    }
+
+    @Override
     protected void initView() {
         super.initView();
         vp = findViewById(R.id.vp);

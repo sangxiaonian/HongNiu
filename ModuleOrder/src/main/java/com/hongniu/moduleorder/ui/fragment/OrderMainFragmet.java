@@ -177,8 +177,8 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
         } else if (view.getId() == R.id.switch_right) {
             rightSelection = position;
             switchRight.setTitle(states.get(position));
-
         }
+        pop.dismiss();
     }
 
 

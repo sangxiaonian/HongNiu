@@ -48,12 +48,16 @@
     <com.sang.common.widget.ItemView
         android:id="@+id/item_address_detail"
         style="@style/itemview"
+        android:layout_height="wrap_content"
+        android:minHeight="45dp"
         app:showline="false"
+        app:isSingleLine="false"
         app:textcenterhide="请输入您的详细地址"
         app:textleft="详细地址" />
 
 
     <Button
+
         style="@style/bt_sum"
         android:layout_marginTop="70dp"
         android:id="@+id/bt_save"

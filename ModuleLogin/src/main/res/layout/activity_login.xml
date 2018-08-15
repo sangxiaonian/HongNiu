@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/login_margin_left"
-    android:paddingRight="@dimen/login_margin_right"
+
     android:background="@color/color_bg"
     tools:context=".LoginActivity">
 
@@ -13,6 +12,8 @@
         android:id="@+id/textView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="86dp"
         android:text="@string/login_title"
         android:textColor="@color/color_title_dark"
@@ -35,19 +36,19 @@
         android:textColorHint="@color/color_et_hide"
         android:textCursorDrawable="@drawable/et_cursor"
         android:textSize="@dimen/text_login_et"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textView"
         app:layout_constraintHorizontal_bias="0.333"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <View
         android:id="@+id/line"
         android:layout_width="0dp"
-        android:layout_height="@dimen/line_height"
+        android:layout_height="1dp"
         android:layout_marginTop="15dp"
         android:background="@color/color_line"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/et_phone"
+        app:layout_constraintStart_toStartOf="@+id/et_phone"
         app:layout_constraintTop_toBottomOf="@+id/et_phone" />
 
     <TextView
@@ -58,14 +59,16 @@
         android:text="@string/login_consent"
         android:textColor="@color/color_content_light"
         android:textSize="@dimen/text_min_11sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/et_phone"
+        app:layout_constraintStart_toStartOf="@+id/et_phone"
         app:layout_constraintTop_toBottomOf="@+id/line" />
 
     <Button
         android:id="@+id/bt_login"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/bt_radius_2_333_999"
         android:text="@string/login_get_sms"

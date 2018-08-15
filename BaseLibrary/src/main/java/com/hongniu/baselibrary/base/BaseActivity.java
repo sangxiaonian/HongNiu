@@ -57,7 +57,7 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
     @Override
     protected void onStart() {
         super.onStart();
-        if (getUseEventBus()) {
+        if (getUseEventBus() ||reciveClose()) {
             BusFactory.getBus().register(this);
         }
     }
@@ -65,7 +65,7 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (getUseEventBus()) {
+        if (getUseEventBus()||reciveClose()) {
             BusFactory.getBus().unregister(this);
         }
     }
@@ -74,9 +74,13 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
         return false;
     }
 
+    protected boolean reciveClose() {
+        return true;
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(CloseActivityEvent event) {
-        if (event != null) {
+        if (event != null&&reciveClose()) {
             finish();
         }
     }

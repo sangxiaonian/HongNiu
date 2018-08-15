@@ -41,7 +41,7 @@ public class FinanceSearchActivity extends BaseActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finance_search);
-
+        setToolbarTitle("");
         initView();
         initData();
         initListener();
@@ -81,15 +81,13 @@ public class FinanceSearchActivity extends BaseActivity implements View.OnClickL
                         TextView tvPrice = itemView.findViewById(R.id.tv_price);
 
                         tvOrder.setText("订单号：" + "1212136484");
-                        tvCarNum.setText("车牌号：" + "沪A125356");
+                        tvCarNum.setText("车牌号码：" + "沪A125356");
                         tvTime.setText("付费时间：" + "2017-7-8");
                         tvPrice.setText("1200.0");
                         itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 new BottomAlertBuilder()
-
-                                        .setDialogTitle(getString(R.string.login_car_entry_deleted))
                                         .creatDialog(new OrderDetailDialog(mContext))
                                         .show();
                             }

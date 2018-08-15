@@ -2,7 +2,10 @@ package com.hongniu.modulelogin;
 
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,6 +34,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         setContentView(R.layout.activity_login);
         setToolbarTitle("");
         initView();
+        initData();
         initListener();
     }
 
@@ -42,6 +46,20 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         tvCaluse = findViewById(R.id.tv_clause);
         bt.setEnabled(false);
         bt.setOnClickListener(this);
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+        SpannableStringBuilder builder=new SpannableStringBuilder(getString(R.string.login_consent));
+        ForegroundColorSpan span=new ForegroundColorSpan( getResources().getColor(R.color.color_order_color_6d6d6d));
+        builder.setSpan(span,10,builder.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        tvCaluse.setText(builder);
+    }
+
+    @Override
+    protected boolean reciveClose() {
+        return true;
     }
 
     @Override

@@ -341,16 +341,15 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
     @Override
     public void onBackPressed() {
         creatDialog("确认要离开支付？", "您的订单已创建，离开后可在订单页继续支付", "确定离开", "继续支付")
-                .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
+                .setLeftClickListener(new DialogControl.OnButtonLeftClickListener() {
                     @Override
-                    public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
+                    public void onLeftClick(View view, DialogControl.ICenterDialog dialog) {
                         dialog.dismiss();
                         finish();
                     }
-                }).creatDialog(new CenterAlertDialog(mContext))
+                })
+                .creatDialog(new CenterAlertDialog(mContext))
                 .show();
-        ;
-
     }
 
     private CenterAlertBuilder creatDialog(String title, String content, String btleft, String btRight) {

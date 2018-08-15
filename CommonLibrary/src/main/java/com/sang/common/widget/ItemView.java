@@ -47,9 +47,10 @@ public class ItemView extends FrameLayout {
     Paint mPaint;
     private boolean showLine;
 
-    private int srcRight=-1;
+    private int srcRight = -1;
     private boolean srcshow;
     private int colorRight;
+    private boolean isSingleLine = true;
 
     public ItemView(@NonNull Context context) {
         this(context, null, 0);
@@ -65,10 +66,9 @@ public class ItemView extends FrameLayout {
     }
 
 
-
     private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
 
-        mPaint=new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStrokeWidth(getResources().getDimension(R.dimen.line_height));
         mPaint.setColor(getResources().getColor(R.color.color_line));
 
@@ -85,6 +85,7 @@ public class ItemView extends FrameLayout {
             srcRight = ta.getInt(R.styleable.ItemView_srcRight, -1);
             colorRight = ta.getInt(R.styleable.ItemView_colorRight, 0);
             srcshow = ta.getBoolean(R.styleable.ItemView_srcshow, false);
+            isSingleLine = ta.getBoolean(R.styleable.ItemView_isSingleLine, true);
             ta.recycle();
         }
 
@@ -101,23 +102,29 @@ public class ItemView extends FrameLayout {
         setTextCenterHide(textCenterHide);
         setTextCenter(textCenter);
         setEditable(editable);
-        setCenter(maxLength,centerType);
+        setCenter(maxLength, centerType);
         setSrcRight(srcRight);
         setSrcshow(srcshow);
         setColorRight(colorRight);
+        setIsSingleLine(isSingleLine);
+    }
 
+    public void setIsSingleLine(boolean isSingleLine) {
+        this.isSingleLine = isSingleLine;
+        etCenter.setMaxLines(isSingleLine ? 1 : Integer.MAX_VALUE);
+        etCenter.setSingleLine(isSingleLine);
     }
 
     private void setColorRight(int colorRight) {
-        this.colorRight=colorRight;
-        if (colorRight!=0){
+        this.colorRight = colorRight;
+        if (colorRight != 0) {
             tvRight.setTextColor(colorRight);
         }
     }
 
     public void setSrcRight(int srcRight) {
         this.srcRight = srcRight;
-        if (srcRight>0) {
+        if (srcRight > 0) {
             imgGo.setImageResource(srcRight);
         }
     }
@@ -131,30 +138,29 @@ public class ItemView extends FrameLayout {
     }
 
     private void setCenter(int maxLength, int centerType) {
-        if (centerType==1){//手机号
+        if (centerType == 1) {//手机号
             etCenter.setInputType(InputType.TYPE_CLASS_PHONE);
-            etCenter.setFilters( new InputFilter[]{new InputFilter.LengthFilter(11)});
+            etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
             etCenter.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
-        }else if (centerType==2){//身份证号
+        } else if (centerType == 2) {//身份证号
             etCenter.setInputType(InputType.TYPE_CLASS_NUMBER);
-            etCenter.setFilters( new InputFilter[]{new InputFilter.LengthFilter(18)});
+            etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(18)});
             etCenter.setKeyListener(DigitsKeyListener.getInstance("0123456789xX"));
-        }else if (centerType==3){//数字
+        } else if (centerType == 3) {//数字
             etCenter.setInputType(InputType.TYPE_CLASS_NUMBER);
-            etCenter.setFilters( new InputFilter[]{new PointLengthFilter()});
+            etCenter.setFilters(new InputFilter[]{new PointLengthFilter()});
             etCenter.setKeyListener(DigitsKeyListener.getInstance("0123456789."));
         } else {
-            if (maxLength>0){
-                etCenter.setFilters( new InputFilter[]{new InputFilter.LengthFilter(maxLength)});
+            if (maxLength > 0) {
+                etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength)});
             }
         }
     }
 
 
-
     public void setEditable(boolean editable) {
         this.editable = editable;
-        if (editable){
+        if (editable) {
             viewFound.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -163,27 +169,27 @@ public class ItemView extends FrameLayout {
 
                 }
             });
-        }else {
+        } else {
             etCenter.setInputType(InputType.TYPE_NULL);
             viewFound.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                   if (onClickListenr!=null){
-                       onClickListenr.onClick(ItemView.this);
-                   }
+                    if (onClickListenr != null) {
+                        onClickListenr.onClick(ItemView.this);
+                    }
                 }
             });
         }
     }
 
-    public void setSrcshow(boolean srcshow){
-        this.srcshow=srcshow;
-        imgGo.setVisibility(!srcshow?GONE:VISIBLE);
+    public void setSrcshow(boolean srcshow) {
+        this.srcshow = srcshow;
+        imgGo.setVisibility(!srcshow ? GONE : VISIBLE);
     }
 
     @Override
     public void setOnClickListener(@Nullable OnClickListener l) {
-        onClickListenr=l;
+        onClickListenr = l;
 
     }
 
@@ -205,24 +211,24 @@ public class ItemView extends FrameLayout {
     public void setTextLeft(String textLeft) {
         this.textLeft = textLeft;
         tvLeft.setText(textLeft == null ? "" : textLeft);
-        if (TextUtils.isEmpty(textLeft)){
+        if (TextUtils.isEmpty(textLeft)) {
             tvLeft.setVisibility(GONE);
-        }else {
+        } else {
             tvLeft.setVisibility(VISIBLE);
         }
     }
 
     public String getTextLeft() {
 
-        return textLeft=tvLeft.getText().toString().trim();
+        return textLeft = tvLeft.getText().toString().trim();
     }
 
-    public void setSingleLine(boolean sing){
+    public void setSingleLine(boolean sing) {
         etCenter.setSingleLine(showLine);
     }
 
     public String getTextCenter() {
-        return textCenter=etCenter.getText().toString().trim();
+        return textCenter = etCenter.getText().toString().trim();
     }
 
     public EditText getEtCenter() {
@@ -230,7 +236,7 @@ public class ItemView extends FrameLayout {
     }
 
     public String getTextRight() {
-        return textRight=tvRight.getText().toString().trim();
+        return textRight = tvRight.getText().toString().trim();
     }
 
     public boolean isEditable() {
@@ -238,6 +244,6 @@ public class ItemView extends FrameLayout {
     }
 
     public String getTextCenterHide() {
-        return textCenterHide=etCenter.getHint().toString().trim();
+        return textCenterHide = etCenter.getHint().toString().trim();
     }
 }

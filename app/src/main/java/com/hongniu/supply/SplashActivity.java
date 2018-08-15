@@ -28,7 +28,7 @@ public class SplashActivity extends BaseActivity {
                 }else {
                     ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_main).navigation(mContext);
                 }
-                sendEmptyMessageDelayed(1,500);
+//                sendEmptyMessageDelayed(1,500);
             }else {
                 finish();
             }
@@ -42,6 +42,12 @@ public class SplashActivity extends BaseActivity {
         setToolbarTitle("");
         handler.sendEmptyMessageDelayed(0, 1500);
     }
+
+    @Override
+    protected boolean reciveClose() {
+        return true;
+    }
+
 
 
     @Override

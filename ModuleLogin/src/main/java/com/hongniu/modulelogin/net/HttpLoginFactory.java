@@ -42,7 +42,7 @@ public class HttpLoginFactory {
     public static Observable<CommonBean<LoginBean>> loginBySms(String mobile, String code) {
         LoginSMSParams params = new LoginSMSParams();
         params.setMobile(mobile);
-        params.setCode(code);
+        params.setCheckCode(code);
         return LoginClient.getInstance().getLoginService()
                 .loginBySms(params)
                 .compose(RxUtils.<CommonBean<LoginBean>>getSchedulersObservableTransformer())

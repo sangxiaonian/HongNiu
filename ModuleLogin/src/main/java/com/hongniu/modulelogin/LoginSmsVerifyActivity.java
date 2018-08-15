@@ -27,7 +27,7 @@ public class LoginSmsVerifyActivity extends BaseActivity implements VericationVi
 
     private String phone;
     private TextView tvPhone;
-    private Button btGetNewVeri;
+    private TextView btGetNewVeri;
     private VericationView vericationView;
 
     private final int originTime=60;
@@ -37,7 +37,7 @@ public class LoginSmsVerifyActivity extends BaseActivity implements VericationVi
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            if (currentTime>0) {
+            if (currentTime>1) {
                 currentTime--;
                 btGetNewVeri.setText(currentTime+getString(R.string.login_up_sms_veri));
                 handler.sendEmptyMessageDelayed(0, 1000);
@@ -74,12 +74,12 @@ public class LoginSmsVerifyActivity extends BaseActivity implements VericationVi
     protected void initData() {
         super.initData();
         StringBuffer buffer=new StringBuffer();
-        buffer.append("验证码已发送至\t");
+        buffer.append("验证码已发送至 ");
         if (phone!=null&&phone.length()==11){
             buffer.append(phone.substring(0,3))
-                    .append("\t")
+                    .append(" ")
                     .append(phone.substring(3,7))
-                    .append("\t")
+                    .append(" ")
                     .append(phone.substring(7));
         }
         tvPhone.setText(buffer.toString().trim());
@@ -123,5 +123,8 @@ public class LoginSmsVerifyActivity extends BaseActivity implements VericationVi
                 });
     }
 
-
+    @Override
+    protected boolean getUseEventBus() {
+        return true;
+    }
 }

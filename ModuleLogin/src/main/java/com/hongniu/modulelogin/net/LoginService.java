@@ -16,7 +16,7 @@ public interface LoginService {
     @POST("hongniu/api/login/getcheckcode")
     Observable<CommonBean<String>> getSmsCode(@Body LoginSMSParams params);
 
-    @POST("hongniu/api/login/wxmilogin")
+    @POST("hongniu/api/login/login")
     Observable<CommonBean<LoginBean>> loginBySms(@Body LoginSMSParams params);
 
 

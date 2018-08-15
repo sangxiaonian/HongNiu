@@ -1,34 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/color_bg"
     android:layout_height="match_parent"
+    android:background="@color/color_bg"
+    android:orientation="vertical"
     tools:context=".LoginActivity">
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/toolbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <include layout="@layout/toolbar" />
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:paddingLeft="@dimen/login_sms_gap"
-        android:paddingRight="40dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="86dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="50dp"
             android:text="@string/login_input_sms_verify"
             android:textColor="#1a1a1a"
             android:textSize="@dimen/text_login_title"
@@ -39,11 +31,12 @@
         <TextView
             android:id="@+id/tv_phone"
             android:layout_width="0dp"
-            android:textSize="@dimen/text_small"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:textColor="@color/color_title_dark"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintEnd_toEndOf="@+id/textView"
+            app:layout_constraintStart_toStartOf="@+id/textView"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 
@@ -52,23 +45,23 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tv_phone"
+            app:layout_constraintStart_toStartOf="@+id/tv_phone"
             app:layout_constraintTop_toBottomOf="@+id/tv_phone" />
 
-        <Button
+        <TextView
             android:id="@+id/bt_get_new_veri"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="27dp"
-            android:textColor="@drawable/selector_color_6d6d6d_light"
             android:background="@color/color_tran"
-            android:textSize="@dimen/text_small"
             android:text="@string/login_sms_reget_code"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="@drawable/selector_color_6d6d6d_light"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintStart_toStartOf="@+id/vercationview"
             app:layout_constraintTop_toBottomOf="@+id/vercationview" />
 
     </android.support.constraint.ConstraintLayout>
 
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

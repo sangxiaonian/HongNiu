@@ -15,7 +15,7 @@ public class LoginSMSParams {
      * 校验码，（手机号+秘钥）进行MD5加密
      */
     private String code;
-    private String openId="111111";
+    private String checkCode;
 
 
     public String getMobile() {
@@ -32,5 +32,13 @@ public class LoginSMSParams {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getCheckCode() {
+        return checkCode;
+    }
+
+    public void setCheckCode(String checkCode) {
+        this.checkCode = checkCode;
     }
 }

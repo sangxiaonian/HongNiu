@@ -59,26 +59,6 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
         button = findViewById(R.id.bt_save);
         pickerDialog = PickerDialogUtils.creatPickerDialog(mContext, this).setTitleText(getString(R.string.login_car_select));
         tvToolbarRight.setTextColor(getResources().getColor(R.color.tool_right));
-        setToolbarSrcRight(getString(R.string.deleted));
-        setToolbarRightClick(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new BottomAlertBuilder()
-                        .setTopClickListener(new DialogControl.OnButtonTopClickListener() {
-                            @Override
-                            public void onTopClick(View view, DialogControl.IBottomDialog dialog) {
-                                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show(getString(R.string.deleted_success));
-                                finish();
-                            }
-
-
-                        })
-                        .setDialogTitle(getString(R.string.login_car_entry_deleted))
-                        .creatDialog(new BottomAlertDialog(mContext))
-                        .show();
-
-            }
-        });
 
 
     }
@@ -123,6 +103,29 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
             itemCarNum.setTextCenter("沪A9999");
             itemCarOwner.setTextCenter("男神一号");
             itemCarPhone.setTextCenter("15555555555");
+        }
+
+        if (!isAdd) {
+            setToolbarSrcRight(getString(R.string.deleted));
+            setToolbarRightClick(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new BottomAlertBuilder()
+                            .setTopClickListener(new DialogControl.OnButtonTopClickListener() {
+                                @Override
+                                public void onTopClick(View view, DialogControl.IBottomDialog dialog) {
+                                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show(getString(R.string.deleted_success));
+                                    finish();
+                                }
+
+
+                            })
+                            .setDialogTitle(getString(R.string.login_car_entry_deleted))
+                            .creatDialog(new BottomAlertDialog(mContext))
+                            .show();
+
+                }
+            });
         }
         BusFactory.getBus().removeStickyEvent(event);
     }
