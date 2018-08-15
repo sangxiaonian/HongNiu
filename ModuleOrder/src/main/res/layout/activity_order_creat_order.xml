@@ -171,7 +171,7 @@
                     android:id="@+id/item_cargo_size"
                     style="@style/itemview"
                     app:centerType="number"
-                    app:textcenterhide="请输入货物面积"
+                    app:textcenterhide="请输入货物体积"
                     app:textleft="货物体积"
                     app:textright="方" />
 
