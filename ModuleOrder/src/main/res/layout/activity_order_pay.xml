@@ -152,7 +152,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:text="保险金额："
+                    android:text="保费金额："
                     android:textColor="@color/color_title_dark"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="@+id/textView2"

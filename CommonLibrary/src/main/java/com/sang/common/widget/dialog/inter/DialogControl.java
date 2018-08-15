@@ -133,6 +133,9 @@ public class DialogControl {
          */
         void setBtRightBgRes(int btRightBgRes);
 
+        void setbtSize(int btSize);
+
+        void setDialogSize(int width, int height);
     }
 
     public interface IBottomDialog extends IDialog{

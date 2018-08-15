@@ -97,7 +97,7 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
             llToolbarLeft.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    finish();
+                    onBackPressed();
                 }
             });
         }

@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +20,7 @@ import com.sang.common.widget.dialog.inter.DialogControl;
  * 作者： ${PING} on 2018/7/30.
  */
 
-public class CenterAlertDialog
-//        extends Dialog
-        implements View.OnClickListener, DialogControl.ICenterDialog {
+public class CenterAlertDialog implements View.OnClickListener, DialogControl.ICenterDialog {
     TextView btLeft;
     TextView btRight;
     TextView tvTitle;
@@ -52,6 +51,7 @@ public class CenterAlertDialog
         dialog = new Dialog(context, themeResId);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(inflate);
+        dialog.getWindow().setGravity(Gravity.CENTER);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0x00000000));
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
@@ -184,6 +184,30 @@ public class CenterAlertDialog
     public void setBtRightBgRes(int btRightBgRes) {
         if (btRightBgRes != 0)
             btRight.setBackgroundResource(btRightBgRes);
+    }
+
+    @Override
+    public void setbtSize(int btSize) {
+        if (btSize>0){
+            btLeft.setTextSize(btSize);
+            btRight.setTextSize(btSize);
+        }
+    }
+
+    @Override
+    public void setDialogSize(int width, int height) {
+        if (width!=0&&height!=0) {
+//            ViewGroup.LayoutParams params = inflate.getLayoutParams();
+//            if (params != null) {
+//                params.width = width;
+//                params.height = height;
+//            } else {
+//                params = new ViewGroup.LayoutParams(width, height);
+//            }
+//            inflate.setLayoutParams(params);
+            dialog.getWindow().setLayout(width, height);
+
+        }
     }
 
     @Override

@@ -19,6 +19,7 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.moduleorder.control.SwitchStateListener;
 import com.hongniu.moduleorder.widget.OrderMainTitlePop;
 import com.sang.common.utils.CommonUtils;
+import com.sang.common.utils.DeviceUtils;
 import com.sang.common.widget.SwitchTextLayout;
 import com.sang.common.widget.dialog.BottomAlertDialog;
 import com.sang.common.widget.dialog.CenterAlertDialog;
@@ -289,6 +290,10 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
 //            ToastUtils.showTextToast("联系客服");
             drawerLayout.closeDrawer(Gravity.START);
             new CenterAlertBuilder()
+                    .setDialogTitleSize(18)
+                    .setDialogContentSize(15)
+                    .setbtSize(18)
+                    .setDialogSize(DeviceUtils.dip2px(mContext,300),DeviceUtils.dip2px(mContext,135))
                     .setDialogTitle(getString(R.string.login_contact_service))
                     .setDialogContent(getString(R.string.login_contact_phone))
                     .setLeftClickListener(new DialogControl.OnButtonLeftClickListener() {

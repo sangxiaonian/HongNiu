@@ -35,6 +35,9 @@ public class CenterAlertBuilder {
     private boolean hideContent;
     private boolean hideBtLeft;
     private boolean hideBtRight;
+    private int btSize;
+    private int height;
+    private int width;
 
     public CenterAlertBuilder setBtLeftBgRes(int btLeftBgRes) {
         this.btLeftBgRes = btLeftBgRes;
@@ -189,6 +192,18 @@ public class CenterAlertBuilder {
         dialog.hideBtRight(hideBtRight);
         dialog.setBtRightBgRes(btRightBgRes);
         dialog.setBtLeftBgRes(btLeftBgRes);
+        dialog.setbtSize(btSize);
+        dialog.setDialogSize(width,height);
         return dialog;
+    }
+
+    public CenterAlertBuilder setbtSize(int btSize) {
+        this.btSize=btSize;
+        return this;
+    }  public CenterAlertBuilder setDialogSize(int width,int height) {
+
+        this.width=width;
+        this.height=height;
+        return this;
     }
 }

@@ -324,7 +324,7 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
      */
     @Override
     public void onStartCar() {
-        creatDialog("确认要开始发车？", "发车时请记得安全驾车哦", "返回订单", "开始发车")
+        creatDialog("确认要开始发车？", "车辆行驶中请记得安全驾车", "返回订单", "开始发车")
                 .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
                     @Override
                     public void onRightClick(View view, DialogControl.ICenterDialog dialog) {

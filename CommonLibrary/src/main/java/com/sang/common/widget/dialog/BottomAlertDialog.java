@@ -52,6 +52,7 @@ public class BottomAlertDialog
         dialog.getWindow().setGravity(Gravity.BOTTOM);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0x00000000));
 
+
     }
 
 

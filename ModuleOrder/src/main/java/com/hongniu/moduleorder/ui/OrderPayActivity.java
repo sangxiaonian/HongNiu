@@ -19,6 +19,8 @@ import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.widget.dialog.BuyInsuranceDialog;
 import com.hongniu.moduleorder.widget.dialog.InsuranceNoticeDialog;
 import com.sang.common.utils.ToastUtils;
+import com.sang.common.widget.dialog.CenterAlertDialog;
+import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
 
 /**
@@ -82,14 +84,14 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
         initListener();
 
         //此处判断是否是购买保险
-          isInsurance = getIntent().getBooleanExtra(Param.TRAN, false);
-        if (isInsurance){//如果是购买保险
+        isInsurance = getIntent().getBooleanExtra(Param.TRAN, false);
+        if (isInsurance) {//如果是购买保险
             switchPayLine(false);
             rl_tran.setVisibility(View.GONE);
             switchToBuyInsurance(false);//切换为购买保险UI
             buyInsuranceDialog.show();
 
-        }else {
+        } else {
             rbOnline.performClick();
 
         }
@@ -188,7 +190,6 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
     }
 
 
-
     /**
      * 切换线上线下支付方式
      *
@@ -255,32 +256,32 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
         } else if (i == R.id.bt_pay) {//支付订单
 
             if (!isInsurance) {//订单支付界面
-                if (onLine){//线上支付
-                    if (buyInsurance){//购买保险
+                if (onLine) {//线上支付
+                    if (buyInsurance) {//购买保险
                         ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("线上支付，购买保险");
 
-                    }else {//不购买保险
+                    } else {//不购买保险
                         ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("线上支付，不购买保险");
 
                     }
 
                     if (checkbox.isChecked()) {
                         ArouterUtils.getInstance().builder(ArouterParamOrder.activity_insurance_creat).navigation(mContext);
-                    }else {
+                    } else {
                         ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("请选择支付方式");
 
                     }
 
-                }else {//线下支付
-                    if (buyInsurance){//购买保险
+                } else {//线下支付
+                    if (buyInsurance) {//购买保险
                         if (checkbox.isChecked()) {
                             ArouterUtils.getInstance().builder(ArouterParamOrder.activity_insurance_creat).navigation(mContext);
                             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("线下支付，购买保险");
-                        }else {
+                        } else {
                             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("请选择支付方式");
                         }
 
-                    }else {//不购买保险
+                    } else {//不购买保险
                         ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("线下支付，不购买保险");
                         ArouterUtils.getInstance().builder(ArouterParamOrder.activity_insurance_creat).navigation(mContext);
 
@@ -288,11 +289,11 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
 
 
                 }
-            }else {//保险购买界面
+            } else {//保险购买界面
                 if (checkbox.isChecked()) {
                     ArouterUtils.getInstance().builder(ArouterParamOrder.activity_insurance_creat).navigation(mContext);
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("单独购买保险");
-                }else {
+                } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("请选择支付方式");
 
                 }
@@ -303,7 +304,7 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
 
             if (!isInsurance) {
                 switchToBuyInsurance(true);
-            }else {
+            } else {
                 finish();
             }
 
@@ -335,5 +336,31 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
         noticeDialog.dismiss();
         buyInsuranceDialog.setReadInsurance(true);
         buyInsuranceDialog.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        creatDialog("确认要离开支付？", "您的订单已创建，离开后可在订单页继续支付", "确定离开", "继续支付")
+                .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
+                    @Override
+                    public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
+                        dialog.dismiss();
+                        finish();
+                    }
+                }).creatDialog(new CenterAlertDialog(mContext))
+                .show();
+        ;
+
+    }
+
+    private CenterAlertBuilder creatDialog(String title, String content, String btleft, String btRight) {
+        return new CenterAlertBuilder()
+                .setDialogTitle(title)
+                .setDialogContent(content)
+                .setBtLeft(btleft)
+                .setBtRight(btRight)
+                .setBtLeftColor(getResources().getColor(R.color.color_title_dark))
+                .setBtRightColor(getResources().getColor(R.color.color_white))
+                .setBtRightBgRes(R.drawable.shape_f06f28);
     }
 }
