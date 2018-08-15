@@ -3,10 +3,9 @@ package com.hongniu.modulelogin.net;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.modulelogin.entity.request.LoginSMSParams;
-import com.hongniu.modulelogin.entity.respond.LoginBean;
+import com.hongniu.baselibrary.entity.LoginBean;
 import com.sang.common.net.rx.RxUtils;
 import com.sang.common.utils.ConvertUtils;
-import com.sang.common.utils.JLog;
 
 import io.reactivex.Observable;
 
@@ -45,6 +44,17 @@ public class HttpLoginFactory {
         params.setCheckCode(code);
         return LoginClient.getInstance().getLoginService()
                 .loginBySms(params)
+                .compose(RxUtils.<CommonBean<LoginBean>>getSchedulersObservableTransformer())
+                ;
+    }
+
+    /**
+     * 获取个人信息
+     */
+    public static Observable<CommonBean<LoginBean>> getPersonInfor() {
+
+        return LoginClient.getInstance().getLoginService()
+                .getPersonInfor()
                 .compose(RxUtils.<CommonBean<LoginBean>>getSchedulersObservableTransformer())
                 ;
     }

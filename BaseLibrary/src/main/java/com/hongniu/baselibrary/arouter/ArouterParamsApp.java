@@ -9,7 +9,7 @@ public class ArouterParamsApp {
     /**
      * 新手引导
      */
-    public final static String activity_guide_activity = "/finance/activity_guide_activity";
+    public final static String activity_guide_activity = "/app/activity_guide_activity";
 
 
 

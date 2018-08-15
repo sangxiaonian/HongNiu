@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -15,11 +14,9 @@ import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
-import com.hongniu.baselibrary.entity.CommonBean;
-import com.hongniu.modulelogin.entity.respond.LoginBean;
+import com.hongniu.baselibrary.entity.LoginBean;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.sang.common.utils.SharedPreferencesUtils;
-import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.VericationView;
 
 @Route(path = ArouterParamLogin.activity_sms_verify)

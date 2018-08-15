@@ -19,6 +19,7 @@ import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
+import com.sang.common.utils.SharedPreferencesUtils;
 import com.sang.common.utils.ToastUtils;
 
 @Route(path = ArouterParamLogin.activity_login)
@@ -36,6 +37,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         initView();
         initData();
         initListener();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        SharedPreferencesUtils.getInstance().remove(Param.LOGIN_ONFOR);
     }
 
     @Override

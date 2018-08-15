@@ -50,4 +50,5 @@ dependencies {
     api 'com.githang:status-bar-compat:latest.integration'
     api 'com.hjq:xxpermissions:3.5'
     api 'com.google.code.gson:gson:2.8.5'
+
 }

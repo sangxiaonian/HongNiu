@@ -1,8 +1,6 @@
 package com.sang.common.net;
 
 
-import com.sang.common.utils.JLog;
-
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -47,8 +45,9 @@ public class HttpClient {
         return retrofit.build().create(t);
     }
 
-    public void addInterceptor(Interceptor interceptor) {
+    public HttpClient addInterceptor(Interceptor interceptor) {
         builder.addInterceptor(interceptor);
+        return this;
     }
 
 
