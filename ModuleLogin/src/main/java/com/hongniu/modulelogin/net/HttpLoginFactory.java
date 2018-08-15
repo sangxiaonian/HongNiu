@@ -59,6 +59,17 @@ public class HttpLoginFactory {
                 .compose(RxUtils.<CommonBean<LoginPersonInfor>>getSchedulersObservableTransformer())
                 ;
     }
+    /**
+     * 更改个人信息
+     * @param infor
+     */
+    public static Observable<CommonBean<String>> changePersonInfor(LoginPersonInfor infor) {
+
+        return LoginClient.getInstance().getLoginService()
+                .changePersonInfor(infor)
+                .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer())
+                ;
+    }
 
 
 }

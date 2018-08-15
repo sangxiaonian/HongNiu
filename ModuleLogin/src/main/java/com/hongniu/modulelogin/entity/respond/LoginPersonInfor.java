@@ -7,7 +7,6 @@ package com.hongniu.modulelogin.entity.respond;
 public class LoginPersonInfor {
 
     /**
-     * id : 251
      * company : null
      * contact : null
      * email : null
@@ -23,12 +22,8 @@ public class LoginPersonInfor {
      * gender : null
      * logo : null
      * remarks : null
-     */
+ /
 
-    /**
-     * true	string	主键
-     */
-    private String id;
     /**
      * true	string	公司名称
      */
@@ -83,13 +78,6 @@ public class LoginPersonInfor {
     private String logo;
     private String remarks;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getCompany() {
         return company;

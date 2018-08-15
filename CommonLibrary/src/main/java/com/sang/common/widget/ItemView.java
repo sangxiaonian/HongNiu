@@ -165,6 +165,7 @@ public class ItemView extends FrameLayout {
                 @Override
                 public void onClick(View v) {
                     etCenter.requestFocus();
+                    etCenter.setSelection(etCenter.getText().toString().length());
                     DeviceUtils.openSoft(etCenter);
 
                 }

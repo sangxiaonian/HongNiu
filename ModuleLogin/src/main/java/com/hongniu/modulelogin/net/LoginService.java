@@ -27,6 +27,13 @@ public interface LoginService {
     @POST("hongniu/api/user/finduserinfo")
     Observable<CommonBean<LoginPersonInfor>> getPersonInfor();
 
+   /**
+     * 更改个人信息
+     * @return
+     */
+    @POST("hongniu/api/user/updateuserinfo")
+    Observable<CommonBean<String>> changePersonInfor(@Body LoginPersonInfor infor);
+
 
 }
 
