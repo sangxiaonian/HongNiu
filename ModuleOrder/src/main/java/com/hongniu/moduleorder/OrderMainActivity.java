@@ -1,5 +1,6 @@
 package com.hongniu.moduleorder;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -22,6 +23,7 @@ import com.hongniu.moduleorder.widget.OrderMainTitlePop;
 import com.sang.common.event.BusFactory;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.DeviceUtils;
+import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.SwitchTextLayout;
 import com.sang.common.widget.dialog.BottomAlertDialog;
 import com.sang.common.widget.dialog.CenterAlertDialog;
@@ -68,6 +70,16 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
         initData();
         initListener();
         changeStaff(0);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        String extra = intent.getStringExtra(Param.TRAN);
+        if (extra!=null&&extra.equals(Param.LOGIN_OUT)){
+            ArouterUtils.getInstance().builder(ArouterParamLogin.activity_login).navigation(mContext);
+            finish();
+        }
     }
 
     @Override

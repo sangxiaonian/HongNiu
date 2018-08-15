@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
+import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.utils.Utils;
 import com.sang.common.utils.JLog;
 import com.sang.common.utils.SharedPreferencesUtils;
 import com.sang.common.widget.guideview.Guide;
@@ -26,9 +28,13 @@ public class SplashActivity extends BaseActivity {
                     SharedPreferencesUtils.getInstance().putBoolean(Param.showGuideActicity,true);
                     startActivity(new Intent(SplashActivity.this, GuideActivity.class));
                 }else {
-                    ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_main).navigation(mContext);
+                    if (Utils.isLogin()) {
+                        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_main).navigation(mContext);
+                    }else {
+                        ArouterUtils.getInstance().builder(ArouterParamLogin.activity_login).navigation(mContext);
+                        sendEmptyMessageDelayed(1,500);
+                    }
                 }
-//                sendEmptyMessageDelayed(1,500);
             }else {
                 finish();
             }

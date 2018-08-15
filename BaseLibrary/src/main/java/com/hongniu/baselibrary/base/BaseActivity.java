@@ -1,5 +1,6 @@
 package com.hongniu.baselibrary.base;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -15,8 +16,13 @@ import android.widget.TextView;
 
 import com.githang.statusbar.StatusBarCompat;
 import com.hongniu.baselibrary.R;
+import com.hongniu.baselibrary.arouter.ArouterParamOrder;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
+import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CloseActivityEvent;
+import com.hongniu.baselibrary.utils.Utils;
 import com.sang.common.event.BusFactory;
+import com.sang.common.net.error.NetException;
 import com.sang.common.net.listener.TaskControl;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.LoadDialog;
@@ -57,7 +63,7 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
     @Override
     protected void onStart() {
         super.onStart();
-        if (getUseEventBus() ||reciveClose()) {
+        if (getUseEventBus() || reciveClose()) {
             BusFactory.getBus().register(this);
         }
     }
@@ -65,7 +71,7 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (getUseEventBus()||reciveClose()) {
+        if (getUseEventBus() || reciveClose()) {
             BusFactory.getBus().unregister(this);
         }
     }
@@ -80,7 +86,7 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(CloseActivityEvent event) {
-        if (event != null&&reciveClose()) {
+        if (event != null && reciveClose()) {
             finish();
         }
     }
@@ -228,8 +234,25 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
     @Override
     public void onTaskFail(Throwable e, String code, String msg) {
         hideLoad();
-        showAleart(msg);
+        if ("401".equals(code) && e instanceof NetException) {//重新登录
+            new CenterAlertBuilder()
+                    .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
+                        @Override
+                        public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
+                            dialog.dismiss();
+                            Utils.loginOut((Activity) mContext);
+                        }
+                    })
+                    .hideBtLeft()
+                    .hideContent()
+                    .setDialogTitle(msg)
+                    .creatDialog(new CenterAlertDialog(mContext))
+                    .show();
+        } else {
+            showAleart(msg);
+        }
     }
+
 
     public void initLoading() {
         if (loading == null) {

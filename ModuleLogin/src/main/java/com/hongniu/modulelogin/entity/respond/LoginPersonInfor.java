@@ -22,9 +22,9 @@ public class LoginPersonInfor {
      * gender : null
      * logo : null
      * remarks : null
- /
-
-    /**
+     * /
+     * <p>
+     * /**
      * true	string	公司名称
      */
     private String company;

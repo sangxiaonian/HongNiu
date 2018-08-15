@@ -16,11 +16,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.utils.Utils;
 import com.sang.common.imgload.ImageLoader;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.JLog;
@@ -194,8 +196,11 @@ public class GuideActivity extends BaseActivity {
     }
 
     private void jumpNext() {
-        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_main).navigation(mContext);
-//        finish();
+        if (Utils.isLogin()) {
+            ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_main).navigation(mContext);
+        }else {
+            ArouterUtils.getInstance().builder(ArouterParamLogin.activity_login).navigation(mContext);
+        }
     }
 
     private class GuideBean {

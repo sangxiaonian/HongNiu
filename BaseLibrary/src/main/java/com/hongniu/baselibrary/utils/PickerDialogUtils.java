@@ -34,7 +34,7 @@ public class PickerDialogUtils {
         Calendar endDate = Calendar.getInstance();
         endDate.set(2020, 11, 28);
         int size = 15;
-        int contentSize =23;
+        int contentSize = 23;
         if (type == null) {
             type = new boolean[]{true, true, true, false, false, false};
         }
@@ -67,7 +67,7 @@ public class PickerDialogUtils {
      * 初始化Dialog
      */
     public static OptionsPickerView initPickerDialog(Context mContext, OptionsPickerView.OnOptionsSelectListener listener) {
-        return creatPickerDialog(mContext,listener).build();
+        return creatPickerDialog(mContext, listener).build();
     }
 
     /**
@@ -75,7 +75,7 @@ public class PickerDialogUtils {
      */
     public static OptionsPickerView.Builder creatPickerDialog(Context mContext, OptionsPickerView.OnOptionsSelectListener listener) {
         int size = 14;
-        int contentSize =  15;
+        int contentSize = 15;
         OptionsPickerView.Builder pvOptions = new OptionsPickerView.Builder(mContext, listener)
                 .setTitleColor(mContext.getResources().getColor(R.color.color_content_light))
                 .setSubmitColor(mContext.getResources().getColor(R.color.color_title_dark))

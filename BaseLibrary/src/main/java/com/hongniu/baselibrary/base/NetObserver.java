@@ -25,5 +25,19 @@ public abstract class NetObserver<T> extends BaseObserver<CommonBean<T>> {
         }
     }
 
+    @Override
+    public void onError(Throwable e) {
+        e.printStackTrace();
+        if (listener != null) {
+            if (e instanceof NetException) {
+
+                listener.onTaskFail(e,((NetException) e).getErrorCode(), ((NetException) e).getErrorMSg());
+            }else {
+                listener.onTaskFail(e,e.getLocalizedMessage(), e.getMessage());
+            }
+        }
+
+    }
+
     public abstract void doOnSuccess(T data);
 }

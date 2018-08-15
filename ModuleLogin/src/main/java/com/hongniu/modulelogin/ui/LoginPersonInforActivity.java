@@ -1,24 +1,19 @@
 package com.hongniu.modulelogin.ui;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
-import com.hongniu.baselibrary.utils.PickerDialogUtils;
 import com.hongniu.modulelogin.R;
 import com.hongniu.modulelogin.entity.respond.LoginPersonInfor;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.ItemView;
-
-import java.util.List;
 
 /**
  * 个人资料

@@ -20,18 +20,9 @@ public class HttpClient {
     private static Retrofit.Builder retrofit;
     private OkHttpClient.Builder builder;
 
-    private static class InnerClient {
-        private static HttpClient client = new HttpClient();
-    }
 
 
-    public static HttpClient getClient() {
-
-
-        return InnerClient.client;
-    }
-
-    private HttpClient() {
+    public HttpClient() {
         builder = OkHttp.getOkHttp().getBuilder();
         retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())

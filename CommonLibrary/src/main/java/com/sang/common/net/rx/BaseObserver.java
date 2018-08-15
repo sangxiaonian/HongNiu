@@ -14,7 +14,7 @@ import io.reactivex.disposables.Disposable;
 
 public class BaseObserver<T> implements Observer<T> {
 
-    private TaskControl.OnTaskListener listener;
+    protected TaskControl.OnTaskListener listener;
 
     public BaseObserver(TaskControl.OnTaskListener listener) {
         this.listener = listener;

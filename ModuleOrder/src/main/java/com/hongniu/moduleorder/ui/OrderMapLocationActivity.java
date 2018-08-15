@@ -154,7 +154,7 @@ public class OrderMapLocationActivity extends BaseActivity implements PoiSearch.
         setToolbarRightClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (selectPositio > 0 && poiItems.size() > selectPositio) {
+                if (selectPositio >= 0 && poiItems.size() > selectPositio) {
                     IBus.IEvent event;
                     if (start) {
                         event = new OrderEvent.StartLoactionEvent(poiItems.get(selectPositio));
