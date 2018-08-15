@@ -35,4 +35,8 @@ public class Param {
      * 退出登录
      */
     public static final String LOGIN_OUT="LOGIN_OUT";
+    /**
+     * 车辆类型
+     */
+    public static final String CAR_TYPE="CAR_TYPE";
 }

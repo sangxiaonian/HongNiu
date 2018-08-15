@@ -14,10 +14,6 @@ public class LoginAddCarBean {
      */
     private String carNumber;
 
-    /**
-     * false	string	车架号
-     */
-    private String carCode;
 
     /**
      * true	string	车辆类型id
@@ -47,13 +43,7 @@ public class LoginAddCarBean {
         this.carNumber = carNumber;
     }
 
-    public String getCarCode() {
-        return carCode;
-    }
 
-    public void setCarCode(String carCode) {
-        this.carCode = carCode;
-    }
 
     public String getCarType() {
         return carType;

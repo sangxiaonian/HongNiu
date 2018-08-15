@@ -7,9 +7,13 @@ import android.widget.Button;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bigkoo.pickerview.OptionsPickerView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
+import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.entity.CarTypeBean;
 import com.hongniu.baselibrary.utils.PickerDialogUtils;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.modulelogin.R;
@@ -17,6 +21,7 @@ import com.hongniu.modulelogin.entity.LoginAddCarBean;
 import com.hongniu.modulelogin.entity.LoginEvent;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.sang.common.event.BusFactory;
+import com.sang.common.utils.SharedPreferencesUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.ItemView;
 import com.sang.common.widget.dialog.BottomAlertDialog;
@@ -28,6 +33,8 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.ResponseBody;
 
 /**
  * 车辆新增、修改界面
@@ -68,18 +75,22 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
 
     }
 
-    private List<String> cars;
+    private List<CarTypeBean> cars;
 
     @Override
     protected void initData() {
         super.initData();
         cars = new ArrayList<>();
-        cars.add("特种车");
-        cars.add("小货车");
-        cars.add("大货车");
-        cars.add("法拉利");
-        cars.add("保时捷");
-        cars.add("布加迪威龙");
+
+        String string = SharedPreferencesUtils.getInstance().getString(Param.CAR_TYPE);
+        if (!TextUtils.isEmpty(string)) {
+            List<CarTypeBean> o = new Gson().fromJson(string,
+                    new TypeToken<List<CarTypeBean>>() {
+                    }.getType());
+            if (o != null) {
+                cars.addAll(o);
+            }
+        }
 
 
     }
@@ -141,15 +152,15 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
      * @param v The view that was clicked.
      */
     @Override
-    public void onClick(View v) {
+    public void onClick(final View v) {
         int i = v.getId();
         if (i == R.id.bt_save) {
             if (check()) {
                 if (isAdd) {
                     HttpLoginFactory.addCar(getValue())
-                            .subscribe(new NetObserver<String>(this) {
+                            .subscribe(new NetObserver<ResponseBody>(this) {
                                 @Override
-                                public void doOnSuccess(String data) {
+                                public void doOnSuccess(ResponseBody data) {
                                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show(R.string.login_add_car_success);
                                     finish();
 
@@ -164,15 +175,31 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
 
 
         } else if (i == R.id.item_car_type) {
-            OptionsPickerView build = pickerDialog.build();
-            build.setPicker(cars);
-            build.show(v);
+
+            if (!cars.isEmpty()){
+                OptionsPickerView build = pickerDialog.build();
+                build.setPicker(cars);
+                build.show(v);
+            }else {
+                HttpLoginFactory.getCarType()
+                        .subscribe(new NetObserver<List<CarTypeBean>>(this) {
+                            @Override
+                            public void doOnSuccess(List<CarTypeBean> data) {
+                                cars.clear();
+                                cars.addAll(data);
+                                OptionsPickerView build = pickerDialog.build();
+                                build.setPicker(cars);
+                                build.show(v);
+                            }
+                        });
+            }
+
+
 
         }
     }
 
     private LoginAddCarBean getValue() {
-        carBean.setCarCode("1");
         carBean.setCarNumber(itemCarNum.getTextCenter());
         carBean.setContactMobile(itemCarPhone.getTextCenter());
         carBean.setContactName(itemCarOwner.getTextCenter());
@@ -204,7 +231,9 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
     @Override
     public void onOptionsSelect(int options1, int options2, int options3, View v) {
         if (v instanceof ItemView) {
-            ((ItemView) v).setTextCenter(cars.get(options1));
+            CarTypeBean carTypeBean = cars.get(options1);
+            ((ItemView) v).setTextCenter(carTypeBean.getCarType());
+            carBean.setCarType(carTypeBean.getId());
         }
     }
 }

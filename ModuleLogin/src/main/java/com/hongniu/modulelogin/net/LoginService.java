@@ -1,12 +1,16 @@
 package com.hongniu.modulelogin.net;
 
+import com.hongniu.baselibrary.entity.CarTypeBean;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.modulelogin.entity.LoginAddCarBean;
 import com.hongniu.modulelogin.entity.LoginSMSParams;
 import com.hongniu.baselibrary.entity.LoginBean;
 import com.hongniu.modulelogin.entity.LoginPersonInfor;
 
+import java.util.List;
+
 import io.reactivex.Observable;
+import okhttp3.ResponseBody;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
@@ -37,7 +41,14 @@ public interface LoginService {
      * 新增车辆信息
      */
     @POST("hongniu/api/car/savecar")
-    Observable<CommonBean<String>> addCar(@Body LoginAddCarBean infor);
+    Observable<CommonBean<ResponseBody>> addCar(@Body LoginAddCarBean infor);
+
+    /**
+     * 获取车辆类型
+     * @return
+     */
+    @POST("hongniu//api/car/vehicletype")
+    Observable<CommonBean<List<CarTypeBean>>> getCarType();
 
 
 }
