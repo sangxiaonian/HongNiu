@@ -44,6 +44,11 @@ public interface LoginService {
      */
     @POST("hongniu/api/car/savecar")
     Observable<CommonBean<ResponseBody>> addCar(@Body LoginCarInforBean infor);
+ /**
+     * 删除车辆信息
+     */
+    @POST("hongniu/api/car/deletebyid")
+    Observable<CommonBean<String>> deletedCar(@Body LoginCarInforBean infor);
 
     /**
      * 获取车辆类型

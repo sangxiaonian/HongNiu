@@ -22,5 +22,11 @@ public class LoginEvent {
     }
 
 
+    /**
+     * 更新信息
+     */
+    public static class UpdateEvent implements IBus.IEvent{
+
+    }
 
 }

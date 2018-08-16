@@ -92,6 +92,18 @@ public class HttpLoginFactory {
     }
 
     /**
+     * 删除车辆
+     */
+    public static Observable<CommonBean<String>> deletedCar(String id) {
+        LoginCarInforBean bean = new LoginCarInforBean();
+        bean.setId(id);
+        return LoginClient.getInstance().getLoginService()
+                .deletedCar(bean)
+                .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer())
+                ;
+    }
+
+    /**
      * 获取车辆类型
      */
     public static Observable<CommonBean<List<CarTypeBean>>> getCarType() {

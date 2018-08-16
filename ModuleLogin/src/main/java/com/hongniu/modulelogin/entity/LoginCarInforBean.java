@@ -1,7 +1,5 @@
 package com.hongniu.modulelogin.entity;
 
-import java.security.PrivateKey;
-
 /**
  * 作者： ${PING} on 2018/8/15.
  * 新增修改车辆
@@ -36,11 +34,18 @@ public class LoginCarInforBean {
     private String contactMobile;
 
     private int userId;
+    private String id;
     private long createTime;
     private int state;
     private String cartypename;
 
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public int getUserId() {
         return userId;

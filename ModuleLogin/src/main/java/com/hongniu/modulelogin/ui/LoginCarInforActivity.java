@@ -115,11 +115,11 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
             carBean = new LoginCarInforBean();
         } else {
             setToolbarTitle(getString(R.string.login_modification_car));
-            carBean=event.bean;
-            itemCarNum.setTextCenter(carBean.getCarNumber()==null?"":carBean.getCarNumber());
-            itemCarType.setTextCenter(carBean.getCartypename()==null?"":carBean.getCartypename());
-            itemCarOwner.setTextCenter(carBean.getContactName()==null?"":carBean.getContactName());
-            itemCarPhone.setTextCenter(carBean.getContactMobile()==null?"":carBean.getContactMobile());
+            carBean = event.bean;
+            itemCarNum.setTextCenter(carBean.getCarNumber() == null ? "" : carBean.getCarNumber());
+            itemCarType.setTextCenter(carBean.getCartypename() == null ? "" : carBean.getCartypename());
+            itemCarOwner.setTextCenter(carBean.getContactName() == null ? "" : carBean.getContactName());
+            itemCarPhone.setTextCenter(carBean.getContactMobile() == null ? "" : carBean.getContactMobile());
         }
 
         if (!isAdd) {
@@ -131,11 +131,9 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
                             .setTopClickListener(new DialogControl.OnButtonTopClickListener() {
                                 @Override
                                 public void onTopClick(View view, DialogControl.IBottomDialog dialog) {
-                                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show(getString(R.string.deleted_success));
-                                    finish();
+                                    dialog.dismiss();
+                                    deletedCar();
                                 }
-
-
                             })
                             .setDialogTitle(getString(R.string.login_car_entry_deleted))
                             .creatDialog(new BottomAlertDialog(mContext))
@@ -147,6 +145,21 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
         BusFactory.getBus().removeStickyEvent(event);
     }
 
+    //删除车辆
+    private void deletedCar() {
+        HttpLoginFactory.deletedCar(carBean.getId())
+                .subscribe(new NetObserver<String>(this) {
+                    @Override
+                    public void doOnSuccess(String data) {
+                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show(R.string.deleted_success);
+                        BusFactory.getBus().post(new LoginEvent.UpdateEvent());
+                        finish();
+
+                    }
+                });
+    }
+
+
     /**
      * Called when a view has been clicked.
      *
@@ -157,12 +170,13 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
         int i = v.getId();
         if (i == R.id.bt_save) {
             if (check()) {
-                if (isAdd) {
+                if (isAdd) {//新增车辆
                     HttpLoginFactory.addCar(getValue())
                             .subscribe(new NetObserver<ResponseBody>(this) {
                                 @Override
                                 public void doOnSuccess(ResponseBody data) {
                                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show(R.string.login_add_car_success);
+                                    BusFactory.getBus().post(new LoginEvent.UpdateEvent());
                                     finish();
 
                                 }
@@ -177,11 +191,11 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
 
         } else if (i == R.id.item_car_type) {
 
-            if (!cars.isEmpty()){
+            if (!cars.isEmpty()) {
                 OptionsPickerView build = pickerDialog.build();
                 build.setPicker(cars);
                 build.show(v);
-            }else {
+            } else {
                 HttpLoginFactory.getCarType()
                         .subscribe(new NetObserver<List<CarTypeBean>>(this) {
                             @Override
@@ -194,7 +208,6 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
                             }
                         });
             }
-
 
 
         }

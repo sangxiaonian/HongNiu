@@ -24,6 +24,9 @@ import com.sang.common.event.BusFactory;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,7 +98,24 @@ public class LoginCarListActivity extends BaseActivity implements View.OnClickLi
 
         recyclerView.setAdapter(adapter);
 
+        upCarLists();
 
+
+    }
+
+    @Override
+    protected boolean getUseEventBus() {
+        return true;
+    }
+
+    @Subscribe(  threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(LoginEvent.UpdateEvent event) {
+        if (event!=null){
+            upCarLists();
+        }
+    }
+
+    public void upCarLists(){
         HttpLoginFactory.getCarList(currentPage)
                 .subscribe(new NetObserver<LoginCarListBean>(this) {
 
@@ -115,11 +135,10 @@ public class LoginCarListActivity extends BaseActivity implements View.OnClickLi
 
                 });
 
-
     }
 
 
-    @Override
+        @Override
     public void onClick(View v) {
         //添加车辆
         BusFactory.getBus().postSticky(new LoginEvent.CarEvent(0));
