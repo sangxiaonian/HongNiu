@@ -28,17 +28,17 @@ public class OkHttp {
         return okHttp;
     }
 
-    public OkHttp() {
+    private OkHttp() {
         builder = new OkHttpClient.Builder();
         builder.connectTimeout(60, TimeUnit.SECONDS)
-                .addInterceptor(getLogInterceptor());
+               ;
     }
 
     public OkHttpClient.Builder getBuilder() {
         return builder;
     }
 
-    private static HttpLoggingInterceptor getLogInterceptor() {
+    public static HttpLoggingInterceptor getLogInterceptor() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         return interceptor;

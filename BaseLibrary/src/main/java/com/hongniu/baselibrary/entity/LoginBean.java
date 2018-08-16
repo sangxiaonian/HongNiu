@@ -22,7 +22,7 @@ public class LoginBean {
      * remarks : null
      */
 
-    private int id;//用户id
+    private String id;//用户id,也是车主ID
     private String mobile;//用户手机号
     private long registerTime;//
     private String openId;//微信的openid
@@ -35,11 +35,11 @@ public class LoginBean {
     private String gender;//性别
     private String remarks;//备注
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -24,6 +24,7 @@ import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.utils.PickerDialogUtils;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
+import com.hongniu.moduleorder.entity.OrderCarNumbean;
 import com.hongniu.moduleorder.entity.OrderCreatParamBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.widget.CarNumPop;
@@ -44,52 +45,46 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import io.reactivex.disposables.Disposable;
+
 /**
  * 创建订单
  */
 @Route(path = ArouterParamOrder.activity_order_create)
-public class OrderCreatOrderActivity extends BaseActivity implements View.OnClickListener, TimePickerView.OnTimeSelectListener {
-
-
+public class OrderCreatOrderActivity extends BaseActivity implements View.OnClickListener, TimePickerView.OnTimeSelectListener, CarNumPop.onItemClickListener<OrderCarNumbean> {
 
 
     public Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            String mark = "沪";
-            List<String> datas = new ArrayList<>();
-            datas.add("沪A1245855");
-            datas.add("沪A245855");
-            datas.add("沪A45855");
-            datas.add("沪A5855");
-            datas.add("沪A1245855");
-            datas.add("沪A1245855");
-            pop.upData(mark,datas);
-            pop.show(itemCarNum);
+
+
+            getCarNum();
         }
     };
 
 
-    private ItemView itemStartTime      ;         //发货时间
-    private ItemView itemStartLocation  ;     //发货地点
-    private ItemView itemEndLocation            ;       //收货地点
-    private ItemView itemStartCarNum        ;       //发车编号
-    private ItemView itemCargoName      ;          //货物名称
-    private ItemView itemCargoSize      ;         //货物面积
-    private ItemView itemCargoWeight    ;         //货物重量
-    private ItemView itemPrice          ;                 //运费
-    private ItemView itemCarNum         ;         //车牌号
-    private ItemView itemCarPhone           ;         //车主手机号
-    private ItemView itemCarName            ;         //车主姓名
-    private ItemView itemDriverName     ;         //司机姓名
-    private ItemView itemDriverPhone        ;         //司机手机
+    private ItemView itemStartTime;         //发货时间
+    private ItemView itemStartLocation;     //发货地点
+    private ItemView itemEndLocation;       //收货地点
+    private ItemView itemStartCarNum;       //发车编号
+    private ItemView itemCargoName;          //货物名称
+    private ItemView itemCargoSize;         //货物面积
+    private ItemView itemCargoWeight;         //货物重量
+    private ItemView itemPrice;                 //运费
+    private ItemView itemCarNum;         //车牌号
+    private ItemView itemCarPhone;         //车主手机号
+    private ItemView itemCarName;         //车主姓名
+    private ItemView itemDriverName;         //司机姓名
+    private ItemView itemDriverPhone;         //司机手机
     private TimePickerView timePickerView;
 
     private Button btSave;
 
-    private CarNumPop pop;
-    private OrderCreatParamBean paramBean=new OrderCreatParamBean();
+    private CarNumPop<OrderCarNumbean> pop;
+    private OrderCreatParamBean paramBean = new OrderCreatParamBean();
+    List<OrderCarNumbean> carNumbeans=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,7 +112,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         itemDriverPhone = findViewById(R.id.item_driver_phone);
         btSave = findViewById(R.id.bt_entry);
         timePickerView = PickerDialogUtils.initTimePicker(mContext, this, new boolean[]{true, true, true, false, false, false});
-        pop = new CarNumPop(mContext);
+        pop = new CarNumPop<OrderCarNumbean>(mContext);
 
     }
 
@@ -129,6 +124,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         itemEndLocation.setOnClickListener(this);
         btSave.setOnClickListener(this);
         itemCarNum.getEtCenter().addTextChangedListener(new TextWatcher() {
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -148,7 +144,44 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
             }
         });
 
+        pop.setListener(this);
+
     }
+
+    private Disposable carDisposable;
+
+    /**
+     * 获取牌相关信息
+     */
+    private void getCarNum() {
+        String carNum = itemCarNum.getTextCenter();
+        if (carDisposable != null) {
+            carDisposable.dispose();
+        }
+        if (TextUtils.isEmpty(carNum)) {
+            return;
+        }
+        HttpOrderFactory.getCarNum(carNum)
+                .subscribe(new NetObserver<List<OrderCarNumbean>>(null) {
+                    @Override
+                    public void doOnSuccess(List<OrderCarNumbean> data) {
+                        carNumbeans.clear();
+                        carNumbeans.addAll(data);
+                        pop.upData(itemCarNum.getTextCenter(),carNumbeans);
+                        pop.show(itemCarNum);
+                    }
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        super.onSubscribe(d);
+                        carDisposable = d;
+                    }
+
+
+                });
+    }
+
+
 
 
     @Override
@@ -169,8 +202,6 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
 
                 }
             });
-
-
         } else if (id == R.id.item_end_loaction) {
             PermissionUtils.applyMap(this, new PermissionUtils.onApplyPermission() {
                 @Override
@@ -184,8 +215,8 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
 
                 }
             });
-        }else if (id==R.id.bt_entry){
-            if (check()){
+        } else if (id == R.id.bt_entry) {
+            if (check()) {
                 getValue();
                 HttpOrderFactory.creatOrder(paramBean)
                         .subscribe(new NetObserver<String>(this) {
@@ -201,27 +232,27 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     }
 
     private void getValue() {
-        if (paramBean==null){
-            paramBean=new OrderCreatParamBean();
+        if (paramBean == null) {
+            paramBean = new OrderCreatParamBean();
         }
-        paramBean.setDepartNum(itemStartCarNum  .getTextCenter());
-        paramBean.setGoodName(itemCargoName    .getTextCenter());
-        paramBean.setGoodvolume(itemCargoSize    .getTextCenter());
-        paramBean.setGoodweight(itemCargoWeight  .getTextCenter());
-        paramBean.setMoney(itemPrice        .getTextCenter());
-        paramBean.setCarnum(itemCarNum       .getTextCenter());
-        paramBean.setUserPhone(itemCarPhone     .getTextCenter());
-        paramBean.setUserName(itemCarName      .getTextCenter());
-        paramBean.setDrivername(itemDriverName   .getTextCenter());
-        paramBean.setDrivermobile(itemDriverPhone  .getTextCenter());
+        paramBean.setDepartNum(itemStartCarNum.getTextCenter());
+        paramBean.setGoodName(itemCargoName.getTextCenter());
+        paramBean.setGoodvolume(itemCargoSize.getTextCenter());
+        paramBean.setGoodweight(itemCargoWeight.getTextCenter());
+        paramBean.setMoney(itemPrice.getTextCenter());
+        paramBean.setCarnum(itemCarNum.getTextCenter());
+        paramBean.setUserPhone(itemCarPhone.getTextCenter());
+        paramBean.setUserName(itemCarName.getTextCenter());
+        paramBean.setDrivername(itemDriverName.getTextCenter());
+        paramBean.setDrivermobile(itemDriverPhone.getTextCenter());
 
     }
 
     @Override
     public void onTimeSelect(Date date, View v) {
 
-        itemStartTime.setTextCenter(ConvertUtils.formatTime(date,"yyyy年MM月dd日"));
-        paramBean.setDeliverydateStr(ConvertUtils.formatTime(date,"yyyy-MM-dd"));
+        itemStartTime.setTextCenter(ConvertUtils.formatTime(date, "yyyy年MM月dd日"));
+        paramBean.setDeliverydateStr(ConvertUtils.formatTime(date, "yyyy-MM-dd"));
 
     }
 
@@ -255,7 +286,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     @Override
     public void onBackPressed() {
         new BottomAlertBuilder()
-                .setDialogTitle( "确认要放弃下单吗？")
+                .setDialogTitle("确认要放弃下单吗？")
                 .setTopClickListener(new DialogControl.OnButtonTopClickListener() {
                     @Override
                     public void onTopClick(View view, DialogControl.IBottomDialog dialog) {
@@ -276,59 +307,72 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     }
 
 
-    private boolean check(){
-        if (TextUtils.isEmpty(itemStartTime    .getTextCenter())){
-            showAleart(itemStartTime    .getTextCenterHide());
+    private boolean check() {
+        if (TextUtils.isEmpty(itemStartTime.getTextCenter())) {
+            showAleart(itemStartTime.getTextCenterHide());
             return false;
-        };
-        if (TextUtils.isEmpty(itemStartLocation.getTextCenter())){
+        }
+        ;
+        if (TextUtils.isEmpty(itemStartLocation.getTextCenter())) {
             showAleart(itemStartLocation.getTextCenterHide());
             return false;
-        };
-        if (TextUtils.isEmpty(itemEndLocation  .getTextCenter())){
-            showAleart(itemEndLocation  .getTextCenterHide());
+        }
+        ;
+        if (TextUtils.isEmpty(itemEndLocation.getTextCenter())) {
+            showAleart(itemEndLocation.getTextCenterHide());
             return false;
-        };
-        if (TextUtils.isEmpty(itemStartCarNum  .getTextCenter())){
-            showAleart(itemStartCarNum  .getTextCenterHide());
+        }
+        ;
+        if (TextUtils.isEmpty(itemStartCarNum.getTextCenter())) {
+            showAleart(itemStartCarNum.getTextCenterHide());
             return false;
-        };
-        if (TextUtils.isEmpty(itemCargoName    .getTextCenter())){
-            showAleart(itemCargoName    .getTextCenterHide());
+        }
+        ;
+        if (TextUtils.isEmpty(itemCargoName.getTextCenter())) {
+            showAleart(itemCargoName.getTextCenterHide());
             return false;
-        };
-        if (TextUtils.isEmpty(itemCargoSize    .getTextCenter())){
-            showAleart(itemCargoSize    .getTextCenterHide());
+        }
+        ;
+        if (TextUtils.isEmpty(itemCargoSize.getTextCenter())) {
+            showAleart(itemCargoSize.getTextCenterHide());
             return false;
-        };
-        if (TextUtils.isEmpty(itemCargoWeight  .getTextCenter())){
-            showAleart(itemCargoWeight  .getTextCenterHide());
+        }
+        ;
+        if (TextUtils.isEmpty(itemCargoWeight.getTextCenter())) {
+            showAleart(itemCargoWeight.getTextCenterHide());
             return false;
-        };
-        if (TextUtils.isEmpty(itemPrice        .getTextCenter())){
-            showAleart(itemPrice        .getTextCenterHide());
+        }
+        ;
+        if (TextUtils.isEmpty(itemPrice.getTextCenter())) {
+            showAleart(itemPrice.getTextCenterHide());
             return false;
-        };
-        if (TextUtils.isEmpty(itemCarNum       .getTextCenter())){
-            showAleart(itemCarNum       .getTextCenterHide());
+        }
+        ;
+        if (TextUtils.isEmpty(itemCarNum.getTextCenter())) {
+            showAleart(itemCarNum.getTextCenterHide());
             return false;
-        };
-        if (TextUtils.isEmpty(itemCarPhone     .getTextCenter())){
-            showAleart(itemCarPhone     .getTextCenterHide());
+        }
+        ;
+        if (TextUtils.isEmpty(itemCarPhone.getTextCenter())) {
+            showAleart(itemCarPhone.getTextCenterHide());
             return false;
-        };
-        if (TextUtils.isEmpty(itemCarName      .getTextCenter())){
-            showAleart(itemCarName      .getTextCenterHide());
+        }
+        ;
+        if (TextUtils.isEmpty(itemCarName.getTextCenter())) {
+            showAleart(itemCarName.getTextCenterHide());
             return false;
-        };
-        if (TextUtils.isEmpty(itemDriverName   .getTextCenter())){
-            showAleart(itemDriverName   .getTextCenterHide());
+        }
+        ;
+        if (TextUtils.isEmpty(itemDriverName.getTextCenter())) {
+            showAleart(itemDriverName.getTextCenterHide());
             return false;
-        };
-        if (TextUtils.isEmpty(itemDriverPhone  .getTextCenter())){
-            showAleart(itemDriverPhone  .getTextCenterHide());
+        }
+        ;
+        if (TextUtils.isEmpty(itemDriverPhone.getTextCenter())) {
+            showAleart(itemDriverPhone.getTextCenterHide());
             return false;
-        };
+        }
+        ;
 
         return true;
 
@@ -336,6 +380,11 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     }
 
 
-
-
+    @Override
+    public void onItemClick(int position, OrderCarNumbean data) {
+        pop.dismiss();
+        itemCarNum.setTextCenter(data.getCarNumber());
+        itemDriverPhone.setTextCenter(data.getOwnerPhone());
+        itemDriverName.setTextCenter(data.getOwnerName());
+    }
 }

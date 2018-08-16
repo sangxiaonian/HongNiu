@@ -102,7 +102,6 @@ public class BaseFragment extends Fragment implements TaskControl.OnTaskListener
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        JLog.i("-----------"+(context instanceof TaskControl.OnTaskListener));
         if (context instanceof TaskControl.OnTaskListener) {
             this.taskListener = (TaskControl.OnTaskListener) context;
         }

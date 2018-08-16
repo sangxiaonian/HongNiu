@@ -4,12 +4,14 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.LoginBean;
 import com.hongniu.baselibrary.utils.Utils;
 import com.sang.common.net.HttpClient;
+import com.sang.common.net.OkHttp;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.JLog;
 
 import java.io.IOException;
 
 import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -55,7 +57,9 @@ public class BaseClient {
 
                         return chain.proceed(newRequest);
                     }
-                });
+                })
+                .addInterceptor(OkHttp.getLogInterceptor())
+          ;
     }
 
     public <T> T creatService(Class<T> t) {
