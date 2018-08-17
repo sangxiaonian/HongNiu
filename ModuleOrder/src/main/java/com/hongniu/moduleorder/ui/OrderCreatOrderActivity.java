@@ -133,9 +133,10 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
             @Override
             public void afterTextChanged(Editable s) {
                 handler.removeMessages(0);
-                if (!TextUtils.isEmpty(itemCarNum.getTextCenter())) {
+                if (!TextUtils.isEmpty(itemCarNum.getTextCenter())&&show) {
                     handler.sendEmptyMessageDelayed(0, 300);
                 }
+                show=true;
             }
         });
 
@@ -374,11 +375,13 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     }
 
 
+    private boolean show=true;
     @Override
     public void onItemClick(int position, OrderCarNumbean data) {
         pop.dismiss();
+        show=false;
         itemCarNum.setTextCenter(data.getCarNumber());
-        itemDriverPhone.setTextCenter(data.getOwnerPhone());
-        itemDriverName.setTextCenter(data.getOwnerName());
+        itemDriverPhone.setTextCenter(data.getContactMobile());
+        itemDriverName.setTextCenter(data.getContactName());
     }
 }

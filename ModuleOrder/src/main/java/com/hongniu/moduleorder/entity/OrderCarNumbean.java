@@ -5,38 +5,38 @@ package com.hongniu.moduleorder.entity;
  * 创建订单时候车牌号联想
  */
 public class OrderCarNumbean {
-    /**
-     * true	string	车辆id
-     */
-    private String id	    ;
+
     /**
      * true	string	车牌号
      */
-    private String carNumber	;
+    private String carNumber;
+
+
     /**
-     * true	string	车架号
+     * true	string	车辆类型id
      */
-    private String carCode	;
+    private String carType;
+
     /**
-     * true	string	司机姓名
+     * true	long	车主id
      */
-    private String ownerName	;
+    private String carOwnerId;
+
     /**
-     * 	true	string	司机手机号
+     * true	string	车辆联系人姓名
      */
-    private String ownerPhone;
+    private String contactName;
+
     /**
-     * true	string	车主id
+     * true	string	车辆联系人手机号
      */
-    private String userId	;
-    /**
-     * 	true	string	添加时间
-     */
-    private String createTime;
-    /**
-     * true	true	是否删除
-     */
-    private String del	    ;
+    private String contactMobile;
+
+    private String userId;
+    private String id;
+    private long createTime;
+    private int state;
+    private String cartypename;
 
     public String getId() {
         return id;
@@ -44,38 +44,6 @@ public class OrderCarNumbean {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getCarNumber() {
-        return carNumber;
-    }
-
-    public void setCarNumber(String carNumber) {
-        this.carNumber = carNumber;
-    }
-
-    public String getCarCode() {
-        return carCode;
-    }
-
-    public void setCarCode(String carCode) {
-        this.carCode = carCode;
-    }
-
-    public String getOwnerName() {
-        return ownerName;
-    }
-
-    public void setOwnerName(String ownerName) {
-        this.ownerName = ownerName;
-    }
-
-    public String getOwnerPhone() {
-        return ownerPhone;
-    }
-
-    public void setOwnerPhone(String ownerPhone) {
-        this.ownerPhone = ownerPhone;
     }
 
     public String getUserId() {
@@ -86,22 +54,71 @@ public class OrderCarNumbean {
         this.userId = userId;
     }
 
-    public String getCreateTime() {
+    public long getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(String createTime) {
+    public void setCreateTime(long createTime) {
         this.createTime = createTime;
     }
 
-    public String getDel() {
-        return del;
+    public int getState() {
+        return state;
     }
 
-    public void setDel(String del) {
-        this.del = del;
+    public void setState(int state) {
+        this.state = state;
     }
 
+    public String getCartypename() {
+        return cartypename;
+    }
+
+    public void setCartypename(String cartypename) {
+        this.cartypename = cartypename;
+    }
+
+    public String getCarNumber() {
+        return carNumber;
+    }
+
+    public void setCarNumber(String carNumber) {
+        this.carNumber = carNumber;
+    }
+
+
+
+    public String getCarType() {
+        return carType;
+    }
+
+    public void setCarType(String carType) {
+        this.carType = carType;
+    }
+
+    public String getCarOwnerId() {
+        return carOwnerId;
+    }
+
+    public void setCarOwnerId(String carOwnerId) {
+        this.carOwnerId = carOwnerId;
+    }
+
+    public String getContactName() {
+        return contactName;
+    }
+
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
+    }
+
+    public String getContactMobile() {
+        return contactMobile;
+    }
+
+    public void setContactMobile(String contactMobile) {
+        this.contactMobile = contactMobile;
+    }
     @Override
     public String toString() {
         return carNumber==null?"":carNumber;
