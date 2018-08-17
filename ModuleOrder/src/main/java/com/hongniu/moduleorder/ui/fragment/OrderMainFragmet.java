@@ -12,18 +12,24 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseFragment;
+import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
+import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.utils.PermissionUtils;
+import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItem;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
-import com.hongniu.baselibrary.widget.order.OrderUtils;
 import com.hongniu.moduleorder.R;
+import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.control.SwitchStateListener;
+import com.hongniu.moduleorder.entity.OrderMainQueryBean;
+import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.widget.OrderMainPop;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.recycleview.holder.PeakHolder;
+import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.SwitchTextLayout;
@@ -33,10 +39,12 @@ import com.sang.common.widget.dialog.inter.DialogControl;
 import com.sang.common.widget.popu.BasePopu;
 import com.sang.common.widget.popu.inter.OnPopuDismissListener;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 /**
  * 订单列表Fragment
@@ -55,7 +63,9 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
 
     private OrderDetailItemControl.RoleState roleState;//角色
     private XAdapter<OrderDetailBean> adapter;
-
+    private OrderMainQueryBean queryBean = new OrderMainQueryBean();
+    private int currentPage = 1;
+    private ArrayList<OrderDetailBean> orders;
 
     public OrderMainFragmet() {
     }
@@ -66,13 +76,16 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
         int anInt = args.getInt(Param.TRAN);
         switch (anInt) {
             case 0:
-                roleState = OrderDetailItemControl.RoleState.CARGO_OWNER;
+                roleState = OrderDetailItemControl.RoleState.CARGO_OWNER;//货主
+                queryBean.setUserType(3);
                 break;
             case 1:
                 roleState = OrderDetailItemControl.RoleState.CAR_OWNER;
+                queryBean.setUserType(1);
                 break;
             case 2:
                 roleState = OrderDetailItemControl.RoleState.DRIVER;
+                queryBean.setUserType(2);
                 break;
         }
 
@@ -100,15 +113,9 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         rv.setLayoutManager(manager);
-        List<OrderDetailBean> data = new ArrayList<>();
-        boolean insurance = new Random().nextBoolean();
-        data.add(OrderUtils.creatBean(1, insurance));
-        data.add(OrderUtils.creatBean(2, insurance));
-        data.add(OrderUtils.creatBean(3, insurance));
-        data.add(OrderUtils.creatBean(4, insurance));
-        data.add(OrderUtils.creatBean(5, insurance));
+        orders = new ArrayList<>();
 
-        adapter = new XAdapter<OrderDetailBean>(getContext(), data) {
+        adapter = new XAdapter<OrderDetailBean>(getContext(), orders) {
             @Override
             public BaseHolder<OrderDetailBean> initHolder(ViewGroup parent, int viewType) {
                 return new BaseHolder<OrderDetailBean>(getContext(), parent, R.layout.order_main_item) {
@@ -121,7 +128,7 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
                         item.setEndLocation(data.getDestinationInfo());
                         item.setStartLocation(data.getStratPlaceInfo());
                         item.setOrder(data.getOrderNum());
-                        item.setTiem(data.getDeliverydate());
+                        item.setTiem(ConvertUtils.formatTime(data.getDeliverydate(),"yyyy-MM-dd"));
                         item.setPrice(data.getMoney());
 
                         item.setOrderState(data.getOrderState());
@@ -137,13 +144,44 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
             }
         };
 
-        View view=new View(getContext());
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DeviceUtils.dip2px(getContext(),75));
+        View view = new View(getContext());
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DeviceUtils.dip2px(getContext(), 75));
         view.setLayoutParams(params);
         adapter.addFoot(new PeakHolder(view));
         rv.setAdapter(adapter);
+        queryOrder();
+
     }
 
+    private void queryOrder() {
+        queryBean.setPageNum(currentPage);
+
+        HttpOrderFactory.queryOrder(queryBean)
+                .subscribe(new NetObserver<PageBean<OrderDetailBean>>(this) {
+                    @Override
+                    public void doOnSuccess(PageBean<OrderDetailBean> data) {
+                        orders.clear();
+                        if (data!=null&&data.getList()!=null){
+                            orders.addAll(data.getList());
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+
+
+
+                });
+    }
+
+
+    @Override
+    protected boolean getUseEventBus() {
+        return true;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onPudate(OrderEvent.OrderUpdate update) {
+         queryOrder();
+    }
 
     @Override
     protected void initListener() {
@@ -171,13 +209,34 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
     @Override
     public void onPopuClick(OrderMainPop pop, View view, int position) {
 
-        if (view.getId() == R.id.switch_left) {
+        if (view.getId() == R.id.switch_left) {//时间
             leftSelection = position;
             switchLeft.setTitle(times.get(position));
+            String time=null;
+            switch (position) {
+                case 0://全部
+                    break;
+                case 1://今天
+                    time="today";
+
+                    break;
+                case 2://明天
+                    time="tomorrow";
+                    break;
+                case 3://本周
+                    time="thisweek";
+                    break;
+                case 4://下周
+                    time="nextweek";
+                    break;
+            }
+            queryBean.setDeliveryDate(time);
         } else if (view.getId() == R.id.switch_right) {
             rightSelection = position;
             switchRight.setTitle(states.get(position));
+            queryBean.setQueryStatus(position);
         }
+        queryOrder();
         pop.dismiss();
     }
 
@@ -211,6 +270,7 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
             }
         }
     }
+
 
     /**
      * Popu dimiss 监听
@@ -292,7 +352,7 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
         PermissionUtils.applyMap(getActivity(), new PermissionUtils.onApplyPermission() {
             @Override
             public void hasPermission(List<String> granted, boolean isAll) {
-                ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_map_path).withBoolean(Param.TRAN,true).navigation(getContext());
+                ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_map_path).withBoolean(Param.TRAN, true).navigation(getContext());
 
             }
 
@@ -343,7 +403,7 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
         PermissionUtils.applyMap(getActivity(), new PermissionUtils.onApplyPermission() {
             @Override
             public void hasPermission(List<String> granted, boolean isAll) {
-                ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_map_path).withBoolean(Param.TRAN,false).navigation(getContext());
+                ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_map_path).withBoolean(Param.TRAN, false).navigation(getContext());
 
             }
 

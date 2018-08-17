@@ -1,5 +1,7 @@
 package com.hongniu.baselibrary.entity;
 
+import android.util.Log;
+
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 
 /**
@@ -7,6 +9,8 @@ import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
  * 订单详情相关数据
  */
 public class OrderDetailBean {
+
+
 
     /**
      * 主键
@@ -60,7 +64,7 @@ public class OrderDetailBean {
     /**
      * true string 发货日期
      */
-    private String deliverydate;
+    private long deliverydate;
 
     /**
      * true string 完成日期
@@ -113,7 +117,10 @@ public class OrderDetailBean {
      * true number 运费，单位元
      */
     private String money;
-
+    /**
+     * true	string	发货日期（字符串，格式YYYY-MM-dd）
+     */
+    protected String  deliverydateStr	  ;
     /**
      * true string 货物名称
      */
@@ -151,6 +158,23 @@ public class OrderDetailBean {
      * 订单状态
      */
     private OrderDetailItemControl.OrderState orderState;
+
+
+    /**
+     * false	string	支付方式(0微信,1银联,2线下支付)
+     */
+    protected String  payWay;
+
+
+
+
+
+
+
+
+
+
+
 
     public OrderDetailItemControl.OrderState getOrderState() {
         if (orderState == null) {
@@ -291,11 +315,11 @@ public class OrderDetailBean {
         this.creationDate = creationDate;
     }
 
-    public String getDeliverydate() {
+    public long getDeliverydate() {
         return deliverydate;
     }
 
-    public void setDeliverydate(String deliverydate) {
+    public void setDeliverydate(long deliverydate) {
         this.deliverydate = deliverydate;
     }
 

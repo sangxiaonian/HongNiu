@@ -1,9 +1,13 @@
 package com.hongniu.moduleorder.net;
 
+import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.OrderDetailBean;
+import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
 import com.hongniu.moduleorder.entity.OrderCreatParamBean;
+import com.hongniu.moduleorder.entity.OrderMainQueryBean;
 import com.sang.common.net.rx.RxUtils;
 
 import java.util.List;
@@ -36,7 +40,6 @@ public class HttpOrderFactory {
     public static Observable<CommonBean<List<OrderCarNumbean>>> getCarNum(String carNum) {
         OrderCarNumbean bean = new OrderCarNumbean();
         bean.setCarNumber(carNum);
-        bean.setUserId(Utils.getPgetPersonInfor().getId());
         return OrderClient.getInstance().getService().getCarNum(bean).compose(RxUtils.<CommonBean<List<OrderCarNumbean>>>getSchedulersObservableTransformer());
 
     }
@@ -50,6 +53,22 @@ public class HttpOrderFactory {
     public static Observable<CommonBean<OrderCarNumbean>> addCarNum(OrderCarNumbean bean) {
         bean.setUserId(Utils.getPgetPersonInfor().getId());
         return OrderClient.getInstance().getService().addCarNum(bean).compose(RxUtils.<CommonBean<OrderCarNumbean>>getSchedulersObservableTransformer());
+
+    }
+
+    /**
+     * 查询订单
+     *
+     * @param bean
+     * @return
+     */
+    public static Observable<CommonBean<PageBean<OrderDetailBean>>> queryOrder(OrderMainQueryBean bean) {
+        bean.setPageSize(Param.PAGE_SIZE);
+
+        return OrderClient.getInstance()
+                .getService()
+                .queryOrder(bean)
+                .compose(RxUtils.<CommonBean<PageBean<OrderDetailBean>>>getSchedulersObservableTransformer());
 
     }
 

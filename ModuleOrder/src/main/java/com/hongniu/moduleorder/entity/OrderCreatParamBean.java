@@ -7,79 +7,79 @@ public class OrderCreatParamBean {
     /**
      * true	string	发车编号
      */
-    private String  departNum	          ;
+    protected String  departNum	          ;
     /**
      * true	string	开始地点x坐标
      */
-    private String  stratPlaceX	      ;
+    protected String  stratPlaceX	      ;
     /**
      * true	string	开始地点y坐标
      */
-    private String  stratPlaceY	      ;
+    protected String  stratPlaceY	      ;
     /**
      * true	string	开始地点描述
      */
-    private String  stratPlaceInfo	  ;
+    protected String  stratPlaceInfo	  ;
     /**
      * true	string	目的地x坐标
      */
-    private String  destinationX      ;
+    protected String  destinationX      ;
     /**
      * true	string	目的地y坐标
      */
-    private String  destinationY	      ;
+    protected String  destinationY	      ;
     /**
      * true	string	目的地描述
      */
-    private String  destinationInfo	  ;
+    protected String  destinationInfo	  ;
     /**
      * true	string	发货日期（字符串，格式YYYY-MM-dd）
      */
-    private String  deliverydateStr	  ;
+    protected String  deliverydateStr	  ;
     /**
      * true	string	货物名称
      */
-    private String  goodName	          ;
+    protected String  goodName	          ;
     /**
      * true	string	货物体积 (方)
      */
-    private String  goodvolume	      ;
+    protected String  goodvolume	      ;
     /**
      * true	string	货物质量(吨)
      */
-    private String  goodweight	      ;
+    protected String  goodweight	      ;
     /**
      * true	string	配送金额
      */
-    private String  money             ;
+    protected String  money             ;
     /**
      * true	string	车牌号
      */
-    private String  carnum	          ;
+    protected String  carnum	          ;
     /**
      * false	string	车辆类型
      */
-    private String  carInfo	          ;
+    protected String  carInfo	          ;
     /**
      * true	string	车主姓名
      */
-    private String  userName	          ;
+    protected String  userName	          ;
     /**
      * true	string	车主手机号
      */
-    private String  userPhone	          ;
+    protected String  userPhone	          ;
     /**
      * true	string	司机名称
      */
-    private String  drivername	      ;
+    protected String  drivername	      ;
     /**
      * true	string	司机手机号
      */
-    private String  drivermobile	      ;
+    protected String  drivermobile	      ;
     /**
      * false	string	支付方式(0微信,1银联,2线下支付)
      */
-    private String  payWay	          ;
+    protected String  payWay	          ;
 
     public void setDepartNum(String departNum) {
         this.departNum = departNum;

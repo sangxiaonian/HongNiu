@@ -156,10 +156,12 @@ public class OrderMapLocationActivity extends BaseActivity implements PoiSearch.
             public void onClick(View v) {
                 if (selectPositio >= 0 && poiItems.size() > selectPositio) {
                     IBus.IEvent event;
+                    PoiItem poiItem = poiItems.get(selectPositio);
+                    JLog.i(poiItem.getLatLonPoint()+">>>>"+poiItem.getEnter()+">>>"+poiItem.getExit());
                     if (start) {
-                        event = new OrderEvent.StartLoactionEvent(poiItems.get(selectPositio));
+                        event = new OrderEvent.StartLoactionEvent(poiItem);
                     } else {
-                        event = new OrderEvent.EndLoactionEvent(poiItems.get(selectPositio));
+                        event = new OrderEvent.EndLoactionEvent(poiItem);
 
                     }
                     BusFactory.getBus().post(event);

@@ -18,7 +18,9 @@ import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CloseActivityEvent;
+import com.hongniu.moduleorder.control.OrderMainControl;
 import com.hongniu.moduleorder.control.SwitchStateListener;
+import com.hongniu.moduleorder.present.OrderMainPresenter;
 import com.hongniu.moduleorder.widget.OrderMainTitlePop;
 import com.sang.common.event.BusFactory;
 import com.sang.common.utils.CommonUtils;
@@ -38,7 +40,7 @@ import com.sang.common.widget.popu.inter.OnPopuDismissListener;
  * 订单中心主页
  */
 @Route(path = ArouterParamOrder.activity_order_main)
-public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.OnSwitchListener, OrderMainTitlePop.OnOrderMainClickListener, OnPopuDismissListener, View.OnClickListener {
+public class OrderMainActivity extends BaseActivity implements OrderMainControl.IOrderMainView, SwitchTextLayout.OnSwitchListener, OrderMainTitlePop.OnOrderMainClickListener, OnPopuDismissListener, View.OnClickListener {
 
     private SwitchTextLayout switchTitle;
 
@@ -61,11 +63,16 @@ public class OrderMainActivity extends BaseActivity implements SwitchTextLayout.
     private SwitchStateListener switchStateListener;
     private BaseGuide guideTitle;
 
+    private OrderMainControl.IOrderMainPresent present;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_main);
         setToolbarTitle("");
+        present=new OrderMainPresenter(this);
         initView();
         initData();
         initListener();

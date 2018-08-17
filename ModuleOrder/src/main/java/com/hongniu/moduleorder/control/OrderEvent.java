@@ -26,6 +26,13 @@ public class OrderEvent {
         }
     }
 
+    /**
+     * 订单更新
+     */
+    public static class OrderUpdate implements IBus.IEvent {
+
+    }
+
     public static class MapNavigationEvent implements IBus.IEvent {
         LatLng start;
 

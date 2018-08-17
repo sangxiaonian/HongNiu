@@ -11,10 +11,6 @@ import android.widget.Button;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bigkoo.pickerview.TimePickerView;
-import com.hjq.permissions.OnPermission;
-import com.hjq.permissions.Permission;
-import com.hjq.permissions.XXPermissions;
-import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
@@ -40,7 +36,6 @@ import com.sang.common.widget.dialog.inter.DialogControl;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -222,6 +217,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
                         .subscribe(new NetObserver<String>(this) {
                             @Override
                             public void doOnSuccess(String data) {
+                                BusFactory.getBus().post(new OrderEvent.MapNavigationEvent());
                                 ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
                                 finish();
                             }
@@ -232,9 +228,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     }
 
     private void getValue() {
-        if (paramBean == null) {
-            paramBean = new OrderCreatParamBean();
-        }
+
         paramBean.setDepartNum(itemStartCarNum.getTextCenter());
         paramBean.setGoodName(itemCargoName.getTextCenter());
         paramBean.setGoodvolume(itemCargoSize.getTextCenter());
@@ -266,8 +260,8 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     public void onStartEvent(OrderEvent.StartLoactionEvent startLoactionEvent) {
         if (startLoactionEvent != null && startLoactionEvent.t != null) {
             itemStartLocation.setTextCenter(startLoactionEvent.t.getTitle());
-            paramBean.setStratPlaceX(String.valueOf(startLoactionEvent.t.getExit().getLatitude()));
-            paramBean.setStratPlaceY(String.valueOf(startLoactionEvent.t.getExit().getLongitude()));
+            paramBean.setStratPlaceX(String.valueOf(startLoactionEvent.t.getLatLonPoint().getLatitude()));
+            paramBean.setStratPlaceY(String.valueOf(startLoactionEvent.t.getLatLonPoint().getLongitude()));
             paramBean.setStratPlaceInfo(startLoactionEvent.t.getTitle());
         }
     }
@@ -277,8 +271,8 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     public void onEndEvent(OrderEvent.EndLoactionEvent endLoactionEvent) {
         if (endLoactionEvent != null && endLoactionEvent.t != null) {
             itemEndLocation.setTextCenter(endLoactionEvent.t.getTitle());
-            paramBean.setDestinationX(String.valueOf(endLoactionEvent.t.getExit().getLatitude()));
-            paramBean.setDestinationY(String.valueOf(endLoactionEvent.t.getExit().getLongitude()));
+            paramBean.setDestinationX(String.valueOf(endLoactionEvent.t.getLatLonPoint().getLatitude()));
+            paramBean.setDestinationY(String.valueOf(endLoactionEvent.t.getLatLonPoint().getLongitude()));
             paramBean.setDestinationInfo(endLoactionEvent.t.getTitle());
         }
     }

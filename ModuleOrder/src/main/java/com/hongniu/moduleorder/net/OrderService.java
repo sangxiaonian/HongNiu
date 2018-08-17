@@ -1,8 +1,12 @@
 package com.hongniu.moduleorder.net;
 
 import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.OrderDetailBean;
+import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
 import com.hongniu.moduleorder.entity.OrderCreatParamBean;
+import com.hongniu.moduleorder.entity.OrderListBean;
+import com.hongniu.moduleorder.entity.OrderMainQueryBean;
 
 import java.util.List;
 
@@ -26,14 +30,14 @@ public interface OrderService {
 
     /**
      * 获取车牌号联想
-     *
+     * <p>
      * 参数名称	是否必须	数据类型	描述
      * userId	true	string	车主Id
      * carNumber	true	string	车牌号
      *
      * @return
      */
-    @POST("hongniu/api/carowner/querycars")
+    @POST("hongniu/api/car/querynumber")
     Observable<CommonBean<List<OrderCarNumbean>>> getCarNum(@Body OrderCarNumbean infor);
 
     /**
@@ -49,6 +53,20 @@ public interface OrderService {
      */
     @POST("hongniu/api/carowner/savecar")
     Observable<CommonBean<OrderCarNumbean>> addCarNum(@Body OrderCarNumbean infor);
+
+    /**
+     * 查询订单数据
+     * pageNum	false	number	页数，默认1
+     * pageSize	false	number	每页条数，默认20
+     * queryStatus	false	string	订单状态(2待发货，3配送中，4已到达,5已收货)
+     * hasFreight	false	string	是否付运费(1是，0否)
+     * userType	false	string	我的身份（3-货主/1-车主/2-司机）
+     * deliveryDate	false	string	发车日期(today-今天 tomorrow-明天 thisweek-本周 nextweek-下周)
+     *
+     * @return
+     */
+    @POST("hongniu/api/order/queryPage")
+    Observable<CommonBean<PageBean<OrderDetailBean>>> queryOrder(@Body OrderMainQueryBean infor);
 
 
 }

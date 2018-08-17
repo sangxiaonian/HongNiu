@@ -3,6 +3,7 @@ package com.hongniu.baselibrary.widget.order;
 
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 
+import java.util.Date;
 import java.util.Random;
 
 /**
@@ -67,7 +68,7 @@ public class OrderUtils {
     public static OrderDetailBean creatBean(int status, boolean insurance){
         OrderDetailBean orderBean = new OrderDetailBean();
         orderBean.setOrderNum("80080018000");//订单号
-        orderBean.setDeliverydate("2017-08-05");//发货日期
+        orderBean.setDeliverydate(new Date().getTime());//发货日期
         orderBean.setStratPlaceInfo("上海虹桥机场国际物流中心");//发车地点
         orderBean.setDestinationInfo("青岛市国际物流中心");//目的地
         orderBean.setMoney("1200");//运费
