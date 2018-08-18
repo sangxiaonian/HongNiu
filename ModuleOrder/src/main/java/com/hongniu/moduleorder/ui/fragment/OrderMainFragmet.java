@@ -325,7 +325,8 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
                 .navigation(getContext());
         OrderEvent.PayOrder payOrder = new OrderEvent.PayOrder();
         payOrder.insurance=true;
-        payOrder.orderID=orderBean.getOrderNum();
+        payOrder.orderID=orderBean.getId();
+        payOrder.orderNum = orderBean.getOrderNum();
         BusFactory.getBus().postSticky(payOrder);
     }
 
@@ -340,7 +341,8 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
                 OrderEvent.PayOrder payOrder = new OrderEvent.PayOrder();
                 payOrder.insurance = false;
                 payOrder.money = Float.parseFloat(orderBean.getMoney());
-                payOrder.orderID = orderBean.getOrderNum();
+                payOrder.orderID = orderBean.getId();
+                payOrder.orderNum = orderBean.getOrderNum();
                 BusFactory.getBus().postSticky(payOrder);
                 ArouterUtils.getInstance()
                         .builder(ArouterParamOrder.activity_order_pay)

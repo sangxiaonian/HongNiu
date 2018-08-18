@@ -15,8 +15,6 @@ import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
-import com.hongniu.baselibrary.config.Param;
-import com.hongniu.baselibrary.entity.CloseActivityEvent;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
@@ -80,7 +78,8 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
 
     //是否为单独的购买保险界面
     private boolean isInsurance;
-    private String orderNum="";//订单号
+    private String orderID ="";//订单号
+    private String orderNum ="";//订单号
 
 
     @Override
@@ -122,7 +121,7 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
     @Override
     protected void initData() {
         super.initData();
-        tvOrder.setText("订单号"+orderNum);
+        tvOrder.setText("订单号"+ orderNum);
         tvPrice.setText("￥" + tranPrice);
     }
 
@@ -138,7 +137,8 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
             //此处判断是否是购买保险
             isInsurance = event.insurance;
             tranPrice=event.money;
-            orderNum=event.orderID;
+            orderID =event.orderID;
+            orderNum =event.orderNum;
             if (isInsurance) {//如果是购买保险
                 switchPayLine(false);
                 rl_tran.setVisibility(View.GONE);
@@ -304,7 +304,7 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
                         }
 
                     } else {//不购买保险
-                        HttpOrderFactory.payOrderOffLine(orderNum)
+                        HttpOrderFactory.payOrderOffLine(orderID)
                                 .subscribe(new NetObserver<ResponseBody>(this) {
                                     @Override
                                     public void doOnSuccess(ResponseBody data) {

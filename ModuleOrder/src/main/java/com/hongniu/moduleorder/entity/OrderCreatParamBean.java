@@ -153,6 +153,82 @@ public class OrderCreatParamBean {
         this.drivermobile = drivermobile;
     }
 
+    public String getDepartNum() {
+        return departNum;
+    }
+
+    public String getStratPlaceX() {
+        return stratPlaceX;
+    }
+
+    public String getStratPlaceY() {
+        return stratPlaceY;
+    }
+
+    public String getStratPlaceInfo() {
+        return stratPlaceInfo;
+    }
+
+    public String getDestinationX() {
+        return destinationX;
+    }
+
+    public String getDestinationY() {
+        return destinationY;
+    }
+
+    public String getDestinationInfo() {
+        return destinationInfo;
+    }
+
+    public String getDeliverydateStr() {
+        return deliverydateStr;
+    }
+
+    public String getGoodName() {
+        return goodName;
+    }
+
+    public String getGoodvolume() {
+        return goodvolume;
+    }
+
+    public String getGoodweight() {
+        return goodweight;
+    }
+
+    public String getMoney() {
+        return money;
+    }
+
+    public String getCarnum() {
+        return carnum;
+    }
+
+    public String getCarInfo() {
+        return carInfo;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getUserPhone() {
+        return userPhone;
+    }
+
+    public String getDrivername() {
+        return drivername;
+    }
+
+    public String getDrivermobile() {
+        return drivermobile;
+    }
+
+    public String getPayWay() {
+        return payWay;
+    }
+
     public void setPayWay(String payWay) {
         this.payWay = payWay;
     }

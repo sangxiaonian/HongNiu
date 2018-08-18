@@ -16,6 +16,7 @@ import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.utils.PickerDialogUtils;
 import com.hongniu.moduleorder.R;
@@ -215,11 +216,20 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
             if (check()) {
                 getValue();
                 HttpOrderFactory.creatOrder(paramBean)
-                        .subscribe(new NetObserver<String>(this) {
+                        .subscribe(new NetObserver<OrderDetailBean>(this) {
                             @Override
-                            public void doOnSuccess(String data) {
+                            public void doOnSuccess(OrderDetailBean data) {
+
+                                OrderEvent.PayOrder payOrder = new OrderEvent.PayOrder();
+                                payOrder.insurance = false;
+                                payOrder.money = Float.parseFloat(paramBean.getMoney());
+                                payOrder.orderID = data.getId();
+                                payOrder.orderNum = data.getOrderNum();
+                                BusFactory.getBus().postSticky(payOrder);
+                                ArouterUtils.getInstance()
+                                        .builder(ArouterParamOrder.activity_order_pay)
+                                        .navigation(mContext);
                                 BusFactory.getBus().post(new OrderEvent.MapNavigationEvent());
-                                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
                                 finish();
                             }
                         });

@@ -29,9 +29,9 @@ public class HttpOrderFactory {
      * @param bean
      * @return
      */
-    public static Observable<CommonBean<String>> creatOrder(OrderCreatParamBean bean) {
+    public static Observable<CommonBean<OrderDetailBean>> creatOrder(OrderCreatParamBean bean) {
 
-        return OrderClient.getInstance().getService().creatOrder(bean).compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
+        return OrderClient.getInstance().getService().creatOrder(bean).compose(RxUtils.<CommonBean<OrderDetailBean>>getSchedulersObservableTransformer());
 
     }
 

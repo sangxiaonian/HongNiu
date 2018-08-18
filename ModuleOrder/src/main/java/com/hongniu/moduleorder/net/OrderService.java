@@ -28,7 +28,7 @@ public interface OrderService {
      * @return
      */
     @POST("hongniu/api/order/add")
-    Observable<CommonBean<String>> creatOrder(@Body OrderCreatParamBean infor);
+    Observable<CommonBean<OrderDetailBean>> creatOrder(@Body OrderCreatParamBean infor);
 
     /**
      * 获取车牌号联想
