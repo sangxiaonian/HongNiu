@@ -8,11 +8,15 @@ import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
 import com.hongniu.moduleorder.entity.OrderCreatParamBean;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
+import com.hongniu.moduleorder.entity.OrderParamBean;
+import com.iflytek.cloud.thirdparty.T;
 import com.sang.common.net.rx.RxUtils;
 
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.functions.Function;
+import okhttp3.ResponseBody;
 
 /**
  * 作者： ${PING} on 2018/8/15.
@@ -64,11 +68,57 @@ public class HttpOrderFactory {
      */
     public static Observable<CommonBean<PageBean<OrderDetailBean>>> queryOrder(OrderMainQueryBean bean) {
         bean.setPageSize(Param.PAGE_SIZE);
-
         return OrderClient.getInstance()
                 .getService()
                 .queryOrder(bean)
+                //对于未支付运费的状态进行转换
+                .map(new Function<CommonBean<PageBean<OrderDetailBean>>, CommonBean<PageBean<OrderDetailBean>>>() {
+                    @Override
+                    public CommonBean<PageBean<OrderDetailBean>> apply(CommonBean<PageBean<OrderDetailBean>> pageBeanCommonBean) throws Exception {
+                        PageBean<OrderDetailBean> data = pageBeanCommonBean.getData();
+                        if (data != null && data.getList() != null) {
+                            for (OrderDetailBean orderDetailBean : data.getList()) {
+                                if (orderDetailBean.getStatus() == 2 && !orderDetailBean.isHasFreight()) {
+                                    orderDetailBean.setStatus(1);
+                                }
+                            }
+                        }
+                        return pageBeanCommonBean;
+                    }
+                })
                 .compose(RxUtils.<CommonBean<PageBean<OrderDetailBean>>>getSchedulersObservableTransformer());
+
+    }
+
+    /**
+     * 取消订单
+     *
+     * @param orderID 订单ID
+     * @return
+     */
+    public static Observable<CommonBean<ResponseBody>> cancleOrder(String orderID) {
+        OrderParamBean bean = new OrderParamBean();
+        bean.setId(orderID);
+        return OrderClient.getInstance()
+                .getService()
+                .cancleOrder(bean)
+                .compose(RxUtils.<CommonBean<ResponseBody>>getSchedulersObservableTransformer());
+
+    }
+
+    /**
+     * 线下支付订单
+     *
+     * @param orderID 订单ID
+     * @return
+     */
+    public static Observable<CommonBean<ResponseBody>> payOrderOffLine(String orderID) {
+        OrderParamBean bean = new OrderParamBean();
+        bean.setId(orderID);
+        return OrderClient.getInstance()
+                .getService()
+                .payOrderOffLine(bean)
+                .compose(RxUtils.<CommonBean<ResponseBody>>getSchedulersObservableTransformer());
 
     }
 

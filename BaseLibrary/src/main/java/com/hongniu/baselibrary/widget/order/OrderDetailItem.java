@@ -8,7 +8,6 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
-import android.text.style.ImageSpan;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,10 +16,11 @@ import android.widget.TextView;
 
 import com.hongniu.baselibrary.R;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.widget.order.helper.OrderItemHelper;
 import com.sang.common.utils.CommonUtils;
+import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.CenteredImageSpan;
 
@@ -58,6 +58,7 @@ public class OrderDetailItem extends FrameLayout {
     //订单状态
     private OrderDetailItemControl.OrderState orderState;
     private OrderDetailItemControl.OnOrderDetailBtClickListener listener;
+    private OrderDetailBean orderBean;
 
 
     public OrderDetailItem(@NonNull Context context) {
@@ -110,6 +111,23 @@ public class OrderDetailItem extends FrameLayout {
             tv_order_detail.setMovementMethod(LinkMovementMethod.getInstance());
         }
     }
+
+    public void setInfor(OrderDetailBean data){
+        this.orderBean=data;
+         setEndLocation(data.getDestinationInfo());
+         setStartLocation(data.getStratPlaceInfo());
+         setOrder(data.getOrderNum());
+         setTiem(ConvertUtils.formatTime(data.getDeliverydate(),"yyyy-MM-dd"));
+         setPrice(data.getMoney());
+
+         setOrderState(data.getOrderState());
+
+         setContent(data.getDepartNum(), data.getCarnum(), data.getUserName(), data.getUserPhone()
+            , data.getGoodName(), data.getDrivername(), data.getDrivermobile());
+
+         buildButton(data.isInsurance());
+    }
+
 
     private boolean hideButton;
     public void hideButton(boolean hideButton){
@@ -316,7 +334,7 @@ public class OrderDetailItem extends FrameLayout {
             bt_right.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    clickEvent(helper.getBtRightInfor());
+                    clickEvent(helper.getBtRightInfor() );
                 }
             });
         }
@@ -325,7 +343,7 @@ public class OrderDetailItem extends FrameLayout {
             bt_left.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    clickEvent(helper.getBtLeftInfor());
+                    clickEvent(helper.getBtLeftInfor() );
                 }
             });
         }
@@ -335,66 +353,66 @@ public class OrderDetailItem extends FrameLayout {
         this.listener=listener;
     }
 
-    private void clickEvent(String msg) {
+    private void clickEvent(String msg ) {
         switch (msg) {
             case ORDER_CANCLE://    = "取消订单";
                 if (listener!=null){
-                    listener.onOrderCancle();
+                    listener.onOrderCancle(orderBean);
                 }else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("取消订单");
                 }
                 break;
             case ORDER_PAY://    = "继续付款";
                 if (listener!=null){
-                    listener.onOrderPay();
+                    listener.onOrderPay(orderBean);
                 }else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("继续付款");
                 }
                 break;
             case ORDER_BUY_INSURANCE://    = "购买保险";
                 if (listener!=null){
-                    listener.onOrderBuyInsurance();
+                    listener.onOrderBuyInsurance(orderBean);
                 }else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("购买保险");
                 }
                 break;
             case ORDER_CHECK_INSURANCE://    = "查看保单";
                 if (listener!=null){
-                    listener.onCheckInsruance();
+                    listener.onCheckInsruance(orderBean);
                 }else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("查看保单");
                 }
                 break;
             case ORDER_CHECK_PATH://    = "查看轨迹";
                 if (listener!=null){
-                    listener.onCheckPath();
+                    listener.onCheckPath(orderBean);
                 }else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("查看轨迹");
                 }                break;
             case ORDER_ENTRY_ORDER://    = "确认收货";
                 if (listener!=null){
-                    listener.onCheckPath();
+                    listener.onEntryOrder(orderBean);
                 }else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("确认收货");
                 }
                 break;
             case ORDER_START_CAR://    = "开始发车";
                 if (listener!=null){
-                    listener.onStartCar();
+                    listener.onStartCar(orderBean);
                 }else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("开始发车");
                 }
                 break;
             case ORDER_CHECK_ROUT://    = "查看路线";
                 if (listener!=null){
-                    listener.onCheckRout();
+                    listener.onCheckRout(orderBean);
                 }else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("查看路线");
                 }
                 break;
             case ORDER_ENTRY_ARRIVE://    = "确认到达";
                 if (listener!=null){
-                    listener.onEntryArrive();
+                    listener.onEntryArrive(orderBean);
                 }else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("确认到达");
                 }

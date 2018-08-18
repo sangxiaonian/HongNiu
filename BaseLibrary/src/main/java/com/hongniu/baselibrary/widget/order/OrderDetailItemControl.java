@@ -1,5 +1,7 @@
 package com.hongniu.baselibrary.widget.order;
 
+import com.hongniu.baselibrary.entity.OrderDetailBean;
+
 /**
  * 作者： ${PING} on 2018/8/7.
  */
@@ -83,49 +85,58 @@ public class OrderDetailItemControl {
 
         /**
          * "取消订单";
+         * @param orderBean
          */
-        void onOrderCancle();
+        void onOrderCancle(OrderDetailBean orderBean);
 
 
         /**
          * 购买保险
+         * @param orderBean
          */
-        void onOrderBuyInsurance();
+        void onOrderBuyInsurance(OrderDetailBean orderBean);
 
         /**
          * ORDER_PAY 继续付款
+         * @param orderBean
          */
-        void onOrderPay();
+        void onOrderPay(OrderDetailBean orderBean);
 
         /**
          * ORDER_CHECK_INSURANCE 查看保单
+         * @param orderBean
          */
-        void onCheckInsruance();
+        void onCheckInsruance(OrderDetailBean orderBean);
 
         /**
          * ORDER_CHECK_PATH 查看轨迹
+         * @param orderBean
          */
-        void onCheckPath();
+        void onCheckPath(OrderDetailBean orderBean);
 
         /**
          * ORDER_ENTRY_ORDER 确认收货
+         * @param orderBean
          */
-        void onEntryOrder();
+        void onEntryOrder(OrderDetailBean orderBean);
 
         /**
          * ORDER_START_CAR           ="开始发车";
+         * @param orderBean
          */
-        void onStartCar();
+        void onStartCar(OrderDetailBean orderBean);
 
         /**
          * ORDER_CHECK_ROUT          ="查看路线";
+         * @param orderBean
          */
-        void onCheckRout();
+        void onCheckRout(OrderDetailBean orderBean);
 
         /**
          * ORDER_ENTRY_ARRIVE        ="确认到达";
+         * @param orderBean
          */
-        void onEntryArrive();
+        void onEntryArrive(OrderDetailBean orderBean);
 
 
     }

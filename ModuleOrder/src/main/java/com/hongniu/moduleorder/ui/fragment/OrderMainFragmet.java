@@ -17,7 +17,6 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.utils.PermissionUtils;
-import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItem;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.moduleorder.R;
@@ -26,10 +25,10 @@ import com.hongniu.moduleorder.control.SwitchStateListener;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.widget.OrderMainPop;
+import com.sang.common.event.BusFactory;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.recycleview.holder.PeakHolder;
-import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.SwitchTextLayout;
@@ -45,6 +44,8 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import okhttp3.ResponseBody;
 
 /**
  * 订单列表Fragment
@@ -123,22 +124,9 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
                     public void initView(View itemView, int position, OrderDetailBean data) {
                         super.initView(itemView, position, data);
                         OrderDetailItem item = itemView.findViewById(R.id.order_detail);//身份角色
-                        item.setDebug();
                         item.setIdentity(roleState);
-                        item.setEndLocation(data.getDestinationInfo());
-                        item.setStartLocation(data.getStratPlaceInfo());
-                        item.setOrder(data.getOrderNum());
-                        item.setTiem(ConvertUtils.formatTime(data.getDeliverydate(),"yyyy-MM-dd"));
-                        item.setPrice(data.getMoney());
-
-                        item.setOrderState(data.getOrderState());
-
-                        item.setContent(data.getDepartNum(), data.getCarnum(), data.getUserName(), data.getUserPhone()
-                                , data.getGoodName(), data.getDrivername(), data.getDrivermobile());
-
+                        item.setInfor(data);
                         item.setOnButtonClickListener(OrderMainFragmet.this);
-                        item.buildButton(data.isInsurance());
-
                     }
                 };
             }
@@ -157,6 +145,7 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
         queryBean.setPageNum(currentPage);
 
         HttpOrderFactory.queryOrder(queryBean)
+
                 .subscribe(new NetObserver<PageBean<OrderDetailBean>>(this) {
                     @Override
                     public void doOnSuccess(PageBean<OrderDetailBean> data) {
@@ -302,51 +291,84 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
 
     /**
      * "取消订单";
+     * @param orderBean
      */
     @Override
-    public void onOrderCancle() {
+    public void onOrderCancle(final OrderDetailBean orderBean) {
         creatDialog("确认要取消订单？", "订单一旦去取消，无法恢复", "返回订单", "取消订单")
                 .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
                     @Override
                     public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
                         dialog.dismiss();
-                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("取消订单");
+                        HttpOrderFactory.cancleOrder(orderBean.getOrderNum())
+                                .subscribe(new NetObserver<ResponseBody>(OrderMainFragmet.this) {
+                                    @Override
+                                    public void doOnSuccess(ResponseBody data) {
+                                        queryOrder();
+                                    }
+                                });
+
                     }
                 }).creatDialog(new CenterAlertDialog(getContext()))
                 .show();
-        ;
     }
 
     /**
      * 购买保险
+     * @param orderBean
      */
     @Override
-    public void onOrderBuyInsurance() {
-        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_pay).withBoolean(Param.TRAN, true).navigation(getContext());
+    public void onOrderBuyInsurance(OrderDetailBean orderBean) {
+        ArouterUtils.getInstance()
+                .builder(ArouterParamOrder.activity_order_pay)
+                .withBoolean(Param.TRAN, true)
+                .navigation(getContext());
+        OrderEvent.PayOrder payOrder = new OrderEvent.PayOrder();
+        payOrder.insurance=true;
+        payOrder.orderID=orderBean.getOrderNum();
+        BusFactory.getBus().postSticky(payOrder);
     }
 
     /**
      * ORDER_PAY 继续付款
+     * @param orderBean
      */
     @Override
-    public void onOrderPay() {
-        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_pay).navigation(getContext());
+    public void onOrderPay(OrderDetailBean orderBean) {
+        if (orderBean.getMoney()!=null) {
+            try {
+                OrderEvent.PayOrder payOrder = new OrderEvent.PayOrder();
+                payOrder.insurance = false;
+                payOrder.money = Float.parseFloat(orderBean.getMoney());
+                payOrder.orderID = orderBean.getOrderNum();
+                BusFactory.getBus().postSticky(payOrder);
+                ArouterUtils.getInstance()
+                        .builder(ArouterParamOrder.activity_order_pay)
+                        .navigation(getContext());
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+
+
+        }
 
     }
 
     /**
      * ORDER_CHECK_INSURANCE 查看保单
+     * @param orderBean
      */
     @Override
-    public void onCheckInsruance() {
+    public void onCheckInsruance(OrderDetailBean orderBean) {
         ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("查看保单");
     }
 
     /**
      * ORDER_CHECK_PATH 查看轨迹
+     * @param orderBean
      */
     @Override
-    public void onCheckPath() {
+    public void onCheckPath(OrderDetailBean orderBean) {
 
 
         PermissionUtils.applyMap(getActivity(), new PermissionUtils.onApplyPermission() {
@@ -365,9 +387,10 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
 
     /**
      * ORDER_ENTRY_ORDER 确认收货
+     * @param orderBean
      */
     @Override
-    public void onEntryOrder() {
+    public void onEntryOrder(OrderDetailBean orderBean) {
         creatDialog("确认已收到货物？", "收货请务必检查货物完好无损", "返回订单", "确定收货")
                 .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
                     @Override
@@ -381,9 +404,10 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
 
     /**
      * ORDER_START_CAR           ="开始发车";
+     * @param orderBean
      */
     @Override
-    public void onStartCar() {
+    public void onStartCar(OrderDetailBean orderBean) {
         creatDialog("确认要开始发车？", "车辆行驶中请记得安全驾车", "返回订单", "开始发车")
                 .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
                     @Override
@@ -397,9 +421,10 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
 
     /**
      * ORDER_CHECK_ROUT          ="查看路线";
+     * @param orderBean
      */
     @Override
-    public void onCheckRout() {
+    public void onCheckRout(OrderDetailBean orderBean) {
         PermissionUtils.applyMap(getActivity(), new PermissionUtils.onApplyPermission() {
             @Override
             public void hasPermission(List<String> granted, boolean isAll) {
@@ -417,9 +442,10 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
 
     /**
      * ORDER_ENTRY_ARRIVE        ="确认到达";
+     * @param orderBean
      */
     @Override
-    public void onEntryArrive() {
+    public void onEntryArrive(OrderDetailBean orderBean) {
         creatDialog("确认已到达目的地？", "感谢您的辛苦付出", "返回订单", "确定到达")
                 .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
                     @Override

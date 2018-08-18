@@ -14,14 +14,24 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.entity.CloseActivityEvent;
 import com.hongniu.moduleorder.R;
+import com.hongniu.moduleorder.control.OrderEvent;
+import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.widget.dialog.BuyInsuranceDialog;
 import com.hongniu.moduleorder.widget.dialog.InsuranceNoticeDialog;
+import com.sang.common.event.BusFactory;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import okhttp3.ResponseBody;
 
 /**
  * 订单支付界面
@@ -62,9 +72,7 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
     private boolean buyInsurance;//是否购买保险
     private float insurancePrice;//保费
     private float cargoPrice;//货物金额
-
-    //TODO 此时为默认显示的运费，正式环境发布前需要置为 0
-    private float tranPrice = 100;//运费
+    private float tranPrice ;//运费
 
 
     private BuyInsuranceDialog buyInsuranceDialog;
@@ -72,6 +80,7 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
 
     //是否为单独的购买保险界面
     private boolean isInsurance;
+    private String orderNum="";//订单号
 
 
     @Override
@@ -82,20 +91,6 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
         initView();
         initData();
         initListener();
-
-        //此处判断是否是购买保险
-        isInsurance = getIntent().getBooleanExtra(Param.TRAN, false);
-        if (isInsurance) {//如果是购买保险
-            switchPayLine(false);
-            rl_tran.setVisibility(View.GONE);
-            switchToBuyInsurance(false);//切换为购买保险UI
-            buyInsuranceDialog.show();
-
-        } else {
-            rbOnline.performClick();
-
-        }
-
     }
 
     @Override
@@ -127,12 +122,40 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
     @Override
     protected void initData() {
         super.initData();
-        switchToBuyInsurance(true);
-        tvOrder.setText("订单号D888888888");
+        tvOrder.setText("订单号"+orderNum);
         tvPrice.setText("￥" + tranPrice);
-        setTvPayAll();
     }
 
+    @Override
+    protected boolean getUseEventBus() {
+        return true;
+    }
+
+
+    @Subscribe(sticky = true,threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(OrderEvent.PayOrder event) {
+        if (event != null) {
+            //此处判断是否是购买保险
+            isInsurance = event.insurance;
+            tranPrice=event.money;
+            orderNum=event.orderID;
+            if (isInsurance) {//如果是购买保险
+                switchPayLine(false);
+                rl_tran.setVisibility(View.GONE);
+                switchToBuyInsurance(false);//切换为购买保险UI
+                buyInsuranceDialog.show();
+            } else {
+                rl_tran.setVisibility(View.VISIBLE);
+                switchPayLine(true);
+                switchToBuyInsurance(true);//切换为购买保险UI
+                rbOnline.performClick();
+
+            }
+            initData();
+
+        }
+        BusFactory.getBus().removeStickyEvent(event);
+    }
 
     /**
      * 线上支付时候，支付保险和运费
@@ -262,7 +285,6 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
 
                     } else {//不购买保险
                         ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("线上支付，不购买保险");
-
                     }
 
                     if (checkbox.isChecked()) {
@@ -282,12 +304,16 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
                         }
 
                     } else {//不购买保险
-                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("线下支付，不购买保险");
-                        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_insurance_creat).navigation(mContext);
+                        HttpOrderFactory.payOrderOffLine(orderNum)
+                                .subscribe(new NetObserver<ResponseBody>(this) {
+                                    @Override
+                                    public void doOnSuccess(ResponseBody data) {
+                                        finish();
+                                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
 
+                                    }
+                                });
                     }
-
-
                 }
             } else {//保险购买界面
                 if (checkbox.isChecked()) {

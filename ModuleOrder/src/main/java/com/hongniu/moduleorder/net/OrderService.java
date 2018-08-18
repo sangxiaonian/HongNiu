@@ -7,10 +7,12 @@ import com.hongniu.moduleorder.entity.OrderCarNumbean;
 import com.hongniu.moduleorder.entity.OrderCreatParamBean;
 import com.hongniu.moduleorder.entity.OrderListBean;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
+import com.hongniu.moduleorder.entity.OrderParamBean;
 
 import java.util.List;
 
 import io.reactivex.Observable;
+import okhttp3.ResponseBody;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
@@ -67,6 +69,22 @@ public interface OrderService {
      */
     @POST("hongniu/api/order/queryPage")
     Observable<CommonBean<PageBean<OrderDetailBean>>> queryOrder(@Body OrderMainQueryBean infor);
+
+    /**
+     * 取消订单
+     * @param infor 订单ID
+     * @return
+     */
+    @POST("hongniu/api/order/cancel")
+    Observable<CommonBean<ResponseBody>> cancleOrder(@Body OrderParamBean infor);
+
+   /**
+     * 线下支付订单
+     * @param infor 订单ID
+     * @return
+     */
+    @POST("hongniu//api/order/pay")
+    Observable<CommonBean<ResponseBody>> payOrderOffLine(@Body OrderParamBean infor);
 
 
 }
