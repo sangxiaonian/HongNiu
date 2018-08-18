@@ -10,10 +10,12 @@
 
     <include layout="@layout/toolbar" />
 
-    <android.support.v7.widget.RecyclerView
+    <com.sang.common.recycleview.RecycleViewSupportEmpty
         android:id="@+id/rv"
         android:layout_width="match_parent"
         android:layout_weight="1"
+        app:empty_title="暂无车辆"
+        app:empty_img="@mipmap/icon_zwcl_240"
         android:layout_height="0dp" />
 
     <Button

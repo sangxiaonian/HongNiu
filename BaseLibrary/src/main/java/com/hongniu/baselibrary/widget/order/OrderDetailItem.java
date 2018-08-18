@@ -56,7 +56,7 @@ public class OrderDetailItem extends FrameLayout {
     //当前角色 货主、车主、司机
     private OrderDetailItemControl.RoleState roleState;
     //订单状态
-    private OrderDetailItemControl.OrderState orderState;
+    private OrderDetailItemControl.OrderState  orderState;
     private OrderDetailItemControl.OnOrderDetailBtClickListener listener;
     private OrderDetailBean orderBean;
 

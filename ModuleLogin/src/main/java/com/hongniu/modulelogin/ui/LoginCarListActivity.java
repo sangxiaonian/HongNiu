@@ -1,9 +1,11 @@
 package com.hongniu.modulelogin.ui;
 
+import android.app.TaskStackBuilder;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.EventLog;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -21,6 +23,7 @@ import com.hongniu.modulelogin.entity.LoginCarListBean;
 import com.hongniu.modulelogin.entity.LoginEvent;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.sang.common.event.BusFactory;
+import com.sang.common.recycleview.RecycleViewSupportEmpty;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 
@@ -33,7 +36,7 @@ import java.util.List;
 @Route(path = ArouterParamLogin.activity_car_list)
 public class LoginCarListActivity extends BaseActivity implements View.OnClickListener {
 
-    private RecyclerView recyclerView;
+    private RecycleViewSupportEmpty recyclerView;
     private  List<LoginCarInforBean> datas;
     private int currentPage=1;
     private XAdapter<LoginCarInforBean> adapter;
@@ -57,6 +60,9 @@ public class LoginCarListActivity extends BaseActivity implements View.OnClickLi
         LinearLayoutManager manager =new LinearLayoutManager(mContext);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(manager);
+
+//        recyclerView.setEmptyView(R.mipmap.icon_zwcl_240,"暂无车辆");
+
     }
 
 
@@ -144,4 +150,6 @@ public class LoginCarListActivity extends BaseActivity implements View.OnClickLi
         BusFactory.getBus().postSticky(new LoginEvent.CarEvent(0));
         ArouterUtils.getInstance().builder(ArouterParamLogin.activity_car_infor) .navigation(mContext);
     }
+
+
 }

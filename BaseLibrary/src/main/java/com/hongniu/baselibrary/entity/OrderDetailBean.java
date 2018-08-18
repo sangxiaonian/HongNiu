@@ -11,7 +11,6 @@ import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 public class OrderDetailBean {
 
 
-
     /**
      * 主键
      */
@@ -120,7 +119,7 @@ public class OrderDetailBean {
     /**
      * true	string	发货日期（字符串，格式YYYY-MM-dd）
      */
-    protected String  deliverydateStr	  ;
+    protected String deliverydateStr;
     /**
      * true string 货物名称
      */
@@ -163,53 +162,44 @@ public class OrderDetailBean {
     /**
      * false	string	支付方式(0微信,1银联,2线下支付)
      */
-    protected String  payWay;
-
-
-
-
-
-
-
-
-
-
+    protected String payWay;
 
 
     public OrderDetailItemControl.OrderState getOrderState() {
-        if (orderState == null) {
-            // 订单状态 -1退款 1待支付 2待发货 3配送中 4到货 5已收货
+        // 订单状态 -1退款 1待支付 2待发货 3配送中 4到货 5已收货
 //            WAITE_PAY,//待支付
 //                    WAITE_START_NO_INSURANCE,//待发车(未购买保险)
 //                    WAITE_START,//待发车(已买保险)
 //                    IN_TRANSIT,//运输中
 //                    HAS_ARRIVED,//已到达
 //                    RECEIPT,//已收货
-            switch (getStatus()) {
-                case  -1 :
+        switch (getStatus()) {
+            case -1:
+                orderState = OrderDetailItemControl.OrderState.REFUND;
+                break;
+            case 1:
+                orderState = OrderDetailItemControl.OrderState.WAITE_PAY;
+                break;
+            case 2:
 
-                    break;
-                case  1 :
-                    orderState= OrderDetailItemControl.OrderState.WAITE_PAY;
-                    break;
-                case 2 :
+                orderState = OrderDetailItemControl.OrderState.WAITE_START;
 
-                    orderState = OrderDetailItemControl.OrderState.WAITE_START;
+                break;
+            case 3:
+                orderState = OrderDetailItemControl.OrderState.IN_TRANSIT;
 
-                    break;
-                case 3:
-                    orderState =OrderDetailItemControl. OrderState.IN_TRANSIT;
+                break;
+            case 4:
+                orderState = OrderDetailItemControl.OrderState.HAS_ARRIVED;
 
-                    break;
-                case 4:
-                    orderState = OrderDetailItemControl.OrderState.HAS_ARRIVED;
+                break;
+            case 5:
+                orderState = OrderDetailItemControl.OrderState.RECEIPT;
+                break;
+            default:
+                orderState = OrderDetailItemControl.OrderState.UNKNOW;
+                break;
 
-                    break;
-                case 5:
-                    orderState = OrderDetailItemControl.OrderState.RECEIPT;
-                    break;
-
-            }
         }
         return orderState;
     }

@@ -76,7 +76,7 @@ public interface OrderService {
      * @return
      */
     @POST("hongniu/api/order/cancel")
-    Observable<CommonBean<ResponseBody>> cancleOrder(@Body OrderParamBean infor);
+    Observable<CommonBean<OrderDetailBean>> cancleOrder(@Body OrderParamBean infor);
 
    /**
      * 线下支付订单

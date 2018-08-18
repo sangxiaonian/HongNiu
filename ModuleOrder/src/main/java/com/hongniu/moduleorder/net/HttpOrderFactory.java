@@ -96,13 +96,13 @@ public class HttpOrderFactory {
      * @param orderID 订单ID
      * @return
      */
-    public static Observable<CommonBean<ResponseBody>> cancleOrder(String orderID) {
+    public static Observable<CommonBean<OrderDetailBean>> cancleOrder(String orderID) {
         OrderParamBean bean = new OrderParamBean();
         bean.setId(orderID);
         return OrderClient.getInstance()
                 .getService()
                 .cancleOrder(bean)
-                .compose(RxUtils.<CommonBean<ResponseBody>>getSchedulersObservableTransformer());
+                .compose(RxUtils.<CommonBean<OrderDetailBean>>getSchedulersObservableTransformer());
 
     }
 

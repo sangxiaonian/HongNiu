@@ -68,8 +68,10 @@
             android:text="@string/cancel" />
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv"
+    <com.sang.common.recycleview.RecycleViewSupportEmpty
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:id="@+id/rv"
+        app:empty_img="@mipmap/icon_zd_200"
+        app:empty_title="未找到相应账单"
+        android:layout_height="match_parent"/>
 </LinearLayout>

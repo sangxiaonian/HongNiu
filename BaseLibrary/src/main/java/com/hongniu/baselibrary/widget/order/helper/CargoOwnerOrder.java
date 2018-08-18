@@ -89,7 +89,6 @@ public class CargoOwnerOrder implements OrderDetailItemControl.IOrderItemHelper 
             case WAITE_PAY://待支付
                 stateMsg = ORDER_PAY;
                 break;
-
             case WAITE_START://待发车(已买保险)
                 if (!insurance) {
                     stateMsg = ORDER_BUY_INSURANCE;
@@ -102,6 +101,8 @@ public class CargoOwnerOrder implements OrderDetailItemControl.IOrderItemHelper 
                 stateMsg = ORDER_ENTRY_ORDER;
                 break;
             case RECEIPT://已收货
+            case REFUND://退款
+            case UNKNOW://未知状态
                 break;
             default:
                 break;

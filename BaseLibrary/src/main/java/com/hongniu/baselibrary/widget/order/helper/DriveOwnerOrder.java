@@ -53,6 +53,8 @@ public class DriveOwnerOrder implements OrderDetailItemControl.IOrderItemHelper 
             case HAS_ARRIVED://已到达
                 break;
             case RECEIPT://已收货
+            case REFUND://退款
+            case UNKNOW://未知状态
                 break;
             default:
                 break;
@@ -83,6 +85,8 @@ public class DriveOwnerOrder implements OrderDetailItemControl.IOrderItemHelper 
 
                 break;
             case RECEIPT://已收货
+            case REFUND://退款
+            case UNKNOW://未知状态
                 break;
             default:
                 break;

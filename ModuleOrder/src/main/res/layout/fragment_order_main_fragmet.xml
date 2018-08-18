@@ -36,8 +36,13 @@
             app:titleSize="14sp" />
     </LinearLayout>
 
-    <include layout="@layout/common_recycleview"/>
 
+    <com.sang.common.recycleview.RecycleViewSupportEmpty
+        android:layout_width="match_parent"
+        android:id="@+id/rv"
+        app:empty_img="@mipmap/icon_zwdd_260"
+        app:empty_title="暂无订单"
+        android:layout_height="match_parent"/>
 
 
 </LinearLayout>

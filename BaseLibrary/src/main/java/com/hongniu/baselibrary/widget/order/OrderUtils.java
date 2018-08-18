@@ -33,6 +33,8 @@ public class OrderUtils {
             case RECEIPT://已收货
                 stateMsg = "已收货";
                 break;
+            case REFUND://退款
+            case UNKNOW://未知状态
             default:
                 stateMsg = "无效状态";
                 break;

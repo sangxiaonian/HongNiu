@@ -1,6 +1,7 @@
 package com.hongniu.baselibrary.widget.order;
 
 import com.hongniu.baselibrary.entity.OrderDetailBean;
+import com.iflytek.cloud.thirdparty.K;
 
 /**
  * 作者： ${PING} on 2018/8/7.
@@ -23,11 +24,13 @@ public class OrderDetailItemControl {
      * 订单 当前所处的支付状态
      */
     public enum OrderState {
+        REFUND,//退款
         WAITE_PAY,//待支付
         WAITE_START,//待发车
         IN_TRANSIT,//运输中
         HAS_ARRIVED,//已到达
         RECEIPT,//已收货
+        UNKNOW,//为止状态
 
     }
 

@@ -300,10 +300,10 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
                     @Override
                     public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
                         dialog.dismiss();
-                        HttpOrderFactory.cancleOrder(orderBean.getOrderNum())
-                                .subscribe(new NetObserver<ResponseBody>(OrderMainFragmet.this) {
+                        HttpOrderFactory.cancleOrder(orderBean.getId())
+                                .subscribe(new NetObserver<OrderDetailBean>(OrderMainFragmet.this) {
                                     @Override
-                                    public void doOnSuccess(ResponseBody data) {
+                                    public void doOnSuccess(OrderDetailBean data) {
                                         queryOrder();
                                     }
                                 });
