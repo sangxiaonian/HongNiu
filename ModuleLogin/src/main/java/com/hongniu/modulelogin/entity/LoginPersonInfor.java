@@ -28,13 +28,20 @@ public class LoginPersonInfor {
      */
     private String province;
     /**
+     * 省份ID
+     */
+    private String provinceId;
+
+    /**
      * true	string	市名称
      */
     private String city;
+    private String cityId;
     /**
      * true	string	区名称
      */
     private String district;
+    private String districtId;
     /**
      * true	string	详细地址
      */
@@ -100,6 +107,30 @@ public class LoginPersonInfor {
 
     public void setProvince(String province) {
         this.province = province;
+    }
+
+    public String getProvinceId() {
+        return provinceId;
+    }
+
+    public void setProvinceId(String provinceId) {
+        this.provinceId = provinceId;
+    }
+
+    public String getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(String cityId) {
+        this.cityId = cityId;
+    }
+
+    public String getDistrictId() {
+        return districtId;
+    }
+
+    public void setDistrictId(String districtId) {
+        this.districtId = districtId;
     }
 
     public String getCity() {

@@ -17,6 +17,8 @@
             <option value="$PROJECT_DIR$/ResLibrary" />
             <option value="$PROJECT_DIR$/ThirdLibrary" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/pickerview" />
+            <option value="$PROJECT_DIR$/wheelview" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -6,7 +6,9 @@ import android.view.View;
 import android.widget.Button;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.bigkoo.pickerview.OptionsPickerView;
+import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
+import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
+import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
@@ -40,7 +42,7 @@ import okhttp3.ResponseBody;
  * 车辆新增、修改界面
  */
 @Route(path = ArouterParamLogin.activity_car_infor)
-public class LoginCarInforActivity extends BaseActivity implements View.OnClickListener, OptionsPickerView.OnOptionsSelectListener {
+public class LoginCarInforActivity extends BaseActivity implements View.OnClickListener, OnOptionsSelectListener {
 
     private ItemView itemCarType;//车辆类型
     private ItemView itemCarNum;//车牌号
@@ -49,7 +51,7 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
 
     private Button button;
     private boolean isAdd;//是否是添加车辆
-    private OptionsPickerView.Builder pickerDialog;
+    private OptionsPickerBuilder pickerDialog;
     private LoginCarInforBean carBean;
 
     @Override

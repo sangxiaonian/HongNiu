@@ -3,8 +3,12 @@ package com.hongniu.baselibrary.utils;
 import android.content.Context;
 import android.graphics.Color;
 
-import com.bigkoo.pickerview.OptionsPickerView;
-import com.bigkoo.pickerview.TimePickerView;
+import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.hongniu.baselibrary.R;
 
 import java.util.Calendar;
@@ -17,19 +21,20 @@ import java.util.Calendar;
 public class PickerDialogUtils {
 
 
-    public static TimePickerView initTimePicker(Context mContext, TimePickerView.OnTimeSelectListener listener, boolean[] type) {
+    public static TimePickerView initTimePicker(Context mContext, OnTimeSelectListener listener, boolean[] type) {
         TimePickerView pvTime = creatTimePicker(mContext, listener, type).build();
         pvTime.setKeyBackCancelable(false);//系统返回键监听屏蔽掉
+
         return pvTime;
     }
 
-    public static TimePickerView.Builder creatTimePicker(Context mContext, TimePickerView.OnTimeSelectListener listener, boolean[] type) {
+    public static TimePickerBuilder creatTimePicker(Context mContext, OnTimeSelectListener listener, boolean[] type) {
         //控制时间范围(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
         //因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
         Calendar selectedDate = Calendar.getInstance();
 
         Calendar startDate = Calendar.getInstance();
-        startDate.set(2013, 0, 23);
+        startDate.set(2017, 0, 23);
 
         Calendar endDate = Calendar.getInstance();
         endDate.set(2020, 11, 28);
@@ -40,7 +45,7 @@ public class PickerDialogUtils {
         }
 
         //时间选择器
-        TimePickerView.Builder pvTime = new TimePickerView.Builder(mContext, listener)
+        TimePickerBuilder pvTime = new TimePickerBuilder(mContext, listener)
                 .setType(type)
                 .setLabel("", "", "", "", "", "") //设置空字符串以隐藏单位提示   hide label
                 .setRangDate(startDate, endDate)
@@ -52,7 +57,7 @@ public class PickerDialogUtils {
                 .setSubmitText("确定")
                 .setSubCalSize(size)
                 .setCancelText("取消")
-                .setContentSize(contentSize)//设置滚轮文字大小
+                .setContentTextSize(contentSize)//设置滚轮文字大小
                 .setDividerColor(Color.LTGRAY)//设置分割线的颜色
                 .setBgColor(Color.WHITE)
                 .setTextColorCenter(Color.BLACK)
@@ -66,17 +71,17 @@ public class PickerDialogUtils {
     /**
      * 初始化Dialog
      */
-    public static OptionsPickerView initPickerDialog(Context mContext, OptionsPickerView.OnOptionsSelectListener listener) {
+    public static OptionsPickerView initPickerDialog(Context mContext, OnOptionsSelectListener listener) {
         return creatPickerDialog(mContext, listener).build();
     }
 
     /**
      * 初始化Dialog
      */
-    public static OptionsPickerView.Builder creatPickerDialog(Context mContext, OptionsPickerView.OnOptionsSelectListener listener) {
+    public static OptionsPickerBuilder creatPickerDialog(Context mContext, OnOptionsSelectListener listener) {
         int size = 14;
         int contentSize = 15;
-        OptionsPickerView.Builder pvOptions = new OptionsPickerView.Builder(mContext, listener)
+        OptionsPickerBuilder pvOptions = new OptionsPickerBuilder(mContext, listener)
                 .setTitleColor(mContext.getResources().getColor(R.color.color_content_light))
                 .setSubmitColor(mContext.getResources().getColor(R.color.color_title_dark))
                 .setCancelColor(mContext.getResources().getColor(R.color.color_title_dark))

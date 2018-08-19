@@ -10,7 +10,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.bigkoo.pickerview.TimePickerView;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
@@ -27,8 +28,6 @@ import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.widget.CarNumPop;
 import com.sang.common.event.BusFactory;
 import com.sang.common.utils.ConvertUtils;
-import com.sang.common.utils.JLog;
-import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.ItemView;
 import com.sang.common.widget.dialog.BottomAlertDialog;
 import com.sang.common.widget.dialog.builder.BottomAlertBuilder;
@@ -47,7 +46,7 @@ import io.reactivex.disposables.Disposable;
  * 创建订单
  */
 @Route(path = ArouterParamOrder.activity_order_create)
-public class OrderCreatOrderActivity extends BaseActivity implements View.OnClickListener, TimePickerView.OnTimeSelectListener, CarNumPop.onItemClickListener<OrderCarNumbean> {
+public class OrderCreatOrderActivity extends BaseActivity implements View.OnClickListener, OnTimeSelectListener, CarNumPop.onItemClickListener<OrderCarNumbean> {
 
 
     public Handler handler = new Handler() {
@@ -80,7 +79,8 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
 
     private CarNumPop<OrderCarNumbean> pop;
     private OrderCreatParamBean paramBean = new OrderCreatParamBean();
-    List<OrderCarNumbean> carNumbeans=new ArrayList<>();
+    List<OrderCarNumbean> carNumbeans = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,10 +134,10 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
             @Override
             public void afterTextChanged(Editable s) {
                 handler.removeMessages(0);
-                if (!TextUtils.isEmpty(itemCarNum.getTextCenter())&&show) {
+                if (!TextUtils.isEmpty(itemCarNum.getTextCenter()) && show) {
                     handler.sendEmptyMessageDelayed(0, 300);
                 }
-                show=true;
+                show = true;
             }
         });
 
@@ -164,7 +164,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
                     public void doOnSuccess(List<OrderCarNumbean> data) {
                         carNumbeans.clear();
                         carNumbeans.addAll(data);
-                        pop.upData(itemCarNum.getTextCenter(),carNumbeans);
+                        pop.upData(itemCarNum.getTextCenter(), carNumbeans);
                         pop.show(itemCarNum);
                     }
 
@@ -177,8 +177,6 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
 
                 });
     }
-
-
 
 
     @Override
@@ -385,11 +383,12 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     }
 
 
-    private boolean show=true;
+    private boolean show = true;
+
     @Override
     public void onItemClick(int position, OrderCarNumbean data) {
         pop.dismiss();
-        show=false;
+        show = false;
         itemCarNum.setTextCenter(data.getCarNumber());
         itemDriverPhone.setTextCenter(data.getContactMobile());
         itemDriverName.setTextCenter(data.getContactName());

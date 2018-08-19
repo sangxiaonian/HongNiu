@@ -26,6 +26,7 @@ import com.hongniu.moduleorder.entity.OrderMainQueryBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.widget.OrderMainPop;
 import com.sang.common.event.BusFactory;
+import com.sang.common.net.listener.TaskControl;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.recycleview.holder.PeakHolder;
@@ -38,14 +39,9 @@ import com.sang.common.widget.dialog.inter.DialogControl;
 import com.sang.common.widget.popu.BasePopu;
 import com.sang.common.widget.popu.inter.OnPopuDismissListener;
 
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import okhttp3.ResponseBody;
 
 /**
  * 订单列表Fragment
@@ -137,40 +133,30 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
         view.setLayoutParams(params);
         adapter.addFoot(new PeakHolder(view));
         rv.setAdapter(adapter);
-        queryOrder();
+        queryOrder(this);
 
     }
 
-    private void queryOrder() {
+    private void queryOrder(TaskControl.OnTaskListener listener) {
         queryBean.setPageNum(currentPage);
 
         HttpOrderFactory.queryOrder(queryBean)
 
-                .subscribe(new NetObserver<PageBean<OrderDetailBean>>(this) {
+                .subscribe(new NetObserver<PageBean<OrderDetailBean>>(listener) {
                     @Override
                     public void doOnSuccess(PageBean<OrderDetailBean> data) {
                         orders.clear();
-                        if (data!=null&&data.getList()!=null){
+                        if (data != null && data.getList() != null) {
                             orders.addAll(data.getList());
                         }
                         adapter.notifyDataSetChanged();
                     }
 
 
-
                 });
     }
 
 
-    @Override
-    protected boolean getUseEventBus() {
-        return true;
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onPudate(OrderEvent.OrderUpdate update) {
-         queryOrder();
-    }
 
     @Override
     protected void initListener() {
@@ -201,22 +187,22 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
         if (view.getId() == R.id.switch_left) {//时间
             leftSelection = position;
             switchLeft.setTitle(times.get(position));
-            String time=null;
+            String time = null;
             switch (position) {
                 case 0://全部
                     break;
                 case 1://今天
-                    time="today";
+                    time = "today";
 
                     break;
                 case 2://明天
-                    time="tomorrow";
+                    time = "tomorrow";
                     break;
                 case 3://本周
-                    time="thisweek";
+                    time = "thisweek";
                     break;
                 case 4://下周
-                    time="nextweek";
+                    time = "nextweek";
                     break;
             }
             queryBean.setDeliveryDate(time);
@@ -225,7 +211,7 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
             switchRight.setTitle(states.get(position));
             queryBean.setQueryStatus(position);
         }
-        queryOrder();
+        queryOrder(this);
         pop.dismiss();
     }
 
@@ -291,6 +277,7 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
 
     /**
      * "取消订单";
+     *
      * @param orderBean
      */
     @Override
@@ -304,10 +291,9 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
                                 .subscribe(new NetObserver<OrderDetailBean>(OrderMainFragmet.this) {
                                     @Override
                                     public void doOnSuccess(OrderDetailBean data) {
-                                        queryOrder();
+                                        queryOrder(OrderMainFragmet.this);
                                     }
                                 });
-
                     }
                 }).creatDialog(new CenterAlertDialog(getContext()))
                 .show();
@@ -315,6 +301,7 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
 
     /**
      * 购买保险
+     *
      * @param orderBean
      */
     @Override
@@ -324,19 +311,20 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
                 .withBoolean(Param.TRAN, true)
                 .navigation(getContext());
         OrderEvent.PayOrder payOrder = new OrderEvent.PayOrder();
-        payOrder.insurance=true;
-        payOrder.orderID=orderBean.getId();
+        payOrder.insurance = true;
+        payOrder.orderID = orderBean.getId();
         payOrder.orderNum = orderBean.getOrderNum();
         BusFactory.getBus().postSticky(payOrder);
     }
 
     /**
      * ORDER_PAY 继续付款
+     *
      * @param orderBean
      */
     @Override
     public void onOrderPay(OrderDetailBean orderBean) {
-        if (orderBean.getMoney()!=null) {
+        if (orderBean.getMoney() != null) {
             try {
                 OrderEvent.PayOrder payOrder = new OrderEvent.PayOrder();
                 payOrder.insurance = false;
@@ -358,6 +346,7 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
 
     /**
      * ORDER_CHECK_INSURANCE 查看保单
+     *
      * @param orderBean
      */
     @Override
@@ -367,6 +356,7 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
 
     /**
      * ORDER_CHECK_PATH 查看轨迹
+     *
      * @param orderBean
      */
     @Override
@@ -387,8 +377,15 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
         });
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        queryOrder(null);
+    }
+
     /**
      * ORDER_ENTRY_ORDER 确认收货
+     *
      * @param orderBean
      */
     @Override
@@ -406,6 +403,7 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
 
     /**
      * ORDER_START_CAR           ="开始发车";
+     *
      * @param orderBean
      */
     @Override
@@ -423,6 +421,7 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
 
     /**
      * ORDER_CHECK_ROUT          ="查看路线";
+     *
      * @param orderBean
      */
     @Override
@@ -444,6 +443,7 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
 
     /**
      * ORDER_ENTRY_ARRIVE        ="确认到达";
+     *
      * @param orderBean
      */
     @Override

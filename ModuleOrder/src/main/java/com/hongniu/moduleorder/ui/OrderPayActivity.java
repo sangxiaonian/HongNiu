@@ -17,6 +17,7 @@ import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
+import com.hongniu.moduleorder.entity.CreatInsuranceBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.widget.dialog.BuyInsuranceDialog;
 import com.hongniu.moduleorder.widget.dialog.InsuranceNoticeDialog;
@@ -297,7 +298,16 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
                 } else {//线下支付
                     if (buyInsurance) {//购买保险
                         if (checkbox.isChecked()) {
-                            ArouterUtils.getInstance().builder(ArouterParamOrder.activity_insurance_creat).navigation(mContext);
+                            ArouterUtils.getInstance()
+                                    .builder(ArouterParamOrder.activity_insurance_creat)
+                                    .navigation(mContext);
+
+//                            CreatInsuranceBean creatInsuranceBean = new CreatInsuranceBean();
+//                            creatInsuranceBean.setGoodsValue();
+//                            OrderEvent.CraetInsurance insurance=new OrderEvent.CraetInsurance(creatInsuranceBean);
+//
+//
+//                            BusFactory.getBus().postSticky(new OrderEvent.EndLoactionEvent());
                             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("线下支付，购买保险");
                         } else {
                             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("请选择支付方式");

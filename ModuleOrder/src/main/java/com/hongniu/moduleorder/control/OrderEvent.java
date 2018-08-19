@@ -1,8 +1,8 @@
 package com.hongniu.moduleorder.control;
 
 import com.amap.api.maps.model.LatLng;
-import com.amap.api.navi.view.RouteOverLay;
 import com.amap.api.services.core.PoiItem;
+import com.hongniu.moduleorder.entity.CreatInsuranceBean;
 import com.sang.common.event.IBus;
 
 /**
@@ -66,4 +66,20 @@ public class OrderEvent {
         public String orderNum;//是否购买保险，true购买
 
     }
+
+    /**
+     * 创建保单
+     */
+    public static class CraetInsurance implements IBus.IEvent{
+        CreatInsuranceBean bean;
+
+        public CraetInsurance(CreatInsuranceBean bean) {
+            this.bean = bean;
+        }
+
+        public CreatInsuranceBean getBean() {
+            return bean;
+        }
+    }
+
 }

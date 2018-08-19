@@ -1,2 +1,2 @@
-include ':app', ':CommonLibrary', ':ResLibrary', ':ThirdLibrary', ':BaseLibrary', ':ModuleLogin', ':ModulePersonalCenter', ':ModuleOrder', ':ModuleFinance'
+include ':app', ':CommonLibrary', ':ResLibrary', ':ThirdLibrary', ':BaseLibrary', ':ModuleLogin', ':ModulePersonalCenter', ':ModuleOrder', ':ModuleFinance', ':pickerview', ':wheelview'
 
