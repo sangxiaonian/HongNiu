@@ -3,13 +3,9 @@ package com.hongniu.moduleorder.widget.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
-import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,33 +32,11 @@ public class BuyInsuranceDialog extends Dialog {
     private Button bt_sum;
     OnBuyInsuranceClickListener listener;
     private TextView tv_insurance;//保费
-    private float insurancePrice;//保费
 
 
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            String trim = et_price.getText().toString().trim();
-            if (!TextUtils.isEmpty(trim)) {
-                insurancePrice = Float.parseFloat(trim) / 200;
-                tv_insurance.setText("保费：" + insurancePrice + "元");
-                bt_sum.setEnabled(true && checkbox.isChecked());
-            } else {
-                tv_insurance.setText("");
-                insurancePrice = 0;
-                bt_sum.setEnabled(false);
-            }
-        }
-    };
 
-    @Override
-    public void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        if (handler != null) {
-            handler.removeMessages(0);
-        }
-    }
+
+
 
     public BuyInsuranceDialog(@NonNull Context context) {
         this(context, 0);
@@ -89,23 +63,7 @@ public class BuyInsuranceDialog extends Dialog {
 
         et_price = inflate.findViewById(R.id.et_price);
 
-        et_price.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                handler.removeMessages(0);
-            }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                handler.sendEmptyMessageDelayed(0, 200);
-
-            }
-        });
 
 
         checkbox = inflate.findViewById(R.id.checkbox);
@@ -123,7 +81,7 @@ public class BuyInsuranceDialog extends Dialog {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
-                    listener.noticeClick(BuyInsuranceDialog.this, checkbox.isChecked(), String.valueOf(insurancePrice));
+                    listener.noticeClick(BuyInsuranceDialog.this, checkbox.isChecked());
                 }
             }
         });
@@ -132,7 +90,7 @@ public class BuyInsuranceDialog extends Dialog {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
-                    listener.entryClick(BuyInsuranceDialog.this, checkbox.isChecked(), String.valueOf(insurancePrice), et_price.getText().toString().trim());
+                    listener.entryClick(BuyInsuranceDialog.this, checkbox.isChecked(),   et_price.getText().toString().trim());
                 }
             }
         });
@@ -166,11 +124,10 @@ public class BuyInsuranceDialog extends Dialog {
          *
          * @param dialog
          * @param checked    是否阅读条款
-         * @param price      保险金额
          * @param cargoPrice 货物金额
          */
-        void entryClick(Dialog dialog, boolean checked, String price, String cargoPrice);
+        void entryClick(Dialog dialog, boolean checked,   String cargoPrice);
 
-        void noticeClick(BuyInsuranceDialog buyInsuranceDialog, boolean checked, String price);
+        void noticeClick(BuyInsuranceDialog buyInsuranceDialog, boolean checked);
     }
 }

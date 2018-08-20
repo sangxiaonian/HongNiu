@@ -60,10 +60,10 @@ public class OrderEvent {
      * 订单支付
      */
     public static class PayOrder implements IBus.IEvent {
-        public String orderID;//订单号
+        public String orderID;//订单ID
         public float money;//运费金额
         public boolean insurance;//是否购买保险，true购买
-        public String orderNum;//是否购买保险，true购买
+        public String orderNum;//订单号
 
     }
 

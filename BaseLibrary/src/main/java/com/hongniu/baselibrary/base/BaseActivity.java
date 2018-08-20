@@ -85,7 +85,7 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(CloseActivityEvent event) {
+    public void onCloseMessageEvent(CloseActivityEvent event) {
         if (event != null && reciveClose()) {
             finish();
         }

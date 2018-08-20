@@ -18,6 +18,7 @@ import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.entity.CreatInsuranceBean;
+import com.hongniu.moduleorder.entity.OrderParamBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.widget.dialog.BuyInsuranceDialog;
 import com.hongniu.moduleorder.widget.dialog.InsuranceNoticeDialog;
@@ -71,7 +72,7 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
     private boolean buyInsurance;//是否购买保险
     private float insurancePrice;//保费
     private float cargoPrice;//货物金额
-    private float tranPrice ;//运费
+    private float tranPrice;//运费
 
 
     private BuyInsuranceDialog buyInsuranceDialog;
@@ -79,8 +80,8 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
 
     //是否为单独的购买保险界面
     private boolean isInsurance;
-    private String orderID ="";//订单号
-    private String orderNum ="";//订单号
+    private String orderID = "";//订单号
+    private String orderNum = "";//订单号
 
 
     @Override
@@ -122,7 +123,7 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
     @Override
     protected void initData() {
         super.initData();
-        tvOrder.setText("订单号"+ orderNum);
+        tvOrder.setText("订单号" + orderNum);
         tvPrice.setText("￥" + tranPrice);
     }
 
@@ -132,14 +133,14 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
     }
 
 
-    @Subscribe(sticky = true,threadMode = ThreadMode.MAIN)
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onMessageEvent(OrderEvent.PayOrder event) {
         if (event != null) {
             //此处判断是否是购买保险
             isInsurance = event.insurance;
-            tranPrice=event.money;
-            orderID =event.orderID;
-            orderNum =event.orderNum;
+            tranPrice = event.money;
+            orderID = event.orderID;
+            orderNum = event.orderNum;
             if (isInsurance) {//如果是购买保险
                 switchPayLine(false);
                 rl_tran.setVisibility(View.GONE);
@@ -281,15 +282,34 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
 
             if (!isInsurance) {//订单支付界面
                 if (onLine) {//线上支付
-                    if (buyInsurance) {//购买保险
-                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("线上支付，购买保险");
-
-                    } else {//不购买保险
-                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("线上支付，不购买保险");
-                    }
 
                     if (checkbox.isChecked()) {
-                        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_insurance_creat).navigation(mContext);
+                        OrderParamBean bean;
+                        if (buyInsurance) {//购买保险
+                            bean = creatBuyParams(true, true, true, "");
+                        } else {//不购买保险
+                            bean = creatBuyParams(true, true, false, "");
+                        }
+
+                        HttpOrderFactory.payOrderOffLine(bean)
+                                .subscribe(new NetObserver<ResponseBody>(this) {
+                                    @Override
+                                    public void doOnSuccess(ResponseBody data) {
+                                        if (buyInsurance) {
+                                            ArouterUtils.getInstance()
+                                                    .builder(ArouterParamOrder.activity_insurance_creat)
+                                                    .navigation(mContext);
+                                            CreatInsuranceBean creatInsuranceBean = new CreatInsuranceBean();
+                                            creatInsuranceBean.setGoodsValue(cargoPrice + "");
+                                            OrderEvent.CraetInsurance insurance = new OrderEvent.CraetInsurance(creatInsuranceBean);
+                                            BusFactory.getBus().postSticky(insurance);
+                                        } else {
+                                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
+                                        }
+                                        finish();
+
+                                    }
+                                });
                     } else {
                         ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("请选择支付方式");
 
@@ -298,23 +318,28 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
                 } else {//线下支付
                     if (buyInsurance) {//购买保险
                         if (checkbox.isChecked()) {
-                            ArouterUtils.getInstance()
-                                    .builder(ArouterParamOrder.activity_insurance_creat)
-                                    .navigation(mContext);
+                            HttpOrderFactory.payOrderOffLine(creatBuyParams(false, true, true, ""))
+                                    .subscribe(new NetObserver<ResponseBody>(this) {
+                                        @Override
+                                        public void doOnSuccess(ResponseBody data) {
+                                            ArouterUtils.getInstance()
+                                                    .builder(ArouterParamOrder.activity_insurance_creat)
+                                                    .navigation(mContext);
+                                            CreatInsuranceBean creatInsuranceBean = new CreatInsuranceBean();
+                                            creatInsuranceBean.setGoodsValue(cargoPrice + "");
+                                            OrderEvent.CraetInsurance insurance = new OrderEvent.CraetInsurance(creatInsuranceBean);
+                                            BusFactory.getBus().postSticky(insurance);
+                                            finish();
 
-//                            CreatInsuranceBean creatInsuranceBean = new CreatInsuranceBean();
-//                            creatInsuranceBean.setGoodsValue();
-//                            OrderEvent.CraetInsurance insurance=new OrderEvent.CraetInsurance(creatInsuranceBean);
-//
-//
-//                            BusFactory.getBus().postSticky(new OrderEvent.EndLoactionEvent());
-                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("线下支付，购买保险");
+                                        }
+                                    });
+
                         } else {
                             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("请选择支付方式");
                         }
 
                     } else {//不购买保险
-                        HttpOrderFactory.payOrderOffLine(orderID)
+                        HttpOrderFactory.payOrderOffLine(creatBuyParams(false, true, false, ""))
                                 .subscribe(new NetObserver<ResponseBody>(this) {
                                     @Override
                                     public void doOnSuccess(ResponseBody data) {
@@ -349,12 +374,40 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
         }
     }
 
+    /**
+     * 创建订单数据
+     *
+     * @param onLine     是否是线上
+     * @param hasFrenght 是否支付运费
+     * @param policy     是否购买保险
+     * @param openID     微信OpenID
+     * @return
+     */
+    private OrderParamBean creatBuyParams(boolean onLine, boolean hasFrenght, boolean policy, String openID) {
+        OrderParamBean bean = new OrderParamBean();
+        bean.setOrderNum(orderNum);
+        bean.setHasFreight(hasFrenght);
+        bean.setHasPolicy(policy);
+        bean.setOpenid(openID);
+        bean.setOnlinePay(onLine);
+        return bean;
+
+    }
+
     @Override
-    public void entryClick(Dialog dialog, boolean checked, String price, String cargoPrice) {
+    public void entryClick(Dialog dialog, boolean checked, String cargoPrice) {
         try {
             this.cargoPrice = Float.parseFloat(cargoPrice);
-            this.insurancePrice = Float.parseFloat(price);
-            switchToBuyInsurance(false);
+            HttpOrderFactory.queryInstancePrice(cargoPrice, orderID)
+                    .subscribe(new NetObserver<String>(this) {
+
+                        @Override
+                        public void doOnSuccess(String data) {
+                            insurancePrice = Float.parseFloat(data);
+                            switchToBuyInsurance(false);
+                        }
+                    });
+            ;
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
@@ -362,7 +415,7 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
     }
 
     @Override
-    public void noticeClick(BuyInsuranceDialog buyInsuranceDialog, boolean checked, String price) {
+    public void noticeClick(BuyInsuranceDialog buyInsuranceDialog, boolean checked) {
         buyInsuranceDialog.dismiss();
         noticeDialog.show();
     }

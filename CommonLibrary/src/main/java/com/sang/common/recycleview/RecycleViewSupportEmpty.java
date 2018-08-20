@@ -63,7 +63,9 @@ public class RecycleViewSupportEmpty extends RecyclerView {
                 if (!adapter.getHeads().contains(emptyHolder) && adapter.getItemCount() - adapter.getHeads().size() - adapter.getFoots().size() == 0) {
                     adapter.addHeard(0, emptyHolder);
                 } else if (adapter.getHeads().contains(emptyHolder)){
-                    adapter.removeHeard(emptyHolder);
+                    if (adapter.getItemCount() - adapter.getHeads().size() - adapter.getFoots().size() != 0) {
+                        adapter.removeHeard(emptyHolder);
+                    }
                 }
 
             }

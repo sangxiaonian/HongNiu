@@ -5,11 +5,12 @@ import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.utils.Utils;
+import com.hongniu.moduleorder.entity.CreatInsuranceBean;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
 import com.hongniu.moduleorder.entity.OrderCreatParamBean;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
 import com.hongniu.moduleorder.entity.OrderParamBean;
-import com.iflytek.cloud.thirdparty.T;
+import com.hongniu.moduleorder.entity.QueryInsurancePriceBean;
 import com.sang.common.net.rx.RxUtils;
 
 import java.util.List;
@@ -27,7 +28,6 @@ public class HttpOrderFactory {
      * 创建订单
      *
      * @param bean
-     * @return
      */
     public static Observable<CommonBean<OrderDetailBean>> creatOrder(OrderCreatParamBean bean) {
 
@@ -39,7 +39,6 @@ public class HttpOrderFactory {
      * 获取到所有车牌号
      *
      * @param carNum 车牌号
-     * @return
      */
     public static Observable<CommonBean<List<OrderCarNumbean>>> getCarNum(String carNum) {
         OrderCarNumbean bean = new OrderCarNumbean();
@@ -52,7 +51,6 @@ public class HttpOrderFactory {
      * 添加联想车牌号
      *
      * @param bean
-     * @return
      */
     public static Observable<CommonBean<OrderCarNumbean>> addCarNum(OrderCarNumbean bean) {
         bean.setUserId(Utils.getPgetPersonInfor().getId());
@@ -62,9 +60,6 @@ public class HttpOrderFactory {
 
     /**
      * 查询订单
-     *
-     * @param bean
-     * @return
      */
     public static Observable<CommonBean<PageBean<OrderDetailBean>>> queryOrder(OrderMainQueryBean bean) {
         bean.setPageSize(Param.PAGE_SIZE);
@@ -94,11 +89,10 @@ public class HttpOrderFactory {
      * 取消订单
      *
      * @param orderID 订单ID
-     * @return
      */
     public static Observable<CommonBean<OrderDetailBean>> cancleOrder(String orderID) {
         OrderParamBean bean = new OrderParamBean();
-        bean.setId(orderID);
+        bean.setOrderId(orderID);
         return OrderClient.getInstance()
                 .getService()
                 .cancleOrder(bean)
@@ -108,13 +102,14 @@ public class HttpOrderFactory {
 
     /**
      * 线下支付订单
-     *
-     * @param orderID 订单ID
-     * @return
+     * <p>
+     * orderNum     true	string	订单号
+     * openid       true	string	微信用户openid
+     * hasFreight   true	boolean	是否付运费，true=是
+     * hasPolicy    true	boolean	是否买保险，true=是
+     * onlinePay    true	boolean	是否线上支付,false=线下支付
      */
-    public static Observable<CommonBean<ResponseBody>> payOrderOffLine(String orderID) {
-        OrderParamBean bean = new OrderParamBean();
-        bean.setId(orderID);
+    public static Observable<CommonBean<ResponseBody>> payOrderOffLine(OrderParamBean bean) {
         return OrderClient.getInstance()
                 .getService()
                 .payOrderOffLine(bean)
@@ -123,4 +118,28 @@ public class HttpOrderFactory {
     }
 
 
+    /**
+     * 创建保单
+     * orderNum	true	string	订单编号
+     * goodsValue	true	number	货物价值
+     */
+    public static Observable<CommonBean<String>> creatInsurance(CreatInsuranceBean bean) {
+        return OrderClient.getInstance()
+                .getService()
+                .creatInsurance(bean)
+                .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
+    }
+
+    /**
+     * 根据货物金额查询保费
+     * @param cargoPrice 货物金额
+     * @param orderId
+     */
+    public static Observable<CommonBean<String>> queryInstancePrice(String cargoPrice, String orderId) {
+        QueryInsurancePriceBean bean=new QueryInsurancePriceBean(orderId,cargoPrice);
+        return OrderClient.getInstance()
+                .getService()
+                .queryInstancePrice(bean)
+                .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
+    }
 }

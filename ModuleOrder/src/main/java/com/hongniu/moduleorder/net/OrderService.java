@@ -3,11 +3,13 @@ package com.hongniu.moduleorder.net;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
+import com.hongniu.moduleorder.entity.CreatInsuranceBean;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
 import com.hongniu.moduleorder.entity.OrderCreatParamBean;
 import com.hongniu.moduleorder.entity.OrderListBean;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
 import com.hongniu.moduleorder.entity.OrderParamBean;
+import com.hongniu.moduleorder.entity.QueryInsurancePriceBean;
 
 import java.util.List;
 
@@ -72,19 +74,42 @@ public interface OrderService {
 
     /**
      * 取消订单
+     *
      * @param infor 订单ID
      * @return
      */
     @POST("hongniu/api/order/cancel")
     Observable<CommonBean<OrderDetailBean>> cancleOrder(@Body OrderParamBean infor);
 
-   /**
+    /**
      * 线下支付订单
+     * orderNum     true	string	订单号
+     * openid       true	string	微信用户openid
+     * hasFreight   true	boolean	是否付运费，true=是
+     * hasPolicy    true	boolean	是否买保险，true=是
+     * onlinePay    true	boolean	是否线上支付,false=线下支付
+     *
      * @param infor 订单ID
      * @return
      */
-    @POST("hongniu//api/order/pay")
+    @POST("hongniu/wx/jsApiPay")
     Observable<CommonBean<ResponseBody>> payOrderOffLine(@Body OrderParamBean infor);
+
+    /**
+     * 创建保单
+     * orderNum	true	string	订单编号
+     * goodsValue	true	number	货物价值
+     */
+    @POST("hongniu/api/policy/create")
+    Observable<CommonBean<String>> creatInsurance(@Body CreatInsuranceBean infor);
+
+    /**
+     * 根据货物金额查询保费
+     * orderId	true	number	订单id
+     * goodPrice	true	number	货物价值，单位元，不能超过200万
+     */
+    @POST("hongniu/api/policy/create")
+    Observable<CommonBean<String>> queryInstancePrice(@Body QueryInsurancePriceBean infor);
 
 
 }

@@ -6,13 +6,78 @@ package com.hongniu.moduleorder.entity;
  * 订单相关操作参数
  */
 public class OrderParamBean {
-    public String id;
+    /**
+     * true	string	订单ID
+     */
+    private String id;
 
-    public String getId() {
-        return id;
+    /**
+     * true	string	订单号
+     */
+    private String orderNum;
+    /**
+     * true	string	微信用户openid
+     */
+    private String openid;
+    /**
+     * true	boolean	是否付运费，true=是
+     */
+    private boolean hasFreight;
+    /**
+     * true	boolean	是否买保险，true=是
+     */
+    private boolean hasPolicy;
+    /**
+     * true	boolean	是否线上支付,false=线下支付
+     */
+    private boolean onlinePay;
+
+    public String getOrderId() {
+        return id
+                ;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setOrderId(String orderId) {
+        this.id = orderId;
+    }
+
+    public String getOrderNum() {
+        return orderNum;
+    }
+
+    public void setOrderNum(String orderNum) {
+        this.orderNum = orderNum;
+    }
+
+    public String getOpenid() {
+        return openid;
+    }
+
+    public void setOpenid(String openid) {
+        this.openid = openid;
+    }
+
+    public boolean isHasFreight() {
+        return hasFreight;
+    }
+
+    public void setHasFreight(boolean hasFreight) {
+        this.hasFreight = hasFreight;
+    }
+
+    public boolean isHasPolicy() {
+        return hasPolicy;
+    }
+
+    public void setHasPolicy(boolean hasPolicy) {
+        this.hasPolicy = hasPolicy;
+    }
+
+    public boolean isOnlinePay() {
+        return onlinePay;
+    }
+
+    public void setOnlinePay(boolean onlinePay) {
+        this.onlinePay = onlinePay;
     }
 }

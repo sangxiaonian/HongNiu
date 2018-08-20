@@ -1,6 +1,7 @@
 package com.hongniu.moduleorder.ui;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -23,13 +24,16 @@ public class OrderInsuranceResultActivity extends BaseActivity implements View.O
     private boolean success;
     private Button btCheck,btFinish;
     private TextView tvInsurance,tvInsuranceState;
+    private String insuranceNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_insurance_result);
         setToolbarTitle("");
-        success= getIntent().getBooleanExtra(Param.TRAN, false);
+
+        insuranceNum= getIntent().getStringExtra(Param.TRAN);
+        success= !TextUtils.isEmpty(insuranceNum);
         initView();
         initData();
         initListener();
