@@ -400,7 +400,6 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
             this.cargoPrice = Float.parseFloat(cargoPrice);
             HttpOrderFactory.queryInstancePrice(cargoPrice, orderID)
                     .subscribe(new NetObserver<String>(this) {
-
                         @Override
                         public void doOnSuccess(String data) {
                             insurancePrice = Float.parseFloat(data);
