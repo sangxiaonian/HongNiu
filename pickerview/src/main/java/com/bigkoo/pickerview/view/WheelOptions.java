@@ -135,15 +135,15 @@ public class WheelOptions<T> {
                     if (!isRestoreItem) {
                         // wv_option3.getCurrentItem() 上一个opt3的选中位置
                         //新opt3的位置，判断如果旧位置没有超过数据范围，则沿用旧位置，否则选中最后一项
-                        if (mOptions3Items.size()>opt1Select&&mOptions3Items.get(opt1Select).size()>index&&index>=0) {
+                        if (mOptions3Items.size() > opt1Select && mOptions3Items.get(opt1Select).size() > index && index >= 0) {
                             opt3 = wv_option3.getCurrentItem() >= mOptions3Items.get(opt1Select).get(index).size() - 1 ?
                                     mOptions3Items.get(opt1Select).get(index).size() - 1 : wv_option3.getCurrentItem();
                         }
                     }
-                    if (index>=0) {
+                    if (index >= 0) {
                         wv_option3.setAdapter(new ArrayWheelAdapter(mOptions3Items.get(wv_option1.getCurrentItem()).get(index)));
                         wv_option3.setCurrentItem(opt3);
-                    }else {
+                    } else {
                         wv_option3.setAdapter(new ArrayWheelAdapter(new ArrayList()));
                     }
 
@@ -351,7 +351,12 @@ public class WheelOptions<T> {
         }
 
         if (mOptions3Items != null && mOptions3Items.size() > 0) {//非空判断
-            currentItems[2] = wv_option3.getCurrentItem() > (mOptions3Items.get(currentItems[0]).get(currentItems[1]).size() - 1) ? 0 : wv_option3.getCurrentItem();
+            if (mOptions3Items.size() > currentItems[0] && mOptions3Items.get(currentItems[0]).size() > currentItems[1]) {
+                currentItems[2] = wv_option3.getCurrentItem() > (mOptions3Items.get(currentItems[0]).get(currentItems[1]).size() - 1) ? 0 : wv_option3.getCurrentItem();
+            }else {
+                currentItems[2] = wv_option3.getCurrentItem();
+            }
+
         } else {
             currentItems[2] = wv_option3.getCurrentItem();
         }

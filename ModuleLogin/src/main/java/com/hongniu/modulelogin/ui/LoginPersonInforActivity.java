@@ -1,5 +1,6 @@
 package com.hongniu.modulelogin.ui;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -64,7 +65,10 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
         itemAddress = findViewById(R.id.item_address);
         itemAddressDetail = findViewById(R.id.item_address_detail);
         btSave = findViewById(R.id.bt_save);
-        pickDialog = PickerDialogUtils.creatPickerDialog(mContext, this).build();
+        pickDialog = PickerDialogUtils.creatPickerDialog(mContext, this)
+                .setTitleText("选择地区")
+                .setSubmitColor(Color.parseColor("#48BAF3"))
+                .build();
     }
 
 
@@ -118,21 +122,23 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
             }
 
         } else if (i == R.id.item_address) {
+            if (areabean==null) {
+                LoginUtils.getAreas(mContext)
+                        .compose(RxUtils.<AreaBeans>getSchedulersObservableTransformer())
+                        .subscribe(new BaseObserver<AreaBeans>(this) {
 
-//
-            LoginUtils.getAreas(mContext)
-                    .compose(RxUtils.<AreaBeans>getSchedulersObservableTransformer())
-                    .subscribe(new BaseObserver<AreaBeans>(this) {
-
-                        @Override
-                        public void onNext(AreaBeans result) {
-                            super.onNext(result);
-                            areabean = result;
-                            pickDialog.setPicker(areabean.getProvinces(), areabean.getCityBean(), areabean.getDistrict());
-                            pickDialog.show();
-
-                        }
-                    });
+                            @Override
+                            public void onNext(AreaBeans result) {
+                                super.onNext(result);
+                                areabean = result;
+                                pickDialog.setPicker(areabean.getProvinces(), areabean.getCityBean(), areabean.getDistrict());
+                                pickDialog.show();
+                            }
+                        });
+            }else {
+//                pickDialog.setPicker(areabean.getProvinces(), areabean.getCityBean(), areabean.getDistrict());
+                pickDialog.show();
+            }
 
 
         }
@@ -181,18 +187,30 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
         if (areabean != null) {
             StringBuffer buffer = new StringBuffer();
             LoginAreaBean provinces = areabean.getProvinces().get(options1).getInfor();
-            LoginAreaBean city = areabean.getCityBean().get(options1).get(options2).getInfor();
-            LoginAreaBean district = areabean.getDistrict().get(options1).get(options2).get(options3).getInfor();
+            LoginAreaBean city;
+            if (areabean.getCityBean().size()>options1&&areabean.getCityBean().get(options1).size()>options2) {
+                city = areabean.getCityBean().get(options1).get(options2).getInfor();
+            }else {
+                city=new LoginAreaBean();
+            }
+            LoginAreaBean district ;
+            if (areabean.getDistrict().size()>options1&&areabean.getDistrict().get(options1).size()>options2
+                    &&areabean.getDistrict().get(options1).get(options2).size()>options3){
+                  district = areabean.getDistrict().get(options1).get(options2).get(options3).getInfor();
+            }else {
+                district=new LoginAreaBean();
+            }
+
             buffer.append(provinces.getAreaName())
                     .append(city.getAreaName())
                     .append(district.getAreaName());
             itemAddress.setTextCenter(buffer.toString());
             personInfor.setProvinceId(provinces.getAreaId() + "");
             personInfor.setProvince(provinces.getAreaName());
-            personInfor.setCity(city.getAreaId() + "");
-            personInfor.setCityId(city.getAreaName());
-            personInfor.setDistrict(district.getAreaId() + "");
-            personInfor.setDistrictId(district.getAreaName());
+            personInfor.setCityId(city.getAreaId() + "");
+            personInfor.setCity(city.getAreaName());
+            personInfor.setDistrictId(district.getAreaId() +"");
+            personInfor.setDistrict(district.getAreaName());
 
 
         }

@@ -87,18 +87,17 @@ public class PickerDialogUtils {
                 .setCancelColor(mContext.getResources().getColor(R.color.color_title_dark))
                 .setTitleBgColor(mContext.getResources().getColor(R.color.color_white))
                 .setSubmitText("确定")
+                .setLineSpacingMultiplier(1.5f)
                 .setSubCalSize(size)
                 .setCancelText("取消")
                 .setContentTextSize(contentSize)//设置滚轮文字大小
                 .setDividerColor(Color.LTGRAY)//设置分割线的颜色
-                .setSelectOptions(0, 1)//默认选中项
+                .setSelectOptions(0, 0,0)//默认选中项
                 .setBgColor(Color.WHITE)
                 .setTextColorCenter(Color.BLACK)
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .setBackgroundId(0x66000000) //设置外部遮罩颜色
                 ;
-
-
         return pvOptions;
     }
 }

@@ -1,6 +1,7 @@
 package com.hongniu.modulelogin;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -40,78 +41,28 @@ public class LoginUtils {
                 .map(new Function<Context, String>() {
                     @Override
                     public String apply(Context context) throws Exception {
-                        InputStream is = context.getResources().openRawResource(R.raw.area);
-                        return readTextFromSDcard(is);
+                        InputStream is = context.getAssets().open("city.json");
+                        return readTextFromSDcard(is).trim();
                     }
                 })
-                .map(new Function<String, List<LoginAreaBean>>() {
+                .map(new Function<String, List<ProvincesBean>>() {
                     @Override
-                    public List<LoginAreaBean> apply(String json) throws Exception {
-                        Type type = new TypeToken<ArrayList<LoginAreaBean>>() {
+                    public List<ProvincesBean> apply(String json) throws Exception {
+                        Type type = new TypeToken<ArrayList<ProvincesBean>>() {
                         }.getType();
-                        return new Gson().fromJson(json, type);
+                        List<ProvincesBean> o = new Gson().fromJson(json, type);
+                        return o;
                     }
                 })
-                .map(new Function<List<LoginAreaBean>, AreaBeans>() {
+                .map(new Function<List<ProvincesBean>, AreaBeans>() {
                     @Override
-                    public AreaBeans apply(List<LoginAreaBean> loginAreaBeans) throws Exception {
-
-                        List<ProvincesBean> provinces = new ArrayList<>();
-
-                        //解析所有的省份
-                        for (LoginAreaBean loginAreaBean : loginAreaBeans) {
-                            if (loginAreaBean.getLevel() == 1) {
-                                provinces.add(new ProvincesBean(loginAreaBean));
-                            }
-                        }
-                        //城市
-                        for (ProvincesBean province : provinces) {
-                            //解析所有的城市
-                            province.setCitys(new ArrayList<CityBean>());
-                            for (LoginAreaBean loginAreaBean : loginAreaBeans) {
-                                if (loginAreaBean.getLevel() == 2 && province.getInfor().getAreaId() == loginAreaBean.getParentId()) {
-                                    province.getCitys().add(new CityBean(loginAreaBean));
-                                }
-                            }
-                        }
-                        //区
-                        for (ProvincesBean province : provinces) {
-                            //解析所有的城市
-                            List<CityBean> citys = province.getCitys();
-                            for (CityBean city : citys) {
-                                city.setDistricts(new ArrayList<DistrictBean>());
-                                for (LoginAreaBean loginAreaBean : loginAreaBeans) {
-                                    if (loginAreaBean.getLevel() == 3 && city.getInfor().getAreaId() == loginAreaBean.getParentId()) {
-                                        city.getDistricts().add(new DistrictBean(loginAreaBean));
-                                    }
-                                    if (city.getDistricts().size() == 0) {
-                                        city.getDistricts().add(new DistrictBean(city.getInfor()));
-                                    }
-                                }
-
-
-                            }
-
-                        }
-
-                        String s = new Gson().toJson(provinces);
-                        FileOutputStream fout = context.openFileOutput("city.json", MODE_PRIVATE);
-                        OutputStreamWriter osw = new OutputStreamWriter(fout, "UTF-8");
-                        osw.write(s);
-                        osw.flush();
-                        fout.flush();  //flush是为了输出缓冲区中所有的内容
-
-                        osw.close();
-                        fout.close();  //写入完成后，将两个输出关闭
-
-
+                    public AreaBeans apply(List<ProvincesBean> provinces) throws Exception {
                         List<List<CityBean>> cityBean = new ArrayList<>();
                         List<List<List<DistrictBean>>> district = new ArrayList<>();
                         for (ProvincesBean provincesBean : provinces) {
                             List<CityBean> citys = provincesBean.getCitys();
                             cityBean.add(citys);
                         }
-
                         for (List<CityBean> cityBeans : cityBean) {
                             List<List<DistrictBean>> child = new ArrayList<>();
                             for (CityBean bean : cityBeans) {
@@ -126,29 +77,26 @@ public class LoginUtils {
                         return areaBeans;
                     }
                 })
-
-
                 ;
 
 
     }
 
     private static String readTextFromSDcard(InputStream fis) throws Exception {
+        StringBuilder stringBuilder = new StringBuilder();
+        //获得assets资源管理器
+        //使用IO流读取json文件内容
         try {
-
-            InputStreamReader isr = new InputStreamReader(fis, "UTF-8");
-            char[] input = new char[fis.available()];  //available()用于获取filename内容的长度
-            isr.read(input);  //读取并存储到input中
-
-            isr.close();
-            fis.close();//读取完成后关闭
-
-            String str = new String(input); //将读取并存放在input中的数据转换成String输出
-            return str;
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(
+                    fis, "utf-8"));
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuilder.append(line);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return stringBuilder.toString();
 
-        return "";
     }
 }

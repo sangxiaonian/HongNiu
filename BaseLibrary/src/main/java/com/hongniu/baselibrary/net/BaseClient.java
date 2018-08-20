@@ -53,8 +53,6 @@ public class BaseClient {
                         }
 
                         Request newRequest = requestBuilder.build();
-
-
                         return chain.proceed(newRequest);
                     }
                 })
