@@ -35,7 +35,6 @@ public abstract class RefrushFragmet<T> extends BaseFragment implements OnRefres
     protected List<T> datas = new ArrayList<>();
     protected XAdapter<T> adapter;
     protected RecyclerView rv;
-    private boolean hasNoMore;
 
     @Nullable
     @Override
@@ -71,24 +70,21 @@ public abstract class RefrushFragmet<T> extends BaseFragment implements OnRefres
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
 
-        refresh.loadmoreFinished(false);
+        refresh.loadmoreFinished(true);
         queryData(true);
     }
 
     @Override
     public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-        if (!hasNoMore) {
-            queryData(false);
-        } else {
-            refresh.finishLoadMore();
-        }
+
+        queryData(false);
+
     }
 
 
     protected void queryData(final boolean isClear) {
         if (isClear) {
             currentPage = 1;
-            hasNoMore = false;
         }
         getListDatas()
                 .subscribe(new NetObserver<PageBean<T>>(this) {
@@ -135,8 +131,7 @@ public abstract class RefrushFragmet<T> extends BaseFragment implements OnRefres
      */
     public void showNoMore() {
 
-        hasNoMore = true;
 
-        refresh.loadmoreFinished(true);
+        refresh.loadmoreFinished(false);
     }
 }
