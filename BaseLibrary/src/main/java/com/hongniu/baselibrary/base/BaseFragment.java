@@ -1,6 +1,5 @@
 package com.hongniu.baselibrary.base;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,14 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.hongniu.baselibrary.utils.Utils;
 import com.sang.common.event.BusFactory;
-import com.sang.common.net.error.NetException;
 import com.sang.common.net.listener.TaskControl;
-import com.sang.common.utils.JLog;
-import com.sang.common.widget.dialog.CenterAlertDialog;
-import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
-import com.sang.common.widget.dialog.inter.DialogControl;
 
 import io.reactivex.disposables.Disposable;
 
@@ -27,6 +20,7 @@ import io.reactivex.disposables.Disposable;
  */
 public class BaseFragment extends Fragment implements TaskControl.OnTaskListener {
     TaskControl.OnTaskListener taskListener;
+    protected Disposable d;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,20 +76,21 @@ public class BaseFragment extends Fragment implements TaskControl.OnTaskListener
 
     @Override
     public void onTaskStart(Disposable d) {
-        if (taskListener!=null)
-        taskListener.onTaskStart(d);
+        this.d = d;
+        if (taskListener != null)
+            taskListener.onTaskStart(d);
     }
 
     @Override
     public void onTaskSuccess() {
-        if (taskListener!=null)
-        taskListener.onTaskSuccess();
+        if (taskListener != null)
+            taskListener.onTaskSuccess();
     }
 
     @Override
     public void onTaskDetail(float present) {
-        if (taskListener!=null)
-        taskListener.onTaskDetail(present);
+        if (taskListener != null)
+            taskListener.onTaskDetail(present);
     }
 
 
@@ -109,7 +104,15 @@ public class BaseFragment extends Fragment implements TaskControl.OnTaskListener
 
     @Override
     public void onTaskFail(Throwable e, String code, String msg) {
-        if (taskListener!=null)
-        taskListener.onTaskFail(e, code, msg);
+        if (taskListener != null)
+            taskListener.onTaskFail(e, code, msg);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if (d != null) {
+            d.dispose();
+        }
     }
 }

@@ -49,7 +49,7 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
     protected TextView tvToolbarRight;
     protected View tool;
     private LoadDialog loading;
-    private Disposable disposable;
+    protected Disposable disposable;
 
 
     @Override

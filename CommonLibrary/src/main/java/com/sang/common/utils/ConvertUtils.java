@@ -94,7 +94,7 @@ public class ConvertUtils {
      * @return yyyy-MM-dd
      */
     public static String formatString(String sour, String sourFormat, String desFormat) {
-        Date date = StrToDate(sourFormat, sourFormat);
+        Date date = StrToDate(sour, sourFormat);
         return formatTime(date,desFormat);
     }
 

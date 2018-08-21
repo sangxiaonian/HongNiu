@@ -43,7 +43,7 @@ public class LoadDialog extends Dialog {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.layout_loading);
         View view = getWindow().getDecorView();
-        img = (ImageView) view.findViewById(R.id.iv);
+        img =  view.findViewById(R.id.iv);
         getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         getWindow().setGravity(Gravity.CENTER);
         getWindow().setBackgroundDrawable(new ColorDrawable(0x00000000));

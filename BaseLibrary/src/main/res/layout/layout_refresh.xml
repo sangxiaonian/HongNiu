@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hongniu.baselibrary.widget.XRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/refresh"
+    android:layout_height="match_parent">
+    <com.sang.common.recycleview.RecycleViewSupportEmpty
+        android:id="@+id/rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:empty_img="@mipmap/icon_zwdd_260"
+        app:empty_title="暂无数据" />
+</com.hongniu.baselibrary.widget.XRefreshLayout>

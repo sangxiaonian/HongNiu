@@ -11,9 +11,10 @@ import android.view.ViewGroup;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.base.BaseFragment;
 import com.hongniu.baselibrary.base.NetObserver;
+import com.hongniu.baselibrary.base.RefrushFragmet;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.utils.PermissionUtils;
@@ -25,6 +26,7 @@ import com.hongniu.moduleorder.control.SwitchStateListener;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.widget.OrderMainPop;
+import com.iflytek.cloud.thirdparty.T;
 import com.sang.common.event.BusFactory;
 import com.sang.common.net.listener.TaskControl;
 import com.sang.common.recycleview.adapter.XAdapter;
@@ -43,14 +45,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import io.reactivex.Observable;
+
 /**
  * 订单列表Fragment
  */
 @Route(path = ArouterParamOrder.fragment_order_main)
-public class OrderMainFragmet extends BaseFragment implements SwitchStateListener, SwitchTextLayout.OnSwitchListener, OrderMainPop.OnPopuClickListener, OnPopuDismissListener, OrderDetailItemControl.OnOrderDetailBtClickListener {
+public class OrderMainFragmet  extends RefrushFragmet<OrderDetailBean> implements SwitchStateListener, SwitchTextLayout.OnSwitchListener, OrderMainPop.OnPopuClickListener, OnPopuDismissListener, OrderDetailItemControl.OnOrderDetailBtClickListener {
     private SwitchTextLayout switchLeft;
     private SwitchTextLayout switchRight;
-    private RecyclerView rv;
 
     private int leftSelection;
     private int rightSelection;
@@ -59,10 +62,7 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
     private List<String> states;
 
     private OrderDetailItemControl.RoleState roleState;//角色
-    private XAdapter<OrderDetailBean> adapter;
     private OrderMainQueryBean queryBean = new OrderMainQueryBean();
-    private int currentPage = 1;
-    private ArrayList<OrderDetailBean> orders;
 
     public OrderMainFragmet() {
     }
@@ -94,7 +94,7 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
         View inflate = inflater.inflate(R.layout.fragment_order_main_fragmet, null);
         switchLeft = inflate.findViewById(R.id.switch_left);
         switchRight = inflate.findViewById(R.id.switch_right);
-        rv = inflate.findViewById(R.id.rv);
+
 
         return inflate;
     }
@@ -105,14 +105,17 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
         orderMainPop = new OrderMainPop<>(getContext());
         states = Arrays.asList(getResources().getStringArray(R.array.order_main_state));
         times = Arrays.asList(getResources().getStringArray(R.array.order_main_time));
+        View view = new View(getContext());
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DeviceUtils.dip2px(getContext(), 75));
+        view.setLayoutParams(params);
+        adapter.addFoot(new PeakHolder(view));
+
+    }
 
 
-        LinearLayoutManager manager = new LinearLayoutManager(getContext());
-        manager.setOrientation(LinearLayoutManager.VERTICAL);
-        rv.setLayoutManager(manager);
-        orders = new ArrayList<>();
-
-        adapter = new XAdapter<OrderDetailBean>(getContext(), orders) {
+    @Override
+    public XAdapter<OrderDetailBean> getAdapter(List<OrderDetailBean> datas) {
+        return  new XAdapter<OrderDetailBean>(getContext(), datas) {
             @Override
             public BaseHolder<OrderDetailBean> initHolder(ViewGroup parent, int viewType) {
                 return new BaseHolder<OrderDetailBean>(getContext(), parent, R.layout.order_main_item) {
@@ -127,36 +130,14 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
                 };
             }
         };
-
-        View view = new View(getContext());
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DeviceUtils.dip2px(getContext(), 75));
-        view.setLayoutParams(params);
-        adapter.addFoot(new PeakHolder(view));
-        rv.setAdapter(adapter);
-        queryOrder(this);
-
     }
 
-    private void queryOrder(TaskControl.OnTaskListener listener) {
+    @Override
+    protected Observable<CommonBean<PageBean<OrderDetailBean>>> getListDatas() {
         queryBean.setPageNum(currentPage);
+        return HttpOrderFactory.queryOrder(queryBean);
 
-        HttpOrderFactory.queryOrder(queryBean)
-
-                .subscribe(new NetObserver<PageBean<OrderDetailBean>>(listener) {
-                    @Override
-                    public void doOnSuccess(PageBean<OrderDetailBean> data) {
-                        orders.clear();
-                        if (data != null && data.getList() != null) {
-                            orders.addAll(data.getList());
-                        }
-                        adapter.notifyDataSetChanged();
-                    }
-
-
-                });
     }
-
-
 
     @Override
     protected void initListener() {
@@ -165,7 +146,6 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
         switchLeft.setListener(this);
         orderMainPop.setOnDismissListener(this);
         orderMainPop.setListener(this);
-
 
     }
 
@@ -211,7 +191,7 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
             switchRight.setTitle(states.get(position));
             queryBean.setQueryStatus(position);
         }
-        queryOrder(this);
+        queryData(true);
         pop.dismiss();
     }
 
@@ -291,7 +271,7 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
                                 .subscribe(new NetObserver<OrderDetailBean>(OrderMainFragmet.this) {
                                     @Override
                                     public void doOnSuccess(OrderDetailBean data) {
-                                        queryOrder(OrderMainFragmet.this);
+                                        queryData(true);
                                     }
                                 });
                     }
@@ -380,7 +360,7 @@ public class OrderMainFragmet extends BaseFragment implements SwitchStateListene
     @Override
     public void onStart() {
         super.onStart();
-        queryOrder(null);
+        queryData(true);
     }
 
     /**

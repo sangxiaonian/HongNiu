@@ -32,4 +32,6 @@ dependencies {
     api project(':CommonLibrary')
     api project(':ThirdLibrary')
     api project(':pickerview')
+    api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
+    api 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'//没有使用特殊Header，可以不加这行
 }

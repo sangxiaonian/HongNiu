@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center"
+              android:orientation="horizontal">
+
+    <View
+        android:layout_width="90dp"
+        android:layout_height="0.5dp"
+        android:layout_marginRight="15dp"
+        android:background="#c5c5c5"/>
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="7.5dp"
+        android:paddingRight="7.5dp"
+        android:text="我也是有底线的"
+        android:textColor="#c5c5c5"
+        android:textSize="11sp"/>
+
+
+    <View
+        android:layout_width="90dp"
+        android:layout_height="0.5dp"
+        android:layout_marginRight="15dp"
+        android:background="#c5c5c5"/>
+
+</LinearLayout>
