@@ -35,15 +35,13 @@ public abstract class RefrushActivity<T> extends BaseActivity implements OnRefre
     protected List<T> datas = new ArrayList<>();
     protected XAdapter<T> adapter;
     protected RecyclerView rv;
-    private boolean hasNoMore;
-
 
 
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
-        refresh =  findViewById(R.id.refresh);
-        rv =  findViewById(R.id.rv);
+        refresh = findViewById(R.id.refresh);
+        rv = findViewById(R.id.rv);
         if (refresh != null) {
             refresh.setOnRefreshListener(this);
             refresh.setOnLoadMoreListener(this);
@@ -65,24 +63,20 @@ public abstract class RefrushActivity<T> extends BaseActivity implements OnRefre
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
 
-        refresh.loadmoreFinished(false);
         queryData(true);
     }
 
     @Override
     public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-        if (!hasNoMore) {
-            queryData(false);
-        } else {
-            refresh.finishLoadMore();
-        }
+        queryData(false);
+
     }
 
 
     protected void queryData(final boolean isClear) {
         if (isClear) {
+            refresh.loadmoreFinished(true);
             currentPage = 1;
-            hasNoMore = false;
         }
         getListDatas()
                 .subscribe(new NetObserver<PageBean<T>>(this) {
@@ -91,12 +85,15 @@ public abstract class RefrushActivity<T> extends BaseActivity implements OnRefre
                         if (isClear) {
                             datas.clear();
                         }
-                        currentPage++;
-                        if (data != null && data.getList() != null) {
+                        if (data != null && data.getList() != null && !data.getList().isEmpty()) {
+                            currentPage++;
+
                             datas.addAll(data.getList());
                             if (data.getList().size() < Param.PAGE_SIZE) {
                                 showNoMore();
                             }
+                        } else {
+                            showNoMore();
                         }
                         adapter.notifyDataSetChanged();
                     }
@@ -110,7 +107,7 @@ public abstract class RefrushActivity<T> extends BaseActivity implements OnRefre
 
     @Override
     public void onTaskStart(Disposable d) {
-        this.disposable = d;
+        disposable = d;
         if (isFirst) {
             isFirst = false;
             super.onTaskStart(d);
@@ -129,8 +126,7 @@ public abstract class RefrushActivity<T> extends BaseActivity implements OnRefre
      */
     public void showNoMore() {
 
-        hasNoMore = true;
 
-        refresh.loadmoreFinished(true);
+        refresh.loadmoreFinished(false);
     }
 }

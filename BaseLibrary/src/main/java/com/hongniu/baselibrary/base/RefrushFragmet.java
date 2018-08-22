@@ -70,13 +70,11 @@ public abstract class RefrushFragmet<T> extends BaseFragment implements OnRefres
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
 
-        refresh.loadmoreFinished(true);
         queryData(true);
     }
 
     @Override
     public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-
         queryData(false);
 
     }
@@ -84,6 +82,7 @@ public abstract class RefrushFragmet<T> extends BaseFragment implements OnRefres
 
     protected void queryData(final boolean isClear) {
         if (isClear) {
+            refresh.loadmoreFinished(true);
             currentPage = 1;
         }
         getListDatas()
@@ -93,12 +92,15 @@ public abstract class RefrushFragmet<T> extends BaseFragment implements OnRefres
                         if (isClear) {
                             datas.clear();
                         }
-                        currentPage++;
-                        if (data != null && data.getList() != null) {
+                        if (data != null && data.getList() != null&&!data.getList().isEmpty()) {
+                            currentPage++;
+
                             datas.addAll(data.getList());
                             if (data.getList().size() < Param.PAGE_SIZE) {
                                 showNoMore();
                             }
+                        }else {
+                            showNoMore();
                         }
                         adapter.notifyDataSetChanged();
                     }

@@ -1,4 +1,4 @@
 include ':app', ':CommonLibrary', ':ResLibrary', ':ThirdLibrary', ':BaseLibrary', ':ModuleLogin',
-        ':ModulePersonalCenter', ':ModuleOrder', ':ModuleFinance', ':pickerview', ':wheelview' ,
-        ':EasyRefrush'
+        ':ModulePersonalCenter', ':ModuleOrder', ':ModuleFinance', ':pickerview', ':wheelview'
+
 

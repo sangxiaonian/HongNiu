@@ -23,7 +23,6 @@ import static com.scwang.smartrefresh.layout.util.DensityUtil.dp2px;
  */
 
 public class RecycleHeader extends LinearLayout implements RefreshHeader {
-    private ImageView iv;
     private ImageView ivLoading;
 
     public RecycleHeader(Context context) {
@@ -48,13 +47,10 @@ public class RecycleHeader extends LinearLayout implements RefreshHeader {
         removeAllViews();
         int size = dp2px(50);
         ivLoading = new ImageView(context);
-        Glide.with(this).load(R.raw.listloading).into(ivLoading);
-        ivLoading.setVisibility(GONE);
 
-        iv = new ImageView(context);
-        Glide.with(this).asBitmap().load(R.raw.listloading).into(iv);
+        Glide.with(getContext()).clear(ivLoading);
+        Glide.with(getContext()).asBitmap().load(R.raw.listloading).into(ivLoading);
 
-        addView(iv, size, size);
         addView(ivLoading, size, size);
         setMinimumHeight(size);
     }
@@ -72,19 +68,14 @@ public class RecycleHeader extends LinearLayout implements RefreshHeader {
     @Override
     public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
 //        mProgressDrawable.start();//开始动画
+        Glide.with(getContext()).clear(ivLoading);
+        Glide.with(getContext()).load(R.raw.listloading).into(ivLoading);
     }
 
     @Override
     public int onFinish(RefreshLayout layout, boolean success) {
-        if (success) {
-            iv.setVisibility(GONE);
-
-            ivLoading.setVisibility(GONE);
-//            gifView.setVisibility(GONE);
-//            mHeaderText.setText("刷新完成");
-        } else {
-//            mHeaderText.setText("刷新失败");
-        }
+        Glide.with(getContext()).clear(ivLoading);
+        Glide.with(getContext()).asBitmap().load(R.raw.listloading).into(ivLoading);
         return 0;//延迟500毫秒之后再弹回
     }
 
@@ -93,15 +84,15 @@ public class RecycleHeader extends LinearLayout implements RefreshHeader {
         switch (newState) {
             case None:
             case PullDownToRefresh://下拉开始刷新
-                iv.setVisibility(VISIBLE);
-                ivLoading.setVisibility(GONE);
+//                iv.setVisibility(VISIBLE);
+//                ivLoading.setVisibility(GONE);
 //                gifView.setVisibility(GONE);
 //                gifFromResource.seekTo(0);
 //                gifFromResource.stop();
                 break;
             case Refreshing://正在刷新
-                iv.setVisibility(GONE);
-                ivLoading.setVisibility(VISIBLE);
+//                iv.setVisibility(GONE);
+//                ivLoading.setVisibility(VISIBLE);
 //                gifView.setVisibility(VISIBLE);
 //                gifFromResource.start();
                 break;
@@ -131,8 +122,8 @@ public class RecycleHeader extends LinearLayout implements RefreshHeader {
     @Override
     public void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight) {
         if (percent <= 1) {
-            iv.animate().scaleX(percent).setDuration(0);
-            iv.animate().scaleY(percent).setDuration(0);
+            ivLoading.animate().scaleX(percent).setDuration(0);
+            ivLoading.animate().scaleY(percent).setDuration(0);
         }
     }
 

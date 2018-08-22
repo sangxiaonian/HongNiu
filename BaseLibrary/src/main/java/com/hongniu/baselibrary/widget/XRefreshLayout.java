@@ -32,12 +32,18 @@ public class XRefreshLayout extends SmartRefreshLayout {
         setRefreshFooter(recycleFooter);
         setHeaderHeight(50);
         setFooterHeight(40);
+
+
     }
 
     public void loadmoreFinished(boolean isFinish){
         finishLoadMore();
-        recycleFooter.loadmoreFinished(isFinish);
-        setEnableLoadMore(isFinish);
+        recycleFooter.loadmoreFinished(!isFinish);
+//        setEnableLoadMore(isFinish);
+        setNoMoreData(!isFinish);//1.0.5 以上
+//        finishLoadmore();
+//        setLoadmoreFinish(true);//1.0.4 及一下版本
+
     }
 
     public void hideLoadFinish(){

@@ -42,5 +42,5 @@ public class Param {
     /**
      * 分页查找每页数据数量
      */
-    public static final int PAGE_SIZE=20;
+    public static final int PAGE_SIZE=2;
 }
