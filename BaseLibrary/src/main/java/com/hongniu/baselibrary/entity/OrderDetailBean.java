@@ -73,6 +73,14 @@ public class OrderDetailBean {
      */
     private String userId;
     /**
+     * 货主电话
+     */
+    private String ownerPhone;
+    /**
+     * 货主姓名
+     */
+    private String ownerName;
+    /**
      * true string 车主的姓名(非下单人)
      */
     private String userName;
@@ -162,6 +170,38 @@ public class OrderDetailBean {
      */
     protected String payWay;
 
+
+    public String getOwnerPhone() {
+        return ownerPhone;
+    }
+
+    public void setOwnerPhone(String ownerPhone) {
+        this.ownerPhone = ownerPhone;
+    }
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
+    }
+
+    public String getDeliverydateStr() {
+        return deliverydateStr;
+    }
+
+    public void setDeliverydateStr(String deliverydateStr) {
+        this.deliverydateStr = deliverydateStr;
+    }
+
+    public String getPayWay() {
+        return payWay;
+    }
+
+    public void setPayWay(String payWay) {
+        this.payWay = payWay;
+    }
 
     public OrderDetailItemControl.OrderState getOrderState() {
         // 订单状态 -1退款 1待支付 2待发货 3配送中 4到货 5已收货

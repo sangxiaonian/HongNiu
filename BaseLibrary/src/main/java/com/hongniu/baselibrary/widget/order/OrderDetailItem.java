@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.AttributeSet;
+import android.util.Printer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -56,7 +57,7 @@ public class OrderDetailItem extends FrameLayout {
     //当前角色 货主、车主、司机
     private OrderDetailItemControl.RoleState roleState;
     //订单状态
-    private OrderDetailItemControl.OrderState  orderState;
+    private OrderDetailItemControl.OrderState orderState;
     private OrderDetailItemControl.OnOrderDetailBtClickListener listener;
     private OrderDetailBean orderBean;
 
@@ -106,33 +107,62 @@ public class OrderDetailItem extends FrameLayout {
 
 
             tv_order_detail.setText(getContent("2831929482", "沪A666888",
-                    "李先生", "17602150486",
-                    "医疗器材", "杨先生", "13795244936"));
+                    "车主：","李先生", "17602150486",
+                    "医疗器材", "司机：","杨先生", "13795244936"));
             tv_order_detail.setMovementMethod(LinkMovementMethod.getInstance());
         }
     }
 
-    public void setInfor(OrderDetailBean data){
-        this.orderBean=data;
-         setEndLocation(data.getDestinationInfo());
-         setStartLocation(data.getStratPlaceInfo());
-         setOrder(data.getOrderNum());
-         setTiem(ConvertUtils.formatTime(data.getDeliverydate(),"yyyy-MM-dd"));
-         setPrice(data.getMoney());
+    public void setInfor(OrderDetailBean data) {
+        this.orderBean = data;
+        setEndLocation(data.getDestinationInfo());
+        setStartLocation(data.getStratPlaceInfo());
+        setOrder(data.getOrderNum());
+        setTiem(ConvertUtils.formatTime(data.getDeliverydate(), "yyyy-MM-dd"));
+        setPrice(data.getMoney());
 
-         setOrderState(data.getOrderState());
+        setOrderState(data.getOrderState());
 
-         setContent(data.getDepartNum(), data.getCarnum(), data.getUserName(), data.getUserPhone()
-            , data.getGoodName(), data.getDrivername(), data.getDrivermobile());
 
-         buildButton(data.isInsurance());
+        if (roleState!=null){
+            switch (roleState){
+                case DRIVER:
+
+                    setContent(data.getDepartNum(), data.getCarnum(), "货主：",data.getOwnerName(), data.getOwnerPhone()
+                            , data.getGoodName(),"车主：",  data.getUserName(), data.getUserPhone()
+                    );
+                    break;
+                case CAR_OWNER:
+                    setContent(data.getDepartNum(), data.getCarnum(), "货主：",data.getOwnerName(), data.getOwnerPhone()
+                            , data.getGoodName(),"司机：", data.getDrivername(), data.getDrivermobile()
+                    );
+                    break;
+                case CARGO_OWNER:
+                    setContent(data.getDepartNum(), data.getCarnum(), "车主：",data.getUserName(), data.getUserPhone()
+                            , data.getGoodName(),"司机：", data.getDrivername(), data.getDrivermobile()
+                    );
+                    break;
+                    default:
+                        setContent(data.getDepartNum(), data.getCarnum(), "车主：",data.getUserName(), data.getUserPhone()
+                                , data.getGoodName(),"司机：", data.getDrivername(), data.getDrivermobile()
+                        );
+                        break;
+            }
+        }else {
+            setContent(data.getDepartNum(), data.getCarnum(), "车主：",data.getUserName(), data.getUserPhone()
+                    , data.getGoodName(),"司机：", data.getDrivername(), data.getDrivermobile()
+            );
+        }
+
+        buildButton(data.isInsurance());
     }
 
 
     private boolean hideButton;
-    public void hideButton(boolean hideButton){
-        this.hideButton=hideButton;
-        if (hideButton){
+
+    public void hideButton(boolean hideButton) {
+        this.hideButton = hideButton;
+        if (hideButton) {
             bt_left.setVisibility(GONE);
             bt_right.setVisibility(GONE);
 
@@ -224,27 +254,30 @@ public class OrderDetailItem extends FrameLayout {
      * @param driverName    司机姓名
      * @param driverPhone   司机电话
      */
-    public void setContent(String startNum, String carNum, String carOwnerName,
-                           final String carOwnerPhone, String cargo,
+    public void setContent(String startNum, String carNum,String roleTop, String carOwnerName,
+                           final String carOwnerPhone, String cargo,String roleBottom,
                            String driverName, final String driverPhone) {
-        tv_order_detail.setText(getContent(startNum, carNum, carOwnerName, carOwnerPhone, cargo
-                , driverName, driverPhone
+        tv_order_detail.setText(getContent(startNum, carNum, roleTop,carOwnerName, carOwnerPhone, cargo
+                ,roleBottom, driverName, driverPhone
         ));
     }
 
     /**
      * 获取中间内容
      *
-     * @param startNum      发车变化
+     * @param startNum      发车编号
      * @param carNum        车牌号
+     * @param roleTop       第一个角色名字
      * @param carOwnerName  车主姓名
      * @param carOwnerPhone 车主电话
      * @param cargo         货物
+     * @param roleBottom     下边角色
+     *
      * @param driverName    司机姓名
      * @param driverPhone   司机电话
      */
-    private SpannableStringBuilder getContent(String startNum, String carNum, String carOwnerName,
-                                              final String carOwnerPhone, String cargo,
+    private SpannableStringBuilder getContent(String startNum, String carNum,String roleTop, String carOwnerName,
+                                              final String carOwnerPhone, String cargo,String roleBottom,
                                               String driverName, final String driverPhone) {
 
 
@@ -256,8 +289,9 @@ public class OrderDetailItem extends FrameLayout {
                 .append("发车编号：")
                 .append(startNum == null ? "" : startNum).append("\n")
                 .append("车牌号：")
-                .append(carNum == null ? "" : carNum).append("\n")
-                .append("车主：")
+                .append(carNum == null ? "" : carNum).append("\n");
+
+        builder.append(roleTop)
                 .append(carOwnerName == null ? "" : carOwnerName)
                 .append(" ")
         ;
@@ -271,7 +305,7 @@ public class OrderDetailItem extends FrameLayout {
         builder.append("\n")
                 .append("货物：")
                 .append(cargo == null ? "" : cargo).append("\n")
-                .append("司机：")
+                .append(roleBottom)
                 .append(driverName == null ? "" : driverName).append(" ")
                 .append(driverPhone == null ? "" : driverPhone)
                 .append(" ")
@@ -283,9 +317,9 @@ public class OrderDetailItem extends FrameLayout {
         }
 
         if (firstPoint > 0) {
-           final int size= DeviceUtils.dip2px(getContext(), 15);
+            final int size = DeviceUtils.dip2px(getContext(), 15);
             CenteredImageSpan imageSpan = new CenteredImageSpan(getContext(), R.mipmap.icon_call_30);
-            imageSpan.setSpanSize(size,size);
+            imageSpan.setSpanSize(size, size);
             builder.setSpan(imageSpan, firstPoint - 1, firstPoint, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
             ClickableSpan carOwnerClick = new ClickableSpan() {
                 @Override
@@ -297,9 +331,9 @@ public class OrderDetailItem extends FrameLayout {
 
         }
         if (secondPoint > 0) {
-            final int size= DeviceUtils.dip2px(getContext(), 15);
+            final int size = DeviceUtils.dip2px(getContext(), 15);
             CenteredImageSpan imageSpan2 = new CenteredImageSpan(getContext(), R.mipmap.icon_call_30);
-            imageSpan2.setSpanSize(size,size);
+            imageSpan2.setSpanSize(size, size);
             builder.setSpan(imageSpan2, secondPoint - 1, secondPoint, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
             ClickableSpan driverClick = new ClickableSpan() {
                 @Override
@@ -318,7 +352,7 @@ public class OrderDetailItem extends FrameLayout {
 
     public void buildButton(boolean b) {
 
-        if (hideButton){
+        if (hideButton) {
             bt_left.setVisibility(GONE);
             bt_right.setVisibility(GONE);
 
@@ -334,7 +368,7 @@ public class OrderDetailItem extends FrameLayout {
             bt_right.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    clickEvent(helper.getBtRightInfor() );
+                    clickEvent(helper.getBtRightInfor());
                 }
             });
         }
@@ -343,77 +377,78 @@ public class OrderDetailItem extends FrameLayout {
             bt_left.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    clickEvent(helper.getBtLeftInfor() );
+                    clickEvent(helper.getBtLeftInfor());
                 }
             });
         }
     }
 
-    public void setOnButtonClickListener(OrderDetailItemControl.OnOrderDetailBtClickListener listener){
-        this.listener=listener;
+    public void setOnButtonClickListener(OrderDetailItemControl.OnOrderDetailBtClickListener listener) {
+        this.listener = listener;
     }
 
-    private void clickEvent(String msg ) {
+    private void clickEvent(String msg) {
         switch (msg) {
             case ORDER_CANCLE://    = "取消订单";
-                if (listener!=null){
+                if (listener != null) {
                     listener.onOrderCancle(orderBean);
-                }else {
+                } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("取消订单");
                 }
                 break;
             case ORDER_PAY://    = "继续付款";
-                if (listener!=null){
+                if (listener != null) {
                     listener.onOrderPay(orderBean);
-                }else {
+                } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("继续付款");
                 }
                 break;
             case ORDER_BUY_INSURANCE://    = "购买保险";
-                if (listener!=null){
+                if (listener != null) {
                     listener.onOrderBuyInsurance(orderBean);
-                }else {
+                } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("购买保险");
                 }
                 break;
             case ORDER_CHECK_INSURANCE://    = "查看保单";
-                if (listener!=null){
+                if (listener != null) {
                     listener.onCheckInsruance(orderBean);
-                }else {
+                } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("查看保单");
                 }
                 break;
             case ORDER_CHECK_PATH://    = "查看轨迹";
-                if (listener!=null){
+                if (listener != null) {
                     listener.onCheckPath(orderBean);
-                }else {
+                } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("查看轨迹");
-                }                break;
+                }
+                break;
             case ORDER_ENTRY_ORDER://    = "确认收货";
-                if (listener!=null){
+                if (listener != null) {
                     listener.onEntryOrder(orderBean);
-                }else {
+                } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("确认收货");
                 }
                 break;
             case ORDER_START_CAR://    = "开始发车";
-                if (listener!=null){
+                if (listener != null) {
                     listener.onStartCar(orderBean);
-                }else {
+                } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("开始发车");
                 }
                 break;
             case ORDER_CHECK_ROUT://    = "查看路线";
-                if (listener!=null){
+                if (listener != null) {
                     listener.onCheckRout(orderBean);
-                }else {
+                } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("查看路线");
                 }
                 break;
             case ORDER_ENTRY_ARRIVE://    = "确认到达";
-                if (listener!=null){
+                if (listener != null) {
                     listener.onEntryArrive(orderBean);
-                }else {
+                } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("确认到达");
                 }
                 break;
@@ -424,10 +459,11 @@ public class OrderDetailItem extends FrameLayout {
 
     /**
      * 隐藏最底部数据
+     *
      * @param b
      */
     public void hideBottom(boolean b) {
-            llBottom.setVisibility(b?GONE:VISIBLE);
-            lineBottom.setVisibility(b?GONE:VISIBLE);
+        llBottom.setVisibility(b ? GONE : VISIBLE);
+        lineBottom.setVisibility(b ? GONE : VISIBLE);
     }
 }
