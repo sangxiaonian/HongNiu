@@ -19,6 +19,7 @@ import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.recycleview.holder.PeakHolder;
 import com.sang.common.recycleview.touchhelper.DragSortHelper;
+import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.CenteredImageSpan;
 
@@ -80,7 +81,8 @@ public class LoginPayWaysActivity extends BaseActivity {
                             }
                             start = 3 + tag.length();
                             for (int i = 0; i < 4; i++) {
-                                ImageSpan imageSpan = new CenteredImageSpan(mContext, R.drawable.shape_circle_ffffff);
+                                CenteredImageSpan imageSpan = new CenteredImageSpan(mContext, R.drawable.shape_circle_ffffff);
+                                imageSpan.setSpanSize(DeviceUtils.dip2px(context,8),DeviceUtils.dip2px(context,8));
                                 builder.setSpan(imageSpan, start, start + 1, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
                                 start += 1 + cellTag.length();
                             }

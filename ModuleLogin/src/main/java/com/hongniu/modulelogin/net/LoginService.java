@@ -2,12 +2,12 @@ package com.hongniu.modulelogin.net;
 
 import com.hongniu.baselibrary.entity.CarTypeBean;
 import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.LoginBean;
+import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
 import com.hongniu.modulelogin.entity.LoginCarInforBean;
-import com.hongniu.modulelogin.entity.LoginCarListBean;
-import com.hongniu.modulelogin.entity.LoginSMSParams;
-import com.hongniu.baselibrary.entity.LoginBean;
 import com.hongniu.modulelogin.entity.LoginPersonInfor;
+import com.hongniu.modulelogin.entity.LoginSMSParams;
 
 import java.util.List;
 
@@ -33,18 +33,19 @@ public interface LoginService {
     @POST("hongniu/api/user/finduserinfo")
     Observable<CommonBean<LoginPersonInfor>> getPersonInfor();
 
-   /**
+    /**
      * 更改个人信息
      */
     @POST("hongniu/api/user/updateuserinfo")
     Observable<CommonBean<String>> changePersonInfor(@Body LoginPersonInfor infor);
 
-   /**
+    /**
      * 新增车辆信息
      */
     @POST("hongniu/api/car/savecar")
     Observable<CommonBean<ResponseBody>> addCar(@Body LoginCarInforBean infor);
- /**
+
+    /**
      * 删除车辆信息
      */
     @POST("hongniu/api/car/deletebyid")
@@ -52,16 +53,19 @@ public interface LoginService {
 
     /**
      * 获取车辆类型
+     *
      * @return
      */
     @POST("hongniu//api/car/vehicletype")
     Observable<CommonBean<List<CarTypeBean>>> getCarType();
-  /**
+
+    /**
      * 获取车辆类型
+     *
      * @return
      */
     @POST("hongniu/api/car/selectpagecar")
-    Observable<CommonBean<LoginCarListBean>> getCarList(@Body PagerParambean parambean);
+    Observable<CommonBean<PageBean<LoginCarInforBean>>> getCarList(@Body PagerParambean parambean);
 
 
 }

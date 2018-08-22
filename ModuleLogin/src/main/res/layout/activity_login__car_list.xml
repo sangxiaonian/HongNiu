@@ -10,17 +10,25 @@
 
     <include layout="@layout/toolbar" />
 
-    <com.sang.common.recycleview.RecycleViewSupportEmpty
-        android:id="@+id/rv"
+
+    <com.hongniu.baselibrary.widget.XRefreshLayout
+        android:id="@+id/refresh"
         android:layout_width="match_parent"
-        android:layout_weight="1"
-        app:empty_title="暂无车辆"
-        app:empty_img="@mipmap/icon_zwcl_240"
-        android:layout_height="0dp" />
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <com.sang.common.recycleview.RecycleViewSupportEmpty
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:empty_img="@mipmap/icon_zwcl_240"
+            app:empty_title="暂无车辆" />
+
+    </com.hongniu.baselibrary.widget.XRefreshLayout>
 
     <Button
         android:id="@+id/bt_save"
-        android:text="添加车辆"
-        style="@style/bt_sum" />
+        style="@style/bt_sum"
+        android:text="添加车辆" />
 
 </LinearLayout>

@@ -17,7 +17,7 @@
     <application>
         <activity
             android:name=".OrderMainActivity"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask" android:screenOrientation="portrait" />
         <activity android:name=".ui.OrderCreatOrderActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.OrderPayActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.OrderInsuranceActivity" android:screenOrientation="portrait"/>
