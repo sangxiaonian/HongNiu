@@ -2,6 +2,7 @@ package com.hongniu.moduleorder.control;
 
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.services.core.PoiItem;
+import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.moduleorder.entity.CreatInsuranceBean;
 import com.sang.common.event.IBus;
 
@@ -70,7 +71,7 @@ public class OrderEvent {
     /**
      * 创建保单
      */
-    public static class CraetInsurance implements IBus.IEvent{
+    public static class CraetInsurance implements IBus.IEvent {
         CreatInsuranceBean bean;
 
         public CraetInsurance(CreatInsuranceBean bean) {
@@ -81,5 +82,21 @@ public class OrderEvent {
             return bean;
         }
     }
+
+    /**
+     * 查看轨迹
+     */
+    public static class CheckPathEvent implements IBus.IEvent {
+        OrderDetailBean bean;
+
+        public CheckPathEvent(OrderDetailBean bean) {
+            this.bean = bean;
+        }
+
+        public OrderDetailBean getBean() {
+            return bean;
+        }
+    }
+
 
 }

@@ -9,6 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.amap.api.location.CoordinateConverter;
+import com.amap.api.location.DPoint;
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.Poi;
+import com.amap.api.navi.AmapNaviPage;
+import com.amap.api.navi.AmapNaviParams;
+import com.amap.api.navi.AmapNaviType;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.NetObserver;
@@ -33,6 +40,7 @@ import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.recycleview.holder.PeakHolder;
 import com.sang.common.utils.DeviceUtils;
+import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.SwitchTextLayout;
 import com.sang.common.widget.dialog.CenterAlertDialog;
@@ -40,18 +48,20 @@ import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
 import com.sang.common.widget.popu.BasePopu;
 import com.sang.common.widget.popu.inter.OnPopuDismissListener;
+import com.sang.thirdlibrary.map.LoactionUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import io.reactivex.Observable;
+import okhttp3.ResponseBody;
 
 /**
  * 订单列表Fragment
  */
 @Route(path = ArouterParamOrder.fragment_order_main)
-public class OrderMainFragmet  extends RefrushFragmet<OrderDetailBean> implements SwitchStateListener, SwitchTextLayout.OnSwitchListener, OrderMainPop.OnPopuClickListener, OnPopuDismissListener, OrderDetailItemControl.OnOrderDetailBtClickListener {
+public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements SwitchStateListener, SwitchTextLayout.OnSwitchListener, OrderMainPop.OnPopuClickListener, OnPopuDismissListener, OrderDetailItemControl.OnOrderDetailBtClickListener {
     private SwitchTextLayout switchLeft;
     private SwitchTextLayout switchRight;
 
@@ -115,7 +125,7 @@ public class OrderMainFragmet  extends RefrushFragmet<OrderDetailBean> implement
 
     @Override
     public XAdapter<OrderDetailBean> getAdapter(List<OrderDetailBean> datas) {
-        return  new XAdapter<OrderDetailBean>(getContext(), datas) {
+        return new XAdapter<OrderDetailBean>(getContext(), datas) {
             @Override
             public BaseHolder<OrderDetailBean> initHolder(ViewGroup parent, int viewType) {
                 return new BaseHolder<OrderDetailBean>(getContext(), parent, R.layout.order_main_item) {
@@ -191,7 +201,7 @@ public class OrderMainFragmet  extends RefrushFragmet<OrderDetailBean> implement
             switchRight.setTitle(states.get(position));
             queryBean.setQueryStatus(position);
         }
-        queryData(true,true);
+        queryData(true, true);
         pop.dismiss();
     }
 
@@ -271,7 +281,7 @@ public class OrderMainFragmet  extends RefrushFragmet<OrderDetailBean> implement
                                 .subscribe(new NetObserver<OrderDetailBean>(OrderMainFragmet.this) {
                                     @Override
                                     public void doOnSuccess(OrderDetailBean data) {
-                                        queryData(true,true);
+                                        queryData(true, true);
                                     }
                                 });
                     }
@@ -286,15 +296,16 @@ public class OrderMainFragmet  extends RefrushFragmet<OrderDetailBean> implement
      */
     @Override
     public void onOrderBuyInsurance(OrderDetailBean orderBean) {
-        ArouterUtils.getInstance()
-                .builder(ArouterParamOrder.activity_order_pay)
-                .withBoolean(Param.TRAN, true)
-                .navigation(getContext());
-        OrderEvent.PayOrder payOrder = new OrderEvent.PayOrder();
-        payOrder.insurance = true;
-        payOrder.orderID = orderBean.getId();
-        payOrder.orderNum = orderBean.getOrderNum();
-        BusFactory.getBus().postSticky(payOrder);
+//        ArouterUtils.getInstance()
+//                .builder(ArouterParamOrder.activity_order_pay)
+//                .withBoolean(Param.TRAN, true)
+//                .navigation(getContext());
+//        OrderEvent.PayOrder payOrder = new OrderEvent.PayOrder();
+//        payOrder.insurance = true;
+//        payOrder.orderID = orderBean.getId();
+//        payOrder.orderNum = orderBean.getOrderNum();
+//        BusFactory.getBus().postSticky(payOrder);
+        changeOrderState(orderBean, 2, true, true);
     }
 
     /**
@@ -316,16 +327,7 @@ public class OrderMainFragmet  extends RefrushFragmet<OrderDetailBean> implement
 //                        .builder(ArouterParamOrder.activity_order_pay)
 //                        .navigation(getContext());
 
-
-                HttpOrderFactory.changeOrderState(orderBean,2,false,true)
-                .subscribe(new NetObserver<String>(this) {
-
-                    @Override
-                    public void doOnSuccess(String data) {
-                        queryData(true,true);
-                    }
-                });
-                ;
+                changeOrderState(orderBean, 2, false, true);
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
@@ -334,6 +336,21 @@ public class OrderMainFragmet  extends RefrushFragmet<OrderDetailBean> implement
         }
 
     }
+
+
+    private void changeOrderState(OrderDetailBean orderBean, int state, boolean insurance, boolean hasFreight) {
+
+        HttpOrderFactory.changeOrderState(orderBean, state, insurance, hasFreight)
+                .subscribe(new NetObserver<String>(this) {
+
+                    @Override
+                    public void doOnSuccess(String data) {
+                        queryData(true, true);
+                    }
+                });
+        ;
+    }
+
 
     /**
      * ORDER_CHECK_INSURANCE 查看保单
@@ -380,13 +397,19 @@ public class OrderMainFragmet  extends RefrushFragmet<OrderDetailBean> implement
      * @param orderBean
      */
     @Override
-    public void onEntryOrder(OrderDetailBean orderBean) {
+    public void onEntryOrder(final OrderDetailBean orderBean) {
         creatDialog("确认已收到货物？", "收货请务必检查货物完好无损", "返回订单", "确定收货")
                 .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
                     @Override
                     public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
                         dialog.dismiss();
-                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("确认收货");
+                        HttpOrderFactory.entryReceiveCargo(orderBean.getId())
+                                .subscribe(new NetObserver<ResponseBody>(OrderMainFragmet.this) {
+                                    @Override
+                                    public void doOnSuccess(ResponseBody data) {
+                                        queryData(true, true);
+                                    }
+                                });
                     }
                 }).creatDialog(new CenterAlertDialog(getContext()))
                 .show();
@@ -398,13 +421,21 @@ public class OrderMainFragmet  extends RefrushFragmet<OrderDetailBean> implement
      * @param orderBean
      */
     @Override
-    public void onStartCar(OrderDetailBean orderBean) {
+    public void onStartCar(final OrderDetailBean orderBean) {
         creatDialog("确认要开始发车？", "车辆行驶中请记得安全驾车", "返回订单", "开始发车")
                 .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
                     @Override
                     public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
+
+                        HttpOrderFactory.driverStart(orderBean.getId())
+                                .subscribe(new NetObserver<String>(OrderMainFragmet.this) {
+                                    @Override
+                                    public void doOnSuccess(String data) {
+                                        queryData(true, true);
+                                    }
+                                });
+
                         dialog.dismiss();
-                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("开始发车");
                     }
                 }).creatDialog(new CenterAlertDialog(getContext()))
                 .show();
@@ -416,12 +447,18 @@ public class OrderMainFragmet  extends RefrushFragmet<OrderDetailBean> implement
      * @param orderBean
      */
     @Override
-    public void onCheckRout(OrderDetailBean orderBean) {
+    public void onCheckRout(final OrderDetailBean orderBean) {
         PermissionUtils.applyMap(getActivity(), new PermissionUtils.onApplyPermission() {
             @Override
             public void hasPermission(List<String> granted, boolean isAll) {
-                ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_map_path).withBoolean(Param.TRAN, false).navigation(getContext());
-
+//                ArouterUtils.getInstance()
+//                        .builder(ArouterParamOrder.activity_order_map_path)
+//                        .withBoolean(Param.TRAN, false)
+//                        .navigation(getContext());
+//                BusFactory.getBus().postSticky(new OrderEvent.CheckPathEvent(orderBean));
+                Poi start = new Poi(orderBean.getStratPlaceInfo(), new LatLng(orderBean.getStratPlaceX(), orderBean.getStratPlaceY()), "");
+                Poi end = new Poi(orderBean.getDestinationInfo(), new LatLng(orderBean.getDestinationX(), orderBean.getDestinationY()), "");
+                AmapNaviPage.getInstance().showRouteActivity(getContext(), new AmapNaviParams(start, null, end, AmapNaviType.DRIVER), null);
             }
 
             @Override
@@ -438,13 +475,24 @@ public class OrderMainFragmet  extends RefrushFragmet<OrderDetailBean> implement
      * @param orderBean
      */
     @Override
-    public void onEntryArrive(OrderDetailBean orderBean) {
+    public void onEntryArrive(final OrderDetailBean orderBean) {
         creatDialog("确认已到达目的地？", "感谢您的辛苦付出", "返回订单", "确定到达")
                 .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
                     @Override
                     public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
+                        double v = LoactionUtils.getInstance().caculeDis(orderBean.getDestinationX(), orderBean.getDestinationY());
                         dialog.dismiss();
-                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("确认已到达目的地");
+                        if (v>Param.ENTRY_MIN){//距离过大，超过确认订单的最大距离
+                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("距离目的地太远，请到达目的地后进行操作");
+                        }else {
+                            HttpOrderFactory.entryArrive(orderBean.getId())
+                                    .subscribe(new NetObserver<String>(OrderMainFragmet.this) {
+                                        @Override
+                                        public void doOnSuccess(String data) {
+                                            queryData(true, true);
+                                        }
+                                    });
+                        }
                     }
                 }).creatDialog(new CenterAlertDialog(getContext()))
                 .show();

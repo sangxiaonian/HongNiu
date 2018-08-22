@@ -132,11 +132,12 @@ public class HttpOrderFactory {
 
     /**
      * 根据货物金额查询保费
+     *
      * @param cargoPrice 货物金额
      * @param orderId
      */
     public static Observable<CommonBean<String>> queryInstancePrice(String cargoPrice, String orderId) {
-        QueryInsurancePriceBean bean=new QueryInsurancePriceBean(orderId,cargoPrice);
+        QueryInsurancePriceBean bean = new QueryInsurancePriceBean(orderId, cargoPrice);
         return OrderClient.getInstance()
                 .getService()
                 .queryInstancePrice(bean)
@@ -144,10 +145,52 @@ public class HttpOrderFactory {
     }
 
     /**
+     * 根据货物金额查询保费
+     *
+     * @param orderId
+     */
+    public static Observable<CommonBean<String>> driverStart(String orderId) {
+        OrderDetailBean bean = new OrderDetailBean();
+        bean.setId(orderId);
+        return OrderClient.getInstance()
+                .getService()
+                .driverStart(bean)
+                .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
+    }
+
+    /**
+     * 确认到达
+     *
+     * @param orderId
+     */
+    public static Observable<CommonBean<String>> entryArrive(String orderId) {
+        OrderDetailBean bean = new OrderDetailBean();
+        bean.setId(orderId);
+        return OrderClient.getInstance()
+                .getService()
+                .entryArrive(bean)
+                .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
+    }
+    /**
+     * 确认收货
+     *
+     * @param orderId
+     */
+    public static Observable<CommonBean<ResponseBody>> entryReceiveCargo(String orderId) {
+        OrderDetailBean bean = new OrderDetailBean();
+        bean.setId(orderId);
+        return OrderClient.getInstance()
+                .getService()
+                .entryReceiveCargo(bean)
+                .compose(RxUtils.<CommonBean<ResponseBody>>getSchedulersObservableTransformer());
+    }
+
+    /**
      * 更改订单状态
-     * @param orderBean 订单相关信息
-     * @param state  订单状态
-     * @param insurance 是否购买保险
+     *
+     * @param orderBean  订单相关信息
+     * @param state      订单状态
+     * @param insurance  是否购买保险
      * @param hasFreight 是否支付运费
      */
     public static Observable<CommonBean<String>> changeOrderState(OrderDetailBean orderBean, int state, boolean insurance, boolean hasFreight) {

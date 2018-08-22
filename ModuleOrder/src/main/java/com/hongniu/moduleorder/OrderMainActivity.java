@@ -19,6 +19,7 @@ import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CloseActivityEvent;
+import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.moduleorder.control.OrderMainControl;
 import com.hongniu.moduleorder.control.SwitchStateListener;
 import com.hongniu.moduleorder.present.OrderMainPresenter;
@@ -36,6 +37,9 @@ import com.sang.common.widget.dialog.inter.DialogControl;
 import com.sang.common.widget.guideview.BaseGuide;
 import com.sang.common.widget.popu.BasePopu;
 import com.sang.common.widget.popu.inter.OnPopuDismissListener;
+import com.sang.thirdlibrary.map.LoactionUtils;
+
+import java.util.List;
 
 /**
  * 订单中心主页
@@ -65,7 +69,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     private BaseGuide guideTitle;
 
     private OrderMainControl.IOrderMainPresent present;
-
+    private LoactionUtils loaction;
 
 
     @Override
@@ -73,11 +77,25 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_main);
         setToolbarTitle("");
-        present=new OrderMainPresenter(this);
+        present = new OrderMainPresenter(this);
         initView();
         initData();
         initListener();
         changeStaff(0);
+        loaction = LoactionUtils.getInstance();
+        loaction.init(this);
+        PermissionUtils.applyMap(this, new PermissionUtils.onApplyPermission() {
+            @Override
+            public void hasPermission(List<String> granted, boolean isAll) {
+                loaction.startLoaction();
+            }
+
+            @Override
+            public void noPermission(List<String> denied, boolean quick) {
+
+            }
+        });
+
     }
 
     @Override
@@ -89,7 +107,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         String extra = intent.getStringExtra(Param.TRAN);
-        if (extra!=null&&extra.equals(Param.LOGIN_OUT)){
+        if (extra != null && extra.equals(Param.LOGIN_OUT)) {
             ArouterUtils.getInstance().builder(ArouterParamLogin.activity_login).navigation(mContext);
             finish();
         }
@@ -99,9 +117,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     protected void initView() {
         super.initView();
         titlePop = new OrderMainTitlePop(this);
-
         switchTitle = findViewById(R.id.switch_title);
-
         drawerLayout = findViewById(R.id.drawer);
         srcFinance = findViewById(R.id.src_finance);
         srcPersonCenter = findViewById(R.id.src_me);
@@ -113,14 +129,14 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
         llPersonInfor = findViewById(R.id.ll_person_infor);
         llPayMethod = findViewById(R.id.ll_pay_method);
 
-        guideTitle=new BaseGuide();
+        guideTitle = new BaseGuide();
         guideTitle.setMsg("这里可以切换角色哦")
                 .setView(switchTitle)
                 .setHighTargetGraphStyle(0)
                 .setActivity(this)
                 .setShowTop(false)
                 .setSharedPreferencesKey(Param.ORDER_MAIN_TITLE_GUIDE)
-                 ;
+        ;
         BaseGuide guideFinance = new BaseGuide();
         guideFinance.setMsg("支出&收入，一目了然")
                 .setView(srcFinance)
@@ -130,7 +146,6 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                 .setSharedPreferencesKey(Param.ORDER_MAIN_FINANCE_GUIDE)
         ;
         guideTitle.setNextGuide(guideFinance);
-
 
 
     }
@@ -330,7 +345,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                     .setDialogTitleSize(18)
                     .setDialogContentSize(15)
                     .setbtSize(18)
-                    .setDialogSize(DeviceUtils.dip2px(mContext,300),DeviceUtils.dip2px(mContext,135))
+                    .setDialogSize(DeviceUtils.dip2px(mContext, 300), DeviceUtils.dip2px(mContext, 135))
                     .setDialogTitle(getString(R.string.login_contact_service))
                     .setDialogContent(getString(R.string.login_contact_phone))
                     .setLeftClickListener(new DialogControl.OnButtonLeftClickListener() {

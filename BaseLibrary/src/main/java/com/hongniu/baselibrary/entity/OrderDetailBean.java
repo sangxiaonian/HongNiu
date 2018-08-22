@@ -27,12 +27,12 @@ public class OrderDetailBean {
     /**
      * true string 出发地x坐标
      */
-    private String stratPlaceX;
+    private double stratPlaceX;
 
     /**
      * true string 出发地y坐标
      */
-    private String stratPlaceY;
+    private double stratPlaceY;
 
     /**
      * true string 出发地描述
@@ -47,11 +47,11 @@ public class OrderDetailBean {
     /**
      * true string 目的地x坐标
      */
-    private String destinationX;
+    private double destinationX;
     /**
      * true string 目的地y坐标
      */
-    private String destinationY;
+    private double destinationY;
 
     /**
      * true string 创建日期
@@ -246,19 +246,19 @@ public class OrderDetailBean {
         this.hasFreight = hasFreight;
     }
 
-    public String getStratPlaceX() {
+    public double getStratPlaceX() {
         return stratPlaceX;
     }
 
-    public void setStratPlaceX(String stratPlaceX) {
+    public void setStratPlaceX(double stratPlaceX) {
         this.stratPlaceX = stratPlaceX;
     }
 
-    public String getStratPlaceY() {
+    public double getStratPlaceY() {
         return stratPlaceY;
     }
 
-    public void setStratPlaceY(String stratPlaceY) {
+    public void setStratPlaceY(double stratPlaceY) {
         this.stratPlaceY = stratPlaceY;
     }
 
@@ -278,19 +278,19 @@ public class OrderDetailBean {
         this.destinationInfo = destinationInfo;
     }
 
-    public String getDestinationX() {
+    public double getDestinationX() {
         return destinationX;
     }
 
-    public void setDestinationX(String destinationX) {
+    public void setDestinationX(double destinationX) {
         this.destinationX = destinationX;
     }
 
-    public String getDestinationY() {
+    public double getDestinationY() {
         return destinationY;
     }
 
-    public void setDestinationY(String destinationY) {
+    public void setDestinationY(double destinationY) {
         this.destinationY = destinationY;
     }
 

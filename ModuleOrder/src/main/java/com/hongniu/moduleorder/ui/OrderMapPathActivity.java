@@ -9,6 +9,8 @@ import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.entity.CloseActivityEvent;
+import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItem;
 import com.hongniu.moduleorder.R;
@@ -16,6 +18,9 @@ import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.control.OrderMapListener;
 import com.hongniu.moduleorder.ui.fragment.OrderMapPathFragment;
 import com.sang.common.event.BusFactory;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -96,10 +101,22 @@ public class OrderMapPathActivity extends BaseActivity {
     }
 
     @Override
+    protected boolean getUseEventBus() {
+        return true;
+    }
+    @Subscribe(sticky = true,threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(OrderEvent.CheckPathEvent event) {
+        if (event != null &&event.getBean()!=null) {
+            OrderDetailBean bean = event.getBean();
+            helper.setStartMarker(bean.getStratPlaceX(), bean.getStratPlaceY(), bean.getStratPlaceInfo());
+            helper.setEndtMarker(bean.getDestinationX(), bean.getDestinationY(), bean.getDestinationInfo());
+            helper.calculate(bean.getCarnum());
+        }
+        BusFactory.getBus().removeStickyEvent(event);
+    }
+    @Override
     protected void onStart() {
         super.onStart();
-        helper.setStartMarker(31.275837, 121.457689, "");
-        helper.setEndtMarker(31.315814, 121.393459, null);
-        helper.calculate("");
+
     }
 }

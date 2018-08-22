@@ -112,6 +112,28 @@ public interface OrderService {
     Observable<CommonBean<String>> queryInstancePrice(@Body QueryInsurancePriceBean infor);
 
     /**
+     * 司机开始发车
+     * id	true	number	订单id
+     */
+    @POST("hongniu/api/order/start")
+    Observable<CommonBean<String>> driverStart(@Body OrderDetailBean infor);
+   /**
+     * 确认到达
+     * id	true	number	订单id
+     */
+    @POST("hongniu/api/order/endSend")
+    Observable<CommonBean<String>> entryArrive(@Body OrderDetailBean infor);
+
+    /**
+     * 确认收货
+     * id	true	number	订单id
+     */
+    @POST("hongniu//api/order/receive")
+    Observable<CommonBean<ResponseBody>> entryReceiveCargo(@Body OrderDetailBean infor);
+
+
+
+    /**
      * 更改订单状态
      */
     @POST("hongniu/api/order/test-update-order")

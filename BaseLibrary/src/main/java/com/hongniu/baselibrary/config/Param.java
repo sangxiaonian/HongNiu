@@ -5,6 +5,19 @@ package com.hongniu.baselibrary.config;
  * 努力，为梦长留
  */
 public class Param {
+    /**
+     * 分页查找每页数据数量
+     */
+    public static final int PAGE_SIZE=20;
+    /**
+     * 确认到达时候，距离目的地的最小距离 单位 千米
+     */
+    public static final int ENTRY_MIN=5;
+
+
+
+
+
 //    AppKey: c33fbf23b76246bf8ee4a3d00b621e03
 //    AppSecret: a7735d245d4241ff9f94-a3ecf7b5fedc
     //秘钥
@@ -39,8 +52,5 @@ public class Param {
      * 车辆类型
      */
     public static final String CAR_TYPE="CAR_TYPE";
-    /**
-     * 分页查找每页数据数量
-     */
-    public static final int PAGE_SIZE=2;
+
 }
