@@ -2,15 +2,11 @@ package com.hongniu.moduleorder.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.amap.api.location.CoordinateConverter;
-import com.amap.api.location.DPoint;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Poi;
 import com.amap.api.navi.AmapNaviPage;
@@ -28,19 +24,15 @@ import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItem;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.moduleorder.R;
-import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.control.SwitchStateListener;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
+import com.hongniu.moduleorder.utils.LoactionCollectionUtils;
 import com.hongniu.moduleorder.widget.OrderMainPop;
-import com.iflytek.cloud.thirdparty.T;
-import com.sang.common.event.BusFactory;
-import com.sang.common.net.listener.TaskControl;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.recycleview.holder.PeakHolder;
 import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.SwitchTextLayout;
 import com.sang.common.widget.dialog.CenterAlertDialog;
@@ -50,7 +42,6 @@ import com.sang.common.widget.popu.BasePopu;
 import com.sang.common.widget.popu.inter.OnPopuDismissListener;
 import com.sang.thirdlibrary.map.LoactionUtils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -458,8 +449,10 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
 //                BusFactory.getBus().postSticky(new OrderEvent.CheckPathEvent(orderBean));
                 Poi start = new Poi(orderBean.getStratPlaceInfo(), new LatLng(orderBean.getStratPlaceX(), orderBean.getStratPlaceY()), "");
                 Poi end = new Poi(orderBean.getDestinationInfo(), new LatLng(orderBean.getDestinationX(), orderBean.getDestinationY()), "");
-                AmapNaviPage.getInstance().showRouteActivity(getContext(), new AmapNaviParams(start, null, end, AmapNaviType.DRIVER), null);
+                AmapNaviPage.getInstance()
+                        .showRouteActivity(getContext(), new AmapNaviParams(start, null, end, AmapNaviType.DRIVER), new LoactionCollectionUtils());
             }
+
 
             @Override
             public void noPermission(List<String> denied, boolean quick) {
@@ -482,9 +475,9 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
                     public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
                         double v = LoactionUtils.getInstance().caculeDis(orderBean.getDestinationX(), orderBean.getDestinationY());
                         dialog.dismiss();
-                        if (v>Param.ENTRY_MIN){//距离过大，超过确认订单的最大距离
+                        if (v > Param.ENTRY_MIN) {//距离过大，超过确认订单的最大距离
                             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("距离目的地太远，请到达目的地后进行操作");
-                        }else {
+                        } else {
                             HttpOrderFactory.entryArrive(orderBean.getId())
                                     .subscribe(new NetObserver<String>(OrderMainFragmet.this) {
                                         @Override
@@ -498,7 +491,8 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
                 .show();
     }
 
-    private CenterAlertBuilder creatDialog(String title, String content, String btleft, String btRight) {
+    private CenterAlertBuilder creatDialog(String title, String content, String btleft, String
+            btRight) {
         return new CenterAlertBuilder()
                 .setDialogTitle(title)
                 .setDialogContent(content)

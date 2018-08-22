@@ -2,9 +2,12 @@ package com.hongniu.moduleorder.control;
 
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.services.core.PoiItem;
+import com.amap.api.trace.TraceLocation;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.moduleorder.entity.CreatInsuranceBean;
 import com.sang.common.event.IBus;
+
+import java.util.List;
 
 /**
  * 作者： ${PING} on 2018/8/8.
@@ -88,9 +91,17 @@ public class OrderEvent {
      */
     public static class CheckPathEvent implements IBus.IEvent {
         OrderDetailBean bean;
-
+        List<TraceLocation> locations;
         public CheckPathEvent(OrderDetailBean bean) {
             this.bean = bean;
+        }
+
+        public List<TraceLocation> getLocations() {
+            return locations;
+        }
+
+        public void setLocations(List<TraceLocation> locations) {
+            this.locations = locations;
         }
 
         public OrderDetailBean getBean() {
