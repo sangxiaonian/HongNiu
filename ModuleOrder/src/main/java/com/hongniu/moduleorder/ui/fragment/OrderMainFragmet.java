@@ -191,7 +191,7 @@ public class OrderMainFragmet  extends RefrushFragmet<OrderDetailBean> implement
             switchRight.setTitle(states.get(position));
             queryBean.setQueryStatus(position);
         }
-        queryData(true);
+        queryData(true,true);
         pop.dismiss();
     }
 
@@ -271,7 +271,7 @@ public class OrderMainFragmet  extends RefrushFragmet<OrderDetailBean> implement
                                 .subscribe(new NetObserver<OrderDetailBean>(OrderMainFragmet.this) {
                                     @Override
                                     public void doOnSuccess(OrderDetailBean data) {
-                                        queryData(true);
+                                        queryData(true,true);
                                     }
                                 });
                     }
@@ -306,15 +306,26 @@ public class OrderMainFragmet  extends RefrushFragmet<OrderDetailBean> implement
     public void onOrderPay(OrderDetailBean orderBean) {
         if (orderBean.getMoney() != null) {
             try {
-                OrderEvent.PayOrder payOrder = new OrderEvent.PayOrder();
-                payOrder.insurance = false;
-                payOrder.money = Float.parseFloat(orderBean.getMoney());
-                payOrder.orderID = orderBean.getId();
-                payOrder.orderNum = orderBean.getOrderNum();
-                BusFactory.getBus().postSticky(payOrder);
-                ArouterUtils.getInstance()
-                        .builder(ArouterParamOrder.activity_order_pay)
-                        .navigation(getContext());
+//                OrderEvent.PayOrder payOrder = new OrderEvent.PayOrder();
+//                payOrder.insurance = false;
+//                payOrder.money = Float.parseFloat(orderBean.getMoney());
+//                payOrder.orderID = orderBean.getId();
+//                payOrder.orderNum = orderBean.getOrderNum();
+//                BusFactory.getBus().postSticky(payOrder);
+//                ArouterUtils.getInstance()
+//                        .builder(ArouterParamOrder.activity_order_pay)
+//                        .navigation(getContext());
+
+
+                HttpOrderFactory.changeOrderState(orderBean,2,false,true)
+                .subscribe(new NetObserver<String>(this) {
+
+                    @Override
+                    public void doOnSuccess(String data) {
+                        queryData(true,true);
+                    }
+                });
+                ;
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }

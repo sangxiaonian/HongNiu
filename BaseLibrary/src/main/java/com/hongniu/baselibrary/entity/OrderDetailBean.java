@@ -1,7 +1,5 @@
 package com.hongniu.baselibrary.entity;
 
-import android.util.Log;
-
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 
 /**
@@ -181,7 +179,6 @@ public class OrderDetailBean {
                 orderState = OrderDetailItemControl.OrderState.WAITE_PAY;
                 break;
             case 2:
-
                 orderState = OrderDetailItemControl.OrderState.WAITE_START;
 
                 break;

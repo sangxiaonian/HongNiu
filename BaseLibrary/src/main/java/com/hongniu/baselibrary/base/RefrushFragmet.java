@@ -80,6 +80,11 @@ public abstract class RefrushFragmet<T> extends BaseFragment implements OnRefres
     }
 
 
+    public void queryData(final boolean isClear,boolean showLoading){
+        isFirst=showLoading;
+        queryData(isClear);
+    }
+
     protected void queryData(final boolean isClear) {
         if (isClear) {
             refresh.loadmoreFinished(true);

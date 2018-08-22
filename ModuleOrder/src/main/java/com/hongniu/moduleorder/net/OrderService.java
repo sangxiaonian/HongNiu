@@ -111,5 +111,11 @@ public interface OrderService {
     @POST("hongniu/api/policy/create")
     Observable<CommonBean<String>> queryInstancePrice(@Body QueryInsurancePriceBean infor);
 
+    /**
+     * 更改订单状态
+     */
+    @POST("hongniu/api/order/test-update-order")
+    Observable<CommonBean<String>> debugChangeState(@Body OrderDetailBean infor);
+
 
 }
