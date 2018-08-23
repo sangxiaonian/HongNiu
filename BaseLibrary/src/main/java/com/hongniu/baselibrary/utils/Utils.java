@@ -34,8 +34,11 @@ public class Utils {
         ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_main).withString(Param.TRAN,Param.LOGIN_OUT).navigation(activity);
     }
 
+    /**
+     * 判断用户是否登录
+     * @return true 登录，false 未登录
+     */
     public static boolean isLogin() {
-
         return getPgetPersonInfor()!=null;
     }
 }

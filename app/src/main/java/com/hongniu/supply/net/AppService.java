@@ -2,6 +2,7 @@ package com.hongniu.supply.net;
 
 import com.hongniu.baselibrary.entity.CarTypeBean;
 import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.RoleTypeBean;
 
 import java.util.List;
 
@@ -16,6 +17,12 @@ public interface AppService {
     @POST("hongniu//api/car/vehicletype")
     Observable<CommonBean<List<CarTypeBean>>> getCarType();
 
+    /**
+     * 获取用户最近使用角色
+     * @return
+     */
+    @POST("hongniu/api/user/queryUserRole")
+    Observable<CommonBean<RoleTypeBean>> getRoleType();
 
 
 }

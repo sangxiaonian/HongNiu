@@ -19,6 +19,7 @@ import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CloseActivityEvent;
+import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.moduleorder.control.OrderMainControl;
 import com.hongniu.moduleorder.control.SwitchStateListener;
@@ -27,7 +28,6 @@ import com.hongniu.moduleorder.widget.OrderMainTitlePop;
 import com.sang.common.event.BusFactory;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.SwitchTextLayout;
 import com.sang.common.widget.dialog.BottomAlertDialog;
 import com.sang.common.widget.dialog.CenterAlertDialog;
@@ -38,6 +38,9 @@ import com.sang.common.widget.guideview.BaseGuide;
 import com.sang.common.widget.popu.BasePopu;
 import com.sang.common.widget.popu.inter.OnPopuDismissListener;
 import com.sang.thirdlibrary.map.LoactionUtils;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -81,7 +84,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
         initView();
         initData();
         initListener();
-        changeStaff(0);
+
         loaction = LoactionUtils.getInstance();
         loaction.init(this);
         PermissionUtils.applyMap(this, new PermissionUtils.onApplyPermission() {
@@ -197,6 +200,19 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
         BusFactory.getBus().post(new CloseActivityEvent());
     }
 
+    @Override
+    protected boolean getUseEventBus() {
+
+        return true;
+    }
+
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(RoleTypeBean event) {
+        if (event != null) {
+            changeStaff(event.getRoleId());
+        }
+    }
+
     /**
      * 顶部角色类型被选中点击的时候
      *
@@ -220,20 +236,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
         if (currentFragmeng != null) {
             fragmentTransaction.hide(currentFragmeng);
         }
-        if (position == 0) {
-            switchTitle.setTitle("我是货主");
-
-            if (cargoFragment == null) {
-                cargoFragment = (Fragment) ArouterUtils.getInstance().builder(ArouterParamOrder.fragment_order_main).navigation(this);
-                Bundle bundle = new Bundle();
-                bundle.putInt(Param.TRAN, 0);
-                cargoFragment.setArguments(bundle);
-                fragmentTransaction.add(R.id.content, cargoFragment);
-            } else {
-                fragmentTransaction.show(cargoFragment);
-            }
-            currentFragmeng = cargoFragment;
-        } else if (position == 1) {
+        if (position == 1) {
             switchTitle.setTitle("我是车主");
             if (carOwnerFragmeng == null) {
                 carOwnerFragmeng = (Fragment) ArouterUtils.getInstance().builder(ArouterParamOrder.fragment_order_main).navigation(this);
@@ -258,6 +261,18 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                 fragmentTransaction.show(driverFragmeng);
             }
             currentFragmeng = driverFragmeng;
+        } else {
+            switchTitle.setTitle("我是货主");
+            if (cargoFragment == null) {
+                cargoFragment = (Fragment) ArouterUtils.getInstance().builder(ArouterParamOrder.fragment_order_main).navigation(this);
+                Bundle bundle = new Bundle();
+                bundle.putInt(Param.TRAN, 0);
+                cargoFragment.setArguments(bundle);
+                fragmentTransaction.add(R.id.content, cargoFragment);
+            } else {
+                fragmentTransaction.show(cargoFragment);
+            }
+            currentFragmeng = cargoFragment;
         }
 
         if (currentFragmeng != null && currentFragmeng instanceof SwitchStateListener) {

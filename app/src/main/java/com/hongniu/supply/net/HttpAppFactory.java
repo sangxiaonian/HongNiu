@@ -1,10 +1,8 @@
 package com.hongniu.supply.net;
 
-import com.hongniu.baselibrary.entity.CarTypeBean;
 import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.sang.common.net.rx.RxUtils;
-
-import java.util.List;
 
 import io.reactivex.Observable;
 
@@ -17,13 +15,11 @@ public class HttpAppFactory {
 
 
     /**
-     * 获取车辆类型
-     *
+     * 获取用户最近使用角色
      */
-    public static Observable<CommonBean<List<CarTypeBean>>> getCarType() {
-
-        return AppClient.getInstance().getService().getCarType().compose(RxUtils.<CommonBean<List<CarTypeBean>>>getSchedulersObservableTransformer());
-
+    public static Observable<CommonBean<RoleTypeBean>> getRoleType() {
+        return AppClient.getInstance().getService().getRoleType()
+                .compose(RxUtils.<CommonBean<RoleTypeBean>>getSchedulersObservableTransformer());
     }
 
 }

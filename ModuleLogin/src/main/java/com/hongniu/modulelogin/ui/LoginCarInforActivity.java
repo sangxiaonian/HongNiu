@@ -84,15 +84,6 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
         super.initData();
         cars = new ArrayList<>();
 
-        String string = SharedPreferencesUtils.getInstance().getString(Param.CAR_TYPE);
-        if (!TextUtils.isEmpty(string)) {
-            List<CarTypeBean> o = new Gson().fromJson(string,
-                    new TypeToken<List<CarTypeBean>>() {
-                    }.getType());
-            if (o != null) {
-                cars.addAll(o);
-            }
-        }
 
 
     }
@@ -192,7 +183,6 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
 
 
         } else if (i == R.id.item_car_type) {
-
             if (!cars.isEmpty()) {
                 OptionsPickerView build = pickerDialog.build();
                 build.setPicker(cars);
