@@ -17,6 +17,7 @@ import android.view.VelocityTracker;
 import android.view.View;
 
 import com.sang.common.utils.DeviceUtils;
+import com.sang.common.utils.JLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +47,11 @@ public class VistogramView extends View implements DynamicAnimation.OnAnimationE
     private float textLineGap;//文字和坐标之间的距离
 
     private int alpha = 100;
+
+    /**
+     * 文字旋转角度
+     */
+    private int rotate = -30;
 
     /**
      * 当前X坐标
@@ -120,11 +126,22 @@ public class VistogramView extends View implements DynamicAnimation.OnAnimationE
         mPaint.getTextBounds(String.valueOf(hValue.x), 0, String.valueOf(hValue.x).length(), textRectY);
         mPaint.setStrokeWidth(2);
         mPaint.setColor(colorLine);
+
         orginPoint.x = mPaint.getStrokeWidth() + textRectY.width() + textLineGap;
         orginPoint.y = getMeasuredHeight() - mPaint.getStrokeWidth() - textRectX.height() - textLineGap;
+
+
+        mPaint.getTextBounds(hValue.x + ".00￥", 0, (hValue.x + ".00￥").length(), textRectX);
         endPoint.x = getMeasuredWidth();
-        endPoint.y = 0;
-        vistogramWidth = (int) (endPoint.x - orginPoint.x);
+
+
+        double sin = Math.sin(Math.abs(rotate) * Math.PI / 180);
+        endPoint.y = (float) ((textRectX.width() * sin + textRectX.height() * Math.sin((90 - Math.abs(rotate)) * Math.PI / 180)) - orginPoint.y / 4.0f);
+
+        endPoint.y = endPoint.y > 0 ? endPoint.y : 0;
+
+
+        vistogramWidth = (int) ( (endPoint.x - orginPoint.x) - (textRectX.width() *sin-cellWidth));
         bigGap = (int) (vistogramWidth * 1.0f / numbersX);
         maxWidth = bigGap * datas.size();
 
@@ -214,7 +231,7 @@ public class VistogramView extends View implements DynamicAnimation.OnAnimationE
             canvas.save();
             rect.left = (int) orginPoint.x;
             rect.top = 0;
-            rect.right = (int) endPoint.x;
+            rect.right = (int) getMeasuredWidth();
             rect.bottom = getMeasuredHeight();
             canvas.clipRect(rect);
             for (int i = 0; i < datas.size(); i++) {
@@ -242,9 +259,9 @@ public class VistogramView extends View implements DynamicAnimation.OnAnimationE
         mPaint.setColor(textColor);
         mPaint.setTextAlign(Paint.Align.CENTER);
         for (int i = 0; i < datas.size(); i++) {
-            if (i==currentX){
+            if (i == currentX) {
                 mPaint.setAlpha(255);
-            }else {
+            } else {
                 mPaint.setAlpha(alpha);
             }
             final int start = (int) (orginPoint.x + i * bigGap) + startX;
@@ -290,9 +307,9 @@ public class VistogramView extends View implements DynamicAnimation.OnAnimationE
             VistogramBean vistogramBean = vistogramBeans.get(j);
             mPaint.setStyle(Paint.Style.FILL);
             mPaint.setColor(vistogramBean.color);
-            if (i==currentX){
+            if (i == currentX) {
                 mPaint.setAlpha(255);
-            }else {
+            } else {
                 mPaint.setAlpha(alpha);
             }
 
@@ -309,10 +326,11 @@ public class VistogramView extends View implements DynamicAnimation.OnAnimationE
             rect.bottom = (int) orginPoint.y;
             canvas.save();
             canvas.translate(rect.left, rect.top);
-            canvas.rotate(-35);
+            canvas.rotate(rotate);
             canvas.translate(-rect.left, -rect.top);
             mPaint.setTextAlign(Paint.Align.LEFT);
-            canvas.drawText(String.valueOf(vistogramBean.value), rect.centerX(), rect.top - (fontMetrics.descent - fontMetrics.bottom), mPaint);
+            canvas.drawText("￥" + String.valueOf(vistogramBean.value), rect.left, rect.top - (fontMetrics.descent - fontMetrics.bottom), mPaint);
+
             canvas.restore();
         }
 
@@ -362,12 +380,11 @@ public class VistogramView extends View implements DynamicAnimation.OnAnimationE
     }
 
 
-    public void setCurrentSelect(int currentSelect){
-        currentX=currentSelect;
-        changeStartX(-(currentX-2)*bigGap);
+    public void setCurrentSelect(int currentSelect) {
+        currentX = currentSelect;
+        changeStartX(-(currentX - 2) * bigGap);
         postInvalidate();
     }
-
 
 
     /**

@@ -6,7 +6,7 @@ package com.hongniu.baselibrary.entity;
  */
 public class CommonBean<T> {
     T data;
-    private int code;
+    private int code=200;
     private String msg;
 
     public T getData() {

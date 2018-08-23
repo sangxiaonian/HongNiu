@@ -1,6 +1,5 @@
 package com.hongniu.modulefinance.ui.fragment;
 
-import android.app.usage.UsageEvents;
 import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,25 +11,30 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.hongniu.baselibrary.base.BaseFragment;
-import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.base.NetObserver;
+import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.widget.order.OrderDetailDialog;
 import com.hongniu.modulefinance.R;
+import com.hongniu.modulefinance.entity.QueryExpendResultBean;
 import com.hongniu.modulefinance.event.FinanceEvent;
+import com.hongniu.modulefinance.net.HttpFinanceFactory;
 import com.hongniu.modulefinance.ui.adapter.FinanceExpendHeadHolder;
-import com.sang.common.event.BusFactory;
+import com.iflytek.cloud.thirdparty.H;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.widget.VistogramView;
 import com.sang.common.widget.dialog.builder.BottomAlertBuilder;
-import com.sang.common.widget.guideview.BaseGuide;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import io.reactivex.Observable;
 
 /**
  * 作者： ${PING} on 2018/8/7.
@@ -47,7 +51,9 @@ public class FinanceExpendFragment extends BaseFragment implements RadioGroup.On
     private List<String> datas;
     private FinanceExpendHeadHolder headHolder;
 
-    List<List<VistogramView.VistogramBean>>  debugDatas;
+    List<QueryExpendResultBean> vistogramTran;//运费
+    List<QueryExpendResultBean> vistogramInsurance;//保费
+    private Date date;//目前显示的数据
 
     @Override
     protected View initView(LayoutInflater inflater) {
@@ -64,6 +70,9 @@ public class FinanceExpendFragment extends BaseFragment implements RadioGroup.On
     protected void initData() {
         super.initData();
         datas = new ArrayList<>();
+        vistogramTran = new ArrayList<>();
+        vistogramInsurance = new ArrayList<>();
+
         for (int i = 0; i < 10; i++) {
             datas.add("");
         }
@@ -104,23 +113,6 @@ public class FinanceExpendFragment extends BaseFragment implements RadioGroup.On
         headHolder = new FinanceExpendHeadHolder(getContext(), recycleView);
         adapter.addHeard(headHolder);
 
-        debugDatas = new ArrayList<>();
-        if (Param.isDebug) {
-            for (int i = 0; i < 12; i++) {
-                List<VistogramView.VistogramBean> list = new ArrayList<>();
-                list.add(new VistogramView.VistogramBean(Color.parseColor("#F06F28"), ConvertUtils.getRandom(10000, 15000), (i + 1) + "月"));
-                list.add(new VistogramView.VistogramBean(Color.parseColor("#007AFF"), ConvertUtils.getRandom(5000, 8000), (i + 1) + "月"));
-                debugDatas.add(list);
-            }
-
-            recycleView.post(new Runnable() {
-                @Override
-                public void run() {
-                    headHolder.setDatas(debugDatas);
-                }
-            })
-            ;
-        }
 
         recycleView.setAdapter(adapter);
 
@@ -145,10 +137,14 @@ public class FinanceExpendFragment extends BaseFragment implements RadioGroup.On
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         if (checkedId == R.id.rb_left) {
             headHolder.setTitle("运费支出明细");
+            insruance = false;
         } else if (checkedId == R.id.rb_right) {
             headHolder.setTitle("保费支出明细");
-
+            insruance = true;
         }
+
+        changeSelect();
+
     }
 
 
@@ -157,23 +153,93 @@ public class FinanceExpendFragment extends BaseFragment implements RadioGroup.On
         return true;
     }
 
-    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
-    public void onEndEvent(FinanceEvent.SelectMonthEvent event) {
-        if (event != null) {
-            SimpleDateFormat format = new SimpleDateFormat("MM月");
-            String data = format.format(event.date);
-            if (data.startsWith("0")){
-               data= data.substring(1);
+    private boolean insruance;//是否是保费支出
+
+    public void changeSelect() {
+        if (date==null){
+            return;
+        }
+        SimpleDateFormat format = new SimpleDateFormat("MM月");
+        String data = format.format(date);
+        if (data.startsWith("0")) {
+            data = data.substring(1);
+        }
+        Observable<CommonBean<List<QueryExpendResultBean>>> observable;
+        if (insruance) {
+            if (vistogramInsurance.isEmpty()) {
+                observable = HttpFinanceFactory
+                        .queryExpendVistogramInsurance(ConvertUtils.formatTime(date, "yyyy"), data.substring(0, data.length() - 1));
+            } else {
+                CommonBean<List<QueryExpendResultBean>> commonBean = new CommonBean<>();
+                commonBean.setData(vistogramInsurance);
+                commonBean.setCode(200);
+                observable=Observable.just(commonBean);
             }
-            if (debugDatas!=null&&debugDatas.size()>0){
-                for (List<VistogramView.VistogramBean> debugData : debugDatas) {
-                    if (debugData!=null&&debugData.size()>0){
-                        if (debugData.get(0).xMark.equals(data)){
-                            headHolder.setCurrentX(debugDatas.indexOf(debugData));
+        } else {
+            if (vistogramTran.isEmpty()) {
+                observable = HttpFinanceFactory
+                        .queryExpendVistogramTran(ConvertUtils.formatTime(date, "yyyy"), data.substring(0, data.length() - 1));
+            }else {
+                CommonBean<List<QueryExpendResultBean>> commonBean = new CommonBean<>();
+                commonBean.setData(vistogramTran);
+                commonBean.setCode(200);
+                observable=Observable.just(commonBean);
+            }
+        }
+        observable.subscribe(new NetObserver<List<QueryExpendResultBean>>(this) {
+            @Override
+            public void doOnSuccess(List<QueryExpendResultBean> data) {
+                List<List<VistogramView.VistogramBean>> current = new ArrayList<>();
+                if (insruance) {
+                    if (vistogramInsurance.isEmpty()) {
+                        vistogramInsurance.addAll(data);
+                    }
+                } else {
+                    if (vistogramTran.isEmpty()) {
+                        vistogramTran.addAll(data);
+                    }
+                }
+                if (!data.isEmpty()) {
+                    for (QueryExpendResultBean datum : data) {
+                        List<VistogramView.VistogramBean> list = new ArrayList<>();
+                        for (QueryExpendResultBean.CostsBean costsBean : datum.getCosts()) {
+                            if (costsBean.getPayWay()==1) {
+                                //线上支付
+                                list.add(new VistogramView.VistogramBean(Color.parseColor("#F06F28"), datum.getCosts().get(0).getMoney(), datum.getCostDate()));
+                            }else if (costsBean.getPayWay()==2){
+                                //线下支付
+                                list.add(new VistogramView.VistogramBean(Color.parseColor("#007AFF"), datum.getCosts().get(1).getMoney(), datum.getCostDate()));
+                            }
+
+                        }
+                       current.add(list);
+                    }
+                }
+                headHolder.setDatas(current);
+                if (current.size() > 0) {
+                    String s = ConvertUtils.formatTime(date, "yyyy-MM");
+                    for (List<VistogramView.VistogramBean> debugData : current) {
+                        if (debugData != null && debugData.size() > 0) {
+                            if (debugData.get(0).xMark.equals(s)) {
+                                headHolder.setCurrentX(current.indexOf(debugData));
+                            }
                         }
                     }
                 }
+
             }
+        });
+    }
+
+
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    public void onEndEvent(final FinanceEvent.SelectMonthEvent event) {
+        if (event != null) {
+            this.date = event.date;
+            vistogramTran.clear();
+            vistogramInsurance.clear();
+            changeSelect();
+
         }
     }
 

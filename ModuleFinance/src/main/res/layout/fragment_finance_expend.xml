@@ -11,11 +11,12 @@
         android:paddingLeft="25dp">
 
         <TextView
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/app_model_gap"
             android:layout_marginTop="25dp"
-            android:text="共收入10笔，合计"
+            android:text="共支出10笔，合计"
             android:textColor="@color/color_content_light"
             android:textSize="13sp" />
 
