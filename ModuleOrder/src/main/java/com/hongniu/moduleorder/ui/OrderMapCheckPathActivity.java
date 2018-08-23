@@ -113,15 +113,7 @@ public class OrderMapCheckPathActivity extends BaseActivity implements TraceList
             if (locations!=null){
                 showLoad();
 
-                List<LatLng> latLngs=new ArrayList<>();
-                for (TraceLocation location : locations) {
-                    latLngs.add(new LatLng(location.getLatitude(),location.getLongitude()));
-                }
-
-                mapView.getMap().addPolyline(new PolylineOptions().
-                                addAll(latLngs));
-                moveTo(latLngs.get(0).latitude,latLngs.get(0).longitude);
-//                mTraceClient.queryProcessedTrace(0,locations, LBSTraceClient.TYPE_AMAP,this);
+                mTraceClient.queryProcessedTrace(0,locations, LBSTraceClient.TYPE_AMAP,this);
             }
         }
         BusFactory.getBus().removeStickyEvent(event);
@@ -148,12 +140,10 @@ public class OrderMapCheckPathActivity extends BaseActivity implements TraceList
     @Override
     public void onFinished(int i, List<LatLng> list, int i1, int i2) {
         hideLoad();
-        JLog.i(i+">>>");
         moveTo(list.get(0).latitude,list.get(0).longitude);
         mapView.getMap().addPolyline(new PolylineOptions().
                         addAll(list)
-
-//                    .width(10).color(Color.argb(255, 1, 1, 1))
+                    .width(10).color(Color.argb(255, 1, 1, 1))
         );
     }
 }

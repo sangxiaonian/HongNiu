@@ -12,6 +12,7 @@ import com.amap.api.maps.model.Poi;
 import com.amap.api.navi.AmapNaviPage;
 import com.amap.api.navi.AmapNaviParams;
 import com.amap.api.navi.AmapNaviType;
+import com.amap.api.navi.AmapPageType;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.NetObserver;
@@ -290,16 +291,16 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
      */
     @Override
     public void onOrderBuyInsurance(OrderDetailBean orderBean) {
-//        ArouterUtils.getInstance()
-//                .builder(ArouterParamOrder.activity_order_pay)
-//                .withBoolean(Param.TRAN, true)
-//                .navigation(getContext());
-//        OrderEvent.PayOrder payOrder = new OrderEvent.PayOrder();
-//        payOrder.insurance = true;
-//        payOrder.orderID = orderBean.getId();
-//        payOrder.orderNum = orderBean.getOrderNum();
-//        BusFactory.getBus().postSticky(payOrder);
-        changeOrderState(orderBean, 2, true, true);
+        ArouterUtils.getInstance()
+                .builder(ArouterParamOrder.activity_order_pay)
+                .withBoolean(Param.TRAN, true)
+                .navigation(getContext());
+        OrderEvent.PayOrder payOrder = new OrderEvent.PayOrder();
+        payOrder.insurance = true;
+        payOrder.orderID = orderBean.getId();
+        payOrder.orderNum = orderBean.getOrderNum();
+        BusFactory.getBus().postSticky(payOrder);
+//        changeOrderState(orderBean, 2, true, true);
     }
 
     /**
@@ -311,17 +312,17 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
     public void onOrderPay(OrderDetailBean orderBean) {
         if (orderBean.getMoney() != null) {
             try {
-//                OrderEvent.PayOrder payOrder = new OrderEvent.PayOrder();
-//                payOrder.insurance = false;
-//                payOrder.money = Float.parseFloat(orderBean.getMoney());
-//                payOrder.orderID = orderBean.getId();
-//                payOrder.orderNum = orderBean.getOrderNum();
-//                BusFactory.getBus().postSticky(payOrder);
-//                ArouterUtils.getInstance()
-//                        .builder(ArouterParamOrder.activity_order_pay)
-//                        .navigation(getContext());
+                OrderEvent.PayOrder payOrder = new OrderEvent.PayOrder();
+                payOrder.insurance = false;
+                payOrder.money = Float.parseFloat(orderBean.getMoney());
+                payOrder.orderID = orderBean.getId();
+                payOrder.orderNum = orderBean.getOrderNum();
+                BusFactory.getBus().postSticky(payOrder);
+                ArouterUtils.getInstance()
+                        .builder(ArouterParamOrder.activity_order_pay)
+                        .navigation(getContext());
 
-                changeOrderState(orderBean, 2, false, true);
+//                changeOrderState(orderBean, 2, false, true);
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
@@ -332,18 +333,18 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
     }
 
 
-    private void changeOrderState(OrderDetailBean orderBean, int state, boolean insurance, boolean hasFreight) {
-
-        HttpOrderFactory.changeOrderState(orderBean, state, insurance, hasFreight)
-                .subscribe(new NetObserver<String>(this) {
-
-                    @Override
-                    public void doOnSuccess(String data) {
-                        queryData(true, true);
-                    }
-                });
-        ;
-    }
+//    private void changeOrderState(OrderDetailBean orderBean, int state, boolean insurance, boolean hasFreight) {
+//
+//        HttpOrderFactory.changeOrderState(orderBean, state, insurance, hasFreight)
+//                .subscribe(new NetObserver<String>(this) {
+//
+//                    @Override
+//                    public void doOnSuccess(String data) {
+//                        queryData(true, true);
+//                    }
+//                });
+//        ;
+//    }
 
 
     /**
@@ -455,8 +456,12 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
 //                BusFactory.getBus().postSticky(new OrderEvent.CheckPathEvent(orderBean));
                 Poi start = new Poi(orderBean.getStratPlaceInfo(), new LatLng(orderBean.getStratPlaceX(), orderBean.getStratPlaceY()), "");
                 Poi end = new Poi(orderBean.getDestinationInfo(), new LatLng(orderBean.getDestinationX(), orderBean.getDestinationY()), "");
-                AmapNaviPage.getInstance()
-                        .showRouteActivity(getContext(), new AmapNaviParams(start, null, end, AmapNaviType.DRIVER), new LoactionCollectionUtils());
+//                AmapNaviPage.getInstance()
+//                        .showRouteActivity(getContext(), new AmapNaviParams(start, null, end, AmapNaviType.DRIVER), new LoactionCollectionUtils());
+
+                AmapNaviParams amapNaviParams = new AmapNaviParams(start, null, end, AmapNaviType.DRIVER, AmapPageType.NAVI);
+                amapNaviParams.setUseInnerVoice(true);
+                AmapNaviPage.getInstance().showRouteActivity(getContext().getApplicationContext(), amapNaviParams, new LoactionCollectionUtils());
             }
 
 
