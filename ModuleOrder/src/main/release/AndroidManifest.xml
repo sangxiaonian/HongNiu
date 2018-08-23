@@ -30,6 +30,7 @@
         <activity android:name=".ui.OrderMapLocationActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.OrderNavigationActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.OrderMapPathActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.OrderMapCheckPathActivity" android:screenOrientation="portrait"/>
 
 
         <!--高德地图-->

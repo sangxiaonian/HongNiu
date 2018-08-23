@@ -1,5 +1,6 @@
 package com.hongniu.moduleorder.ui.fragment;
 
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,11 +11,23 @@ import android.view.View;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.PolylineOptions;
 import com.amap.api.navi.view.RouteOverLay;
+import com.amap.api.trace.TraceLocation;
 import com.hongniu.baselibrary.base.BaseFragment;
+import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.moduleorder.R;
+import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.control.OrderMapListener;
+import com.sang.common.event.BusFactory;
 import com.sang.thirdlibrary.map.MapCalculateHelper;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 作者： ${PING} on 2018/8/9.
@@ -56,6 +69,8 @@ public class OrderMapPathFragment extends BaseFragment implements OrderMapListen
     @Override
     protected void initData() {
         super.initData();
+
+
         helper = new MapCalculateHelper();
         helper.initMap(getContext(), mapView);
         helper.setOnMyLocationChangeListener(new AMap.OnMyLocationChangeListener() {
@@ -116,7 +131,6 @@ public class OrderMapPathFragment extends BaseFragment implements OrderMapListen
         mapView.onDestroy();
 
     }
-
 
 
 

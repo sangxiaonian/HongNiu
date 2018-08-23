@@ -62,7 +62,7 @@ public class LoactionCollectionUtils implements INaviInfoCallback {
             location.setTime(aMapNaviLocation.getTime());
             instance.getList().add(location);
             lastLoaction=aMapNaviLocation;
-              JLog.i("onLocationChange:" + aMapNaviLocation.getCoord().getLatitude() + ">>" + aMapNaviLocation.getCoord().getLongitude() + ">>"
+              JLog.i("收集数据：onLocationChange:" + aMapNaviLocation.getCoord().getLatitude() + ">>" + aMapNaviLocation.getCoord().getLongitude() + ">>"
                       + aMapNaviLocation.getSpeed() + ">>>>");
 
           } else {//初始化

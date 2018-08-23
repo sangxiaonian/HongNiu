@@ -100,20 +100,7 @@ public class OrderMapPathActivity extends BaseActivity {
         });
     }
 
-    @Override
-    protected boolean getUseEventBus() {
-        return true;
-    }
-    @Subscribe(sticky = true,threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(OrderEvent.CheckPathEvent event) {
-        if (event != null &&event.getBean()!=null) {
-            OrderDetailBean bean = event.getBean();
-            helper.setStartMarker(bean.getStratPlaceX(), bean.getStratPlaceY(), bean.getStratPlaceInfo());
-            helper.setEndtMarker(bean.getDestinationX(), bean.getDestinationY(), bean.getDestinationInfo());
-            helper.calculate(bean.getCarnum());
-        }
-        BusFactory.getBus().removeStickyEvent(event);
-    }
+
     @Override
     protected void onStart() {
         super.onStart();

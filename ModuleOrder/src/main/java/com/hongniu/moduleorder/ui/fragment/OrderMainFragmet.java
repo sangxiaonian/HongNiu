@@ -24,11 +24,14 @@ import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItem;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.moduleorder.R;
+import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.control.SwitchStateListener;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
+import com.hongniu.moduleorder.utils.LoactionCellection;
 import com.hongniu.moduleorder.utils.LoactionCollectionUtils;
 import com.hongniu.moduleorder.widget.OrderMainPop;
+import com.sang.common.event.BusFactory;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.recycleview.holder.PeakHolder;
@@ -359,14 +362,17 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
      * @param orderBean
      */
     @Override
-    public void onCheckPath(OrderDetailBean orderBean) {
+    public void onCheckPath(final OrderDetailBean orderBean) {
 
 
         PermissionUtils.applyMap(getActivity(), new PermissionUtils.onApplyPermission() {
             @Override
             public void hasPermission(List<String> granted, boolean isAll) {
-                ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_map_path).withBoolean(Param.TRAN, true).navigation(getContext());
-
+                ArouterUtils.getInstance().builder(ArouterParamOrder.activity_map_check_path).withBoolean(Param.TRAN, true).navigation(getContext());
+                OrderEvent.CheckPathEvent checkPathEvent = new OrderEvent.CheckPathEvent(orderBean);
+                checkPathEvent.setLocations(LoactionCellection.getInstance().getList());
+                BusFactory.getBus().postSticky(checkPathEvent);
+//                CheckPathEvent
             }
 
             @Override
