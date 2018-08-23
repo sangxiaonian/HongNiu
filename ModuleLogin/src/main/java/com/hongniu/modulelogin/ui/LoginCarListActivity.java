@@ -44,8 +44,6 @@ public class LoginCarListActivity extends RefrushActivity<LoginCarInforBean> imp
     protected void initView() {
         super.initView();
         findViewById(R.id.bt_save).setOnClickListener(this);
-
-
     }
 
 

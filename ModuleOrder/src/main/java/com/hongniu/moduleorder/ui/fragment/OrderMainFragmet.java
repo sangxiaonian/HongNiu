@@ -456,8 +456,6 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
 //                BusFactory.getBus().postSticky(new OrderEvent.CheckPathEvent(orderBean));
                 Poi start = new Poi(orderBean.getStratPlaceInfo(), new LatLng(orderBean.getStratPlaceX(), orderBean.getStratPlaceY()), "");
                 Poi end = new Poi(orderBean.getDestinationInfo(), new LatLng(orderBean.getDestinationX(), orderBean.getDestinationY()), "");
-//                AmapNaviPage.getInstance()
-//                        .showRouteActivity(getContext(), new AmapNaviParams(start, null, end, AmapNaviType.DRIVER), new LoactionCollectionUtils());
 
                 AmapNaviParams amapNaviParams = new AmapNaviParams(start, null, end, AmapNaviType.DRIVER, AmapPageType.NAVI);
                 amapNaviParams.setUseInnerVoice(true);

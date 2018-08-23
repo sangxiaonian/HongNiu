@@ -44,6 +44,7 @@
 
         <com.sang.common.recycleview.RecycleViewSupportEmpty
             android:id="@+id/rv"
+            android:overScrollMode="never"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:empty_img="@mipmap/icon_zwdd_260"
