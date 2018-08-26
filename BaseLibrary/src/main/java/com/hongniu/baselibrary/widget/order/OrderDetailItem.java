@@ -115,15 +115,17 @@ public class OrderDetailItem extends FrameLayout {
 
     public void setInfor(OrderDetailBean data) {
         this.orderBean = data;
+
+        if(roleState==null){
+            roleState= OrderDetailItemControl.RoleState.CARGO_OWNER;
+        }
+
         setEndLocation(data.getDestinationInfo());
         setStartLocation(data.getStratPlaceInfo());
         setOrder(data.getOrderNum());
         setTiem(ConvertUtils.formatTime(data.getDeliverydate(), "yyyy-MM-dd"));
         setPrice(data.getMoney());
-
         setOrderState(data.getOrderState());
-
-
         if (roleState!=null){
             switch (roleState){
                 case DRIVER:

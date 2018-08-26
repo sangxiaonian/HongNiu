@@ -69,7 +69,6 @@ public abstract class RefrushFragmet<T> extends BaseFragment implements OnRefres
 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-
         queryData(true);
     }
 
@@ -99,7 +98,6 @@ public abstract class RefrushFragmet<T> extends BaseFragment implements OnRefres
                         }
                         if (data != null && data.getList() != null&&!data.getList().isEmpty()) {
                             currentPage++;
-
                             datas.addAll(data.getList());
                             if (data.getList().size() < Param.PAGE_SIZE) {
                                 showNoMore();

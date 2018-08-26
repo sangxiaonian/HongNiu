@@ -11,6 +11,7 @@ public class PageBean<T> {
     private int pageSize;
     private int total;
     private int pages;
+    private String totalMoney;
     private List<T> list;
 
     public int getPageNum() {

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 
 import com.hongniu.baselibrary.R;
+import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.sang.common.widget.dialog.inter.DialogControl;
 
 /**
@@ -18,10 +19,12 @@ import com.sang.common.widget.dialog.inter.DialogControl;
 public class OrderDetailDialog implements DialogControl.IBottomDialog {
 
     private final Dialog dialog;
+    private final OrderDetailItem item;
+    private OrderDetailBean ordetail;
 
     public OrderDetailDialog(Context context) {
-        OrderDetailItem item = new OrderDetailItem(context);
-        item.setDebug();
+          item = new OrderDetailItem(context);
+//        item.setDebug();
 //        item.hideButton(true);
         item.hideBottom(true);
 
@@ -46,6 +49,11 @@ public class OrderDetailDialog implements DialogControl.IBottomDialog {
 
     @Override
     public void show() {
+
+        if (ordetail!=null){
+            item.setInfor(ordetail);
+        }
+
         dialog.show();
     }
 
@@ -124,5 +132,9 @@ public class OrderDetailDialog implements DialogControl.IBottomDialog {
     @Override
     public void setBtBottomBgRes(int btBottomBgRes) {
 
+    }
+
+    public void setOrdetail(OrderDetailBean ordetail) {
+        this.ordetail = ordetail;
     }
 }

@@ -158,11 +158,16 @@ public class OrderDetailBean {
      * true string 发车编号
      */
     private String departNum;
-
+    /**
+     * 付费时间
+     */
+    private long payTime;
     /**
      * 订单状态
      */
     private OrderDetailItemControl.OrderState orderState;
+
+
 
 
     /**
@@ -170,6 +175,14 @@ public class OrderDetailBean {
      */
     protected String payWay;
 
+
+    public long getPayTime() {
+        return payTime;
+    }
+
+    public void setPayTime(long payTime) {
+        this.payTime = payTime;
+    }
 
     public String getOwnerPhone() {
         return ownerPhone;
@@ -219,7 +232,11 @@ public class OrderDetailBean {
                 orderState = OrderDetailItemControl.OrderState.WAITE_PAY;
                 break;
             case 2:
-                orderState = OrderDetailItemControl.OrderState.WAITE_START;
+                if (hasFreight) {
+                    orderState = OrderDetailItemControl.OrderState.WAITE_START;
+                }else {
+                    orderState = OrderDetailItemControl.OrderState.WAITE_PAY;
+                }
 
                 break;
             case 3:

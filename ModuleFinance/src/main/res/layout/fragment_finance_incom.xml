@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/color_bg"
     android:orientation="vertical">
 
@@ -32,6 +33,18 @@
 
 
 
-    <include layout="@layout/common_recycleview" />
+    <com.hongniu.baselibrary.widget.XRefreshLayout
+        android:id="@+id/refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.sang.common.recycleview.RecycleViewSupportEmpty
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            app:empty_img="@mipmap/icon_cw_240"
+            app:empty_title="暂无收入" />
+    </com.hongniu.baselibrary.widget.XRefreshLayout>
 
 </LinearLayout>

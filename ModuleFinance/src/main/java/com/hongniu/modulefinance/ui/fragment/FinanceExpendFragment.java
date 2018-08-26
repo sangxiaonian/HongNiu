@@ -10,16 +10,19 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.hongniu.baselibrary.base.BaseFragment;
 import com.hongniu.baselibrary.base.NetObserver;
+import com.hongniu.baselibrary.base.RefrushFragmet;
 import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.OrderDetailBean;
+import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.widget.order.OrderDetailDialog;
 import com.hongniu.modulefinance.R;
+import com.hongniu.modulefinance.entity.QueryExpendBean;
 import com.hongniu.modulefinance.entity.QueryExpendResultBean;
 import com.hongniu.modulefinance.event.FinanceEvent;
 import com.hongniu.modulefinance.net.HttpFinanceFactory;
 import com.hongniu.modulefinance.ui.adapter.FinanceExpendHeadHolder;
-import com.iflytek.cloud.thirdparty.H;
+import com.sang.common.recycleview.RecycleViewSupportEmpty;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.utils.ConvertUtils;
@@ -40,68 +43,82 @@ import io.reactivex.Observable;
  * 作者： ${PING} on 2018/8/7.
  * 财务支出模块
  */
-public class FinanceExpendFragment extends BaseFragment implements RadioGroup.OnCheckedChangeListener {
+public class FinanceExpendFragment extends RefrushFragmet<OrderDetailBean> implements RadioGroup.OnCheckedChangeListener {
 
-    private RecyclerView recycleView;
     private RadioGroup rg;
     private RadioButton rbRight;
     private RadioButton rbLeft;
+    private View llEmpty;
 
-    XAdapter<String> adapter;
-    private List<String> datas;
+
     private FinanceExpendHeadHolder headHolder;
 
     List<QueryExpendResultBean> vistogramTran;//运费
     List<QueryExpendResultBean> vistogramInsurance;//保费
     private Date date;//目前显示的数据
+    private QueryExpendBean bean = new QueryExpendBean();
 
     @Override
     protected View initView(LayoutInflater inflater) {
         View inflate = inflater.inflate(R.layout.fragment_finance_expend, null);
-        recycleView = inflate.findViewById(R.id.rv);
         rbRight = inflate.findViewById(R.id.rb_right);
         rbLeft = inflate.findViewById(R.id.rb_left);
         rg = inflate.findViewById(R.id.rg);
+        llEmpty = inflate.findViewById(R.id.ll_empty);
 
         return inflate;
     }
 
     @Override
     protected void initData() {
+//        if (rv instanceof RecycleViewSupportEmpty){
+//            ((RecycleViewSupportEmpty) rv).setEmptyView(llEmpty);
+//        }
         super.initData();
-        datas = new ArrayList<>();
         vistogramTran = new ArrayList<>();
         vistogramInsurance = new ArrayList<>();
+        headHolder = new FinanceExpendHeadHolder(getContext(), rv);
+        adapter.addHeard(0,headHolder);
 
-        for (int i = 0; i < 10; i++) {
-            datas.add("");
-        }
-        LinearLayoutManager manager = new LinearLayoutManager(getContext());
-        manager.setOrientation(LinearLayoutManager.VERTICAL);
-        recycleView.setLayoutManager(manager);
-        adapter = new XAdapter<String>(getContext(), datas) {
+        queryData(true);
+
+    }
+
+
+    @Override
+    protected Observable<CommonBean<PageBean<OrderDetailBean>>> getListDatas() {
+        bean.setPageNum(currentPage);
+        bean.setFinanceType(1);
+
+        return HttpFinanceFactory.queryFinance(bean);
+    }
+
+    @Override
+    protected XAdapter<OrderDetailBean> getAdapter(List<OrderDetailBean> datas) {
+        return   new XAdapter<OrderDetailBean>(getContext(), datas) {
             @Override
-            public BaseHolder<String> initHolder(ViewGroup parent, int viewType) {
-                return new BaseHolder<String>(getContext(), parent, R.layout.finance_item_finance) {
+            public BaseHolder<OrderDetailBean> initHolder(ViewGroup parent, int viewType) {
+                return new BaseHolder<OrderDetailBean>(getContext(), parent, R.layout.finance_item_finance) {
                     @Override
-                    public void initView(View itemView, int position, String data) {
+                    public void initView(View itemView, int position, final OrderDetailBean data) {
                         super.initView(itemView, position, data);
                         TextView tvOrder = itemView.findViewById(R.id.tv_order);
                         TextView tvCarNum = itemView.findViewById(R.id.tv_car_num);
                         TextView tvTime = itemView.findViewById(R.id.tv_time);
                         TextView tvPrice = itemView.findViewById(R.id.tv_price);
 
-                        tvOrder.setText("订单号：" + "1212136484");
-                        tvCarNum.setText("车牌号码：" + "沪A125356");
-                        tvTime.setText("付费时间：" + "2017-7-8");
+                        tvOrder.setText("订单号：" + (data.getOrderNum()==null?"":data.getOrderNum()));
+                        tvCarNum.setText("车牌号码：" + (data.getCarnum()==null?"":data.getCarnum()));
+                        tvTime.setText("付费时间：" + (data.getPayTime()==0?"":ConvertUtils.formatTime(data.getPayTime(),"yyyy-MM-dd HH:mm:ss")));
                         tvPrice.setText("1200.0");
                         itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                OrderDetailDialog orderDetailDialog = new OrderDetailDialog(getContext());
+                                orderDetailDialog.setOrdetail(data);
                                 new BottomAlertBuilder()
-
                                         .setDialogTitle(getString(R.string.login_car_entry_deleted))
-                                        .creatDialog(new OrderDetailDialog(getContext()))
+                                        .creatDialog(orderDetailDialog)
                                         .show();
                             }
                         });
@@ -110,12 +127,6 @@ public class FinanceExpendFragment extends BaseFragment implements RadioGroup.On
                 };
             }
         };
-        headHolder = new FinanceExpendHeadHolder(getContext(), recycleView);
-        adapter.addHeard(headHolder);
-
-
-        recycleView.setAdapter(adapter);
-
     }
 
     @Override
@@ -124,7 +135,7 @@ public class FinanceExpendFragment extends BaseFragment implements RadioGroup.On
         rg.setOnCheckedChangeListener(this);
         rbLeft.performClick();
 
-        recycleView.post(new Runnable() {
+        rv.post(new Runnable() {
             @Override
             public void run() {
                 headHolder.showGuide(getActivity());
@@ -143,6 +154,7 @@ public class FinanceExpendFragment extends BaseFragment implements RadioGroup.On
             insruance = true;
         }
 
+
         changeSelect();
 
     }
@@ -156,7 +168,7 @@ public class FinanceExpendFragment extends BaseFragment implements RadioGroup.On
     private boolean insruance;//是否是保费支出
 
     public void changeSelect() {
-        if (date==null){
+        if (date == null) {
             return;
         }
         SimpleDateFormat format = new SimpleDateFormat("MM月");
@@ -165,6 +177,11 @@ public class FinanceExpendFragment extends BaseFragment implements RadioGroup.On
             data = data.substring(1);
         }
         Observable<CommonBean<List<QueryExpendResultBean>>> observable;
+
+        bean.setYear(ConvertUtils.formatTime(date, "yyyy"));
+        bean.setMonth(data.substring(0, data.length() - 1));
+
+
         if (insruance) {
             if (vistogramInsurance.isEmpty()) {
                 observable = HttpFinanceFactory
@@ -173,17 +190,17 @@ public class FinanceExpendFragment extends BaseFragment implements RadioGroup.On
                 CommonBean<List<QueryExpendResultBean>> commonBean = new CommonBean<>();
                 commonBean.setData(vistogramInsurance);
                 commonBean.setCode(200);
-                observable=Observable.just(commonBean);
+                observable = Observable.just(commonBean);
             }
         } else {
             if (vistogramTran.isEmpty()) {
                 observable = HttpFinanceFactory
                         .queryExpendVistogramTran(ConvertUtils.formatTime(date, "yyyy"), data.substring(0, data.length() - 1));
-            }else {
+            } else {
                 CommonBean<List<QueryExpendResultBean>> commonBean = new CommonBean<>();
                 commonBean.setData(vistogramTran);
                 commonBean.setCode(200);
-                observable=Observable.just(commonBean);
+                observable = Observable.just(commonBean);
             }
         }
         observable.subscribe(new NetObserver<List<QueryExpendResultBean>>(this) {
@@ -203,16 +220,16 @@ public class FinanceExpendFragment extends BaseFragment implements RadioGroup.On
                     for (QueryExpendResultBean datum : data) {
                         List<VistogramView.VistogramBean> list = new ArrayList<>();
                         for (QueryExpendResultBean.CostsBean costsBean : datum.getCosts()) {
-                            if (costsBean.getPayWay()==1) {
+                            if (costsBean.getPayWay() == 1) {
                                 //线上支付
                                 list.add(new VistogramView.VistogramBean(Color.parseColor("#F06F28"), datum.getCosts().get(0).getMoney(), datum.getCostDate()));
-                            }else if (costsBean.getPayWay()==2){
+                            } else if (costsBean.getPayWay() == 2) {
                                 //线下支付
                                 list.add(new VistogramView.VistogramBean(Color.parseColor("#007AFF"), datum.getCosts().get(1).getMoney(), datum.getCostDate()));
                             }
 
                         }
-                       current.add(list);
+                        current.add(list);
                     }
                 }
                 headHolder.setDatas(current);

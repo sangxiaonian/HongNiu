@@ -9,10 +9,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hongniu.baselibrary.base.BaseFragment;
+import com.hongniu.baselibrary.base.NetObserver;
+import com.hongniu.baselibrary.base.RefrushFragmet;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.OrderDetailBean;
+import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.widget.order.OrderDetailDialog;
 import com.hongniu.modulefinance.R;
+import com.hongniu.modulefinance.entity.QueryExpendBean;
+import com.hongniu.modulefinance.entity.QueryExpendResultBean;
 import com.hongniu.modulefinance.event.FinanceEvent;
+import com.hongniu.modulefinance.net.HttpFinanceFactory;
 import com.hongniu.modulefinance.ui.adapter.FinanceExpendHeadHolder;
 import com.hongniu.modulefinance.ui.adapter.FinanceIncomHeadHolder;
 import com.sang.common.event.BusFactory;
@@ -31,26 +39,22 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
+
 /**
  * 作者： ${PING} on 2018/8/7.
  * 财务收入模块
- *
  */
-public class FinanceIncomeFragment extends BaseFragment {
+public class FinanceIncomeFragment extends RefrushFragmet<OrderDetailBean> {
 
-    private RecyclerView recycleView;
 
-    XAdapter<String> adapter;
-    private List<String> datas;
     private FinanceIncomHeadHolder headHolder;
-    List<List<VistogramView.VistogramBean>>  debugDatas;
+    private QueryExpendBean bean=new QueryExpendBean();
 
 
     @Override
     protected View initView(LayoutInflater inflater) {
         View inflate = inflater.inflate(R.layout.fragment_finance_incom, null);
-        recycleView = inflate.findViewById(R.id.rv);
-
         return inflate;
     }
 
@@ -58,76 +62,56 @@ public class FinanceIncomeFragment extends BaseFragment {
     protected void initData() {
         super.initData();
 
-        datas=new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            datas.add("");
-        }
+        headHolder = new FinanceIncomHeadHolder(getContext(), rv);
+        adapter.addHeard(0,headHolder);
 
 
-        LinearLayoutManager manager =new LinearLayoutManager(getContext());
-        manager.setOrientation(LinearLayoutManager.VERTICAL);
-        recycleView.setLayoutManager(manager);
-        adapter=new XAdapter<String>(getContext(),datas) {
+
+
+
+    }
+
+    @Override
+    protected Observable<CommonBean<PageBean<OrderDetailBean>>> getListDatas() {
+        bean.setPageNum(currentPage);
+        bean.setFinanceType(2);
+        return HttpFinanceFactory.queryFinance(bean);
+    }
+
+    @Override
+    protected XAdapter<OrderDetailBean> getAdapter(final List<OrderDetailBean> datas) {
+        return  new XAdapter<OrderDetailBean>(getContext(), datas) {
             @Override
-            public BaseHolder<String> initHolder(ViewGroup parent, int viewType) {
-                return new BaseHolder<String>(getContext(),parent,R.layout.finance_item_finance){
+            public BaseHolder<OrderDetailBean> initHolder(ViewGroup parent, int viewType) {
+                return new BaseHolder<OrderDetailBean>(getContext(), parent, R.layout.finance_item_finance) {
                     @Override
-                    public void initView(View itemView, int position, String data) {
+                    public void initView(View itemView, int position, final OrderDetailBean data) {
                         super.initView(itemView, position, data);
                         TextView tvOrder = itemView.findViewById(R.id.tv_order);
                         TextView tvCarNum = itemView.findViewById(R.id.tv_car_num);
                         TextView tvTime = itemView.findViewById(R.id.tv_time);
                         TextView tvPrice = itemView.findViewById(R.id.tv_price);
 
-                        tvOrder.setText("订单号：" + "1212136484");
-                        tvCarNum.setText("车牌号码：" + "沪A125356");
-                        tvTime.setText("付费时间：" + "2017-7-8");
+                        tvOrder.setText("订单号：" + (data.getOrderNum()==null?"":data.getOrderNum()));
+                        tvCarNum.setText("车牌号码：" + (data.getCarnum()==null?"":data.getCarnum()));
+                        tvTime.setText("付费时间：" + (data.getPayTime()==0?"":ConvertUtils.formatTime(data.getPayTime(),"yyyy-MM-dd HH:mm:ss")));
                         tvPrice.setText("1200.0");
                         itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                OrderDetailDialog orderDetailDialog = new OrderDetailDialog(getContext());
+                                orderDetailDialog.setOrdetail(data);
                                 new BottomAlertBuilder()
                                         .setDialogTitle(getString(R.string.login_car_entry_deleted))
-                                        .creatDialog(new OrderDetailDialog(getContext()))
+                                        .creatDialog(orderDetailDialog)
                                         .show();
                             }
                         });
-
 
                     }
                 };
             }
         };
-        headHolder = new FinanceIncomHeadHolder(getContext(), recycleView);
-        adapter.addHeard(headHolder);
-        recycleView.setAdapter(adapter);
-
-
-
-
-        debugDatas = new ArrayList<>();
-        if (Param.isDebug) {
-            for (int i = 0; i < 12; i++) {
-                List<VistogramView.VistogramBean> list = new ArrayList<>();
-                list.add(new VistogramView.VistogramBean(Color.parseColor("#F06F28"), ConvertUtils.getRandom(10000, 15000), (i + 1) + "月"));
-                debugDatas.add(list);
-            }
-
-            recycleView.post(new Runnable() {
-                @Override
-                public void run() {
-                    headHolder.setDatas(debugDatas);
-                }
-            })
-            ;
-        }
-        recycleView.post(new Runnable() {
-            @Override
-            public void run() {
-                headHolder.setDatas(debugDatas);
-            }
-        });
-
     }
 
     @Override
@@ -141,22 +125,44 @@ public class FinanceIncomeFragment extends BaseFragment {
     }
 
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
-    public void onEndEvent(FinanceEvent.SelectMonthEvent event) {
+    public void onEndEvent(final FinanceEvent.SelectMonthEvent event) {
         if (event != null) {
             SimpleDateFormat format = new SimpleDateFormat("MM月");
             String data = format.format(event.date);
-            if (data.startsWith("0")){
-                data= data.substring(1);
+            if (data.startsWith("0")) {
+                data = data.substring(1);
             }
-            if (debugDatas!=null&&debugDatas.size()>0){
-                for (List<VistogramView.VistogramBean> debugData : debugDatas) {
-                    if (debugData!=null&&debugData.size()>0){
-                        if (debugData.get(0).xMark.equals(data)){
-                            headHolder.setCurrentX(debugDatas.indexOf(debugData));
+
+            bean.setYear(ConvertUtils.formatTime(event.date, "yyyy"));
+            bean.setMonth(data.substring(0, data.length() - 1));
+            HttpFinanceFactory
+                    .queryInComeVistogram(ConvertUtils.formatTime(event.date, "yyyy"), data.substring(0, data.length() - 1))
+                    .subscribe(new NetObserver<List<QueryExpendResultBean>>(this) {
+                        @Override
+                        public void doOnSuccess(List<QueryExpendResultBean> data) {
+                            List<List<VistogramView.VistogramBean>> current = new ArrayList<>();
+
+                            if (!data.isEmpty()) {
+                                for (QueryExpendResultBean datum : data) {
+                                    List<VistogramView.VistogramBean> list = new ArrayList<>();
+                                    list.add(new VistogramView.VistogramBean(Color.parseColor("#F06F28"), datum.getCosts().get(0).getMoney(), datum.getCostDate()));
+                                    current.add(list);
+                                }
+                            }
+                            headHolder.setDatas(current);
+                            if (current.size() > 0) {
+                                String s = ConvertUtils.formatTime(event.date, "yyyy-MM");
+                                for (List<VistogramView.VistogramBean> debugData : current) {
+                                    if (debugData != null && debugData.size() > 0) {
+                                        if (debugData.get(0).xMark.equals(s)) {
+                                            headHolder.setCurrentX(current.indexOf(debugData));
+                                        }
+                                    }
+                                }
+                            }
+
                         }
-                    }
-                }
-            }
+                    });
         }
     }
 }

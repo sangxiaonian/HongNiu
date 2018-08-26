@@ -1,69 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingLeft="25dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
-
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/app_model_gap"
-            android:layout_marginTop="25dp"
-            android:text="共支出10笔，合计"
-            android:textColor="@color/color_content_light"
-            android:textSize="13sp" />
+            android:orientation="vertical"
+            android:paddingLeft="25dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="￥25015"
-            android:textColor="@color/color_title_dark"
-            android:textSize="36sp" />
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/app_model_gap"
+                android:layout_marginTop="25dp"
+                android:text="共支出10笔，合计"
+                android:textColor="@color/color_content_light"
+                android:textSize="13sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="￥25015"
+                android:textColor="@color/color_title_dark"
+                android:textSize="36sp" />
+
+        </LinearLayout>
+
+        <RadioGroup
+            android:id="@+id/rg"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="@dimen/app_gap"
+            android:orientation="horizontal"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp">
+
+            <RadioButton
+                android:id="@+id/rb_left"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/select_line_eee_ddd"
+                android:button="@null"
+                android:gravity="center"
+                android:text="运费"
+                android:textColor="@drawable/selector_color_999_333"
+                android:textSize="14sp" />
+
+            <RadioButton
+                android:id="@+id/rb_right"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/select_line_eee_ddd"
+                android:button="@null"
+                android:gravity="center"
+                android:text="保费"
+                android:textColor="@drawable/selector_color_999_333"
+                android:textSize="14sp" />
+
+        </RadioGroup>
+
+
+        <com.hongniu.baselibrary.widget.XRefreshLayout
+            android:id="@+id/refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.sang.common.recycleview.RecycleViewSupportEmpty
+                android:id="@+id/rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                app:empty_img="@mipmap/icon_cw_240"
+                app:empty_title="暂无支出" />
+        </com.hongniu.baselibrary.widget.XRefreshLayout>
 
     </LinearLayout>
 
-    <RadioGroup
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/ll_empty"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:id="@+id/rg"
-        android:layout_marginBottom="@dimen/app_gap"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:layout_marginTop="97dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-        <RadioButton
-            android:id="@+id/rb_left"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/select_line_eee_ddd"
-            android:button="@null"
-            android:gravity="center"
-            android:text="运费"
-            android:textColor="@drawable/selector_color_999_333"
-            android:textSize="14sp" />
-        <RadioButton
-            android:id="@+id/rb_right"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/select_line_eee_ddd"
-            android:button="@null"
-            android:gravity="center"
-            android:text="保费"
-            android:textColor="@drawable/selector_color_999_333"
-            android:textSize="14sp" />
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:scaleType="centerInside"
+            android:src="@mipmap/icon_cw_240" />
 
-    </RadioGroup>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="暂无支出"
+            android:textColor="@color/color_content_light"
+            android:textSize="@dimen/text_small_14" />
 
+    </LinearLayout>
 
-    <include layout="@layout/common_recycleview" />
-
-</LinearLayout>
+</RelativeLayout>

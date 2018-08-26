@@ -14,7 +14,7 @@
         android:layout_height="@dimen/img_go_size"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/app_gap"
+        android:layout_marginLeft="@dimen/app_item_gap"
         android:scaleType="fitCenter"
         android:src="@mipmap/icon_gary_arrowmore_20" />
 

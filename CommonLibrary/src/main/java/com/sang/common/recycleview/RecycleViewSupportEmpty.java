@@ -10,7 +10,11 @@ import android.view.View;
 import com.sang.common.R;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.EmptyHolder;
+import com.sang.common.recycleview.holder.PeakHolder;
 import com.sang.common.utils.JLog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 作者： ${桑小年} on 2018/8/18.
@@ -23,6 +27,7 @@ public class RecycleViewSupportEmpty extends RecyclerView {
     private XAdapter adapter;
     private String msg;
     private int ImgSrc;
+    private View emptyView;//由外部直接传入的数据为空时候的界面，优先于holder
 
 
     public RecycleViewSupportEmpty(Context context) {
@@ -48,6 +53,11 @@ public class RecycleViewSupportEmpty extends RecyclerView {
 
     }
 
+
+    public void setEmptyView(View emptyView) {
+        this.emptyView = emptyView;
+    }
+
     /**
      * 创建一个观察者
      * 为什么要在onChanged里面写？
@@ -59,12 +69,22 @@ public class RecycleViewSupportEmpty extends RecyclerView {
         public void onChanged() {
             //这种写发跟之前我们之前看到的ListView的是一样的，判断数据为空否，在进行显示或者隐藏
             if (adapter != null && emptyHolder != null) {
-                emptyHolder.setEmptyInfor(ImgSrc, msg);
-                if (!adapter.getHeads().contains(emptyHolder) && adapter.getItemCount() - adapter.getHeads().size() - adapter.getFoots().size() == 0) {
-                    adapter.addHeard(0, emptyHolder);
-                } else if (adapter.getHeads().contains(emptyHolder)){
-                    if (adapter.getItemCount() - adapter.getHeads().size() - adapter.getFoots().size() != 0) {
-                        adapter.removeHeard(emptyHolder);
+                if (emptyView==null&&emptyHolder!=null) {
+                    emptyHolder.setEmptyInfor(ImgSrc, msg);
+                    if (!adapter.getHeads().contains(emptyHolder) && adapter.getItemCount() - adapter.getHeads().size() - adapter.getFoots().size() == 0) {
+                        adapter.addHeard(0, emptyHolder);
+                    } else if (adapter.getHeads().contains(emptyHolder)){
+                        if (adapter.getItemCount() - adapter.getHeads().size() - adapter.getFoots().size() != 0) {
+                            adapter.removeHeard(emptyHolder);
+                        }
+                    }
+                }else if (emptyView!=null){
+                    if (adapter.getItemCount() - adapter.getHeads().size() - adapter.getFoots().size() == 0) {
+                        emptyView.setVisibility(VISIBLE);
+                        setVisibility(GONE);
+                    } else {
+                        emptyView.setVisibility(GONE);
+                        setVisibility(VISIBLE);
                     }
                 }
 
