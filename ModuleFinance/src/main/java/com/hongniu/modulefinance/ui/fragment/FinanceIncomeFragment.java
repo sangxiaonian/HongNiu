@@ -40,6 +40,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Function;
 
 /**
  * 作者： ${PING} on 2018/8/7.
@@ -51,10 +53,15 @@ public class FinanceIncomeFragment extends RefrushFragmet<OrderDetailBean> {
     private FinanceIncomHeadHolder headHolder;
     private QueryExpendBean bean=new QueryExpendBean();
 
+    private TextView tv_order_count;
+    private TextView tv_order_money;
 
     @Override
     protected View initView(LayoutInflater inflater) {
         View inflate = inflater.inflate(R.layout.fragment_finance_incom, null);
+        tv_order_count = inflate.findViewById(R.id.tv_order_count);
+        tv_order_money = inflate.findViewById(R.id.tv_order_money);
+
         return inflate;
     }
 
@@ -75,7 +82,23 @@ public class FinanceIncomeFragment extends RefrushFragmet<OrderDetailBean> {
     protected Observable<CommonBean<PageBean<OrderDetailBean>>> getListDatas() {
         bean.setPageNum(currentPage);
         bean.setFinanceType(2);
-        return HttpFinanceFactory.queryFinance(bean);
+        return HttpFinanceFactory.queryFinance(bean)
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(new Function<CommonBean<PageBean<OrderDetailBean>>, CommonBean<PageBean<OrderDetailBean>>>() {
+                    @Override
+                    public CommonBean<PageBean<OrderDetailBean>> apply(CommonBean<PageBean<OrderDetailBean>> pageBeanCommonBean) throws Exception {
+                        if (pageBeanCommonBean != null && pageBeanCommonBean.getData() != null) {
+                            PageBean<OrderDetailBean> data = pageBeanCommonBean.getData();
+                            int total = data.getTotal();
+                            tv_order_count.setText("共支出"+total+"笔，合计");
+                            tv_order_money.setText("￥"+data.getTotalMoney());
+                        }
+
+                        return pageBeanCommonBean;
+                    }
+                })
+
+                ;
     }
 
     @Override

@@ -11,7 +11,7 @@ public class PageBean<T> {
     private int pageSize;
     private int total;
     private int pages;
-    private String totalMoney;
+    private float totalMoney;
     private List<T> list;
 
     public int getPageNum() {
@@ -32,6 +32,14 @@ public class PageBean<T> {
 
     public int getTotal() {
         return total;
+    }
+
+    public float getTotalMoney() {
+        return totalMoney;
+    }
+
+    public void setTotalMoney(float totalMoney) {
+        this.totalMoney = totalMoney;
     }
 
     public void setTotal(int total) {

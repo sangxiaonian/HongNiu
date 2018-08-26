@@ -11,23 +11,23 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingLeft="25dp">
-
         <TextView
+            android:id="@+id/tv_order_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/app_model_gap"
             android:layout_marginTop="25dp"
-            android:text="共收入10笔，合计"
+            android:text="共支出0笔，合计"
             android:textColor="@color/color_content_light"
             android:textSize="13sp" />
 
         <TextView
+            android:id="@+id/tv_order_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="￥25015"
+            android:text="￥0"
             android:textColor="@color/color_title_dark"
             android:textSize="36sp" />
-
 
     </LinearLayout>
 

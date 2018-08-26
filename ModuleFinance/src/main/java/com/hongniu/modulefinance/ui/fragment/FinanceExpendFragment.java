@@ -38,6 +38,8 @@ import java.util.Date;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Function;
 
 /**
  * 作者： ${PING} on 2018/8/7.
@@ -49,7 +51,8 @@ public class FinanceExpendFragment extends RefrushFragmet<OrderDetailBean> imple
     private RadioButton rbRight;
     private RadioButton rbLeft;
     private View llEmpty;
-
+    private TextView tv_order_count;
+    private TextView tv_order_money;
 
     private FinanceExpendHeadHolder headHolder;
 
@@ -65,6 +68,8 @@ public class FinanceExpendFragment extends RefrushFragmet<OrderDetailBean> imple
         rbLeft = inflate.findViewById(R.id.rb_left);
         rg = inflate.findViewById(R.id.rg);
         llEmpty = inflate.findViewById(R.id.ll_empty);
+        tv_order_count = inflate.findViewById(R.id.tv_order_count);
+        tv_order_money = inflate.findViewById(R.id.tv_order_money);
 
         return inflate;
     }
@@ -78,7 +83,7 @@ public class FinanceExpendFragment extends RefrushFragmet<OrderDetailBean> imple
         vistogramTran = new ArrayList<>();
         vistogramInsurance = new ArrayList<>();
         headHolder = new FinanceExpendHeadHolder(getContext(), rv);
-        adapter.addHeard(0,headHolder);
+        adapter.addHeard(0, headHolder);
 
         queryData(true);
 
@@ -90,12 +95,28 @@ public class FinanceExpendFragment extends RefrushFragmet<OrderDetailBean> imple
         bean.setPageNum(currentPage);
         bean.setFinanceType(1);
 
-        return HttpFinanceFactory.queryFinance(bean);
+        return HttpFinanceFactory.queryFinance(bean)
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(new Function<CommonBean<PageBean<OrderDetailBean>>, CommonBean<PageBean<OrderDetailBean>>>() {
+                    @Override
+                    public CommonBean<PageBean<OrderDetailBean>> apply(CommonBean<PageBean<OrderDetailBean>> pageBeanCommonBean) throws Exception {
+                        if (pageBeanCommonBean != null && pageBeanCommonBean.getData() != null) {
+                            PageBean<OrderDetailBean> data = pageBeanCommonBean.getData();
+                            int total = data.getTotal();
+                            tv_order_count.setText("共支出"+total+"笔，合计");
+                            tv_order_money.setText("￥"+data.getTotalMoney());
+                        }
+
+                        return pageBeanCommonBean;
+                    }
+                })
+
+                ;
     }
 
     @Override
     protected XAdapter<OrderDetailBean> getAdapter(List<OrderDetailBean> datas) {
-        return   new XAdapter<OrderDetailBean>(getContext(), datas) {
+        return new XAdapter<OrderDetailBean>(getContext(), datas) {
             @Override
             public BaseHolder<OrderDetailBean> initHolder(ViewGroup parent, int viewType) {
                 return new BaseHolder<OrderDetailBean>(getContext(), parent, R.layout.finance_item_finance) {
@@ -107,9 +128,9 @@ public class FinanceExpendFragment extends RefrushFragmet<OrderDetailBean> imple
                         TextView tvTime = itemView.findViewById(R.id.tv_time);
                         TextView tvPrice = itemView.findViewById(R.id.tv_price);
 
-                        tvOrder.setText("订单号：" + (data.getOrderNum()==null?"":data.getOrderNum()));
-                        tvCarNum.setText("车牌号码：" + (data.getCarnum()==null?"":data.getCarnum()));
-                        tvTime.setText("付费时间：" + (data.getPayTime()==0?"":ConvertUtils.formatTime(data.getPayTime(),"yyyy-MM-dd HH:mm:ss")));
+                        tvOrder.setText("订单号：" + (data.getOrderNum() == null ? "" : data.getOrderNum()));
+                        tvCarNum.setText("车牌号码：" + (data.getCarnum() == null ? "" : data.getCarnum()));
+                        tvTime.setText("付费时间：" + (data.getPayTime() == 0 ? "" : ConvertUtils.formatTime(data.getPayTime(), "yyyy-MM-dd HH:mm:ss")));
                         tvPrice.setText("1200.0");
                         itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
