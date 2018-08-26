@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.hongniu.supply.R;
+import com.sang.common.utils.JLog;
 import com.sang.thirdlibrary.pay.PayConfig;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
@@ -45,6 +46,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 	@Override
 	public void onResp(BaseResp resp) {
 		int result = 0;
+		JLog.i(resp.toString()+">>>"+resp.getType());
 		if (resp.getType()== ConstantsAPI.COMMAND_PAY_BY_WX){
 			if (resp.errCode==0){
 				Toast.makeText(this,"支付成功",Toast.LENGTH_LONG).show();

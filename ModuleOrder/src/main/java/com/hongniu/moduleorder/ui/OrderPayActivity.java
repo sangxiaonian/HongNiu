@@ -17,14 +17,12 @@ import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
-import com.hongniu.moduleorder.entity.CreatInsuranceBean;
 import com.hongniu.moduleorder.entity.OrderParamBean;
 import com.hongniu.moduleorder.entity.WxPayBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.widget.dialog.BuyInsuranceDialog;
 import com.hongniu.moduleorder.widget.dialog.InsuranceNoticeDialog;
 import com.sang.common.event.BusFactory;
-import com.sang.common.net.AppConfigs;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
@@ -34,8 +32,6 @@ import com.sang.thirdlibrary.pay.wechat.WeChatAppPay;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import okhttp3.ResponseBody;
 
 /**
  * 订单支付界面
@@ -299,7 +295,10 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
                                 .subscribe(new NetObserver<WxPayBean>(this) {
                                     @Override
                                     public void doOnSuccess(WxPayBean data) {
-                                        WeChatAppPay.pay(mContext);
+                                        WeChatAppPay.pay(mContext, data.getPartnerId(), data.getPrePayId(),data.getPrepay_id()
+                                                , data.getNonceStr(), data.getTimeStamp(), data.getPaySign()
+                                        );
+//                                        WeChatAppPay.pay(mContext);
 //                                        if (buyInsurance) {
 //                                            ArouterUtils.getInstance()
 //                                                    .builder(ArouterParamOrder.activity_insurance_creat)
@@ -328,14 +327,17 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
                                     .subscribe(new NetObserver<WxPayBean>(this) {
                                         @Override
                                         public void doOnSuccess(WxPayBean data) {
-                                            ArouterUtils.getInstance()
-                                                    .builder(ArouterParamOrder.activity_insurance_creat)
-                                                    .navigation(mContext);
-                                            CreatInsuranceBean creatInsuranceBean = new CreatInsuranceBean();
-                                            creatInsuranceBean.setGoodsValue(cargoPrice + "");
-                                            OrderEvent.CraetInsurance insurance = new OrderEvent.CraetInsurance(creatInsuranceBean);
-                                            BusFactory.getBus().postSticky(insurance);
-                                            finish();
+//                                            ArouterUtils.getInstance()
+//                                                    .builder(ArouterParamOrder.activity_insurance_creat)
+//                                                    .navigation(mContext);
+//                                            CreatInsuranceBean creatInsuranceBean = new CreatInsuranceBean();
+//                                            creatInsuranceBean.setGoodsValue(cargoPrice + "");
+//                                            OrderEvent.CraetInsurance insurance = new OrderEvent.CraetInsurance(creatInsuranceBean);
+//                                            BusFactory.getBus().postSticky(insurance);
+//                                            finish();
+                                            WeChatAppPay.pay(mContext, data.getPartnerId(), data.getPrePayId(),data.getPrepay_id()
+                                                    , data.getNonceStr(), data.getTimeStamp(), data.getPaySign()
+                                            );
 
                                         }
                                     });
@@ -389,12 +391,12 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
      * @param policy     是否购买保险
      * @return
      */
-    private OrderParamBean creatBuyParams(boolean onLine, boolean hasFrenght, boolean policy ) {
+    private OrderParamBean creatBuyParams(boolean onLine, boolean hasFrenght, boolean policy) {
         OrderParamBean bean = new OrderParamBean();
         bean.setOrderNum(orderNum);
         bean.setHasFreight(hasFrenght);
         bean.setHasPolicy(policy);
-        bean. setAppid(PayConfig.weChatAppid);
+        bean.setAppid(PayConfig.weChatAppid);
         bean.setOnlinePay(onLine);
         return bean;
 

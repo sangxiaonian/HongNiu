@@ -109,7 +109,7 @@ public interface OrderService {
      * orderId	true	number	订单id
      * goodPrice	true	number	货物价值，单位元，不能超过200万
      */
-    @POST("hongniu/api/policy/create")
+    @POST("hongniu/api/order/updategoodprice")
     Observable<CommonBean<String>> queryInstancePrice(@Body QueryInsurancePriceBean infor);
 
     /**
