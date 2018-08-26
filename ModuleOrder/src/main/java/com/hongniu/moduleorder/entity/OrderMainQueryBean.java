@@ -16,7 +16,7 @@ public class OrderMainQueryBean {
     /**
      * false	string	订单状态(2待发货，3配送中，4已到达,5已收货)
      */
-    private int queryStatus;
+    private String queryStatus;
     /**
      * false	string	是否付运费(1是，0否)
      */
@@ -38,11 +38,19 @@ public class OrderMainQueryBean {
         this.pageSize = pageSize;
     }
 
-    public int getQueryStatus() {
+    public int getPageNum() {
+        return pageNum;
+    }
+
+    public void setPageNum(int pageNum) {
+        this.pageNum = pageNum;
+    }
+
+    public String getQueryStatus() {
         return queryStatus;
     }
 
-    public void setQueryStatus(int queryStatus) {
+    public void setQueryStatus(String queryStatus) {
         this.queryStatus = queryStatus;
     }
 
@@ -69,12 +77,5 @@ public class OrderMainQueryBean {
     public void setDeliveryDate(String deliveryDate) {
         this.deliveryDate = deliveryDate;
     }
-
-    public int getPageNum() {
-        return pageNum;
-    }
-
-    public void setPageNum(int pageNum) {
-        this.pageNum = pageNum;
-    }
 }
+

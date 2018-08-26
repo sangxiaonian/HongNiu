@@ -10,6 +10,7 @@ import com.hongniu.moduleorder.entity.OrderListBean;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
 import com.hongniu.moduleorder.entity.OrderParamBean;
 import com.hongniu.moduleorder.entity.QueryInsurancePriceBean;
+import com.hongniu.moduleorder.entity.WxPayBean;
 
 import java.util.List;
 
@@ -93,7 +94,7 @@ public interface OrderService {
      * @return
      */
     @POST("hongniu/wx/jsApiPay")
-    Observable<CommonBean<ResponseBody>> payOrderOffLine(@Body OrderParamBean infor);
+    Observable<CommonBean<WxPayBean>> payOrderOffLine(@Body OrderParamBean infor);
 
     /**
      * 创建保单

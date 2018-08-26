@@ -19,6 +19,7 @@ import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.entity.CreatInsuranceBean;
 import com.hongniu.moduleorder.entity.OrderParamBean;
+import com.hongniu.moduleorder.entity.WxPayBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.widget.dialog.BuyInsuranceDialog;
 import com.hongniu.moduleorder.widget.dialog.InsuranceNoticeDialog;
@@ -295,26 +296,27 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
                         }
 
                         HttpOrderFactory.payOrderOffLine(bean)
-                                .subscribe(new NetObserver<ResponseBody>(this) {
+                                .subscribe(new NetObserver<WxPayBean>(this) {
                                     @Override
-                                    public void doOnSuccess(ResponseBody data) {
-                                        if (buyInsurance) {
-                                            ArouterUtils.getInstance()
-                                                    .builder(ArouterParamOrder.activity_insurance_creat)
-                                                    .navigation(mContext);
-                                            CreatInsuranceBean creatInsuranceBean = new CreatInsuranceBean();
-                                            creatInsuranceBean.setGoodsValue(cargoPrice + "");
-                                            OrderEvent.CraetInsurance insurance = new OrderEvent.CraetInsurance(creatInsuranceBean);
-                                            BusFactory.getBus().postSticky(insurance);
-                                        } else {
-                                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
-                                        }
-                                        finish();
+                                    public void doOnSuccess(WxPayBean data) {
+                                        WeChatAppPay.pay(mContext);
+//                                        if (buyInsurance) {
+//                                            ArouterUtils.getInstance()
+//                                                    .builder(ArouterParamOrder.activity_insurance_creat)
+//                                                    .navigation(mContext);
+//                                            CreatInsuranceBean creatInsuranceBean = new CreatInsuranceBean();
+//                                            creatInsuranceBean.setGoodsValue(cargoPrice + "");
+//                                            OrderEvent.CraetInsurance insurance = new OrderEvent.CraetInsurance(creatInsuranceBean);
+//                                            BusFactory.getBus().postSticky(insurance);
+//                                        } else {
+//                                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
+//                                        }
+//                                        finish();
 
                                     }
                                 });
                     } else {
-                        WeChatAppPay.pay(mContext);
+//                        WeChatAppPay.pay(mContext);
                         ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("请选择支付方式");
 
                     }
@@ -323,9 +325,9 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
                     if (buyInsurance) {//购买保险
                         if (checkbox.isChecked()) {
                             HttpOrderFactory.payOrderOffLine(creatBuyParams(false, true, true))
-                                    .subscribe(new NetObserver<ResponseBody>(this) {
+                                    .subscribe(new NetObserver<WxPayBean>(this) {
                                         @Override
-                                        public void doOnSuccess(ResponseBody data) {
+                                        public void doOnSuccess(WxPayBean data) {
                                             ArouterUtils.getInstance()
                                                     .builder(ArouterParamOrder.activity_insurance_creat)
                                                     .navigation(mContext);
@@ -344,9 +346,9 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
 
                     } else {//不购买保险
                         HttpOrderFactory.payOrderOffLine(creatBuyParams(false, true, false))
-                                .subscribe(new NetObserver<ResponseBody>(this) {
+                                .subscribe(new NetObserver<WxPayBean>(this) {
                                     @Override
-                                    public void doOnSuccess(ResponseBody data) {
+                                    public void doOnSuccess(WxPayBean data) {
                                         finish();
                                         ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
 

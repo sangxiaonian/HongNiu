@@ -11,6 +11,7 @@ import com.hongniu.moduleorder.entity.OrderCreatParamBean;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
 import com.hongniu.moduleorder.entity.OrderParamBean;
 import com.hongniu.moduleorder.entity.QueryInsurancePriceBean;
+import com.hongniu.moduleorder.entity.WxPayBean;
 import com.sang.common.net.rx.RxUtils;
 
 import java.util.List;
@@ -109,11 +110,11 @@ public class HttpOrderFactory {
      * hasPolicy    true	boolean	是否买保险，true=是
      * onlinePay    true	boolean	是否线上支付,false=线下支付
      */
-    public static Observable<CommonBean<ResponseBody>> payOrderOffLine(OrderParamBean bean) {
+    public static Observable<CommonBean<WxPayBean>> payOrderOffLine(OrderParamBean bean) {
         return OrderClient.getInstance()
                 .getService()
                 .payOrderOffLine(bean)
-                .compose(RxUtils.<CommonBean<ResponseBody>>getSchedulersObservableTransformer());
+                .compose(RxUtils.<CommonBean<WxPayBean>>getSchedulersObservableTransformer());
 
     }
 

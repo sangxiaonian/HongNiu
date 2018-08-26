@@ -38,7 +38,7 @@ public class QueryExpendResultBean {
          */
 
         private int payWay;
-        private int money;
+        private float money;
 
         public int getPayWay() {
             return payWay;
@@ -48,11 +48,11 @@ public class QueryExpendResultBean {
             this.payWay = payWay;
         }
 
-        public int getMoney() {
+        public float getMoney() {
             return money;
         }
 
-        public void setMoney(int money) {
+        public void setMoney(float money) {
             this.money = money;
         }
     }

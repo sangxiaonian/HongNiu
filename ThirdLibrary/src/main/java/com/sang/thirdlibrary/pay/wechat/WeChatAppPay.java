@@ -19,12 +19,19 @@ public class WeChatAppPay {
         api = WXAPIFactory.createWXAPI(context, PayConfig.weChatAppid);
 
         PayReq request = new PayReq();
-        request.appId = "wxd930ea5d5a258f4f";
-        request.partnerId = "1900000109";
+        //应用ID
+        request.appId = PayConfig.weChatAppid;
+        //商户号
+//        request.partnerId = "1900000109";
+        //预支付交易会话ID
         request.prepayId= "1101000000140415649af9fc314aa427";
+        //固定值
         request.packageValue = "Sign=WXPay";
+        //随机字符串
         request.nonceStr= "1101000000140429eb40476f8896f4c9";
+        //timestamp
         request.timeStamp= "1398746574";
+        //sign
         request.sign= "7FFECB600D7157C5AA49810D2D8F28BC2811827B";
         api.sendReq(request);
     }

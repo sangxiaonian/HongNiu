@@ -82,6 +82,7 @@ public class SplashActivity extends BaseActivity {
                         }
                     });
         } else {
+            EventBus.getDefault().postSticky(new RoleTypeBean());
             handler.sendEmptyMessageDelayed(0, 1500);
 
         }

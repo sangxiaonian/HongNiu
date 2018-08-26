@@ -194,7 +194,16 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
         } else if (view.getId() == R.id.switch_right) {
             rightSelection = position;
             switchRight.setTitle(states.get(position));
-            queryBean.setQueryStatus(position);
+            queryBean.setQueryStatus(null);
+            queryBean.setHasFreight(null);
+            if (position==0){//全部状态
+                queryBean.setQueryStatus(null);
+            }else if (position==1){//待支付状态
+                queryBean.setQueryStatus(null);
+                queryBean.setHasFreight("0");
+            }else {
+                queryBean.setQueryStatus(position+"");
+            }
         }
         queryData(true, true);
         pop.dismiss();
