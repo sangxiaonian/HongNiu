@@ -16,26 +16,35 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.RefrushActivity;
+import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.OrderDetailBean;
+import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.widget.order.OrderDetailDialog;
 import com.hongniu.modulefinance.R;
+import com.hongniu.modulefinance.entity.QueryExpendBean;
+import com.hongniu.modulefinance.net.HttpFinanceFactory;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
+import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.dialog.builder.BottomAlertBuilder;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import io.reactivex.Observable;
+import retrofit2.http.HTTP;
 
 @Route(path = ArouterParamsFinance.activity_finance_search)
-public class FinanceSearchActivity extends BaseActivity implements View.OnClickListener {
+public class FinanceSearchActivity extends RefrushActivity<OrderDetailBean> implements View.OnClickListener {
 
     private EditText etSearch;
     private View imgClear;
     private View btCancle;
-    private RecyclerView recycleView;
-    private ArrayList<String> datas;
-    private XAdapter<String> adapter;
+    private QueryExpendBean bean = new QueryExpendBean();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +63,6 @@ public class FinanceSearchActivity extends BaseActivity implements View.OnClickL
         etSearch = findViewById(R.id.et_search);
         imgClear = findViewById(R.id.img_clear);
         btCancle = findViewById(R.id.tv_cancel);
-        recycleView = findViewById(R.id.rv);
-
-
 
 
     }
@@ -64,31 +70,42 @@ public class FinanceSearchActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void initData() {
         super.initData();
-        datas = new ArrayList<>();
-        LinearLayoutManager manager = new LinearLayoutManager(mContext);
-        manager.setOrientation(LinearLayoutManager.VERTICAL);
-        recycleView.setLayoutManager(manager);
-        adapter = new XAdapter<String>(mContext, datas) {
+
+    }
+
+    @Override
+    protected Observable<CommonBean<PageBean<OrderDetailBean>>> getListDatas() {
+        bean.setPageNum(currentPage);
+//        bean.setFinanceType(2);
+        return HttpFinanceFactory.queryFinance(bean);
+    }
+
+    @Override
+    protected XAdapter<OrderDetailBean> getAdapter(List<OrderDetailBean> datas) {
+        return new XAdapter<OrderDetailBean>(mContext, datas) {
             @Override
-            public BaseHolder<String> initHolder(ViewGroup parent, int viewType) {
-                return new BaseHolder<String>(mContext, parent, R.layout.finance_item_finance) {
+            public BaseHolder<OrderDetailBean> initHolder(ViewGroup parent, int viewType) {
+                return new BaseHolder<OrderDetailBean>(mContext, parent, R.layout.finance_item_finance) {
                     @Override
-                    public void initView(View itemView, int position, String data) {
+                    public void initView(View itemView, int position, final OrderDetailBean data) {
                         super.initView(itemView, position, data);
                         TextView tvOrder = itemView.findViewById(R.id.tv_order);
                         TextView tvCarNum = itemView.findViewById(R.id.tv_car_num);
                         TextView tvTime = itemView.findViewById(R.id.tv_time);
                         TextView tvPrice = itemView.findViewById(R.id.tv_price);
 
-                        tvOrder.setText("订单号：" + "1212136484");
-                        tvCarNum.setText("车牌号码：" + "沪A125356");
-                        tvTime.setText("付费时间：" + "2017-7-8");
+                        tvOrder.setText("订单号：" + (data.getOrderNum() == null ? "" : data.getOrderNum()));
+                        tvCarNum.setText("车牌号码：" + (data.getCarnum() == null ? "" : data.getCarnum()));
+                        tvTime.setText("付费时间：" + (data.getPayTime() == 0 ? "" : ConvertUtils.formatTime(data.getPayTime(), "yyyy-MM-dd HH:mm:ss")));
                         tvPrice.setText("1200.0");
                         itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                OrderDetailDialog orderDetailDialog = new OrderDetailDialog(mContext);
+                                orderDetailDialog.setOrdetail(data);
                                 new BottomAlertBuilder()
-                                        .creatDialog(new OrderDetailDialog(mContext))
+                                        .setDialogTitle(getString(R.string.login_car_entry_deleted))
+                                        .creatDialog(orderDetailDialog)
                                         .show();
                             }
                         });
@@ -97,7 +114,6 @@ public class FinanceSearchActivity extends BaseActivity implements View.OnClickL
                 };
             }
         };
-        recycleView.setAdapter(adapter);
     }
 
     @Override
@@ -131,12 +147,9 @@ public class FinanceSearchActivity extends BaseActivity implements View.OnClickL
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("搜索");
+                    bean.setCarNo(etSearch.getText().toString().trim());
+                    queryData(true,true);
 
-                    for (int i = 0; i < 10; i++) {
-                        datas.add("");
-                    }
-                    adapter.notifyDataSetChanged();
                     DeviceUtils.hideSoft(etSearch);
                 }
                 return false;

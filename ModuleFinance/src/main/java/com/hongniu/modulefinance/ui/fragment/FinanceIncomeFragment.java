@@ -135,6 +135,7 @@ public class FinanceIncomeFragment extends RefrushFragmet<OrderDetailBean> {
 
             bean.setYear(ConvertUtils.formatTime(event.date, "yyyy"));
             bean.setMonth(data.substring(0, data.length() - 1));
+            queryData(true);
             HttpFinanceFactory
                     .queryInComeVistogram(ConvertUtils.formatTime(event.date, "yyyy"), data.substring(0, data.length() - 1))
                     .subscribe(new NetObserver<List<QueryExpendResultBean>>(this) {

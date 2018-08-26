@@ -67,11 +67,17 @@
             android:paddingLeft="@dimen/app_gap"
             android:text="@string/cancel" />
     </LinearLayout>
-
-    <com.sang.common.recycleview.RecycleViewSupportEmpty
+    <com.hongniu.baselibrary.widget.XRefreshLayout
+        android:id="@+id/refresh"
         android:layout_width="match_parent"
-        android:id="@+id/rv"
-        app:empty_img="@mipmap/icon_zd_200"
-        app:empty_title="未找到相应账单"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+        <com.sang.common.recycleview.RecycleViewSupportEmpty
+            android:layout_width="match_parent"
+            android:id="@+id/rv"
+            app:empty_img="@mipmap/icon_zd_200"
+            app:empty_title="未找到相应账单"
+            android:layout_height="match_parent"/>
+    </com.hongniu.baselibrary.widget.XRefreshLayout>
+
+
 </LinearLayout>

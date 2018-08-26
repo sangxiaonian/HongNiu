@@ -63,7 +63,7 @@ public abstract class RefrushActivity<T> extends BaseActivity implements OnRefre
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
 
-        queryData(true);
+        queryData(true,false);
     }
 
     @Override
@@ -72,6 +72,10 @@ public abstract class RefrushActivity<T> extends BaseActivity implements OnRefre
 
     }
 
+    protected void queryData(final boolean isClear,boolean showLoad) {
+        isFirst=showLoad;
+         queryData(isClear);
+    }
 
     protected void queryData(final boolean isClear) {
         if (isClear) {

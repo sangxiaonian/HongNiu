@@ -428,7 +428,6 @@ public class VistogramView extends View implements DynamicAnimation.OnAnimationE
         hValue.x = (int) ((Math.ceil(max / 3000) + 1) * 3000);
         initData();
         postInvalidate();
-        JLog.i("---------------"+hValue.x);
 
     }
 
