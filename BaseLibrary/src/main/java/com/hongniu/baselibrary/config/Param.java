@@ -5,6 +5,9 @@ package com.hongniu.baselibrary.config;
  * 努力，为梦长留
  */
 public class Param {
+
+    public static final String weChatAppid="wxa9d4be10effd4626";
+
     /**
      * 分页查找每页数据数量
      */

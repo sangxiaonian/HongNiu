@@ -23,10 +23,13 @@ import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.widget.dialog.BuyInsuranceDialog;
 import com.hongniu.moduleorder.widget.dialog.InsuranceNoticeDialog;
 import com.sang.common.event.BusFactory;
+import com.sang.common.net.AppConfigs;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
+import com.sang.thirdlibrary.pay.PayConfig;
+import com.sang.thirdlibrary.pay.wechat.WeChatAppPay;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -286,9 +289,9 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
                     if (checkbox.isChecked()) {
                         OrderParamBean bean;
                         if (buyInsurance) {//购买保险
-                            bean = creatBuyParams(true, true, true, "");
+                            bean = creatBuyParams(true, true, true);
                         } else {//不购买保险
-                            bean = creatBuyParams(true, true, false, "");
+                            bean = creatBuyParams(true, true, false);
                         }
 
                         HttpOrderFactory.payOrderOffLine(bean)
@@ -311,6 +314,7 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
                                     }
                                 });
                     } else {
+                        WeChatAppPay.pay(mContext);
                         ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("请选择支付方式");
 
                     }
@@ -318,7 +322,7 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
                 } else {//线下支付
                     if (buyInsurance) {//购买保险
                         if (checkbox.isChecked()) {
-                            HttpOrderFactory.payOrderOffLine(creatBuyParams(false, true, true, ""))
+                            HttpOrderFactory.payOrderOffLine(creatBuyParams(false, true, true))
                                     .subscribe(new NetObserver<ResponseBody>(this) {
                                         @Override
                                         public void doOnSuccess(ResponseBody data) {
@@ -339,7 +343,7 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
                         }
 
                     } else {//不购买保险
-                        HttpOrderFactory.payOrderOffLine(creatBuyParams(false, true, false, ""))
+                        HttpOrderFactory.payOrderOffLine(creatBuyParams(false, true, false))
                                 .subscribe(new NetObserver<ResponseBody>(this) {
                                     @Override
                                     public void doOnSuccess(ResponseBody data) {
@@ -381,15 +385,14 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
      * @param onLine     是否是线上
      * @param hasFrenght 是否支付运费
      * @param policy     是否购买保险
-     * @param openID     微信OpenID
      * @return
      */
-    private OrderParamBean creatBuyParams(boolean onLine, boolean hasFrenght, boolean policy, String openID) {
+    private OrderParamBean creatBuyParams(boolean onLine, boolean hasFrenght, boolean policy ) {
         OrderParamBean bean = new OrderParamBean();
         bean.setOrderNum(orderNum);
         bean.setHasFreight(hasFrenght);
         bean.setHasPolicy(policy);
-        bean.setOpenid(openID);
+        bean. setAppid(PayConfig.weChatAppid);
         bean.setOnlinePay(onLine);
         return bean;
 

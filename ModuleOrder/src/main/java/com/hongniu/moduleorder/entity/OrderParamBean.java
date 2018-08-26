@@ -16,9 +16,9 @@ public class OrderParamBean {
      */
     private String orderNum;
     /**
-     * true	string	微信用户openid
+     * true	string	微信appid
      */
-    private String openid;
+    private String appid;
     /**
      * true	boolean	是否付运费，true=是
      */
@@ -49,13 +49,15 @@ public class OrderParamBean {
         this.orderNum = orderNum;
     }
 
-    public String getOpenid() {
-        return openid;
+    public String getAppid() {
+        return appid;
     }
 
-    public void setOpenid(String openid) {
-        this.openid = openid;
+    public void setAppid(String appid) {
+        this.appid = appid;
     }
+
+
 
     public boolean isHasFreight() {
         return hasFreight;
