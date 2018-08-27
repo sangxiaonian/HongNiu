@@ -1,7 +1,6 @@
 package com.hongniu.moduleorder.ui;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -12,6 +11,8 @@ import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.moduleorder.R;
+import com.hongniu.baselibrary.entity.OrderCreatBean;
+import com.hongniu.moduleorder.utils.OrderUtils;
 import com.sang.common.utils.ToastUtils;
 
 
@@ -24,16 +25,15 @@ public class OrderInsuranceResultActivity extends BaseActivity implements View.O
     private boolean success;
     private Button btCheck,btFinish;
     private TextView tvInsurance,tvInsuranceState;
-    private String insuranceNum;
-
+    OrderCreatBean insurance;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_insurance_result);
         setToolbarTitle("");
+        insurance = getIntent().getParcelableExtra(Param.TRAN);
 
-        insuranceNum= getIntent().getStringExtra(Param.TRAN);
-        success= !TextUtils.isEmpty(insuranceNum);
+        success= insurance!=null;
         initView();
         initData();
         initListener();
@@ -53,7 +53,10 @@ public class OrderInsuranceResultActivity extends BaseActivity implements View.O
         super.initData();
         btCheck.setVisibility(success? View.VISIBLE:View.GONE);
         tvInsurance.setVisibility(success? View.VISIBLE:View.GONE);
-        tvInsurance.setText("保单号"+"1546846544654");
+
+        if (insurance!=null){
+            tvInsurance.setText("保单号"+insurance.getPolicyNo());
+        }
         tvInsuranceState.setText(success?R.string.order_insurance_creat_success:R.string.order_insurance_creat_fail);
 
     }
@@ -76,6 +79,12 @@ public class OrderInsuranceResultActivity extends BaseActivity implements View.O
             ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_main).navigation(mContext);
         } else if (i == R.id.bt_check) {
             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("查看保单");
+            OrderUtils.scanPDf(this,insurance.getDownloadUrl());
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_main).navigation(mContext);
     }
 }

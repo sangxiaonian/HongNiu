@@ -3,7 +3,6 @@ package com.hongniu.moduleorder.ui;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Parcelable;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
@@ -11,17 +10,12 @@ import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
-import com.hongniu.baselibrary.entity.CloseActivityEvent;
 import com.hongniu.baselibrary.entity.CreatInsuranceBean;
 import com.hongniu.moduleorder.R;
-import com.hongniu.moduleorder.control.OrderEvent;
+import com.hongniu.baselibrary.entity.OrderCreatBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.sang.common.utils.ConvertUtils;
-import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.ColorProgress;
-
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * 保单生成中界面
@@ -36,8 +30,8 @@ public class OrderInsuranceActivity extends BaseActivity {
 
     private final int SUCCESS = 2;
     private final int FAIL = 1;
+    public OrderCreatBean insruance;
 
-    private String insruanceNum;//保单号
 
     private Handler handler = new Handler() {
         @Override
@@ -53,7 +47,7 @@ public class OrderInsuranceActivity extends BaseActivity {
             } else if (msg.what == SUCCESS) {
                 progress.setCurrentValue(100);
                 ArouterUtils.getInstance().builder(ArouterParamOrder.activity_insurance_creat_result)
-                        .withString(Param.TRAN,insruanceNum)
+                        .withParcelable(Param.TRAN,insruance)
                         .navigation(mContext);
                 finish();
             } else if (msg.what == FAIL){
@@ -76,11 +70,12 @@ public class OrderInsuranceActivity extends BaseActivity {
             handler.sendEmptyMessageDelayed(0, 200);
 
             HttpOrderFactory.creatInsurance(insuranceBean)
-                    .subscribe(new NetObserver<String>(null) {
+                    .subscribe(new NetObserver<OrderCreatBean>(null) {
+
                         @Override
-                        public void doOnSuccess(String data) {
+                        public void doOnSuccess(OrderCreatBean data) {
+                             insruance=data;
                             handler.sendEmptyMessage(SUCCESS);
-                            insruanceNum=data;
                         }
 
                         @Override

@@ -6,24 +6,20 @@ import android.support.annotation.Nullable;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
-import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.AttributeSet;
-import android.util.Printer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.hongniu.baselibrary.R;
-import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.widget.OrderProgress;
 import com.hongniu.baselibrary.widget.order.helper.OrderItemHelper;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.CenteredImageSpan;
 import com.sang.thirdlibrary.map.LoactionUtils;
@@ -184,7 +180,7 @@ public class OrderDetailItem extends FrameLayout {
      */
     public void setIdentity(OrderDetailItemControl.RoleState roleState) {
         this.roleState = roleState;
-        tvIdentity.setText(OrderUtils.getRoleState(roleState));
+        tvIdentity.setText(CommonOrderUtils.getRoleState(roleState));
     }
 
     /**
@@ -245,7 +241,7 @@ public class OrderDetailItem extends FrameLayout {
      */
     public void setOrderState(OrderDetailItemControl.OrderState orderState) {
         this.orderState = orderState;
-        tv_state.setText(OrderUtils.getOrderState(orderState));
+        tv_state.setText(CommonOrderUtils.getOrderState(orderState));
     }
 
 

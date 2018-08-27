@@ -9,7 +9,7 @@ import java.util.Random;
 /**
  * 作者： ${PING} on 2018/8/2.
  */
-public class OrderUtils {
+public class CommonOrderUtils {
     public static String getOrderState(OrderDetailItemControl.OrderState state) {
         String stateMsg;
         if (state==null){

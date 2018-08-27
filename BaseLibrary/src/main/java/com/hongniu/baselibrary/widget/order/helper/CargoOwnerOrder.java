@@ -4,7 +4,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
-import com.hongniu.baselibrary.widget.order.OrderUtils;
+import com.hongniu.baselibrary.widget.order.CommonOrderUtils;
 
 import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_BUY_INSURANCE;
 import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_CANCLE;
@@ -113,7 +113,7 @@ public class CargoOwnerOrder implements OrderDetailItemControl.IOrderItemHelper 
 
     @Override
     public String getOrderState() {
-        return OrderUtils.getOrderState(state);
+        return CommonOrderUtils.getOrderState(state);
     }
 
 

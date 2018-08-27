@@ -8,6 +8,7 @@ import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.entity.CreatInsuranceBean;
 import com.hongniu.moduleorder.entity.LocationBean;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
+import com.hongniu.baselibrary.entity.OrderCreatBean;
 import com.hongniu.moduleorder.entity.OrderCreatParamBean;
 import com.hongniu.moduleorder.entity.OrderIdBean;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
@@ -126,11 +127,11 @@ public class HttpOrderFactory {
      * orderNum	true	string	订单编号
      * goodsValue	true	number	货物价值
      */
-    public static Observable<CommonBean<String>> creatInsurance(CreatInsuranceBean bean) {
+    public static Observable<CommonBean<OrderCreatBean>> creatInsurance(CreatInsuranceBean bean) {
         return OrderClient.getInstance()
                 .getService()
                 .creatInsurance(bean)
-                .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
+                .compose(RxUtils.<CommonBean<OrderCreatBean>>getSchedulersObservableTransformer());
     }
 
     /**

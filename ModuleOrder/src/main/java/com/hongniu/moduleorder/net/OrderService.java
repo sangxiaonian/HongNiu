@@ -6,6 +6,7 @@ import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.CreatInsuranceBean;
 import com.hongniu.moduleorder.entity.LocationBean;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
+import com.hongniu.baselibrary.entity.OrderCreatBean;
 import com.hongniu.moduleorder.entity.OrderCreatParamBean;
 import com.hongniu.moduleorder.entity.OrderIdBean;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
@@ -103,7 +104,7 @@ public interface OrderService {
      * goodsValue	true	number	货物价值
      */
     @POST("hongniu/api/policy/create")
-    Observable<CommonBean<String>> creatInsurance(@Body CreatInsuranceBean infor);
+    Observable<CommonBean<OrderCreatBean>> creatInsurance(@Body CreatInsuranceBean infor);
 
     /**
      * 根据货物金额查询保费

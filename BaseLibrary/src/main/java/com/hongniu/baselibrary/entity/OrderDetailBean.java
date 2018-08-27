@@ -180,6 +180,56 @@ public class OrderDetailBean {
     protected String payWay;
 
 
+    /**
+     *  false	string	保单号
+      */
+    private String policyNum	   ;
+    /**
+     *  false	string	保险公司简称
+      */
+    private String companyName;
+    /**
+     *  false	number	保费
+      */
+    private String policyMoney;
+    /**
+     *  false	string	保单信息
+      */
+    private OrderCreatBean policyInfo	   ;
+
+
+    public String getPolicyNum() {
+        return policyNum;
+    }
+
+    public void setPolicyNum(String policyNum) {
+        this.policyNum = policyNum;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getPolicyMoney() {
+        return policyMoney;
+    }
+
+    public void setPolicyMoney(String policyMoney) {
+        this.policyMoney = policyMoney;
+    }
+
+    public OrderCreatBean getPolicyInfo() {
+        return policyInfo;
+    }
+
+    public void setPolicyInfo(OrderCreatBean policyInfo) {
+        this.policyInfo = policyInfo;
+    }
+
     public double getPositionX() {
         return positionX;
     }

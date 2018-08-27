@@ -22,6 +22,7 @@ import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.utils.PermissionUtils;
+import com.hongniu.baselibrary.widget.order.CommonOrderUtils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItem;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.moduleorder.R;
@@ -30,6 +31,7 @@ import com.hongniu.moduleorder.control.SwitchStateListener;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.utils.LoactionCollectionUtils;
+import com.hongniu.moduleorder.utils.OrderUtils;
 import com.hongniu.moduleorder.widget.OrderMainPop;
 import com.sang.common.event.BusFactory;
 import com.sang.common.recycleview.adapter.XAdapter;
@@ -46,7 +48,6 @@ import com.sang.common.widget.popu.inter.OnPopuDismissListener;
 import com.sang.thirdlibrary.map.LoactionUtils;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -349,7 +350,13 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
      */
     @Override
     public void onCheckInsruance(OrderDetailBean orderBean) {
-        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("查看保单");
+//        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("查看保单");
+        if (orderBean.getPolicyInfo()!=null){
+            OrderUtils.scanPDf(getActivity(),orderBean.getPolicyInfo().getDownloadUrl());
+        }else {
+            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("暂无保单信息");
+
+        }
     }
 
     /**
