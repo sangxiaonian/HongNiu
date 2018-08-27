@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -259,6 +260,7 @@ public class OrderDetailItem extends FrameLayout {
     public void setContent(String startNum, String carNum,String roleTop, String carOwnerName,
                            final String carOwnerPhone, String cargo,String roleBottom,
                            String driverName, final String driverPhone) {
+        tv_order_detail.setMovementMethod(LinkMovementMethod.getInstance());
         tv_order_detail.setText(getContent(startNum, carNum, roleTop,carOwnerName, carOwnerPhone, cargo
                 ,roleBottom, driverName, driverPhone
         ));

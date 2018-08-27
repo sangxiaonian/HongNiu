@@ -36,7 +36,6 @@
             android:exported="true"
             android:launchMode="singleTop"
             android:theme="@style/tranTheme" />
-        <activity android:name=".H5Activity"></activity>
     </application>
 
 </manifest>
