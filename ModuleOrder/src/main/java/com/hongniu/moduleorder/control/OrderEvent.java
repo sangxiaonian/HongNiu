@@ -5,6 +5,7 @@ import com.amap.api.services.core.PoiItem;
 import com.amap.api.trace.TraceLocation;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.CreatInsuranceBean;
+import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.sang.common.event.IBus;
 import com.sang.thirdlibrary.map.voice.IFlyTTS;
 
@@ -90,7 +91,13 @@ public class OrderEvent {
     public static class CheckPathEvent implements IBus.IEvent {
         OrderDetailBean bean;
         List<TraceLocation> locations;
+        private OrderDetailItemControl.RoleState roaleState;
+
         public CheckPathEvent(OrderDetailBean bean) {
+            this.bean = bean;
+        }
+
+        public void setBean(OrderDetailBean bean) {
             this.bean = bean;
         }
 
@@ -104,6 +111,14 @@ public class OrderEvent {
 
         public OrderDetailBean getBean() {
             return bean;
+        }
+
+        public void setRoaleState(OrderDetailItemControl.RoleState roaleState) {
+            this.roaleState = roaleState;
+        }
+
+        public OrderDetailItemControl.RoleState getRoaleState() {
+            return roaleState;
         }
     }
 

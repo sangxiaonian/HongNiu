@@ -259,6 +259,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                 }
                 JLog.i("-------接收到运输相关信息-----");
                 upLoactionUtils = new LoactionUpUtils();
+                upLoactionUtils.setOrderInfor(event.orderID,event.cardID);
             } else {
                 if (upLoactionUtils != null) {
                     upLoactionUtils.onDestroy();
@@ -490,7 +491,6 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     //定位成功，位置信息开始变化
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
-        JLog.d(aMapLocation.getAddress());
         if (upLoactionUtils != null) {
             upLoactionUtils.add(aMapLocation.getLatitude(), aMapLocation.getLongitude(), aMapLocation.getTime());
         }

@@ -10,10 +10,7 @@ import com.amap.api.location.AMapLocationListener;
 import com.amap.api.location.CoordinateConverter;
 import com.amap.api.location.DPoint;
 import com.amap.api.maps.model.LatLng;
-import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
-
-import java.util.logging.Level;
 
 /**
  * 作者： ${PING} on 2018/8/22.
@@ -135,6 +132,25 @@ public class LoactionUtils {
         endLatlng.setLongitude(longitude);
        return CoordinateConverter.calculateLineDistance(startLatlng,endLatlng)/1000;
 
+    }
+
+    /**
+     * 两坐标之间的距离 单位米
+     * @param startLatitude
+     * @param startLongitude
+     * @param endLatitude
+     * @param endLongitude
+     * @return
+     */
+    public float caculeDis(double startLatitude, double startLongitude, double endLatitude,
+                          double endLongitude){
+        DPoint startLatlng =new DPoint();
+        DPoint endLatlng =new DPoint();
+        startLatlng.setLatitude(startLatitude);
+        startLatlng.setLongitude(startLongitude);
+        endLatlng.setLatitude(endLatitude);
+        endLatlng.setLongitude(endLongitude);
+        return CoordinateConverter.calculateLineDistance(startLatlng,endLatlng);
     }
 
 

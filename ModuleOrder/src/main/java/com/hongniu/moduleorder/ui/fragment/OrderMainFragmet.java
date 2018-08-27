@@ -368,9 +368,11 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
             public void hasPermission(List<String> granted, boolean isAll) {
                 ArouterUtils.getInstance().builder(ArouterParamOrder.activity_map_check_path).withBoolean(Param.TRAN, true).navigation(getContext());
                 OrderEvent.CheckPathEvent checkPathEvent = new OrderEvent.CheckPathEvent(orderBean);
-                checkPathEvent.setLocations(LoactionCellection.getInstance().getList());
+                checkPathEvent.setBean(orderBean);
+                checkPathEvent.setRoaleState(roleState);
+//                checkPathEvent.setLocations(LoactionCellection.getInstance().getList());
                 BusFactory.getBus().postSticky(checkPathEvent);
-//                CheckPathEvent
+
             }
 
             @Override

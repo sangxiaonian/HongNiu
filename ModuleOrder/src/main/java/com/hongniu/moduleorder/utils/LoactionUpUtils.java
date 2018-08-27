@@ -1,8 +1,11 @@
 package com.hongniu.moduleorder.utils;
 
+import com.amap.api.maps.model.LatLng;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.moduleorder.entity.LocationBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
+import com.sang.common.utils.JLog;
+import com.sang.thirdlibrary.map.LoactionUtils;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -21,6 +24,8 @@ public class LoactionUpUtils {
     public Queue<List<LocationBean>> queue = new LinkedList<>();
 
     private List<LocationBean> temp =new ArrayList<>();
+    private int tempSize=10;//每次批量上传的坐标个数
+    private int minDis=10;//记录两次坐标之间的最小距离
 
 
 
@@ -38,20 +43,26 @@ public class LoactionUpUtils {
         this.carId = carId;
     }
 
-    private double latitude;
-    /**
-     * true	double	经度，浮点数，范围为-180~180，负数表示西经
-     */
-    private double longitude;
+
+    private LatLng lastLoaction=new LatLng(0,0) ;
 
     public void add(double latitude, double longitude,long movingTime) {
+        float v = LoactionUtils.getInstance().caculeDis(lastLoaction.latitude, lastLoaction.longitude, latitude, longitude);
+        if (v<minDis){
+            return;
+        }else {
+            JLog.i("记录");
+            lastLoaction=new LatLng(latitude,longitude);
+
+        }
+
         LocationBean bean = new LocationBean();
         bean.setOrderId(orderId);
         bean.setCarId(carId);
         bean.setLatitude(latitude);
         bean.setLongitude(longitude);
         bean.setMovingTime(movingTime);
-        if (temp.size()<10){
+        if (temp.size()<tempSize){
             temp.add(bean);
         }else {
             notifyQueue(temp);

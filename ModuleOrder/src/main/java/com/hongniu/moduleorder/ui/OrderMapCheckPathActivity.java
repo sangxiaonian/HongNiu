@@ -86,7 +86,6 @@ public class OrderMapCheckPathActivity extends BaseActivity implements TraceList
         mapView = findViewById(R.id.map);
         aMap = mapView.getMap();
         item = findViewById(R.id.item_order);
-        item.setDebug();
         item.hideButton(true);
 
 
@@ -110,6 +109,10 @@ public class OrderMapCheckPathActivity extends BaseActivity implements TraceList
         if (event != null &&event.getBean()!=null) {
             OrderDetailBean bean = event.getBean();
             List<TraceLocation> locations = event.getLocations();
+            item.setIdentity(event.getRoaleState());
+            item.setInfor(bean);
+
+
             if (locations!=null){
                 showLoad();
 
