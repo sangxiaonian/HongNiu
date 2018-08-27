@@ -454,7 +454,8 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
                 Poi start = new Poi(orderBean.getStratPlaceInfo(), new LatLng(orderBean.getStratPlaceX(), orderBean.getStratPlaceY()), "");
                 Poi end = new Poi(orderBean.getDestinationInfo(), new LatLng(orderBean.getDestinationX(), orderBean.getDestinationY()), "");
 
-                AmapNaviParams amapNaviParams = new AmapNaviParams(start, null, end, AmapNaviType.DRIVER, AmapPageType.NAVI);
+//                AmapNaviParams amapNaviParams = new AmapNaviParams(start, null, end, AmapNaviType.DRIVER, AmapPageType.NAVI);//直接跳过选址，进入导航
+                AmapNaviParams amapNaviParams = new AmapNaviParams(start, null, end, AmapNaviType.DRIVER );
                 amapNaviParams.setUseInnerVoice(true);
                 AmapNaviPage.getInstance().showRouteActivity(getContext().getApplicationContext(), amapNaviParams, new LoactionCollectionUtils());
             }

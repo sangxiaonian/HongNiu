@@ -13,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationListener;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
@@ -24,13 +26,16 @@ import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.utils.Utils;
+import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.control.OrderMainControl;
 import com.hongniu.moduleorder.control.SwitchStateListener;
 import com.hongniu.moduleorder.present.OrderMainPresenter;
+import com.hongniu.moduleorder.utils.LoactionUpUtils;
 import com.hongniu.moduleorder.widget.OrderMainTitlePop;
 import com.sang.common.event.BusFactory;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.DeviceUtils;
+import com.sang.common.utils.JLog;
 import com.sang.common.widget.SwitchTextLayout;
 import com.sang.common.widget.dialog.BottomAlertDialog;
 import com.sang.common.widget.dialog.CenterAlertDialog;
@@ -51,7 +56,7 @@ import java.util.List;
  * 订单中心主页
  */
 @Route(path = ArouterParamOrder.activity_order_main)
-public class OrderMainActivity extends BaseActivity implements OrderMainControl.IOrderMainView, SwitchTextLayout.OnSwitchListener, OrderMainTitlePop.OnOrderMainClickListener, OnPopuDismissListener, View.OnClickListener {
+public class OrderMainActivity extends BaseActivity implements OrderMainControl.IOrderMainView, SwitchTextLayout.OnSwitchListener, OrderMainTitlePop.OnOrderMainClickListener, OnPopuDismissListener, View.OnClickListener, AMapLocationListener {
 
     private SwitchTextLayout switchTitle;
 
@@ -78,6 +83,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     private LoactionUtils loaction;
 
     private TextView tvName, tvPhone;
+    private LoactionUpUtils upLoactionUtils;//上传位置信息
 
 
     @Override
@@ -92,9 +98,11 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
 
         loaction = LoactionUtils.getInstance();
         loaction.init(this);
+        loaction.setListener(this);
         PermissionUtils.applyMap(this, new PermissionUtils.onApplyPermission() {
             @Override
             public void hasPermission(List<String> granted, boolean isAll) {
+                loaction.setInterval(3000);
                 loaction.startLoaction();
             }
 
@@ -166,9 +174,9 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     protected void initData() {
         super.initData();
         if (Utils.checkInfor()) {
-            tvName.setText(Utils.getPersonInfor().getContact()==null?"":Utils.getPersonInfor().getContact());
+            tvName.setText(Utils.getPersonInfor().getContact() == null ? "" : Utils.getPersonInfor().getContact());
         }
-        tvPhone.setText(Utils.getLoginInfor().getMobile()==null?"":Utils.getLoginInfor().getMobile());
+        tvPhone.setText(Utils.getLoginInfor().getMobile() == null ? "" : Utils.getLoginInfor().getMobile());
         switchTitle.post(new Runnable() {
             @Override
             public void run() {
@@ -217,10 +225,58 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     }
 
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(RoleTypeBean event) {
+    public void onMessageEvent(final RoleTypeBean event) {
         if (event != null) {
-            changeStaff(event.getRoleId());
+            changeStaff(event.getRoleId());//此处接收到用户类型
+            //如果有正在运输中的订单，则此时获取到用户的位置信息
+            if (event.getCarId() != null && event.getOrderId() != null) {
+                switchTitle.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        OrderEvent.UpLoactionEvent upLoactionEvent = new OrderEvent.UpLoactionEvent();
+                        upLoactionEvent.start = true;
+                        upLoactionEvent.orderID = event.getOrderId();
+                        upLoactionEvent.cardID = event.getCarId();
+                        BusFactory.getBus().post(upLoactionEvent);
+                        JLog.i("-------发送运输相关信息-----");
+                    }
+                },200);
+
+            }
         }
+    }
+
+
+    //开始或停止记录用户位置信息
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onStartLoactionMessage(OrderEvent.UpLoactionEvent event) {
+        JLog.i("-------接收到运输相关信息-----");
+        if (event != null) {
+            //如果有正在运输中的订单，则此时获取到用户的位置信息
+            if (event.start) {//开始记录数据
+                if (upLoactionUtils != null) {
+                    upLoactionUtils.onDestroy();
+                }
+                JLog.i("-------接收到运输相关信息-----");
+                upLoactionUtils = new LoactionUpUtils();
+            } else {
+                if (upLoactionUtils != null) {
+                    upLoactionUtils.onDestroy();
+                }
+            }
+        }
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        if (upLoactionUtils != null) {
+            upLoactionUtils.onDestroy();
+        }
+        loaction.onDestroy();
+        super.onDestroy();
+
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -342,17 +398,13 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.src_finance) {
-//            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL) .show("财务");
             ArouterUtils.getInstance().builder(ArouterParamsFinance.activity_finance_activity).navigation(mContext);
         } else if (i == R.id.src_me) {
-//            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL) .show("个人中心");
             drawerLayout.openDrawer(Gravity.START);
         } else if (i == R.id.ll_order) {
-//            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL) .show("我要下单");
             ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_create).navigation(mContext);
 
         } else if (i == R.id.ll_login_out) {
-//            ToastUtils.showTextToast("退出登录");
             drawerLayout.closeDrawer(Gravity.START);
             new BottomAlertBuilder()
                     .setDialogTitle(getString(R.string.login_out_entry))
@@ -376,7 +428,6 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
 
 
         } else if (i == R.id.ll_contact_service) {
-//            ToastUtils.showTextToast("联系客服");
             drawerLayout.closeDrawer(Gravity.START);
             new CenterAlertBuilder()
                     .setDialogTitleSize(18)
@@ -405,21 +456,17 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
 
         } else if (i == R.id.ll_about_us) {
             drawerLayout.closeDrawer(Gravity.START);
-//            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL) .show("关于我们");
 
             ArouterUtils.getInstance().builder(ArouterParamLogin.activity_about_us).navigation(mContext);
         } else if (i == R.id.ll_my_car) {
             drawerLayout.closeDrawer(Gravity.START);
-//            ToastUtils.showTextToast("我的车辆");
             ArouterUtils.getInstance().builder(ArouterParamLogin.activity_car_list).navigation(mContext);
         } else if (i == R.id.ll_person_infor) {
             drawerLayout.closeDrawer(Gravity.START);
-//            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL) .show("个人资料");
             ArouterUtils.getInstance().builder(ArouterParamLogin.activity_person_infor).navigation(mContext);
 
         } else if (i == R.id.ll_pay_method) {
             drawerLayout.closeDrawer(Gravity.START);
-//            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL) .show("收款方式");
             ArouterUtils.getInstance().builder(ArouterParamLogin.activity_pay_ways).navigation(mContext);
 
         }
@@ -436,9 +483,16 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
 
     @Override
     public void onClose(SwitchTextLayout switchTextLayout, View view) {
-
         titlePop.dismiss();
     }
 
 
+    //定位成功，位置信息开始变化
+    @Override
+    public void onLocationChanged(AMapLocation aMapLocation) {
+        JLog.d(aMapLocation.getAddress());
+        if (upLoactionUtils != null) {
+            upLoactionUtils.add(aMapLocation.getLatitude(), aMapLocation.getLongitude(), aMapLocation.getTime());
+        }
+    }
 }

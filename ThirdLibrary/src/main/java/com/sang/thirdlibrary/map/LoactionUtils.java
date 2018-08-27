@@ -13,6 +13,8 @@ import com.amap.api.maps.model.LatLng;
 import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 
+import java.util.logging.Level;
+
 /**
  * 作者： ${PING} on 2018/8/22.
  * 高德地图定位工具类
@@ -23,6 +25,8 @@ public class LoactionUtils {
     private LatLng latLng;
 
 
+    private  AMapLocationListener listener;
+
     public AMapLocationClient mLocationClient = null;
     //声明定位回调监听器
     public AMapLocationListener mLocationListener = new AMapLocationListener() {
@@ -31,6 +35,11 @@ public class LoactionUtils {
             //可在其中解析amapLocation获取相应内容。
             if (aMapLocation.getErrorCode() == 0) {//定位成功
                 latLng = new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude());
+                if (listener!=null){
+                    listener.onLocationChanged(aMapLocation);
+                }
+
+
             } else {
                 latLng = null;
                 //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
@@ -42,6 +51,12 @@ public class LoactionUtils {
         }
     };
     private AMapLocationClientOption mLocationOption;
+
+    public void onDestroy() {
+        if (mLocationClient!=null) {
+            mLocationClient.onDestroy();
+        }
+    }
 
     private static class InnerClass {
         public static LoactionUtils utils = new LoactionUtils();
@@ -55,6 +70,10 @@ public class LoactionUtils {
 
     }
 
+    public void setListener(AMapLocationListener listener) {
+        this.listener = listener;
+    }
+
     Context context;
     public void init(Context context) {
         this.context=context;
@@ -66,9 +85,10 @@ public class LoactionUtils {
         mLocationOption = new AMapLocationClientOption();
         mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
         mLocationOption.setNeedAddress(true);
+        mLocationOption.setOnceLocation(false);
         //设置是否允许模拟位置,默认为true，允许模拟位置
         mLocationOption.setMockEnable(true);
-        mLocationOption.setLocationPurpose(AMapLocationClientOption.AMapLocationPurpose.SignIn);
+        mLocationOption.setLocationPurpose(AMapLocationClientOption.AMapLocationPurpose.Sport);
     }
 
     /**
@@ -101,7 +121,6 @@ public class LoactionUtils {
      * @param longitude 终点坐标
      */
     public float caculeDis(double latitude, double longitude) {
-
         DPoint startLatlng =new DPoint();
         DPoint endLatlng =new DPoint();
         if (latLng!=null){
@@ -114,9 +133,6 @@ public class LoactionUtils {
         }
         endLatlng.setLatitude(latitude);
         endLatlng.setLongitude(longitude);
-        boolean isAMapDataAvailable = CoordinateConverter.isAMapDataAvailable(latitude,longitude);
-
-
        return CoordinateConverter.calculateLineDistance(startLatlng,endLatlng)/1000;
 
     }

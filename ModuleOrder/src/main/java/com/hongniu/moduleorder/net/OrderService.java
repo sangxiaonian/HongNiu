@@ -4,6 +4,7 @@ import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.CreatInsuranceBean;
+import com.hongniu.moduleorder.entity.LocationBean;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
 import com.hongniu.moduleorder.entity.OrderCreatParamBean;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
@@ -138,6 +139,12 @@ public interface OrderService {
      */
     @POST("hongniu/api/order/test-update-order")
     Observable<CommonBean<String>> debugChangeState(@Body OrderDetailBean infor);
+
+    /**
+     * 上传所有位置信息
+     */
+    @POST("hongniu/api/position/save")
+    Observable<CommonBean<String>> upLoaction(@Body List<LocationBean> locationBeans);
 
 
 }

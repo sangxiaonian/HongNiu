@@ -6,6 +6,7 @@ import com.amap.api.trace.TraceLocation;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.CreatInsuranceBean;
 import com.sang.common.event.IBus;
+import com.sang.thirdlibrary.map.voice.IFlyTTS;
 
 import java.util.List;
 
@@ -71,6 +72,16 @@ public class OrderEvent {
 
     }
 
+
+    /**
+     * 开始或者停止用户信息上传的数据
+     */
+    public static class UpLoactionEvent implements IBus.IEvent{
+       public String cardID;
+       public String orderID;
+       public boolean start;//true 开始，false 停止
+
+    }
 
 
     /**
