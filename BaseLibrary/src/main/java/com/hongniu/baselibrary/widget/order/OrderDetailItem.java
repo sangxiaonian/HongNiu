@@ -18,12 +18,14 @@ import android.widget.TextView;
 import com.hongniu.baselibrary.R;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
+import com.hongniu.baselibrary.widget.OrderProgress;
 import com.hongniu.baselibrary.widget.order.helper.OrderItemHelper;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.CenteredImageSpan;
+import com.sang.thirdlibrary.map.LoactionUtils;
 
 import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_BUY_INSURANCE;
 import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_CANCLE;
@@ -60,6 +62,7 @@ public class OrderDetailItem extends FrameLayout {
     private OrderDetailItemControl.OrderState orderState;
     private OrderDetailItemControl.OnOrderDetailBtClickListener listener;
     private OrderDetailBean orderBean;
+    private OrderProgress progress;
 
 
     public OrderDetailItem(@NonNull Context context) {
@@ -89,6 +92,7 @@ public class OrderDetailItem extends FrameLayout {
         tv_order_detail = itemView.findViewById(R.id.tv_order_detail);//右侧按钮
         llBottom = itemView.findViewById(R.id.ll_bottom);//右侧按钮
         lineBottom = itemView.findViewById(R.id.line_bottom);//右侧按钮
+        progress = itemView.findViewById(R.id.progress);//右侧按钮
 
         addView(itemView);
     }
@@ -126,6 +130,22 @@ public class OrderDetailItem extends FrameLayout {
         setTiem(ConvertUtils.formatTime(data.getDeliverydate(), "yyyy-MM-dd"));
         setPrice(data.getMoney());
         setOrderState(data.getOrderState());
+
+        if (data.getOrderState()== OrderDetailItemControl.OrderState.IN_TRANSIT){//正在运输中
+            progress.showProgress(true);
+            if (data.getPositionX()>0&&data.getPositionY()>0) {
+                float totale = LoactionUtils.getInstance().caculeDis(data.getStratPlaceX(), data.getStratPlaceY(), data.getDestinationX(), data.getDestinationY());
+                float current = LoactionUtils.getInstance().caculeDis(data.getStratPlaceX(), data.getStratPlaceY(), data.getPositionX(), data.getPositionY());
+                progress.setCurent(current / (totale == 0 ? 1 : totale));
+            }else {
+                progress.setCurent(0);
+            }
+        }else {
+            progress.showProgress(false);
+        }
+
+
+
         if (roleState!=null){
             switch (roleState){
                 case DRIVER:

@@ -168,13 +168,33 @@ public class OrderDetailBean {
     private OrderDetailItemControl.OrderState orderState;
 
 
-
+    /**
+     * 当前订单所在位置
+     */
+    private double positionX;
+    private double positionY;
 
     /**
      * false	string	支付方式(0微信,1银联,2线下支付)
      */
     protected String payWay;
 
+
+    public double getPositionX() {
+        return positionX;
+    }
+
+    public void setPositionX(double positionX) {
+        this.positionX = positionX;
+    }
+
+    public double getPositionY() {
+        return positionY;
+    }
+
+    public void setPositionY(double positionY) {
+        this.positionY = positionY;
+    }
 
     public long getPayTime() {
         return payTime;
@@ -234,7 +254,7 @@ public class OrderDetailBean {
             case 2:
                 if (hasFreight) {
                     orderState = OrderDetailItemControl.OrderState.WAITE_START;
-                }else {
+                } else {
                     orderState = OrderDetailItemControl.OrderState.WAITE_PAY;
                 }
 

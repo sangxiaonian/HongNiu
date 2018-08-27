@@ -21,6 +21,7 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
+import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItem;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
@@ -428,6 +429,11 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
                                 .subscribe(new NetObserver<String>(OrderMainFragmet.this) {
                                     @Override
                                     public void doOnSuccess(String data) {
+                                        OrderEvent.UpLoactionEvent upLoactionEvent = new OrderEvent.UpLoactionEvent();
+                                        upLoactionEvent.start = true;
+                                        upLoactionEvent.orderID = orderBean.getId();
+                                        upLoactionEvent.cardID = orderBean.getCarId();
+                                        BusFactory.getBus().post(upLoactionEvent);
                                         queryData(true, true);
                                     }
                                 });
@@ -491,6 +497,7 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
                                     .subscribe(new NetObserver<String>(OrderMainFragmet.this) {
                                         @Override
                                         public void doOnSuccess(String data) {
+                                            BusFactory.getBus().post(new OrderEvent.UpLoactionEvent());
                                             queryData(true, true);
                                         }
                                     });

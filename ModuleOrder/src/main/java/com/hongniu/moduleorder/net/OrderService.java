@@ -7,6 +7,7 @@ import com.hongniu.baselibrary.entity.CreatInsuranceBean;
 import com.hongniu.moduleorder.entity.LocationBean;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
 import com.hongniu.moduleorder.entity.OrderCreatParamBean;
+import com.hongniu.moduleorder.entity.OrderIdBean;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
 import com.hongniu.moduleorder.entity.OrderParamBean;
 import com.hongniu.moduleorder.entity.QueryInsurancePriceBean;
@@ -80,7 +81,7 @@ public interface OrderService {
      * @return
      */
     @POST("hongniu/api/order/cancel")
-    Observable<CommonBean<OrderDetailBean>> cancleOrder(@Body OrderParamBean infor);
+    Observable<CommonBean<OrderDetailBean>> cancleOrder(@Body OrderIdBean infor);
 
     /**
      * 线下支付订单
@@ -117,20 +118,20 @@ public interface OrderService {
      * id	true	number	订单id
      */
     @POST("hongniu/api/order/start")
-    Observable<CommonBean<String>> driverStart(@Body OrderDetailBean infor);
+    Observable<CommonBean<String>> driverStart(@Body OrderIdBean infor);
    /**
      * 确认到达
      * id	true	number	订单id
      */
     @POST("hongniu/api/order/endSend")
-    Observable<CommonBean<String>> entryArrive(@Body OrderDetailBean infor);
+    Observable<CommonBean<String>> entryArrive(@Body OrderIdBean infor);
 
     /**
      * 确认收货
      * id	true	number	订单id
      */
     @POST("hongniu//api/order/receive")
-    Observable<CommonBean<ResponseBody>> entryReceiveCargo(@Body OrderDetailBean infor);
+    Observable<CommonBean<ResponseBody>> entryReceiveCargo(@Body OrderIdBean infor);
 
 
 

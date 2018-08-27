@@ -250,7 +250,6 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     //开始或停止记录用户位置信息
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onStartLoactionMessage(OrderEvent.UpLoactionEvent event) {
-        JLog.i("-------接收到运输相关信息-----");
         if (event != null) {
             //如果有正在运输中的订单，则此时获取到用户的位置信息
             if (event.start) {//开始记录数据

@@ -9,6 +9,7 @@ import com.hongniu.baselibrary.entity.CreatInsuranceBean;
 import com.hongniu.moduleorder.entity.LocationBean;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
 import com.hongniu.moduleorder.entity.OrderCreatParamBean;
+import com.hongniu.moduleorder.entity.OrderIdBean;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
 import com.hongniu.moduleorder.entity.OrderParamBean;
 import com.hongniu.moduleorder.entity.QueryInsurancePriceBean;
@@ -93,8 +94,8 @@ public class HttpOrderFactory {
      * @param orderID 订单ID
      */
     public static Observable<CommonBean<OrderDetailBean>> cancleOrder(String orderID) {
-        OrderParamBean bean = new OrderParamBean();
-        bean.setOrderId(orderID);
+        OrderIdBean bean = new OrderIdBean();
+        bean.setId(orderID);
         return OrderClient.getInstance()
                 .getService()
                 .cancleOrder(bean)
@@ -152,7 +153,7 @@ public class HttpOrderFactory {
      * @param orderId
      */
     public static Observable<CommonBean<String>> driverStart(String orderId) {
-        OrderDetailBean bean = new OrderDetailBean();
+        OrderIdBean bean = new OrderIdBean();
         bean.setId(orderId);
         return OrderClient.getInstance()
                 .getService()
@@ -166,7 +167,7 @@ public class HttpOrderFactory {
      * @param orderId
      */
     public static Observable<CommonBean<String>> entryArrive(String orderId) {
-        OrderDetailBean bean = new OrderDetailBean();
+        OrderIdBean bean = new OrderIdBean();
         bean.setId(orderId);
         return OrderClient.getInstance()
                 .getService()
@@ -179,7 +180,7 @@ public class HttpOrderFactory {
      * @param orderId
      */
     public static Observable<CommonBean<ResponseBody>> entryReceiveCargo(String orderId) {
-        OrderDetailBean bean = new OrderDetailBean();
+        OrderIdBean bean = new OrderIdBean();
         bean.setId(orderId);
         return OrderClient.getInstance()
                 .getService()

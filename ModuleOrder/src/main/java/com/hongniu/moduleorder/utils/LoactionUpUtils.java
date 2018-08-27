@@ -125,7 +125,10 @@ public class LoactionUpUtils {
      * 摧毁时候清除所有数据
      */
     public void onDestroy(){
-        disposable.dispose();
+        JLog.i("停止记录位置信息");
+        if (disposable!=null) {
+            disposable.dispose();
+        }
         queue.clear();
     }
 

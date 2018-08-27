@@ -29,6 +29,7 @@ public class OrderProgress extends View {
     private Bitmap bitmap;
 
     private Rect rect;
+    private boolean showProgress=true;
 
     public OrderProgress(Context context) {
         this(context, null, 0);
@@ -72,20 +73,24 @@ public class OrderProgress extends View {
         mPaint.setColor(unPassColor);
         drawProprogress(canvas);
         mPaint.setColor(passColor);
-        final float currentPro = current * 1.0f / max;
-        final float proY = getMeasuredHeight() * currentPro;
-        canvas.save();
-        rect.top = 0;
-        rect.left = 0;
-        rect.right = getMeasuredWidth();
-        rect.bottom = (int) (proY);
-        canvas.clipRect(rect);
-        drawProprogress(canvas);
-        canvas.restore();
 
-        final float bitmapY=(proY-bitmap.getHeight())>0?(proY-bitmap.getHeight()):0;
-        canvas.drawBitmap(bitmap,(getMeasuredWidth()-bitmap.getWidth())/2
-        ,bitmapY,mPaint);
+
+        if (showProgress) {
+            final float currentPro = current * 1.0f / max;
+            final float proY = getMeasuredHeight() * currentPro;
+            canvas.save();
+            rect.top = 0;
+            rect.left = 0;
+            rect.right = getMeasuredWidth();
+            rect.bottom = (int) (proY);
+            canvas.clipRect(rect);
+            drawProprogress(canvas);
+            canvas.restore();
+
+            final float bitmapY=(proY-bitmap.getHeight())>0?(proY-bitmap.getHeight()):0;
+            canvas.drawBitmap(bitmap,(getMeasuredWidth()-bitmap.getWidth())/2
+            ,bitmapY,mPaint);
+        }
 
 
     }
@@ -110,4 +115,9 @@ public class OrderProgress extends View {
         postInvalidate();
     }
 
+    //隐藏当前进度
+    public void showProgress(boolean show) {
+        showProgress=show;
+        postInvalidate();
+    }
 }
