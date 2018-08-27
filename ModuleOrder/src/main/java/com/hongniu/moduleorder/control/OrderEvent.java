@@ -4,7 +4,7 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.trace.TraceLocation;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
-import com.hongniu.moduleorder.entity.CreatInsuranceBean;
+import com.hongniu.baselibrary.entity.CreatInsuranceBean;
 import com.sang.common.event.IBus;
 
 import java.util.List;
@@ -71,20 +71,7 @@ public class OrderEvent {
 
     }
 
-    /**
-     * 创建保单
-     */
-    public static class CraetInsurance implements IBus.IEvent {
-        CreatInsuranceBean bean;
 
-        public CraetInsurance(CreatInsuranceBean bean) {
-            this.bean = bean;
-        }
-
-        public CreatInsuranceBean getBean() {
-            return bean;
-        }
-    }
 
     /**
      * 查看轨迹

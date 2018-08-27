@@ -1,4 +1,4 @@
-package com.hongniu.moduleorder.entity;
+package com.hongniu.baselibrary.entity;
 
 /**
  * 作者： ${桑小年} on 2018/8/18.

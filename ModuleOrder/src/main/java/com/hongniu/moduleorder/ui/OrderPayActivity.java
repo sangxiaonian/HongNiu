@@ -15,13 +15,14 @@ import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
+import com.hongniu.baselibrary.event.Event;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
+import com.hongniu.baselibrary.entity.CreatInsuranceBean;
 import com.hongniu.moduleorder.entity.OrderParamBean;
 import com.hongniu.moduleorder.entity.WxPayBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.widget.dialog.BuyInsuranceDialog;
-import com.hongniu.moduleorder.widget.dialog.InsuranceNoticeDialog;
 import com.sang.common.event.BusFactory;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.dialog.CenterAlertDialog;
@@ -47,7 +48,7 @@ import org.greenrobot.eventbus.ThreadMode;
  * 不购买保险，则直接显示完成订单
  */
 @Route(path = ArouterParamOrder.activity_order_pay)
-public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener, BuyInsuranceDialog.OnBuyInsuranceClickListener, DialogControl.OnButtonBottomClickListener {
+public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener, BuyInsuranceDialog.OnBuyInsuranceClickListener {
 
     private TextView tvOrder;//订单号
     private ViewGroup btBuy;//购买保险
@@ -76,7 +77,7 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
 
 
     private BuyInsuranceDialog buyInsuranceDialog;
-    private InsuranceNoticeDialog noticeDialog;
+//    private InsuranceNoticeDialog noticeDialog;
 
     //是否为单独的购买保险界面
     private boolean isInsurance;
@@ -117,7 +118,7 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
 
         buyInsuranceDialog = new BuyInsuranceDialog(mContext);
 
-        noticeDialog = new InsuranceNoticeDialog(mContext);
+//        noticeDialog = new InsuranceNoticeDialog(mContext);
     }
 
     @Override
@@ -141,18 +142,16 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
             tranPrice = event.money;
             orderID = event.orderID;
             orderNum = event.orderNum;
+
             if (isInsurance) {//如果是购买保险
                 switchPayLine(false);
                 rl_tran.setVisibility(View.GONE);
-                switchToBuyInsurance(false);//切换为购买保险UI
-                buyInsuranceDialog.show();
             } else {
                 rl_tran.setVisibility(View.VISIBLE);
                 switchPayLine(true);
-                switchToBuyInsurance(true);//切换为购买保险UI
-                rbOnline.performClick();
-
             }
+            switchToBuyInsurance(true);
+            rbOnline.performClick();
             initData();
 
         }
@@ -246,7 +245,7 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
         rg.setOnCheckedChangeListener(this);
         bt_cancle_insurance.setOnClickListener(this);
         tv_change_cargo_price.setOnClickListener(this);
-        noticeDialog.setOnBottomClickListener(this);
+//        noticeDialog.setOnBottomClickListener(this);
         buyInsuranceDialog.setListener(this);
 
 
@@ -295,27 +294,11 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
                                 .subscribe(new NetObserver<WxPayBean>(this) {
                                     @Override
                                     public void doOnSuccess(WxPayBean data) {
-                                        WeChatAppPay.pay(mContext, data.getPartnerId(), data.getPrePayId(),data.getPrepay_id()
-                                                , data.getNonceStr(), data.getTimeStamp(), data.getPaySign()
-                                        );
-//                                        WeChatAppPay.pay(mContext);
-//                                        if (buyInsurance) {
-//                                            ArouterUtils.getInstance()
-//                                                    .builder(ArouterParamOrder.activity_insurance_creat)
-//                                                    .navigation(mContext);
-//                                            CreatInsuranceBean creatInsuranceBean = new CreatInsuranceBean();
-//                                            creatInsuranceBean.setGoodsValue(cargoPrice + "");
-//                                            OrderEvent.CraetInsurance insurance = new OrderEvent.CraetInsurance(creatInsuranceBean);
-//                                            BusFactory.getBus().postSticky(insurance);
-//                                        } else {
-//                                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
-//                                        }
-//                                        finish();
+                                        startWeChatPay(data, buyInsurance);
 
                                     }
                                 });
                     } else {
-//                        WeChatAppPay.pay(mContext);
                         ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("请选择支付方式");
 
                     }
@@ -327,17 +310,7 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
                                     .subscribe(new NetObserver<WxPayBean>(this) {
                                         @Override
                                         public void doOnSuccess(WxPayBean data) {
-//                                            ArouterUtils.getInstance()
-//                                                    .builder(ArouterParamOrder.activity_insurance_creat)
-//                                                    .navigation(mContext);
-//                                            CreatInsuranceBean creatInsuranceBean = new CreatInsuranceBean();
-//                                            creatInsuranceBean.setGoodsValue(cargoPrice + "");
-//                                            OrderEvent.CraetInsurance insurance = new OrderEvent.CraetInsurance(creatInsuranceBean);
-//                                            BusFactory.getBus().postSticky(insurance);
-//                                            finish();
-                                            WeChatAppPay.pay(mContext, data.getPartnerId(), data.getPrePayId(),data.getPrepay_id()
-                                                    , data.getNonceStr(), data.getTimeStamp(), data.getPaySign()
-                                            );
+                                            startWeChatPay(data, true);
 
                                         }
                                     });
@@ -353,16 +326,24 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
                                     public void doOnSuccess(WxPayBean data) {
                                         finish();
                                         ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
-
-
                                     }
                                 });
                     }
                 }
             } else {//保险购买界面
                 if (checkbox.isChecked()) {
-                    ArouterUtils.getInstance().builder(ArouterParamOrder.activity_insurance_creat).navigation(mContext);
-                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("单独购买保险");
+                    //单独购买保险
+                    HttpOrderFactory.payOrderOffLine(creatBuyParams(true, false, true))
+                            .subscribe(new NetObserver<WxPayBean>(this) {
+                                @Override
+                                public void doOnSuccess(WxPayBean data) {
+//                                            ArouterUtils.getInstance()
+//                                                    .builder(ArouterParamOrder.activity_insurance_creat)
+//                                                    .navigation(mContext);
+                                    startWeChatPay(data, true);
+
+                                }
+                            });
                 } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("请选择支付方式");
 
@@ -371,17 +352,31 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
             }
 
         } else if (i == R.id.bt_cancle_insurance) {//取消保险
-
-            if (!isInsurance) {
-                switchToBuyInsurance(true);
-            } else {
-                finish();
-            }
+            switchToBuyInsurance(true);
 
         } else if (i == R.id.tv_change_cargo_price) {//修改保险金额
             buyInsuranceDialog.show();
         }
     }
+
+    /**
+     * 吊起微信支付
+     *
+     * @param data
+     * @param isCreatInsurance
+     */
+    private void startWeChatPay(WxPayBean data, boolean isCreatInsurance) {
+        CreatInsuranceBean creatInsuranceBean = new CreatInsuranceBean();
+        creatInsuranceBean.setGoodsValue(cargoPrice + "");
+        creatInsuranceBean.setOrderNum(orderNum);
+        Event.CraetInsurance insurance = new Event.CraetInsurance(creatInsuranceBean);
+        insurance.isCreatInsurance = isCreatInsurance;
+        BusFactory.getBus().postSticky(insurance);
+        WeChatAppPay.pay(mContext, data.getPartnerId(), data.getPrePayId(), data.getPrepay_id()
+                , data.getNonceStr(), data.getTimeStamp(), data.getPaySign()
+        );
+    }
+
 
     /**
      * 创建订单数据
@@ -423,16 +418,11 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
 
     @Override
     public void noticeClick(BuyInsuranceDialog buyInsuranceDialog, boolean checked) {
-        buyInsuranceDialog.dismiss();
-        noticeDialog.show();
+//        buyInsuranceDialog.dismiss();
+        buyInsuranceDialog.setReadInsurance(true);
+//        noticeDialog.show();
     }
 
-    @Override
-    public void onBottomClick(View view, DialogControl.IBottomDialog dialog) {
-        noticeDialog.dismiss();
-        buyInsuranceDialog.setReadInsurance(true);
-        buyInsuranceDialog.show();
-    }
 
     @Override
     public void onBackPressed() {

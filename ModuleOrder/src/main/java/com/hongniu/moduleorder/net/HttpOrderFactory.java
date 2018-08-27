@@ -5,7 +5,7 @@ import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.utils.Utils;
-import com.hongniu.moduleorder.entity.CreatInsuranceBean;
+import com.hongniu.baselibrary.entity.CreatInsuranceBean;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
 import com.hongniu.moduleorder.entity.OrderCreatParamBean;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;

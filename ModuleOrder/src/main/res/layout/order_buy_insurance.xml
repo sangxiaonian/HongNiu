@@ -96,7 +96,6 @@
         android:gravity="center_vertical"
         android:layout_height="wrap_content">
         <CheckBox
-            android:enabled="false"
             android:id="@+id/checkbox"
             android:button="@null"
             android:gravity="center"

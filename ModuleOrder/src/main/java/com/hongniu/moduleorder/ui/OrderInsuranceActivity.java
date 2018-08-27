@@ -72,34 +72,34 @@ public class OrderInsuranceActivity extends BaseActivity {
         handler.sendEmptyMessageDelayed(0, 200);
     }
 
-    @Override
-    protected boolean getUseEventBus() {
-        return true;
-    }
-
-    @Subscribe(sticky = true,threadMode = ThreadMode.MAIN)
-    public void onMessageEvent( OrderEvent.CraetInsurance event) {
-        if (event != null &&event.getBean()!=null) {
-
-            HttpOrderFactory.creatInsurance(event.getBean())
-                    .subscribe(new NetObserver<String>(null) {
-                        @Override
-                        public void doOnSuccess(String data) {
-
-                            handler.sendEmptyMessage(SUCCESS);
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            super.onError(e);
-                            handler.sendEmptyMessage(FAIL);
-                        }
-                    });
-
-
-
-        }
-    }
+//    @Override
+//    protected boolean getUseEventBus() {
+//        return true;
+//    }
+//
+//    @Subscribe(sticky = true,threadMode = ThreadMode.MAIN)
+//    public void onMessageEvent( OrderEvent.CraetInsurance event) {
+//        if (event != null &&event.getBean()!=null) {
+//
+//            HttpOrderFactory.creatInsurance(event.getBean())
+//                    .subscribe(new NetObserver<String>(null) {
+//                        @Override
+//                        public void doOnSuccess(String data) {
+//
+//                            handler.sendEmptyMessage(SUCCESS);
+//                        }
+//
+//                        @Override
+//                        public void onError(Throwable e) {
+//                            super.onError(e);
+//                            handler.sendEmptyMessage(FAIL);
+//                        }
+//                    });
+//
+//
+//
+//        }
+//    }
 
     @Override
     protected void onDestroy() {
