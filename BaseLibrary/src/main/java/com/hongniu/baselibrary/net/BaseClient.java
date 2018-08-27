@@ -6,12 +6,10 @@ import com.hongniu.baselibrary.utils.Utils;
 import com.sang.common.net.HttpClient;
 import com.sang.common.net.OkHttp;
 import com.sang.common.utils.ConvertUtils;
-import com.sang.common.utils.JLog;
 
 import java.io.IOException;
 
 import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -41,7 +39,7 @@ public class BaseClient {
                         Request request = chain.request();
                         Request.Builder requestBuilder = request.newBuilder();
                         requestBuilder.addHeader("Content-Type", "application/json;charset=UTF-8");
-                        LoginBean infor = Utils.getPgetPersonInfor();
+                        LoginBean infor = Utils.getLoginInfor();
                         if (infor != null) {
                             RequestBody body = request.body();
                             String s = body.toString();

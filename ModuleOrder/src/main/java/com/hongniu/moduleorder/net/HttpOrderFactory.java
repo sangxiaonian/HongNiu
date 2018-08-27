@@ -54,7 +54,7 @@ public class HttpOrderFactory {
      * @param bean
      */
     public static Observable<CommonBean<OrderCarNumbean>> addCarNum(OrderCarNumbean bean) {
-        bean.setUserId(Utils.getPgetPersonInfor().getId());
+        bean.setUserId(Utils.getLoginInfor().getId());
         return OrderClient.getInstance().getService().addCarNum(bean).compose(RxUtils.<CommonBean<OrderCarNumbean>>getSchedulersObservableTransformer());
 
     }

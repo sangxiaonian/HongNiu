@@ -189,12 +189,18 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
 
 
     protected void showAleart(String msg) {
+        showAleart(msg,null);
+    }
+
+    protected void showAleart(String msg, final DialogControl.OnButtonRightClickListener listener) {
         new CenterAlertBuilder()
                 .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
                     @Override
                     public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
+                        if (listener!=null){
+                            listener.onRightClick(view,dialog);
+                        }
                         dialog.dismiss();
-
                     }
 
                 })

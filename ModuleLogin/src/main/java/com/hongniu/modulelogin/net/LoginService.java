@@ -6,7 +6,7 @@ import com.hongniu.baselibrary.entity.LoginBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
 import com.hongniu.modulelogin.entity.LoginCarInforBean;
-import com.hongniu.modulelogin.entity.LoginPersonInfor;
+import com.hongniu.baselibrary.entity.LoginPersonInfor;
 import com.hongniu.modulelogin.entity.LoginSMSParams;
 
 import java.util.List;

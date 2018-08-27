@@ -9,23 +9,25 @@ import android.widget.Button;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.google.gson.Gson;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
+import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.utils.PickerDialogUtils;
 import com.hongniu.modulelogin.LoginUtils;
 import com.hongniu.modulelogin.R;
 import com.hongniu.modulelogin.entity.AreaBeans;
 import com.hongniu.modulelogin.entity.LoginAreaBean;
-import com.hongniu.modulelogin.entity.LoginPersonInfor;
-import com.hongniu.modulelogin.entity.ProvincesBean;
+import com.hongniu.baselibrary.entity.LoginPersonInfor;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
+import com.sang.common.event.BusFactory;
 import com.sang.common.net.rx.BaseObserver;
 import com.sang.common.net.rx.RxUtils;
+import com.sang.common.utils.SharedPreferencesUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.ItemView;
-
-import java.util.List;
 
 /**
  * 个人资料
@@ -115,7 +117,10 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
                         .subscribe(new NetObserver<String>(this) {
                             @Override
                             public void doOnSuccess(String data) {
+                                //更新个人信息
+                                SharedPreferencesUtils.getInstance().putString(Param.PERSON_ONFOR,new Gson().toJson(personInfor));
                                 ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
+                                BusFactory.getBus().post(new Event.UpPerson());
                                 finish();
                             }
                         });
@@ -136,7 +141,6 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
                             }
                         });
             }else {
-//                pickDialog.setPicker(areabean.getProvinces(), areabean.getCityBean(), areabean.getDistrict());
                 pickDialog.show();
             }
 

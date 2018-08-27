@@ -11,14 +11,16 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
+import com.hongniu.baselibrary.entity.CreatInsuranceBean;
 import com.hongniu.baselibrary.event.Event;
+import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
-import com.hongniu.baselibrary.entity.CreatInsuranceBean;
 import com.hongniu.moduleorder.entity.OrderParamBean;
 import com.hongniu.moduleorder.entity.WxPayBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
@@ -273,12 +275,23 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.con_buy) {//购买保险
-            buyInsuranceDialog.show();
+
+            if (Utils.checkInfor()) {
+                buyInsuranceDialog.show();
+            }else {
+                showAleart("购买保险前，请先完善个人信息", new DialogControl.OnButtonRightClickListener() {
+                    @Override
+                    public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
+                        ArouterUtils.getInstance().builder(ArouterParamLogin.activity_person_infor).navigation(mContext);
+                    }
+                });
+            }
+
+
 
         } else if (i == R.id.rl_wechact) {//选择微信支付
             checkbox.setChecked(!checkbox.isChecked());
         } else if (i == R.id.bt_pay) {//支付订单
-
             if (!isInsurance) {//订单支付界面
                 if (onLine) {//线上支付
 
@@ -333,17 +346,17 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
             } else {//保险购买界面
                 if (checkbox.isChecked()) {
                     //单独购买保险
-                    HttpOrderFactory.payOrderOffLine(creatBuyParams(true, false, true))
-                            .subscribe(new NetObserver<WxPayBean>(this) {
-                                @Override
-                                public void doOnSuccess(WxPayBean data) {
-//                                            ArouterUtils.getInstance()
-//                                                    .builder(ArouterParamOrder.activity_insurance_creat)
-//                                                    .navigation(mContext);
-                                    startWeChatPay(data, true);
-
-                                }
-                            });
+                    if (cargoPrice > 0) {
+                        HttpOrderFactory.payOrderOffLine(creatBuyParams(true, false, true))
+                                .subscribe(new NetObserver<WxPayBean>(this) {
+                                    @Override
+                                    public void doOnSuccess(WxPayBean data) {
+                                        startWeChatPay(data, true);
+                                    }
+                                });
+                    } else {
+                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("请设置保险金额");
+                    }
                 } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("请选择支付方式");
 

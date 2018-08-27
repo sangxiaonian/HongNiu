@@ -3,6 +3,7 @@ package com.hongniu.moduleorder.ui;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Parcelable;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
@@ -11,6 +12,7 @@ import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CloseActivityEvent;
+import com.hongniu.baselibrary.entity.CreatInsuranceBean;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
@@ -35,7 +37,7 @@ public class OrderInsuranceActivity extends BaseActivity {
     private final int SUCCESS = 2;
     private final int FAIL = 1;
 
-    private String insruanceNum;
+    private String insruanceNum;//保单号
 
     private Handler handler = new Handler() {
         @Override
@@ -69,37 +71,30 @@ public class OrderInsuranceActivity extends BaseActivity {
         setContentView(R.layout.activity_order_insurance);
         setToolbarTitle("");
         progress = findViewById(R.id.color_progress);
-        handler.sendEmptyMessageDelayed(0, 200);
+        CreatInsuranceBean insuranceBean = getIntent().getParcelableExtra(Param.TRAN);
+        if (insuranceBean!=null) {
+            handler.sendEmptyMessageDelayed(0, 200);
+
+            HttpOrderFactory.creatInsurance(insuranceBean)
+                    .subscribe(new NetObserver<String>(null) {
+                        @Override
+                        public void doOnSuccess(String data) {
+                            handler.sendEmptyMessage(SUCCESS);
+                            insruanceNum=data;
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            super.onError(e);
+                            handler.sendEmptyMessage(FAIL);
+                        }
+                    });
+        }else {
+            handler.sendEmptyMessage(FAIL);
+        }
+
     }
 
-//    @Override
-//    protected boolean getUseEventBus() {
-//        return true;
-//    }
-//
-//    @Subscribe(sticky = true,threadMode = ThreadMode.MAIN)
-//    public void onMessageEvent( OrderEvent.CraetInsurance event) {
-//        if (event != null &&event.getBean()!=null) {
-//
-//            HttpOrderFactory.creatInsurance(event.getBean())
-//                    .subscribe(new NetObserver<String>(null) {
-//                        @Override
-//                        public void doOnSuccess(String data) {
-//
-//                            handler.sendEmptyMessage(SUCCESS);
-//                        }
-//
-//                        @Override
-//                        public void onError(Throwable e) {
-//                            super.onError(e);
-//                            handler.sendEmptyMessage(FAIL);
-//                        }
-//                    });
-//
-//
-//
-//        }
-//    }
 
     @Override
     protected void onDestroy() {

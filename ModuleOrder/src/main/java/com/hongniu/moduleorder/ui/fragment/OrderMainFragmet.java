@@ -342,18 +342,6 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
     }
 
 
-//    private void changeOrderState(OrderDetailBean orderBean, int state, boolean insurance, boolean hasFreight) {
-//
-//        HttpOrderFactory.changeOrderState(orderBean, state, insurance, hasFreight)
-//                .subscribe(new NetObserver<String>(this) {
-//
-//                    @Override
-//                    public void doOnSuccess(String data) {
-//                        queryData(true, true);
-//                    }
-//                });
-//        ;
-//    }
 
 
     /**

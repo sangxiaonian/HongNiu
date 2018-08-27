@@ -1,4 +1,4 @@
-package com.hongniu.modulelogin.entity;
+package com.hongniu.baselibrary.entity;
 
 /**
  * 作者： ${PING} on 2018/8/15.
@@ -58,9 +58,7 @@ public class LoginPersonInfor {
      * true	string	联系人身份证
      */
     private String idnumber;
-    /**
-     *
-     */
+
 
 
     private String nickname;

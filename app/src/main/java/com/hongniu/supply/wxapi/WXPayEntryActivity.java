@@ -1,11 +1,14 @@
 package com.hongniu.supply.wxapi;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.hongniu.baselibrary.arouter.ArouterParamOrder;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.entity.CreatInsuranceBean;
 import com.hongniu.baselibrary.event.Event;
 import com.hongniu.supply.R;
 import com.sang.common.event.BusFactory;
@@ -26,11 +29,11 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
     private static final String TAG = "MicroMsg.SDKSample.WXPayEntryActivity";
 
     private IWXAPI api;
+    private CreatInsuranceBean insuranceBean;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.getWindow().getDecorView().setBackgroundColor(Color.TRANSPARENT);
         setContentView(R.layout.activiy_wx_pay_entry);
         setToolbarDarkTitle("");
         BusFactory.getBus().register(this);
@@ -51,17 +54,20 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 
     @Override
     public void onResp(BaseResp resp) {
-        int result = 0;
-        JLog.i(resp.toString() + ">>>" + resp.getType() + ">>>>" + resp.errCode);
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
             if (resp.errCode == 0) {
                 Toast.makeText(this, "支付成功", Toast.LENGTH_LONG).show();
+                if (insuranceBean != null) {
+                    ArouterUtils.getInstance().builder(ArouterParamOrder.activity_insurance_creat)
+                            .withParcelable(Param.TRAN,insuranceBean)
+                            .navigation(this);
+                }
             } else if (resp.errCode == -2) {
                 Toast.makeText(this, "取消支付", Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(this, "支付失败", Toast.LENGTH_LONG).show();
             }
-//			finish();
+            finish();
         }
 
     }
@@ -74,7 +80,8 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onMessageEvent(Event.CraetInsurance event) {
         if (event != null && event.getBean() != null) {
-            JLog.i("我先收到信息了");
+            CreatInsuranceBean bean = event.getBean();
+            this.insuranceBean = bean;
         }
         BusFactory.getBus().removeStickyEvent(event);
     }

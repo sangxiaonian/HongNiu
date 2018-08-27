@@ -51,11 +51,6 @@ public abstract class RefrushFragmet<T> extends BaseFragment implements OnRefres
         return view;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        queryData(true);
-    }
 
     @Override
     protected void initData() {

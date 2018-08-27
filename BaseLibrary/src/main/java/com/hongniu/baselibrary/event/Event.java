@@ -26,4 +26,10 @@ public class Event {
             return bean;
         }
     }
+
+    /**
+     * 更新个人信息
+     */
+    public static class UpPerson implements IBus.IEvent {
+    }
 }

@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
@@ -20,7 +21,9 @@ import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CloseActivityEvent;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
+import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.utils.PermissionUtils;
+import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.moduleorder.control.OrderMainControl;
 import com.hongniu.moduleorder.control.SwitchStateListener;
 import com.hongniu.moduleorder.present.OrderMainPresenter;
@@ -74,6 +77,8 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     private OrderMainControl.IOrderMainPresent present;
     private LoactionUtils loaction;
 
+    private TextView tvName, tvPhone;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,8 +103,8 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
 
             }
         });
-
     }
+
 
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
@@ -132,6 +137,9 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
         llPersonInfor = findViewById(R.id.ll_person_infor);
         llPayMethod = findViewById(R.id.ll_pay_method);
 
+        tvName = findViewById(R.id.tv_name);
+        tvPhone = findViewById(R.id.tv_phone);
+
         guideTitle = new BaseGuide();
         guideTitle.setMsg("这里可以切换角色哦")
                 .setView(switchTitle)
@@ -157,7 +165,10 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     @Override
     protected void initData() {
         super.initData();
-
+        if (Utils.checkInfor()) {
+            tvName.setText(Utils.getPersonInfor().getContact()==null?"":Utils.getPersonInfor().getContact());
+        }
+        tvPhone.setText(Utils.getLoginInfor().getMobile()==null?"":Utils.getLoginInfor().getMobile());
         switchTitle.post(new Runnable() {
             @Override
             public void run() {
@@ -191,8 +202,8 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
 
         titlePop.setListener(this);
         titlePop.setOnDismissListener(this);
-
     }
+
 
     @Override
     protected void onStart() {
@@ -202,7 +213,6 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
 
     @Override
     protected boolean getUseEventBus() {
-
         return true;
     }
 
@@ -212,6 +222,16 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
             changeStaff(event.getRoleId());
         }
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUpPersonInfor(Event.UpPerson event) {
+        if (event != null) {
+            if (Utils.checkInfor()) {
+                tvName.setText(Utils.getPersonInfor().getContact());
+            }
+        }
+    }
+
 
     /**
      * 顶部角色类型被选中点击的时候
@@ -289,7 +309,9 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
         } else if (switchStateListener != null && switchStateListener.isShowing()) {
             switchStateListener.closePop();
         } else {
-            super.onBackPressed();
+            Intent i = new Intent(Intent.ACTION_MAIN);
+            i.addCategory(Intent.CATEGORY_HOME);
+            startActivity(i);
         }
     }
 
@@ -417,4 +439,6 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
 
         titlePop.dismiss();
     }
+
+
 }

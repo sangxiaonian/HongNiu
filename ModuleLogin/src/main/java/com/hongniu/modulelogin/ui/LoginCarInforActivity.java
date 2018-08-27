@@ -9,12 +9,9 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
-import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CarTypeBean;
 import com.hongniu.baselibrary.utils.PickerDialogUtils;
 import com.hongniu.baselibrary.utils.Utils;
@@ -23,7 +20,6 @@ import com.hongniu.modulelogin.entity.LoginCarInforBean;
 import com.hongniu.modulelogin.entity.LoginEvent;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.sang.common.event.BusFactory;
-import com.sang.common.utils.SharedPreferencesUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.ItemView;
 import com.sang.common.widget.dialog.BottomAlertDialog;
@@ -209,7 +205,7 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
         carBean.setCarNumber(itemCarNum.getTextCenter());
         carBean.setContactMobile(itemCarPhone.getTextCenter());
         carBean.setContactName(itemCarOwner.getTextCenter());
-        carBean.setCarOwnerId(Utils.getPgetPersonInfor().getId() + "");
+        carBean.setCarOwnerId(Utils.getLoginInfor().getId() + "");
         return carBean;
     }
 

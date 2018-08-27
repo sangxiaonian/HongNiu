@@ -71,7 +71,7 @@ public class FinanceIncomeFragment extends RefrushFragmet<OrderDetailBean> {
 
         headHolder = new FinanceIncomHeadHolder(getContext(), rv);
         adapter.addHeard(0,headHolder);
-
+        queryData(true);
 
 
 
