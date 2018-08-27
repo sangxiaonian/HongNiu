@@ -126,6 +126,13 @@ public abstract class RefrushFragmet<T> extends BaseFragment implements OnRefres
         refresh.finishRefresh();
     }
 
+    @Override
+    public void onTaskFail(Throwable e, String code, String msg) {
+        super.onTaskFail(e, code, msg);
+        refresh.finishLoadMore();
+        refresh.finishRefresh();
+    }
+
     /**
      * 显示没有更多数据了
      */

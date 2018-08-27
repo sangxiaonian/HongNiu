@@ -43,9 +43,6 @@ public class OrderNavigationActivity extends BaseActivity implements MapControl.
 
         navigationUtils = new NavigationUtils(this);
         navigationUtils.setListener(this);
-        if (Param.isDebug) {
-            navigationUtils.setDebug();
-        }
 
         mAMapNaviView.setAMapNaviViewListener(navigationUtils);
 

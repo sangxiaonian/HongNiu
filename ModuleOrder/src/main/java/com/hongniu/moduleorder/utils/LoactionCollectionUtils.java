@@ -7,6 +7,7 @@ import com.amap.api.navi.INaviInfoCallback;
 import com.amap.api.navi.model.AMapNaviLocation;
 import com.amap.api.trace.TraceLocation;
 import com.sang.common.utils.JLog;
+import com.sang.thirdlibrary.map.LoactionUtils;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -18,11 +19,10 @@ import java.util.Queue;
  * 坐标收集更改的集合
  */
 public class LoactionCollectionUtils implements INaviInfoCallback {
-    private LoactionCellection instance;
-    public Queue<LatLng> loaction = new LinkedList<>();
     private String orderNum;//订单号
     private String carID;//车辆ＩＤ
 
+    LoactionUpUtils loactions;
     private AMapNaviLocation lastLoaction;
 
     public void setOrderNum(String orderNum) {
@@ -35,8 +35,7 @@ public class LoactionCollectionUtils implements INaviInfoCallback {
 
 
     public LoactionCollectionUtils() {
-        instance = LoactionCellection.getInstance();
-
+        loactions=new LoactionUpUtils();
     }
 
     //
@@ -60,9 +59,9 @@ public class LoactionCollectionUtils implements INaviInfoCallback {
             location.setLatitude(aMapNaviLocation.getCoord().getLatitude());
             location.setLongitude(aMapNaviLocation.getCoord().getLongitude());
             location.setTime(aMapNaviLocation.getTime());
-            instance.getList().add(location);
             lastLoaction=aMapNaviLocation;
 
+//            loactions.add(aMapNaviLocation.getCoord().getLatitude(),aMapNaviLocation.getCoord().getLongitude(),aMapNaviLocation.getTime());
 
           } else {//初始化
             lastLoaction = aMapNaviLocation;
@@ -80,6 +79,7 @@ public class LoactionCollectionUtils implements INaviInfoCallback {
     @Override
     public void onStartNavi(int i) {
         JLog.i("onStartNavi:" + i);
+        loactions.setOrderInfor(orderNum,carID);
     }
 
     @Override

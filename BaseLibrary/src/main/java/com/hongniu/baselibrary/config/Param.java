@@ -7,6 +7,7 @@ package com.hongniu.baselibrary.config;
 public class Param {
 
     public static final String weChatAppid="wxa9d4be10effd4626";
+    public static final boolean isDebug=true;
 
     /**
      * 分页查找每页数据数量
@@ -27,7 +28,6 @@ public class Param {
     public static final String key="85274113a1ce1c39";
     public static final String AppKey="c33fbf23b76246bf8ee4a3d00b621e03";
     public static final String AppSecret="a7735d245d4241ff9f94-a3ecf7b5fedc";
-    public static final boolean isDebug=true;
 
 
     public static final String TRAN = "tran";

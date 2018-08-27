@@ -21,7 +21,6 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
-import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItem;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
@@ -30,7 +29,6 @@ import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.control.SwitchStateListener;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
-import com.hongniu.moduleorder.utils.LoactionCellection;
 import com.hongniu.moduleorder.utils.LoactionCollectionUtils;
 import com.hongniu.moduleorder.widget.OrderMainPop;
 import com.sang.common.event.BusFactory;
@@ -48,6 +46,7 @@ import com.sang.common.widget.popu.inter.OnPopuDismissListener;
 import com.sang.thirdlibrary.map.LoactionUtils;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -197,13 +196,13 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
             switchRight.setTitle(states.get(position));
             queryBean.setQueryStatus(null);
             queryBean.setHasFreight(null);
-            if (position==0){//全部状态
+            if (position == 0) {//全部状态
                 queryBean.setQueryStatus(null);
-            }else if (position==1){//待支付状态
+            } else if (position == 1) {//待支付状态
                 queryBean.setQueryStatus(null);
                 queryBean.setHasFreight("0");
-            }else {
-                queryBean.setQueryStatus(position+"");
+            } else {
+                queryBean.setQueryStatus(position + "");
             }
         }
         queryData(true, true);
@@ -343,8 +342,6 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
     }
 
 
-
-
     /**
      * ORDER_CHECK_INSURANCE 查看保单
      *
@@ -462,10 +459,14 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
                 Poi start = new Poi(orderBean.getStratPlaceInfo(), new LatLng(orderBean.getStratPlaceX(), orderBean.getStratPlaceY()), "");
                 Poi end = new Poi(orderBean.getDestinationInfo(), new LatLng(orderBean.getDestinationX(), orderBean.getDestinationY()), "");
 
-//                AmapNaviParams amapNaviParams = new AmapNaviParams(start, null, end, AmapNaviType.DRIVER, AmapPageType.NAVI);//直接跳过选址，进入导航
-                AmapNaviParams amapNaviParams = new AmapNaviParams(start, null, end, AmapNaviType.DRIVER );
+                AmapNaviParams amapNaviParams = new AmapNaviParams(start, null, end, AmapNaviType.DRIVER, AmapPageType.NAVI);//直接跳过选址，进入导航
+//                AmapNaviParams amapNaviParams = new AmapNaviParams(start, null, end, AmapNaviType.DRIVER);
                 amapNaviParams.setUseInnerVoice(true);
-                AmapNaviPage.getInstance().showRouteActivity(getContext().getApplicationContext(), amapNaviParams, new LoactionCollectionUtils());
+                LoactionCollectionUtils loactionCollectionUtils = new LoactionCollectionUtils();
+                loactionCollectionUtils.setOrderNum(orderBean.getId());
+                loactionCollectionUtils.setCarID(orderBean.getCarId());
+
+                AmapNaviPage.getInstance().showRouteActivity(getContext().getApplicationContext(), amapNaviParams, loactionCollectionUtils);
             }
 
 

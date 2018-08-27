@@ -23,6 +23,7 @@ import com.hongniu.baselibrary.widget.order.helper.OrderItemHelper;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
+import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.CenteredImageSpan;
 import com.sang.thirdlibrary.map.LoactionUtils;
@@ -98,24 +99,7 @@ public class OrderDetailItem extends FrameLayout {
     }
 
 
-    public void setDebug() {
 
-        if (Param.isDebug) {
-            tvIdentity.setText("货主");
-            tv_order.setText("80080018000");
-            tv_state.setText("运输中");
-            tv_time.setText("发车时间：2017-08-05");
-            tv_start_loaction.setText("上海虹桥机场国际物流中心");
-            tv_end_loaction.setText("青岛市国际物流中心");
-            tv_price.setText("1520");
-
-
-            tv_order_detail.setText(getContent("2831929482", "沪A666888",
-                    "车主：","李先生", "17602150486",
-                    "医疗器材", "司机：","杨先生", "13795244936"));
-            tv_order_detail.setMovementMethod(LinkMovementMethod.getInstance());
-        }
-    }
 
     public void setInfor(OrderDetailBean data) {
         this.orderBean = data;
