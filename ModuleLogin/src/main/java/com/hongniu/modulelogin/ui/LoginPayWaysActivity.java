@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
-import android.text.style.ImageSpan;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -14,6 +13,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.config.Param;
 import com.hongniu.modulelogin.R;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
@@ -22,6 +22,7 @@ import com.sang.common.recycleview.touchhelper.DragSortHelper;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.CenteredImageSpan;
+import com.sang.thirdlibrary.pay.wechat.WeChatAppPay;
 
 import java.util.ArrayList;
 
@@ -82,7 +83,7 @@ public class LoginPayWaysActivity extends BaseActivity {
                             start = 3 + tag.length();
                             for (int i = 0; i < 4; i++) {
                                 CenteredImageSpan imageSpan = new CenteredImageSpan(mContext, R.drawable.shape_circle_ffffff);
-                                imageSpan.setSpanSize(DeviceUtils.dip2px(context,8),DeviceUtils.dip2px(context,8));
+                                imageSpan.setSpanSize(DeviceUtils.dip2px(context, 8), DeviceUtils.dip2px(context, 8));
                                 builder.setSpan(imageSpan, start, start + 1, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
                                 start += 1 + cellTag.length();
                             }
@@ -108,7 +109,7 @@ public class LoginPayWaysActivity extends BaseActivity {
         recyclerView.setAdapter(adapter);
         helper.attachToRecyclerView(recyclerView);
 
-        adapter.addFoot(new PeakHolder(mContext,recyclerView,R.layout.login_item_foot_pay_ways){
+        adapter.addFoot(new PeakHolder(mContext, recyclerView, R.layout.login_item_foot_pay_ways) {
             @Override
             public void initView(int position) {
                 super.initView(position);
@@ -116,12 +117,8 @@ public class LoginPayWaysActivity extends BaseActivity {
                 getItemView().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        datas.add("16666666666");
-                        datas.add("15555555555");
-                        datas.add("17777777777");
-                        datas.add("19999999999");
-                        datas.add("18888888888");
-                        adapter.removeFoot(0);
+
+                        WeChatAppPay.jumpToXia(mContext, Param.isDebug);
                         adapter.notifyDataSetChanged();
                     }
                 });
