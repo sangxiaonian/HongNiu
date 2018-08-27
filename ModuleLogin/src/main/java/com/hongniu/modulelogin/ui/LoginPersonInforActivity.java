@@ -16,6 +16,7 @@ import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.utils.PickerDialogUtils;
+import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.modulelogin.LoginUtils;
 import com.hongniu.modulelogin.R;
 import com.hongniu.modulelogin.entity.AreaBeans;
@@ -77,26 +78,37 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
     @Override
     protected void initData() {
         super.initData();
-        HttpLoginFactory.getPersonInfor().subscribe(new NetObserver<LoginPersonInfor>(this) {
 
-            @Override
-            public void doOnSuccess(LoginPersonInfor data) {
-                if (data != null) {
-                    personInfor = data;
-                    itemName.setTextCenter(data.getContact() == null ? "" : data.getContact());
-                    itemIdcard.setTextCenter(data.getIdnumber() == null ? "" : data.getIdnumber());
-                    itemEmail.setTextCenter(data.getEmail() == null ? "" : data.getEmail());
-                    StringBuffer buffer = new StringBuffer();
-                    buffer.append(data.getProvince() == null ? "" : data.getProvince());
-                    buffer.append(data.getCity() == null ? "" : data.getCity());
-                    buffer.append(data.getDistrict() == null ? "" : data.getDistrict());
-                    itemAddress.setTextCenter(buffer.toString());
-                    itemAddressDetail.setTextCenter(data.getAddress() == null ? "" : data.getAddress());
-                } else {
-                    personInfor = new LoginPersonInfor();
+        LoginPersonInfor personInfor = Utils.getPersonInfor();
+        if (personInfor==null){
+            HttpLoginFactory.getPersonInfor().subscribe(new NetObserver<LoginPersonInfor>(this) {
+
+                @Override
+                public void doOnSuccess(LoginPersonInfor data) {
+                    initInfor(data);
                 }
-            }
-        });
+            });
+        }else {
+            initInfor(personInfor);
+        }
+
+    }
+
+    private void initInfor(LoginPersonInfor data) {
+        if (data != null) {
+            LoginPersonInforActivity.this.personInfor = data;
+            itemName.setTextCenter(data.getContact() == null ? "" : data.getContact());
+            itemIdcard.setTextCenter(data.getIdnumber() == null ? "" : data.getIdnumber());
+            itemEmail.setTextCenter(data.getEmail() == null ? "" : data.getEmail());
+            StringBuffer buffer = new StringBuffer();
+            buffer.append(data.getProvince() == null ? "" : data.getProvince());
+            buffer.append(data.getCity() == null ? "" : data.getCity());
+            buffer.append(data.getDistrict() == null ? "" : data.getDistrict());
+            itemAddress.setTextCenter(buffer.toString());
+            itemAddressDetail.setTextCenter(data.getAddress() == null ? "" : data.getAddress());
+        } else {
+            LoginPersonInforActivity.this.personInfor = new LoginPersonInfor();
+        }
     }
 
     @Override
@@ -118,7 +130,7 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
                             @Override
                             public void doOnSuccess(String data) {
                                 //更新个人信息
-                                SharedPreferencesUtils.getInstance().putString(Param.PERSON_ONFOR,new Gson().toJson(personInfor));
+                                Utils.savePersonInfor(personInfor);
                                 ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
                                 BusFactory.getBus().post(new Event.UpPerson());
                                 finish();

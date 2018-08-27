@@ -21,7 +21,7 @@ public class H5Activity extends BaseActivity {
     @Override
     protected void initView() {
         super.initView();
-        pdfView=findViewById(R.id.pdfview);
+//        pdfView=findViewById(R.id.pdfview);
     }
 
     @Override

@@ -55,6 +55,22 @@ public class LoactionUtils {
         }
     }
 
+    public void upInterval(float v) {
+
+        float dis = v / 1000;
+        if (dis<10){
+            setInterval(3000);
+        }else if (dis<50){
+            setInterval(10*1000);
+        }else if (dis<200){
+            setInterval(30*1000);
+        }else {
+            setInterval(60*1000);
+        }
+
+
+    }
+
     private static class InnerClass {
         public static LoactionUtils utils = new LoactionUtils();
     }
@@ -94,7 +110,8 @@ public class LoactionUtils {
      * @param time
      */
     public void setInterval(long time) {
-        mLocationOption.setInterval(1000);
+        mLocationOption.setInterval(time);
+        startLoaction();
     }
 
 

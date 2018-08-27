@@ -13,12 +13,14 @@ import com.amap.api.navi.AmapNaviPage;
 import com.amap.api.navi.AmapNaviParams;
 import com.amap.api.navi.AmapNaviType;
 import com.amap.api.navi.AmapPageType;
+import com.google.gson.Gson;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.base.RefrushFragmet;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.OrderCreatBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.utils.PermissionUtils;
@@ -38,6 +40,7 @@ import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.recycleview.holder.PeakHolder;
 import com.sang.common.utils.DeviceUtils;
+import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.SwitchTextLayout;
 import com.sang.common.widget.dialog.CenterAlertDialog;
@@ -350,9 +353,9 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
      */
     @Override
     public void onCheckInsruance(OrderDetailBean orderBean) {
-//        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("查看保单");
         if (orderBean.getPolicyInfo()!=null){
-            OrderUtils.scanPDf(getActivity(),orderBean.getPolicyInfo().getDownloadUrl());
+            OrderCreatBean orderCreatBean = new Gson().fromJson(orderBean.getPolicyInfo(), OrderCreatBean.class);
+            OrderUtils.scanPDf(getActivity(),orderCreatBean.getDownloadUrl() );
         }else {
             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("暂无保单信息");
 

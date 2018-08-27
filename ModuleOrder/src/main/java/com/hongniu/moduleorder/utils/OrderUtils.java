@@ -19,9 +19,13 @@ public class OrderUtils {
         if (TextUtils.isEmpty(url)){
             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("保单号异常");
         }else {
-            Uri uri = Uri.parse(url);
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            activity.startActivity(intent);
+            try {
+                Uri uri = Uri.parse(url);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                activity.startActivity(intent);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }

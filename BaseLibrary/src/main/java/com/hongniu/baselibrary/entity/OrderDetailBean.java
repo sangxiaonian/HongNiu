@@ -195,7 +195,7 @@ public class OrderDetailBean {
     /**
      *  false	string	保单信息
       */
-    private OrderCreatBean policyInfo	   ;
+    private String policyInfo	   ;
 
 
     public String getPolicyNum() {
@@ -222,11 +222,11 @@ public class OrderDetailBean {
         this.policyMoney = policyMoney;
     }
 
-    public OrderCreatBean getPolicyInfo() {
+    public String getPolicyInfo() {
         return policyInfo;
     }
 
-    public void setPolicyInfo(OrderCreatBean policyInfo) {
+    public void setPolicyInfo(String policyInfo) {
         this.policyInfo = policyInfo;
     }
 
