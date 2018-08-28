@@ -12,7 +12,6 @@ import com.amap.api.maps.model.Poi;
 import com.amap.api.navi.AmapNaviPage;
 import com.amap.api.navi.AmapNaviParams;
 import com.amap.api.navi.AmapNaviType;
-import com.amap.api.navi.AmapPageType;
 import com.google.gson.Gson;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
@@ -24,7 +23,6 @@ import com.hongniu.baselibrary.entity.OrderCreatBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.utils.PermissionUtils;
-import com.hongniu.baselibrary.widget.order.CommonOrderUtils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItem;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.moduleorder.R;
@@ -40,7 +38,6 @@ import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.recycleview.holder.PeakHolder;
 import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.SwitchTextLayout;
 import com.sang.common.widget.dialog.CenterAlertDialog;
@@ -353,10 +350,10 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
      */
     @Override
     public void onCheckInsruance(OrderDetailBean orderBean) {
-        if (orderBean.getPolicyInfo()!=null){
+        if (orderBean.getPolicyInfo() != null) {
             OrderCreatBean orderCreatBean = new Gson().fromJson(orderBean.getPolicyInfo(), OrderCreatBean.class);
-            OrderUtils.scanPDf(getActivity(),orderCreatBean.getDownloadUrl() );
-        }else {
+            OrderUtils.scanPDf(getActivity(), orderCreatBean.getDownloadUrl());
+        } else {
             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("暂无保单信息");
 
         }
@@ -369,25 +366,12 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
      */
     @Override
     public void onCheckPath(final OrderDetailBean orderBean) {
+        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_map_check_path).withBoolean(Param.TRAN, true).navigation(getActivity());
+        OrderEvent.CheckPathEvent checkPathEvent = new OrderEvent.CheckPathEvent(orderBean);
+        checkPathEvent.setBean(orderBean);
+        checkPathEvent.setRoaleState(roleState);
+        BusFactory.getBus().postSticky(checkPathEvent);
 
-
-        PermissionUtils.applyMap(getActivity(), new PermissionUtils.onApplyPermission() {
-            @Override
-            public void hasPermission(List<String> granted, boolean isAll) {
-                ArouterUtils.getInstance().builder(ArouterParamOrder.activity_map_check_path).withBoolean(Param.TRAN, true).navigation(getContext());
-                OrderEvent.CheckPathEvent checkPathEvent = new OrderEvent.CheckPathEvent(orderBean);
-                checkPathEvent.setBean(orderBean);
-                checkPathEvent.setRoaleState(roleState);
-//                checkPathEvent.setLocations(LoactionCellection.getInstance().getList());
-                BusFactory.getBus().postSticky(checkPathEvent);
-
-            }
-
-            @Override
-            public void noPermission(List<String> denied, boolean quick) {
-
-            }
-        });
     }
 
     @Override
@@ -464,17 +448,11 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
 
                 Poi start = new Poi(orderBean.getStratPlaceInfo(), new LatLng(orderBean.getStratPlaceX(), orderBean.getStratPlaceY()), "");
                 Poi end = new Poi(orderBean.getDestinationInfo(), new LatLng(orderBean.getDestinationX(), orderBean.getDestinationY()), "");
-                AmapNaviParams amapNaviParams;
-                if (Param.isDebug) {
-                      amapNaviParams = new AmapNaviParams(start, null, end, AmapNaviType.DRIVER);
-                }else {
-                      amapNaviParams = new AmapNaviParams(start, null, end, AmapNaviType.DRIVER, AmapPageType.NAVI);//直接跳过选址，进入导航
-                }
+                AmapNaviParams amapNaviParams = new AmapNaviParams(start, null, end, AmapNaviType.DRIVER);
                 amapNaviParams.setUseInnerVoice(true);
                 LoactionCollectionUtils loactionCollectionUtils = new LoactionCollectionUtils();
                 loactionCollectionUtils.setOrderNum(orderBean.getId());
                 loactionCollectionUtils.setCarID(orderBean.getCarId());
-
                 AmapNaviPage.getInstance().showRouteActivity(getContext().getApplicationContext(), amapNaviParams, loactionCollectionUtils);
             }
 

@@ -236,7 +236,7 @@ public class HttpOrderFactory {
         return OrderClient.getInstance()
                 .getService()
                 .getPath(bean)
-                .compose(RxUtils.<CommonBean<PathBean>>getSchedulersObservableTransformer());
+               ;
     }
 
     /**

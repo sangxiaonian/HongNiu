@@ -90,7 +90,6 @@ public class OrderEvent {
      */
     public static class CheckPathEvent implements IBus.IEvent {
         OrderDetailBean bean;
-        List<TraceLocation> locations;
         private OrderDetailItemControl.RoleState roaleState;
 
         public CheckPathEvent(OrderDetailBean bean) {
@@ -101,13 +100,6 @@ public class OrderEvent {
             this.bean = bean;
         }
 
-        public List<TraceLocation> getLocations() {
-            return locations;
-        }
-
-        public void setLocations(List<TraceLocation> locations) {
-            this.locations = locations;
-        }
 
         public OrderDetailBean getBean() {
             return bean;

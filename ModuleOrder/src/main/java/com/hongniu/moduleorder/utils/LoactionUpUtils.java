@@ -59,7 +59,7 @@ public class LoactionUpUtils {
         bean.setCarId(carId);
         bean.setLatitude(latitude);
         bean.setLongitude(longitude);
-        bean.setMovingTime(movingTime);
+        bean.setMovingTime(movingTime+" ");
         if (temp.size()<tempSize){
             temp.add(bean);
         }else {

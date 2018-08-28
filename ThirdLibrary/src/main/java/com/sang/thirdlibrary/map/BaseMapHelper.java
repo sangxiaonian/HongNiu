@@ -82,27 +82,7 @@ public class BaseMapHelper implements AMap.OnMyLocationChangeListener {
         aMap.moveCamera(mCameraUpdate);
     }
 
-    public void addMark(BitmapDescriptor bitmap, PoiItem data) {
-        LatLng latLng = new LatLng(data.getLatLonPoint().getLatitude(), data.getLatLonPoint().getLongitude());
-        MarkerOptions markerOption = new MarkerOptions();
-        markerOption.position(latLng);
-        markerOption.title(data.getTitle());
-        markerOption.draggable(false);//设置Marker可拖动
-        markerOption.icon(bitmap);
-        // 将Marker设置为贴地显示，可以双指下拉地图查看效果
-        markerOption.setFlat(true);//设置marker平贴地图效果
-        aMap.addMarker(markerOption);
-    }
 
-
-    public MarkerOptions creatMark(BitmapDescriptor bitmap, String title) {
-        MarkerOptions markerOption = new MarkerOptions();
-        markerOption.draggable(false);//设置Marker可拖动
-        markerOption.icon(bitmap);
-        // 将Marker设置为贴地显示，可以双指下拉地图查看效果
-        markerOption.setFlat(true);//设置marker平贴地图效果
-        return markerOption;
-    }
 
     public void onDestroy() {
         sList.clear();

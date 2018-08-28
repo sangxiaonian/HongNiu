@@ -17,7 +17,7 @@ public class PathBean {
     private String startPlace;
     private String carNum;
     private String endPlace;
-    private List<Object> list;
+    private List<LocationBean> list;
 
     public String getStartPlace() {
         return startPlace;
@@ -43,11 +43,11 @@ public class PathBean {
         this.endPlace = endPlace;
     }
 
-    public List<Object> getList() {
+    public List<LocationBean> getList() {
         return list;
     }
 
-    public void setList(List<Object> list) {
+    public void setList(List<LocationBean> list) {
         this.list = list;
     }
 }

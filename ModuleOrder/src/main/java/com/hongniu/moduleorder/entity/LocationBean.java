@@ -16,7 +16,7 @@ public class LocationBean {
     /**
      *     true	datetime	位移时间
       */
-    private  long movingTime	        ;
+    private  String movingTime	        ;
     /**
      * true	double	纬度，浮点数，范围为-90~90，负数表示南纬
       */
@@ -66,11 +66,11 @@ public class LocationBean {
         this.carId = carId;
     }
 
-    public long getMovingTime() {
+    public String getMovingTime() {
         return movingTime;
     }
 
-    public void setMovingTime(long movingTime) {
+    public void setMovingTime(String movingTime) {
         this.movingTime = movingTime;
     }
 
