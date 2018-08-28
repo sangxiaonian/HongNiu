@@ -37,6 +37,7 @@ public class LoginCarListActivity extends RefrushActivity<LoginCarInforBean> imp
         setToolbarTitle(getString(R.string.car_title));
         initView();
         initData();
+        queryData(true);
 
     }
 

@@ -1,5 +1,7 @@
 package com.hongniu.moduleorder.ui.fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import com.amap.api.maps.AMap;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.PolylineOptions;
+import com.amap.api.navi.view.AmapCameraOverlay;
 import com.amap.api.navi.view.RouteOverLay;
 import com.amap.api.trace.TraceLocation;
 import com.hongniu.baselibrary.base.BaseFragment;
@@ -44,9 +47,7 @@ public class OrderMapPathFragment extends BaseFragment implements OrderMapListen
             helper.moveToStart();
         }
     };
-
-
-
+    private AMap.OnMyLocationChangeListener changeListener;
 
 
     @Override
@@ -79,8 +80,26 @@ public class OrderMapPathFragment extends BaseFragment implements OrderMapListen
                 if (moveToStar){
                     handler.sendEmptyMessageDelayed(0,200);
                 }
+                if (changeListener!=null){
+                    changeListener.onMyLocationChange(location);
+                }
             }
         });
+    }
+
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof AMap.OnMyLocationChangeListener){
+            this.changeListener= (AMap.OnMyLocationChangeListener) context;
+        }
     }
 
     @Override

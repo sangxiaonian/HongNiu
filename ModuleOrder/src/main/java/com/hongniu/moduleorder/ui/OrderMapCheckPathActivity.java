@@ -19,6 +19,7 @@ import com.amap.api.trace.TraceLocation;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.utils.PermissionUtils;
@@ -26,6 +27,8 @@ import com.hongniu.baselibrary.widget.order.OrderDetailItem;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.control.OrderMapListener;
+import com.hongniu.moduleorder.entity.PathBean;
+import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.ui.fragment.OrderMapPathFragment;
 import com.sang.common.event.BusFactory;
 import com.sang.common.utils.JLog;
@@ -112,12 +115,24 @@ public class OrderMapCheckPathActivity extends BaseActivity implements TraceList
             item.setIdentity(event.getRoaleState());
             item.setInfor(bean);
 
+            HttpOrderFactory.getPath(bean.getId())
+            .subscribe(new NetObserver<PathBean>(this) {
+                @Override
+                public void doOnSuccess(PathBean data) {
+                    if (data.getList()==null||data.getList().isEmpty()){
+                        showAleart("当前订单暂无位置信息");
+                    }else {
 
-            if (locations!=null){
-                showLoad();
+                    }
+                }
+            });
+            ;
 
-                mTraceClient.queryProcessedTrace(0,locations, LBSTraceClient.TYPE_AMAP,this);
-            }
+//            if (locations!=null){
+//                showLoad();
+//
+//                mTraceClient.queryProcessedTrace(0,locations, LBSTraceClient.TYPE_AMAP,this);
+//            }
         }
         BusFactory.getBus().removeStickyEvent(event);
     }

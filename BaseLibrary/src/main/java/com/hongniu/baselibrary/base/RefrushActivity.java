@@ -15,6 +15,7 @@ import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.widget.XRefreshLayout;
 import com.sang.common.recycleview.adapter.XAdapter;
+import com.sang.common.utils.JLog;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -46,7 +47,6 @@ public abstract class RefrushActivity<T> extends BaseActivity implements OnRefre
             refresh.setOnRefreshListener(this);
             refresh.setOnLoadMoreListener(this);
         }
-        queryData(true);
 
     }
 
@@ -86,6 +86,9 @@ public abstract class RefrushActivity<T> extends BaseActivity implements OnRefre
                 .subscribe(new NetObserver<PageBean<T>>(this) {
                     @Override
                     public void doOnSuccess(PageBean<T> data) {
+
+                        JLog.i("-------------------"+data.getList().size());
+
                         if (isClear) {
                             datas.clear();
                         }

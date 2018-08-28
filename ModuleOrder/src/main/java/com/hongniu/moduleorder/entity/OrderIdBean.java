@@ -6,6 +6,15 @@ package com.hongniu.moduleorder.entity;
  */
 public class OrderIdBean {
     private String id;
+    private String orderId;
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
 
     public String getId() {
         return id;

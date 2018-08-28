@@ -11,6 +11,7 @@ import com.hongniu.moduleorder.entity.OrderCreatParamBean;
 import com.hongniu.moduleorder.entity.OrderIdBean;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
 import com.hongniu.moduleorder.entity.OrderParamBean;
+import com.hongniu.moduleorder.entity.PathBean;
 import com.hongniu.moduleorder.entity.QueryInsurancePriceBean;
 import com.hongniu.moduleorder.entity.WxPayBean;
 
@@ -147,6 +148,11 @@ public interface OrderService {
      */
     @POST("hongniu/api/position/save")
     Observable<CommonBean<String>> upLoaction(@Body List<LocationBean> locationBeans);
+/**
+     * 获取指定订单所有位置信息
+     */
+    @POST("hongniu/api/order/positionList")
+    Observable<CommonBean<PathBean>> getPath(@Body OrderIdBean infor);
 
 
 }

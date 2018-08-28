@@ -1,9 +1,7 @@
 package com.hongniu.moduleorder.ui;
 
+import android.location.Location;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,18 +11,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.amap.api.maps.AMap;
+import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
-import com.hjq.permissions.OnPermission;
-import com.hjq.permissions.Permission;
-import com.hjq.permissions.XXPermissions;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.RefrushActivity;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.control.OrderMapListener;
+import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.ui.fragment.OrderMapPathFragment;
 import com.sang.common.event.BusFactory;
 import com.sang.common.event.IBus;
@@ -36,21 +36,20 @@ import com.sang.common.utils.ToastUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
+
 /**
  * 定位，选择当前所在点的Activity，
  */
 @Route(path = ArouterParamOrder.activity_map_loaction)
-public class OrderMapLocationActivity extends BaseActivity implements PoiSearch.OnPoiSearchListener {
+public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implements  AMap.OnMyLocationChangeListener {
 
 
     private EditText etSearch;
-    private PoiSearch.Query query;
-    private ArrayList<PoiItem> poiItems = new ArrayList<>();
-    private RecyclerView recyclerView;
     private int selectPositio = -1;
-    private XAdapter<PoiItem> adapter;
     private boolean start;
     private OrderMapListener helper;
+    private PoiSearch.SearchBound searchBound;
 
 
     @Override
@@ -67,8 +66,6 @@ public class OrderMapLocationActivity extends BaseActivity implements PoiSearch.
         initListener();
 
 
-
-
     }
 
 
@@ -76,8 +73,9 @@ public class OrderMapLocationActivity extends BaseActivity implements PoiSearch.
     protected void initView() {
         super.initView();
         etSearch = findViewById(R.id.et_search);
-        recyclerView = findViewById(R.id.rv);
-        recyclerView.setVisibility(View.GONE);
+        refresh.setVisibility(View.GONE);
+
+
     }
 
     @Override
@@ -90,11 +88,36 @@ public class OrderMapLocationActivity extends BaseActivity implements PoiSearch.
         } else {
             etSearch.setHint("在哪里收货");
         }
+        etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    searchBound=null;
+                    queryData(true, true);
+                }
+                return false;
+            }
+        });
+    }
 
-        LinearLayoutManager manager = new LinearLayoutManager(mContext);
-        manager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(manager);
-        adapter = new XAdapter<PoiItem>(mContext, poiItems) {
+    @Override
+    protected Observable<CommonBean<PageBean<PoiItem>>> getListDatas() {
+        PoiSearch.Query query = new PoiSearch.Query(etSearch.getText().toString().trim(), "", "");
+//keyWord表示搜索字符串，
+//第二个参数表示POI搜索类型，二者选填其一，选用POI搜索类型时建议填写类型代码，码表可以参考下方（而非文字）
+//cityCode表示POI搜索区域，可以是城市编码也可以是城市名称，也可以传空字符串，空字符串代表全国在全国范围内进行搜索
+        query.setPageSize(Param.PAGE_SIZE);// 设置每页最多返回多少条poiitem
+        query.setPageNum(currentPage);//设置查询页码
+        PoiSearch poiSearch = new PoiSearch(mContext, query);
+        if (searchBound!=null) {
+            poiSearch.setBound(searchBound);
+        }
+        return HttpOrderFactory.searchPio(poiSearch);
+    }
+
+    @Override
+    protected XAdapter<PoiItem> getAdapter(List<PoiItem> datas) {
+        return new XAdapter<PoiItem>(mContext, datas) {
             @Override
             public BaseHolder<PoiItem> initHolder(ViewGroup parent, int viewType) {
                 return new BaseHolder<PoiItem>(context, parent, R.layout.map_select_item) {
@@ -119,7 +142,7 @@ public class OrderMapLocationActivity extends BaseActivity implements PoiSearch.
                                     selectPositio = position;
                                     adapter.notifyDataSetChanged();
 
-                                    if (helper!=null) {
+                                    if (helper != null) {
                                         if (start) {
                                             helper.setStartMarker(data.getLatLonPoint().getLatitude(), data.getLatLonPoint().getLongitude(), data.getTitle());
                                         } else {
@@ -135,16 +158,6 @@ public class OrderMapLocationActivity extends BaseActivity implements PoiSearch.
                 };
             }
         };
-        recyclerView.setAdapter(adapter);
-        etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    searchPio();
-                }
-                return false;
-            }
-        });
     }
 
 
@@ -154,10 +167,10 @@ public class OrderMapLocationActivity extends BaseActivity implements PoiSearch.
         setToolbarRightClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (selectPositio >= 0 && poiItems.size() > selectPositio) {
+                if (selectPositio >= 0 && datas.size() > selectPositio) {
                     IBus.IEvent event;
-                    PoiItem poiItem = poiItems.get(selectPositio);
-                    JLog.i(poiItem.getLatLonPoint()+">>>>"+poiItem.getEnter()+">>>"+poiItem.getExit());
+                    PoiItem poiItem = datas.get(selectPositio);
+                    JLog.i(poiItem.getLatLonPoint() + ">>>>" + poiItem.getEnter() + ">>>" + poiItem.getExit());
                     if (start) {
                         event = new OrderEvent.StartLoactionEvent(poiItem);
                     } else {
@@ -172,29 +185,10 @@ public class OrderMapLocationActivity extends BaseActivity implements PoiSearch.
             }
         });
     }
-
-    private void searchPio() {
-        String trim = etSearch.getText().toString().trim();
-        if (TextUtils.isEmpty(trim)) {
-            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("请输入搜索地址");
-        } else {
-            query = new PoiSearch.Query(trim, "", "");
-//keyWord表示搜索字符串，
-//第二个参数表示POI搜索类型，二者选填其一，选用POI搜索类型时建议填写类型代码，码表可以参考下方（而非文字）
-//cityCode表示POI搜索区域，可以是城市编码也可以是城市名称，也可以传空字符串，空字符串代表全国在全国范围内进行搜索
-            query.setPageSize(10);// 设置每页最多返回多少条poiitem
-            query.setPageNum(1);//设置查询页码
-            PoiSearch poiSearch = new PoiSearch(mContext, query);
-            poiSearch.setOnPoiSearchListener(this);
-            poiSearch.searchPOIAsyn();
-        }
-
-    }
-
     @Override
     public void onBackPressed() {
-        if (recyclerView.getVisibility() == View.VISIBLE) {
-            recyclerView.setVisibility(View.GONE);
+        if (refresh.getVisibility() == View.VISIBLE) {
+            refresh.setVisibility(View.GONE);
         } else {
             super.onBackPressed();
 
@@ -202,23 +196,21 @@ public class OrderMapLocationActivity extends BaseActivity implements PoiSearch.
     }
 
 
-    @Override
-    public void onPoiSearched(PoiResult poiResult, int i) {
-        if (i == 1000) {
-            poiItems.clear();
-            poiItems.addAll(poiResult.getPois());
-            adapter.notifyDataSetChanged();
-
-            recyclerView.setVisibility(View.VISIBLE);
-        } else {
-            recyclerView.setVisibility(View.GONE);
-            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("搜索失败");
-        }
-    }
 
     @Override
-    public void onPoiItemSearched(PoiItem poiItem, int i) {
+    public void onTaskSuccess() {
+        super.onTaskSuccess();
+        adapter.notifyDataSetChanged();
+        refresh.setVisibility(View.VISIBLE);
 
     }
 
+
+
+    @Override
+    public void onMyLocationChange(Location location) {
+       searchBound = new PoiSearch.SearchBound(new LatLonPoint(location.getLatitude(),
+                location.getLongitude()), 1000);
+        queryData(true);
+    }
 }

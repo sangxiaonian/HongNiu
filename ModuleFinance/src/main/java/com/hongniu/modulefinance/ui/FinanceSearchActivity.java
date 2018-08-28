@@ -54,6 +54,8 @@ public class FinanceSearchActivity extends RefrushActivity<OrderDetailBean> impl
         initView();
         initData();
         initListener();
+        queryData(true);
+
     }
 
     @Override
