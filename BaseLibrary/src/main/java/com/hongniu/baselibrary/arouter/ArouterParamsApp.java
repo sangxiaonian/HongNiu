@@ -10,6 +10,10 @@ public class ArouterParamsApp {
      * 新手引导
      */
     public final static String activity_guide_activity = "/app/activity_guide_activity";
+    /**
+     * Pdf 加载页面
+     */
+    public final static String activity_pdf = "/app/activity_pdf";
 
 
 

@@ -49,5 +49,31 @@ public class PermissionUtils {
 
     }
 
+    /**
+     * 申请储存相关权限
+     *
+     * @param activity
+     */
+    public static void applyStorage(Activity activity, final onApplyPermission permission) {
+        XXPermissions.with(activity)
+                //.constantRequest() //可设置被拒绝后继续申请，直到用户授权或者永久拒绝
+                .permission(Permission.WRITE_EXTERNAL_STORAGE) //支持请求安装权限和悬浮窗权限
+                .permission(Permission.Group.STORAGE) //支持多个权限组进行请求，不指定则默以清单文件中的危险权限进行请求
+                .request(new OnPermission() {
+
+                    @Override
+                    public void hasPermission(List<String> granted, boolean isAll) {
+                        permission.hasPermission(granted,isAll);
+
+                    }
+
+                    @Override
+                    public void noPermission(List<String> denied, boolean quick) {
+                        permission.noPermission(denied,quick);
+                    }
+                });
+
+    }
+
 
 }

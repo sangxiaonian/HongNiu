@@ -51,9 +51,7 @@ public class LoactionUpUtils {
         if (v<minDis){
             return;
         }else {
-            JLog.i("记录");
             lastLoaction=new LatLng(latitude,longitude);
-
         }
 
         LocationBean bean = new LocationBean();
