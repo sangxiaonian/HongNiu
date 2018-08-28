@@ -292,6 +292,28 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
 
 
     /**
+     * 改变角色信息
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onChangeRole(Event.UpRoale event) {
+        if (event != null&&event.roleState!=null) {
+            switch (event.roleState){
+                case CARGO_OWNER:
+                    changeStaff(3);
+                    break;
+                case CAR_OWNER:
+                    changeStaff(1);
+                    break;
+                case DRIVER:
+                    changeStaff(2);
+                    break;
+            }
+
+        }
+    }
+
+    /**
      * 顶部角色类型被选中点击的时候
      *
      * @param popu
@@ -493,6 +515,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
         if (upLoactionUtils != null) {
+            JLog.i("---------------------------------");
             upLoactionUtils.add(aMapLocation.getLatitude(), aMapLocation.getLongitude(), aMapLocation.getTime());
         }
     }

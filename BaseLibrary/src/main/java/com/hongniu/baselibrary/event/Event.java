@@ -1,6 +1,9 @@
 package com.hongniu.baselibrary.event;
 
 import com.hongniu.baselibrary.entity.CreatInsuranceBean;
+import com.hongniu.baselibrary.entity.OrderDetailBean;
+import com.hongniu.baselibrary.entity.RoleTypeBean;
+import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.sang.common.event.IBus;
 
 /**
@@ -31,5 +34,14 @@ public class Event {
      * 更新个人信息
      */
     public static class UpPerson implements IBus.IEvent {
+    } /**
+     * 更新个人信息
+     */
+    public static class UpRoale implements IBus.IEvent {
+        public OrderDetailItemControl.RoleState roleState;
+
+        public UpRoale(OrderDetailItemControl.RoleState roleState) {
+            this.roleState = roleState;
+        }
     }
 }

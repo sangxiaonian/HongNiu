@@ -18,8 +18,10 @@ import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
+import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.utils.PickerDialogUtils;
+import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
@@ -227,8 +229,10 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
                                 ArouterUtils.getInstance()
                                         .builder(ArouterParamOrder.activity_order_pay)
                                         .navigation(mContext);
-                                BusFactory.getBus().post(new OrderEvent.MapNavigationEvent());
+
+                                BusFactory.getBus().postSticky(new Event.UpRoale(OrderDetailItemControl.RoleState.CARGO_OWNER));
                                 finish();
+
                             }
                         });
 
