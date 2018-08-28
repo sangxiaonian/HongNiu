@@ -209,14 +209,19 @@ public class MapCalculateHelper extends BaseMapHelper implements AMap.OnMyLocati
 
     @Override
     public void onDestroy() {
+
         super.onDestroy();
-        /**
-         * 当前页面只是展示地图，activity销毁后不需要再回调导航的状态
-         */
-        mAMapNavi.removeAMapNaviListener(this);
-        mAMapNavi.destroy();
-        mAMapNavi=null;
-        routeOverlays.clear();
+        if (mAMapNavi!=null) {
+            /**
+             * 当前页面只是展示地图，activity销毁后不需要再回调导航的状态
+             */
+            mAMapNavi.removeAMapNaviListener(this);
+            mAMapNavi.destroy();
+            mAMapNavi=null;
+        }
+        if (routeOverlays!=null) {
+            routeOverlays.clear();
+        }
     }
 
     @Override

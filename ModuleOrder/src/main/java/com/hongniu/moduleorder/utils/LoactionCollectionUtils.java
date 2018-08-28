@@ -6,6 +6,7 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.navi.INaviInfoCallback;
 import com.amap.api.navi.model.AMapNaviLocation;
 import com.amap.api.trace.TraceLocation;
+import com.hongniu.baselibrary.config.Param;
 import com.sang.common.utils.JLog;
 import com.sang.thirdlibrary.map.LoactionUtils;
 
@@ -35,7 +36,7 @@ public class LoactionCollectionUtils implements INaviInfoCallback {
 
 
     public LoactionCollectionUtils() {
-        loactions=new LoactionUpUtils();
+        loactions = new LoactionUpUtils();
     }
 
     //
@@ -53,17 +54,18 @@ public class LoactionCollectionUtils implements INaviInfoCallback {
     //当前位置发生改变
     @Override
     public void onLocationChange(AMapNaviLocation aMapNaviLocation) {
-          if (lastLoaction != null && lastLoaction.getBearing() != aMapNaviLocation.getBearing()) {//方向更改
+        if (lastLoaction != null && lastLoaction.getBearing() != aMapNaviLocation.getBearing()) {//方向更改
             TraceLocation location = new TraceLocation();
             location.setBearing(aMapNaviLocation.getBearing());
             location.setLatitude(aMapNaviLocation.getCoord().getLatitude());
             location.setLongitude(aMapNaviLocation.getCoord().getLongitude());
             location.setTime(aMapNaviLocation.getTime());
-            lastLoaction=aMapNaviLocation;
+            lastLoaction = aMapNaviLocation;
+            if (Param.isDebug) {
+                loactions.add(aMapNaviLocation.getCoord().getLatitude(), aMapNaviLocation.getCoord().getLongitude(), aMapNaviLocation.getTime());
+            }
 
-//            loactions.add(aMapNaviLocation.getCoord().getLatitude(),aMapNaviLocation.getCoord().getLongitude(),aMapNaviLocation.getTime());
-
-          } else {//初始化
+        } else {//初始化
             lastLoaction = aMapNaviLocation;
         }
 
@@ -79,7 +81,7 @@ public class LoactionCollectionUtils implements INaviInfoCallback {
     @Override
     public void onStartNavi(int i) {
         JLog.i("onStartNavi:" + i);
-        loactions.setOrderInfor(orderNum,carID);
+        loactions.setOrderInfor(orderNum, carID);
     }
 
     @Override

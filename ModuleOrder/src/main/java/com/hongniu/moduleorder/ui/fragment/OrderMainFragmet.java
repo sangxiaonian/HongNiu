@@ -461,16 +461,15 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
         PermissionUtils.applyMap(getActivity(), new PermissionUtils.onApplyPermission() {
             @Override
             public void hasPermission(List<String> granted, boolean isAll) {
-//                ArouterUtils.getInstance()
-//                        .builder(ArouterParamOrder.activity_order_map_path)
-//                        .withBoolean(Param.TRAN, false)
-//                        .navigation(getContext());
-//                BusFactory.getBus().postSticky(new OrderEvent.CheckPathEvent(orderBean));
+
                 Poi start = new Poi(orderBean.getStratPlaceInfo(), new LatLng(orderBean.getStratPlaceX(), orderBean.getStratPlaceY()), "");
                 Poi end = new Poi(orderBean.getDestinationInfo(), new LatLng(orderBean.getDestinationX(), orderBean.getDestinationY()), "");
-
-                AmapNaviParams amapNaviParams = new AmapNaviParams(start, null, end, AmapNaviType.DRIVER, AmapPageType.NAVI);//直接跳过选址，进入导航
-//                AmapNaviParams amapNaviParams = new AmapNaviParams(start, null, end, AmapNaviType.DRIVER);
+                AmapNaviParams amapNaviParams;
+                if (Param.isDebug) {
+                      amapNaviParams = new AmapNaviParams(start, null, end, AmapNaviType.DRIVER);
+                }else {
+                      amapNaviParams = new AmapNaviParams(start, null, end, AmapNaviType.DRIVER, AmapPageType.NAVI);//直接跳过选址，进入导航
+                }
                 amapNaviParams.setUseInnerVoice(true);
                 LoactionCollectionUtils loactionCollectionUtils = new LoactionCollectionUtils();
                 loactionCollectionUtils.setOrderNum(orderBean.getId());
