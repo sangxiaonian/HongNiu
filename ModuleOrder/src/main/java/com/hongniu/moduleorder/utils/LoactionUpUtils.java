@@ -4,6 +4,7 @@ import com.amap.api.maps.model.LatLng;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.moduleorder.entity.LocationBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
+import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.JLog;
 import com.sang.thirdlibrary.map.LoactionUtils;
 
@@ -59,7 +60,7 @@ public class LoactionUpUtils {
         bean.setCarId(carId);
         bean.setLatitude(latitude);
         bean.setLongitude(longitude);
-        bean.setMovingTime(movingTime+" ");
+        bean.setMovingTime(ConvertUtils.formatTime(movingTime,"yyyy-MM-dd HH:mm:ss"));
         if (temp.size()<tempSize){
             temp.add(bean);
         }else {

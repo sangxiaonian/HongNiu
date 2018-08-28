@@ -67,7 +67,7 @@ public class ConvertUtils {
      * 将data转换成指定格式
      *
      * @param date   时间
-     * @param format "yyyy年MM月dd日"
+     * @param format "yyyy年MM月dd日 HH:mm:ss"
      */
     public static String formatTime(Date date, String format) {
 
