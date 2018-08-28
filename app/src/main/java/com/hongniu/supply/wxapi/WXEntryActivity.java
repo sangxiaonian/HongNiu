@@ -1,18 +1,14 @@
 package com.hongniu.supply.wxapi;
 
 
-import android.app.ActivityManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
 
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.supply.R;
-import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.JLog;
 import com.sang.thirdlibrary.pay.PayConfig;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
@@ -22,8 +18,6 @@ import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
-
-import java.util.List;
 
 public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler {
 
@@ -63,7 +57,7 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler 
             String extraData = launchMiniProResp.extMsg; // 对应JsApi navigateBackApplication中的extraData字段数据
             JLog.i(extraData);
             ArouterUtils.getInstance().builder(ArouterParamLogin.activity_pay_ways)
-                    .withString(Param.TRAN,extraData)
+                    .withString(Param.TRAN, extraData)
                     .navigation(this);
             finish();
 

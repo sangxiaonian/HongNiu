@@ -30,6 +30,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 
     private IWXAPI api;
     private CreatInsuranceBean insuranceBean;
+    private boolean insurance;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,9 +59,12 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
             if (resp.errCode == 0) {
                 Toast.makeText(this, "支付成功", Toast.LENGTH_LONG).show();
-                if (insuranceBean != null) {
+                if (insuranceBean != null&&insurance) {
                     ArouterUtils.getInstance().builder(ArouterParamOrder.activity_insurance_creat)
                             .withParcelable(Param.TRAN,insuranceBean)
+                            .navigation(this);
+                }else {
+                    ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_main)
                             .navigation(this);
                 }
             } else if (resp.errCode == -2) {
@@ -83,6 +87,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
         if (event != null && event.getBean() != null) {
             CreatInsuranceBean bean = event.getBean();
             this.insuranceBean = bean;
+            this.insurance=event.isCreatInsurance;
         }
         BusFactory.getBus().removeStickyEvent(event);
     }
