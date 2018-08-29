@@ -114,10 +114,10 @@ public class OrderDetailItem extends FrameLayout {
 
         if (data.getOrderState()== OrderDetailItemControl.OrderState.IN_TRANSIT){//正在运输中
             progress.showProgress(true);
-            if (data.getPositionX()>0&&data.getPositionY()>0) {
-                float totale = LoactionUtils.getInstance().caculeDis(data.getStartLatitude(), data.getStartLongitude(), data.getDestinationLatitude(), data.getDestinationY());
-                float current = LoactionUtils.getInstance().caculeDis(data.getStartLatitude(), data.getStartLongitude(), data.getPositionX(), data.getPositionY());
-                progress.setCurent(current / (totale == 0 ? 1 : totale));
+            if (data.getLatitude()>0&&data.getLongitude()>0) {
+                float totale = LoactionUtils.getInstance().caculeDis(data.getStartLatitude(), data.getStartLongitude(), data.getDestinationLatitude(), data.getDestinationLongitude());
+                float current = LoactionUtils.getInstance().caculeDis(data.getStartLatitude(), data.getStartLongitude(), data.getLatitude(), data.getLongitude());
+                progress.setCurent(current*100 / (totale == 0 ? 1 : totale));
             }else {
                 progress.setCurent(0);
             }

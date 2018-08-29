@@ -51,7 +51,7 @@ public class OrderDetailBean {
     /**
      * true string 目的地y坐标 经度坐标
      */
-    private double destinationY;
+    private double destinationLongitude;
 
     /**
      * true string 创建日期
@@ -171,8 +171,8 @@ public class OrderDetailBean {
     /**
      * 当前订单所在位置
      */
-    private double positionX;
-    private double positionY;
+    private double latitude;
+    private double longitude;
 
     /**
      * false	string	支付方式(0微信,1银联,2线下支付)
@@ -230,20 +230,20 @@ public class OrderDetailBean {
         this.policyInfo = policyInfo;
     }
 
-    public double getPositionX() {
-        return positionX;
+    public double getLatitude() {
+        return latitude;
     }
 
-    public void setPositionX(double positionX) {
-        this.positionX = positionX;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 
-    public double getPositionY() {
-        return positionY;
+    public double getLongitude() {
+        return longitude;
     }
 
-    public void setPositionY(double positionY) {
-        this.positionY = positionY;
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public long getPayTime() {
@@ -413,12 +413,12 @@ public class OrderDetailBean {
         this.destinationLatitude = destinationLatitude;
     }
 
-    public double getDestinationY() {
-        return destinationY;
+    public double getDestinationLongitude() {
+        return destinationLongitude;
     }
 
-    public void setDestinationY(double destinationY) {
-        this.destinationY = destinationY;
+    public void setDestinationLongitude(double destinationLongitude) {
+        this.destinationLongitude = destinationLongitude;
     }
 
     public String getCreationDate() {

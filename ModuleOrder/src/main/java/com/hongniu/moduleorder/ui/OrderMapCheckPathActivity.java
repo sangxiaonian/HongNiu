@@ -180,7 +180,7 @@ public class OrderMapCheckPathActivity extends BaseActivity {
                         );
                         MarkUtils.addMark(aMap,
                                 BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), com.sang.thirdlibrary.R.mipmap.end))
-                                , bean.getDestinationLatitude(), bean.getDestinationY()
+                                , bean.getDestinationLatitude(), bean.getDestinationLongitude()
                         );
 
                         return latLngs;

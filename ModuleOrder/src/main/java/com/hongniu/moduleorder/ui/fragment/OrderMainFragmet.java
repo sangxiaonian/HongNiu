@@ -447,7 +447,7 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
             public void hasPermission(List<String> granted, boolean isAll) {
 
                 Poi start = new Poi(orderBean.getStartPlaceInfo(), new LatLng(orderBean.getStartLatitude(), orderBean.getStartLongitude()), "");
-                Poi end = new Poi(orderBean.getDestinationInfo(), new LatLng(orderBean.getDestinationLatitude(), orderBean.getDestinationY()), "");
+                Poi end = new Poi(orderBean.getDestinationInfo(), new LatLng(orderBean.getDestinationLatitude(), orderBean.getDestinationLongitude()), "");
                 AmapNaviParams amapNaviParams = new AmapNaviParams(start, null, end, AmapNaviType.DRIVER);
                 amapNaviParams.setUseInnerVoice(true);
                 LoactionCollectionUtils loactionCollectionUtils = new LoactionCollectionUtils();
@@ -476,9 +476,10 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
                 .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
                     @Override
                     public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
-                        double v = LoactionUtils.getInstance().caculeDis(orderBean.getDestinationLatitude(), orderBean.getDestinationY());
+                        double v = LoactionUtils.getInstance().caculeDis(orderBean.getDestinationLatitude(), orderBean.getDestinationLongitude());
                         dialog.dismiss();
                         if (v > Param.ENTRY_MIN) {//距离过大，超过确认订单的最大距离
+//                        if (false) {
                             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("距离目的地太远，请到达目的地后进行操作");
                         } else {
                             HttpOrderFactory.entryArrive(orderBean.getId())
