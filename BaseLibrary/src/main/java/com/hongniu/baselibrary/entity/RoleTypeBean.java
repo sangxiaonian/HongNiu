@@ -24,44 +24,44 @@ public class RoleTypeBean {
      * false	string	订单状态（有司机角色正在运输的订单  时返回数据，其他情况为空）
      */
     private String status;
-    private double stratPlaceX;
-    private double stratPlaceY;
-    private double destinationX;
-    private double destinationY;
+    private double startLatitude;
+    private double startLongitude;
+    private double destinationLatitude;
+    private double destinationLongitude;
 
     public RoleTypeBean() {
     }
 
-    public double getStratPlaceX() {
-        return stratPlaceX;
+    public double getStartLatitude() {
+        return startLatitude;
     }
 
-    public void setStratPlaceX(double stratPlaceX) {
-        this.stratPlaceX = stratPlaceX;
+    public void setStartLatitude(double startLatitude) {
+        this.startLatitude = startLatitude;
     }
 
-    public double getStratPlaceY() {
-        return stratPlaceY;
+    public double getStartLongitude() {
+        return startLongitude;
     }
 
-    public void setStratPlaceY(double stratPlaceY) {
-        this.stratPlaceY = stratPlaceY;
+    public void setStartLongitude(double startLongitude) {
+        this.startLongitude = startLongitude;
     }
 
-    public double getDestinationX() {
-        return destinationX;
+    public double getDestinationLatitude() {
+        return destinationLatitude;
     }
 
-    public void setDestinationX(double destinationX) {
-        this.destinationX = destinationX;
+    public void setDestinationLatitude(double destinationLatitude) {
+        this.destinationLatitude = destinationLatitude;
     }
 
-    public double getDestinationY() {
-        return destinationY;
+    public double getDestinationLongitude() {
+        return destinationLongitude;
     }
 
-    public void setDestinationY(double destinationY) {
-        this.destinationY = destinationY;
+    public void setDestinationLongitude(double destinationLongitude) {
+        this.destinationLongitude = destinationLongitude;
     }
 
     public int getRoleId() {

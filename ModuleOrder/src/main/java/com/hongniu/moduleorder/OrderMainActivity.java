@@ -238,7 +238,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                         upLoactionEvent.orderID = event.getOrderId();
                         upLoactionEvent.cardID = event.getCarId();
                         BusFactory.getBus().post(upLoactionEvent);
-                        float v = loaction.caculeDis(event.getStratPlaceX(), event.getStratPlaceY(), event.getDestinationX(), event.getDestinationY());
+                        float v = loaction.caculeDis(event.getStartLatitude(), event.getStartLongitude(), event.getDestinationLatitude(), event.getDestinationLongitude());
                         loaction.upInterval(v);
                         JLog.i("-------发送运输相关信息-----");
                     }

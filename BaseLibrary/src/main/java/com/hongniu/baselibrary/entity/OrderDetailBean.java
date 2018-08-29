@@ -25,19 +25,19 @@ public class OrderDetailBean {
     private int status;
 
     /**
-     * true string 出发地x坐标
+     * true string 出发地纬度坐标
      */
     private double startLatitude;
 
     /**
-     * true string 出发地y坐标
+     * true string 出发地经度坐标
      */
-    private double stratPlaceY;
+    private double startLongitude;
 
     /**
      * true string 出发地描述
      */
-    private String stratPlaceInfo;
+    private String startPlaceInfo;
 
     /**
      * true string 目的地描述
@@ -45,11 +45,11 @@ public class OrderDetailBean {
     private String destinationInfo;
 
     /**
-     * true string 目的地x坐标
+     * true string 目的地x坐标 目的地纬度坐标
      */
-    private double destinationX;
+    private double destinationLatitude;
     /**
-     * true string 目的地y坐标
+     * true string 目的地y坐标 经度坐标
      */
     private double destinationY;
 
@@ -381,20 +381,20 @@ public class OrderDetailBean {
         this.startLatitude = startLatitude;
     }
 
-    public double getStratPlaceY() {
-        return stratPlaceY;
+    public double getStartLongitude() {
+        return startLongitude;
     }
 
-    public void setStratPlaceY(double stratPlaceY) {
-        this.stratPlaceY = stratPlaceY;
+    public void setStartLongitude(double startLongitude) {
+        this.startLongitude = startLongitude;
     }
 
-    public String getStratPlaceInfo() {
-        return stratPlaceInfo;
+    public String getStartPlaceInfo() {
+        return startPlaceInfo;
     }
 
-    public void setStratPlaceInfo(String stratPlaceInfo) {
-        this.stratPlaceInfo = stratPlaceInfo;
+    public void setStartPlaceInfo(String startPlaceInfo) {
+        this.startPlaceInfo = startPlaceInfo;
     }
 
     public String getDestinationInfo() {
@@ -405,12 +405,12 @@ public class OrderDetailBean {
         this.destinationInfo = destinationInfo;
     }
 
-    public double getDestinationX() {
-        return destinationX;
+    public double getDestinationLatitude() {
+        return destinationLatitude;
     }
 
-    public void setDestinationX(double destinationX) {
-        this.destinationX = destinationX;
+    public void setDestinationLatitude(double destinationLatitude) {
+        this.destinationLatitude = destinationLatitude;
     }
 
     public double getDestinationY() {

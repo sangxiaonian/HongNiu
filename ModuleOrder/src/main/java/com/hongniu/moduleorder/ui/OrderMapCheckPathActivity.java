@@ -176,11 +176,11 @@ public class OrderMapCheckPathActivity extends BaseActivity {
                     public List<LatLng> apply(List<LatLng> latLngs) throws Exception {
                         MarkUtils.addMark(aMap,
                                 BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), com.sang.thirdlibrary.R.mipmap.start))
-                                , bean.getStartLatitude(), bean.getStratPlaceY()
+                                , bean.getStartLatitude(), bean.getStartLongitude()
                         );
                         MarkUtils.addMark(aMap,
                                 BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), com.sang.thirdlibrary.R.mipmap.end))
-                                , bean.getDestinationX(), bean.getDestinationY()
+                                , bean.getDestinationLatitude(), bean.getDestinationY()
                         );
 
                         return latLngs;

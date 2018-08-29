@@ -11,23 +11,23 @@ public class OrderCreatParamBean {
     /**
      * true	string	开始地点x坐标
      */
-    protected String  stratPlaceX	      ;
+    protected double startLatitude;
     /**
      * true	string	开始地点y坐标
      */
-    protected String  stratPlaceY	      ;
+    protected double startLongitude;
     /**
      * true	string	开始地点描述
      */
-    protected String  stratPlaceInfo	  ;
+    protected String startPlaceInfo;
     /**
      * true	string	目的地x坐标
      */
-    protected String  destinationX      ;
+    protected double destinationLatitude;
     /**
      * true	string	目的地y坐标
      */
-    protected String  destinationY	      ;
+    protected double destinationLongitude;
     /**
      * true	string	目的地描述
      */
@@ -81,148 +81,147 @@ public class OrderCreatParamBean {
      */
     protected String  payWay	          ;
 
-    public void setDepartNum(String departNum) {
-        this.departNum = departNum;
-    }
-
-    public void setStratPlaceX(String stratPlaceX) {
-        this.stratPlaceX = stratPlaceX;
-    }
-
-    public void setStratPlaceY(String stratPlaceY) {
-        this.stratPlaceY = stratPlaceY;
-    }
-
-    public void setStratPlaceInfo(String stratPlaceInfo) {
-        this.stratPlaceInfo = stratPlaceInfo;
-    }
-
-    public void setDestinationX(String destinationX) {
-        this.destinationX = destinationX;
-    }
-
-    public void setDestinationY(String destinationY) {
-        this.destinationY = destinationY;
-    }
-
-    public void setDestinationInfo(String destinationInfo) {
-        this.destinationInfo = destinationInfo;
-    }
-
-    public void setDeliverydateStr(String deliverydateStr) {
-        this.deliverydateStr = deliverydateStr;
-    }
-
-    public void setGoodName(String goodName) {
-        this.goodName = goodName;
-    }
-
-    public void setGoodvolume(String goodvolume) {
-        this.goodvolume = goodvolume;
-    }
-
-    public void setGoodweight(String goodweight) {
-        this.goodweight = goodweight;
-    }
-
-    public void setMoney(String money) {
-        this.money = money;
-    }
-
-    public void setCarnum(String carnum) {
-        this.carnum = carnum;
-    }
-
-    public void setCarInfo(String carInfo) {
-        this.carInfo = carInfo;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public void setUserPhone(String userPhone) {
-        this.userPhone = userPhone;
-    }
-
-    public void setDrivername(String drivername) {
-        this.drivername = drivername;
-    }
-
-    public void setDrivermobile(String drivermobile) {
-        this.drivermobile = drivermobile;
-    }
-
     public String getDepartNum() {
         return departNum;
     }
 
-    public String getStratPlaceX() {
-        return stratPlaceX;
+    public void setDepartNum(String departNum) {
+        this.departNum = departNum;
     }
 
-    public String getStratPlaceY() {
-        return stratPlaceY;
+    public double getStartLatitude() {
+        return startLatitude;
     }
 
-    public String getStratPlaceInfo() {
-        return stratPlaceInfo;
+    public void setStartLatitude(double startLatitude) {
+        this.startLatitude = startLatitude;
     }
 
-    public String getDestinationX() {
-        return destinationX;
+    public double getStartLongitude() {
+        return startLongitude;
     }
 
-    public String getDestinationY() {
-        return destinationY;
+    public void setStartLongitude(double startLongitude) {
+        this.startLongitude = startLongitude;
+    }
+
+    public String getStartPlaceInfo() {
+        return startPlaceInfo;
+    }
+
+    public void setStartPlaceInfo(String startPlaceInfo) {
+        this.startPlaceInfo = startPlaceInfo;
+    }
+
+    public double getDestinationLatitude() {
+        return destinationLatitude;
+    }
+    public void setDestinationLatitude(double destinationLatitude) {
+        this.destinationLatitude = destinationLatitude;
+    }
+
+    public double getDestinationLongitude() {
+        return destinationLongitude;
+    }
+
+    public void setDestinationLongitude(double destinationLongitude) {
+        this.destinationLongitude = destinationLongitude;
     }
 
     public String getDestinationInfo() {
         return destinationInfo;
     }
 
+    public void setDestinationInfo(String destinationInfo) {
+        this.destinationInfo = destinationInfo;
+    }
+
     public String getDeliverydateStr() {
         return deliverydateStr;
+    }
+
+    public void setDeliverydateStr(String deliverydateStr) {
+        this.deliverydateStr = deliverydateStr;
     }
 
     public String getGoodName() {
         return goodName;
     }
 
+    public void setGoodName(String goodName) {
+        this.goodName = goodName;
+    }
+
     public String getGoodvolume() {
         return goodvolume;
+    }
+
+    public void setGoodvolume(String goodvolume) {
+        this.goodvolume = goodvolume;
     }
 
     public String getGoodweight() {
         return goodweight;
     }
 
+    public void setGoodweight(String goodweight) {
+        this.goodweight = goodweight;
+    }
+
     public String getMoney() {
         return money;
+    }
+
+    public void setMoney(String money) {
+        this.money = money;
     }
 
     public String getCarnum() {
         return carnum;
     }
 
+    public void setCarnum(String carnum) {
+        this.carnum = carnum;
+    }
+
     public String getCarInfo() {
         return carInfo;
+    }
+
+    public void setCarInfo(String carInfo) {
+        this.carInfo = carInfo;
     }
 
     public String getUserName() {
         return userName;
     }
 
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public String getUserPhone() {
         return userPhone;
+    }
+
+    public void setUserPhone(String userPhone) {
+        this.userPhone = userPhone;
     }
 
     public String getDrivername() {
         return drivername;
     }
 
+    public void setDrivername(String drivername) {
+        this.drivername = drivername;
+    }
+
     public String getDrivermobile() {
         return drivermobile;
+    }
+
+    public void setDrivermobile(String drivermobile) {
+        this.drivermobile = drivermobile;
     }
 
     public String getPayWay() {

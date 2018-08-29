@@ -273,9 +273,9 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     public void onStartEvent(OrderEvent.StartLoactionEvent startLoactionEvent) {
         if (startLoactionEvent != null && startLoactionEvent.t != null) {
             itemStartLocation.setTextCenter(startLoactionEvent.t.getTitle());
-            paramBean.setStratPlaceX(String.valueOf(startLoactionEvent.t.getLatLonPoint().getLatitude()));
-            paramBean.setStratPlaceY(String.valueOf(startLoactionEvent.t.getLatLonPoint().getLongitude()));
-            paramBean.setStratPlaceInfo(startLoactionEvent.t.getTitle());
+            paramBean.setStartLatitude( startLoactionEvent.t.getLatLonPoint().getLatitude());
+            paramBean.setStartLongitude( startLoactionEvent.t.getLatLonPoint().getLongitude());
+            paramBean.setStartPlaceInfo(startLoactionEvent.t.getTitle());
         }
     }
 
@@ -284,8 +284,8 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     public void onEndEvent(OrderEvent.EndLoactionEvent endLoactionEvent) {
         if (endLoactionEvent != null && endLoactionEvent.t != null) {
             itemEndLocation.setTextCenter(endLoactionEvent.t.getTitle());
-            paramBean.setDestinationX(String.valueOf(endLoactionEvent.t.getLatLonPoint().getLatitude()));
-            paramBean.setDestinationY(String.valueOf(endLoactionEvent.t.getLatLonPoint().getLongitude()));
+            paramBean.setDestinationLatitude( endLoactionEvent.t.getLatLonPoint().getLatitude());
+            paramBean.setDestinationLongitude( endLoactionEvent.t.getLatLonPoint().getLongitude());
             paramBean.setDestinationInfo(endLoactionEvent.t.getTitle());
         }
     }

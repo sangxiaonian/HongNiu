@@ -4,7 +4,6 @@ package com.hongniu.baselibrary.widget.order;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 
 import java.util.Date;
-import java.util.Random;
 
 /**
  * 作者： ${PING} on 2018/8/2.
@@ -71,7 +70,7 @@ public class CommonOrderUtils {
         OrderDetailBean orderBean = new OrderDetailBean();
         orderBean.setOrderNum("80080018000");//订单号
         orderBean.setDeliverydate(new Date().getTime());//发货日期
-        orderBean.setStratPlaceInfo("上海虹桥机场国际物流中心");//发车地点
+        orderBean.setStartPlaceInfo("上海虹桥机场国际物流中心");//发车地点
         orderBean.setDestinationInfo("青岛市国际物流中心");//目的地
         orderBean.setMoney("1200");//运费
         orderBean.setDepartNum("21554812154");//发车编号
