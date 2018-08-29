@@ -36,7 +36,7 @@ public class LocationBean {
     /**
      * false	int 	方向
       */
-    private int 	 direction      	;
+    private float 	 direction      	;
     /**
      * false	int	    位置的精确度
       */
@@ -106,11 +106,11 @@ public class LocationBean {
         this.speed = speed;
     }
 
-    public int getDirection() {
+    public float getDirection() {
         return direction;
     }
 
-    public void setDirection(int direction) {
+    public void setDirection(float direction) {
         this.direction = direction;
     }
 

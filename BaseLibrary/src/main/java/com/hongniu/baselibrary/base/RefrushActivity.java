@@ -86,9 +86,6 @@ public abstract class RefrushActivity<T> extends BaseActivity implements OnRefre
                 .subscribe(new NetObserver<PageBean<T>>(this) {
                     @Override
                     public void doOnSuccess(PageBean<T> data) {
-
-                        JLog.i("-------------------"+data.getList().size());
-
                         if (isClear) {
                             datas.clear();
                         }

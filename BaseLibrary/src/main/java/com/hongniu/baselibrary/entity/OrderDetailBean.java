@@ -27,7 +27,7 @@ public class OrderDetailBean {
     /**
      * true string 出发地x坐标
      */
-    private double stratPlaceX;
+    private double startLatitude;
 
     /**
      * true string 出发地y坐标
@@ -373,12 +373,12 @@ public class OrderDetailBean {
         this.hasFreight = hasFreight;
     }
 
-    public double getStratPlaceX() {
-        return stratPlaceX;
+    public double getStartLatitude() {
+        return startLatitude;
     }
 
-    public void setStratPlaceX(double stratPlaceX) {
-        this.stratPlaceX = stratPlaceX;
+    public void setStartLatitude(double startLatitude) {
+        this.startLatitude = startLatitude;
     }
 
     public double getStratPlaceY() {

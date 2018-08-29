@@ -1,9 +1,7 @@
 package com.hongniu.moduleorder.ui;
 
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.SystemClock;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.amap.api.maps.AMap;
@@ -16,7 +14,6 @@ import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.PolylineOptions;
 import com.amap.api.trace.LBSTraceClient;
-import com.amap.api.trace.TraceListener;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.entity.CommonBean;
@@ -27,15 +24,12 @@ import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.entity.LocationBean;
 import com.hongniu.moduleorder.entity.PathBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
-import com.hongniu.moduleorder.utils.LoactionCollectionUtils;
 import com.sang.common.event.BusFactory;
 import com.sang.common.net.error.NetException;
 import com.sang.common.net.rx.BaseObserver;
 import com.sang.common.net.rx.RxUtils;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.JLog;
-import com.sang.common.utils.ToastUtils;
-import com.sang.thirdlibrary.map.LoactionUtils;
 import com.sang.thirdlibrary.map.MarkUtils;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -182,7 +176,7 @@ public class OrderMapCheckPathActivity extends BaseActivity {
                     public List<LatLng> apply(List<LatLng> latLngs) throws Exception {
                         MarkUtils.addMark(aMap,
                                 BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), com.sang.thirdlibrary.R.mipmap.start))
-                                , bean.getStratPlaceX(), bean.getStratPlaceY()
+                                , bean.getStartLatitude(), bean.getStratPlaceY()
                         );
                         MarkUtils.addMark(aMap,
                                 BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), com.sang.thirdlibrary.R.mipmap.end))

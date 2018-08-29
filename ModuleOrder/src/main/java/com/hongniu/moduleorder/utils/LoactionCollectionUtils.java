@@ -2,16 +2,11 @@ package com.hongniu.moduleorder.utils;
 
 import android.view.View;
 
-import com.amap.api.maps.model.LatLng;
 import com.amap.api.navi.INaviInfoCallback;
 import com.amap.api.navi.model.AMapNaviLocation;
 import com.amap.api.trace.TraceLocation;
 import com.hongniu.baselibrary.config.Param;
 import com.sang.common.utils.JLog;
-import com.sang.thirdlibrary.map.LoactionUtils;
-
-import java.util.LinkedList;
-import java.util.Queue;
 
 /**
  * 作者： ${桑小年} on 2018/8/22.
@@ -62,7 +57,7 @@ public class LoactionCollectionUtils implements INaviInfoCallback {
             location.setTime(aMapNaviLocation.getTime());
             lastLoaction = aMapNaviLocation;
             if (Param.isDebug) {
-                loactions.add(aMapNaviLocation.getCoord().getLatitude(), aMapNaviLocation.getCoord().getLongitude(), aMapNaviLocation.getTime());
+                loactions.add(aMapNaviLocation.getCoord().getLatitude(), aMapNaviLocation.getCoord().getLongitude(), aMapNaviLocation.getTime(), aMapNaviLocation.getSpeed(), aMapNaviLocation.getBearing());
             }
 
         } else {//初始化

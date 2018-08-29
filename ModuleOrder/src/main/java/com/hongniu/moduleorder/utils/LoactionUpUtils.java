@@ -47,7 +47,7 @@ public class LoactionUpUtils {
 
     private LatLng lastLoaction=new LatLng(0,0) ;
 
-    public void add(double latitude, double longitude,long movingTime) {
+    public void add(double latitude, double longitude, long movingTime, float speed, float bearing) {
         float v = LoactionUtils.getInstance().caculeDis(lastLoaction.latitude, lastLoaction.longitude, latitude, longitude);
         if (v<minDis){
             return;
@@ -60,6 +60,8 @@ public class LoactionUpUtils {
         bean.setCarId(carId);
         bean.setLatitude(latitude);
         bean.setLongitude(longitude);
+        bean.setSpeed(speed);
+        bean.setDirection(bearing);
         bean.setMovingTime(ConvertUtils.formatTime(movingTime,"yyyy-MM-dd HH:mm:ss"));
         if (temp.size()<tempSize){
             temp.add(bean);

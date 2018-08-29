@@ -515,8 +515,9 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
         if (upLoactionUtils != null) {
-            JLog.i("---------------------------------");
-            upLoactionUtils.add(aMapLocation.getLatitude(), aMapLocation.getLongitude(), aMapLocation.getTime());
+            JLog.i(aMapLocation.getSpeed()+">>>>"+aMapLocation.getBearing());
+
+            upLoactionUtils.add(aMapLocation.getLatitude(), aMapLocation.getLongitude(), aMapLocation.getTime(),aMapLocation.getSpeed(),aMapLocation.getBearing());
         }
     }
 }

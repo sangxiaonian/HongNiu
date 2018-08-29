@@ -446,7 +446,7 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
             @Override
             public void hasPermission(List<String> granted, boolean isAll) {
 
-                Poi start = new Poi(orderBean.getStratPlaceInfo(), new LatLng(orderBean.getStratPlaceX(), orderBean.getStratPlaceY()), "");
+                Poi start = new Poi(orderBean.getStratPlaceInfo(), new LatLng(orderBean.getStartLatitude(), orderBean.getStratPlaceY()), "");
                 Poi end = new Poi(orderBean.getDestinationInfo(), new LatLng(orderBean.getDestinationX(), orderBean.getDestinationY()), "");
                 AmapNaviParams amapNaviParams = new AmapNaviParams(start, null, end, AmapNaviType.DRIVER);
                 amapNaviParams.setUseInnerVoice(true);
