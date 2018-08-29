@@ -1,17 +1,14 @@
 package com.hongniu.modulefinance.ui.fragment;
 
 import android.graphics.Color;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.hongniu.baselibrary.base.BaseFragment;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.base.RefrushFragmet;
-import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
@@ -21,14 +18,10 @@ import com.hongniu.modulefinance.entity.QueryExpendBean;
 import com.hongniu.modulefinance.entity.QueryExpendResultBean;
 import com.hongniu.modulefinance.event.FinanceEvent;
 import com.hongniu.modulefinance.net.HttpFinanceFactory;
-import com.hongniu.modulefinance.ui.adapter.FinanceExpendHeadHolder;
 import com.hongniu.modulefinance.ui.adapter.FinanceIncomHeadHolder;
-import com.sang.common.event.BusFactory;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
-import com.sang.common.recycleview.holder.PeakHolder;
 import com.sang.common.utils.ConvertUtils;
-import com.sang.common.utils.JLog;
 import com.sang.common.widget.VistogramView;
 import com.sang.common.widget.dialog.builder.BottomAlertBuilder;
 
@@ -51,7 +44,7 @@ public class FinanceIncomeFragment extends RefrushFragmet<OrderDetailBean> {
 
 
     private FinanceIncomHeadHolder headHolder;
-    private QueryExpendBean bean=new QueryExpendBean();
+    private QueryExpendBean bean = new QueryExpendBean();
 
     private TextView tv_order_count;
     private TextView tv_order_money;
@@ -70,10 +63,8 @@ public class FinanceIncomeFragment extends RefrushFragmet<OrderDetailBean> {
         super.initData();
 
         headHolder = new FinanceIncomHeadHolder(getContext(), rv);
-        adapter.addHeard(0,headHolder);
+        adapter.addHeard(0, headHolder);
         queryData(true);
-
-
 
 
     }
@@ -90,8 +81,8 @@ public class FinanceIncomeFragment extends RefrushFragmet<OrderDetailBean> {
                         if (pageBeanCommonBean != null && pageBeanCommonBean.getData() != null) {
                             PageBean<OrderDetailBean> data = pageBeanCommonBean.getData();
                             int total = data.getTotal();
-                            tv_order_count.setText("共支出"+total+"笔，合计");
-                            tv_order_money.setText("￥"+data.getTotalMoney());
+                            tv_order_count.setText("共支出" + total + "笔，合计");
+                            tv_order_money.setText("￥" + data.getTotalMoney());
                         }
 
                         return pageBeanCommonBean;
@@ -103,7 +94,7 @@ public class FinanceIncomeFragment extends RefrushFragmet<OrderDetailBean> {
 
     @Override
     protected XAdapter<OrderDetailBean> getAdapter(final List<OrderDetailBean> datas) {
-        return  new XAdapter<OrderDetailBean>(getContext(), datas) {
+        return new XAdapter<OrderDetailBean>(getContext(), datas) {
             @Override
             public BaseHolder<OrderDetailBean> initHolder(ViewGroup parent, int viewType) {
                 return new BaseHolder<OrderDetailBean>(getContext(), parent, R.layout.finance_item_finance) {
@@ -115,10 +106,10 @@ public class FinanceIncomeFragment extends RefrushFragmet<OrderDetailBean> {
                         TextView tvTime = itemView.findViewById(R.id.tv_time);
                         TextView tvPrice = itemView.findViewById(R.id.tv_price);
 
-                        tvOrder.setText("订单号：" + (data.getOrderNum()==null?"":data.getOrderNum()));
-                        tvCarNum.setText("车牌号码：" + (data.getCarnum()==null?"":data.getCarnum()));
-                        tvTime.setText("付费时间：" + (data.getPayTime()==0?"":ConvertUtils.formatTime(data.getPayTime(),"yyyy-MM-dd HH:mm:ss")));
-                        tvPrice.setText("1200.0");
+                        tvOrder.setText("订单号：" + (data.getOrderNum() == null ? "" : data.getOrderNum()));
+                        tvCarNum.setText("车牌号码：" + (data.getCarnum() == null ? "" : data.getCarnum()));
+                        tvTime.setText("付费时间：" + (data.getPayTime() == 0 ? "" : ConvertUtils.formatTime(data.getPayTime(), "yyyy-MM-dd HH:mm:ss")));
+                        tvPrice.setText("+"+(TextUtils.isEmpty(data.getPolicyMoney()) ? "0.0" : data.getPolicyMoney()));
                         itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {

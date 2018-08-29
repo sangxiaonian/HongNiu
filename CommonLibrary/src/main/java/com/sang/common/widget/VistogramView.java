@@ -136,12 +136,13 @@ public class VistogramView extends View implements DynamicAnimation.OnAnimationE
 
 
         double sin = Math.sin(Math.abs(rotate) * Math.PI / 180);
-        endPoint.y = (float) ((textRectX.width() * sin + textRectX.height() * Math.sin((90 - Math.abs(rotate)) * Math.PI / 180)) - orginPoint.y / 4.0f);
+        double cos = Math.sin((90 - Math.abs(rotate)) * Math.PI / 180);
+        endPoint.y = (float) ((textRectX.width() * sin + textRectX.height()  - orginPoint.y / 4.0f));
 
         endPoint.y = endPoint.y > 0 ? endPoint.y : 0;
 
 
-        vistogramWidth = (int) ( (endPoint.x - orginPoint.x) - (textRectX.width() *sin-cellWidth));
+        vistogramWidth = (int) ( (endPoint.x - orginPoint.x) - (textRectX.width() *cos-cellWidth));
         bigGap = (int) (vistogramWidth * 1.0f / numbersX);
         maxWidth = bigGap * datas.size();
 
@@ -426,6 +427,7 @@ public class VistogramView extends View implements DynamicAnimation.OnAnimationE
             }
         }
         hValue.x = (int) ((Math.ceil(max / 3000) + 1) * 3000);
+
         initData();
         postInvalidate();
 

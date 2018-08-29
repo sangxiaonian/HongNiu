@@ -3,6 +3,7 @@ package com.hongniu.modulefinance.ui.fragment;
 import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.base.RefrushFragmet;
 import com.hongniu.baselibrary.entity.CommonBean;
@@ -26,6 +28,7 @@ import com.sang.common.recycleview.RecycleViewSupportEmpty;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.utils.ConvertUtils;
+import com.sang.common.utils.JLog;
 import com.sang.common.widget.VistogramView;
 import com.sang.common.widget.dialog.builder.BottomAlertBuilder;
 
@@ -128,10 +131,16 @@ public class FinanceExpendFragment extends RefrushFragmet<OrderDetailBean> imple
                         TextView tvTime = itemView.findViewById(R.id.tv_time);
                         TextView tvPrice = itemView.findViewById(R.id.tv_price);
 
+                        if (data.isHasFreight()&&data.isInsurance()){
+                            JLog.i(new Gson().toJson(data));
+                        }
                         tvOrder.setText("订单号：" + (data.getOrderNum() == null ? "" : data.getOrderNum()));
                         tvCarNum.setText("车牌号码：" + (data.getCarnum() == null ? "" : data.getCarnum()));
                         tvTime.setText("付费时间：" + (data.getPayTime() == 0 ? "" : ConvertUtils.formatTime(data.getPayTime(), "yyyy-MM-dd HH:mm:ss")));
-                        tvPrice.setText("1200.0");
+
+                        tvPrice.setText(insruance?
+                                (TextUtils.isEmpty(data.getPolicyMoney())?"-0.0":data.getPolicyMoney())
+                                :(TextUtils.isEmpty(data.getMoney())?"-0.0":data.getMoney()) );
                         itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
