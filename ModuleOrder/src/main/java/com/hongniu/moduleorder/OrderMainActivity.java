@@ -331,7 +331,6 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
      * @param position
      */
     private void changeStaff(int position) {
-
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         if (currentFragmeng != null) {
             fragmentTransaction.hide(currentFragmeng);
@@ -379,7 +378,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
             switchStateListener = (SwitchStateListener) currentFragmeng;
         }
 
-        fragmentTransaction.commit();
+        fragmentTransaction. commitAllowingStateLoss();
     }
 
     @Override
@@ -515,6 +514,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
         if (upLoactionUtils != null) {
+            JLog.i(aMapLocation.getSpeed()+">>>>"+aMapLocation.getBearing());
 
             upLoactionUtils.add(aMapLocation.getLatitude(), aMapLocation.getLongitude(), aMapLocation.getTime(),aMapLocation.getSpeed(),aMapLocation.getBearing());
         }

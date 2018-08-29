@@ -256,12 +256,18 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
 
     @Override
     public boolean isShowing() {
-        return orderMainPop.isShow();
+        if (orderMainPop!=null) {
+           return orderMainPop.isShow();
+        }else {
+            return false;
+        }
     }
 
     @Override
     public void closePop() {
-        orderMainPop.dismiss();
+        if (orderMainPop!=null) {
+            orderMainPop.dismiss();
+        }
     }
 
     @Override

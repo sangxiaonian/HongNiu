@@ -35,7 +35,7 @@ public class OrderCreatParamBean {
     /**
      * true	string	发货日期（字符串，格式YYYY-MM-dd）
      */
-    protected String  deliverydateStr	  ;
+    protected String deliveryDate;
     /**
      * true	string	货物名称
      */
@@ -43,11 +43,11 @@ public class OrderCreatParamBean {
     /**
      * true	string	货物体积 (方)
      */
-    protected String  goodvolume	      ;
+    protected String goodVolume;
     /**
      * true	string	货物质量(吨)
      */
-    protected String  goodweight	      ;
+    protected String goodWeight;
     /**
      * true	string	配送金额
      */
@@ -55,7 +55,7 @@ public class OrderCreatParamBean {
     /**
      * true	string	车牌号
      */
-    protected String  carnum	          ;
+    protected String carNum;
     /**
      * false	string	车辆类型
      */
@@ -63,19 +63,19 @@ public class OrderCreatParamBean {
     /**
      * true	string	车主姓名
      */
-    protected String  userName	          ;
+    protected String ownerName;
     /**
      * true	string	车主手机号
      */
-    protected String  userPhone	          ;
+    protected String ownerMobile;
     /**
      * true	string	司机名称
      */
-    protected String  drivername	      ;
+    protected String driverName;
     /**
      * true	string	司机手机号
      */
-    protected String  drivermobile	      ;
+    protected String driverMobile;
     /**
      * false	string	支付方式(0微信,1银联,2线下支付)
      */
@@ -136,12 +136,12 @@ public class OrderCreatParamBean {
         this.destinationInfo = destinationInfo;
     }
 
-    public String getDeliverydateStr() {
-        return deliverydateStr;
+    public String getDeliveryDate() {
+        return deliveryDate;
     }
 
-    public void setDeliverydateStr(String deliverydateStr) {
-        this.deliverydateStr = deliverydateStr;
+    public void setDeliveryDate(String deliveryDate) {
+        this.deliveryDate = deliveryDate;
     }
 
     public String getGoodName() {
@@ -152,20 +152,20 @@ public class OrderCreatParamBean {
         this.goodName = goodName;
     }
 
-    public String getGoodvolume() {
-        return goodvolume;
+    public String getGoodVolume() {
+        return goodVolume;
     }
 
-    public void setGoodvolume(String goodvolume) {
-        this.goodvolume = goodvolume;
+    public void setGoodVolume(String goodVolume) {
+        this.goodVolume = goodVolume;
     }
 
-    public String getGoodweight() {
-        return goodweight;
+    public String getGoodWeight() {
+        return goodWeight;
     }
 
-    public void setGoodweight(String goodweight) {
-        this.goodweight = goodweight;
+    public void setGoodWeight(String goodWeight) {
+        this.goodWeight = goodWeight;
     }
 
     public String getMoney() {
@@ -176,12 +176,12 @@ public class OrderCreatParamBean {
         this.money = money;
     }
 
-    public String getCarnum() {
-        return carnum;
+    public String getCarNum() {
+        return carNum;
     }
 
-    public void setCarnum(String carnum) {
-        this.carnum = carnum;
+    public void setCarNum(String carNum) {
+        this.carNum = carNum;
     }
 
     public String getCarInfo() {
@@ -192,36 +192,36 @@ public class OrderCreatParamBean {
         this.carInfo = carInfo;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getOwnerName() {
+        return ownerName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
     }
 
-    public String getUserPhone() {
-        return userPhone;
+    public String getOwnerMobile() {
+        return ownerMobile;
     }
 
-    public void setUserPhone(String userPhone) {
-        this.userPhone = userPhone;
+    public void setOwnerMobile(String ownerMobile) {
+        this.ownerMobile = ownerMobile;
     }
 
-    public String getDrivername() {
-        return drivername;
+    public String getDriverName() {
+        return driverName;
     }
 
-    public void setDrivername(String drivername) {
-        this.drivername = drivername;
+    public void setDriverName(String driverName) {
+        this.driverName = driverName;
     }
 
-    public String getDrivermobile() {
-        return drivermobile;
+    public String getDriverMobile() {
+        return driverMobile;
     }
 
-    public void setDrivermobile(String drivermobile) {
-        this.drivermobile = drivermobile;
+    public void setDriverMobile(String driverMobile) {
+        this.driverMobile = driverMobile;
     }
 
     public String getPayWay() {

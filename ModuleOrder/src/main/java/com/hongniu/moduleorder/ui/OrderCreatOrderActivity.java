@@ -244,14 +244,14 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
 
         paramBean.setDepartNum(itemStartCarNum.getTextCenter());
         paramBean.setGoodName(itemCargoName.getTextCenter());
-        paramBean.setGoodvolume(itemCargoSize.getTextCenter());
-        paramBean.setGoodweight(itemCargoWeight.getTextCenter());
+        paramBean.setGoodVolume(itemCargoSize.getTextCenter());
+        paramBean.setGoodWeight(itemCargoWeight.getTextCenter());
         paramBean.setMoney(itemPrice.getTextCenter());
-        paramBean.setCarnum(itemCarNum.getTextCenter());
-        paramBean.setUserPhone(itemCarPhone.getTextCenter());
-        paramBean.setUserName(itemCarName.getTextCenter());
-        paramBean.setDrivername(itemDriverName.getTextCenter());
-        paramBean.setDrivermobile(itemDriverPhone.getTextCenter());
+        paramBean.setCarNum(itemCarNum.getTextCenter());
+        paramBean.setOwnerMobile(itemCarPhone.getTextCenter());
+        paramBean.setOwnerName(itemCarName.getTextCenter());
+        paramBean.setDriverName(itemDriverName.getTextCenter());
+        paramBean.setDriverMobile(itemDriverPhone.getTextCenter());
 
     }
 
@@ -259,7 +259,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     public void onTimeSelect(Date date, View v) {
 
         itemStartTime.setTextCenter(ConvertUtils.formatTime(date, "yyyy年MM月dd日"));
-        paramBean.setDeliverydateStr(ConvertUtils.formatTime(date, "yyyy-MM-dd"));
+        paramBean.setDeliveryDate(ConvertUtils.formatTime(date, "yyyy-MM-dd"));
 
     }
 
