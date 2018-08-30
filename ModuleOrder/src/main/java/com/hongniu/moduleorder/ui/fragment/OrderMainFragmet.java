@@ -399,9 +399,9 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
                     public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
                         dialog.dismiss();
                         HttpOrderFactory.entryReceiveCargo(orderBean.getId())
-                                .subscribe(new NetObserver<ResponseBody>(OrderMainFragmet.this) {
+                                .subscribe(new NetObserver<OrderDetailBean>(OrderMainFragmet.this) {
                                     @Override
-                                    public void doOnSuccess(ResponseBody data) {
+                                    public void doOnSuccess(OrderDetailBean data) {
                                         queryData(true, true);
                                     }
                                 });

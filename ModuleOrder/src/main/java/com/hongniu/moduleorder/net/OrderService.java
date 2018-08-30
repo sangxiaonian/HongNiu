@@ -133,7 +133,7 @@ public interface OrderService {
      * id	true	number	订单id
      */
     @POST("hongniu//api/order/receive")
-    Observable<CommonBean<ResponseBody>> entryReceiveCargo(@Body OrderIdBean infor);
+    Observable<CommonBean<OrderDetailBean>> entryReceiveCargo(@Body OrderIdBean infor);
 
 
 

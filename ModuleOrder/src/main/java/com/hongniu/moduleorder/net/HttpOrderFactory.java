@@ -186,13 +186,13 @@ public class HttpOrderFactory {
      *
      * @param orderId
      */
-    public static Observable<CommonBean<ResponseBody>> entryReceiveCargo(String orderId) {
+    public static Observable<CommonBean<OrderDetailBean>> entryReceiveCargo(String orderId) {
         OrderIdBean bean = new OrderIdBean();
         bean.setId(orderId);
         return OrderClient.getInstance()
                 .getService()
                 .entryReceiveCargo(bean)
-                .compose(RxUtils.<CommonBean<ResponseBody>>getSchedulersObservableTransformer());
+                .compose(RxUtils.<CommonBean<OrderDetailBean>>getSchedulersObservableTransformer());
     }
 
     /**
