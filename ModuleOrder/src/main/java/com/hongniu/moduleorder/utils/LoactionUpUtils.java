@@ -1,5 +1,7 @@
 package com.hongniu.moduleorder.utils;
 
+import android.text.TextUtils;
+
 import com.amap.api.maps.model.LatLng;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.moduleorder.entity.LocationBean;
@@ -49,7 +51,7 @@ public class LoactionUpUtils {
 
     public void add(double latitude, double longitude, long movingTime, float speed, float bearing) {
         float v = LoactionUtils.getInstance().caculeDis(lastLoaction.latitude, lastLoaction.longitude, latitude, longitude);
-        if (v<minDis){
+        if (v<minDis|| TextUtils.isEmpty(carId)||TextUtils.isEmpty(orderId)){
             return;
         }else {
             lastLoaction=new LatLng(latitude,longitude);
@@ -130,6 +132,8 @@ public class LoactionUpUtils {
         if (disposable!=null) {
             disposable.dispose();
         }
+        carId=null;
+        orderId=null;
         queue.clear();
     }
 
