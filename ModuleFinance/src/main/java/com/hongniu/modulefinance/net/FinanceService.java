@@ -3,6 +3,7 @@ package com.hongniu.modulefinance.net;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
+import com.hongniu.modulefinance.entity.FinanceOrderBean;
 import com.hongniu.modulefinance.entity.QueryExpendBean;
 import com.hongniu.modulefinance.entity.QueryExpendResultBean;
 
@@ -54,7 +55,7 @@ public interface FinanceService {
      * @return
      */
     @POST("hongniu/api/finance/search")
-    Observable<CommonBean<PageBean<OrderDetailBean>>> queryFinance(@Body QueryExpendBean infor);
+    Observable<CommonBean<PageBean<FinanceOrderBean>>> queryFinance(@Body QueryExpendBean infor);
 
 
 }

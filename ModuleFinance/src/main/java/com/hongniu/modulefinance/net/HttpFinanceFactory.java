@@ -4,6 +4,7 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
+import com.hongniu.modulefinance.entity.FinanceOrderBean;
 import com.hongniu.modulefinance.entity.QueryExpendBean;
 import com.hongniu.modulefinance.entity.QueryExpendResultBean;
 import com.sang.common.net.rx.RxUtils;
@@ -68,10 +69,10 @@ public class HttpFinanceFactory {
      *
      * @return
      */
-    public static Observable<CommonBean<PageBean<OrderDetailBean>>> queryFinance(QueryExpendBean bean) {
+    public static Observable<CommonBean<PageBean<FinanceOrderBean>>> queryFinance(QueryExpendBean bean) {
         bean.setPageSize(Param.PAGE_SIZE);
         return FinanceClient.getInstance().getService().queryFinance(bean)
-                .compose(RxUtils.<CommonBean<PageBean<OrderDetailBean>>>getSchedulersObservableTransformer())
+                .compose(RxUtils.<CommonBean<PageBean<FinanceOrderBean>>>getSchedulersObservableTransformer())
                 ;
     }
 }

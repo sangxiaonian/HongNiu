@@ -19,11 +19,13 @@ import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.widget.order.OrderDetailDialog;
 import com.hongniu.modulefinance.R;
+import com.hongniu.modulefinance.entity.FinanceOrderBean;
 import com.hongniu.modulefinance.entity.QueryExpendBean;
 import com.hongniu.modulefinance.entity.QueryExpendResultBean;
 import com.hongniu.modulefinance.event.FinanceEvent;
 import com.hongniu.modulefinance.net.HttpFinanceFactory;
 import com.hongniu.modulefinance.ui.adapter.FinanceExpendHeadHolder;
+import com.hongniu.modulefinance.ui.adapter.FinanceOrderAdapter;
 import com.sang.common.recycleview.RecycleViewSupportEmpty;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
@@ -48,7 +50,7 @@ import io.reactivex.functions.Function;
  * 作者： ${PING} on 2018/8/7.
  * 财务支出模块
  */
-public class FinanceExpendFragment extends RefrushFragmet<OrderDetailBean> implements RadioGroup.OnCheckedChangeListener {
+public class FinanceExpendFragment extends RefrushFragmet<FinanceOrderBean> implements RadioGroup.OnCheckedChangeListener {
 
     private RadioGroup rg;
     private RadioButton rbRight;
@@ -94,17 +96,17 @@ public class FinanceExpendFragment extends RefrushFragmet<OrderDetailBean> imple
 
 
     @Override
-    protected Observable<CommonBean<PageBean<OrderDetailBean>>> getListDatas() {
+    protected Observable<CommonBean<PageBean<FinanceOrderBean>>> getListDatas() {
         bean.setPageNum(currentPage);
         bean.setFinanceType(1);
 
         return HttpFinanceFactory.queryFinance(bean)
                 .observeOn(AndroidSchedulers.mainThread())
-                .map(new Function<CommonBean<PageBean<OrderDetailBean>>, CommonBean<PageBean<OrderDetailBean>>>() {
+                .map(new Function<CommonBean<PageBean<FinanceOrderBean>>, CommonBean<PageBean<FinanceOrderBean>>>() {
                     @Override
-                    public CommonBean<PageBean<OrderDetailBean>> apply(CommonBean<PageBean<OrderDetailBean>> pageBeanCommonBean) throws Exception {
+                    public CommonBean<PageBean<FinanceOrderBean>> apply(CommonBean<PageBean<FinanceOrderBean>> pageBeanCommonBean) throws Exception {
                         if (pageBeanCommonBean != null && pageBeanCommonBean.getData() != null) {
-                            PageBean<OrderDetailBean> data = pageBeanCommonBean.getData();
+                            PageBean<FinanceOrderBean> data = pageBeanCommonBean.getData();
                             int total = data.getTotal();
                             tv_order_count.setText("共支出"+total+"笔，合计");
                             tv_order_money.setText("￥"+data.getTotalMoney());
@@ -118,45 +120,8 @@ public class FinanceExpendFragment extends RefrushFragmet<OrderDetailBean> imple
     }
 
     @Override
-    protected XAdapter<OrderDetailBean> getAdapter(List<OrderDetailBean> datas) {
-        return new XAdapter<OrderDetailBean>(getContext(), datas) {
-            @Override
-            public BaseHolder<OrderDetailBean> initHolder(ViewGroup parent, int viewType) {
-                return new BaseHolder<OrderDetailBean>(getContext(), parent, R.layout.finance_item_finance) {
-                    @Override
-                    public void initView(View itemView, int position, final OrderDetailBean data) {
-                        super.initView(itemView, position, data);
-                        TextView tvOrder = itemView.findViewById(R.id.tv_order);
-                        TextView tvCarNum = itemView.findViewById(R.id.tv_car_num);
-                        TextView tvTime = itemView.findViewById(R.id.tv_time);
-                        TextView tvPrice = itemView.findViewById(R.id.tv_price);
-
-                        if (data.isHasFreight()&&data.isInsurance()){
-                            JLog.i(new Gson().toJson(data));
-                        }
-                        tvOrder.setText("订单号：" + (data.getOrderNum() == null ? "" : data.getOrderNum()));
-                        tvCarNum.setText("车牌号码：" + (data.getCarnum() == null ? "" : data.getCarnum()));
-                        tvTime.setText("付费时间：" + (data.getPayTime() == 0 ? "" : ConvertUtils.formatTime(data.getPayTime(), "yyyy-MM-dd HH:mm:ss")));
-
-                        tvPrice.setText(insruance?
-                                (TextUtils.isEmpty(data.getPolicyMoney())?"-0.0":data.getPolicyMoney())
-                                :(TextUtils.isEmpty(data.getMoney())?"-0.0":data.getMoney()) );
-                        itemView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                OrderDetailDialog orderDetailDialog = new OrderDetailDialog(getContext());
-                                orderDetailDialog.setOrdetail(data);
-                                new BottomAlertBuilder()
-                                        .setDialogTitle(getString(R.string.login_car_entry_deleted))
-                                        .creatDialog(orderDetailDialog)
-                                        .show();
-                            }
-                        });
-
-                    }
-                };
-            }
-        };
+    protected XAdapter<FinanceOrderBean> getAdapter(List<FinanceOrderBean> datas) {
+        return  new FinanceOrderAdapter(getContext(),datas);
     }
 
     @Override

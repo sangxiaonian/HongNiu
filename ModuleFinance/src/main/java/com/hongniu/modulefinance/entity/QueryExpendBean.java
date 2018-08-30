@@ -23,7 +23,7 @@ public class QueryExpendBean {
     /**
      * false	String	车牌号
      */
-    private String carNo	    ;
+    private String carNo=""	    ;
     /**
      * true	int	财务类型，0支出和收入；1支出；2收入
      */

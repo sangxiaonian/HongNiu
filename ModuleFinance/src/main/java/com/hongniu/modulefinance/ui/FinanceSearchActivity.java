@@ -1,6 +1,7 @@
 package com.hongniu.modulefinance.ui;
 
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -22,8 +23,10 @@ import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.widget.order.OrderDetailDialog;
 import com.hongniu.modulefinance.R;
+import com.hongniu.modulefinance.entity.FinanceOrderBean;
 import com.hongniu.modulefinance.entity.QueryExpendBean;
 import com.hongniu.modulefinance.net.HttpFinanceFactory;
+import com.hongniu.modulefinance.ui.adapter.FinanceOrderAdapter;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.utils.ConvertUtils;
@@ -36,10 +39,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.functions.Function;
 import retrofit2.http.HTTP;
 
 @Route(path = ArouterParamsFinance.activity_finance_search)
-public class FinanceSearchActivity extends RefrushActivity<OrderDetailBean> implements View.OnClickListener {
+public class FinanceSearchActivity extends RefrushActivity<FinanceOrderBean> implements View.OnClickListener {
 
     private EditText etSearch;
     private View imgClear;
@@ -76,46 +80,20 @@ public class FinanceSearchActivity extends RefrushActivity<OrderDetailBean> impl
     }
 
     @Override
-    protected Observable<CommonBean<PageBean<OrderDetailBean>>> getListDatas() {
+    protected Observable<CommonBean<PageBean<FinanceOrderBean>>> getListDatas() {
         bean.setPageNum(currentPage);
 //        bean.setFinanceType(2);
-        return HttpFinanceFactory.queryFinance(bean);
+        return HttpFinanceFactory.queryFinance(bean).map(new Function<CommonBean<PageBean<FinanceOrderBean>>, CommonBean<PageBean<FinanceOrderBean>>>() {
+            @Override
+            public CommonBean<PageBean<FinanceOrderBean>> apply(CommonBean<PageBean<FinanceOrderBean>> pageBeanCommonBean) throws Exception {
+                return pageBeanCommonBean;
+            }
+        });
     }
 
     @Override
-    protected XAdapter<OrderDetailBean> getAdapter(List<OrderDetailBean> datas) {
-        return new XAdapter<OrderDetailBean>(mContext, datas) {
-            @Override
-            public BaseHolder<OrderDetailBean> initHolder(ViewGroup parent, int viewType) {
-                return new BaseHolder<OrderDetailBean>(mContext, parent, R.layout.finance_item_finance) {
-                    @Override
-                    public void initView(View itemView, int position, final OrderDetailBean data) {
-                        super.initView(itemView, position, data);
-                        TextView tvOrder = itemView.findViewById(R.id.tv_order);
-                        TextView tvCarNum = itemView.findViewById(R.id.tv_car_num);
-                        TextView tvTime = itemView.findViewById(R.id.tv_time);
-                        TextView tvPrice = itemView.findViewById(R.id.tv_price);
-
-                        tvOrder.setText("订单号：" + (data.getOrderNum() == null ? "" : data.getOrderNum()));
-                        tvCarNum.setText("车牌号码：" + (data.getCarnum() == null ? "" : data.getCarnum()));
-                        tvTime.setText("付费时间：" + (data.getPayTime() == 0 ? "" : ConvertUtils.formatTime(data.getPayTime(), "yyyy-MM-dd HH:mm:ss")));
-                        tvPrice.setText("1200.0");
-                        itemView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                OrderDetailDialog orderDetailDialog = new OrderDetailDialog(mContext);
-                                orderDetailDialog.setOrdetail(data);
-                                new BottomAlertBuilder()
-                                        .setDialogTitle(getString(R.string.login_car_entry_deleted))
-                                        .creatDialog(orderDetailDialog)
-                                        .show();
-                            }
-                        });
-
-                    }
-                };
-            }
-        };
+    protected XAdapter<FinanceOrderBean> getAdapter(List<FinanceOrderBean> datas) {
+        return  new FinanceOrderAdapter(mContext,datas);
     }
 
     @Override
