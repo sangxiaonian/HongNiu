@@ -69,7 +69,7 @@ public class RecycleHeader extends LinearLayout implements RefreshHeader {
     public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
 //        mProgressDrawable.start();//开始动画
         Glide.with(getContext()).clear(ivLoading);
-        Glide.with(getContext()).load(R.raw.listloading).into(ivLoading);
+        Glide.with(getContext()).asGif().load(R.raw.listloading).into(ivLoading);
     }
 
     @Override

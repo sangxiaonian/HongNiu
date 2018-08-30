@@ -13,7 +13,7 @@ import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.moduleorder.entity.LocationBean;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
 import com.hongniu.moduleorder.entity.OrderCreatParamBean;
-import com.hongniu.moduleorder.entity.OrderIdBean;
+import com.hongniu.baselibrary.entity.OrderIdBean;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
 import com.hongniu.moduleorder.entity.OrderParamBean;
 import com.hongniu.moduleorder.entity.PathBean;
@@ -26,7 +26,6 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
-import okhttp3.ResponseBody;
 
 /**
  * 作者： ${PING} on 2018/8/15.

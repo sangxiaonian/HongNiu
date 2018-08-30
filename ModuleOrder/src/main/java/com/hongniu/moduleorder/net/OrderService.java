@@ -8,7 +8,7 @@ import com.hongniu.moduleorder.entity.LocationBean;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
 import com.hongniu.baselibrary.entity.OrderCreatBean;
 import com.hongniu.moduleorder.entity.OrderCreatParamBean;
-import com.hongniu.moduleorder.entity.OrderIdBean;
+import com.hongniu.baselibrary.entity.OrderIdBean;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
 import com.hongniu.moduleorder.entity.OrderParamBean;
 import com.hongniu.moduleorder.entity.PathBean;
@@ -18,7 +18,6 @@ import com.hongniu.moduleorder.entity.WxPayBean;
 import java.util.List;
 
 import io.reactivex.Observable;
-import okhttp3.ResponseBody;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
