@@ -30,11 +30,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     api project(':ResLibrary')
-    api files('libs/AMap3DMap_6.3.1_AMapNavi_6.2.0_20180726.jar')
-    api files('libs/AMap_Location_V4.1.0_20180619.jar')
-    api files('libs/AMap_Search_V6.1.0_20180330.jar')
     implementation project(':CommonLibrary')
-    api files('libs/Msc.jar')
     //微信支付
     api 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+    api files('libs/AMap3DMap_6.4.0_AMapNavi_6.2.0_AMapSearch_6.1.0_AMapLocation_4.2.0_20180814.jar')
 }

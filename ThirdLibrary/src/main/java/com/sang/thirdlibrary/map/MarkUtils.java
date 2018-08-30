@@ -1,11 +1,9 @@
 package com.sang.thirdlibrary.map;
 
-import com.amap.api.col.n3.bm;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.model.BitmapDescriptor;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MarkerOptions;
-import com.amap.api.services.core.PoiItem;
 
 /**
  * 作者： ${桑小年} on 2018/8/28.
@@ -22,7 +20,7 @@ public class MarkUtils {
         return markerOption;
     }
 
-    public static void addMark(AMap aMap, BitmapDescriptor bitmap, double latitude,double longitude) {
+    public static void addMark(AMap aMap, BitmapDescriptor bitmap, double latitude, double longitude) {
         LatLng latLng = new LatLng(latitude, longitude);
         MarkerOptions markerOption = new MarkerOptions();
         markerOption.position(latLng);

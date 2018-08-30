@@ -22,6 +22,7 @@
         <com.sang.common.widget.CircularFramlayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_alignParentBottom="true"
             android:layout_margin="@dimen/app_item_gap"
             app:showBorder="false"
@@ -37,9 +38,6 @@
 
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/bt"
-        style="@style/bt_sum"
-        android:text="开始导航" />
+
 
 </LinearLayout>

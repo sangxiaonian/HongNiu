@@ -93,12 +93,17 @@ public class LoactionUtils {
 
 //初始化定位
         mLocationClient = new AMapLocationClient(context.getApplicationContext());
+
 //设置定位回调监听
         mLocationClient.setLocationListener(mLocationListener);
         mLocationOption = new AMapLocationClientOption();
         mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
         mLocationOption.setNeedAddress(true);
         mLocationOption.setOnceLocation(false);
+
+//        mLocationOption.setDeviceModeDistanceFilter(10);
+
+
         //设置是否允许模拟位置,默认为true，允许模拟位置
         mLocationOption.setMockEnable(true);
         mLocationOption.setLocationPurpose(AMapLocationClientOption.AMapLocationPurpose.Sport);

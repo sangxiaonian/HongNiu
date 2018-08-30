@@ -10,21 +10,14 @@ import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.hongniu.moduleorder.R;
-import com.iflytek.cloud.thirdparty.T;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
-import com.sang.common.utils.JLog;
-import com.sang.common.utils.ToastUtils;
-import com.sang.common.widget.popu.BasePopu;
-import com.sang.common.widget.popu.inter.OnPopuDismissListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,17 +25,16 @@ import java.util.List;
 /**
  * 作者： ${PING} on 2018/8/9.
  * 车牌联想pupWindow
- *
  */
-public class CarNumPop<T>  {
+public class CarNumPop<T> {
     RecyclerView rv;
     protected PopupWindow pop;
     protected View tragetView;
     XAdapter<T> adapter;
-    private List<T> datas=new ArrayList<>();
-    private String mark="沪";
+    private List<T> datas = new ArrayList<>();
+    private String mark = "沪";
 
-    final int[] location=new int[2];
+    final int[] location = new int[2];
 
 
     public CarNumPop(Context context) {
@@ -50,9 +42,10 @@ public class CarNumPop<T>  {
         setContentView(context);
     }
 
-    public interface onItemClickListener<T>{
-        void onItemClick(int position,T data);
+    public interface onItemClickListener<T> {
+        void onItemClick(int position, T data);
     }
+
     onItemClickListener<T> listener;
 
     public void setListener(onItemClickListener<T> listener) {
@@ -71,39 +64,39 @@ public class CarNumPop<T>  {
         rv.post(new Runnable() {
             @Override
             public void run() {
-                if (tragetView!=null) {
+                if (tragetView != null) {
                     pop.update((location[0] + tragetView.getWidth() / 2) - rv.getWidth() / 2, location[1] - rv.getHeight(), rv.getWidth(), rv.getHeight());
-                }else {
-                    pop.update((location[0]  ) - rv.getWidth() / 2, location[1] - rv.getHeight(), rv.getWidth(), rv.getHeight());
+                } else {
+                    pop.update((location[0]) - rv.getWidth() / 2, location[1] - rv.getHeight(), rv.getWidth(), rv.getHeight());
 
                 }
             }
         });
-        LinearLayoutManager manager =new LinearLayoutManager(context);
+        LinearLayoutManager manager = new LinearLayoutManager(context);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         rv.setLayoutManager(manager);
-        adapter=new XAdapter<T>(context,datas) {
+        adapter = new XAdapter<T>(context, datas) {
             @Override
             public BaseHolder<T> initHolder(ViewGroup parent, int viewType) {
-                return new BaseHolder<T>(context,parent,R.layout.order_item_carnum_item){
+                return new BaseHolder<T>(context, parent, R.layout.order_item_carnum_item) {
                     @Override
                     public void initView(View itemView, final int position, final T data) {
                         super.initView(itemView, position, data);
                         TextView tv = itemView.findViewById(R.id.tv);
-                        if (!TextUtils.isEmpty(mark)&&data.toString().startsWith(mark)){
-                            SpannableStringBuilder builder =new SpannableStringBuilder(data.toString());
-                            ForegroundColorSpan span=new ForegroundColorSpan(context.getResources().getColor(R.color.color_light));
-                            builder.setSpan(span,0,mark.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        if (!TextUtils.isEmpty(mark) && data.toString().startsWith(mark)) {
+                            SpannableStringBuilder builder = new SpannableStringBuilder(data.toString());
+                            ForegroundColorSpan span = new ForegroundColorSpan(context.getResources().getColor(R.color.color_light));
+                            builder.setSpan(span, 0, mark.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                             tv.setText(builder);
-                        }else {
+                        } else {
                             tv.setText(data.toString());
                         }
 
                         itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if (listener!=null){
-                                    listener.onItemClick(position,data);
+                                if (listener != null) {
+                                    listener.onItemClick(position, data);
                                 }
                             }
                         });
@@ -118,10 +111,10 @@ public class CarNumPop<T>  {
     }
 
 
-    public void upData(String mark,List<T> datas){
-        this.mark=mark;
+    public void upData(String mark, List<T> datas) {
+        this.mark = mark;
         this.datas.clear();
-        if (datas!=null){
+        if (datas != null) {
             this.datas.addAll(datas);
         }
         adapter.notifyDataSetChanged();
@@ -131,8 +124,8 @@ public class CarNumPop<T>  {
 
 
     public void show(final View view) {
-        tragetView=view;
-        if (datas.size()==0){
+        tragetView = view;
+        if (datas.size() == 0) {
             return;
         }
         view.getLocationOnScreen(location);

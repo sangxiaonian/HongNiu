@@ -4,25 +4,20 @@ import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.text.TextUtils;
-import android.widget.TextView;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdate;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.UiSettings;
-import com.amap.api.maps.model.BitmapDescriptor;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
-import com.amap.api.navi.enums.NaviType;
 import com.amap.api.navi.model.NaviLatLng;
-import com.amap.api.services.core.PoiItem;
 import com.sang.thirdlibrary.R;
-import com.sang.thirdlibrary.map.voice.TTSController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,12 +41,12 @@ public class BaseMapHelper implements AMap.OnMyLocationChangeListener {
     protected final List<NaviLatLng> sList = new ArrayList<NaviLatLng>();
     //终点坐标
     protected final List<NaviLatLng> eList = new ArrayList<NaviLatLng>();
-    protected List<NaviLatLng> mWayPointList=new ArrayList<>();//途经地点
+    protected List<NaviLatLng> mWayPointList = new ArrayList<>();//途经地点
     protected Context mContext;
 
 
-    public BaseMapHelper initMap(Context context,MapView mMapView) {
-        mContext=context;
+    public BaseMapHelper initMap(Context context, MapView mMapView) {
+        mContext = context;
         aMap = mMapView.getMap();
         myLocationStyle = new MyLocationStyle();//初始化定位蓝点样式类myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);//连续定位、且将视角移动到地图中心点，定位点依照设备方向旋转，并且会跟随设备移动。（1秒1次定位）如果不设置myLocationType，默认也会执行此种模式。
         aMap.setMyLocationEnabled(true);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
@@ -73,6 +68,7 @@ public class BaseMapHelper implements AMap.OnMyLocationChangeListener {
 
     /**
      * 移动到指定位置
+     *
      * @param latitude
      * @param longitude
      */
@@ -83,7 +79,6 @@ public class BaseMapHelper implements AMap.OnMyLocationChangeListener {
     }
 
 
-
     public void onDestroy() {
         sList.clear();
         mWayPointList.clear();
@@ -92,14 +87,14 @@ public class BaseMapHelper implements AMap.OnMyLocationChangeListener {
 
 
     public void setStartMarker(double latitude, double longitude) {
-        setStartMarker( latitude,longitude,"");
+        setStartMarker(latitude, longitude, "");
     }
 
     public void setStartMarker(double latitude, double longitude, String title) {
-        mStartMarker.setPosition(new LatLng( latitude,longitude));
+        mStartMarker.setPosition(new LatLng(latitude, longitude));
         sList.clear();
-        sList.add(new NaviLatLng(latitude,longitude));
-        if (!TextUtils.isEmpty(title)){
+        sList.add(new NaviLatLng(latitude, longitude));
+        if (!TextUtils.isEmpty(title)) {
             mStartMarker.setTitle(title);
         }
     }
@@ -107,14 +102,14 @@ public class BaseMapHelper implements AMap.OnMyLocationChangeListener {
     public void setEndMarker(double latitude, double longitude, String title) {
         mEndMarker.setPosition(new LatLng(latitude, longitude));
         eList.clear();
-        eList.add(new NaviLatLng(latitude,longitude));
-        if (!TextUtils.isEmpty(title)){
+        eList.add(new NaviLatLng(latitude, longitude));
+        if (!TextUtils.isEmpty(title)) {
             mEndMarker.setTitle(title);
         }
     }
 
     public void setEndMarker(double latitude, double longitude) {
-        setEndMarker( latitude,longitude,"");
+        setEndMarker(latitude, longitude, "");
     }
 
 

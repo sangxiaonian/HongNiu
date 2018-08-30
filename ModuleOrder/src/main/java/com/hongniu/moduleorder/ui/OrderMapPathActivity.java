@@ -32,7 +32,6 @@ public class OrderMapPathActivity extends BaseActivity {
     public boolean checkPath;//是否是查看轨迹
 
     private OrderDetailItem item;
-    private Button bt;
 
 
     @Override
@@ -55,7 +54,6 @@ public class OrderMapPathActivity extends BaseActivity {
         item = findViewById(R.id.item_order);
         item.hideButton(true);
 
-        bt = findViewById(R.id.bt);
 
     }
 
@@ -63,40 +61,14 @@ public class OrderMapPathActivity extends BaseActivity {
     @Override
     protected void initData() {
         super.initData();
-        if (checkPath) {
-            setToolbarTitle("查看轨迹");
-            bt.setVisibility(View.GONE);
-        } else {
-            item.setVisibility(View.GONE);
-            setToolbarTitle("查看路线");
-        }
+        setToolbarTitle("查看轨迹");
+
     }
 
     @Override
     protected void initListener() {
         super.initListener();
-        bt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PermissionUtils.applyMap(OrderMapPathActivity.this, new PermissionUtils.onApplyPermission() {
-                    @Override
-                    public void hasPermission(List<String> granted, boolean isAll) {
-                        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_navigation).navigation(mContext);
-                        OrderEvent.MapNavigationEvent event = new OrderEvent.MapNavigationEvent();
-                        event.setStart(31.275837, 121.457689);
-                        event.setEnd(31.315814, 121.393459);
-                        BusFactory.getBus().postSticky(event);
-                        finish();
-                    }
 
-                    @Override
-                    public void noPermission(List<String> denied, boolean quick) {
-
-                    }
-                });
-
-            }
-        });
     }
 
 
