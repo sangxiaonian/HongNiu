@@ -1,7 +1,5 @@
 package com.hongniu.moduleorder.control;
 
-import com.amap.api.navi.view.RouteOverLay;
-
 /**
  * 作者： ${PING} on 2018/8/9.
  */

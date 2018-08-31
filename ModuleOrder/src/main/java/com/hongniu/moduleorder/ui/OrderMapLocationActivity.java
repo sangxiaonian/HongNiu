@@ -1,5 +1,6 @@
 package com.hongniu.moduleorder.ui;
 
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -11,10 +12,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdate;
+import com.amap.api.maps.CameraUpdateFactory;
+import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.BitmapDescriptorFactory;
+import com.amap.api.maps.model.CameraPosition;
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.Marker;
+import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;
-import com.amap.api.services.poisearch.PoiResult;
+import com.amap.api.services.geocoder.GeocodeResult;
+import com.amap.api.services.geocoder.GeocodeSearch;
+import com.amap.api.services.geocoder.RegeocodeResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.base.RefrushActivity;
@@ -25,15 +38,15 @@ import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.control.OrderMapListener;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
-import com.hongniu.moduleorder.ui.fragment.OrderMapPathFragment;
 import com.sang.common.event.BusFactory;
 import com.sang.common.event.IBus;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
+import com.sang.thirdlibrary.map.MapUtils;
+import com.sang.thirdlibrary.map.MarkUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -42,15 +55,18 @@ import io.reactivex.Observable;
  * 定位，选择当前所在点的Activity，
  */
 @Route(path = ArouterParamOrder.activity_map_loaction)
-public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implements  AMap.OnMyLocationChangeListener {
+public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implements    MapUtils.OnMapChangeListener {
 
 
     private EditText etSearch;
-    private int selectPositio = -1;
+    private int selectPositio  ;
     private boolean start;
-    private OrderMapListener helper;
     private PoiSearch.SearchBound searchBound;
-
+    private MapView mMapView;
+    private AMap aMap;
+    private Marker marker;
+MapUtils mapUtils;
+    private GeocodeSearch geocodeSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,13 +74,18 @@ public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implement
         setContentView(R.layout.activity_order_map_location_ativity);
         setToolbarTitle("位置");
         setToolbarSrcRight("确定");
-        OrderMapPathFragment orderMapPathFragment = new OrderMapPathFragment();
-        helper = orderMapPathFragment;
-        getSupportFragmentManager().beginTransaction().replace(R.id.content, orderMapPathFragment).commit();
+
+        mMapView = (MapView) findViewById(R.id.map);
+        //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，创建地图
+        aMap = mMapView.getMap();
+        mMapView.onCreate(savedInstanceState);
+
         initView();
         initData();
         initListener();
-
+        mapUtils=new MapUtils();
+        mapUtils.init(this, aMap);
+        mapUtils.setMapListener(this);
 
     }
 
@@ -84,20 +105,25 @@ public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implement
         start = getIntent().getBooleanExtra(Param.TRAN, false);
 
         if (start) {
+            marker = aMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.start))));
             etSearch.setHint("从哪里发货");
         } else {
+            marker = aMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.end))));
             etSearch.setHint("在哪里收货");
         }
+
         etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    searchBound=null;
+                    searchBound = null;
                     queryData(true, true);
                 }
                 return false;
             }
         });
+
+
     }
 
     @Override
@@ -109,7 +135,7 @@ public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implement
         query.setPageSize(Param.PAGE_SIZE);// 设置每页最多返回多少条poiitem
         query.setPageNum(currentPage);//设置查询页码
         PoiSearch poiSearch = new PoiSearch(mContext, query);
-        if (searchBound!=null) {
+        if (searchBound != null) {
             poiSearch.setBound(searchBound);
         }
         return HttpOrderFactory.searchPio(poiSearch);
@@ -138,19 +164,13 @@ public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implement
                         itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if (selectPositio != position) {
+
                                     selectPositio = position;
+                                    upData=false;
                                     adapter.notifyDataSetChanged();
+                                    MarkUtils.moveMark(marker,data.getLatLonPoint().getLatitude(), data.getLatLonPoint().getLongitude());
+                                    mapUtils.moveTo(data.getLatLonPoint().getLatitude(), data.getLatLonPoint().getLongitude());
 
-                                    if (helper != null) {
-                                        if (start) {
-                                            helper.setStartMarker(data.getLatLonPoint().getLatitude(), data.getLatLonPoint().getLongitude(), data.getTitle());
-                                        } else {
-                                            helper.setEndtMarker(data.getLatLonPoint().getLatitude(), data.getLatLonPoint().getLongitude(), data.getTitle());
-
-                                        }
-                                    }
-                                }
 
                             }
                         });
@@ -160,6 +180,7 @@ public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implement
         };
     }
 
+    private boolean upData=true;
 
     @Override
     protected void initListener() {
@@ -170,7 +191,6 @@ public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implement
                 if (selectPositio >= 0 && datas.size() > selectPositio) {
                     IBus.IEvent event;
                     PoiItem poiItem = datas.get(selectPositio);
-                    JLog.i(poiItem.getLatLonPoint() + ">>>>" + poiItem.getEnter() + ">>>" + poiItem.getExit());
                     if (start) {
                         event = new OrderEvent.StartLoactionEvent(poiItem);
                     } else {
@@ -185,6 +205,7 @@ public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implement
             }
         });
     }
+
     @Override
     public void onBackPressed() {
         if (refresh.getVisibility() == View.VISIBLE) {
@@ -196,7 +217,6 @@ public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implement
     }
 
 
-
     @Override
     public void onTaskSuccess() {
         super.onTaskSuccess();
@@ -206,11 +226,76 @@ public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implement
     }
 
 
+    /**
+     * 定位改变监听
+     *
+     * @param latitude
+     * @param longitude
+     */
+    @Override
+    public void loactionChangeListener(double latitude, double longitude) {
+        searchBound = new PoiSearch.SearchBound(new LatLonPoint(latitude, longitude), 1000);
+        mapUtils.moveTo(latitude, longitude);
+    }
+
+    /**
+     * 地图移动变化
+     *
+     * @param latitude
+     * @param longitude
+     */
+    @Override
+    public void onCameraChange(double latitude, double longitude) {
+        MarkUtils.moveMark(marker,latitude,longitude);
+    }
+
+    /**
+     * 地图移动完成
+     *
+     * @param latitude
+     * @param longitude
+     */
+    @Override
+    public void onCameraChangeFinish(double latitude, double longitude) {
+        if (upData) {
+            searchBound = new PoiSearch.SearchBound(new LatLonPoint(latitude, longitude), 1000);
+            selectPositio = 0;
+            queryData(true);
+        }else {
+            upData=true;
+        }
+    }
+
 
     @Override
-    public void onMyLocationChange(Location location) {
-       searchBound = new PoiSearch.SearchBound(new LatLonPoint(location.getLatitude(),
-                location.getLongitude()), 1000);
-        queryData(true);
+    protected void onDestroy() {
+        super.onDestroy();
+        //在activity执行onDestroy时执行mMapView.onDestroy()，销毁地图
+        mMapView.onDestroy();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //在activity执行onResume时执行mMapView.onResume ()，重新绘制加载地图
+        mMapView.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //在activity执行onPause时执行mMapView.onPause ()，暂停地图的绘制
+        mMapView.onPause();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        //在activity执行onSaveInstanceState时执行mMapView.onSaveInstanceState (outState)，保存地图当前的状态
+        mMapView.onSaveInstanceState(outState);
+    }
+
+
+
+
 }

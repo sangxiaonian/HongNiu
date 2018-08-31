@@ -3,6 +3,7 @@ package com.sang.thirdlibrary.map;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.model.BitmapDescriptor;
 import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 
 /**
@@ -30,4 +31,12 @@ public class MarkUtils {
         markerOption.setFlat(true);//设置marker平贴地图效果
         aMap.addMarker(markerOption);
     }
+
+    public static void moveMark(Marker mark, double latitude, double longitude){
+        mark.setPosition(new LatLng(latitude,longitude));
+
+    }
+
+
+
 }
