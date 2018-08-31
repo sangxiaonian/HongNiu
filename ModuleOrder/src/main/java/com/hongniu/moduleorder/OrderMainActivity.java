@@ -46,6 +46,7 @@ import com.sang.common.widget.guideview.BaseGuide;
 import com.sang.common.widget.popu.BasePopu;
 import com.sang.common.widget.popu.inter.OnPopuDismissListener;
 import com.sang.thirdlibrary.map.LoactionUtils;
+import com.sang.thirdlibrary.map.utils.MapConverUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -238,11 +239,11 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                         upLoactionEvent.orderID = event.getOrderId();
                         upLoactionEvent.cardID = event.getCarId();
                         BusFactory.getBus().post(upLoactionEvent);
-                        float v = loaction.caculeDis(event.getStartLatitude(), event.getStartLongitude(), event.getDestinationLatitude(), event.getDestinationLongitude());
+                        float v = MapConverUtils.caculeDis(event.getStartLatitude(), event.getStartLongitude(), event.getDestinationLatitude(), event.getDestinationLongitude());
                         loaction.upInterval(v);
                         JLog.i("-------发送运输相关信息-----");
                     }
-                },200);
+                }, 200);
 
             }
         }
@@ -260,7 +261,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                 }
                 JLog.i("-------接收到运输相关信息-----");
                 upLoactionUtils = new LoactionUpUtils();
-                upLoactionUtils.setOrderInfor(event.orderID,event.cardID);
+                upLoactionUtils.setOrderInfor(event.orderID, event.cardID);
             } else {
                 if (upLoactionUtils != null) {
                     upLoactionUtils.onDestroy();
@@ -293,12 +294,13 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
 
     /**
      * 改变角色信息
+     *
      * @param event
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onChangeRole(Event.UpRoale event) {
-        if (event != null&&event.roleState!=null) {
-            switch (event.roleState){
+        if (event != null && event.roleState != null) {
+            switch (event.roleState) {
                 case CARGO_OWNER:
                     changeStaff(3);
                     break;
@@ -378,7 +380,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
             switchStateListener = (SwitchStateListener) currentFragmeng;
         }
 
-        fragmentTransaction. commitAllowingStateLoss();
+        fragmentTransaction.commitAllowingStateLoss();
     }
 
     @Override
@@ -514,9 +516,8 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
         if (upLoactionUtils != null) {
-            JLog.i(aMapLocation.getSpeed()+">>>>"+aMapLocation.getBearing());
-
-            upLoactionUtils.add(aMapLocation.getLatitude(), aMapLocation.getLongitude(), aMapLocation.getTime(),aMapLocation.getSpeed(),aMapLocation.getBearing());
+            JLog.i(aMapLocation.getSpeed() + ">>>>" + aMapLocation.getBearing());
+            upLoactionUtils.add(aMapLocation.getLatitude(), aMapLocation.getLongitude(), aMapLocation.getTime(), aMapLocation.getSpeed(), aMapLocation.getBearing());
         }
     }
 }

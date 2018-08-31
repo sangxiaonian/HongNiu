@@ -9,6 +9,7 @@ import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.JLog;
 import com.sang.thirdlibrary.map.LoactionUtils;
+import com.sang.thirdlibrary.map.utils.MapConverUtils;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -50,7 +51,7 @@ public class LoactionUpUtils {
     private LatLng lastLoaction=new LatLng(0,0) ;
 
     public void add(double latitude, double longitude, long movingTime, float speed, float bearing) {
-        float v = LoactionUtils.getInstance().caculeDis(lastLoaction.latitude, lastLoaction.longitude, latitude, longitude);
+        float v = MapConverUtils.caculeDis(lastLoaction.latitude, lastLoaction.longitude, latitude, longitude);
         if (v<minDis|| TextUtils.isEmpty(carId)||TextUtils.isEmpty(orderId)){
             return;
         }else {

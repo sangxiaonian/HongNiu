@@ -87,9 +87,7 @@ public class LoactionUtils {
         this.listener = listener;
     }
 
-    Context context;
     public void init(Context context) {
-        this.context=context;
 
 //初始化定位
         mLocationClient = new AMapLocationClient(context.getApplicationContext());
@@ -133,47 +131,12 @@ public class LoactionUtils {
 //启动定位
     }
 
-
-    /**
-     * 计算当前位置距离终点位置的距离
-     * @param latitude  终点坐标
-     * @param longitude 终点坐标
-     */
-    public float caculeDis(double latitude, double longitude) {
-        DPoint startLatlng =new DPoint();
-        DPoint endLatlng =new DPoint();
-        if (latLng!=null){
-            startLatlng.setLatitude(latLng.latitude);
-            startLatlng.setLongitude(latLng.longitude);
-
-        }else {
-            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("获取当前位置失败，请打开GPS");
-            return 0;
-        }
-        endLatlng.setLatitude(latitude);
-        endLatlng.setLongitude(longitude);
-       return CoordinateConverter.calculateLineDistance(startLatlng,endLatlng)/1000;
-
+    public LatLng getCurrentLoaction(){
+        return latLng==null?new LatLng(0,0):latLng;
     }
 
-    /**
-     * 两坐标之间的距离 单位米
-     * @param startLatitude
-     * @param startLongitude
-     * @param endLatitude
-     * @param endLongitude
-     * @return
-     */
-    public float caculeDis(double startLatitude, double startLongitude, double endLatitude,
-                          double endLongitude){
-        DPoint startLatlng =new DPoint();
-        DPoint endLatlng =new DPoint();
-        startLatlng.setLatitude(startLatitude);
-        startLatlng.setLongitude(startLongitude);
-        endLatlng.setLatitude(endLatitude);
-        endLatlng.setLongitude(endLongitude);
-        return CoordinateConverter.calculateLineDistance(startLatlng,endLatlng);
-    }
+
+
 
 
 }

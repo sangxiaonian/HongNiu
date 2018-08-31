@@ -25,6 +25,7 @@ import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.CenteredImageSpan;
 import com.sang.thirdlibrary.map.LoactionUtils;
+import com.sang.thirdlibrary.map.utils.MapConverUtils;
 
 import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_BUY_INSURANCE;
 import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_CANCLE;
@@ -123,8 +124,8 @@ public class OrderDetailItem extends FrameLayout {
         if (data.getOrderState()== OrderDetailItemControl.OrderState.IN_TRANSIT){//正在运输中
             progress.showProgress(true);
             if (data.getLatitude()>0&&data.getLongitude()>0) {
-                float totale = LoactionUtils.getInstance().caculeDis(data.getStartLatitude(), data.getStartLongitude(), data.getDestinationLatitude(), data.getDestinationLongitude());
-                float current = LoactionUtils.getInstance().caculeDis(data.getStartLatitude(), data.getStartLongitude(), data.getLatitude(), data.getLongitude());
+                float totale = MapConverUtils.caculeDis(data.getStartLatitude(), data.getStartLongitude(), data.getDestinationLatitude(), data.getDestinationLongitude());
+                float current = MapConverUtils.caculeDis(data.getStartLatitude(), data.getStartLongitude(), data.getLatitude(), data.getLongitude());
                 progress.setCurent(current*100 / (totale == 0 ? 1 : totale));
             }else {
                 progress.setCurent(0);

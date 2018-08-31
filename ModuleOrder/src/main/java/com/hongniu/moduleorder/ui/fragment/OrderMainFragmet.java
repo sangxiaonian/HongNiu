@@ -46,12 +46,12 @@ import com.sang.common.widget.dialog.inter.DialogControl;
 import com.sang.common.widget.popu.BasePopu;
 import com.sang.common.widget.popu.inter.OnPopuDismissListener;
 import com.sang.thirdlibrary.map.LoactionUtils;
+import com.sang.thirdlibrary.map.utils.MapConverUtils;
 
 import java.util.Arrays;
 import java.util.List;
 
 import io.reactivex.Observable;
-import okhttp3.ResponseBody;
 
 /**
  * 订单列表Fragment
@@ -256,16 +256,16 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
 
     @Override
     public boolean isShowing() {
-        if (orderMainPop!=null) {
-           return orderMainPop.isShow();
-        }else {
+        if (orderMainPop != null) {
+            return orderMainPop.isShow();
+        } else {
             return false;
         }
     }
 
     @Override
     public void closePop() {
-        if (orderMainPop!=null) {
+        if (orderMainPop != null) {
             orderMainPop.dismiss();
         }
     }
@@ -482,7 +482,9 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
                 .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
                     @Override
                     public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
-                        double v = LoactionUtils.getInstance().caculeDis(orderBean.getDestinationLatitude(), orderBean.getDestinationLongitude());
+                        double v = MapConverUtils.caculeDis(LoactionUtils.getInstance().getCurrentLoaction().latitude
+                                ,LoactionUtils.getInstance().getCurrentLoaction().latitude
+                                ,orderBean.getDestinationLatitude(), orderBean.getDestinationLongitude());
                         dialog.dismiss();
                         if (v > Param.ENTRY_MIN) {//距离过大，超过确认订单的最大距离
 //                        if (false) {
