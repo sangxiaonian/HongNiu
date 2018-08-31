@@ -217,7 +217,7 @@ public class OrderMapCheckPathActivity extends BaseActivity {
         LatLng latLng = new LatLng(latitude, longitude);
         CameraUpdate mCameraUpdate = CameraUpdateFactory.newCameraPosition(new CameraPosition(latLng, 15, 30, 30));
         aMap.moveCamera(mCameraUpdate);
-        aMap.moveCamera(CameraUpdateFactory.scrollBy(0, DeviceUtils.dip2px(mContext, 300)));
+//        aMap.moveCamera(CameraUpdateFactory.scrollBy(0, DeviceUtils.dip2px(mContext, 300)));
 
     }
 

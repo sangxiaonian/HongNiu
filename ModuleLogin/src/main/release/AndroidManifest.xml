@@ -8,6 +8,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".LoginSmsVerifyActivity"
+              android:windowSoftInputMode="stateVisible"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.LoginCarInforActivity"

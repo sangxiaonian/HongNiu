@@ -1,5 +1,7 @@
 package com.hongniu.baselibrary.entity;
 
+import android.text.TextUtils;
+
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 
 /**
@@ -181,21 +183,21 @@ public class OrderDetailBean {
 
 
     /**
-     *  false	string	保单号
-      */
-    private String policyNum	   ;
+     * false	string	保单号
+     */
+    private String policyNum;
     /**
-     *  false	string	保险公司简称
-      */
+     * false	string	保险公司简称
+     */
     private String companyName;
     /**
-     *  false	number	保费
-      */
+     * false	number	保费
+     */
     private String policyMoney;
     /**
-     *  false	string	保单信息
-      */
-    private String policyInfo	   ;
+     * false	string	保单信息
+     */
+    private String policyInfo;
 
 
     public String getPolicyNum() {
@@ -281,6 +283,23 @@ public class OrderDetailBean {
     public String getPayWay() {
         return payWay;
     }
+
+    //获取支付方式的描述
+    public String getPayWayDes() {
+        if (TextUtils.isEmpty(payWay)) {
+            return "";
+        } else if (payWay.equals("0")) {
+            return "微信";
+        } else if (payWay.equals("1")) {
+            return "银联";
+        } else if (payWay.equals("2")) {
+            return "线下支付";
+        }else {
+            return "";
+        }
+
+    }
+
 
     public void setPayWay(String payWay) {
         this.payWay = payWay;

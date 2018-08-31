@@ -29,6 +29,7 @@ import com.hongniu.moduleorder.entity.OrderCreatParamBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.widget.CarNumPop;
 import com.sang.common.event.BusFactory;
+import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.widget.ItemView;
 import com.sang.common.widget.dialog.BottomAlertDialog;
@@ -354,9 +355,14 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
             showAleart(itemPrice.getTextCenterHide());
             return false;
         }
-        ;
+
+
+
         if (TextUtils.isEmpty(itemCarNum.getTextCenter())) {
             showAleart(itemCarNum.getTextCenterHide());
+            return false;
+        }else if (!  CommonUtils.carNumMatches(itemCarNum.getTextCenter())){
+            showAleart(getString(R.string.carnum_error));
             return false;
         }
         ;

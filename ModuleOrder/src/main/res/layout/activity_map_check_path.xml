@@ -10,8 +10,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="match_parent"
+       >
 
         <com.amap.api.maps.MapView
             android:id="@+id/map"
@@ -21,10 +21,12 @@
 
         <com.sang.common.widget.CircularFramlayout
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_margin="@dimen/app_item_gap"
             app:showBorder="false"
+
             app:viewradius="5dp">
 
             <com.hongniu.baselibrary.widget.order.OrderDetailItem

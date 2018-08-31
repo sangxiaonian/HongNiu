@@ -109,7 +109,14 @@ public class OrderDetailItem extends FrameLayout {
         setStartLocation(data.getStartPlaceInfo());
         setOrder(data.getOrderNum());
         setTiem(ConvertUtils.formatTime(data.getDeliverydate(), "yyyy-MM-dd"));
-        setPrice(data.getMoney());
+
+
+        String money = data.getMoney();
+        if (!TextUtils.isEmpty(money)){
+            String s = TextUtils.isEmpty(data.getPayWayDes()) ? "" : ("(" + data.getPayWayDes() + ")");
+            setPrice(money+s);
+
+        }
         setOrderState(data.getOrderState());
 
         if (data.getOrderState()== OrderDetailItemControl.OrderState.IN_TRANSIT){//正在运输中

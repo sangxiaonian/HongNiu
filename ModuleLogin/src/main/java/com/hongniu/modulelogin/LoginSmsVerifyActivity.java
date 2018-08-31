@@ -61,6 +61,7 @@ public class LoginSmsVerifyActivity extends BaseActivity implements VericationVi
         initView();
         initData();
         initListener();
+
     }
 
 
@@ -86,6 +87,7 @@ public class LoginSmsVerifyActivity extends BaseActivity implements VericationVi
                     .append(phone.substring(7));
         }
         tvPhone.setText(buffer.toString().trim());
+
     }
 
     @Override

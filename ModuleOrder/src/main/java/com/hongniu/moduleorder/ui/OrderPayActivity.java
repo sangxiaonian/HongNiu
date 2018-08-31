@@ -69,6 +69,7 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
     private TextView tv_cargo_price;//货物金额
     private TextView bt_cancle_insurance;//取消保险
     private TextView tv_change_cargo_price;//更改货物金额
+    private TextView tv_des;//订单描述
 
 
     private boolean onLine = true;
@@ -95,6 +96,7 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
         initView();
         initData();
         initListener();
+
     }
 
     @Override
@@ -116,6 +118,7 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
         bt_cancle_insurance = findViewById(R.id.bt_cancle_insurance);
         tv_change_cargo_price = findViewById(R.id.tv_change_cargo_price);
         rl_tran = findViewById(R.id.rl_tran);
+        tv_des = findViewById(R.id.tv_des);
 
 
         buyInsuranceDialog = new BuyInsuranceDialog(mContext);
@@ -128,6 +131,7 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
         super.initData();
         tvOrder.setText("订单号" + orderNum);
         tvPrice.setText("￥" + tranPrice);
+        checkbox.setChecked(true);//默认选中微信支付
     }
 
     @Override
@@ -147,8 +151,12 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
 
             if (isInsurance) {//如果是购买保险
                 switchPayLine(false);
+                tv_des.setText(R.string.order_pay_insruance_buy_des);
+                setToolbarDarkTitle(getString(R.string.order_pay_insruance_pay));
                 rl_tran.setVisibility(View.GONE);
             } else {
+                setToolbarDarkTitle(getString(R.string.order_pay));
+                tv_des.setText(R.string.order_pay_success_driver_start);
                 rl_tran.setVisibility(View.VISIBLE);
                 switchPayLine(true);
             }

@@ -61,6 +61,10 @@
     <string name="order_pay_order_pay">支付订单</string>
     <string name="order_pay_change_cargo_price">修改金额</string>
     <string name="order_pay_cancle_insurance">取消保险</string>
+    <string name="order_pay_insruance_buy_des">发车前可购买保险</string>
+    <string name="order_pay_insruance_pay">购买保险</string>
+
+
     <!--保单生成-->
     <string name="order_insurance_creating">系统正在拼命为您生成保单</string>
     <string name="order_insurance_creating_wait">请耐心等待保单生成完成</string>
@@ -71,6 +75,7 @@
     <string name="finance">财务</string>
     <string name="login_sms_reget_code">重新获取验证码</string>
     <string name="order_main_creat_order">我要下单</string>
+    <string name="carnum_error">车牌号错误</string>
 
 
 </resources>

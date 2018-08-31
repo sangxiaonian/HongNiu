@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.sang.common.R;
+import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.JLog;
 
 /**
@@ -59,6 +60,11 @@ public class VericationView extends LinearLayout implements TextWatcher, View.On
                 for (int i = 0; i < mEditCount; i++) {
                     EditText editext = getEditext(childWidth, childHeight);
                     addView(editext);
+                    if (i==0){
+                        editext.setFocusable(true);
+                        editext.setFocusableInTouchMode(true);
+                        editext.requestFocus();
+                    }
                 }
             }
         });
@@ -214,6 +220,8 @@ public class VericationView extends LinearLayout implements TextWatcher, View.On
             }
         }
     }
+
+
 
     public interface OnCompleteListener {
         void onComplete(String content);
