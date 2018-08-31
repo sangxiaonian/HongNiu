@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.hongniu.baselibrary.R;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
+import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.OrderProgress;
 import com.hongniu.baselibrary.widget.order.helper.OrderItemHelper;
 import com.sang.common.utils.CommonUtils;
@@ -102,7 +103,7 @@ public class OrderDetailItem extends FrameLayout {
         this.orderBean = data;
 
         if(roleState==null){
-            roleState= OrderDetailItemControl.RoleState.CARGO_OWNER;
+            roleState= CommonOrderUtils.getRoleState(data.getRoleType());
         }
 
         setEndLocation(data.getDestinationInfo());

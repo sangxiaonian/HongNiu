@@ -199,6 +199,31 @@ public class OrderDetailBean {
      */
     private String policyInfo;
 
+    /**
+     * 财务类型 1支持 2收入 0 无类型
+     */
+    private int financeType;
+
+    /**
+     * 角色类似 1车主 2司机 3 货主
+     */
+    private int roleType;
+
+    public int getRoleType() {
+        return roleType;
+    }
+
+    public void setRoleType(int roleType) {
+        this.roleType = roleType;
+    }
+
+    public int getFinanceType() {
+        return financeType;
+    }
+
+    public void setFinanceType(int financeType) {
+        this.financeType = financeType;
+    }
 
     public String getPolicyNum() {
         return policyNum;
@@ -294,7 +319,7 @@ public class OrderDetailBean {
             return "银联";
         } else if (payWay.equals("2")) {
             return "线下支付";
-        }else {
+        } else {
             return "";
         }
 

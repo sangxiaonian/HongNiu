@@ -42,7 +42,7 @@ import io.reactivex.functions.Function;
  * 作者： ${PING} on 2018/8/7.
  * 财务收入模块
  */
-public class FinanceIncomeFragment extends RefrushFragmet<FinanceOrderBean> {
+public class FinanceIncomeFragment extends RefrushFragmet<OrderDetailBean> {
 
 
     private FinanceIncomHeadHolder headHolder;
@@ -72,16 +72,16 @@ public class FinanceIncomeFragment extends RefrushFragmet<FinanceOrderBean> {
     }
 
     @Override
-    protected Observable<CommonBean<PageBean<FinanceOrderBean>>> getListDatas() {
+    protected Observable<CommonBean<PageBean<OrderDetailBean>>> getListDatas() {
         bean.setPageNum(currentPage);
         bean.setFinanceType(2);
-        return HttpFinanceFactory.queryFinance(bean)
+        return HttpFinanceFactory.queryFinance1(bean)
                 .observeOn(AndroidSchedulers.mainThread())
-                .map(new Function<CommonBean<PageBean<FinanceOrderBean>>, CommonBean<PageBean<FinanceOrderBean>>>() {
+                .map(new Function<CommonBean<PageBean<OrderDetailBean>>, CommonBean<PageBean<OrderDetailBean>>>() {
                     @Override
-                    public CommonBean<PageBean<FinanceOrderBean>> apply(CommonBean<PageBean<FinanceOrderBean>> pageBeanCommonBean) throws Exception {
+                    public CommonBean<PageBean<OrderDetailBean>> apply(CommonBean<PageBean<OrderDetailBean>> pageBeanCommonBean) throws Exception {
                         if (pageBeanCommonBean != null && pageBeanCommonBean.getData() != null) {
-                            PageBean<FinanceOrderBean> data = pageBeanCommonBean.getData();
+                            PageBean<OrderDetailBean> data = pageBeanCommonBean.getData();
                             int total = data.getTotal();
                             tv_order_count.setText("共支出" + total + "笔，合计");
                             tv_order_money.setText("￥" + data.getTotalMoney());
@@ -95,7 +95,7 @@ public class FinanceIncomeFragment extends RefrushFragmet<FinanceOrderBean> {
     }
 
     @Override
-    protected XAdapter<FinanceOrderBean> getAdapter(final List<FinanceOrderBean> datas) {
+    protected XAdapter<OrderDetailBean> getAdapter(final List<OrderDetailBean> datas) {
         return new FinanceOrderAdapter(getContext(),datas);
     }
 

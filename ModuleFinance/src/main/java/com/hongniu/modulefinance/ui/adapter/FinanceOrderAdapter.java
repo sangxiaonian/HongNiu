@@ -5,18 +5,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.hongniu.baselibrary.entity.OrderDetailBean;
+import com.hongniu.baselibrary.widget.order.OrderDetailDialog;
 import com.hongniu.modulefinance.R;
 import com.hongniu.modulefinance.entity.FinanceOrderBean;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
+import com.sang.common.utils.ConvertUtils;
+import com.sang.common.widget.dialog.builder.BottomAlertBuilder;
 
 import java.util.List;
 
 /**
  * 作者： ${PING} on 2018/8/30.
  */
-public class FinanceOrderAdapter extends XAdapter<FinanceOrderBean> {
-    public FinanceOrderAdapter(Context context, List<FinanceOrderBean> list) {
+public class FinanceOrderAdapter extends XAdapter<OrderDetailBean> {
+    public FinanceOrderAdapter(Context context, List<OrderDetailBean> list) {
         super(context, list);
     }
     OnItemClickListener listener;
@@ -26,10 +30,10 @@ public class FinanceOrderAdapter extends XAdapter<FinanceOrderBean> {
     }
 
     @Override
-    public BaseHolder<FinanceOrderBean> initHolder(ViewGroup parent, int viewType) {
-        return new BaseHolder<FinanceOrderBean>(context, parent, R.layout.finance_item_finance) {
+    public BaseHolder<OrderDetailBean> initHolder(ViewGroup parent, int viewType) {
+        return new BaseHolder<OrderDetailBean>(context, parent, R.layout.finance_item_finance) {
             @Override
-            public void initView(View itemView, final int position, final FinanceOrderBean data) {
+            public void initView(View itemView, final int position, final OrderDetailBean data) {
                 super.initView(itemView, position, data);
                 TextView tvOrder = itemView.findViewById(R.id.tv_order);
                 TextView tvCarNum = itemView.findViewById(R.id.tv_car_num);
@@ -37,11 +41,10 @@ public class FinanceOrderAdapter extends XAdapter<FinanceOrderBean> {
                 TextView tvPrice = itemView.findViewById(R.id.tv_price);
 
                 tvOrder.setText("订单号：" + (data.getOrderNum() == null ? "" : data.getOrderNum()));
-                tvCarNum.setText("车牌号码：" + (data.getCarNum() == null ? "" : data.getCarNum()));
-                tvTime.setText("付费时间：" + (data.getPayTime() == null ? "" : data.getPayTime()));
-
-                double money = data.getMoney();
-
+                tvCarNum.setText("车牌号码：" + (data.getCarnum() == null ? "" : data.getCarnum()));
+                tvTime.setText("付费时间：" + ConvertUtils.formatTime(data.getPayTime(),"yyyy-MM-dd HH:mm:ss"));
+//
+                String money = data.getMoney();
                 int financeType = data.getFinanceType();
                 StringBuffer buffer = new StringBuffer();
                 if (financeType == 1) {//支出
@@ -58,14 +61,12 @@ public class FinanceOrderAdapter extends XAdapter<FinanceOrderBean> {
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        OrderDetailDialog orderDetailDialog = new OrderDetailDialog(getContext());
-//                        orderDetailDialog.setOrdetail(data);
-//                        new BottomAlertBuilder()
-//                                .creatDialog(orderDetailDialog)
-//                                .show();
-                        if (listener!=null){
-                            listener.itemClick(position,data);
-                        }
+                        OrderDetailDialog orderDetailDialog = new OrderDetailDialog(context);
+                        orderDetailDialog.setOrdetail(data);
+                        new BottomAlertBuilder()
+                                .creatDialog(orderDetailDialog)
+                                .show();
+
                     }
                 });
                 ;

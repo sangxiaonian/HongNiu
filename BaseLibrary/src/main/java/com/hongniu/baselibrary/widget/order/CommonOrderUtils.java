@@ -64,7 +64,26 @@ public class CommonOrderUtils {
         }
         return role;
     }
+    public static OrderDetailItemControl.RoleState getRoleState(int roleType) {
+        OrderDetailItemControl.RoleState role;
 
+        switch (roleType) {
+
+            case 1:
+                role = OrderDetailItemControl.RoleState.CAR_OWNER;
+                break;
+            case 2:
+                role = OrderDetailItemControl.RoleState.DRIVER;
+                break;
+            case 3:
+                role = OrderDetailItemControl.RoleState.CARGO_OWNER;
+                break;
+            default:
+                role = OrderDetailItemControl.RoleState.CARGO_OWNER;
+                break;
+        }
+        return role;
+    }
 
     public static OrderDetailBean creatBean(int status, boolean insurance){
         OrderDetailBean orderBean = new OrderDetailBean();

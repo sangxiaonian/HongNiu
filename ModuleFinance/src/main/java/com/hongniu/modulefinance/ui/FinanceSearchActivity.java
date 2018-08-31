@@ -43,7 +43,7 @@ import io.reactivex.functions.Function;
 import retrofit2.http.HTTP;
 
 @Route(path = ArouterParamsFinance.activity_finance_search)
-public class FinanceSearchActivity extends RefrushActivity<FinanceOrderBean> implements View.OnClickListener {
+public class FinanceSearchActivity extends RefrushActivity<OrderDetailBean> implements View.OnClickListener {
 
     private EditText etSearch;
     private View imgClear;
@@ -80,20 +80,21 @@ public class FinanceSearchActivity extends RefrushActivity<FinanceOrderBean> imp
     }
 
     @Override
-    protected Observable<CommonBean<PageBean<FinanceOrderBean>>> getListDatas() {
+    protected Observable<CommonBean<PageBean<OrderDetailBean>>> getListDatas() {
         bean.setPageNum(currentPage);
 //        bean.setFinanceType(2);
-        return HttpFinanceFactory.queryFinance(bean).map(new Function<CommonBean<PageBean<FinanceOrderBean>>, CommonBean<PageBean<FinanceOrderBean>>>() {
-            @Override
-            public CommonBean<PageBean<FinanceOrderBean>> apply(CommonBean<PageBean<FinanceOrderBean>> pageBeanCommonBean) throws Exception {
-                return pageBeanCommonBean;
-            }
-        });
+        return HttpFinanceFactory.queryFinance1(bean)
+                .map(new Function<CommonBean<PageBean<OrderDetailBean>>, CommonBean<PageBean<OrderDetailBean>>>() {
+                    @Override
+                    public CommonBean<PageBean<OrderDetailBean>> apply(CommonBean<PageBean<OrderDetailBean>> pageBeanCommonBean) throws Exception {
+                        return pageBeanCommonBean;
+                    }
+                });
     }
 
     @Override
-    protected XAdapter<FinanceOrderBean> getAdapter(List<FinanceOrderBean> datas) {
-        return  new FinanceOrderAdapter(mContext,datas);
+    protected XAdapter<OrderDetailBean> getAdapter(List<OrderDetailBean> datas) {
+        return new FinanceOrderAdapter(mContext, datas);
     }
 
     @Override
@@ -128,7 +129,7 @@ public class FinanceSearchActivity extends RefrushActivity<FinanceOrderBean> imp
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     bean.setCarNo(etSearch.getText().toString().trim());
-                    queryData(true,true);
+                    queryData(true, true);
 
                     DeviceUtils.hideSoft(etSearch);
                 }

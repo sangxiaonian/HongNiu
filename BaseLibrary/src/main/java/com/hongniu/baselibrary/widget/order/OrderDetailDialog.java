@@ -51,6 +51,7 @@ public class OrderDetailDialog implements DialogControl.IBottomDialog {
     public void show() {
 
         if (ordetail!=null){
+
             item.setInfor(ordetail);
         }
 
