@@ -123,7 +123,7 @@ public class HttpFinanceFactory {
                                 data.setDestinationInfo(sourData.getDestinationInfo());
                                 data.setDestinationLatitude(sourData.getDestinationLatitude());
                                 data.setDestinationLongitude(sourData.getDestinationLongitude());
-                                data.setDrivermobile(sourData.getDriverId());
+                                data.setDrivermobile(sourData.getDriverMobile());
                                 data.setDrivername(sourData.getDriverName());
                                 data.setFinanceType(sourData.getFinanceType());
                                 data.setGoodName(sourData.getGoodName());
@@ -133,8 +133,8 @@ public class HttpFinanceFactory {
                                 data.setId(sourData.getId());
                                 data.setMoney(sourData.getMoney() + "");
                                 data.setOrderNum(sourData.getOrderNum());
-                                data.setOwnerPhone(sourData.getOwnerMobile());
-                                data.setOwnerName(sourData.getOwnerName());
+                                data.setUserPhone(sourData.getOwnerMobile());
+                                data.setUserName(sourData.getOwnerName());
                                 data.setPayTime(ConvertUtils.StrToDate(sourData.getDeliveryDate(),"yyyy-MM-dd HH:mm:ss").getTime());
                                 data.setRoleType(sourData.getRoleType());
                                 data.setStartLatitude(sourData.getStartLatitude());

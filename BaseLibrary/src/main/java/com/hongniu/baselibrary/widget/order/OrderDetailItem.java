@@ -105,7 +105,7 @@ public class OrderDetailItem extends FrameLayout {
         if(roleState==null){
             roleState= CommonOrderUtils.getRoleState(data.getRoleType());
         }
-
+        setIdentity(roleState);
         setEndLocation(data.getDestinationInfo());
         setStartLocation(data.getStartPlaceInfo());
         setOrder(data.getOrderNum());
