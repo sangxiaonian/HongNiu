@@ -4,8 +4,10 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
+import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +24,7 @@ import com.sang.common.utils.PointLengthFilter;
 /**
  * 作者： ${PING} on 2018/8/6.
  */
-public class BuyInsuranceDialog extends Dialog {
+public class BuyInsuranceDialog extends Dialog implements TextWatcher {
 
 
     private View bt_cancle;
@@ -63,7 +65,7 @@ public class BuyInsuranceDialog extends Dialog {
 
         et_price = inflate.findViewById(R.id.et_price);
 
-
+        et_price.addTextChangedListener(this);
 
 
         checkbox = inflate.findViewById(R.id.checkbox);
@@ -115,6 +117,21 @@ public class BuyInsuranceDialog extends Dialog {
 
     public void setListener(OnBuyInsuranceClickListener listener) {
         this.listener = listener;
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        bt_sum.setEnabled(!TextUtils.isEmpty(et_price.getText().toString().trim()) && checkbox.isChecked());
     }
 
     public interface OnBuyInsuranceClickListener {

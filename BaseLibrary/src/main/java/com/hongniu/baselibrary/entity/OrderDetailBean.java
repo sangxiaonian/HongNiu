@@ -63,7 +63,7 @@ public class OrderDetailBean {
     /**
      * true string 发货日期
      */
-    private long deliverydate;
+    private String deliveryDate;
 
     /**
      * true string 完成日期
@@ -77,34 +77,34 @@ public class OrderDetailBean {
     /**
      * 货主电话
      */
-    private String ownerPhone;
+    private String userMobile;
     /**
      * 货主姓名
      */
-    private String ownerName;
+    private String userName;
     /**
      * true string 车主的姓名(非下单人)
      */
-    private String userName;
+    private String ownerName;
 
     /**
      * true string 车主的电话(非下单人)
      */
-    private String userPhone;
+    private String ownerMobile;
 
     /**
      * true string 司机的id
      */
-    private String userIdSend;
+    private String driverId;
     /**
      * true string 司机的姓名
      */
-    private String drivername;
+    private String driverName;
 
     /**
      * true string 司机的手机号
      */
-    private String drivermobile;
+    private String driverMobile;
 
     /**
      * true string 车辆id
@@ -118,16 +118,13 @@ public class OrderDetailBean {
     /**
      * true string 车牌号
      */
-    private String carnum;
+    private String carNum;
 
     /**
      * true number 运费，单位元
      */
     private String money;
-    /**
-     * true	string	发货日期（字符串，格式YYYY-MM-dd）
-     */
-    protected String deliverydateStr;
+
     /**
      * true string 货物名称
      */
@@ -135,12 +132,12 @@ public class OrderDetailBean {
     /**
      * true number 货物体积，单位方
      */
-    private String goodvolume;
+    private String goodVolume;
 
     /**
      * true number 货物质量，单位吨
      */
-    private String goodweight;
+    private String goodWeight;
     /**
      * true number 货物价值，单位元
      */
@@ -163,7 +160,7 @@ public class OrderDetailBean {
     /**
      * 付费时间
      */
-    private long payTime;
+    private String payTime;
     /**
      * 订单状态
      */
@@ -181,6 +178,21 @@ public class OrderDetailBean {
      */
     protected String payWay;
 
+    public String getUserMobile() {
+        return userMobile;
+    }
+
+    public void setUserMobile(String userMobile) {
+        this.userMobile = userMobile;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     /**
      * false	string	保单号
@@ -273,37 +285,15 @@ public class OrderDetailBean {
         this.longitude = longitude;
     }
 
-    public long getPayTime() {
+    public String getPayTime() {
         return payTime;
     }
 
-    public void setPayTime(long payTime) {
+    public void setPayTime(String payTime) {
         this.payTime = payTime;
     }
 
-    public String getOwnerPhone() {
-        return ownerPhone;
-    }
 
-    public void setOwnerPhone(String ownerPhone) {
-        this.ownerPhone = ownerPhone;
-    }
-
-    public String getOwnerName() {
-        return ownerName;
-    }
-
-    public void setOwnerName(String ownerName) {
-        this.ownerName = ownerName;
-    }
-
-    public String getDeliverydateStr() {
-        return deliverydateStr;
-    }
-
-    public void setDeliverydateStr(String deliverydateStr) {
-        this.deliverydateStr = deliverydateStr;
-    }
 
     public String getPayWay() {
         return payWay;
@@ -473,12 +463,12 @@ public class OrderDetailBean {
         this.creationDate = creationDate;
     }
 
-    public long getDeliverydate() {
-        return deliverydate;
+    public String getDeliveryDate() {
+        return deliveryDate;
     }
 
-    public void setDeliverydate(long deliverydate) {
-        this.deliverydate = deliverydate;
+    public void setDeliveryDate(String deliveryDate) {
+        this.deliveryDate = deliveryDate;
     }
 
     public String getEndTime() {
@@ -497,44 +487,44 @@ public class OrderDetailBean {
         this.userId = userId;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getOwnerName() {
+        return ownerName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
     }
 
-    public String getUserPhone() {
-        return userPhone;
+    public String getOwnerMobile() {
+        return ownerMobile;
     }
 
-    public void setUserPhone(String userPhone) {
-        this.userPhone = userPhone;
+    public void setOwnerMobile(String ownerMobile) {
+        this.ownerMobile = ownerMobile;
     }
 
-    public String getUserIdSend() {
-        return userIdSend;
+    public String getDriverId() {
+        return driverId;
     }
 
-    public void setUserIdSend(String userIdSend) {
-        this.userIdSend = userIdSend;
+    public void setDriverId(String driverId) {
+        this.driverId = driverId;
     }
 
-    public String getDrivername() {
-        return drivername;
+    public String getDriverName() {
+        return driverName;
     }
 
-    public void setDrivername(String drivername) {
-        this.drivername = drivername;
+    public void setDriverName(String driverName) {
+        this.driverName = driverName;
     }
 
-    public String getDrivermobile() {
-        return drivermobile;
+    public String getDriverMobile() {
+        return driverMobile;
     }
 
-    public void setDrivermobile(String drivermobile) {
-        this.drivermobile = drivermobile;
+    public void setDriverMobile(String driverMobile) {
+        this.driverMobile = driverMobile;
     }
 
     public String getCarId() {
@@ -553,12 +543,12 @@ public class OrderDetailBean {
         this.carInfo = carInfo;
     }
 
-    public String getCarnum() {
-        return carnum;
+    public String getCarNum() {
+        return carNum;
     }
 
-    public void setCarnum(String carnum) {
-        this.carnum = carnum;
+    public void setCarNum(String carNum) {
+        this.carNum = carNum;
     }
 
     public String getMoney() {
@@ -577,20 +567,20 @@ public class OrderDetailBean {
         this.goodName = goodName;
     }
 
-    public String getGoodvolume() {
-        return goodvolume;
+    public String getGoodVolume() {
+        return goodVolume;
     }
 
-    public void setGoodvolume(String goodvolume) {
-        this.goodvolume = goodvolume;
+    public void setGoodVolume(String goodVolume) {
+        this.goodVolume = goodVolume;
     }
 
-    public String getGoodweight() {
-        return goodweight;
+    public String getGoodWeight() {
+        return goodWeight;
     }
 
-    public void setGoodweight(String goodweight) {
-        this.goodweight = goodweight;
+    public void setGoodWeight(String goodWeight) {
+        this.goodWeight = goodWeight;
     }
 
     public String getGoodPrice() {

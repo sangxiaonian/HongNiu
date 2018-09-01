@@ -1,17 +1,13 @@
 package com.hongniu.baselibrary.widget.order;
 
 
-import com.hongniu.baselibrary.entity.OrderDetailBean;
-
-import java.util.Date;
-
 /**
  * 作者： ${PING} on 2018/8/2.
  */
 public class CommonOrderUtils {
     public static String getOrderState(OrderDetailItemControl.OrderState state) {
         String stateMsg;
-        if (state==null){
+        if (state == null) {
             return "无效状态";
         }
         switch (state) {
@@ -42,9 +38,9 @@ public class CommonOrderUtils {
     }
 
 
-    public static String getRoleState( OrderDetailItemControl.RoleState roleState) {
+    public static String getRoleState(OrderDetailItemControl.RoleState roleState) {
         String role;
-        if (roleState==null){
+        if (roleState == null) {
             return "未知";
         }
         switch (roleState) {
@@ -64,6 +60,7 @@ public class CommonOrderUtils {
         }
         return role;
     }
+
     public static OrderDetailItemControl.RoleState getRoleState(int roleType) {
         OrderDetailItemControl.RoleState role;
 
@@ -83,26 +80,6 @@ public class CommonOrderUtils {
                 break;
         }
         return role;
-    }
-
-    public static OrderDetailBean creatBean(int status, boolean insurance){
-        OrderDetailBean orderBean = new OrderDetailBean();
-        orderBean.setOrderNum("80080018000");//订单号
-        orderBean.setDeliverydate(new Date().getTime());//发货日期
-        orderBean.setStartPlaceInfo("上海虹桥机场国际物流中心");//发车地点
-        orderBean.setDestinationInfo("青岛市国际物流中心");//目的地
-        orderBean.setMoney("1200");//运费
-        orderBean.setDepartNum("21554812154");//发车编号
-        orderBean.setCarnum("沪A666666");//车牌号
-        orderBean.setUserName(insurance?"有保险车主":"无保险车主");//车主
-        orderBean.setInsurance(insurance);
-        orderBean.setUserPhone("15515846532");//车主手机
-        orderBean.setGoodName("医疗器材");//货物名称
-        orderBean.setDrivername("杨先生");//司机
-        orderBean.setDrivermobile("16575545654");//司机手机号
-        orderBean.setStatus(status);
-        return orderBean;
-
     }
 
 

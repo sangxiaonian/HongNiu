@@ -7,20 +7,20 @@ package com.hongniu.moduleorder.entity;
  */
 public class QueryInsurancePriceBean {
 
-   private String orderId	 ;//   true	number	订单id
+   private String id;//   true	number	订单id
    private String goodPrice	 ;// true	number	货物价值，单位元，不能超过200万
 
-    public QueryInsurancePriceBean(String orderId, String goodPrice) {
-        this.orderId = orderId;
+    public QueryInsurancePriceBean(String id, String goodPrice) {
+        this.id = id;
         this.goodPrice = goodPrice;
     }
 
-    public String getOrderId() {
-        return orderId;
+    public String getId() {
+        return id;
     }
 
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getGoodPrice() {

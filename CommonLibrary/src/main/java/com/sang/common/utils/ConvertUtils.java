@@ -3,6 +3,7 @@ package com.sang.common.utils;
 import android.text.TextUtils;
 import android.widget.TextView;
 
+import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
@@ -114,4 +115,33 @@ public class ConvertUtils {
         }
         return date;
     }
+
+    public static double add(double a1, double b1) {
+        BigDecimal a2 = new BigDecimal(Double.toString(a1));
+        BigDecimal b2 = new BigDecimal(Double.toString(b1));
+        return a2.add(b2).doubleValue();
+    }
+    //减法：
+    public static double sub(double a1, double b1) {
+        BigDecimal a2 = new BigDecimal(Double.toString(a1));
+        BigDecimal b2 = new BigDecimal(Double.toString(b1));
+        return a2.subtract(b2).doubleValue();
+    }
+    //乘法：
+    public static double mul(double a1, double b1) {
+        BigDecimal a2 = new BigDecimal(Double.toString(a1));
+        BigDecimal b2 = new BigDecimal(Double.toString(b1));
+        return a2.multiply(b2).doubleValue();
+    }
+    //除法：
+    public static double div(double a1, double b1, int scale) {
+        if (scale < 0) {
+            throw new IllegalArgumentException("error");
+        }
+        BigDecimal a2 = new BigDecimal(Double.toString(a1));
+        BigDecimal b2 = new BigDecimal(Double.toString(b1));
+        return a2.divide(b2, scale, BigDecimal.ROUND_HALF_UP).doubleValue();
+    }
+
+
 }

@@ -26,6 +26,7 @@ import com.hongniu.moduleorder.entity.WxPayBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.widget.dialog.BuyInsuranceDialog;
 import com.sang.common.event.BusFactory;
+import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
@@ -35,6 +36,9 @@ import com.sang.thirdlibrary.pay.wechat.WeChatAppPay;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 /**
  * 订单支付界面
@@ -173,11 +177,16 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
      * 线下支付则不需要支付运费，如果选择保险，则需要支付保险，否则不需要
      */
     private void setTvPayAll() {
+        float price;
+
         if (onLine) {
-            tvPayAll.setText("￥" + (tranPrice + insurancePrice) + "元");
+            price = tranPrice + insurancePrice;
         } else {
-            tvPayAll.setText("￥" + (insurancePrice) + "元");
+            price = insurancePrice;
         }
+        DecimalFormat df2 =new DecimalFormat("0.00");
+        String str2 =df2.format(price);
+        tvPayAll.setText("￥" + str2 + "元");
         switchPay();
     }
 
@@ -286,7 +295,7 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
 
             if (Utils.checkInfor()) {
                 buyInsuranceDialog.show();
-            }else {
+            } else {
                 showAleart("购买保险前，请先完善个人信息", new DialogControl.OnButtonRightClickListener() {
                     @Override
                     public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
@@ -294,7 +303,6 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
                     }
                 });
             }
-
 
 
         } else if (i == R.id.rl_wechact) {//选择微信支付
@@ -427,6 +435,8 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
                         @Override
                         public void doOnSuccess(String data) {
                             insurancePrice = Float.parseFloat(data);
+
+
                             switchToBuyInsurance(false);
                         }
                     });

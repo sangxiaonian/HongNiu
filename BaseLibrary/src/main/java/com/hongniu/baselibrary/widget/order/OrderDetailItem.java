@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.hongniu.baselibrary.R;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
-import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.OrderProgress;
 import com.hongniu.baselibrary.widget.order.helper.OrderItemHelper;
 import com.sang.common.utils.CommonUtils;
@@ -24,7 +23,6 @@ import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.CenteredImageSpan;
-import com.sang.thirdlibrary.map.LoactionUtils;
 import com.sang.thirdlibrary.map.utils.MapConverUtils;
 
 import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_BUY_INSURANCE;
@@ -110,7 +108,9 @@ public class OrderDetailItem extends FrameLayout {
         setEndLocation(data.getDestinationInfo());
         setStartLocation(data.getStartPlaceInfo());
         setOrder(data.getOrderNum());
-        setTiem(ConvertUtils.formatTime(data.getDeliverydate(), "yyyy-MM-dd"));
+        if (data.getDeliveryDate()!=null) {
+            setTiem(ConvertUtils.formatString(data.getDeliveryDate(), "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd"));
+        }
 
 
         String money = data.getMoney();
@@ -140,29 +140,29 @@ public class OrderDetailItem extends FrameLayout {
             switch (roleState){
                 case DRIVER:
 
-                    setContent(data.getDepartNum(), data.getCarnum(), "货主：",data.getOwnerName(), data.getOwnerPhone()
-                            , data.getGoodName(),"车主：",  data.getUserName(), data.getUserPhone()
+                    setContent(data.getDepartNum(), data.getCarNum(), "货主：",data.getUserName(), data.getUserMobile()
+                            , data.getGoodName(),"车主：",  data.getOwnerName(), data.getOwnerMobile()
                     );
                     break;
                 case CAR_OWNER:
-                    setContent(data.getDepartNum(), data.getCarnum(), "货主：",data.getOwnerName(), data.getOwnerPhone()
-                            , data.getGoodName(),"司机：", data.getDrivername(), data.getDrivermobile()
+                    setContent(data.getDepartNum(), data.getCarNum(), "货主：",data.getUserName(), data.getUserMobile()
+                            , data.getGoodName(),"司机：", data.getDriverName(), data.getDriverMobile()
                     );
                     break;
                 case CARGO_OWNER:
-                    setContent(data.getDepartNum(), data.getCarnum(), "车主：",data.getUserName(), data.getUserPhone()
-                            , data.getGoodName(),"司机：", data.getDrivername(), data.getDrivermobile()
+                    setContent(data.getDepartNum(), data.getCarNum(), "车主：",data.getOwnerName(), data.getOwnerMobile()
+                            , data.getGoodName(),"司机：", data.getDriverName(), data.getDriverMobile()
                     );
                     break;
                     default:
-                        setContent(data.getDepartNum(), data.getCarnum(), "车主：",data.getUserName(), data.getUserPhone()
-                                , data.getGoodName(),"司机：", data.getDrivername(), data.getDrivermobile()
+                        setContent(data.getDepartNum(), data.getCarNum(), "车主：",data.getOwnerName(), data.getOwnerMobile()
+                                , data.getGoodName(),"司机：", data.getDriverName(), data.getDriverMobile()
                         );
                         break;
             }
         }else {
-            setContent(data.getDepartNum(), data.getCarnum(), "车主：",data.getUserName(), data.getUserPhone()
-                    , data.getGoodName(),"司机：", data.getDrivername(), data.getDrivermobile()
+            setContent(data.getDepartNum(), data.getCarNum(), "车主：",data.getOwnerName(), data.getOwnerMobile()
+                    , data.getGoodName(),"司机：", data.getDriverName(), data.getDriverMobile()
             );
         }
 

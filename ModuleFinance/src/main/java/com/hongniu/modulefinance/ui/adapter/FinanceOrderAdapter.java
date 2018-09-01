@@ -41,8 +41,8 @@ public class FinanceOrderAdapter extends XAdapter<OrderDetailBean> {
                 TextView tvPrice = itemView.findViewById(R.id.tv_price);
 
                 tvOrder.setText("订单号：" + (data.getOrderNum() == null ? "" : data.getOrderNum()));
-                tvCarNum.setText("车牌号码：" + (data.getCarnum() == null ? "" : data.getCarnum()));
-                tvTime.setText("付费时间：" + ConvertUtils.formatTime(data.getPayTime(),"yyyy-MM-dd HH:mm:ss"));
+                tvCarNum.setText("车牌号码：" + (data.getCarNum() == null ? "" : data.getCarNum()));
+                tvTime.setText("付费时间：" + data.getPayTime()==null?"":data.getPayTime());
 //
                 String money = data.getMoney();
                 int financeType = data.getFinanceType();
