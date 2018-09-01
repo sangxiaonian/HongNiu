@@ -433,12 +433,13 @@ public class VistogramView extends View implements DynamicAnimation.OnAnimationE
             }
         }
 
+
 //         if (hValue.x < 30) {
 //            minYGap = 3;
 //        } else
-            if (hValue.x < 300) {
+        if (max < 300) {
             minYGap = 30;
-        } else if (hValue.x < 3000) {
+        } else if (max < 3000) {
             minYGap = 300;
         } else {
             minYGap = 3000;
@@ -450,7 +451,6 @@ public class VistogramView extends View implements DynamicAnimation.OnAnimationE
         postInvalidate();
 
     }
-
 
 
     public static class VistogramBean {
