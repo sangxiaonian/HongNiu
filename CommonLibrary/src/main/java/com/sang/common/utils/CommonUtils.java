@@ -3,6 +3,7 @@ package com.sang.common.utils;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.text.TextUtils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -37,4 +38,13 @@ public class CommonUtils {
     }
 
 
+    public static boolean isPhone(String phone) {
+        if (TextUtils.isEmpty(phone)) {
+            return false;
+        }else if (phone.length()==11&&phone.startsWith("1")){
+            return true;
+        }else {
+            return false;
+        }
+    }
 }

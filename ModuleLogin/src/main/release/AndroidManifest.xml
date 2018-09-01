@@ -5,6 +5,7 @@
     <application>
         <activity
             android:name=".LoginActivity"
+            android:windowSoftInputMode="stateVisible"
             android:screenOrientation="portrait" />
         <activity
             android:name=".LoginSmsVerifyActivity"

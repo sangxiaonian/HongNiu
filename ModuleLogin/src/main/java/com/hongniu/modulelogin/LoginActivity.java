@@ -19,6 +19,7 @@ import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
+import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.SharedPreferencesUtils;
 import com.sang.common.utils.ToastUtils;
 
@@ -102,7 +103,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         int i = view.getId();
         if (i == R.id.bt_login) {
             final String phone = etPhone.getText().toString().trim();
-            if (phone.length() == 11 && phone.startsWith("1")) {
+            if (CommonUtils.isPhone(phone)) {
                 HttpLoginFactory.getSmsCode(phone)
                         .subscribe(new NetObserver<String>(this) {
                             @Override
