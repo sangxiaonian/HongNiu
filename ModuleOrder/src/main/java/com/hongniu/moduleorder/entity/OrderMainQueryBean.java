@@ -28,7 +28,7 @@ public class OrderMainQueryBean {
     /**
      * false	string	发车日期(today-今天 tomorrow-明天 thisweek-本周 nextweek-下周)
      */
-    private String deliveryDate;
+    private String deliveryDateType;
 
     public int getPageSize() {
         return pageSize;
@@ -70,12 +70,12 @@ public class OrderMainQueryBean {
         this.userType = userType;
     }
 
-    public String getDeliveryDate() {
-        return deliveryDate;
+    public String getDeliveryDateType() {
+        return deliveryDateType;
     }
 
-    public void setDeliveryDate(String deliveryDate) {
-        this.deliveryDate = deliveryDate;
+    public void setDeliveryDateType(String deliveryDateType) {
+        this.deliveryDateType = deliveryDateType;
     }
 }
 

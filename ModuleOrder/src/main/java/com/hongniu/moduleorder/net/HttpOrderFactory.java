@@ -153,7 +153,7 @@ public class HttpOrderFactory {
     }
 
     /**
-     * 根据货物金额查询保费
+     * 开始发车
      *
      * @param orderId
      */

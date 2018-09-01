@@ -191,7 +191,7 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
                     time = "nextweek";
                     break;
             }
-            queryBean.setDeliveryDate(time);
+            queryBean.setDeliveryDateType(time);
         } else if (view.getId() == R.id.switch_right) {
             rightSelection = position;
             switchRight.setTitle(states.get(position));
