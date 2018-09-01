@@ -83,7 +83,7 @@ public class FinanceSearchActivity extends RefrushActivity<OrderDetailBean> impl
     protected Observable<CommonBean<PageBean<OrderDetailBean>>> getListDatas() {
         bean.setPageNum(currentPage);
 //        bean.setFinanceType(2);
-        return HttpFinanceFactory.queryFinance1(bean)
+        return HttpFinanceFactory.queryFinance(bean)
                 .map(new Function<CommonBean<PageBean<OrderDetailBean>>, CommonBean<PageBean<OrderDetailBean>>>() {
                     @Override
                     public CommonBean<PageBean<OrderDetailBean>> apply(CommonBean<PageBean<OrderDetailBean>> pageBeanCommonBean) throws Exception {

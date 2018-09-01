@@ -1,38 +1,27 @@
 package com.hongniu.modulefinance.ui.fragment;
 
 import android.graphics.Color;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.base.RefrushFragmet;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
-import com.hongniu.baselibrary.widget.order.OrderDetailDialog;
 import com.hongniu.modulefinance.R;
-import com.hongniu.modulefinance.entity.FinanceOrderBean;
 import com.hongniu.modulefinance.entity.QueryExpendBean;
 import com.hongniu.modulefinance.entity.QueryExpendResultBean;
 import com.hongniu.modulefinance.event.FinanceEvent;
 import com.hongniu.modulefinance.net.HttpFinanceFactory;
 import com.hongniu.modulefinance.ui.adapter.FinanceExpendHeadHolder;
 import com.hongniu.modulefinance.ui.adapter.FinanceOrderAdapter;
-import com.sang.common.recycleview.RecycleViewSupportEmpty;
 import com.sang.common.recycleview.adapter.XAdapter;
-import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.utils.ConvertUtils;
-import com.sang.common.utils.JLog;
 import com.sang.common.widget.VistogramView;
-import com.sang.common.widget.dialog.builder.BottomAlertBuilder;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -90,7 +79,7 @@ public class FinanceExpendFragment extends RefrushFragmet<OrderDetailBean> imple
         headHolder = new FinanceExpendHeadHolder(getContext(), rv);
         adapter.addHeard(0, headHolder);
 
-        queryData(true);
+
 
     }
 
@@ -100,7 +89,7 @@ public class FinanceExpendFragment extends RefrushFragmet<OrderDetailBean> imple
         bean.setPageNum(currentPage);
         bean.setFinanceType(1);
 
-        return HttpFinanceFactory.queryFinance1(bean)
+        return HttpFinanceFactory.queryFinance(bean)
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(new Function<CommonBean<PageBean<OrderDetailBean>>, CommonBean<PageBean<OrderDetailBean>>>() {
                     @Override
@@ -108,8 +97,8 @@ public class FinanceExpendFragment extends RefrushFragmet<OrderDetailBean> imple
                         if (pageBeanCommonBean != null && pageBeanCommonBean.getData() != null) {
                             PageBean<OrderDetailBean> data = pageBeanCommonBean.getData();
                             int total = data.getTotal();
-                            tv_order_count.setText("共支出"+total+"笔，合计");
-                            tv_order_money.setText("￥"+data.getTotalMoney());
+                            tv_order_count.setText("共支出" + total + "笔，合计");
+                            tv_order_money.setText("￥" + data.getTotalMoney());
                         }
 
                         return pageBeanCommonBean;
@@ -121,7 +110,7 @@ public class FinanceExpendFragment extends RefrushFragmet<OrderDetailBean> imple
 
     @Override
     protected XAdapter<OrderDetailBean> getAdapter(List<OrderDetailBean> datas) {
-        return  new FinanceOrderAdapter(getContext(),datas);
+        return new FinanceOrderAdapter(getContext(), datas);
     }
 
     @Override
@@ -153,7 +142,6 @@ public class FinanceExpendFragment extends RefrushFragmet<OrderDetailBean> imple
         changeSelect();
 
         //更改运费保费
-
 
 
     }
@@ -255,6 +243,7 @@ public class FinanceExpendFragment extends RefrushFragmet<OrderDetailBean> imple
             vistogramTran.clear();
             vistogramInsurance.clear();
             changeSelect();
+            queryData(true);
 
         }
     }

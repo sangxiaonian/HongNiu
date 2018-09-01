@@ -66,7 +66,6 @@ public class FinanceIncomeFragment extends RefrushFragmet<OrderDetailBean> {
 
         headHolder = new FinanceIncomHeadHolder(getContext(), rv);
         adapter.addHeard(0, headHolder);
-        queryData(true);
 
 
     }
@@ -75,7 +74,7 @@ public class FinanceIncomeFragment extends RefrushFragmet<OrderDetailBean> {
     protected Observable<CommonBean<PageBean<OrderDetailBean>>> getListDatas() {
         bean.setPageNum(currentPage);
         bean.setFinanceType(2);
-        return HttpFinanceFactory.queryFinance1(bean)
+        return HttpFinanceFactory.queryFinance(bean)
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(new Function<CommonBean<PageBean<OrderDetailBean>>, CommonBean<PageBean<OrderDetailBean>>>() {
                     @Override

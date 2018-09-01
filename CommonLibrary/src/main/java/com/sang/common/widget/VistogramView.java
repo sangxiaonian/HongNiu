@@ -17,7 +17,6 @@ import android.view.VelocityTracker;
 import android.view.View;
 
 import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.JLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +44,8 @@ public class VistogramView extends View implements DynamicAnimation.OnAnimationE
 
     private int numbersX = 3;//X轴上面所能显示的坐标数
     private float textLineGap;//文字和坐标之间的距离
+
+    private int minYGap = 3000;//默认情况下，Y轴之间最小差距
 
     private int alpha = 100;
 
@@ -123,7 +124,10 @@ public class VistogramView extends View implements DynamicAnimation.OnAnimationE
     private void initData() {
         mPaint.setTextSize(DeviceUtils.dip2px(getContext(), 11));
         mPaint.getTextBounds(markX, 0, markX.length(), textRectX);
-        mPaint.getTextBounds(String.valueOf(hValue.x), 0, String.valueOf(hValue.x).length(), textRectY);
+        final String valueY = String.valueOf(hValue.x);
+
+        mPaint.getTextBounds(valueY, 0, valueY.length(), textRectY);
+
         mPaint.setStrokeWidth(2);
         mPaint.setColor(colorLine);
 
@@ -137,12 +141,12 @@ public class VistogramView extends View implements DynamicAnimation.OnAnimationE
 
         double sin = Math.sin(Math.abs(rotate) * Math.PI / 180);
         double cos = Math.sin((90 - Math.abs(rotate)) * Math.PI / 180);
-        endPoint.y = (float) ((textRectX.width() * sin + textRectX.height()  - orginPoint.y / 4.0f));
+        endPoint.y = (float) ((textRectX.width() * sin + textRectX.height() - orginPoint.y / 4.0f));
 
         endPoint.y = endPoint.y > 0 ? endPoint.y : 0;
 
 
-        vistogramWidth = (int) ( (endPoint.x - orginPoint.x) - (textRectX.width() *cos-cellWidth));
+        vistogramWidth = (int) ((endPoint.x - orginPoint.x) - (textRectX.width() * cos - cellWidth));
         bigGap = (int) (vistogramWidth * 1.0f / numbersX);
         maxWidth = bigGap * datas.size();
 
@@ -370,7 +374,9 @@ public class VistogramView extends View implements DynamicAnimation.OnAnimationE
         float textHight = fontMetrics.top / 2 + fontMetrics.bottom / 2;
         for (int i = 0; i < 4; i++) {
             final float y = orginPoint.y - cellY * i;
-            canvas.drawText(String.valueOf(hValue.x * (i) / 3), textRectY.width(), (y - textHight), mPaint);
+            final String valueY = String.valueOf(hValue.x * (i) / 3);
+
+            canvas.drawText(valueY, textRectY.width(), (y - textHight), mPaint);
         }
     }
 
@@ -426,12 +432,25 @@ public class VistogramView extends View implements DynamicAnimation.OnAnimationE
                 }
             }
         }
-        hValue.x = (int) ((Math.ceil(max / 3000) + 1) * 3000);
+
+//         if (hValue.x < 30) {
+//            minYGap = 3;
+//        } else
+            if (hValue.x < 300) {
+            minYGap = 30;
+        } else if (hValue.x < 3000) {
+            minYGap = 300;
+        } else {
+            minYGap = 3000;
+        }
+
+        hValue.x = (int) ((Math.ceil(max / minYGap) + 1) * minYGap);
 
         initData();
         postInvalidate();
 
     }
+
 
 
     public static class VistogramBean {

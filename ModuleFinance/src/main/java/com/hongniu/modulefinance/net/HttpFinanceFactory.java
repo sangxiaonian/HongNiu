@@ -71,10 +71,10 @@ public class HttpFinanceFactory {
      *
      * @return
      */
-    public static Observable<CommonBean<PageBean<FinanceOrderBean>>> queryFinance(QueryExpendBean bean) {
+    public static Observable<CommonBean<PageBean<OrderDetailBean>>> queryFinance(QueryExpendBean bean) {
         bean.setPageSize(Param.PAGE_SIZE);
         return FinanceClient.getInstance().getService().queryFinance(bean)
-                .compose(RxUtils.<CommonBean<PageBean<FinanceOrderBean>>>getSchedulersObservableTransformer())
+                .compose(RxUtils.<CommonBean<PageBean<OrderDetailBean>>>getSchedulersObservableTransformer())
                 ;
     }
 

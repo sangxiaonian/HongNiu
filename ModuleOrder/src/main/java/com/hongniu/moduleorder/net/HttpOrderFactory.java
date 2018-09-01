@@ -194,23 +194,7 @@ public class HttpOrderFactory {
                 .compose(RxUtils.<CommonBean<OrderDetailBean>>getSchedulersObservableTransformer());
     }
 
-    /**
-     * 更改订单状态
-     *
-     * @param orderBean  订单相关信息
-     * @param state      订单状态
-     * @param insurance  是否购买保险
-     * @param hasFreight 是否支付运费
-     */
-    public static Observable<CommonBean<String>> changeOrderState(OrderDetailBean orderBean, int state, boolean insurance, boolean hasFreight) {
-        orderBean.setInsurance(insurance);
-        orderBean.setHasFreight(hasFreight);
-        orderBean.setStatus(state);
-        return OrderClient.getInstance()
-                .getService()
-                .debugChangeState(orderBean)
-                .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
-    }
+
 
     /**
      * 上传位置数据

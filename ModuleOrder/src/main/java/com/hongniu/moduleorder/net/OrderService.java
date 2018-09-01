@@ -136,11 +136,6 @@ public interface OrderService {
 
 
 
-    /**
-     * 更改订单状态
-     */
-    @POST("hongniu/api/order/test-update-order")
-    Observable<CommonBean<String>> debugChangeState(@Body OrderDetailBean infor);
 
     /**
      * 上传所有位置信息

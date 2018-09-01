@@ -55,7 +55,7 @@ public interface FinanceService {
      * @return
      */
     @POST("hongniu/api/finance/search")
-    Observable<CommonBean<PageBean<FinanceOrderBean>>> queryFinance(@Body QueryExpendBean infor);
+    Observable<CommonBean<PageBean<OrderDetailBean>>> queryFinance(@Body QueryExpendBean infor);
 
    /**
      * 财务搜索
