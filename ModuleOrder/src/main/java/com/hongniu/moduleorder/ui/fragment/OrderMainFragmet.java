@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Poi;
 import com.amap.api.navi.AmapNaviPage;
@@ -22,6 +23,7 @@ import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderCreatBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
+import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItem;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
@@ -45,8 +47,10 @@ import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
 import com.sang.common.widget.popu.BasePopu;
 import com.sang.common.widget.popu.inter.OnPopuDismissListener;
-import com.sang.thirdlibrary.map.LoactionUtils;
 import com.sang.thirdlibrary.map.utils.MapConverUtils;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Arrays;
 import java.util.List;
@@ -60,7 +64,7 @@ import io.reactivex.Observable;
 public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements SwitchStateListener, SwitchTextLayout.OnSwitchListener, OrderMainPop.OnPopuClickListener, OnPopuDismissListener, OrderDetailItemControl.OnOrderDetailBtClickListener {
     private SwitchTextLayout switchLeft;
     private SwitchTextLayout switchRight;
-
+    AMapLocationListener aMapLocationListener;
     private int leftSelection;
     private int rightSelection;
     private OrderMainPop<String> orderMainPop;
@@ -69,6 +73,7 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
 
     private OrderDetailItemControl.RoleState roleState;//角色
     private OrderMainQueryBean queryBean = new OrderMainQueryBean();
+    private LatLng latLng = new LatLng(0, 0);
 
     public OrderMainFragmet() {
     }
@@ -116,6 +121,19 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
         view.setLayoutParams(params);
         adapter.addFoot(new PeakHolder(view));
 
+    }
+
+
+    @Override
+    protected boolean getUseEventBus() {
+        return true;
+    }
+
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    public void onLocationChange(final Event.UpLoaction event) {
+        if (event != null) {
+            latLng = new LatLng(event.latitude, event.longitude);
+        }
     }
 
 
@@ -482,11 +500,13 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
                 .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
                     @Override
                     public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
-                        double v = MapConverUtils.caculeDis(LoactionUtils.getInstance().getCurrentLoaction().latitude
-                                ,LoactionUtils.getInstance().getCurrentLoaction().latitude
-                                ,orderBean.getDestinationLatitude(), orderBean.getDestinationLongitude());
+                        double v = MapConverUtils.caculeDis(latLng.latitude
+                                , latLng.longitude
+                                , orderBean.getDestinationLatitude(), orderBean.getDestinationLongitude());
                         dialog.dismiss();
-                        if (v > Param.ENTRY_MIN) {//距离过大，超过确认订单的最大距离
+                        if (latLng.latitude == 0 || latLng.longitude == 0) {
+                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("正在获取当前位置，请稍后再试");
+                        } else if (v > Param.ENTRY_MIN) {//距离过大，超过确认订单的最大距离
 //                        if (false) {
                             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("距离目的地太远，请到达目的地后进行操作");
                         } else {

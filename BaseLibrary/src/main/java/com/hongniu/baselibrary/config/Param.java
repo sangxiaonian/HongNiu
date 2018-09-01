@@ -16,7 +16,7 @@ public class Param {
     /**
      * 确认到达时候，距离目的地的最小距离 单位 千米
      */
-    public static final int ENTRY_MIN=5;
+    public static final int ENTRY_MIN=5000;
 
 
 

@@ -9,7 +9,7 @@ import com.sang.common.event.IBus;
 /**
  * 作者： ${PING} on 2018/8/27.
  * 对于模块间交互的事件
- * */
+ */
 public class Event {
     /**
      * 创建保单
@@ -34,7 +34,22 @@ public class Event {
      * 更新个人信息
      */
     public static class UpPerson implements IBus.IEvent {
-    } /**
+    }
+
+    /**
+     * 更新位置信息
+     */
+    public static class UpLoaction implements IBus.IEvent {
+        public double latitude;
+        public double longitude;
+
+        public UpLoaction(double latitude, double longitude) {
+            this.latitude = latitude;
+            this.longitude = longitude;
+        }
+    }
+
+    /**
      * 更新个人信息
      */
     public static class UpRoale implements IBus.IEvent {

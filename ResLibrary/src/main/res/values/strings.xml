@@ -69,7 +69,7 @@
     <string name="order_insurance_creating">系统正在拼命为您生成保单</string>
     <string name="order_insurance_creating_wait">请耐心等待保单生成完成</string>
     <string name="order_insurance_creat_success">保单生成成功</string>
-    <string name="order_insurance_creat_fail">保单生成失败</string>
+    <string name="order_insurance_creat_fail">保单创建失败</string>
     <string name="order_insurance_check_insurance">查看保单</string>
     <string name="finish">完成</string>
     <string name="finance">财务</string>
