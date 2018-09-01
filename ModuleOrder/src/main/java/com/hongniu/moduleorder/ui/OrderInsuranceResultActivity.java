@@ -3,9 +3,11 @@ package com.hongniu.moduleorder.ui;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.bumptech.glide.Glide;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
@@ -13,6 +15,7 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.moduleorder.R;
 import com.hongniu.baselibrary.entity.OrderCreatBean;
 import com.hongniu.moduleorder.utils.OrderUtils;
+import com.sang.common.imgload.ImageLoader;
 import com.sang.common.utils.ToastUtils;
 
 
@@ -26,6 +29,8 @@ public class OrderInsuranceResultActivity extends BaseActivity implements View.O
     private Button btCheck,btFinish;
     private TextView tvInsurance,tvInsuranceState;
     OrderCreatBean insurance;
+    private ImageView img;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +48,7 @@ public class OrderInsuranceResultActivity extends BaseActivity implements View.O
     protected void initView() {
         super.initView();
         btCheck=findViewById(R.id.bt_check);
+        img=findViewById(R.id.img_result);
         btFinish=findViewById(R.id.bt_finish);
         tvInsurance=findViewById(R.id.tv_insurance);
         tvInsuranceState=findViewById(R.id.tv_insurance_state);
@@ -58,6 +64,8 @@ public class OrderInsuranceResultActivity extends BaseActivity implements View.O
             tvInsurance.setText("保单号"+insurance.getPolicyNo());
         }
         tvInsuranceState.setText(success?R.string.order_insurance_creat_success:R.string.order_insurance_creat_fail);
+        btFinish.setText(success?R.string.finish:R.string.order_insurance_return_home);
+        ImageLoader.getLoader().load(mContext,img,success?R.mipmap.icon_cgts_260:R.mipmap.insurance_fail);
 
     }
 

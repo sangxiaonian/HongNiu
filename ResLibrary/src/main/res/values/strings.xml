@@ -71,6 +71,7 @@
     <string name="order_insurance_creat_success">保单生成成功</string>
     <string name="order_insurance_creat_fail">保单创建失败</string>
     <string name="order_insurance_check_insurance">查看保单</string>
+    <string name="order_insurance_return_home">返回首页</string>
     <string name="finish">完成</string>
     <string name="finance">财务</string>
     <string name="login_sms_reget_code">重新获取验证码</string>
