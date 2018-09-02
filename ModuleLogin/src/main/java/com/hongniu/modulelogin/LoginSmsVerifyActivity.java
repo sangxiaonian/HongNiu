@@ -97,7 +97,14 @@ public class LoginSmsVerifyActivity extends BaseActivity implements VericationVi
         btGetNewVeri.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startCountTime();
+                HttpLoginFactory.getSmsCode(phone)
+                        .subscribe(new NetObserver<String>(LoginSmsVerifyActivity.this) {
+                            @Override
+                            public void doOnSuccess(String data) {
+                                startCountTime();
+
+                            }
+                        });
             }
         });
     }

@@ -24,7 +24,6 @@ public class LoginBean {
 
     private String id;//用户id,也是车主ID
     private String mobile;//用户手机号
-    private long registerTime;//
     private String openId;//微信的openid
     private String token;//本次登录的token，有有效期
     private int type;//用户类型。无实际作用。
@@ -51,13 +50,6 @@ public class LoginBean {
         this.mobile = mobile;
     }
 
-    public long getRegisterTime() {
-        return registerTime;
-    }
-
-    public void setRegisterTime(long registerTime) {
-        this.registerTime = registerTime;
-    }
 
     public String getOpenId() {
         return openId;
