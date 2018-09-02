@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.hongniu.moduleorder.R;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
-import com.sang.common.utils.DeviceUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +43,8 @@ public class CarNumPop<T> {
     }
 
     public interface onItemClickListener<T> {
-        void onItemClick(int position, T data);
+        void onItemClick(View tragetView, int position, T data);
+        void onDissmiss( );
     }
 
     onItemClickListener<T> listener;
@@ -61,6 +61,14 @@ public class CarNumPop<T> {
         pop.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         pop.setBackgroundDrawable(new ColorDrawable(0x00000000));
         pop.setOutsideTouchable(true);
+        pop.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                if (listener!=null){
+                    listener.onDissmiss();
+                }
+            }
+        });
 //        pop.setAnimationStyle(R.style.pop_ani);
         rv.post(new Runnable() {
             @Override
@@ -97,7 +105,7 @@ public class CarNumPop<T> {
                             @Override
                             public void onClick(View v) {
                                 if (listener != null) {
-                                    listener.onItemClick(position, data);
+                                    listener.onItemClick(tragetView,position, data);
                                 }
                             }
                         });

@@ -14,6 +14,7 @@ import com.hongniu.moduleorder.entity.LocationBean;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
 import com.hongniu.moduleorder.entity.OrderCreatParamBean;
 import com.hongniu.baselibrary.entity.OrderIdBean;
+import com.hongniu.moduleorder.entity.OrderDriverPhoneBean;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
 import com.hongniu.moduleorder.entity.OrderParamBean;
 import com.hongniu.moduleorder.entity.PathBean;
@@ -52,6 +53,16 @@ public class HttpOrderFactory {
         OrderCarNumbean bean = new OrderCarNumbean();
         bean.setCarNumber(carNum);
         return OrderClient.getInstance().getService().getCarNum(bean).compose(RxUtils.<CommonBean<List<OrderCarNumbean>>>getSchedulersObservableTransformer());
+
+    }/**
+     * 获取到所有车牌号
+     *
+     * @param carNum 车牌号
+     */
+    public static Observable<CommonBean<List<OrderDriverPhoneBean>>> getDriverPhone(String mobile) {
+        OrderDriverPhoneBean bean = new OrderDriverPhoneBean();
+        bean.setDriverMobile(mobile);
+        return OrderClient.getInstance().getService().getDriverPhone(bean).compose(RxUtils.<CommonBean<List<OrderDriverPhoneBean>>>getSchedulersObservableTransformer());
 
     }
 

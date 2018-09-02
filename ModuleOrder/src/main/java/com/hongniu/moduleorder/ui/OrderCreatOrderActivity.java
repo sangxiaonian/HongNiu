@@ -26,6 +26,7 @@ import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
 import com.hongniu.moduleorder.entity.OrderCreatParamBean;
+import com.hongniu.moduleorder.entity.OrderDriverPhoneBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.widget.CarNumPop;
 import com.sang.common.event.BusFactory;
@@ -49,7 +50,7 @@ import io.reactivex.disposables.Disposable;
  * 创建订单
  */
 @Route(path = ArouterParamOrder.activity_order_create)
-public class OrderCreatOrderActivity extends BaseActivity implements View.OnClickListener, OnTimeSelectListener, CarNumPop.onItemClickListener<OrderCarNumbean> {
+public class OrderCreatOrderActivity extends BaseActivity implements View.OnClickListener, OnTimeSelectListener, CarNumPop.onItemClickListener{
 
 
     public Handler handler = new Handler() {
@@ -57,8 +58,11 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
 
-
-            getCarNum();
+            if (msg.what==0) {
+                getCarNum();
+            }else {
+                getDriverInfor();
+            }
         }
     };
 
@@ -81,8 +85,10 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     private Button btSave;
 
     private CarNumPop<OrderCarNumbean> pop;
+    private CarNumPop<OrderDriverPhoneBean> driverPop;
     private OrderCreatParamBean paramBean = new OrderCreatParamBean();
     List<OrderCarNumbean> carNumbeans = new ArrayList<>();
+    List<OrderDriverPhoneBean> driverBeans = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +118,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         btSave = findViewById(R.id.bt_entry);
         timePickerView = PickerDialogUtils.initTimePicker(mContext, this, new boolean[]{true, true, true, false, false, false});
         pop = new CarNumPop<OrderCarNumbean>(mContext);
+        driverPop = new CarNumPop<OrderDriverPhoneBean>(mContext);
 
     }
 
@@ -137,14 +144,37 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
             @Override
             public void afterTextChanged(Editable s) {
                 handler.removeMessages(0);
+                handler.removeMessages(1);
                 if (!TextUtils.isEmpty(itemCarNum.getTextCenter()) && show) {
                     handler.sendEmptyMessageDelayed(0, 300);
                 }
                 show = true;
             }
         });
+        itemDriverPhone.getEtCenter().addTextChangedListener(new TextWatcher() {
 
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                handler.removeMessages(1);
+                handler.removeMessages(0);
+                if (!TextUtils.isEmpty(itemDriverPhone.getTextCenter()) && show) {
+                    handler.sendEmptyMessageDelayed(1, 300);
+                }
+                show = true;
+            }
+        });
         pop.setListener(this);
+        driverPop.setListener(this);
 
     }
 
@@ -181,6 +211,38 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
                 });
     }
 
+    /**
+     * 获取牌相关信息
+     */
+    private void getDriverInfor() {
+        String carNum = itemDriverPhone.getTextCenter();
+        if (carDisposable != null) {
+            carDisposable.dispose();
+        }
+        if (TextUtils.isEmpty(carNum)) {
+            return;
+        }
+        HttpOrderFactory.getDriverPhone(carNum)
+                .subscribe(new NetObserver<List<OrderDriverPhoneBean>>(null) {
+                    @Override
+                    public void doOnSuccess(List<OrderDriverPhoneBean> data) {
+
+                        driverBeans.clear();
+                        driverBeans.addAll(data);
+
+                        driverPop.upData(itemDriverPhone.getTextCenter(), driverBeans);
+                        driverPop.show(itemDriverPhone);
+                    }
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        super.onSubscribe(d);
+                        carDisposable = d;
+                    }
+
+
+                });
+    }
 
     @Override
     public void onClick(View v) {
@@ -402,11 +464,28 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     private boolean show = true;
 
     @Override
-    public void onItemClick(int position, OrderCarNumbean data) {
+    public void onItemClick(View tragetView, int position, Object data) {
         pop.dismiss();
+        driverPop.dismiss();
         show = false;
-        itemCarNum.setTextCenter(data.getCarNumber());
-        itemDriverPhone.setTextCenter(data.getContactMobile());
-        itemDriverName.setTextCenter(data.getContactName());
+        if (tragetView!=null){
+            if (tragetView.getId()==R.id.item_car_num&&data instanceof OrderCarNumbean){
+                OrderCarNumbean bean= (OrderCarNumbean) data;
+                itemCarNum.setTextCenter(bean.getCarNumber());
+                itemCarPhone.setTextCenter(bean.getContactMobile());
+                itemCarName.setTextCenter(bean.getContactName());
+            }else if (tragetView.getId()==R.id.item_driver_phone&&data instanceof OrderDriverPhoneBean){
+                OrderDriverPhoneBean bean= (OrderDriverPhoneBean) data;
+                itemDriverPhone.setTextCenter(bean.getMobile());
+                itemDriverName.setTextCenter(bean.getUserName());
+            }
+        }
+
     }
+
+    @Override
+    public void onDissmiss() {
+        show = false;
+    }
+
 }

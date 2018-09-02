@@ -9,6 +9,7 @@ import com.hongniu.moduleorder.entity.OrderCarNumbean;
 import com.hongniu.baselibrary.entity.OrderCreatBean;
 import com.hongniu.moduleorder.entity.OrderCreatParamBean;
 import com.hongniu.baselibrary.entity.OrderIdBean;
+import com.hongniu.moduleorder.entity.OrderDriverPhoneBean;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
 import com.hongniu.moduleorder.entity.OrderParamBean;
 import com.hongniu.moduleorder.entity.PathBean;
@@ -46,6 +47,17 @@ public interface OrderService {
      */
     @POST("hongniu/api/car/querynumber")
     Observable<CommonBean<List<OrderCarNumbean>>> getCarNum(@Body OrderCarNumbean infor);
+  /**
+     * 获取车牌号联想
+     * <p>
+     * 参数名称	是否必须	数据类型	描述
+     * userId	true	string	车主Id
+     * carNumber	true	string	车牌号
+     *
+     * @return
+     */
+    @POST("hongniu/api/car/querynumber")
+    Observable<CommonBean<List<OrderDriverPhoneBean>>> getDriverPhone(@Body OrderDriverPhoneBean infor);
 
     /**
      * 车牌号联想
