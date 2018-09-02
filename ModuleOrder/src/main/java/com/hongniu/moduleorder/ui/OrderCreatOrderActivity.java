@@ -369,6 +369,9 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         if (TextUtils.isEmpty(itemCarPhone.getTextCenter())) {
             showAleart(itemCarPhone.getTextCenterHide());
             return false;
+        }else if (!  CommonUtils.isPhone(itemCarPhone.getTextCenter())){
+            showAleart(getString(R.string.phone_error));
+            return false;
         }
         ;
         if (TextUtils.isEmpty(itemCarName.getTextCenter())) {
@@ -383,6 +386,9 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         ;
         if (TextUtils.isEmpty(itemDriverPhone.getTextCenter())) {
             showAleart(itemDriverPhone.getTextCenterHide());
+            return false;
+        }else if (!  CommonUtils.isPhone(itemDriverPhone.getTextCenter())){
+            showAleart(getString(R.string.phone_error));
             return false;
         }
         ;

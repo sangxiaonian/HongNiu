@@ -17,7 +17,6 @@ import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
-import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.SharedPreferencesUtils;
@@ -117,7 +116,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
 
             } else {
-                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show(R.string.login_phone_error);
+                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show(R.string.phone_error);
             }
 
         } else if (i == R.id.tv_clause) {

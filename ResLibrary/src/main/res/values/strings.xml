@@ -8,6 +8,7 @@
     <string name="sumbit">提交</string>
 
     <string name="splash_title">更快 更好 更懂你</string>
+    <string name="phone_error">请输入正确手机号码</string>
 
     <!--Login-->
     <string name="login_title">欢迎登录泓牛</string>
@@ -16,7 +17,6 @@
     <string name="login_input_sms_verify">请输入验证码</string>
     <string name="login_consent">进入泓牛代表你已同意《泓牛供应链软件许可及服务协议》</string>
     <string name="login_get_sms">获取短信验证码</string>
-    <string name="login_phone_error">请输入正确手机号码</string>
     <string name="login_up_sms_veri">秒后重获取验证码</string>
     <string name="login_get_sms_veri">重获取验证码</string>
     <string name="login_contact_service">联系客服</string>
