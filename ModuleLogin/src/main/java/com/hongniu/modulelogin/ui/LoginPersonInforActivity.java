@@ -181,7 +181,7 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
         if (TextUtils.isEmpty(itemIdcard.getTextCenter())) {
             showAleart(itemIdcard.getTextCenterHide());
             return false;
-        }else if (!CommonUtils.isIdCard(itemIdcard.getTextCenterHide())){
+        }else if (!CommonUtils.isIdCard(itemIdcard.getTextCenter())){
             showAleart(getString(R.string.login_person_idcard_error));
             return false;
         }

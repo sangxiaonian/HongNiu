@@ -10,6 +10,7 @@ import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.method.DigitsKeyListener;
+import android.text.method.PasswordTransformationMethod;
 import android.text.method.TextKeyListener;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 
 import com.sang.common.R;
 import com.sang.common.utils.DeviceUtils;
+import com.sang.common.utils.JLog;
 import com.sang.common.utils.PointLengthFilter;
 
 /**
@@ -101,11 +103,12 @@ public class ItemView extends FrameLayout {
         setTextCenterHide(textCenterHide);
         setTextCenter(textCenter);
         setEditable(editable);
-        setCenter(maxLength, centerType);
         setSrcRight(srcRight);
         setSrcshow(srcshow);
         setColorRight(colorRight);
         setIsSingleLine(isSingleLine);
+        setCenter(maxLength, centerType);
+
     }
 
     public void setIsSingleLine(boolean isSingleLine) {
@@ -142,9 +145,9 @@ public class ItemView extends FrameLayout {
             etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
             etCenter.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
         } else if (centerType == 2) {//身份证号
-            etCenter.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD );
             etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(18)});
-//            etCenter.setKeyListener(TextKeyListener.getInstance("xX0123456789"));
+            etCenter.setKeyListener(DigitsKeyListener.getInstance("xX0123456789"));
+            JLog.i("------------------------------");
         } else if (centerType == 3) {//数字
             etCenter.setFilters(new InputFilter[]{new PointLengthFilter()});
             etCenter.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL|InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_SIGNED);
