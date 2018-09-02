@@ -30,15 +30,21 @@
     <string name="login_add_car_success">添加成功</string>
     <string name="login_add_car_modification">修改成功</string>
     <string name="login_car_select">选择车辆类型</string>
+    <string name="login_car_error_carnum">请输入正确车牌号</string>
+    <string name="login_person_idcard_error">请输入正确身份证号</string>
+
     <!--个人资料-->
     <string name="login_person">个人资料</string>
     <string name="login_person_improve_infor">购买货物保险前，需完善个人信息</string>
     <string name="login_pay_title">我的收款方式</string>
     <string name="login_pay_aleart">您的收入将默认转账到此微信账号</string>
 
+
     <!--Order-->
     <string name="order_create_order">创建订单</string>
     <string name="order_main_title">我是货主</string>
+    <string name="order_main_start_time">发车时间</string>
+    <string name="order_main_no_order">暂无订单</string>
 
     <!--订单支付-->
     <string name="order_pay">支付订单</string>
@@ -77,6 +83,7 @@
     <string name="login_sms_reget_code">重新获取验证码</string>
     <string name="order_main_creat_order">我要下单</string>
     <string name="carnum_error">车牌号错误</string>
+
 
 
 </resources>

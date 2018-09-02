@@ -190,7 +190,7 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
 
         if (view.getId() == R.id.switch_left) {//时间
             leftSelection = position;
-            switchLeft.setTitle(times.get(position));
+            switchLeft.setTitle(position==0?getString(R.string.order_main_start_time): times.get(position));
             String time = null;
             switch (position) {
                 case 0://全部
@@ -214,6 +214,7 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
             rightSelection = position;
             switchRight.setTitle(states.get(position));
             queryBean.setQueryStatus(null);
+            queryBean.setHasFreight(null);
             if (position == 0) {//全部状态
                 queryBean.setQueryStatus(null);
             } else if (position == 1) {//待支付状态

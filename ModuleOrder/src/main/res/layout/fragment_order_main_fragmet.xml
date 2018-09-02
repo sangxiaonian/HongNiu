@@ -22,7 +22,7 @@
             app:closeIcon="@drawable/icon_arrow_down_d8d8d8"
             app:openColor="@color/color_light"
             app:openIcon="@drawable/icon_arrow_down_f06f28"
-            app:title="发车时间"
+            app:title="@string/order_main_start_time"
             app:titleSize="14sp" />
 
         <com.sang.common.widget.SwitchTextLayout
@@ -49,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:empty_img="@mipmap/icon_zwdd_260"
-            app:empty_title="暂无订单" />
+            app:empty_title="@string/order_main_no_order" />
     </com.hongniu.baselibrary.widget.XRefreshLayout>
 
 

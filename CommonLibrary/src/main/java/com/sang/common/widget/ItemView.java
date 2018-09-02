@@ -141,11 +141,11 @@ public class ItemView extends FrameLayout {
             etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
             etCenter.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
         } else if (centerType == 2) {//身份证号
-            etCenter.setInputType(InputType.TYPE_CLASS_NUMBER);
+//            etCenter.setInputType(InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD );
             etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(18)});
-            etCenter.setKeyListener(DigitsKeyListener.getInstance("0123456789xX"));
+            etCenter.setKeyListener(DigitsKeyListener.getInstance("xX0123456789"));
         } else if (centerType == 3) {//数字
-            etCenter.setInputType(InputType.TYPE_CLASS_NUMBER);
+//            etCenter.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
             etCenter.setFilters(new InputFilter[]{new PointLengthFilter()});
             etCenter.setKeyListener(DigitsKeyListener.getInstance("0123456789."));
         } else {

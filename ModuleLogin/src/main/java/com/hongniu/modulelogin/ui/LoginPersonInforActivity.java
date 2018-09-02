@@ -26,6 +26,7 @@ import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.sang.common.event.BusFactory;
 import com.sang.common.net.rx.BaseObserver;
 import com.sang.common.net.rx.RxUtils;
+import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.SharedPreferencesUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.ItemView;
@@ -179,6 +180,9 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
         }
         if (TextUtils.isEmpty(itemIdcard.getTextCenter())) {
             showAleart(itemIdcard.getTextCenterHide());
+            return false;
+        }else if (!CommonUtils.isIdCard(itemIdcard.getTextCenterHide())){
+            showAleart(getString(R.string.login_person_idcard_error));
             return false;
         }
         if (TextUtils.isEmpty(itemEmail.getTextCenter())) {

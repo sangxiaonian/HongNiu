@@ -20,7 +20,7 @@ public class OrderMainQueryBean {
     /**
      * false	string	是否付运费(1是，0否)
      */
-    private boolean hasFreight;
+    private Boolean hasFreight;
     /**
      * false	string	我的身份（3-货主/1-车主/2-司机）
      */
@@ -54,11 +54,11 @@ public class OrderMainQueryBean {
         this.queryStatus = queryStatus;
     }
 
-    public boolean getHasFreight() {
+    public Boolean getHasFreight() {
         return hasFreight;
     }
 
-    public void setHasFreight(boolean hasFreight) {
+    public void setHasFreight(Boolean hasFreight) {
         this.hasFreight = hasFreight;
     }
 

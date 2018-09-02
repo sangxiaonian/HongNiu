@@ -20,6 +20,8 @@ import com.hongniu.modulelogin.entity.LoginCarInforBean;
 import com.hongniu.modulelogin.entity.LoginEvent;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.sang.common.event.BusFactory;
+import com.sang.common.utils.CommonUtils;
+import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.ItemView;
 import com.sang.common.widget.dialog.BottomAlertDialog;
@@ -218,6 +220,9 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
         if (TextUtils.isEmpty(itemCarNum.getTextCenter())) {
             showAleart(itemCarNum.getTextCenterHide());
             return false;
+        }else if (!CommonUtils.carNumMatches(itemCarNum.getTextCenter())){
+            showAleart(getString(R.string.login_car_error_carnum));
+            return false;
         }
         if (TextUtils.isEmpty(itemCarOwner.getTextCenter())) {
             showAleart(itemCarOwner.getTextCenterHide());
@@ -225,6 +230,9 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
         }
         if (TextUtils.isEmpty(itemCarPhone.getTextCenter())) {
             showAleart(itemCarPhone.getTextCenterHide());
+            return false;
+        }else if (!CommonUtils.isPhone(itemCarPhone.getTextCenter())){
+            showAleart(getString(R.string.login_car_error_phone));
             return false;
         }
         return true;

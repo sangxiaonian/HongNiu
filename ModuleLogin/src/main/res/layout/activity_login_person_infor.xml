@@ -29,6 +29,7 @@
         android:id="@+id/item_idcard"
         style="@style/itemview"
         app:textcenterhide="请输入您的身份证号"
+        app:centerType="idcard"
         app:textleft="身份证号" />
 
     <com.sang.common.widget.ItemView

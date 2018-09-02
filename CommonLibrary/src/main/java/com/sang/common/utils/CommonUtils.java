@@ -41,9 +41,19 @@ public class CommonUtils {
     public static boolean isPhone(String phone) {
         if (TextUtils.isEmpty(phone)) {
             return false;
-        }else if (phone.length()==11&&phone.startsWith("1")){
+        } else if (phone.length() == 11 && phone.startsWith("1")) {
             return true;
-        }else {
+        } else {
+            return false;
+        }
+    }
+
+    public static boolean isIdCard(String idCard) {
+        if (TextUtils.isEmpty(idCard)) {
+            return false;
+        } else if (idCard.length() == 15 ||idCard.length() == 18) {
+            return true;
+        } else {
             return false;
         }
     }

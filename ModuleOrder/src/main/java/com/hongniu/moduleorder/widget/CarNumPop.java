@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.hongniu.moduleorder.R;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
+import com.sang.common.utils.DeviceUtils;
 
 import java.util.ArrayList;
 import java.util.List;
