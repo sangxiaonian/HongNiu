@@ -146,8 +146,9 @@ public class ItemView extends FrameLayout {
             etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(18)});
 //            etCenter.setKeyListener(TextKeyListener.getInstance("xX0123456789"));
         } else if (centerType == 3) {//数字
-            etCenter.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
             etCenter.setFilters(new InputFilter[]{new PointLengthFilter()});
+            etCenter.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL|InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_SIGNED);
+
 //            etCenter.setKeyListener(DigitsKeyListener.getInstance("0123456789."));
         } else {
             if (maxLength > 0) {

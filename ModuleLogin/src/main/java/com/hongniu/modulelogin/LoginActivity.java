@@ -86,7 +86,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (etPhone.getText().toString().length() == 11) {
+                if (CommonUtils.isPhone(etPhone.getText().toString().trim())) {
                     bt.setEnabled(true);
                 } else {
                     if (bt.isEnabled()) {

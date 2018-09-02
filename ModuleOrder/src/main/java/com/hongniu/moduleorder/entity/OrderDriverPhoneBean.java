@@ -7,12 +7,8 @@ package com.hongniu.moduleorder.entity;
 public class OrderDriverPhoneBean {
     private String driverMobile;
     private String mobile;
-    private String userName;
+    private String contact;
 
-    public OrderDriverPhoneBean(String mobile, String userName) {
-        this.mobile = mobile;
-        this.userName = userName;
-    }
 
     public OrderDriverPhoneBean() {
     }
@@ -25,12 +21,12 @@ public class OrderDriverPhoneBean {
         this.mobile = mobile;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getContact() {
+        return contact;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setContact(String contact) {
+        this.contact = contact;
     }
 
     public String getDriverMobile() {

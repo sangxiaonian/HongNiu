@@ -56,7 +56,7 @@ public interface OrderService {
      *
      * @return
      */
-    @POST("hongniu/api/car/querynumber")
+    @POST("hongniu/api/user/querydriver")
     Observable<CommonBean<List<OrderDriverPhoneBean>>> getDriverPhone(@Body OrderDriverPhoneBean infor);
 
     /**

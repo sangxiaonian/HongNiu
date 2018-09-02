@@ -167,7 +167,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
             public void afterTextChanged(Editable s) {
                 handler.removeMessages(1);
                 handler.removeMessages(0);
-                if (!TextUtils.isEmpty(itemDriverPhone.getTextCenter()) && show) {
+                if (CommonUtils.isPhone(itemDriverPhone.getTextCenter())&&show) {
                     handler.sendEmptyMessageDelayed(1, 300);
                 }
                 show = true;
@@ -226,12 +226,18 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
                 .subscribe(new NetObserver<List<OrderDriverPhoneBean>>(null) {
                     @Override
                     public void doOnSuccess(List<OrderDriverPhoneBean> data) {
-
-                        driverBeans.clear();
-                        driverBeans.addAll(data);
-
-                        driverPop.upData(itemDriverPhone.getTextCenter(), driverBeans);
-                        driverPop.show(itemDriverPhone);
+                        if (data!=null&&!data.isEmpty()) {
+                            OrderDriverPhoneBean bean = data.get(0);
+                            show=false;
+                            itemDriverPhone.setTextCenter(bean.getMobile());
+                            itemDriverName.setTextCenter(bean.getContact());
+                            itemDriverName.getEtCenter().requestFocus();
+                        }
+//                        driverBeans.clear();
+//                        driverBeans.addAll(data);
+//
+//                        driverPop.upData(itemDriverPhone.getTextCenter(), driverBeans);
+//                        driverPop.show(itemDriverPhone);
                     }
 
                     @Override
@@ -477,7 +483,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
             }else if (tragetView.getId()==R.id.item_driver_phone&&data instanceof OrderDriverPhoneBean){
                 OrderDriverPhoneBean bean= (OrderDriverPhoneBean) data;
                 itemDriverPhone.setTextCenter(bean.getMobile());
-                itemDriverName.setTextCenter(bean.getUserName());
+                itemDriverName.setTextCenter(bean.getContact());
             }
         }
 

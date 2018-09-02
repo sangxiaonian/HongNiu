@@ -55,9 +55,8 @@ public class HttpOrderFactory {
         return OrderClient.getInstance().getService().getCarNum(bean).compose(RxUtils.<CommonBean<List<OrderCarNumbean>>>getSchedulersObservableTransformer());
 
     }/**
-     * 获取到所有车牌号
+     * 获取到所有司机手机号
      *
-     * @param carNum 车牌号
      */
     public static Observable<CommonBean<List<OrderDriverPhoneBean>>> getDriverPhone(String mobile) {
         OrderDriverPhoneBean bean = new OrderDriverPhoneBean();
