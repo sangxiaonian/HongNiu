@@ -37,6 +37,8 @@ public class PointLengthFilter implements InputFilter {
             return source.subSequence(start, end - 1);
         }
 
+
+
         String[] splitArray = dValue.split("\\.");
         if (splitArray.length > 1) {
             String dotValue = splitArray[1];

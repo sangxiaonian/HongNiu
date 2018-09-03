@@ -24,6 +24,7 @@ import com.sang.common.R;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.JLog;
 import com.sang.common.utils.PointLengthFilter;
+import com.sang.common.utils.SpaceFilter;
 
 /**
  * 作者： ${桑小年} on 2018/8/2.
@@ -147,7 +148,6 @@ public class ItemView extends FrameLayout {
         } else if (centerType == 2) {//身份证号
             etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(18)});
             etCenter.setKeyListener(DigitsKeyListener.getInstance("xX0123456789"));
-            JLog.i("------------------------------");
         } else if (centerType == 3) {//数字
             etCenter.setFilters(new InputFilter[]{new PointLengthFilter()});
             etCenter.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL|InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_SIGNED);
@@ -155,7 +155,10 @@ public class ItemView extends FrameLayout {
 //            etCenter.setKeyListener(DigitsKeyListener.getInstance("0123456789."));
         } else {
             if (maxLength > 0) {
-                etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength)});
+                etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength),new SpaceFilter()});
+            }else {
+                etCenter.setFilters(new InputFilter[]{ new SpaceFilter()});
+
             }
         }
     }

@@ -62,7 +62,6 @@ dependencies {
     if (!IsBuildMudle.toBoolean()) {
         implementation project(':ModuleLogin')
         implementation project(':ModuleOrder')
-        implementation project(':ModulePersonalCenter')
         implementation project(':BaseLibrary')
         implementation project(':ModuleFinance')
     } else {
