@@ -136,6 +136,7 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
         tvOrder.setText("订单号" + orderNum);
         tvPrice.setText("￥" + tranPrice);
         checkbox.setChecked(true);//默认选中微信支付
+        buyInsuranceDialog.setOrderID(orderID);
     }
 
     @Override

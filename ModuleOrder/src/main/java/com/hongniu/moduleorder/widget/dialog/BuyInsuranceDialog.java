@@ -1,8 +1,12 @@
 package com.hongniu.moduleorder.widget.dialog;
 
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -18,13 +22,17 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.moduleorder.R;
+import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.sang.common.utils.PointLengthFilter;
+
+import io.reactivex.disposables.Disposable;
 
 /**
  * 作者： ${PING} on 2018/8/6.
  */
-public class BuyInsuranceDialog extends Dialog implements TextWatcher {
+public class BuyInsuranceDialog extends Dialog implements TextWatcher, DialogInterface.OnDismissListener {
 
 
     private View bt_cancle;
@@ -34,21 +42,50 @@ public class BuyInsuranceDialog extends Dialog implements TextWatcher {
     private Button bt_sum;
     OnBuyInsuranceClickListener listener;
     private TextView tv_insurance;//保费
+    String orderID;
 
+    private Disposable disposable;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (orderID != null && et_price != null) {
+                if (disposable!=null){
+                    disposable.dispose();
+                }
+                HttpOrderFactory.queryInstancePrice(et_price.getText().toString().trim(), orderID)
+                        .subscribe(new NetObserver<String>(null) {
+                            @Override
+                            public void onSubscribe(Disposable d) {
+                                super.onSubscribe(d);
+                                disposable=d;
+                            }
 
-
-
+                            @Override
+                            public void doOnSuccess(String data) {
+                                if (tv_insurance!=null){
+                                    tv_insurance.setText("￥"+Float.parseFloat(data));
+                                }
+                            }
+                        });
+            }
+        }
+    };
 
 
     public BuyInsuranceDialog(@NonNull Context context) {
         this(context, 0);
     }
 
+    public void setOrderID(String orderID) {
+        this.orderID = orderID;
+    }
 
     public BuyInsuranceDialog(@NonNull Context context, int themeResId) {
         super(context, themeResId);
         initView(context);
     }
+
 
 
     private void initView(Context context) {
@@ -92,18 +129,19 @@ public class BuyInsuranceDialog extends Dialog implements TextWatcher {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
-                    listener.entryClick(BuyInsuranceDialog.this, checkbox.isChecked(),   et_price.getText().toString().trim());
+                    listener.entryClick(BuyInsuranceDialog.this, checkbox.isChecked(), et_price.getText().toString().trim());
                 }
             }
         });
 
 
-        et_price.setFilters(new InputFilter[]{new InputFilter.LengthFilter(8),new PointLengthFilter()});
+        et_price.setFilters(new InputFilter[]{new InputFilter.LengthFilter(8), new PointLengthFilter()});
         setContentView(inflate);
         getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         getWindow().setWindowAnimations(R.style.dialog_ani);
         getWindow().setGravity(Gravity.BOTTOM);
         getWindow().setBackgroundDrawable(new ColorDrawable(0x00000000));
+        setOnDismissListener(this);
     }
 
     /**
@@ -132,6 +170,40 @@ public class BuyInsuranceDialog extends Dialog implements TextWatcher {
     @Override
     public void afterTextChanged(Editable s) {
         bt_sum.setEnabled(!TextUtils.isEmpty(et_price.getText().toString().trim()) && checkbox.isChecked());
+        if (handler != null) {
+
+            handler.removeMessages(0);
+            if (!TextUtils.isEmpty(et_price.getText().toString().trim())) {
+                handler.sendEmptyMessageDelayed(0, 200);
+            }else {
+                tv_insurance.setText("￥"+0);
+
+            }
+        }
+    }
+
+    /**
+     * This method will be invoked when the dialog is dismissed.
+     *
+     * @param dialog the dialog that was dismissed will be passed into the
+     *               method
+     */
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        if (disposable!=null){
+            disposable.dispose();
+        }
+        handler.removeMessages(0);
+    }
+
+    @Override
+    public void onDetachedFromWindow() {
+        if (disposable!=null){
+            disposable.dispose();
+        }
+        handler.removeMessages(0);
+        super.onDetachedFromWindow();
+
     }
 
     public interface OnBuyInsuranceClickListener {
@@ -143,7 +215,7 @@ public class BuyInsuranceDialog extends Dialog implements TextWatcher {
          * @param checked    是否阅读条款
          * @param cargoPrice 货物金额
          */
-        void entryClick(Dialog dialog, boolean checked,   String cargoPrice);
+        void entryClick(Dialog dialog, boolean checked, String cargoPrice);
 
         void noticeClick(BuyInsuranceDialog buyInsuranceDialog, boolean checked);
     }
