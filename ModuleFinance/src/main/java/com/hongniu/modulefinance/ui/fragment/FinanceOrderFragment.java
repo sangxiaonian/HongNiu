@@ -142,7 +142,6 @@ public class FinanceOrderFragment extends RefrushFragmet<OrderDetailBean> {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
         if (getParentFragment() instanceof OnHideChangeListener) {
             this.hidechangeListener = (OnHideChangeListener) getParentFragment();
         }
