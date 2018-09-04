@@ -517,7 +517,6 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
         if (upLoactionUtils != null) {
-            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show(aMapLocation.getSpeed()+">>"+aMapLocation.getBearing());
             BusFactory.getBus().postSticky(new Event.UpLoaction(aMapLocation.getLatitude(), aMapLocation.getLongitude()));
             upLoactionUtils.add(aMapLocation.getLatitude(), aMapLocation.getLongitude(), aMapLocation.getTime(), aMapLocation.getSpeed(), aMapLocation.getBearing());
         }

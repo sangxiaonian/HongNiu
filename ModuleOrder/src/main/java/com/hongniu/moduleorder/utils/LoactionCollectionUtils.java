@@ -49,20 +49,27 @@ public class LoactionCollectionUtils implements INaviInfoCallback {
     //当前位置发生改变
     @Override
     public void onLocationChange(AMapNaviLocation aMapNaviLocation) {
-        if (lastLoaction != null && lastLoaction.getBearing() != aMapNaviLocation.getBearing()) {//方向更改
-            TraceLocation location = new TraceLocation();
-            location.setBearing(aMapNaviLocation.getBearing());
-            location.setLatitude(aMapNaviLocation.getCoord().getLatitude());
-            location.setLongitude(aMapNaviLocation.getCoord().getLongitude());
-            location.setTime(aMapNaviLocation.getTime());
-            lastLoaction = aMapNaviLocation;
-            if (Param.isDebug) {
-                loactions.add(aMapNaviLocation.getCoord().getLatitude(), aMapNaviLocation.getCoord().getLongitude(), aMapNaviLocation.getTime(), aMapNaviLocation.getSpeed(), aMapNaviLocation.getBearing());
-            }
 
-        } else {//初始化
-            lastLoaction = aMapNaviLocation;
+        if (Param.isDebug) {
+            loactions.add(aMapNaviLocation.getCoord().getLatitude(), aMapNaviLocation.getCoord().getLongitude(), aMapNaviLocation.getTime(), aMapNaviLocation.getSpeed(), aMapNaviLocation.getBearing());
         }
+
+//        if (lastLoaction != null && lastLoaction.getBearing() != aMapNaviLocation.getBearing()) {//方向更改
+//            TraceLocation location = new TraceLocation();
+//            location.setBearing(aMapNaviLocation.getBearing());
+//            location.setLatitude(aMapNaviLocation.getCoord().getLatitude());
+//            location.setLongitude(aMapNaviLocation.getCoord().getLongitude());
+//            location.setTime(aMapNaviLocation.getTime());
+//            lastLoaction = aMapNaviLocation;
+//
+//            if (Param.isDebug) {
+//                loactions.add(aMapNaviLocation.getCoord().getLatitude(), aMapNaviLocation.getCoord().getLongitude(), aMapNaviLocation.getTime(), aMapNaviLocation.getSpeed(), aMapNaviLocation.getBearing());
+//            }
+//
+//
+//        } else {//初始化
+//            lastLoaction = aMapNaviLocation;
+//        }
 
     }
 

@@ -3,6 +3,7 @@ package com.hongniu.moduleorder.net;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
+import com.amap.api.trace.TraceLocation;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.CreatInsuranceBean;
@@ -20,7 +21,9 @@ import com.hongniu.moduleorder.entity.OrderParamBean;
 import com.hongniu.moduleorder.entity.PathBean;
 import com.hongniu.moduleorder.entity.QueryInsurancePriceBean;
 import com.hongniu.moduleorder.entity.WxPayBean;
+import com.sang.common.net.error.NetException;
 import com.sang.common.net.rx.RxUtils;
+import com.sang.common.utils.ConvertUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -223,12 +226,38 @@ public class HttpOrderFactory {
      *
      * @param orderID
      */
-    public static Observable<CommonBean<PathBean>> getPath(String orderID) {
+    public static Observable<List<TraceLocation>> getPath(String orderID) {
         OrderIdBean bean =new OrderIdBean();
         bean.setOrderId(orderID);
-        return OrderClient.getInstance()
+         return OrderClient.getInstance()
                 .getService()
                 .getPath(bean)
+                .map(new Function<CommonBean<PathBean>,  List<TraceLocation>>() {
+                    @Override
+                    public  List<TraceLocation> apply(CommonBean<PathBean> pathBeanCommonBean) throws Exception {
+                        List<TraceLocation> result = new ArrayList<>();
+                        if (pathBeanCommonBean.getCode() == 200) {
+                            PathBean data = pathBeanCommonBean.getData();
+                            if (data.getList() != null) {
+                                for (LocationBean o : data.getList()) {
+                                    if (o.getLatitude() != 0 && o.getLongitude() != 0) {
+                                        TraceLocation location=new TraceLocation();
+                                        location.setBearing(o.getDirection());
+                                        location.setSpeed((float) o.getSpeed());
+                                        location.setTime(ConvertUtils.StrToDate(o.getMovingTime(),"yyyy-MM-dd HH:mm:ss").getTime());
+                                        location.setLatitude(o.getLatitude());
+                                        location.setLongitude(o.getLongitude());
+                                        result.add(location);
+                                    }
+                                }
+                            }
+                        } else {
+                            throw new NetException(pathBeanCommonBean.getCode(), pathBeanCommonBean.getMsg());
+                        }
+
+                        return result;
+                    };
+                })
                ;
     }
 

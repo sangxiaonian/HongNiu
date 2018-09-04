@@ -14,18 +14,16 @@ import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.PolylineOptions;
 import com.amap.api.trace.LBSTraceClient;
+import com.amap.api.trace.TraceListener;
+import com.amap.api.trace.TraceLocation;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.base.BaseActivity;
-import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.widget.order.OrderDetailItem;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
-import com.hongniu.moduleorder.entity.LocationBean;
-import com.hongniu.moduleorder.entity.PathBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.sang.common.event.BusFactory;
-import com.sang.common.net.error.NetException;
 import com.sang.common.net.rx.BaseObserver;
 import com.sang.common.net.rx.RxUtils;
 import com.sang.common.utils.DeviceUtils;
@@ -44,7 +42,7 @@ import io.reactivex.functions.Function;
  * 查看轨迹
  */
 @Route(path = ArouterParamOrder.activity_map_check_path)
-public class OrderMapCheckPathActivity extends BaseActivity {
+public class OrderMapCheckPathActivity extends BaseActivity implements TraceListener {
 
 
     private MapView mapView;
@@ -129,86 +127,39 @@ public class OrderMapCheckPathActivity extends BaseActivity {
 
     private void drawPath(final OrderDetailBean bean) {
 
+        MarkUtils.addMark(aMap,
+                BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), com.sang.thirdlibrary.R.mipmap.start))
+                , bean.getStartLatitude(), bean.getStartLongitude()
+        );
+        MarkUtils.addMark(aMap,
+                BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), com.sang.thirdlibrary.R.mipmap.end))
+                , bean.getDestinationLatitude(), bean.getDestinationLongitude()
+        );
         HttpOrderFactory.getPath(bean.getId())
-                .map(new Function<CommonBean<PathBean>, List<LatLng>>() {
+                .map(new Function<List<TraceLocation>, List<TraceLocation>>() {
                     @Override
-                    public List<LatLng> apply(CommonBean<PathBean> pathBeanCommonBean) throws Exception {
-                        JLog.i(Thread.currentThread().getName() + "");
-                        List<LatLng> result = new ArrayList<>();
-                        if (pathBeanCommonBean.getCode() == 200) {
-                            PathBean data = pathBeanCommonBean.getData();
-                            if (data.getList() != null) {
-                                for (LocationBean o : data.getList()) {
-                                    if (o.getLatitude() != 0 && o.getLongitude() != 0) {
-                                        result.add(new LatLng(o.getLatitude(), o.getLongitude()));
-                                    }
-                                }
-                            }
-                        } else {
-                            throw new NetException(pathBeanCommonBean.getCode(), pathBeanCommonBean.getMsg());
-                        }
-
-                        return result;
-                    }
-                })
-
-                .map(new Function<List<LatLng>, List<LatLng>>() {
-                    @Override
-                    public List<LatLng> apply(List<LatLng> result) throws Exception {
-                        List<BitmapDescriptor> textureList = new ArrayList<BitmapDescriptor>();
-                        BitmapDescriptor mRedTexture = BitmapDescriptorFactory
-                                .fromResource(R.mipmap.map_line);
-                        textureList.add(mRedTexture);
-                        List<Integer> textureIndexs = new ArrayList<Integer>();
-                        textureIndexs.add(0);
-                        mapView.getMap().addPolyline(new PolylineOptions().
-                                addAll(result)
-                                .setCustomTextureList(textureList)
-                                .setCustomTextureIndex(textureIndexs)
-                                .setUseTexture(true)
-                                .width(DeviceUtils.dip2px(mContext, 5))
-                        );
-                        return result;
-                    }
-                })
-                .map(new Function<List<LatLng>, List<LatLng>>() {
-                    @Override
-                    public List<LatLng> apply(List<LatLng> latLngs) throws Exception {
-                        MarkUtils.addMark(aMap,
-                                BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), com.sang.thirdlibrary.R.mipmap.start))
-                                , bean.getStartLatitude(), bean.getStartLongitude()
-                        );
-                        MarkUtils.addMark(aMap,
-                                BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), com.sang.thirdlibrary.R.mipmap.end))
-                                , bean.getDestinationLatitude(), bean.getDestinationLongitude()
-                        );
-
-                        return latLngs;
-                    }
-                })  .map(new Function<List<LatLng>, List<LatLng>>() {
-                    @Override
-                    public List<LatLng> apply(List<LatLng> latLngs) throws Exception {
-
-
-
+                    public List<TraceLocation> apply(List<TraceLocation> latLngs) throws Exception {
                         if (!latLngs.isEmpty()) {
-
-                            moveTo(latLngs.get(0).latitude, latLngs.get(0).longitude);
+                            moveTo(latLngs.get(0).getLatitude(), latLngs.get(0).getLongitude());
                         }
-
                         return latLngs;
                     }
                 })
-                .compose(RxUtils.<List<LatLng>>getSchedulersObservableTransformer())
-                .subscribe(new BaseObserver<List<LatLng>>(this) {
+                .compose(RxUtils.<List<TraceLocation>>getSchedulersObservableTransformer())
+                .subscribe(new BaseObserver<List<TraceLocation>>(this) {
                     @Override
-                    public void onNext(List<LatLng> result) {
+                    public void onNext(List<TraceLocation> result) {
                         super.onNext(result);
                         if (result == null || result.isEmpty()) {
                             showAleart("当前订单暂无位置信息");
+                        } else {
+                            mTraceClient.queryProcessedTrace(1, result,
+                                    LBSTraceClient.TYPE_AMAP, OrderMapCheckPathActivity.this);
                         }
                     }
                 });
+
+
     }
 
     public void moveTo(double latitude, double longitude) {
@@ -221,5 +172,41 @@ public class OrderMapCheckPathActivity extends BaseActivity {
 
     }
 
+
+    @Override
+    public void onRequestFailed(int i, String s) {
+
+    }
+
+    @Override
+    public void onTraceProcessing(int i, int i1, List<LatLng> list) {
+
+    }
+
+    @Override
+    public void onFinished(int i, List<LatLng> list, int i1, int i2) {
+            drawPath(list);
+    }
+
+    /**
+     * 绘制轨迹
+     * @param linePatch
+     */
+    private void drawPath(Iterable<LatLng> linePatch){
+       List<BitmapDescriptor> textureList = new ArrayList<BitmapDescriptor>();
+       BitmapDescriptor mRedTexture = BitmapDescriptorFactory
+               .fromResource(R.mipmap.map_line);
+       textureList.add(mRedTexture);
+       List<Integer> textureIndexs = new ArrayList<Integer>();
+       textureIndexs.add(0);
+       mapView.getMap().addPolyline(new PolylineOptions().
+               addAll(linePatch)
+               .setCustomTextureList(textureList)
+               .setCustomTextureIndex(textureIndexs)
+               .setUseTexture(true)
+               .width(DeviceUtils.dip2px(mContext, 5))
+       );
+
+   }
 
 }

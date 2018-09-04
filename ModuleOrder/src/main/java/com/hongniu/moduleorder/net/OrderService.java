@@ -157,7 +157,7 @@ public interface OrderService {
 /**
      * 获取指定订单所有位置信息
      */
-    @POST("hongniu/api/order/list")
+    @POST("hongniu/api/position/list")
     Observable<CommonBean<PathBean>> getPath(@Body OrderIdBean infor);
 
 

@@ -144,12 +144,19 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
             public BaseHolder<OrderDetailBean> initHolder(ViewGroup parent, int viewType) {
                 return new BaseHolder<OrderDetailBean>(getContext(), parent, R.layout.order_main_item) {
                     @Override
-                    public void initView(View itemView, int position, OrderDetailBean data) {
+                    public void initView(View itemView, int position, final OrderDetailBean data) {
                         super.initView(itemView, position, data);
                         OrderDetailItem item = itemView.findViewById(R.id.order_detail);//身份角色
                         item.setIdentity(roleState);
                         item.setInfor(data);
                         item.setOnButtonClickListener(OrderMainFragmet.this);
+
+                        itemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                onCheckPath(data);
+                            }
+                        });
                     }
                 };
             }
