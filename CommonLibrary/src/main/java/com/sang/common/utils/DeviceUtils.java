@@ -3,6 +3,7 @@ package com.sang.common.utils;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.os.Build;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -121,5 +122,14 @@ public class DeviceUtils {
      */
     public static int getSdkVersion() {
         return android.os.Build.VERSION.SDK_INT;
+    }
+
+    /**
+     * 判断GPS是否可用
+     * @param mContext
+     */
+    public static boolean isOpenGps(Context mContext) {
+        LocationManager locationManager = (LocationManager)mContext.getSystemService(Context.LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 }

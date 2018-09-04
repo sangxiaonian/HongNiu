@@ -2,6 +2,7 @@ package com.hongniu.moduleorder.ui;
 
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.SystemClock;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.amap.api.maps.AMap;
@@ -36,6 +37,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
 import io.reactivex.functions.Function;
 
 /**
@@ -50,6 +52,7 @@ public class OrderMapCheckPathActivity extends BaseActivity implements TraceList
     private OrderDetailItem item;
     private AMap aMap;
     private LBSTraceClient mTraceClient;
+    private PolylineOptions lineOption;
 
 
     @Override
@@ -98,7 +101,18 @@ public class OrderMapCheckPathActivity extends BaseActivity implements TraceList
         super.initData();
         setToolbarTitle("查看轨迹");
         mTraceClient = LBSTraceClient.getInstance(this);
+        List<BitmapDescriptor> textureList = new ArrayList<BitmapDescriptor>();
+        BitmapDescriptor mRedTexture = BitmapDescriptorFactory
+                .fromResource(R.mipmap.map_line);
+        textureList.add(mRedTexture);
+        List<Integer> textureIndexs = new ArrayList<Integer>();
+        textureIndexs.add(0);
+          lineOption = new PolylineOptions()
 
+                .setCustomTextureList(textureList)
+                .setCustomTextureIndex(textureIndexs)
+                .setUseTexture(true)
+                .width(DeviceUtils.dip2px(mContext, 5));
     }
 
     @Override
@@ -163,8 +177,6 @@ public class OrderMapCheckPathActivity extends BaseActivity implements TraceList
     }
 
     public void moveTo(double latitude, double longitude) {
-
-
         LatLng latLng = new LatLng(latitude, longitude);
         CameraUpdate mCameraUpdate = CameraUpdateFactory.newCameraPosition(new CameraPosition(latLng, 15, 30, 30));
         aMap.moveCamera(mCameraUpdate);
@@ -193,20 +205,8 @@ public class OrderMapCheckPathActivity extends BaseActivity implements TraceList
      * @param linePatch
      */
     private void drawPath(Iterable<LatLng> linePatch){
-       List<BitmapDescriptor> textureList = new ArrayList<BitmapDescriptor>();
-       BitmapDescriptor mRedTexture = BitmapDescriptorFactory
-               .fromResource(R.mipmap.map_line);
-       textureList.add(mRedTexture);
-       List<Integer> textureIndexs = new ArrayList<Integer>();
-       textureIndexs.add(0);
-       mapView.getMap().addPolyline(new PolylineOptions().
-               addAll(linePatch)
-               .setCustomTextureList(textureList)
-               .setCustomTextureIndex(textureIndexs)
-               .setUseTexture(true)
-               .width(DeviceUtils.dip2px(mContext, 5))
-       );
-
+        lineOption.addAll(linePatch);
+        mapView.getMap().addPolyline(lineOption);
    }
 
 }

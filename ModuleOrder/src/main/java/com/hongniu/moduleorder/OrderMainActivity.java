@@ -97,7 +97,6 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
         initView();
         initData();
         initListener();
-
         loaction = LoactionUtils.getInstance();
         loaction.init(this);
         loaction.setListener(this);
@@ -260,7 +259,13 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                 if (upLoactionUtils != null) {
                     upLoactionUtils.onDestroy();
                 }
+
+                DeviceUtils.isOpenGps(mContext);
+
                 JLog.i("-------接收到运输相关信息-----");
+                if (!DeviceUtils.isOpenGps(mContext)){
+                    showAleart("为了更准确的记录您的轨迹信息，请打开GPS");
+                }
                 upLoactionUtils = new LoactionUpUtils();
                 upLoactionUtils.setOrderInfor(event.orderID, event.cardID);
             } else {
