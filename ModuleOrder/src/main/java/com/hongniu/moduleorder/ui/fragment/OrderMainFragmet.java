@@ -23,6 +23,7 @@ import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderCreatBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
+import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItem;
@@ -40,6 +41,7 @@ import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.recycleview.holder.PeakHolder;
 import com.sang.common.utils.DeviceUtils;
+import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.SwitchTextLayout;
 import com.sang.common.widget.dialog.CenterAlertDialog;
@@ -325,6 +327,20 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
                 .show();
     }
 
+
+
+    @Subscribe( threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(final OrderEvent.OrderUpdate event) {
+        if (event != null) {
+            if (rv!=null&&roleState!=null&&!roleState.equals(event.roleState)){
+                rv.smoothScrollToPosition(0);
+            }
+            queryData(true,true);
+        }
+    }
+
+
+
     /**
      * 购买保险
      *
@@ -427,7 +443,7 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
                                 .subscribe(new NetObserver<OrderDetailBean>(OrderMainFragmet.this) {
                                     @Override
                                     public void doOnSuccess(OrderDetailBean data) {
-                                        queryData(true, true);
+                                        BusFactory.getBus().post(new OrderEvent.OrderUpdate(roleState));
                                     }
                                 });
                     }
@@ -456,7 +472,8 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
                                         upLoactionEvent.orderID = orderBean.getId();
                                         upLoactionEvent.cardID = orderBean.getCarId();
                                         BusFactory.getBus().post(upLoactionEvent);
-                                        queryData(true, true);
+                                        BusFactory.getBus().post(new OrderEvent.OrderUpdate(roleState));
+
                                     }
                                 });
 
@@ -522,7 +539,7 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
                                         @Override
                                         public void doOnSuccess(String data) {
                                             BusFactory.getBus().post(new OrderEvent.UpLoactionEvent());
-                                            queryData(true, true);
+                                            BusFactory.getBus().post(new OrderEvent.OrderUpdate(roleState));
                                         }
                                     });
                         }

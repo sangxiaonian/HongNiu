@@ -72,19 +72,11 @@
         </RadioGroup>
 
 
-        <com.hongniu.baselibrary.widget.XRefreshLayout
-            android:id="@+id/refresh"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:id="@+id/content"
+            android:layout_height="match_parent"/>
 
-            <com.sang.common.recycleview.RecycleViewSupportEmpty
-                android:id="@+id/rv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:overScrollMode="never"
-                app:empty_img="@mipmap/icon_cw_240"
-                app:empty_title="暂无支出" />
-        </com.hongniu.baselibrary.widget.XRefreshLayout>
 
     </LinearLayout>
 

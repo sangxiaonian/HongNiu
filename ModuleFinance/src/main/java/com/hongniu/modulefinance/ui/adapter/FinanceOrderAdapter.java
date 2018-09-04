@@ -42,7 +42,7 @@ public class FinanceOrderAdapter extends XAdapter<OrderDetailBean> {
 
                 tvOrder.setText("订单号：" + (data.getOrderNum() == null ? "" : data.getOrderNum()));
                 tvCarNum.setText("车牌号码：" + (data.getCarNum() == null ? "" : data.getCarNum()));
-                tvTime.setText("付费时间：" + data.getPayTime()==null?"":data.getPayTime());
+                tvTime.setText("付费时间：" +( data.getPayTime()==null?"":data.getPayTime()));
 //
                 String money = data.getMoney();
                 int financeType = data.getFinanceType();

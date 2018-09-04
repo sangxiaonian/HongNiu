@@ -17,6 +17,7 @@ import android.view.VelocityTracker;
 import android.view.View;
 
 import com.sang.common.utils.DeviceUtils;
+import com.sang.common.utils.JLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -433,10 +434,6 @@ public class VistogramView extends View implements DynamicAnimation.OnAnimationE
             }
         }
 
-
-//         if (hValue.x < 30) {
-//            minYGap = 3;
-//        } else
         if (max < 300) {
             minYGap = 30;
         } else if (max < 3000) {
@@ -444,9 +441,7 @@ public class VistogramView extends View implements DynamicAnimation.OnAnimationE
         } else {
             minYGap = 3000;
         }
-
         hValue.x = (int) ((Math.ceil(max / minYGap) + 1) * minYGap);
-
         initData();
         postInvalidate();
 

@@ -28,33 +28,17 @@ public class OrderEvent {
     }
 
     /**
-     * 订单更新
+     * 订单更新列表
      */
     public static class OrderUpdate implements IBus.IEvent {
+        public OrderDetailItemControl.RoleState roleState;//角色
 
-    }
-
-    public static class MapNavigationEvent implements IBus.IEvent {
-        LatLng start;
-
-        LatLng end;
-
-        public void setStart(double latitude, double longitude) {
-            start = new LatLng(latitude, longitude);
-        }
-
-        public void setEnd(double latitude, double longitude) {
-            end = new LatLng(latitude, longitude);
-        }
-
-        public LatLng getStart() {
-            return start;
-        }
-
-        public LatLng getEnd() {
-            return end;
+        public OrderUpdate(OrderDetailItemControl.RoleState roleState) {
+            this.roleState = roleState;
         }
     }
+
+
 
 
     /**

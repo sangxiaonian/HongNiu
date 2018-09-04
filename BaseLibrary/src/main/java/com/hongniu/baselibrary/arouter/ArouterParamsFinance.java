@@ -15,6 +15,10 @@ public class ArouterParamsFinance {
      * 订单搜索列表
      */
     public final static String activity_finance_search = "/finance/activity_finance_search";
+    /**
+     * 财务收入支出数据
+     */
+    public final static String fragment_finance_order = "/finance/fragment_finance_order";
 
 
 }

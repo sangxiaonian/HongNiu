@@ -6,6 +6,7 @@ package com.hongniu.modulefinance.entity;
  * month	false	int	月份，从1开始，1代表1月，2代表2月以此类推。
  * carNo	false	String	车牌号
  * financeType	true	int	财务类型，0支出和收入；1支出；2收入
+ * feeType	true	int	 财务搜索需要区分运费还是保费，请在参数里增加feeType字段，1表示运费，2表示保费。0在搜索收入时使用，代表只搜索收入
  * pageNum	false	int	页面索引
  * pageSize	false	int	页面记录条数
  */
@@ -29,6 +30,10 @@ public class QueryExpendBean {
      */
     private int financeType	;
     /**
+     * int	 财务搜索需要区分运费还是保费，请在参数里增加feeType字段，1表示运费，2表示保费。0在搜索收入时使用，代表只搜索收入
+     */
+    private int feeType	;
+    /**
      * false	int	页面索引
      */
     private int pageNum	    ;
@@ -44,6 +49,14 @@ public class QueryExpendBean {
     }
 
     public QueryExpendBean() {
+    }
+
+    public int getFeeType() {
+        return feeType;
+    }
+
+    public void setFeeType(int feeType) {
+        this.feeType = feeType;
     }
 
     public String getYear() {

@@ -68,6 +68,7 @@ public class LoactionUpUtils {
                     + "\n此次记录距离：" + v
                     + "\n速度：" + speed
                     + "\n方向：" + bearing
+                    +"\n位置改变："+(lastLoaction.latitude==latitude)
             );
         } else {
             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("此次记录距离：" + v);

@@ -1,18 +1,14 @@
 package com.hongniu.modulefinance.ui.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.hongniu.baselibrary.config.Param;
 import com.hongniu.modulefinance.R;
 import com.sang.common.recycleview.holder.PeakHolder;
-import com.sang.common.utils.ConvertUtils;
 import com.sang.common.widget.VistogramView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,9 +38,7 @@ public class FinanceIncomHeadHolder extends PeakHolder {
         super.initView(position);
         tvDes = itemView.findViewById(R.id.tv_des);
         vist = itemView.findViewById(R.id.vistorgram);
-        if (title != null) {
-            tvDes.setText(title);
-        }
+        tvDes.setText(title == null ? "" : title);
 
 
     }
@@ -61,7 +55,7 @@ public class FinanceIncomHeadHolder extends PeakHolder {
     }
 
     public void setCurrentX(int i) {
-        this.currentX=i;
+        this.currentX = i;
         itemView.post(new Runnable() {
             @Override
             public void run() {
