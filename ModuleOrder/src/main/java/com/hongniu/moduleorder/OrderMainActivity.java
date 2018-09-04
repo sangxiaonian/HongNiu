@@ -36,6 +36,7 @@ import com.sang.common.event.BusFactory;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.JLog;
+import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.SwitchTextLayout;
 import com.sang.common.widget.dialog.BottomAlertDialog;
 import com.sang.common.widget.dialog.CenterAlertDialog;
@@ -516,6 +517,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
         if (upLoactionUtils != null) {
+            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show(aMapLocation.getSpeed()+">>"+aMapLocation.getBearing());
             BusFactory.getBus().postSticky(new Event.UpLoaction(aMapLocation.getLatitude(), aMapLocation.getLongitude()));
             upLoactionUtils.add(aMapLocation.getLatitude(), aMapLocation.getLongitude(), aMapLocation.getTime(), aMapLocation.getSpeed(), aMapLocation.getBearing());
         }

@@ -8,6 +8,7 @@ import com.hongniu.moduleorder.entity.LocationBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.JLog;
+import com.sang.common.utils.ToastUtils;
 import com.sang.thirdlibrary.map.LoactionUtils;
 import com.sang.thirdlibrary.map.utils.MapConverUtils;
 
@@ -53,6 +54,10 @@ public class LoactionUpUtils {
     public void add(double latitude, double longitude, long movingTime, float speed, float bearing) {
         float v = MapConverUtils.caculeDis(lastLoaction.latitude, lastLoaction.longitude, latitude, longitude);
         if (v<minDis|| TextUtils.isEmpty(carId)||TextUtils.isEmpty(orderId)){
+            if (v<minDis){
+                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("距离太近，不记录："+v);
+
+            }
             return;
         }else {
             lastLoaction=new LatLng(latitude,longitude);
