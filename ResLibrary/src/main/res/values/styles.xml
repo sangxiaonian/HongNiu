@@ -5,9 +5,9 @@
         <!-- Customize your theme here. -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+         <item name="colorPrimary">@color/color_white</item>
+        <item name="colorPrimaryDark">@color/color_white</item>
+        <item name="colorAccent">@color/color_white</item>
     </style>
     <style name="tranTheme" parent="AppTheme">
         <item name="android:windowIsTranslucent">true</item>
