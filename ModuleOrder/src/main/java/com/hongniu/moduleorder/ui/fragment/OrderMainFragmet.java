@@ -489,6 +489,9 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
                                             upLoactionEvent.start = true;
                                             upLoactionEvent.orderID = orderBean.getId();
                                             upLoactionEvent.cardID = orderBean.getCarId();
+                                            upLoactionEvent.destinationLatitude = orderBean.getDestinationLatitude();
+                                            upLoactionEvent.destinationLongitude = orderBean.getDestinationLongitude();
+
                                             BusFactory.getBus().post(upLoactionEvent);
                                             BusFactory.getBus().post(new OrderEvent.OrderUpdate(roleState));
 

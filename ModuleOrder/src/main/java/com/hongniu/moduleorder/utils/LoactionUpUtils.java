@@ -11,7 +11,6 @@ import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.sang.common.net.rx.RxUtils;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.JLog;
-import com.sang.common.utils.ToastUtils;
 import com.sang.thirdlibrary.map.utils.MapConverUtils;
 
 import java.util.ArrayList;
@@ -32,19 +31,14 @@ public class LoactionUpUtils {
     private int tempSize = 10;//每次批量上传的坐标个数
     private int minDis = 10;//记录两次坐标之间的最小距离
 
+    LoactionInfor loactionInfor;
 
-    /**
-     * true	long	订单id
-     */
-    private String orderId;
-    /**
-     * true	string	车辆id
-     */
-    private String carId;
-
-    public void setOrderInfor(String orderId, String carId) {
-        this.orderId = orderId;
-        this.carId = carId;
+    public void setOrderInfor(String orderId, String carId, double destinationLatitude, double destinationLongitude) {
+        loactionInfor = new LoactionInfor();
+        loactionInfor.cardID = carId;
+        loactionInfor.orderId = orderId;
+        loactionInfor.latitude = destinationLatitude;
+        loactionInfor.longitude = destinationLongitude;
     }
 
 
@@ -54,11 +48,22 @@ public class LoactionUpUtils {
     public void add(double latitude, double longitude, long movingTime, float speed, float bearing) {
 
 
-        if (TextUtils.isEmpty(carId) || TextUtils.isEmpty(orderId)) {
+        if (loactionInfor == null || TextUtils.isEmpty(loactionInfor.cardID) || TextUtils.isEmpty(loactionInfor.orderId)) {
             return;
         }
+
+        //计算当前距离目的地的距离
+        float dis = MapConverUtils.caculeDis(loactionInfor.latitude, loactionInfor.longitude, latitude, longitude);
         float v = MapConverUtils.caculeDis(lastLoaction.latitude, lastLoaction.longitude, latitude, longitude);
-        if (v < minDis) {
+
+        if (dis < 100) {
+            LocationBean bean = getLocationBean(latitude, longitude, movingTime, speed, bearing);
+            if (v > minDis) {
+                temp.add(bean);
+            }
+            notifyQueue(temp);
+            lastLoaction = new LatLng(latitude, longitude);
+        } else if (v < minDis) {
             JLog.d("上次位置：" + lastLoaction.latitude +
                     "\n此次位置：" + latitude
                     + "\n此次记录距离：" + v
@@ -83,8 +88,8 @@ public class LoactionUpUtils {
     @NonNull
     private LocationBean getLocationBean(double latitude, double longitude, long movingTime, float speed, float bearing) {
         LocationBean bean = new LocationBean();
-        bean.setOrderId(orderId);
-        bean.setCarId(carId);
+        bean.setOrderId(loactionInfor.orderId);
+        bean.setCarId(loactionInfor.cardID);
         bean.setLatitude(latitude);
         bean.setLongitude(longitude);
         bean.setSpeed(speed);
@@ -100,6 +105,9 @@ public class LoactionUpUtils {
      * @param temp
      */
     private void notifyQueue(List<LocationBean> temp) {
+        if (temp == null || temp.isEmpty()) {
+            return;
+        }
         List<LocationBean> datas = new ArrayList<>(10);
         datas.addAll(temp);
         upData(datas);
@@ -110,7 +118,7 @@ public class LoactionUpUtils {
 
     //将数据上传
     public void upData(final List<LocationBean> datas) {
-        if (datas==null||datas.isEmpty()){
+        if (datas == null || datas.isEmpty()) {
             return;
         }
         HttpOrderFactory
@@ -148,8 +156,57 @@ public class LoactionUpUtils {
     public void onDestroy() {
         JLog.i("停止记录位置信息");
         upData(temp);
-        carId = null;
-        orderId = null;
+        loactionInfor = null;
+    }
+
+
+    public static class LoactionInfor {
+        /**
+         * true	long	车辆ID
+         */
+        public String cardID;
+        /**
+         * true	long	订单id
+         */
+        public String orderId;
+        /**
+         * 终点位置
+         */
+        public double latitude;
+        public double longitude;
+
+
+        public String getCardID() {
+            return cardID;
+        }
+
+        public void setCardID(String cardID) {
+            this.cardID = cardID;
+        }
+
+        public String getOrderId() {
+            return orderId;
+        }
+
+        public void setOrderId(String orderId) {
+            this.orderId = orderId;
+        }
+
+        public double getLatitude() {
+            return latitude;
+        }
+
+        public void setLatitude(double latitude) {
+            this.latitude = latitude;
+        }
+
+        public double getLongitude() {
+            return longitude;
+        }
+
+        public void setLongitude(double longitude) {
+            this.longitude = longitude;
+        }
     }
 
 

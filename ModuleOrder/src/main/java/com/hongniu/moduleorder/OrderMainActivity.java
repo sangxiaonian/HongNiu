@@ -238,6 +238,9 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                         upLoactionEvent.start = true;
                         upLoactionEvent.orderID = event.getOrderId();
                         upLoactionEvent.cardID = event.getCarId();
+                        upLoactionEvent.destinationLatitude = event.getDestinationLatitude();
+                        upLoactionEvent.destinationLongitude = event.getDestinationLongitude();
+
                         BusFactory.getBus().post(upLoactionEvent);
                         float v = MapConverUtils.caculeDis(event.getStartLatitude(), event.getStartLongitude(), event.getDestinationLatitude(), event.getDestinationLongitude());
                         loaction.upInterval(v);
@@ -267,7 +270,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                     showAleart("为了更准确的记录您的轨迹信息，请打开GPS");
                 }
                 upLoactionUtils = new LoactionUpUtils();
-                upLoactionUtils.setOrderInfor(event.orderID, event.cardID);
+                upLoactionUtils.setOrderInfor(event.orderID, event.cardID,event.destinationLatitude,event.destinationLongitude);
             } else {
                 if (upLoactionUtils != null) {
                     upLoactionUtils.onDestroy();

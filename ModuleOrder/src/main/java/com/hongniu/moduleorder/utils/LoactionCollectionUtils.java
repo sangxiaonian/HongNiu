@@ -4,7 +4,6 @@ import android.view.View;
 
 import com.amap.api.navi.INaviInfoCallback;
 import com.amap.api.navi.model.AMapNaviLocation;
-import com.amap.api.trace.TraceLocation;
 import com.hongniu.baselibrary.config.Param;
 import com.sang.common.utils.JLog;
 
@@ -83,7 +82,7 @@ public class LoactionCollectionUtils implements INaviInfoCallback {
     @Override
     public void onStartNavi(int i) {
         JLog.i("onStartNavi:" + i);
-        loactions.setOrderInfor(orderNum, carID);
+//        loactions.setOrderInfor(orderNum, carID, event.destinationLatitude, event.destinationLongitude);
     }
 
     @Override
