@@ -524,6 +524,14 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     //定位成功，位置信息开始变化
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
+
+        JLog.d("测试后台打点："+DeviceUtils.isOpenGps(mContext)
+                    +"\n Latitude："+aMapLocation.getLatitude()
+                    +"\n Longitude："+aMapLocation.getLongitude()
+
+        );
+
+
         if (upLoactionUtils != null) {
             BusFactory.getBus().postSticky(new Event.UpLoaction(aMapLocation.getLatitude(), aMapLocation.getLongitude()));
             upLoactionUtils.add(aMapLocation.getLatitude(), aMapLocation.getLongitude(), aMapLocation.getTime(), aMapLocation.getSpeed(), aMapLocation.getBearing());

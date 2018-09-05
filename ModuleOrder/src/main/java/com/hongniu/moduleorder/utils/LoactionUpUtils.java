@@ -31,7 +31,7 @@ public class LoactionUpUtils {
     private int tempSize = 10;//每次批量上传的坐标个数
     private int minDis = 10;//记录两次坐标之间的最小距离
 
-    LoactionInfor loactionInfor;
+    LoactionInfor loactionInfor=new LoactionInfor();
 
     public void setOrderInfor(String orderId, String carId, double destinationLatitude, double destinationLongitude) {
         loactionInfor = new LoactionInfor();
