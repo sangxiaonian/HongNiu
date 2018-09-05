@@ -21,7 +21,6 @@ import com.hongniu.modulelogin.entity.LoginEvent;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.sang.common.event.BusFactory;
 import com.sang.common.utils.CommonUtils;
-import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.ItemView;
 import com.sang.common.widget.dialog.BottomAlertDialog;
@@ -81,7 +80,6 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
     protected void initData() {
         super.initData();
         cars = new ArrayList<>();
-
 
 
     }
@@ -172,9 +170,18 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
 
                                 }
                             });
-                } else {
-                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show(R.string.login_add_car_modification);
-                    finish();
+                } else {//修改车辆
+                    HttpLoginFactory.upDataCar(getValue())
+                            .subscribe(new NetObserver<ResponseBody>(this) {
+                                @Override
+                                public void doOnSuccess(ResponseBody data) {
+                                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show(R.string.login_add_car_modification);
+                                    BusFactory.getBus().post(new LoginEvent.UpdateEvent());
+                                    finish();
+
+                                }
+                            });
+
 
                 }
             }
@@ -220,7 +227,7 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
         if (TextUtils.isEmpty(itemCarNum.getTextCenter())) {
             showAleart(itemCarNum.getTextCenterHide());
             return false;
-        }else if (!CommonUtils.carNumMatches(itemCarNum.getTextCenter())){
+        } else if (!CommonUtils.carNumMatches(itemCarNum.getTextCenter())) {
             showAleart(getString(R.string.login_car_error_carnum));
             return false;
         }
@@ -231,7 +238,7 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
         if (TextUtils.isEmpty(itemCarPhone.getTextCenter())) {
             showAleart(itemCarPhone.getTextCenterHide());
             return false;
-        }else if (!CommonUtils.isPhone(itemCarPhone.getTextCenter())){
+        } else if (!CommonUtils.isPhone(itemCarPhone.getTextCenter())) {
             showAleart(getString(R.string.login_car_error_phone));
             return false;
         }

@@ -33,10 +33,7 @@ public class LoginCarInforBean {
      */
     private String contactMobile;
 
-    private int userId;
     private String id;
-    private long createTime;
-    private int state;
     private String cartypename;
 
     public String getId() {
@@ -47,29 +44,8 @@ public class LoginCarInforBean {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
-    }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
 
-    public long getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(long createTime) {
-        this.createTime = createTime;
-    }
-
-    public int getState() {
-        return state;
-    }
-
-    public void setState(int state) {
-        this.state = state;
-    }
 
     public String getCartypename() {
         return cartypename;

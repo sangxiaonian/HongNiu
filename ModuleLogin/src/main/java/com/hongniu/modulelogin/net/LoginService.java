@@ -3,10 +3,10 @@ package com.hongniu.modulelogin.net;
 import com.hongniu.baselibrary.entity.CarTypeBean;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.LoginBean;
+import com.hongniu.baselibrary.entity.LoginPersonInfor;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
 import com.hongniu.modulelogin.entity.LoginCarInforBean;
-import com.hongniu.baselibrary.entity.LoginPersonInfor;
 import com.hongniu.modulelogin.entity.LoginSMSParams;
 
 import java.util.List;
@@ -44,6 +44,12 @@ public interface LoginService {
      */
     @POST("hongniu/api/car/savecar")
     Observable<CommonBean<ResponseBody>> addCar(@Body LoginCarInforBean infor);
+
+    /**
+     * 修改车辆信息
+     */
+    @POST("hongniu/api/car/updatecar")
+    Observable<CommonBean<ResponseBody>> upDataCar(@Body LoginCarInforBean infor);
 
     /**
      * 删除车辆信息

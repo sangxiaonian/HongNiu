@@ -54,25 +54,18 @@ public class LoactionUpUtils {
     public void add(double latitude, double longitude, long movingTime, float speed, float bearing) {
 
 
-        if ( TextUtils.isEmpty(carId) || TextUtils.isEmpty(orderId)){
+        if (TextUtils.isEmpty(carId) || TextUtils.isEmpty(orderId)) {
             return;
         }
         float v = MapConverUtils.caculeDis(lastLoaction.latitude, lastLoaction.longitude, latitude, longitude);
-        if (lastLoaction.latitude == 0) {
-            LocationBean bean = getLocationBean(latitude, longitude, movingTime, speed, bearing);
-            temp.add(bean);
-            notifyQueue(temp);
-            temp.clear();
-            lastLoaction=new LatLng(latitude,longitude);
-        } else if (v < minDis ) {
-
-//            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("上次位置：" + lastLoaction.latitude +
-//                    "\n此次位置：" + latitude
-//                    + "\n此次记录距离：" + v
-//                    + "\n速度：" + speed
-//                    + "\n方向：" + bearing
-//                    +"\n位置改变："+(lastLoaction.latitude==latitude)
-//            );
+        if (v < minDis) {
+            JLog.d("上次位置：" + lastLoaction.latitude +
+                    "\n此次位置：" + latitude
+                    + "\n此次记录距离：" + v
+                    + "\n速度：" + speed
+                    + "\n方向：" + bearing
+                    + "\n位置改变：" + (lastLoaction.latitude == latitude)
+            );
         } else {
             LocationBean bean = getLocationBean(latitude, longitude, movingTime, speed, bearing);
             if (temp.size() < tempSize) {
@@ -117,6 +110,9 @@ public class LoactionUpUtils {
 
     //将数据上传
     public void upData(final List<LocationBean> datas) {
+        if (datas==null||datas.isEmpty()){
+            return;
+        }
         HttpOrderFactory
                 .upLoaction(datas)
                 .map(new Function<CommonBean<String>, CommonBean<String>>() {
@@ -141,7 +137,6 @@ public class LoactionUpUtils {
 
                     @Override
                     public void doOnSuccess(String data) {
-//                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("轨迹上传");
                     }
                 });
     }
@@ -152,9 +147,7 @@ public class LoactionUpUtils {
      */
     public void onDestroy() {
         JLog.i("停止记录位置信息");
-        if (disposable != null) {
-            disposable.dispose();
-        }
+        upData(temp);
         carId = null;
         orderId = null;
     }

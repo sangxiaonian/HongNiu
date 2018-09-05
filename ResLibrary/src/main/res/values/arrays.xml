@@ -13,7 +13,7 @@
         <item>待支付</item>
         <item>待发车</item>
         <item>运输中</item>
-        <item>已送达</item>
+        <item>已到达</item>
         <item>已收货</item>
     </string-array>
 

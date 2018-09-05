@@ -54,6 +54,7 @@ import com.sang.thirdlibrary.map.utils.MapConverUtils;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -66,7 +67,6 @@ import io.reactivex.Observable;
 public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements SwitchStateListener, SwitchTextLayout.OnSwitchListener, OrderMainPop.OnPopuClickListener, OnPopuDismissListener, OrderDetailItemControl.OnOrderDetailBtClickListener {
     private SwitchTextLayout switchLeft;
     private SwitchTextLayout switchRight;
-    AMapLocationListener aMapLocationListener;
     private int leftSelection;
     private int rightSelection;
     private OrderMainPop<String> orderMainPop;
@@ -122,6 +122,17 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DeviceUtils.dip2px(getContext(), 75));
         view.setLayoutParams(params);
         adapter.addFoot(new PeakHolder(view));
+
+        List<String> text=new ArrayList<>();
+        text.add("1");
+        text.add("2");
+        text.add("3");
+        text.add("4");
+        List<String> result=new ArrayList<>();
+        result.addAll(text);
+        text.clear();
+        JLog.i(result.size()+">>>>"+text.size());
+
 
     }
 
@@ -463,19 +474,30 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
                     @Override
                     public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
 
-                        HttpOrderFactory.driverStart(orderBean.getId())
-                                .subscribe(new NetObserver<String>(OrderMainFragmet.this) {
-                                    @Override
-                                    public void doOnSuccess(String data) {
-                                        OrderEvent.UpLoactionEvent upLoactionEvent = new OrderEvent.UpLoactionEvent();
-                                        upLoactionEvent.start = true;
-                                        upLoactionEvent.orderID = orderBean.getId();
-                                        upLoactionEvent.cardID = orderBean.getCarId();
-                                        BusFactory.getBus().post(upLoactionEvent);
-                                        BusFactory.getBus().post(new OrderEvent.OrderUpdate(roleState));
+                        double v = MapConverUtils.caculeDis(latLng.latitude
+                                , latLng.longitude
+                                , orderBean.getDestinationLatitude(), orderBean.getDestinationLongitude());
+                        dialog.dismiss();
+                        if (latLng.latitude == 0 || latLng.longitude == 0) {
+                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("正在获取当前位置，请稍后再试");
+                        } else if (v > Param.ENTRY_MIN) {//距离过大，超过确认订单的最大距离
+//                        if (false) {
+                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("距离发货地点还有"+(v/1000)+"公里，无法确认到达");
+                        } else {
+                            HttpOrderFactory.driverStart(orderBean.getId())
+                                    .subscribe(new NetObserver<String>(OrderMainFragmet.this) {
+                                        @Override
+                                        public void doOnSuccess(String data) {
+                                            OrderEvent.UpLoactionEvent upLoactionEvent = new OrderEvent.UpLoactionEvent();
+                                            upLoactionEvent.start = true;
+                                            upLoactionEvent.orderID = orderBean.getId();
+                                            upLoactionEvent.cardID = orderBean.getCarId();
+                                            BusFactory.getBus().post(upLoactionEvent);
+                                            BusFactory.getBus().post(new OrderEvent.OrderUpdate(roleState));
 
-                                    }
-                                });
+                                        }
+                                    });
+                        }
 
                         dialog.dismiss();
                     }
@@ -532,7 +554,7 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
                             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("正在获取当前位置，请稍后再试");
                         } else if (v > Param.ENTRY_MIN) {//距离过大，超过确认订单的最大距离
 //                        if (false) {
-                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("距离目的地太远，请到达目的地后进行操作");
+                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("距离收货地点还有"+(v/1000)+"公里，无法确认到达");
                         } else {
                             HttpOrderFactory.entryArrive(orderBean.getId())
                                     .subscribe(new NetObserver<String>(OrderMainFragmet.this) {

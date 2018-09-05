@@ -4,10 +4,10 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CarTypeBean;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.LoginBean;
+import com.hongniu.baselibrary.entity.LoginPersonInfor;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
 import com.hongniu.modulelogin.entity.LoginCarInforBean;
-import com.hongniu.baselibrary.entity.LoginPersonInfor;
 import com.hongniu.modulelogin.entity.LoginSMSParams;
 import com.sang.common.net.rx.RxUtils;
 import com.sang.common.utils.ConvertUtils;
@@ -87,6 +87,17 @@ public class HttpLoginFactory {
 
         return LoginClient.getInstance().getLoginService()
                 .addCar(infor)
+                .compose(RxUtils.<CommonBean<ResponseBody>>getSchedulersObservableTransformer())
+                ;
+    }
+
+    /**
+     * 修改车辆
+     */
+    public static Observable<CommonBean<ResponseBody>> upDataCar(LoginCarInforBean infor) {
+
+        return LoginClient.getInstance().getLoginService()
+                .upDataCar(infor)
                 .compose(RxUtils.<CommonBean<ResponseBody>>getSchedulersObservableTransformer())
                 ;
     }
