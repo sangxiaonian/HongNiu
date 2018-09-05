@@ -116,24 +116,21 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
     protected void initData() {
         super.initData();
         orderMainPop = new OrderMainPop<>(getContext());
-        states = Arrays.asList(getResources().getStringArray(R.array.order_main_state));
+        String[] stringArray = getResources().getStringArray(R.array.order_main_state);
+        states = new ArrayList<>();
+        for (String s : stringArray) {
+            states.add(s);
+        }
+
+        if (roleState!= OrderDetailItemControl.RoleState.CARGO_OWNER){
+            states.remove(1);
+        }
+
         times = Arrays.asList(getResources().getStringArray(R.array.order_main_time));
         View view = new View(getContext());
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DeviceUtils.dip2px(getContext(), 75));
         view.setLayoutParams(params);
         adapter.addFoot(new PeakHolder(view));
-
-        List<String> text=new ArrayList<>();
-        text.add("1");
-        text.add("2");
-        text.add("3");
-        text.add("4");
-        List<String> result=new ArrayList<>();
-        result.addAll(text);
-        text.clear();
-        JLog.i(result.size()+">>>>"+text.size());
-
-
     }
 
 
@@ -237,11 +234,11 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
             queryBean.setHasFreight(null);
             if (position == 0) {//全部状态
                 queryBean.setQueryStatus(null);
-            } else if (position == 1) {//待支付状态
+            } else if (position == 1&&roleState== OrderDetailItemControl.RoleState.CARGO_OWNER) {//待支付状态
                 queryBean.setQueryStatus(null);
                 queryBean.setHasFreight(false);
             } else {
-                queryBean.setQueryStatus(position + "");
+                queryBean.setQueryStatus((1+position) + "");
             }
         }
         queryData(true, true);
