@@ -25,6 +25,7 @@ import com.hongniu.moduleorder.entity.OrderParamBean;
 import com.hongniu.moduleorder.entity.WxPayBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.widget.dialog.BuyInsuranceDialog;
+import com.hongniu.moduleorder.widget.dialog.InsuranceNoticeDialog;
 import com.sang.common.event.BusFactory;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.ToastUtils;
@@ -54,7 +55,7 @@ import java.text.DecimalFormat;
  * 不购买保险，则直接显示完成订单
  */
 @Route(path = ArouterParamOrder.activity_order_pay)
-public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener, BuyInsuranceDialog.OnBuyInsuranceClickListener {
+public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener, BuyInsuranceDialog.OnBuyInsuranceClickListener, DialogControl.OnButtonBottomClickListener {
 
     private TextView tvOrder;//订单号
     private ViewGroup btBuy;//购买保险
@@ -84,7 +85,7 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
 
 
     private BuyInsuranceDialog buyInsuranceDialog;
-//    private InsuranceNoticeDialog noticeDialog;
+    private InsuranceNoticeDialog noticeDialog;
 
     //是否为单独的购买保险界面
     private boolean isInsurance;
@@ -127,7 +128,7 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
 
         buyInsuranceDialog = new BuyInsuranceDialog(mContext);
 
-//        noticeDialog = new InsuranceNoticeDialog(mContext);
+        noticeDialog = new InsuranceNoticeDialog(mContext);
     }
 
     @Override
@@ -265,7 +266,7 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
         rg.setOnCheckedChangeListener(this);
         bt_cancle_insurance.setOnClickListener(this);
         tv_change_cargo_price.setOnClickListener(this);
-//        noticeDialog.setOnBottomClickListener(this);
+        noticeDialog.setOnBottomClickListener(this);
         buyInsuranceDialog.setListener(this);
 
 
@@ -450,9 +451,8 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
 
     @Override
     public void noticeClick(BuyInsuranceDialog buyInsuranceDialog, boolean checked) {
-//        buyInsuranceDialog.dismiss();
-        buyInsuranceDialog.setReadInsurance(true);
-//        noticeDialog.show();
+        buyInsuranceDialog.dismiss();
+        noticeDialog.show();
     }
 
 
@@ -479,5 +479,12 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
                 .setBtLeftColor(getResources().getColor(R.color.color_title_dark))
                 .setBtRightColor(getResources().getColor(R.color.color_white))
                 .setBtRightBgRes(R.drawable.shape_f06f28);
+    }
+
+    @Override
+    public void onBottomClick(View view, DialogControl.IBottomDialog dialog) {
+        noticeDialog.dismiss();
+        buyInsuranceDialog.setReadInsurance(true);
+        buyInsuranceDialog.show();
     }
 }

@@ -36,7 +36,8 @@
             android:exported="true"
             android:launchMode="singleTop"
             android:theme="@style/tranTheme" />
-        <activity android:name=".ui.PDFActivity"></activity>
+        <activity android:name=".ui.PDFActivity" />
+        <activity android:name=".ui.H5Activity"></activity>
     </application>
 
 </manifest>

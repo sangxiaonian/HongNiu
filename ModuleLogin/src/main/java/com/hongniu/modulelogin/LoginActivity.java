@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
+import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
@@ -53,6 +54,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         tvCaluse = findViewById(R.id.tv_clause);
         bt.setEnabled(false);
         bt.setOnClickListener(this);
+        tvCaluse.setOnClickListener(this);
     }
 
     @Override
@@ -120,7 +122,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             }
 
         } else if (i == R.id.tv_clause) {
-
+            ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5).withString(Param.TRAN,Param.hongniu_agreement).navigation(this);
         }
     }
 }

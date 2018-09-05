@@ -15,6 +15,10 @@ public class ArouterParamsApp {
      */
     public final static String activity_pdf = "/app/activity_pdf";
 
+    /**
+     * h5 加载页面
+     */
+    public final static String activity_h5 = "/app/activity_h5";
 
 
 }

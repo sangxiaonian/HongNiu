@@ -8,6 +8,15 @@ public class Param {
 
     public static final String weChatAppid="wxa9d4be10effd4626";
     public static final boolean isDebug=true;
+    /**
+     * 泓牛协议
+     */
+    public static final String hongniu_agreement="http://47.104.130.110:8080/static/service.html";
+    //保险协议
+    public static final String insurance_agreement="http://47.104.130.110:8080/static/insurance.html";
+
+
+
 
     /**
      * 分页查找每页数据数量
