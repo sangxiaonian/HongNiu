@@ -94,11 +94,11 @@ public class HttpLoginFactory {
     /**
      * 修改车辆
      */
-    public static Observable<CommonBean<ResponseBody>> upDataCar(LoginCarInforBean infor) {
+    public static Observable<CommonBean<String>> upDataCar(LoginCarInforBean infor) {
 
         return LoginClient.getInstance().getLoginService()
                 .upDataCar(infor)
-                .compose(RxUtils.<CommonBean<ResponseBody>>getSchedulersObservableTransformer())
+                .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer())
                 ;
     }
 

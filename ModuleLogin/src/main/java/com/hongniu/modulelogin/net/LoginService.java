@@ -49,7 +49,7 @@ public interface LoginService {
      * 修改车辆信息
      */
     @POST("hongniu/api/car/updatecar")
-    Observable<CommonBean<ResponseBody>> upDataCar(@Body LoginCarInforBean infor);
+    Observable<CommonBean<String>> upDataCar(@Body LoginCarInforBean infor);
 
     /**
      * 删除车辆信息

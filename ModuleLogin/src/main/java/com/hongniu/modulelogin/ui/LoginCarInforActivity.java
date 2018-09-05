@@ -172,9 +172,9 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
                             });
                 } else {//修改车辆
                     HttpLoginFactory.upDataCar(getValue())
-                            .subscribe(new NetObserver<ResponseBody>(this) {
+                            .subscribe(new NetObserver<String>(this) {
                                 @Override
-                                public void doOnSuccess(ResponseBody data) {
+                                public void doOnSuccess(String data) {
                                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show(R.string.login_add_car_modification);
                                     BusFactory.getBus().post(new LoginEvent.UpdateEvent());
                                     finish();
