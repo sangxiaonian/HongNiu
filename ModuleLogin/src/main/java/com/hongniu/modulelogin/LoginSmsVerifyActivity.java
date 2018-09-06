@@ -19,6 +19,7 @@ import com.hongniu.baselibrary.entity.LoginBean;
 import com.hongniu.baselibrary.entity.LoginPersonInfor;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
+import com.sang.common.net.error.NetException;
 import com.sang.common.utils.SharedPreferencesUtils;
 import com.sang.common.widget.VericationView;
 
@@ -129,8 +130,13 @@ public class LoginSmsVerifyActivity extends BaseActivity implements VericationVi
                 .map(new Function<CommonBean<LoginBean>, CommonBean<LoginBean>>() {
                     @Override
                     public CommonBean<LoginBean> apply(CommonBean<LoginBean> loginBeanCommonBean) throws Exception {
-                        Utils.saveLoginInfor(loginBeanCommonBean.getData());
-                        return loginBeanCommonBean;
+                        if (loginBeanCommonBean.getCode()==200){
+
+                            Utils.saveLoginInfor(loginBeanCommonBean.getData());
+                            return loginBeanCommonBean;
+                        }else {
+                            throw new NetException(loginBeanCommonBean.getCode(),loginBeanCommonBean.getMsg());
+                        }
                     }
                 })
 

@@ -530,10 +530,8 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                     +"\n Longitude："+aMapLocation.getLongitude()
 
         );
-
-
+        BusFactory.getBus().postSticky(new Event.UpLoaction(aMapLocation.getLatitude(), aMapLocation.getLongitude()));
         if (upLoactionUtils != null) {
-            BusFactory.getBus().postSticky(new Event.UpLoaction(aMapLocation.getLatitude(), aMapLocation.getLongitude()));
             upLoactionUtils.add(aMapLocation.getLatitude(), aMapLocation.getLongitude(), aMapLocation.getTime(), aMapLocation.getSpeed(), aMapLocation.getBearing());
         }
     }

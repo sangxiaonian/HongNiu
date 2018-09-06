@@ -33,6 +33,7 @@ public class Utils {
      */
     public static void loginOut(Activity activity) {
         SharedPreferencesUtils.getInstance().remove(Param.LOGIN_ONFOR);
+        SharedPreferencesUtils.getInstance().remove(Param.PERSON_ONFOR);
         ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_main).withString(Param.TRAN, Param.LOGIN_OUT).navigation(activity);
     }
 
