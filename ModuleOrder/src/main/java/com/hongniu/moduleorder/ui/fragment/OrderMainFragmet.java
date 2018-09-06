@@ -38,6 +38,7 @@ import com.sang.common.event.BusFactory;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.recycleview.holder.PeakHolder;
+import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.SwitchTextLayout;
@@ -474,13 +475,14 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
 
                         double v = MapConverUtils.caculeDis(latLng.latitude
                                 , latLng.longitude
-                                , orderBean.getDestinationLatitude(), orderBean.getDestinationLongitude());
+                                , orderBean.getStartLatitude(), orderBean.getStartLongitude());
+
                         dialog.dismiss();
                         if (latLng.latitude == 0 || latLng.longitude == 0) {
                             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("正在获取当前位置，请稍后再试");
                         } else if (v > Param.ENTRY_MIN) {//距离过大，超过确认订单的最大距离
 //                        if (false) {
-                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("距离发货地点还有" + (v / 1000) + "公里，无法确认到达");
+                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("距离发货地点还有" + ConvertUtils.changeFloat(v / 1000,1) + "公里，无法开始发车");
                         } else {
                             HttpOrderFactory.driverStart(orderBean.getId())
                                     .subscribe(new NetObserver<String>(OrderMainFragmet.this) {
@@ -555,7 +557,7 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
                             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("正在获取当前位置，请稍后再试");
                         } else if (v > Param.ENTRY_MIN) {//距离过大，超过确认订单的最大距离
 //                        if (false) {
-                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("距离收货地点还有" + (v / 1000) + "公里，无法确认到达");
+                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("距离收货地点还有" +ConvertUtils.changeFloat(v / 1000,1) + "公里，无法确认到达");
                         } else {
                             HttpOrderFactory.entryArrive(orderBean.getId())
                                     .subscribe(new NetObserver<String>(OrderMainFragmet.this) {

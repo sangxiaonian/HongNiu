@@ -1,17 +1,15 @@
 package com.sang.common.utils;
 
 import android.text.TextUtils;
-import android.widget.TextView;
 
 import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
-
-import retrofit2.http.POST;
 
 /**
  * 作者： ${PING} on 2018/8/6.
@@ -142,6 +140,30 @@ public class ConvertUtils {
         BigDecimal b2 = new BigDecimal(Double.toString(b1));
         return a2.divide(b2, scale, BigDecimal.ROUND_HALF_UP).doubleValue();
     }
+
+//除法：
+
+    /**
+     * 保留小数
+     * @param num    原始数据
+     * @param floatNum 保留的位数
+     * @return
+     */
+    public static String changeFloat(double num, int floatNum) {
+        StringBuffer buffer =new StringBuffer();
+        buffer.append("0");
+        if (floatNum>0){
+            buffer.append(".");
+            for (int i = 0; i < floatNum; i++) {
+                buffer.append("0");
+            }
+        }
+        DecimalFormat df1 = new DecimalFormat(buffer.toString());
+        String str = df1.format(num);
+        return str;
+    }
+
+
 
 
 }
