@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Poi;
 import com.amap.api.navi.AmapNaviPage;
@@ -23,7 +22,6 @@ import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderCreatBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
-import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItem;
@@ -41,7 +39,6 @@ import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.recycleview.holder.PeakHolder;
 import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.SwitchTextLayout;
 import com.sang.common.widget.dialog.CenterAlertDialog;
@@ -122,7 +119,7 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
             states.add(s);
         }
 
-        if (roleState!= OrderDetailItemControl.RoleState.CARGO_OWNER){
+        if (roleState != OrderDetailItemControl.RoleState.CARGO_OWNER) {
             states.remove(1);
         }
 
@@ -164,7 +161,7 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
                         itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                onCheckPath(data);
+//                                onCheckPath(data);
                             }
                         });
                     }
@@ -207,7 +204,7 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
 
         if (view.getId() == R.id.switch_left) {//时间
             leftSelection = position;
-            switchLeft.setTitle(position==0?getString(R.string.order_main_start_time): times.get(position));
+            switchLeft.setTitle(position == 0 ? getString(R.string.order_main_start_time) : times.get(position));
             String time = null;
             switch (position) {
                 case 0://全部
@@ -234,11 +231,17 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
             queryBean.setHasFreight(null);
             if (position == 0) {//全部状态
                 queryBean.setQueryStatus(null);
-            } else if (position == 1&&roleState== OrderDetailItemControl.RoleState.CARGO_OWNER) {//待支付状态
+            } else if (position == 1 && roleState == OrderDetailItemControl.RoleState.CARGO_OWNER) {//待支付状态
                 queryBean.setQueryStatus(null);
                 queryBean.setHasFreight(false);
             } else {
-                queryBean.setQueryStatus((1+position) + "");
+                queryBean.setHasFreight(true);
+                if (roleState == OrderDetailItemControl.RoleState.CARGO_OWNER) {
+                    queryBean.setQueryStatus((position) + "");
+                } else {
+                    queryBean.setQueryStatus((1 + position) + "");
+
+                }
             }
         }
         queryData(true, true);
@@ -336,17 +339,15 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
     }
 
 
-
-    @Subscribe( threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(final OrderEvent.OrderUpdate event) {
         if (event != null) {
-            if (rv!=null&&roleState!=null&&!roleState.equals(event.roleState)){
+            if (rv != null && roleState != null && !roleState.equals(event.roleState)) {
                 rv.smoothScrollToPosition(0);
             }
-            queryData(true,true);
+            queryData(true, true);
         }
     }
-
 
 
     /**
@@ -479,7 +480,7 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
                             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("正在获取当前位置，请稍后再试");
                         } else if (v > Param.ENTRY_MIN) {//距离过大，超过确认订单的最大距离
 //                        if (false) {
-                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("距离发货地点还有"+(v/1000)+"公里，无法确认到达");
+                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("距离发货地点还有" + (v / 1000) + "公里，无法确认到达");
                         } else {
                             HttpOrderFactory.driverStart(orderBean.getId())
                                     .subscribe(new NetObserver<String>(OrderMainFragmet.this) {
@@ -554,7 +555,7 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
                             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("正在获取当前位置，请稍后再试");
                         } else if (v > Param.ENTRY_MIN) {//距离过大，超过确认订单的最大距离
 //                        if (false) {
-                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("距离收货地点还有"+(v/1000)+"公里，无法确认到达");
+                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("距离收货地点还有" + (v / 1000) + "公里，无法确认到达");
                         } else {
                             HttpOrderFactory.entryArrive(orderBean.getId())
                                     .subscribe(new NetObserver<String>(OrderMainFragmet.this) {
