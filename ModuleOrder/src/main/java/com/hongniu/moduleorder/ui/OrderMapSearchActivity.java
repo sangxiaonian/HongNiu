@@ -22,9 +22,12 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.moduleorder.R;
+import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
+import com.sang.common.event.BusFactory;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
+import com.sang.common.utils.DeviceUtils;
 
 import java.util.List;
 
@@ -37,7 +40,6 @@ public class OrderMapSearchActivity extends RefrushActivity<PoiItem> {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (!TextUtils.isEmpty(etSearch.getText().toString().trim())){
-                refresh.autoRefresh();
                 queryData(true);
 
             }
@@ -50,6 +52,7 @@ public class OrderMapSearchActivity extends RefrushActivity<PoiItem> {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_map_search);
         setToolbarTitle("");
+        isFirst=false;
         initView();
         initData();
         initListener();
@@ -71,8 +74,9 @@ public class OrderMapSearchActivity extends RefrushActivity<PoiItem> {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     queryData(true);
+                    DeviceUtils.hideSoft(etSearch);
                 }
-                return false;
+                return true;
             }
         });
         etSearch.addTextChangedListener(new TextWatcher() {
@@ -126,7 +130,8 @@ public class OrderMapSearchActivity extends RefrushActivity<PoiItem> {
                             @Override
                             public void onClick(View v) {
                                 img.setVisibility(View.VISIBLE);
-
+                                BusFactory.getBus().post(new OrderEvent.SearchPioItem(data));
+                                onBackPressed();
                             }
                         });
                     }

@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         android:background="@color/color_white"
         android:gravity="center">
 
@@ -29,7 +29,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:textColorHint="#c8c8c8"
-            android:hint="在哪收货"
+            android:hint="请输入查询地址"
             android:textSize="13sp" />
     </LinearLayout>
     <com.hongniu.baselibrary.widget.XRefreshLayout
@@ -43,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:empty_img="@mipmap/icon_zwdd_260"
-            app:empty_title="@string/order_main_no_order" />
+            app:empty_title="@string/order_map_search_error" />
     </com.hongniu.baselibrary.widget.XRefreshLayout>
 
 

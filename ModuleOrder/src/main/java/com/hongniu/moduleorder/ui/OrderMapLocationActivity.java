@@ -57,6 +57,7 @@ public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implement
     private AMap aMap;
     private Marker marker;
     MapUtils mapUtils;
+    private PoiItem searchKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +107,8 @@ public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implement
 
     @Override
     protected Observable<CommonBean<PageBean<PoiItem>>> getListDatas() {
-        PoiSearch.Query query = new PoiSearch.Query(etSearch.getText().toString().trim(), "", "");
+        JLog.i(searchKey+">>>>"+searchBound);
+        PoiSearch.Query  query = new PoiSearch.Query( searchKey==null?"":searchKey.getTitle(), "", "");
 
 
 //keyWord表示搜索字符串，
@@ -145,7 +147,6 @@ public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implement
                         itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-
                                 selectPositio = position;
                                 upData = false;
                                 adapter.notifyDataSetChanged();
@@ -161,6 +162,7 @@ public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implement
         };
     }
 
+    //移动地图的时候是否更新数据
     private boolean upData = true;
 
     @Override
@@ -244,6 +246,7 @@ public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implement
         if (upData) {
             searchBound = new PoiSearch.SearchBound(new LatLonPoint(latitude, longitude), 1000);
             selectPositio = 0;
+            searchKey=null;
             queryData(true);
         } else {
             upData = true;
@@ -259,8 +262,12 @@ public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implement
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(final OrderEvent.SearchPioItem event) {
         if (event != null) {
-            etSearch.setText(event.t.getTitle());
-            queryData(true,true);
+            this.searchKey = event.t;
+            upData=false;
+            searchBound=null;
+            selectPositio = 0;
+            mapUtils.moveTo(searchKey.getLatLonPoint().getLatitude(),searchKey.getLatLonPoint().getLongitude());
+            queryData(true, true);
         }
     }
 

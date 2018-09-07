@@ -63,7 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:empty_img="@mipmap/icon_zwcl_240"
-            app:empty_title="搜不到数据" />
+            app:empty_title="@string/order_map_search_error" />
 
     </com.hongniu.baselibrary.widget.XRefreshLayout>
 

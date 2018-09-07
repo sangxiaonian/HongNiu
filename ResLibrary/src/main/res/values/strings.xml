@@ -84,7 +84,7 @@
     <string name="login_sms_reget_code">重新获取验证码</string>
     <string name="order_main_creat_order">我要下单</string>
     <string name="carnum_error">车牌号错误</string>
-
+    <string name="order_map_search_error">抱歉，没有搜索到结果，请换个关键词试试</string>
 
 
 </resources>
