@@ -173,6 +173,9 @@ public class OrderMapCheckPathActivity extends BaseActivity implements TraceList
 
     @Override
     public void onRequestFailed(int i, String s) {
+
+        JLog.i(i+">>>>>>>>>>>>>>>");
+
             onTaskFail(new NetException(i,s),i+"",s);
     }
 
@@ -197,7 +200,6 @@ public class OrderMapCheckPathActivity extends BaseActivity implements TraceList
         mapView.getMap().addPolyline(lineOption);
    }
     private void drawPathWithTrace(final OrderDetailBean bean){
-
 
         HttpOrderFactory.getPath(bean.getId())
                 .map(new Function<List<LocationBean>, List<TraceLocation>>() {

@@ -31,8 +31,8 @@ public class PermissionUtils {
     public static void applyMap(Activity activity, final onApplyPermission permission) {
         XXPermissions.with(activity)
                 //.constantRequest() //可设置被拒绝后继续申请，直到用户授权或者永久拒绝
-                .permission(Permission.WRITE_EXTERNAL_STORAGE, Permission.ACCESS_COARSE_LOCATION) //支持请求安装权限和悬浮窗权限
-                .permission(Permission.Group.STORAGE) //支持多个权限组进行请求，不指定则默以清单文件中的危险权限进行请求
+//                .permission(Permission.WRITE_EXTERNAL_STORAGE, Permission.ACCESS_COARSE_LOCATION)
+                .permission(Permission.Group.STORAGE,Permission.Group.LOCATION,new String[]{Permission.READ_PHONE_STATE}) //支持多个权限组进行请求，不指定则默以清单文件中的危险权限进行请求
                 .request(new OnPermission() {
 
                     @Override

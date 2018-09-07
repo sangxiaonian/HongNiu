@@ -63,6 +63,7 @@ public class LoactionUpUtils {
             }
             notifyQueue(temp);
             lastLoaction = new LatLng(latitude, longitude);
+            temp.clear();
         } else if (v < minDis) {
             JLog.d("上次位置：" + lastLoaction.latitude +
                     "\n此次位置：" + latitude
@@ -126,7 +127,6 @@ public class LoactionUpUtils {
                 .map(new Function<CommonBean<String>, CommonBean<String>>() {
                     @Override
                     public CommonBean<String> apply(CommonBean<String> stringCommonBean) throws Exception {
-                        System.out.println(2 / 0);
                         return stringCommonBean;
                     }
                 })
