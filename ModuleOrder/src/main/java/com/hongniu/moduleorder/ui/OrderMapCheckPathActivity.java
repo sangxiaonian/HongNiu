@@ -176,7 +176,7 @@ public class OrderMapCheckPathActivity extends BaseActivity implements TraceList
 
         JLog.i(i+">>>>>>>>>>>>>>>");
 
-            onTaskFail(new NetException(i,s),i+"",s);
+            onTaskFail(new NetException(i,s),i+"",s+">>"+i);
     }
 
     @Override
@@ -235,14 +235,36 @@ public class OrderMapCheckPathActivity extends BaseActivity implements TraceList
                 .compose(RxUtils.<List<TraceLocation>>getSchedulersObservableTransformer())
                 .subscribe(new BaseObserver<List<TraceLocation>>(this) {
                     @Override
-                    public void onNext(List<TraceLocation> result) {
+                    public void onNext(final List<TraceLocation> result) {
                         super.onNext(result);
                         if (result == null || result.isEmpty()) {
                             showAleart("当前订单暂无位置信息");
                             onTaskSuccess();
                         } else {
                             mTraceClient.queryProcessedTrace(1, result,
-                                    LBSTraceClient.TYPE_AMAP, OrderMapCheckPathActivity.this);
+                                    LBSTraceClient.TYPE_AMAP, new TraceListener() {
+                                        @Override
+                                        public void onRequestFailed(int i, String s) {
+
+                                            List<LatLng> list=new ArrayList<>();
+                                            for (TraceLocation location : result) {
+                                                list.add(new LatLng(location.getLatitude(),location.getLongitude()));
+                                            }
+                                            drawPath(list);
+                                            onTaskSuccess();
+                                        }
+
+                                        @Override
+                                        public void onTraceProcessing(int i, int i1, List<LatLng> list) {
+
+                                        }
+
+                                        @Override
+                                        public void onFinished(int i, List<LatLng> list, int i1, int i2) {
+                                            onTaskSuccess();
+                                            drawPath(list);
+                                        }
+                                    });
                         }
                     }
 

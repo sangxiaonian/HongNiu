@@ -45,6 +45,7 @@
     <string name="order_main_title">我是货主</string>
     <string name="order_main_start_time">发车时间</string>
     <string name="order_main_no_order">暂无订单</string>
+    <string name="order_main_map_no_location">抱歉，没有搜索到结果，请换个关键词试试</string>
 
     <!--订单支付-->
     <string name="order_pay">支付订单</string>

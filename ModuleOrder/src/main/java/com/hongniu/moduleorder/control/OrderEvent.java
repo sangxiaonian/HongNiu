@@ -26,6 +26,13 @@ public class OrderEvent {
             this.t = t;
         }
     }
+  public static class SearchPioItem implements IBus.IEvent {
+        public PoiItem t;
+
+        public SearchPioItem(PoiItem t) {
+            this.t = t;
+        }
+    }
 
     /**
      * 订单更新列表

@@ -1,33 +1,22 @@
 package com.hongniu.moduleorder.ui;
 
+import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.location.Location;
 import android.os.Bundle;
-import android.view.KeyEvent;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.amap.api.location.AMapLocation;
-import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
-import com.amap.api.maps.CameraUpdate;
-import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
-import com.amap.api.maps.model.CameraPosition;
-import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;
-import com.amap.api.services.geocoder.GeocodeResult;
-import com.amap.api.services.geocoder.GeocodeSearch;
-import com.amap.api.services.geocoder.RegeocodeResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.base.RefrushActivity;
@@ -36,7 +25,6 @@ import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
-import com.hongniu.moduleorder.control.OrderMapListener;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.sang.common.event.BusFactory;
 import com.sang.common.event.IBus;
@@ -47,6 +35,9 @@ import com.sang.common.utils.ToastUtils;
 import com.sang.thirdlibrary.map.MapUtils;
 import com.sang.thirdlibrary.map.MarkUtils;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -55,18 +46,17 @@ import io.reactivex.Observable;
  * 定位，选择当前所在点的Activity，
  */
 @Route(path = ArouterParamOrder.activity_map_loaction)
-public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implements    MapUtils.OnMapChangeListener {
+public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implements MapUtils.OnMapChangeListener, View.OnClickListener {
 
 
-    private EditText etSearch;
-    private int selectPositio  ;
+    private TextView etSearch;
+    private int selectPositio;
     private boolean start;
     private PoiSearch.SearchBound searchBound;
     private MapView mMapView;
     private AMap aMap;
     private Marker marker;
-MapUtils mapUtils;
-    private GeocodeSearch geocodeSearch;
+    MapUtils mapUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +73,7 @@ MapUtils mapUtils;
         initView();
         initData();
         initListener();
-        mapUtils=new MapUtils();
+        mapUtils = new MapUtils();
         mapUtils.init(this, aMap);
         mapUtils.setMapListener(this);
 
@@ -112,23 +102,13 @@ MapUtils mapUtils;
             etSearch.setHint("在哪里收货");
         }
 
-        etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    searchBound = null;
-                    queryData(true, true);
-                }
-                return false;
-            }
-        });
-
-
     }
 
     @Override
     protected Observable<CommonBean<PageBean<PoiItem>>> getListDatas() {
         PoiSearch.Query query = new PoiSearch.Query(etSearch.getText().toString().trim(), "", "");
+
+
 //keyWord表示搜索字符串，
 //第二个参数表示POI搜索类型，二者选填其一，选用POI搜索类型时建议填写类型代码，码表可以参考下方（而非文字）
 //cityCode表示POI搜索区域，可以是城市编码也可以是城市名称，也可以传空字符串，空字符串代表全国在全国范围内进行搜索
@@ -140,6 +120,7 @@ MapUtils mapUtils;
         }
         return HttpOrderFactory.searchPio(poiSearch);
     }
+
 
     @Override
     protected XAdapter<PoiItem> getAdapter(List<PoiItem> datas) {
@@ -165,11 +146,11 @@ MapUtils mapUtils;
                             @Override
                             public void onClick(View v) {
 
-                                    selectPositio = position;
-                                    upData=false;
-                                    adapter.notifyDataSetChanged();
-                                    MarkUtils.moveMark(marker,data.getLatLonPoint().getLatitude(), data.getLatLonPoint().getLongitude());
-                                    mapUtils.moveTo(data.getLatLonPoint().getLatitude(), data.getLatLonPoint().getLongitude());
+                                selectPositio = position;
+                                upData = false;
+                                adapter.notifyDataSetChanged();
+                                MarkUtils.moveMark(marker, data.getLatLonPoint().getLatitude(), data.getLatLonPoint().getLongitude());
+                                mapUtils.moveTo(data.getLatLonPoint().getLatitude(), data.getLatLonPoint().getLongitude());
 
 
                             }
@@ -180,11 +161,14 @@ MapUtils mapUtils;
         };
     }
 
-    private boolean upData=true;
+    private boolean upData = true;
 
     @Override
     protected void initListener() {
         super.initListener();
+
+        etSearch.setOnClickListener(this);
+
         setToolbarRightClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -246,7 +230,7 @@ MapUtils mapUtils;
      */
     @Override
     public void onCameraChange(double latitude, double longitude) {
-        MarkUtils.moveMark(marker,latitude,longitude);
+        MarkUtils.moveMark(marker, latitude, longitude);
     }
 
     /**
@@ -261,8 +245,22 @@ MapUtils mapUtils;
             searchBound = new PoiSearch.SearchBound(new LatLonPoint(latitude, longitude), 1000);
             selectPositio = 0;
             queryData(true);
-        }else {
-            upData=true;
+        } else {
+            upData = true;
+        }
+    }
+
+
+    @Override
+    protected boolean getUseEventBus() {
+        return true;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(final OrderEvent.SearchPioItem event) {
+        if (event != null) {
+            etSearch.setText(event.t.getTitle());
+            queryData(true,true);
         }
     }
 
@@ -296,6 +294,20 @@ MapUtils mapUtils;
     }
 
 
+    /**
+     * Called when a view has been clicked.
+     *
+     * @param v The view that was clicked.
+     */
+    @Override
+    public void onClick(View v) {
+        int i = v.getId();
+        if (i == R.id.et_search) {
 
-
+            Intent intent = new Intent(mContext, OrderMapSearchActivity.class);
+            ActivityOptionsCompat optionsCompat =
+                    ActivityOptionsCompat.makeSceneTransitionAnimation(this, etSearch, "search");
+            startActivity(intent, optionsCompat.toBundle());
+        }
+    }
 }

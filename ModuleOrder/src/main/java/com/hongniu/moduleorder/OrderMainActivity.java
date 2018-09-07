@@ -36,7 +36,6 @@ import com.sang.common.event.BusFactory;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.JLog;
-import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.SwitchTextLayout;
 import com.sang.common.widget.dialog.BottomAlertDialog;
 import com.sang.common.widget.dialog.CenterAlertDialog;
@@ -266,11 +265,11 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                 DeviceUtils.isOpenGps(mContext);
 
                 JLog.i("-------接收到运输相关信息-----");
-                if (!DeviceUtils.isOpenGps(mContext)){
+                if (!DeviceUtils.isOpenGps(mContext)) {
                     showAleart("为了更准确的记录您的轨迹信息，请打开GPS");
                 }
                 upLoactionUtils = new LoactionUpUtils();
-                upLoactionUtils.setOrderInfor(event.orderID, event.cardID,event.destinationLatitude,event.destinationLongitude);
+                upLoactionUtils.setOrderInfor(event.orderID, event.cardID, event.destinationLatitude, event.destinationLongitude);
             } else {
                 if (upLoactionUtils != null) {
                     upLoactionUtils.onDestroy();
@@ -525,9 +524,9 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
 
-        JLog.d("测试后台打点："+DeviceUtils.isOpenGps(mContext)
-                    +"\n Latitude："+aMapLocation.getLatitude()
-                    +"\n Longitude："+aMapLocation.getLongitude()
+        JLog.d("测试后台打点：" + DeviceUtils.isOpenGps(mContext)
+                + "\n Latitude：" + aMapLocation.getLatitude()
+                + "\n Longitude：" + aMapLocation.getLongitude()
 
         );
         BusFactory.getBus().postSticky(new Event.UpLoaction(aMapLocation.getLatitude(), aMapLocation.getLongitude()));
