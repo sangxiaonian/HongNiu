@@ -1,6 +1,7 @@
 package com.hongniu.moduleorder.ui;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -29,6 +30,7 @@ public class OrderInsuranceResultActivity extends BaseActivity implements View.O
     private Button btCheck,btFinish;
     private TextView tvInsurance,tvInsuranceState;
     OrderCreatBean insurance;
+    String error;
     private ImageView img;
 
     @Override
@@ -38,7 +40,13 @@ public class OrderInsuranceResultActivity extends BaseActivity implements View.O
         setToolbarTitle("");
         insurance = getIntent().getParcelableExtra(Param.TRAN);
 
+
         success= insurance!=null;
+
+        if (!success){
+            error=getIntent().getStringExtra(Param.TRAN);
+        }
+
         initView();
         initData();
         initListener();
@@ -63,7 +71,7 @@ public class OrderInsuranceResultActivity extends BaseActivity implements View.O
         if (insurance!=null){
             tvInsurance.setText("保单号"+insurance.getPolicyNo());
         }
-        tvInsuranceState.setText(success?R.string.order_insurance_creat_success:R.string.order_insurance_creat_fail);
+        tvInsuranceState.setText(success?getString(R.string.order_insurance_creat_success):((TextUtils.isEmpty(error))?getString(R.string.order_insurance_creat_fail):error));
         btFinish.setText(success?R.string.finish:R.string.order_insurance_return_home);
         ImageLoader.getLoader().load(mContext,img,success?R.mipmap.icon_cgts_260:R.mipmap.insurance_fail);
 

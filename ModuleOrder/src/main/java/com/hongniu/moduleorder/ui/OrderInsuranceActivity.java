@@ -14,6 +14,7 @@ import com.hongniu.baselibrary.entity.CreatInsuranceBean;
 import com.hongniu.moduleorder.R;
 import com.hongniu.baselibrary.entity.OrderCreatBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
+import com.sang.common.net.error.NetException;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.widget.ColorProgress;
 
@@ -37,6 +38,7 @@ public class OrderInsuranceActivity extends BaseActivity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+
             if (msg.what == 0) {
                 random += ConvertUtils.getRandom(7, 11);
                 if (random > 99) {
@@ -53,6 +55,7 @@ public class OrderInsuranceActivity extends BaseActivity {
             } else if (msg.what == FAIL){
                 ArouterUtils.getInstance()
                         .builder(ArouterParamOrder.activity_insurance_creat_result)
+                        .withString(Param.TRAN, (String) msg.obj)
                         .navigation(mContext);
                 finish();
             }
@@ -81,7 +84,14 @@ public class OrderInsuranceActivity extends BaseActivity {
                         @Override
                         public void onError(Throwable e) {
                             super.onError(e);
-                            handler.sendEmptyMessage(FAIL);
+                            Message msg=Message.obtain();
+                            if (e instanceof NetException) {
+                                msg.obj=((NetException) e).getErrorMSg();
+                            }else {
+                                msg.obj=e.getMessage();
+                            }
+                            msg.what=FAIL;
+                            handler.sendMessage(msg);
                         }
                     });
         }else {
