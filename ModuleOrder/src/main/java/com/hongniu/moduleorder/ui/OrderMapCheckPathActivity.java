@@ -13,6 +13,7 @@ import com.amap.api.maps.model.BitmapDescriptor;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.LatLngBounds;
 import com.amap.api.maps.model.PolylineOptions;
 import com.amap.api.navi.enums.LaneAction;
 import com.amap.api.trace.LBSTraceClient;
@@ -34,7 +35,9 @@ import com.sang.common.net.rx.RxUtils;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.JLog;
+import com.sang.thirdlibrary.map.MapUtils;
 import com.sang.thirdlibrary.map.MarkUtils;
+import com.sang.thirdlibrary.map.utils.MapConverUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -49,7 +52,7 @@ import io.reactivex.functions.Function;
  * 查看轨迹
  */
 @Route(path = ArouterParamOrder.activity_map_check_path)
-public class OrderMapCheckPathActivity extends BaseActivity implements TraceListener {
+public class OrderMapCheckPathActivity extends BaseActivity  {
 
 
     private MapView mapView;
@@ -58,6 +61,7 @@ public class OrderMapCheckPathActivity extends BaseActivity implements TraceList
     private AMap aMap;
     private LBSTraceClient mTraceClient;
     private PolylineOptions lineOption;
+    private OrderDetailBean bean;
 
 
     @Override
@@ -128,7 +132,7 @@ public class OrderMapCheckPathActivity extends BaseActivity implements TraceList
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onMessageEvent(OrderEvent.CheckPathEvent event) {
         if (event != null && event.getBean() != null) {
-            final OrderDetailBean bean = event.getBean();
+            bean = event.getBean();
             item.setIdentity(event.getRoaleState());
             item.setInfor(bean);
             item.postDelayed(new Runnable() {
@@ -145,57 +149,24 @@ public class OrderMapCheckPathActivity extends BaseActivity implements TraceList
     }
 
     private void drawPath(final OrderDetailBean bean) {
-
-        MarkUtils.addMark(aMap,
-                BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), com.sang.thirdlibrary.R.mipmap.start))
-                , bean.getStartLatitude(), bean.getStartLongitude()
-        );
-        MarkUtils.addMark(aMap,
-                BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), com.sang.thirdlibrary.R.mipmap.end))
-                , bean.getDestinationLatitude(), bean.getDestinationLongitude()
-        );
-
         drawPathWithTrace(bean);
-
-
-
-
-    }
-
-    public void moveTo(double latitude, double longitude) {
-        LatLng latLng = new LatLng(latitude, longitude);
-        CameraUpdate mCameraUpdate = CameraUpdateFactory.newCameraPosition(new CameraPosition(latLng, 15, 30, 30));
-        aMap.moveCamera(mCameraUpdate);
-//        aMap.moveCamera(CameraUpdateFactory.scrollBy(0, DeviceUtils.dip2px(mContext, 300)));
-
     }
 
 
-    @Override
-    public void onRequestFailed(int i, String s) {
-
-        JLog.i(i+">>>>>>>>>>>>>>>");
-
-            onTaskFail(new NetException(i,s),i+"",s+">>"+i);
-    }
-
-    @Override
-    public void onTraceProcessing(int i, int i1, List<LatLng> list) {
-
-    }
-
-    @Override
-    public void onFinished(int i, List<LatLng> list, int i1, int i2) {
-            drawPath(list);
-            onTaskSuccess();
-    }
 
     /**
      * 绘制轨迹
      * @param linePatch
      */
     private void drawPath(List<LatLng> linePatch){
-        JLog.i(linePatch.size()+">>>>");
+
+        LatLngBounds.Builder builder2 = new LatLngBounds.Builder();
+        builder2.include(new LatLng(bean.getStartLatitude(),bean.getStartLongitude()));
+        builder2.include(new LatLng(bean.getDestinationLatitude(),bean.getDestinationLongitude()));
+        LatLngBounds latlngBounds = builder2.build();
+        aMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latlngBounds,DeviceUtils.dip2px(mContext,50)));
+
+
         lineOption.addAll(linePatch);
         mapView.getMap().addPolyline(lineOption);
    }
@@ -223,15 +194,7 @@ public class OrderMapCheckPathActivity extends BaseActivity implements TraceList
                         return result;
                     }
                 })
-                .map(new Function<List<TraceLocation>, List<TraceLocation>>() {
-                    @Override
-                    public List<TraceLocation> apply(List<TraceLocation> latLngs) throws Exception {
-                        if (!latLngs.isEmpty()) {
-                            moveTo(latLngs.get(0).getLatitude(), latLngs.get(0).getLongitude());
-                        }
-                        return latLngs;
-                    }
-                })
+
                 .compose(RxUtils.<List<TraceLocation>>getSchedulersObservableTransformer())
                 .subscribe(new BaseObserver<List<TraceLocation>>(this) {
                     @Override
@@ -250,6 +213,7 @@ public class OrderMapCheckPathActivity extends BaseActivity implements TraceList
                                             for (TraceLocation location : result) {
                                                 list.add(new LatLng(location.getLatitude(),location.getLongitude()));
                                             }
+                                            JLog.e("纠偏失败");
                                             drawPath(list);
                                             onTaskSuccess();
                                         }
@@ -271,6 +235,7 @@ public class OrderMapCheckPathActivity extends BaseActivity implements TraceList
                     @Override
                     public void onComplete() {
 //                        super.onComplete();
+                        drawMark(bean);
 
                     }
                 });
@@ -296,15 +261,7 @@ public class OrderMapCheckPathActivity extends BaseActivity implements TraceList
                         return result;
                     }
                 })
-                .map(new Function<List<LatLng>, List<LatLng>>() {
-                    @Override
-                    public List<LatLng> apply(List<LatLng> latLngs) throws Exception {
-                        if (!latLngs.isEmpty()) {
-                            moveTo(latLngs.get(0).latitude, latLngs.get(0).longitude);
-                        }
-                        return latLngs;
-                    }
-                })
+
                 .compose(RxUtils.<List<LatLng>>getSchedulersObservableTransformer())
                 .subscribe(new BaseObserver<List<LatLng>>(this) {
                     @Override
@@ -316,10 +273,29 @@ public class OrderMapCheckPathActivity extends BaseActivity implements TraceList
                             drawPath(result);
                         }
                     }
+
+                    @Override
+                    public void onComplete() {
+                        super.onComplete();
+                        drawMark(bean);
+
+                    }
                 });
 
 
    }
+
+    private void drawMark(OrderDetailBean bean) {
+
+        MarkUtils.addMark(aMap,
+                BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(),  R.mipmap.start))
+                , bean.getStartLatitude(), bean.getStartLongitude()
+        );
+        MarkUtils.addMark(aMap,
+                BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(),  R.mipmap.end))
+                , bean.getDestinationLatitude(), bean.getDestinationLongitude()
+        );
+    }
 
 
 }

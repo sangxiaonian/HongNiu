@@ -1,10 +1,14 @@
 package com.sang.thirdlibrary.map;
 
+import android.graphics.BitmapFactory;
+
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.model.BitmapDescriptor;
+import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
+import com.sang.thirdlibrary.R;
 
 /**
  * 作者： ${桑小年} on 2018/8/28.
@@ -28,8 +32,10 @@ public class MarkUtils {
         markerOption.draggable(false);//设置Marker可拖动
         markerOption.icon(bitmap);
         // 将Marker设置为贴地显示，可以双指下拉地图查看效果
-        markerOption.setFlat(true);//设置marker平贴地图效果
+//        markerOption.setFlat(true);//设置marker平贴地图效果
         aMap.addMarker(markerOption);
+
+
     }
 
     public static void moveMark(Marker mark, double latitude, double longitude){
