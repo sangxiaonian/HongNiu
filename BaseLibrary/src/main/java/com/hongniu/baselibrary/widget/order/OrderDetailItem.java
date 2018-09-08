@@ -100,83 +100,100 @@ public class OrderDetailItem extends FrameLayout {
     }
 
 
-
-
     public void setInfor(OrderDetailBean data) {
         this.orderBean = data;
 
-        if(roleState==null){
-            roleState= CommonOrderUtils.getRoleState(data.getRoleType());
+        if (roleState == null) {
+            roleState = CommonOrderUtils.getRoleState(data.getRoleType());
         }
         setIdentity(roleState);
         setEndLocation(data.getDestinationInfo());
         setStartLocation(data.getStartPlaceInfo());
         setOrder(data.getOrderNum());
-        if (data.getDeliveryDate()!=null) {
+        if (data.getDeliveryDate() != null) {
             setTiem(ConvertUtils.formatString(data.getDeliveryDate(), "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd"));
         }
 
 
         String money = data.getMoney();
-        if (!TextUtils.isEmpty(money)){
+        if (!TextUtils.isEmpty(money)) {
             String s = TextUtils.isEmpty(data.getPayWayDes()) ? "" : ("(" + data.getPayWayDes() + ")");
-            setPrice(money+s);
+            setPrice("运费：￥" + money + s);
 
+        } else {
+            setPrice("");
         }
 
         setOrderState(data.getOrderState());
 
-        if (data.getOrderState()== OrderDetailItemControl.OrderState.IN_TRANSIT){//正在运输中
+        if (data.getOrderState() == OrderDetailItemControl.OrderState.IN_TRANSIT) {//正在运输中
             progress.showProgress(true);
-            if (data.getLatitude()>0&&data.getLongitude()>0) {
+            if (data.getLatitude() > 0 && data.getLongitude() > 0) {
                 float totale = MapConverUtils.caculeDis(data.getStartLatitude(), data.getStartLongitude(), data.getDestinationLatitude(), data.getDestinationLongitude());
                 float current = MapConverUtils.caculeDis(data.getStartLatitude(), data.getStartLongitude(), data.getLatitude(), data.getLongitude());
-                progress.setCurent(current*100 / (totale == 0 ? 1 : totale));
-            }else {
+                progress.setCurent(current * 100 / (totale == 0 ? 1 : totale));
+            } else {
                 progress.setCurent(0);
             }
-        }else {
+            //已到达
+        } else if (data.getOrderState() == OrderDetailItemControl.OrderState.HAS_ARRIVED) {
+            progress.showProgress(true);
+            progress.setCurent(100);
+            //已收货
+        } else if (data.getOrderState() == OrderDetailItemControl.OrderState.RECEIPT) {
+            progress.showProgress(true);
+            progress.setCurent(100);
+
+        } else {
             progress.showProgress(false);
         }
 
 
-
-        if (roleState!=null){
-            switch (roleState){
+        if (roleState != null) {
+            switch (roleState) {
                 case DRIVER:
 
-                    setContent(data.getDepartNum(), data.getCarNum(), "货主：",data.getUserName(), data.getUserMobile()
-                            , data.getGoodName(),"车主：",  data.getOwnerName(), data.getOwnerMobile()
-                            ,data.isInsurance(),data.getPolicyMoney()
+                    setContent(data.getDepartNum(), data.getCarNum(), "货主：", data.getUserName(), data.getUserMobile()
+                            , data.getGoodName(), "车主：", data.getOwnerName(), data.getOwnerMobile()
+                            , data.isInsurance(), data.getPolicyMoney()
                     );
                     break;
                 case CAR_OWNER:
-                    setContent(data.getDepartNum(), data.getCarNum(), "货主：",data.getUserName(), data.getUserMobile()
-                            , data.getGoodName(),"司机：", data.getDriverName(), data.getDriverMobile()
-                            ,data.isInsurance(),data.getPolicyMoney()
+                    setContent(data.getDepartNum(), data.getCarNum(), "货主：", data.getUserName(), data.getUserMobile()
+                            , data.getGoodName(), "司机：", data.getDriverName(), data.getDriverMobile()
+                            , data.isInsurance(), data.getPolicyMoney()
                     );
                     break;
                 case CARGO_OWNER:
-                    setContent(data.getDepartNum(), data.getCarNum(), "车主：",data.getOwnerName(), data.getOwnerMobile()
-                            , data.getGoodName(),"司机：", data.getDriverName(), data.getDriverMobile()
-                            ,data.isInsurance(),data.getPolicyMoney()
+                    setContent(data.getDepartNum(), data.getCarNum(), "车主：", data.getOwnerName(), data.getOwnerMobile()
+                            , data.getGoodName(), "司机：", data.getDriverName(), data.getDriverMobile()
+                            , data.isInsurance(), data.getPolicyMoney()
                     );
                     break;
-                    default:
-                        setContent(data.getDepartNum(), data.getCarNum(), "车主：",data.getOwnerName(), data.getOwnerMobile()
-                                , data.getGoodName(),"司机：", data.getDriverName(), data.getDriverMobile()
-                                ,data.isInsurance(),data.getPolicyMoney()
-                        );
-                        break;
+                default:
+                    setContent(data.getDepartNum(), data.getCarNum(), "车主：", data.getOwnerName(), data.getOwnerMobile()
+                            , data.getGoodName(), "司机：", data.getDriverName(), data.getDriverMobile()
+                            , data.isInsurance(), data.getPolicyMoney()
+                    );
+                    break;
             }
-        }else {
-            setContent(data.getDepartNum(), data.getCarNum(), "车主：",data.getOwnerName(), data.getOwnerMobile()
-                    , data.getGoodName(),"司机：", data.getDriverName(), data.getDriverMobile()
-                    ,data.isInsurance(),data.getPolicyMoney()
+        } else {
+            setContent(data.getDepartNum(), data.getCarNum(), "车主：", data.getOwnerName(), data.getOwnerMobile()
+                    , data.getGoodName(), "司机：", data.getDriverName(), data.getDriverMobile()
+                    , data.isInsurance(), data.getPolicyMoney()
             );
         }
 
         buildButton(data.isInsurance());
+
+        //对于司机，不显示运费
+        if (roleState == OrderDetailItemControl.RoleState.DRIVER) {
+            setPrice("");
+            hideBottom(bt_left.getVisibility() != VISIBLE && bt_right.getVisibility() != VISIBLE);
+
+        }
+
+
     }
 
 
@@ -276,34 +293,33 @@ public class OrderDetailItem extends FrameLayout {
      * @param driverName    司机姓名
      * @param driverPhone   司机电话
      */
-    public void setContent(String startNum, String carNum,String roleTop, String carOwnerName,
-                           final String carOwnerPhone, String cargo,String roleBottom,
-                           String driverName, final String driverPhone,boolean hasInsurance,String insuranceMoney) {
+    public void setContent(String startNum, String carNum, String roleTop, String carOwnerName,
+                           final String carOwnerPhone, String cargo, String roleBottom,
+                           String driverName, final String driverPhone, boolean hasInsurance, String insuranceMoney) {
         tv_order_detail.setMovementMethod(LinkMovementMethod.getInstance());
-        tv_order_detail.setText(getContent(startNum, carNum, roleTop,carOwnerName, carOwnerPhone, cargo
-                ,roleBottom, driverName, driverPhone,hasInsurance,insuranceMoney
+        tv_order_detail.setText(getContent(startNum, carNum, roleTop, carOwnerName, carOwnerPhone, cargo
+                , roleBottom, driverName, driverPhone, hasInsurance, insuranceMoney
         ));
     }
 
     /**
      * 获取中间内容
      *
-     * @param startNum      发车编号
-     * @param carNum        车牌号
-     * @param roleTop       第一个角色名字
-     * @param carOwnerName  车主姓名
-     * @param carOwnerPhone 车主电话
-     * @param cargo         货物
+     * @param startNum       发车编号
+     * @param carNum         车牌号
+     * @param roleTop        第一个角色名字
+     * @param carOwnerName   车主姓名
+     * @param carOwnerPhone  车主电话
+     * @param cargo          货物
      * @param roleBottom     下边角色
-     *
-     * @param driverName    司机姓名
-     * @param driverPhone   司机电话
+     * @param driverName     司机姓名
+     * @param driverPhone    司机电话
      * @param hasInsurance   是否支付保费
-     * @param insuranceMoney   保费金额
+     * @param insuranceMoney 保费金额
      */
-    private SpannableStringBuilder getContent(String startNum, String carNum,String roleTop, String carOwnerName,
-                                              final String carOwnerPhone, String cargo,String roleBottom,
-                                              String driverName, final String driverPhone,boolean hasInsurance,String insuranceMoney) {
+    private SpannableStringBuilder getContent(String startNum, String carNum, String roleTop, String carOwnerName,
+                                              final String carOwnerPhone, String cargo, String roleBottom,
+                                              String driverName, final String driverPhone, boolean hasInsurance, String insuranceMoney) {
 
 
         int firstPoint = -1;
@@ -328,14 +344,14 @@ public class OrderDetailItem extends FrameLayout {
         }
 
         //如果设置隐藏保费，直接隐藏
-        if (hideInsurance){
-            hasInsurance=false;
+        if (hideInsurance) {
+            hasInsurance = false;
         }
 
         builder.append("\n")
                 .append("货物：")
                 .append(cargo == null ? "" : cargo)
-                .append(hasInsurance?("（已支付"+insuranceMoney+"元保险费）"):"")
+                .append(hasInsurance ? ("（已支付" + insuranceMoney + "元保险费）") : "")
                 .append("\n")
                 .append(roleBottom)
                 .append(driverName == null ? "" : driverName).append(" ")
@@ -501,9 +517,10 @@ public class OrderDetailItem extends FrameLayout {
 
     /**
      * 设置是否隐藏保费信息
+     *
      * @param hideInsurance true 隐藏保费信息，false显示保费信息
      */
     public void hideInsurance(boolean hideInsurance) {
-        this.hideInsurance=hideInsurance;
+        this.hideInsurance = hideInsurance;
     }
 }

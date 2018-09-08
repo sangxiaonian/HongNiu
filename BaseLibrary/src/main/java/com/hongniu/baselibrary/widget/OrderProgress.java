@@ -30,6 +30,7 @@ public class OrderProgress extends View {
 
     private Rect rect;
     private boolean showProgress=true;
+    private boolean showLog;
 
     public OrderProgress(Context context) {
         this(context, null, 0);
@@ -87,9 +88,11 @@ public class OrderProgress extends View {
             drawProprogress(canvas);
             canvas.restore();
 
-            final float bitmapY=(proY-bitmap.getHeight())>0?(proY-bitmap.getHeight()):0;
-            canvas.drawBitmap(bitmap,(getMeasuredWidth()-bitmap.getWidth())/2
-            ,bitmapY,mPaint);
+            if (showLog) {
+                final float bitmapY = (proY - bitmap.getHeight()) > 0 ? (proY - bitmap.getHeight()) : 0;
+                canvas.drawBitmap(bitmap, (getMeasuredWidth() - bitmap.getWidth()) / 2
+                        , bitmapY, mPaint);
+            }
         }
 
 
@@ -119,5 +122,13 @@ public class OrderProgress extends View {
     public void showProgress(boolean show) {
         showProgress=show;
         postInvalidate();
+    }
+
+    /**
+     * 隐藏进度图标
+     * @param showLog
+     */
+    public void showLog(boolean showLog){
+       this. showLog=showLog;
     }
 }
