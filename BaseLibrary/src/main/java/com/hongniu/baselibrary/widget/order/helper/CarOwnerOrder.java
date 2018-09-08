@@ -6,9 +6,10 @@ import android.view.View;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.baselibrary.widget.order.CommonOrderUtils;
 
-import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_BUY_INSURANCE;
-import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_CHECK_INSURANCE;
-import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_CHECK_PATH;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_BUY_INSURANCE;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_INSURANCE;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_PATH;
+
 
 /**
  * 作者： ${PING} on 2018/8/2.
@@ -108,7 +109,7 @@ public class CarOwnerOrder implements OrderDetailItemControl.IOrderItemHelper {
 
     @Override
     public String getOrderState() {
-        return CommonOrderUtils.getOrderState(state);
+        return CommonOrderUtils.getOrderStateDes(state);
     }
 
 

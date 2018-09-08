@@ -2,6 +2,7 @@ package com.hongniu.baselibrary.entity;
 
 import android.text.TextUtils;
 
+import com.hongniu.baselibrary.widget.order.CommonOrderUtils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 
 /**
@@ -22,7 +23,8 @@ public class OrderDetailBean {
     private String orderNum;
 
     /**
-     * true string 订单状态 -1退款 2待发货 3配送中 4到货 5已收货
+     * <p>
+     * 最新订单状态：-1 已退款 0 待支付 1待发车 2待发货 3配送中 4到货 5已收货 20 已取消
      */
     private int status;
 
@@ -148,10 +150,6 @@ public class OrderDetailBean {
      */
     private boolean insurance;
 
-    /**
-     * true boolean 是否付运费，true=是
-     */
-    private boolean hasFreight;
 
     /**
      * true string 发车编号
@@ -161,10 +159,6 @@ public class OrderDetailBean {
      * 付费时间
      */
     private String payTime;
-    /**
-     * 订单状态
-     */
-    private OrderDetailItemControl.OrderState orderState;
 
 
     /**
@@ -294,7 +288,6 @@ public class OrderDetailBean {
     }
 
 
-
     public String getPayWay() {
         return payWay;
     }
@@ -321,51 +314,11 @@ public class OrderDetailBean {
     }
 
     public OrderDetailItemControl.OrderState getOrderState() {
-        // 订单状态 -1退款 1待支付 2待发货 3配送中 4到货 5已收货
-//            WAITE_PAY,//待支付
-//                    WAITE_START_NO_INSURANCE,//待发车(未购买保险)
-//                    WAITE_START,//待发车(已买保险)
-//                    IN_TRANSIT,//运输中
-//                    HAS_ARRIVED,//已到达
-//                    RECEIPT,//已收货
-        switch (getStatus()) {
-            case -1:
-                orderState = OrderDetailItemControl.OrderState.REFUND;
-                break;
-            case 1:
-                orderState = OrderDetailItemControl.OrderState.WAITE_PAY;
-                break;
-            case 2:
-                if (hasFreight) {
-                    orderState = OrderDetailItemControl.OrderState.WAITE_START;
-                } else {
-                    orderState = OrderDetailItemControl.OrderState.WAITE_PAY;
-                }
 
-                break;
-            case 3:
-                orderState = OrderDetailItemControl.OrderState.IN_TRANSIT;
+        return CommonOrderUtils.getStatus(status);
 
-                break;
-            case 4:
-                orderState = OrderDetailItemControl.OrderState.HAS_ARRIVED;
-
-                break;
-            case 5:
-                orderState = OrderDetailItemControl.OrderState.RECEIPT;
-                break;
-            default:
-                orderState = OrderDetailItemControl.OrderState.UNKNOW;
-                break;
-
-        }
-        return orderState;
     }
 
-    public void setOrderState(OrderDetailItemControl.OrderState orderState) {
-
-        this.orderState = orderState;
-    }
 
     public String getId() {
         return id;
@@ -383,9 +336,6 @@ public class OrderDetailBean {
         this.orderNum = orderNum;
     }
 
-    public int getStatus() {
-        return status;
-    }
 
     public void setStatus(int status) {
         this.status = status;
@@ -399,13 +349,6 @@ public class OrderDetailBean {
         this.insurance = insurance;
     }
 
-    public boolean isHasFreight() {
-        return hasFreight;
-    }
-
-    public void setHasFreight(boolean hasFreight) {
-        this.hasFreight = hasFreight;
-    }
 
     public double getStartLatitude() {
         return startLatitude;

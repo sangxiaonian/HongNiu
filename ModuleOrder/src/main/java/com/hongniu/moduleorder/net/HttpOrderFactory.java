@@ -85,21 +85,7 @@ public class HttpOrderFactory {
         return OrderClient.getInstance()
                 .getService()
                 .queryOrder(bean)
-                //对于未支付运费的状态进行转换
-                .map(new Function<CommonBean<PageBean<OrderDetailBean>>, CommonBean<PageBean<OrderDetailBean>>>() {
-                    @Override
-                    public CommonBean<PageBean<OrderDetailBean>> apply(CommonBean<PageBean<OrderDetailBean>> pageBeanCommonBean) throws Exception {
-                        PageBean<OrderDetailBean> data = pageBeanCommonBean.getData();
-                        if (data != null && data.getList() != null) {
-                            for (OrderDetailBean orderDetailBean : data.getList()) {
-                                if (orderDetailBean.getStatus() == 2 && !orderDetailBean.isHasFreight()) {
-                                    orderDetailBean.setStatus(1);
-                                }
-                            }
-                        }
-                        return pageBeanCommonBean;
-                    }
-                })
+
                 .compose(RxUtils.<CommonBean<PageBean<OrderDetailBean>>>getSchedulersObservableTransformer());
 
     }

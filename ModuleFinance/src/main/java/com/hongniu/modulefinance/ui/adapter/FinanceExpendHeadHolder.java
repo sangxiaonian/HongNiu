@@ -25,6 +25,7 @@ public class FinanceExpendHeadHolder extends PeakHolder {
     private String title;
     private VistogramView vist;
     private int currentX;
+    private boolean hideVisDes;
 
     public FinanceExpendHeadHolder(View itemView) {
         super(itemView);
@@ -48,6 +49,8 @@ public class FinanceExpendHeadHolder extends PeakHolder {
         super.initView(position);
         tvDes = itemView.findViewById(R.id.tv_des);
         vist = itemView.findViewById(R.id.vistorgram);
+        vist = itemView.findViewById(R.id.vistorgram);
+   itemView.findViewById(R.id.ll_vis_des).setVisibility(hideVisDes?View.GONE:View.VISIBLE);
         if (title != null) {
             tvDes.setText(title);
         }
@@ -86,5 +89,12 @@ public class FinanceExpendHeadHolder extends PeakHolder {
         });
 
 
+    }
+
+    /**
+     * 隐藏柱状图的颜色描述信息
+     */
+    public void hideVisDes() {
+        hideVisDes=true;
     }
 }

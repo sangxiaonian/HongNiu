@@ -12,6 +12,7 @@
         android:layout_marginRight="25dp" />
 
     <LinearLayout
+        android:id="@+id/ll_vis_des"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/app_model_gap"

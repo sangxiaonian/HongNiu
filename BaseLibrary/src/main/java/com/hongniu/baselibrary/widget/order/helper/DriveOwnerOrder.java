@@ -6,9 +6,10 @@ import android.view.View;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.baselibrary.widget.order.CommonOrderUtils;
 
-import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_CHECK_ROUT;
-import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_ENTRY_ARRIVE;
-import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_START_CAR;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_ROUT;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_ENTRY_ARRIVE;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_START_CAR;
+
 
 /**
  * 作者： ${PING} on 2018/8/2.
@@ -97,7 +98,7 @@ public class DriveOwnerOrder implements OrderDetailItemControl.IOrderItemHelper 
 
     @Override
     public String getOrderState() {
-        return CommonOrderUtils.getOrderState(state);
+        return CommonOrderUtils.getOrderStateDes(state);
     }
 
 

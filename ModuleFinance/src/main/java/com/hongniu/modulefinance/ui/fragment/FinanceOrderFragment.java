@@ -89,6 +89,7 @@ public class FinanceOrderFragment extends RefrushFragmet<OrderDetailBean> {
                 empty.setEmptyView(R.mipmap.icon_cw_240, "暂无收入");
             }
             headHolder.setTitle("收入明细");
+            headHolder.hideVisDes();
         }
         adapter.addHeard(0, headHolder);
 

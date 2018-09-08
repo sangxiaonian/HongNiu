@@ -25,15 +25,15 @@ import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.CenteredImageSpan;
 import com.sang.thirdlibrary.map.utils.MapConverUtils;
 
-import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_BUY_INSURANCE;
-import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_CANCLE;
-import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_CHECK_INSURANCE;
-import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_CHECK_PATH;
-import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_CHECK_ROUT;
-import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_ENTRY_ARRIVE;
-import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_ENTRY_ORDER;
-import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_PAY;
-import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.ORDER_START_CAR;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_BUY_INSURANCE;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CANCLE;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_INSURANCE;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_PATH;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_ROUT;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_ENTRY_ARRIVE;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_ENTRY_ORDER;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_PAY;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_START_CAR;
 
 /**
  * 作者： ${PING} on 2018/8/7.
@@ -61,6 +61,10 @@ public class OrderDetailItem extends FrameLayout {
     private OrderDetailItemControl.OnOrderDetailBtClickListener listener;
     private OrderDetailBean orderBean;
     private OrderProgress progress;
+    /**
+     * true 隐藏保费信息，false显示保费信息 默认为false
+     */
+    private boolean hideInsurance;
 
 
     public OrderDetailItem(@NonNull Context context) {
@@ -119,6 +123,7 @@ public class OrderDetailItem extends FrameLayout {
             setPrice(money+s);
 
         }
+
         setOrderState(data.getOrderState());
 
         if (data.getOrderState()== OrderDetailItemControl.OrderState.IN_TRANSIT){//正在运输中
@@ -256,7 +261,7 @@ public class OrderDetailItem extends FrameLayout {
      */
     public void setOrderState(OrderDetailItemControl.OrderState orderState) {
         this.orderState = orderState;
-        tv_state.setText(CommonOrderUtils.getOrderState(orderState));
+        tv_state.setText(CommonOrderUtils.getOrderStateDes(orderState));
     }
 
 
@@ -320,6 +325,11 @@ public class OrderDetailItem extends FrameLayout {
         if (!TextUtils.isEmpty(carOwnerPhone)) {//如果司机电话不为空，则拼接司机电话
             builder.append(carOwnerPhone).append(" ").append(" ");
             firstPoint = builder.toString().length();
+        }
+
+        //如果设置隐藏保费，直接隐藏
+        if (hideInsurance){
+            hasInsurance=false;
         }
 
         builder.append("\n")
@@ -487,5 +497,13 @@ public class OrderDetailItem extends FrameLayout {
     public void hideBottom(boolean b) {
         llBottom.setVisibility(b ? GONE : VISIBLE);
         lineBottom.setVisibility(b ? GONE : VISIBLE);
+    }
+
+    /**
+     * 设置是否隐藏保费信息
+     * @param hideInsurance true 隐藏保费信息，false显示保费信息
+     */
+    public void hideInsurance(boolean hideInsurance) {
+        this.hideInsurance=hideInsurance;
     }
 }
