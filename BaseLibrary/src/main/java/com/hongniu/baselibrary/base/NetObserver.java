@@ -33,7 +33,7 @@ public abstract class NetObserver<T> extends BaseObserver<CommonBean<T>> {
 
                 listener.onTaskFail(e,((NetException) e).getErrorCode(), ((NetException) e).getErrorMSg());
             }else {
-                listener.onTaskFail(e,e.getLocalizedMessage(), e.getMessage());
+                listener.onTaskFail(e,e.getLocalizedMessage(),"网络异常");
             }
         }
 
