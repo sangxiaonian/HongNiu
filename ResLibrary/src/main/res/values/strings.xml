@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">ResLibrary</string>
-    <string name="hongniu_phone">4000000000</string>
     <string name="save">保存</string>
     <string name="cancel">取消</string>
     <string name="deleted">删除</string>
@@ -20,7 +19,7 @@
     <string name="login_up_sms_veri">秒后重获取验证码</string>
     <string name="login_get_sms_veri">重获取验证码</string>
     <string name="login_contact_service">联系客服</string>
-    <string name="login_contact_phone">400 000 0000</string>
+    <string name="login_contact_phone">400-0061-656</string>
 
     <!--车辆管理-->
     <string name="login_car_entry_deleted">确认要删除车辆吗？</string>

@@ -107,7 +107,6 @@ public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implement
 
     @Override
     protected Observable<CommonBean<PageBean<PoiItem>>> getListDatas() {
-        JLog.i(searchKey+">>>>"+searchBound);
         PoiSearch.Query  query = new PoiSearch.Query( searchKey==null?"":searchKey.getTitle(), "", "");
 
 

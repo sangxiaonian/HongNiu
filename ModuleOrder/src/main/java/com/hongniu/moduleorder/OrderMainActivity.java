@@ -482,7 +482,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                         @Override
                         public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
                             dialog.dismiss();
-                            CommonUtils.toDial(mContext, getString(R.string.hongniu_phone));
+                            CommonUtils.toDial(mContext, getString(R.string.login_contact_phone));
 
                         }
                     }).creatDialog(new CenterAlertDialog(mContext)).show();
