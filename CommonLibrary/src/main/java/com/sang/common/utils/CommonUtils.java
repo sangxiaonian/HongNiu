@@ -32,7 +32,9 @@ public class CommonUtils {
      */
     public static boolean carNumMatches(String carNum) {
 
-        String regist = "^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-Z0-9]{4}[A-Z0-9挂学警港澳]{1}$";
+//        String regist = "^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-Z0-9]{4}[A-Z0-9挂学警港澳]{1}$";
+        //不区分大小写的正则
+        String regist = "^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领a-zA-Z]{1}[a-zA-Z]{1}[a-zA-Z0-9]{4}[a-zA-Z0-9挂学警港澳]{1}$";
         Matcher p = Pattern.compile(regist).matcher(carNum);
         return p.matches();
     }
@@ -51,10 +53,21 @@ public class CommonUtils {
     public static boolean isIdCard(String idCard) {
         if (TextUtils.isEmpty(idCard)) {
             return false;
-        } else if (idCard.length() == 15 ||idCard.length() == 18) {
+        } else if (idCard.length() == 15 || idCard.length() == 18) {
             return true;
         } else {
             return false;
         }
+    }
+
+    /**
+     * 是否是邮箱
+     * @param email
+     * @return
+     */
+    public static boolean isEmail(String email) {
+        String regist="^([a-zA-Z0-9]+[_|\\_|\\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\\_|\\.]?)*[a-zA-Z0-9]+\\.[a-zA-Z]{2,3}$";
+        Matcher p = Pattern.compile(regist).matcher(email);
+        return p.matches();
     }
 }

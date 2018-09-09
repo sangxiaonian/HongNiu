@@ -31,6 +31,7 @@
     <string name="login_car_select">选择车辆类型</string>
     <string name="login_car_error_carnum">请输入正确车牌号</string>
     <string name="login_person_idcard_error">请输入正确身份证号</string>
+    <string name="login_person_email_error">请输入正确邮箱</string>
 
     <!--个人资料-->
     <string name="login_person">个人资料</string>
