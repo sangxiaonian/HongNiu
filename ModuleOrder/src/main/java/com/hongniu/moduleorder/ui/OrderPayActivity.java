@@ -198,7 +198,7 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
 
         SpannableStringBuilder builder = new SpannableStringBuilder();
         builder.append(tranPrice);
-        if (onLine&&buyInsurance){
+        if (!isInsurance&&onLine&&buyInsurance){
             builder.append("（含保费"+ ConvertUtils.changeFloat(insurancePrice,2)+"元）");
         }
         JLog.i(tranPrice.length()+"");
