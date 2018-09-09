@@ -25,7 +25,7 @@ import com.sang.common.utils.JLog;
  * 短信验证码使用的View
  */
 
-public class VericationView extends LinearLayout implements TextWatcher, View.OnFocusChangeListener {
+public class VericationView extends LinearLayout implements TextWatcher, View.OnFocusChangeListener, View.OnKeyListener {
 
     private int mEditCount;
     private int childGap;
@@ -121,6 +121,10 @@ public class VericationView extends LinearLayout implements TextWatcher, View.On
         editText.setLongClickable(false);
         editText.addTextChangedListener(this);
         editText.setOnFocusChangeListener(this);
+
+        editText.setOnKeyListener(this);
+
+
         return editText;
 
     }
@@ -221,6 +225,15 @@ public class VericationView extends LinearLayout implements TextWatcher, View.On
         }
     }
 
+    @Override
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+        if(keyCode == KeyEvent.KEYCODE_DEL) {
+            backFocus();
+        }
+
+        return false;
+    }
 
 
     public interface OnCompleteListener {
