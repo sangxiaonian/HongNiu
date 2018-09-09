@@ -21,6 +21,7 @@ import com.hongniu.modulelogin.entity.LoginEvent;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.sang.common.event.BusFactory;
 import com.sang.common.utils.CommonUtils;
+import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.ItemView;
 import com.sang.common.widget.dialog.BottomAlertDialog;
@@ -188,6 +189,7 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
 
 
         } else if (i == R.id.item_car_type) {
+            DeviceUtils.hideSoft(getCurrentFocus());
             if (!cars.isEmpty()) {
                 OptionsPickerView build = pickerDialog.build();
                 build.setPicker(cars);

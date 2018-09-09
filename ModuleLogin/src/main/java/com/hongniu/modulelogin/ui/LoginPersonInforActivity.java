@@ -27,6 +27,7 @@ import com.sang.common.event.BusFactory;
 import com.sang.common.net.rx.BaseObserver;
 import com.sang.common.net.rx.RxUtils;
 import com.sang.common.utils.CommonUtils;
+import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.SharedPreferencesUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.ItemView;
@@ -140,6 +141,7 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
             }
 
         } else if (i == R.id.item_address) {
+            DeviceUtils.hideSoft(getCurrentFocus());
             if (areabean==null) {
                 LoginUtils.getAreas(mContext)
                         .compose(RxUtils.<AreaBeans>getSchedulersObservableTransformer())
@@ -221,9 +223,10 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
                 district=new LoginAreaBean();
             }
 
-            buffer.append(provinces.getAreaName())
-                    .append(city.getAreaName())
-                    .append(district.getAreaName());
+            buffer.append(provinces.getAreaName()==null?"":provinces.getAreaName())
+                    .append(city.getAreaName()==null?"":city.getAreaName())
+                    .append(district.getAreaName()==null?"":district.getAreaName());
+
             itemAddress.setTextCenter(buffer.toString());
             personInfor.setProvinceId(provinces.getAreaId() + "");
             personInfor.setProvince(provinces.getAreaName());

@@ -5,6 +5,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Build;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
@@ -99,16 +100,26 @@ public class DeviceUtils {
         return (int) (pxValue / scale + 0.5f);
     }
 
-    public static void openSoft(EditText etCenter) {
-        InputMethodManager imm = (InputMethodManager) etCenter.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.showSoftInput(etCenter, InputMethodManager.SHOW_FORCED);
+    public static void openSoft(View etCenter) {
+        if (etCenter!=null) {
+            InputMethodManager imm = (InputMethodManager) etCenter.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(etCenter, InputMethodManager.SHOW_FORCED);
+        }
     }
 
-    public static void hideSoft(EditText etCenter) {
-        InputMethodManager inputMethodManager = (InputMethodManager) etCenter.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(etCenter.getWindowToken(), 0);
+    public static void hideSoft(View etCenter) {
+        if (etCenter!=null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) etCenter.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(etCenter.getWindowToken(), 0);
+        }
     }
 
+
+
+    public static boolean softOpen(Context context) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        return imm.isActive();
+    }
 
     /**
      * 手机系统版本名称
@@ -126,10 +137,11 @@ public class DeviceUtils {
 
     /**
      * 判断GPS是否可用
+     *
      * @param mContext
      */
     public static boolean isOpenGps(Context mContext) {
-        LocationManager locationManager = (LocationManager)mContext.getSystemService(Context.LOCATION_SERVICE);
+        LocationManager locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 }
