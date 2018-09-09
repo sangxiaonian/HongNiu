@@ -15,6 +15,7 @@ import android.text.method.TextKeyListener;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -150,8 +151,7 @@ public class ItemView extends FrameLayout {
             etCenter.setKeyListener(DigitsKeyListener.getInstance("xX0123456789"));
         } else if (centerType == 3) {//数字
             etCenter.setFilters(new InputFilter[]{new PointLengthFilter()});
-            etCenter.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL|InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_SIGNED);
-
+            etCenter.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
 //            etCenter.setKeyListener(DigitsKeyListener.getInstance("0123456789."));
         } else {
             if (maxLength > 0) {
