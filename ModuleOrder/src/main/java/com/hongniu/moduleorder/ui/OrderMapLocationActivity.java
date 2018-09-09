@@ -116,6 +116,8 @@ public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implement
 //cityCode表示POI搜索区域，可以是城市编码也可以是城市名称，也可以传空字符串，空字符串代表全国在全国范围内进行搜索
         query.setPageSize(Param.PAGE_SIZE);// 设置每页最多返回多少条poiitem
         query.setPageNum(currentPage);//设置查询页码
+        query.setCityLimit(true);
+        query.requireSubPois(true);
         PoiSearch poiSearch = new PoiSearch(mContext, query);
         if (searchBound != null) {
             poiSearch.setBound(searchBound);
