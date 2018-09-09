@@ -20,7 +20,7 @@ public class H5Activity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_h5);
-        setToolbarDarkTitle("");
+        setToolbarTitle("");
         initView();
         initData();
     }

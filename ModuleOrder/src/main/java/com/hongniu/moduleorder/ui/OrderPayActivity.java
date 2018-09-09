@@ -2,6 +2,9 @@ package com.hongniu.moduleorder.ui;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -28,6 +31,7 @@ import com.hongniu.moduleorder.widget.dialog.BuyInsuranceDialog;
 import com.hongniu.moduleorder.widget.dialog.InsuranceNoticeDialog;
 import com.sang.common.event.BusFactory;
 import com.sang.common.utils.ConvertUtils;
+import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
@@ -188,7 +192,19 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
         }
         DecimalFormat df2 =new DecimalFormat("0.00");
         String str2 =df2.format(price);
-        tvPayAll.setText("￥" + str2 + "元");
+        String tranPrice = "￥" +  ConvertUtils.changeFloat(price,2) ;
+
+
+
+        SpannableStringBuilder builder = new SpannableStringBuilder();
+        builder.append(tranPrice);
+        if (onLine&&buyInsurance){
+            builder.append("（含保费"+ ConvertUtils.changeFloat(insurancePrice,2)+"元）");
+        }
+        JLog.i(tranPrice.length()+"");
+        ForegroundColorSpan span = new ForegroundColorSpan( getResources().getColor(R.color.color_light));
+        builder.setSpan(span, 0, tranPrice.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        tvPayAll.setText(builder);
         switchPay();
     }
 
