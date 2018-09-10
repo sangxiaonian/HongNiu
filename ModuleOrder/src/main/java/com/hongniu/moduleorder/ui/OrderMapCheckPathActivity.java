@@ -1,6 +1,7 @@
 package com.hongniu.moduleorder.ui;
 
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.SystemClock;
 
@@ -110,17 +111,18 @@ public class OrderMapCheckPathActivity extends BaseActivity  {
         super.initData();
         setToolbarTitle("查看轨迹");
         mTraceClient = LBSTraceClient.getInstance(this);
-        List<BitmapDescriptor> textureList = new ArrayList<BitmapDescriptor>();
-        BitmapDescriptor mRedTexture = BitmapDescriptorFactory
-                .fromResource(R.mipmap.map_line);
-        textureList.add(mRedTexture);
-        List<Integer> textureIndexs = new ArrayList<Integer>();
-        textureIndexs.add(0);
+//        List<BitmapDescriptor> textureList = new ArrayList<BitmapDescriptor>();
+//        BitmapDescriptor mRedTexture = BitmapDescriptorFactory
+//                .fromResource(R.mipmap.map_line);
+//        textureList.add(mRedTexture);
+//        List<Integer> textureIndexs = new ArrayList<Integer>();
+//        textureIndexs.add(0);
           lineOption = new PolylineOptions()
 
-                .setCustomTextureList(textureList)
-                .setCustomTextureIndex(textureIndexs)
+//                .setCustomTextureList(textureList)
+//                .setCustomTextureIndex(textureIndexs)
                 .setUseTexture(true)
+                 .color(Color.parseColor("#43BFA3"))
                 .width(DeviceUtils.dip2px(mContext, 5));
     }
 
