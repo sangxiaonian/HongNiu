@@ -26,7 +26,7 @@ public class BaseClient {
         return InnerLoginClient.client;
     }
     private BaseClient() {
-          httpClient = new HttpClient()
+          httpClient = new HttpClient(Param.isDebug?Param.debug_url:Param.release_url)
                 .addInterceptor(new Interceptor() {
                     @Override
                     public Response intercept(Chain chain) throws IOException {

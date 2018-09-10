@@ -5,9 +5,21 @@ package com.hongniu.baselibrary.config;
  * 努力，为梦长留
  */
 public class Param {
+    public static final boolean isDebug=true;
+
 
     public static final String weChatAppid="wxa9d4be10effd4626";
-    public static final boolean isDebug=true;
+
+    /**
+     * 测试环境使用的url
+     */
+    public final static String debug_url="http://47.104.130.110:8080/";
+     /**
+     * 正式环境使用的url
+     */
+    public final static String release_url="https://api.hongniudai.cn/";
+
+
     /**
      * 泓牛协议
      */

@@ -22,12 +22,12 @@ public class HttpClient {
 
 
 
-    public HttpClient() {
+    public HttpClient(String url) {
         builder = OkHttp.getOkHttp().getBuilder();
         retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .baseUrl(AppConfigs.base_url)
+                .baseUrl(url)
         ;
     }
 
