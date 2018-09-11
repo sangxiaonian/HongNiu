@@ -22,10 +22,14 @@
         android:supportsRtl="true"
          >
 
+        <receiver android:name=".map.MapClickReceiver"/>
+
         <!--高德地图-->
         <meta-data android:name="com.amap.api.v2.apikey" android:value="e2f88f78abaaefbf28ad68edbb1f6214">
 
         </meta-data>
+
+
     </application>
 
 

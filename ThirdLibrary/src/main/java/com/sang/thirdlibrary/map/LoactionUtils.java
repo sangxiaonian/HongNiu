@@ -4,14 +4,18 @@ import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 
+import com.alibaba.android.arouter.facade.annotation.Param;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.google.gson.Gson;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.JLog;
 import com.sang.thirdlibrary.R;
@@ -184,6 +188,14 @@ public class LoactionUtils {
                 .setWhen(System.currentTimeMillis())
 
         ;
+        //被点击
+        Intent intent = new Intent();
+        intent.setClass(context, MapClickReceiver.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        builder.setContentIntent(PendingIntent.getBroadcast(context, 1,
+                intent, PendingIntent.FLAG_UPDATE_CURRENT));
+
+
 
         if (android.os.Build.VERSION.SDK_INT >= 16) {
             notification = builder.build();
