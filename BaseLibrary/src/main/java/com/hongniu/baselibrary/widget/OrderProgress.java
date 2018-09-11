@@ -30,7 +30,7 @@ public class OrderProgress extends View {
 
     private Rect rect;
     private boolean showProgress=true;
-    private boolean showLog;
+    private boolean showLog=true;
 
     public OrderProgress(Context context) {
         this(context, null, 0);

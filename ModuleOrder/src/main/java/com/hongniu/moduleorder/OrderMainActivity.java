@@ -1,5 +1,7 @@
 package com.hongniu.moduleorder;
 
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -30,12 +32,15 @@ import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.control.OrderMainControl;
 import com.hongniu.moduleorder.control.SwitchStateListener;
 import com.hongniu.moduleorder.present.OrderMainPresenter;
+import com.hongniu.moduleorder.service.KeepAliveService;
 import com.hongniu.moduleorder.utils.LoactionUpUtils;
 import com.hongniu.moduleorder.widget.OrderMainTitlePop;
 import com.sang.common.event.BusFactory;
 import com.sang.common.utils.CommonUtils;
+import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.JLog;
+import com.sang.common.utils.NotificationUtils;
 import com.sang.common.widget.SwitchTextLayout;
 import com.sang.common.widget.dialog.BottomAlertDialog;
 import com.sang.common.widget.dialog.CenterAlertDialog;
@@ -99,11 +104,15 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
         loaction = LoactionUtils.getInstance();
         loaction.init(this);
         loaction.setListener(this);
+
+
         PermissionUtils.applyMap(this, new PermissionUtils.onApplyPermission() {
             @Override
             public void hasPermission(List<String> granted, boolean isAll) {
-                loaction.setInterval(3000);
                 loaction.startLoaction();
+//                show();
+//                Intent startServiceIntent = new Intent(OrderMainActivity.this,KeepAliveService.class);
+//                startService(startServiceIntent) ;
             }
 
             @Override
@@ -111,6 +120,26 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
 
             }
         });
+    }
+
+
+
+    private void show(){
+        NotificationUtils notification = new NotificationUtils();
+        notification.setTitle(getString(R.string.app_name));
+        notification.setContent("正在为您记录轨迹");
+        notification.setIcon(R.mipmap.app_logo);
+        Intent resultIntent = new Intent(this, OrderMainActivity.class);
+        resultIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addParentStack(OrderMainActivity.class);
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
+        notification.setClickIntent(this,resultPendingIntent);
+        //前台 service
+        notification.showNotification(this,15);
     }
 
 
@@ -527,6 +556,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
         JLog.d("测试后台打点：" + DeviceUtils.isOpenGps(mContext)
                 + "\n Latitude：" + aMapLocation.getLatitude()
                 + "\n Longitude：" + aMapLocation.getLongitude()
+                +"\n"+ ConvertUtils.formatTime(aMapLocation.getTime(), "yyyy-MM-dd HH:mm:ss")
 
         );
         BusFactory.getBus().postSticky(new Event.UpLoaction(aMapLocation.getLatitude(), aMapLocation.getLongitude()));

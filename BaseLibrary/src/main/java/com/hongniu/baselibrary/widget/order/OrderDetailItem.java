@@ -139,10 +139,12 @@ public class OrderDetailItem extends FrameLayout {
         } else if (data.getOrderState() == OrderDetailItemControl.OrderState.HAS_ARRIVED) {
             progress.showProgress(true);
             progress.setCurent(100);
+            progress.showLog(false);
             //已收货
         } else if (data.getOrderState() == OrderDetailItemControl.OrderState.RECEIPT) {
             progress.showProgress(true);
             progress.setCurent(100);
+            progress.showLog(false);
 
         } else {
             progress.showProgress(false);

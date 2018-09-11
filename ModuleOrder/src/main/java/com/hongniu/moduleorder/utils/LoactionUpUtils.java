@@ -56,6 +56,7 @@ public class LoactionUpUtils {
         float dis = MapConverUtils.caculeDis(loactionInfor.latitude, loactionInfor.longitude, latitude, longitude);
         float v = MapConverUtils.caculeDis(lastLoaction.latitude, lastLoaction.longitude, latitude, longitude);
 
+        JLog.i(dis+">>>>"+loactionInfor.cardID+">>>>>"+loactionInfor.orderId);
         if (dis < 100) {
             LocationBean bean = getLocationBean(latitude, longitude, movingTime, speed, bearing);
             if (v > minDis) {

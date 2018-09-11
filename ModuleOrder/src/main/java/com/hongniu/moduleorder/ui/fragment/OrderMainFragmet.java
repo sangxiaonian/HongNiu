@@ -526,7 +526,7 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
                 LoactionCollectionUtils loactionCollectionUtils = new LoactionCollectionUtils();
                 loactionCollectionUtils.setOrderNum(orderBean.getId());
                 loactionCollectionUtils.setCarID(orderBean.getCarId());
-                AmapNaviPage.getInstance().showRouteActivity(getContext().getApplicationContext(), amapNaviParams, loactionCollectionUtils);
+                AmapNaviPage.getInstance().showRouteActivity(getContext().getApplicationContext(), amapNaviParams, null);
             }
 
 

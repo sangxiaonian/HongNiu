@@ -111,19 +111,25 @@ public class OrderMapCheckPathActivity extends BaseActivity  {
         super.initData();
         setToolbarTitle("查看轨迹");
         mTraceClient = LBSTraceClient.getInstance(this);
-//        List<BitmapDescriptor> textureList = new ArrayList<BitmapDescriptor>();
-//        BitmapDescriptor mRedTexture = BitmapDescriptorFactory
-//                .fromResource(R.mipmap.map_line);
-//        textureList.add(mRedTexture);
-//        List<Integer> textureIndexs = new ArrayList<Integer>();
-//        textureIndexs.add(0);
-          lineOption = new PolylineOptions()
-
+        List<BitmapDescriptor> textureList = new ArrayList<BitmapDescriptor>();
+        BitmapDescriptor mRedTexture = BitmapDescriptorFactory
+                .fromResource(R.mipmap.map_line);
+        textureList.add(mRedTexture);
+        List<Integer> textureIndexs = new ArrayList<Integer>();
+        textureIndexs.add(0);
+//        lineOption = new PolylineOptions()
+//
 //                .setCustomTextureList(textureList)
 //                .setCustomTextureIndex(textureIndexs)
-                .setUseTexture(true)
-                 .color(Color.parseColor("#43BFA3"))
-                .width(DeviceUtils.dip2px(mContext, 5));
+//                .setUseTexture(true)
+//                .width(DeviceUtils.dip2px(mContext, 5));
+
+        lineOption=  new PolylineOptions()
+                .width(DeviceUtils.dip2px(mContext, 5))
+                        .color(Color.parseColor("#43BFA3"));
+
+
+
     }
 
     @Override
@@ -227,8 +233,8 @@ public class OrderMapCheckPathActivity extends BaseActivity  {
 
                                         @Override
                                         public void onFinished(int i, List<LatLng> list, int i1, int i2) {
-                                            onTaskSuccess();
                                             drawPath(list);
+                                            onTaskSuccess();
                                         }
                                     });
                         }

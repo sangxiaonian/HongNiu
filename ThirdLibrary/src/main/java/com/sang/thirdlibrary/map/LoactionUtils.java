@@ -1,16 +1,20 @@
 package com.sang.thirdlibrary.map;
 
+import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.amap.api.location.CoordinateConverter;
-import com.amap.api.location.DPoint;
-import com.amap.api.maps.model.LatLng;
-import com.sang.common.utils.ToastUtils;
+import com.sang.common.utils.JLog;
+import com.sang.thirdlibrary.R;
+import com.sang.thirdlibrary.map.utils.ErrorInfo;
 
 /**
  * 作者： ${PING} on 2018/8/22.
@@ -19,10 +23,7 @@ import com.sang.common.utils.ToastUtils;
 public class LoactionUtils {
 
 
-    private LatLng latLng;
-
-
-    private  AMapLocationListener listener;
+    private AMapLocationListener listener;
 
     public AMapLocationClient mLocationClient = null;
     //声明定位回调监听器
@@ -31,18 +32,20 @@ public class LoactionUtils {
         public void onLocationChanged(AMapLocation aMapLocation) {
             //可在其中解析amapLocation获取相应内容。
             if (aMapLocation.getErrorCode() == 0) {//定位成功
-                latLng = new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude());
-                if (listener!=null){
+                if (listener != null) {
                     listener.onLocationChanged(aMapLocation);
                 }
 
 
             } else {
-                latLng = null;
                 //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
                 Log.e("AmapError", "location Error, ErrCode:"
                         + aMapLocation.getErrorCode() + ", errInfo:"
                         + aMapLocation.getErrorInfo());
+
+                mLocationClient.enableBackgroundLocation(2001, buildNotification(context, ErrorInfo.getLoactionError(aMapLocation.getErrorCode())));
+                mLocationClient.startLocation();
+
             }
 
         }
@@ -50,22 +53,21 @@ public class LoactionUtils {
     private AMapLocationClientOption mLocationOption;
 
     public void onDestroy() {
-        if (mLocationClient!=null) {
+        if (mLocationClient != null) {
             mLocationClient.onDestroy();
         }
     }
 
     public void upInterval(float v) {
-
         float dis = v / 1000;
-        if (dis<10){
+        if (dis < 10) {
             setInterval(3000);
-        }else if (dis<50){
-            setInterval(10*1000);
-        }else if (dis<200){
-            setInterval(30*1000);
-        }else {
-            setInterval(60*1000);
+        } else if (dis < 50) {
+            setInterval(10 * 1000);
+        } else if (dis < 200) {
+            setInterval(30 * 1000);
+        } else {
+            setInterval(60 * 1000);
         }
 
 
@@ -87,8 +89,10 @@ public class LoactionUtils {
         this.listener = listener;
     }
 
-    public void init(Context context) {
+    Context context;
 
+    public void init(Context context) {
+        this.context = context;
 //初始化定位
         mLocationClient = new AMapLocationClient(context.getApplicationContext());
 
@@ -117,6 +121,7 @@ public class LoactionUtils {
      */
     public void setInterval(long time) {
         mLocationOption.setInterval(time);
+        JLog.i("------------------");
         startLoaction();
     }
 
@@ -129,17 +134,60 @@ public class LoactionUtils {
             mLocationClient.setLocationOption(mLocationOption);
             //设置场景模式后最好调用一次stop，再调用start以保证场景模式生效
             mLocationClient.stopLocation();
+            mLocationClient.enableBackgroundLocation(2001, buildNotification(context, "泓牛正在为您提供定位服务"));
             mLocationClient.startLocation();
         }
-//启动定位
-    }
-
-    public LatLng getCurrentLoaction(){
-        return latLng==null?new LatLng(0,0):latLng;
     }
 
 
+    //创建一个前台引用，用来显示数据
+    private static final String NOTIFICATION_CHANNEL_NAME = "BackgroundLocation";
+    private NotificationManager notificationManager = null;
+    boolean isCreateChannel = false;
 
+    @SuppressLint("NewApi")
+    private Notification buildNotification(Context context, String loactionError) {
+
+        Notification.Builder builder = null;
+        Notification notification = null;
+        if (android.os.Build.VERSION.SDK_INT >= 26) {
+            //Android O上对Notification进行了修改，如果设置的targetSDKVersion>=26建议使用此种方式创建通知栏
+            if (null == notificationManager) {
+                notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            }
+            String channelId = context.getPackageName();
+            if (!isCreateChannel) {
+                NotificationChannel notificationChannel = new NotificationChannel(channelId,
+                        NOTIFICATION_CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+                notificationChannel.enableLights(true);//是否在桌面icon右上角展示小圆点
+                notificationChannel.setLightColor(Color.BLUE); //小圆点颜色
+                notificationChannel.setShowBadge(true); //是否在久按桌面图标时显示此渠道的通知
+                notificationChannel.enableVibration(true);//是否开启振动
+                notificationChannel.setVibrationPattern(new long[]{100, 100, 200, 100});
+
+
+                notificationManager.createNotificationChannel(notificationChannel);
+                isCreateChannel = true;
+            }
+            builder = new Notification.Builder(context.getApplicationContext(), channelId);
+        } else {
+            builder = new Notification.Builder(context.getApplicationContext());
+        }
+        builder. setDefaults(Notification.DEFAULT_ALL)
+                .setSmallIcon(R.mipmap.app_logo)
+                .setContentTitle("泓牛供应链")
+                .setContentText(loactionError == null ? "" : loactionError)
+                .setWhen(System.currentTimeMillis())
+
+        ;
+
+        if (android.os.Build.VERSION.SDK_INT >= 16) {
+            notification = builder.build();
+        } else {
+            return builder.getNotification();
+        }
+        return notification;
+    }
 
 
 }

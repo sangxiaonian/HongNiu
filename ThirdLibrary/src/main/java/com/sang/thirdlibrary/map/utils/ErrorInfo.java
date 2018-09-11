@@ -24,6 +24,7 @@ import java.util.Map;
  **/
 public class ErrorInfo {
     private static Map<Integer, String> list = new HashMap();
+    private static Map<Integer, String> locationError = new HashMap();
 
     static {
         list.put(-1, "路径计算失败，在导航过程中调用calculateDriveRoute方法导致的失败，导航过程中只能用reCalculate方法进行路径计算。");
@@ -43,11 +44,34 @@ public class ErrorInfo {
         list.put(17, "请求超出配额。");
         list.put(18, "请求参数非法,请检查传入参数是否符合要求。");
         list.put(19, "未知错误。");
+    }
 
+
+    static {
+        locationError.put(0,"定位成功");
+        locationError.put(1,"重要参数为空");
+        locationError.put(2,"请重新尝试，定位失败，近扫描到单个wifi，且没有基站信息");
+        locationError.put(3,"获取到的请求参数为空，");
+        locationError.put(4,"定位失败，请检查设备网络是否通畅");
+        locationError.put(5,"定位失败，请求被恶意劫持，定位结果解析失败。");
+        locationError.put(6,"定位失败，定位服务返回定位失败");
+        locationError.put(7,"KEY鉴权失败");
+        locationError.put(8,"Android exception常规错误");
+        locationError.put(9,"定位初始化时出现异常，请重新启动定位" );
+        locationError.put(10,"定位客户端启动失败" );
+        locationError.put(11,"定位失败，请检查是否安装SIM卡，设备很有可能连入了伪基站网络。" );
+        locationError.put(12,"定位失败，请在设备的设置中开启app的定位权限" );
+        locationError.put(13,"定位失败，由于未获得WIFI列表和基站信息，且GPS当前不可用" );
+        locationError.put(14,"GPS信号弱，请到开阔地带重新尝试" );
+        locationError.put(18,"定位失败，由于手机WIFI功能被关闭同时设置为飞行模式" );
+        locationError.put(19,"定位失败，由于手机没插sim卡且WIFI功能被关闭" );
     }
 
     public static String getError(int id) {
         return list.get(id);
     }
 
+    public static String getLoactionError(int id){
+        return locationError.get(id)==null?"定位失败":locationError.get(id);
+    }
 }
