@@ -151,8 +151,8 @@ public class NotificationUtils {
         builder
 //                .setDefaults(Notification.DEFAULT_ALL)
                 .setSmallIcon(icon!=0?icon:0)
-                .setSound(getPlaySound())
-                .setVibrate(null)
+//                .setSound(getPlaySound())
+//                .setVibrate(null)
                 .setDefaults(NotificationCompat.FLAG_ONLY_ALERT_ONCE)
         ;
         //下拉显示的大图标
@@ -164,17 +164,17 @@ public class NotificationUtils {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private NotificationChannel creatChan(Context context, String CHANNEL_ID, String CHANNEL_NAME) {
         NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
-//        channel.setBypassDnd(true);    //设置绕过免打扰模式
-//        channel.canBypassDnd();       //检测是否绕过免打扰模式
+        channel.setBypassDnd(true);    //设置绕过免打扰模式
+        channel.canBypassDnd();       //检测是否绕过免打扰模式
         channel.setLockscreenVisibility(Notification.VISIBILITY_SECRET);//设置在锁屏界面上显示这条通知
         channel.setDescription("description of this notification");
         channel.setLightColor(Color.GREEN);
         channel.setName(CHANNEL_NAME);
         channel.setShowBadge(true);
-//        channel.setVibrationPattern(new long[]{100, 100, 200, 100});
-        channel.setVibrationPattern(null);
-        channel.enableVibration(false);
-        channel.setSound(getPlaySound(), Notification.AUDIO_ATTRIBUTES_DEFAULT);
+        channel.setVibrationPattern(new long[]{100, 100, 200, 100});
+//        channel.setVibrationPattern(null);
+//        channel.enableVibration(false);
+//        channel.setSound(getPlaySound(), Notification.AUDIO_ATTRIBUTES_DEFAULT);
         return channel;
     }
 

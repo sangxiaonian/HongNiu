@@ -1,13 +1,20 @@
 package com.sang.common.utils;
 
+import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Build;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
+
+import java.util.List;
+
+import static android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND;
+import static android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_VISIBLE;
+import static android.content.Context.ACTIVITY_SERVICE;
 
 /**
  * Created by appdevzhang on 16/9/23.
@@ -47,6 +54,56 @@ public class DeviceUtils {
                 Build.TYPE.length() % 10 +
                 Build.USER.length() % 10; //13 digits
         return m_szDevIDShort;
+    }
+
+
+    /**
+     * 判断当前引用是否在前台
+     *
+     * @param context
+     * @return
+     */
+    public static boolean isBackGround(Context context) {
+        ActivityManager manager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> processInfoList = manager.getRunningAppProcesses();
+        for (ActivityManager.RunningAppProcessInfo processInfo : processInfoList) {
+            if (processInfo.processName.equalsIgnoreCase(context.getPackageName())) {
+                return processInfo.importance != IMPORTANCE_FOREGROUND
+                        && processInfo.importance != IMPORTANCE_VISIBLE;
+
+            }
+        }
+        return false;
+    }
+
+    public static void moveToFront(Context context) {
+        //获取ActivityManager
+        ActivityManager mAm = (ActivityManager) context.getSystemService(context.ACTIVITY_SERVICE);
+        //获得当前运行的task
+        List<ActivityManager.RunningTaskInfo> taskList = mAm.getRunningTasks(100);
+        for (ActivityManager.RunningTaskInfo rti : taskList) {
+            //找到当前应用的task，并启动task的栈顶activity，达到程序切换到前台
+            if (rti.topActivity.getPackageName().equals(context.getPackageName())) {
+                mAm.moveTaskToFront(rti.id, 0);
+                return;
+            }
+        }
+        //若没有找到运行的task，用户结束了task或被系统释放，则重新启动mainactivity
+        openApp(context);
+
+    }
+
+    /**
+     * 打开APP
+     *
+     * @param context
+     */
+    public static void openApp(Context context) {
+        Intent launchIntent = context.getPackageManager()
+                .getLaunchIntentForPackage(context.getPackageName());
+        launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+        context.startActivity(launchIntent);
     }
 
 
@@ -101,19 +158,18 @@ public class DeviceUtils {
     }
 
     public static void openSoft(View etCenter) {
-        if (etCenter!=null) {
+        if (etCenter != null) {
             InputMethodManager imm = (InputMethodManager) etCenter.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.showSoftInput(etCenter, InputMethodManager.SHOW_FORCED);
         }
     }
 
     public static void hideSoft(View etCenter) {
-        if (etCenter!=null) {
+        if (etCenter != null) {
             InputMethodManager inputMethodManager = (InputMethodManager) etCenter.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(etCenter.getWindowToken(), 0);
         }
     }
-
 
 
     public static boolean softOpen(Context context) {

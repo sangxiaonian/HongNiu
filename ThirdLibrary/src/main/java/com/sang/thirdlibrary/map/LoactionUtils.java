@@ -12,6 +12,7 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.JLog;
 import com.sang.thirdlibrary.R;
 import com.sang.thirdlibrary.map.utils.ErrorInfo;
@@ -25,26 +26,30 @@ public class LoactionUtils {
 
     private AMapLocationListener listener;
 
+    private int notify;
+
     public AMapLocationClient mLocationClient = null;
     //声明定位回调监听器
     public AMapLocationListener mLocationListener = new AMapLocationListener() {
         @Override
         public void onLocationChanged(AMapLocation aMapLocation) {
+
+
+            if (listener != null) {
+                listener.onLocationChanged(aMapLocation);
+            }
             //可在其中解析amapLocation获取相应内容。
             if (aMapLocation.getErrorCode() == 0) {//定位成功
-                if (listener != null) {
-                    listener.onLocationChanged(aMapLocation);
-                }
 
+                mLocationClient.enableBackgroundLocation(2001, buildNotification(context, "泓牛正在为您提供定位服务"+notify));
+                notify++;
 
             } else {
                 //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
                 Log.e("AmapError", "location Error, ErrCode:"
                         + aMapLocation.getErrorCode() + ", errInfo:"
                         + aMapLocation.getErrorInfo());
-
                 mLocationClient.enableBackgroundLocation(2001, buildNotification(context, ErrorInfo.getLoactionError(aMapLocation.getErrorCode())));
-                mLocationClient.startLocation();
 
             }
 
@@ -121,7 +126,6 @@ public class LoactionUtils {
      */
     public void setInterval(long time) {
         mLocationOption.setInterval(time);
-        JLog.i("------------------");
         startLoaction();
     }
 
@@ -186,6 +190,8 @@ public class LoactionUtils {
         } else {
             return builder.getNotification();
         }
+
+
         return notification;
     }
 
