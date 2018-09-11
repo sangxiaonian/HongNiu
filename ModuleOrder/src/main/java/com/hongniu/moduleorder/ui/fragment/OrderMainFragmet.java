@@ -518,15 +518,15 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
         PermissionUtils.applyMap(getActivity(), new PermissionUtils.onApplyPermission() {
             @Override
             public void hasPermission(List<String> granted, boolean isAll) {
-
+                //查看路线，发送一个开始发车的广播
                 Poi start = new Poi(orderBean.getStartPlaceInfo(), new LatLng(orderBean.getStartLatitude(), orderBean.getStartLongitude()), "");
                 Poi end = new Poi(orderBean.getDestinationInfo(), new LatLng(orderBean.getDestinationLatitude(), orderBean.getDestinationLongitude()), "");
                 AmapNaviParams amapNaviParams = new AmapNaviParams(start, null, end, AmapNaviType.DRIVER);
                 amapNaviParams.setUseInnerVoice(true);
                 LoactionCollectionUtils loactionCollectionUtils = new LoactionCollectionUtils();
-                loactionCollectionUtils.setOrderNum(orderBean.getId());
-                loactionCollectionUtils.setCarID(orderBean.getCarId());
-                AmapNaviPage.getInstance().showRouteActivity(getContext().getApplicationContext(), amapNaviParams, null);
+                loactionCollectionUtils.setOrderInfor(orderBean);
+                AmapNaviPage.getInstance().showRouteActivity(getContext().getApplicationContext(),
+                        amapNaviParams, loactionCollectionUtils);
             }
 
 

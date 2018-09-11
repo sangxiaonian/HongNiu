@@ -10,14 +10,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 
-import com.alibaba.android.arouter.facade.annotation.Param;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.google.gson.Gson;
-import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.JLog;
 import com.sang.thirdlibrary.R;
 import com.sang.thirdlibrary.map.utils.ErrorInfo;
 
@@ -27,10 +23,10 @@ import com.sang.thirdlibrary.map.utils.ErrorInfo;
  */
 public class LoactionUtils {
 
+    private final int NOTIFYID=2001;
 
     private AMapLocationListener listener;
-
-    private int notify;
+    private int errorCode=Integer.MAX_VALUE;
 
     public AMapLocationClient mLocationClient = null;
     //声明定位回调监听器
@@ -42,20 +38,23 @@ public class LoactionUtils {
             if (listener != null) {
                 listener.onLocationChanged(aMapLocation);
             }
+
             //可在其中解析amapLocation获取相应内容。
             if (aMapLocation.getErrorCode() == 0) {//定位成功
-
-                mLocationClient.enableBackgroundLocation(2001, buildNotification(context, "泓牛正在为您提供定位服务"+notify));
-                notify++;
-
+                if (aMapLocation.getErrorCode()!=errorCode) {
+                    mLocationClient.enableBackgroundLocation(NOTIFYID, buildNotification(context, context.getString(R.string.app_name) + "正在为您提供定位服务"));
+                }
             } else {
                 //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
                 Log.e("AmapError", "location Error, ErrCode:"
                         + aMapLocation.getErrorCode() + ", errInfo:"
                         + aMapLocation.getErrorInfo());
-                mLocationClient.enableBackgroundLocation(2001, buildNotification(context, ErrorInfo.getLoactionError(aMapLocation.getErrorCode())));
+                if (aMapLocation.getErrorCode()!=errorCode) {
+                    mLocationClient.enableBackgroundLocation(NOTIFYID, buildNotification(context, ErrorInfo.getLoactionError(aMapLocation.getErrorCode())));
+                }
 
             }
+            errorCode=aMapLocation.getErrorCode();
 
         }
     };
@@ -142,19 +141,19 @@ public class LoactionUtils {
             mLocationClient.setLocationOption(mLocationOption);
             //设置场景模式后最好调用一次stop，再调用start以保证场景模式生效
             mLocationClient.stopLocation();
-            mLocationClient.enableBackgroundLocation(2001, buildNotification(context, "泓牛正在为您提供定位服务"));
+            mLocationClient.enableBackgroundLocation(NOTIFYID, buildNotification(context, context.getString(R.string.app_name)+"正在为您提供定位服务"));
             mLocationClient.startLocation();
         }
     }
 
 
     //创建一个前台引用，用来显示数据
-    private static final String NOTIFICATION_CHANNEL_NAME = "BackgroundLocation";
+    private static final String NOTIFICATION_CHANNEL_NAME = "地图定位数据";
     private NotificationManager notificationManager = null;
     boolean isCreateChannel = false;
 
     @SuppressLint("NewApi")
-    private Notification buildNotification(Context context, String loactionError) {
+    public Notification buildNotification(Context context, String loactionError) {
 
         Notification.Builder builder = null;
         Notification notification = null;
@@ -166,14 +165,13 @@ public class LoactionUtils {
             String channelId = context.getPackageName();
             if (!isCreateChannel) {
                 NotificationChannel notificationChannel = new NotificationChannel(channelId,
-                        NOTIFICATION_CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+                        NOTIFICATION_CHANNEL_NAME, NotificationManager.IMPORTANCE_MAX);
                 notificationChannel.enableLights(true);//是否在桌面icon右上角展示小圆点
                 notificationChannel.setLightColor(Color.BLUE); //小圆点颜色
                 notificationChannel.setShowBadge(true); //是否在久按桌面图标时显示此渠道的通知
                 notificationChannel.enableVibration(true);//是否开启振动
-                notificationChannel.setVibrationPattern(new long[]{100, 100, 200, 100});
-
-
+                notificationChannel.setVibrationPattern(null);
+                notificationChannel.setSound(null, null);
                 notificationManager.createNotificationChannel(notificationChannel);
                 isCreateChannel = true;
             }
@@ -183,7 +181,7 @@ public class LoactionUtils {
         }
         builder. setDefaults(Notification.DEFAULT_ALL)
                 .setSmallIcon(R.mipmap.app_logo)
-                .setContentTitle("泓牛供应链")
+                .setContentTitle(context.getString(R.string.app_name))
                 .setContentText(loactionError == null ? "" : loactionError)
                 .setWhen(System.currentTimeMillis())
 
@@ -194,7 +192,6 @@ public class LoactionUtils {
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         builder.setContentIntent(PendingIntent.getBroadcast(context, 1,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT));
-
 
 
         if (android.os.Build.VERSION.SDK_INT >= 16) {

@@ -31,7 +31,7 @@ public class LoactionUpUtils {
     private int tempSize = 10;//每次批量上传的坐标个数
     private int minDis = 10;//记录两次坐标之间的最小距离
 
-    LoactionInfor loactionInfor=new LoactionInfor();
+    LoactionInfor loactionInfor = new LoactionInfor();
 
     public void setOrderInfor(String orderId, String carId, double destinationLatitude, double destinationLongitude) {
         loactionInfor = new LoactionInfor();
@@ -45,18 +45,17 @@ public class LoactionUpUtils {
     private LatLng lastLoaction = new LatLng(0, 0);
 
 
+
+
     public void add(double latitude, double longitude, long movingTime, float speed, float bearing) {
-
-
+        JLog.i("位置信息变化");
         if (loactionInfor == null || TextUtils.isEmpty(loactionInfor.cardID) || TextUtils.isEmpty(loactionInfor.orderId)) {
             return;
         }
-
         //计算当前距离目的地的距离
         float dis = MapConverUtils.caculeDis(loactionInfor.latitude, loactionInfor.longitude, latitude, longitude);
         float v = MapConverUtils.caculeDis(lastLoaction.latitude, lastLoaction.longitude, latitude, longitude);
-
-        JLog.i(dis+">>>>"+loactionInfor.cardID+">>>>>"+loactionInfor.orderId);
+        //如果接近终点，则实时上传数据
         if (dis < 100) {
             LocationBean bean = getLocationBean(latitude, longitude, movingTime, speed, bearing);
             if (v > minDis) {
@@ -65,15 +64,8 @@ public class LoactionUpUtils {
             notifyQueue(temp);
             lastLoaction = new LatLng(latitude, longitude);
             temp.clear();
-        } else if (v < minDis) {
-            JLog.d("上次位置：" + lastLoaction.latitude +
-                    "\n此次位置：" + latitude
-                    + "\n此次记录距离：" + v
-                    + "\n速度：" + speed
-                    + "\n方向：" + bearing
-                    + "\n位置改变：" + (lastLoaction.latitude == latitude)
-            );
-        } else {
+            //否则只成批量上传
+        } else if ((v >= minDis)) {
             LocationBean bean = getLocationBean(latitude, longitude, movingTime, speed, bearing);
             if (temp.size() < tempSize) {
                 temp.add(bean);
@@ -158,6 +150,11 @@ public class LoactionUpUtils {
         JLog.i("停止记录位置信息");
         upData(temp);
         loactionInfor = null;
+    }
+
+
+    public String getCarID(){
+        return loactionInfor==null?"":loactionInfor.cardID;
     }
 
 

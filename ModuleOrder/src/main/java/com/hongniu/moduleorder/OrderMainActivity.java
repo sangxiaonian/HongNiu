@@ -221,6 +221,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     protected void onStart() {
         super.onStart();
         BusFactory.getBus().post(new CloseActivityEvent());
+        loaction.startLoaction();
     }
 
     @Override
@@ -243,11 +244,9 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                         upLoactionEvent.cardID = event.getCarId();
                         upLoactionEvent.destinationLatitude = event.getDestinationLatitude();
                         upLoactionEvent.destinationLongitude = event.getDestinationLongitude();
-
                         BusFactory.getBus().post(upLoactionEvent);
                         float v = MapConverUtils.caculeDis(event.getStartLatitude(), event.getStartLongitude(), event.getDestinationLatitude(), event.getDestinationLongitude());
                         loaction.upInterval(v);
-                        JLog.i("-------发送运输相关信息-----");
                     }
                 }, 200);
 
@@ -262,18 +261,26 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
         if (event != null) {
             //如果有正在运输中的订单，则此时获取到用户的位置信息
             if (event.start) {//开始记录数据
-                if (upLoactionUtils != null) {
+
+                //首次创建位置信息收集数据
+                if (upLoactionUtils==null){
+                    if (!DeviceUtils.isOpenGps(mContext)) {
+                        showAleart("为了更准确的记录您的轨迹信息，请打开GPS");
+                    }
+                    upLoactionUtils = new LoactionUpUtils();
+                    upLoactionUtils.setOrderInfor(event.orderID, event.cardID, event.destinationLatitude, event.destinationLongitude);
+                    JLog.i("创建位置信息收集器");
+                    //更新位置信息收起器
+                }else if (!upLoactionUtils.getCarID().equals(event.cardID)){
                     upLoactionUtils.onDestroy();
+                    if (!DeviceUtils.isOpenGps(mContext)) {
+                        showAleart("为了更准确的记录您的轨迹信息，请打开GPS");
+                    }
+                    upLoactionUtils = new LoactionUpUtils();
+                    upLoactionUtils.setOrderInfor(event.orderID, event.cardID, event.destinationLatitude, event.destinationLongitude);
+                    JLog.i("更新位置信息收集器");
                 }
 
-                DeviceUtils.isOpenGps(mContext);
-
-                JLog.i("-------接收到运输相关信息-----");
-                if (!DeviceUtils.isOpenGps(mContext)) {
-                    showAleart("为了更准确的记录您的轨迹信息，请打开GPS");
-                }
-                upLoactionUtils = new LoactionUpUtils();
-                upLoactionUtils.setOrderInfor(event.orderID, event.cardID, event.destinationLatitude, event.destinationLongitude);
             } else {
                 if (upLoactionUtils != null) {
                     upLoactionUtils.onDestroy();
@@ -534,20 +541,34 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                     + "\n Longitude：" + aMapLocation.getLongitude()
                     + "\n" + ConvertUtils.formatTime(aMapLocation.getTime(), "yyyy-MM-dd HH:mm:ss")
             );
-            BusFactory.getBus().postSticky(new Event.UpLoaction(aMapLocation.getLatitude(), aMapLocation.getLongitude()));
-            if (upLoactionUtils != null) {
-                upLoactionUtils.add(aMapLocation.getLatitude(), aMapLocation.getLongitude(), aMapLocation.getTime(), aMapLocation.getSpeed(), aMapLocation.getBearing());
-            }
-
+            //发送当前的定位数据
+            Event.UpLoaction upLoaction = new Event.UpLoaction(aMapLocation.getLatitude(), aMapLocation.getLongitude());
+            upLoaction.bearing=aMapLocation.getBearing();
+            upLoaction.movingTime=aMapLocation.getTime();
+            upLoaction.speed=aMapLocation.getSpeed();
+            BusFactory.getBus().postSticky(upLoaction);
         } else {
             //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
-            Log.e("AmapError", "location Error, ErrCode:"
-                    + aMapLocation.getErrorCode() + ", errInfo:"
-                    + aMapLocation.getErrorInfo());
-
-
         }
-
-
     }
+
+
+    /**
+     * 位置信息变化
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void upLoaction(Event.UpLoaction event) {
+        if (event != null) {
+            if (upLoactionUtils != null) {
+                upLoactionUtils.add(event.latitude, event.longitude, event.movingTime, event.speed,event.bearing);
+            }
+        }
+    }
+
+
+
+
+
+
 }

@@ -42,6 +42,9 @@ public class Event {
     public static class UpLoaction implements IBus.IEvent {
         public double latitude;
         public double longitude;
+        public long movingTime;
+        public float speed;
+        public float bearing;
 
         public UpLoaction(double latitude, double longitude) {
             this.latitude = latitude;

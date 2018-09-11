@@ -4,7 +4,10 @@ import android.view.View;
 
 import com.amap.api.navi.INaviInfoCallback;
 import com.amap.api.navi.model.AMapNaviLocation;
-import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.entity.OrderDetailBean;
+import com.hongniu.baselibrary.event.Event;
+import com.hongniu.moduleorder.control.OrderEvent;
+import com.sang.common.event.BusFactory;
 import com.sang.common.utils.JLog;
 
 /**
@@ -14,23 +17,12 @@ import com.sang.common.utils.JLog;
  * 坐标收集更改的集合
  */
 public class LoactionCollectionUtils implements INaviInfoCallback {
-    private String orderNum;//订单号
-    private String carID;//车辆ＩＤ
 
-    LoactionUpUtils loactions;
-    private AMapNaviLocation lastLoaction;
-
-    public void setOrderNum(String orderNum) {
-        this.orderNum = orderNum;
-    }
-
-    public void setCarID(String carID) {
-        this.carID = carID;
-    }
+    private OrderDetailBean orderInfor;
 
 
     public LoactionCollectionUtils() {
-        loactions = new LoactionUpUtils();
+
     }
 
     //
@@ -45,15 +37,20 @@ public class LoactionCollectionUtils implements INaviInfoCallback {
     }
 
 
+    private float currentBear;//当前方向
+
     //当前位置发生改变
     @Override
     public void onLocationChange(AMapNaviLocation aMapNaviLocation) {
-
-//        if (Param.isDebug) {
-//            loactions.add(aMapNaviLocation.getCoord().getLatitude(), aMapNaviLocation.getCoord().getLongitude(), aMapNaviLocation.getTime(), aMapNaviLocation.getSpeed(), aMapNaviLocation.getBearing());
-//        }
-
-
+        float bearing = aMapNaviLocation.getBearing();
+        if (currentBear != bearing) {
+            currentBear = bearing;
+            Event.UpLoaction upLoaction = new Event.UpLoaction(aMapNaviLocation.getCoord().getLatitude(), aMapNaviLocation.getCoord().getLongitude());
+            upLoaction.bearing = aMapNaviLocation.getBearing();
+            upLoaction.movingTime = aMapNaviLocation.getTime();
+            upLoaction.speed = aMapNaviLocation.getSpeed();
+            BusFactory.getBus().postSticky(upLoaction);
+        }
     }
 
     //到达目的地
@@ -66,7 +63,15 @@ public class LoactionCollectionUtils implements INaviInfoCallback {
     @Override
     public void onStartNavi(int i) {
         JLog.i("onStartNavi:" + i);
-//        loactions.setOrderInfor(orderNum, carID, event.destinationLatitude, event.destinationLongitude);
+        if (orderInfor != null) {
+            OrderEvent.UpLoactionEvent upLoactionEvent = new OrderEvent.UpLoactionEvent();
+            upLoactionEvent.start = true;
+            upLoactionEvent.orderID = orderInfor.getId();
+            upLoactionEvent.cardID = orderInfor.getCarId();
+            upLoactionEvent.destinationLatitude = orderInfor.getDestinationLatitude();
+            upLoactionEvent.destinationLongitude = orderInfor.getDestinationLongitude();
+            BusFactory.getBus().post(upLoactionEvent);
+        }
     }
 
     @Override
@@ -113,5 +118,9 @@ public class LoactionCollectionUtils implements INaviInfoCallback {
     @Override
     public void onArrivedWayPoint(int i) {
 
+    }
+
+    public void setOrderInfor(OrderDetailBean orderInfor) {
+        this.orderInfor = orderInfor;
     }
 }
