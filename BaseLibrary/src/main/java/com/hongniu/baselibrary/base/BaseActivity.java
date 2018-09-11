@@ -28,6 +28,7 @@ import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.LoadDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
+import com.sang.thirdlibrary.bug.BugClient;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -66,6 +67,18 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
         if (getUseEventBus() || reciveClose()) {
             BusFactory.getBus().register(this);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        BugClient.getInstance().onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        BugClient.getInstance().onPause(this);
     }
 
     @Override

@@ -447,7 +447,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
             drawerLayout.openDrawer(Gravity.START);
         } else if (i == R.id.ll_order) {
             ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_create).navigation(mContext);
-
+            System.out.println(2/0);
         } else if (i == R.id.ll_login_out) {
             drawerLayout.closeDrawer(Gravity.START);
             new BottomAlertBuilder()
