@@ -11,8 +11,8 @@ import com.umeng.commonsdk.UMConfigure;
  */
 public class BugClient {
 
-    private String appKey="5b977ce9a40fa3196400000c";
-    private String pushSercet="3e3d9ee49758ac6dacc3bbac5c82f1f1";
+    private String appKey="5b9788ecf43e4845ec000071";
+    private String pushSercet="77a9468f91f6fd0106780654b1140e13";
 
     private static class InnerClient {
         private final static BugClient client = new BugClient();
