@@ -23,10 +23,10 @@ import com.sang.thirdlibrary.map.utils.ErrorInfo;
  */
 public class LoactionUtils {
 
-    private final int NOTIFYID=2001;
+    private final int NOTIFYID = 2001;
 
     private AMapLocationListener listener;
-    private int errorCode=Integer.MAX_VALUE;
+    private int errorCode = Integer.MAX_VALUE;
 
     public AMapLocationClient mLocationClient = null;
     //声明定位回调监听器
@@ -41,7 +41,7 @@ public class LoactionUtils {
 
             //可在其中解析amapLocation获取相应内容。
             if (aMapLocation.getErrorCode() == 0) {//定位成功
-                if (aMapLocation.getErrorCode()!=errorCode) {
+                if (aMapLocation.getErrorCode() != errorCode) {
                     mLocationClient.enableBackgroundLocation(NOTIFYID, buildNotification(context, context.getString(R.string.app_name) + "正在为您提供定位服务"));
                 }
             } else {
@@ -49,12 +49,12 @@ public class LoactionUtils {
                 Log.e("AmapError", "location Error, ErrCode:"
                         + aMapLocation.getErrorCode() + ", errInfo:"
                         + aMapLocation.getErrorInfo());
-                if (aMapLocation.getErrorCode()!=errorCode) {
+                if (aMapLocation.getErrorCode() != errorCode) {
                     mLocationClient.enableBackgroundLocation(NOTIFYID, buildNotification(context, ErrorInfo.getLoactionError(aMapLocation.getErrorCode())));
                 }
 
             }
-            errorCode=aMapLocation.getErrorCode();
+            errorCode = aMapLocation.getErrorCode();
 
         }
     };
@@ -103,23 +103,18 @@ public class LoactionUtils {
         this.context = context;
 //初始化定位
         mLocationClient = new AMapLocationClient(context.getApplicationContext());
-
 //设置定位回调监听
         mLocationClient.setLocationListener(mLocationListener);
         mLocationOption = new AMapLocationClientOption();
-
         mLocationOption.setOnceLocation(false);
-
         mLocationOption.setDeviceModeDistanceFilter(10);
-
-
         //设置是否允许模拟位置,默认为true，允许模拟位置
         mLocationOption.setMockEnable(false);
         mLocationOption.setLocationPurpose(AMapLocationClientOption.AMapLocationPurpose.Transport);
         mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
         mLocationOption.setNeedAddress(true);
         mLocationOption.setSensorEnable(true);
-
+        mLocationClient.enableBackgroundLocation(NOTIFYID, buildNotification(context, context.getString(R.string.app_name) + "正在为您提供定位服务"));
     }
 
     /**
@@ -141,7 +136,6 @@ public class LoactionUtils {
             mLocationClient.setLocationOption(mLocationOption);
             //设置场景模式后最好调用一次stop，再调用start以保证场景模式生效
             mLocationClient.stopLocation();
-            mLocationClient.enableBackgroundLocation(NOTIFYID, buildNotification(context, context.getString(R.string.app_name)+"正在为您提供定位服务"));
             mLocationClient.startLocation();
         }
     }
@@ -179,7 +173,7 @@ public class LoactionUtils {
         } else {
             builder = new Notification.Builder(context.getApplicationContext());
         }
-        builder. setDefaults(Notification.DEFAULT_ALL)
+        builder.setDefaults(Notification.DEFAULT_ALL)
                 .setSmallIcon(R.mipmap.app_logo)
                 .setContentTitle(context.getString(R.string.app_name))
                 .setContentText(loactionError == null ? "" : loactionError)
