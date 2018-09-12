@@ -1,12 +1,13 @@
 package com.sang.common.recycleview.touchhelper;
 
-import android.app.Service;
 import android.content.Context;
-import android.os.Vibrator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.View;
 
 import com.sang.common.recycleview.inter.OnItemTouchHelper;
+
+import java.util.LinkedList;
 
 /**
  * 作者： ${桑小年} on 2018/8/5.
@@ -15,6 +16,8 @@ import com.sang.common.recycleview.inter.OnItemTouchHelper;
 public class DragSortHelper extends ItemTouchHelper.Callback {
     private OnItemTouchHelper helper;
     private Context context;
+    private LinkedList<Integer> ingoreHolder=new LinkedList<>();
+
 
     public DragSortHelper(OnItemTouchHelper helper) {
         this.helper = helper;
@@ -30,7 +33,8 @@ public class DragSortHelper extends ItemTouchHelper.Callback {
         int dragFlag = ItemTouchHelper.LEFT | ItemTouchHelper.DOWN | ItemTouchHelper.UP | ItemTouchHelper.RIGHT;
         int swipeFlag = ItemTouchHelper.START | ItemTouchHelper.END;
 
-        return makeMovementFlags(dragFlag, swipeFlag);
+
+        return ingoreHolder.contains(viewHolder.getAdapterPosition())?0:makeMovementFlags(dragFlag, swipeFlag);
 
 
     }
@@ -71,9 +75,24 @@ public class DragSortHelper extends ItemTouchHelper.Callback {
         return true;
     }
 
+
+    /**
+     * 长按选中指定的holder
+     * @param viewHolder
+     * @param actionState
+     */
     @Override
     public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
         super.onSelectedChanged(viewHolder, actionState);
-        helper.onSelectedChanged( viewHolder,   actionState);
+        helper.onSelectedChanged(viewHolder, actionState);
     }
+
+    /**
+     * 设置忽略的条目
+     * @param position
+     */
+    public void addIngoreItem(int position){
+        ingoreHolder.add(position);
+    }
+
 }

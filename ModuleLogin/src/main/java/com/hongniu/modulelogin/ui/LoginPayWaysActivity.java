@@ -34,6 +34,7 @@ public class LoginPayWaysActivity extends BaseActivity {
 
     RecyclerView recyclerView;
     private ArrayList<String> datas;
+    private XAdapter<String> adapter;
 
 
     @Override
@@ -59,8 +60,15 @@ public class LoginPayWaysActivity extends BaseActivity {
     protected void initData() {
         super.initData();
         datas = new ArrayList<>();
-
-        final XAdapter<String> adapter = new XAdapter<String>(mContext, datas) {
+//        datas.add("15515551555");
+//        datas.add("15515551555");
+//        datas.add("15515551555");
+//        datas.add("15515551555");
+//        datas.add("15515551555");
+//        datas.add("15515551555");
+//        datas.add("15515551555");
+//        datas.add("15515551555");
+        adapter = new XAdapter<String>(mContext, datas) {
             @Override
             public BaseHolder<String> initHolder(ViewGroup parent, int viewType) {
                 return new BaseHolder<String>(mContext, parent, R.layout.login_item_pay_ways) {
@@ -105,15 +113,12 @@ public class LoginPayWaysActivity extends BaseActivity {
 
         };
 
-        ItemTouchHelper helper = new ItemTouchHelper(new DragSortHelper(adapter));
-        recyclerView.setAdapter(adapter);
-        helper.attachToRecyclerView(recyclerView);
 
-        adapter.addFoot(new PeakHolder(mContext, recyclerView, R.layout.login_item_foot_pay_ways) {
+        PeakHolder peakHolder = new PeakHolder(mContext, recyclerView, R.layout.login_item_foot_pay_ways) {
             @Override
             public void initView(int position) {
                 super.initView(position);
-
+                getItemView().setLongClickable(false);
                 getItemView().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -124,6 +129,15 @@ public class LoginPayWaysActivity extends BaseActivity {
                 });
 
             }
-        });
+        };
+        adapter.addFoot(peakHolder);
+
+
+        DragSortHelper dragSortHelper = new DragSortHelper(adapter);
+        ItemTouchHelper helper = new ItemTouchHelper(dragSortHelper);
+        dragSortHelper.addIngoreItem(adapter.getItemCount()-1);
+        recyclerView.setAdapter(adapter);
+        helper.attachToRecyclerView(recyclerView);
+
     }
 }

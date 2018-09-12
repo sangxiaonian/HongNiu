@@ -8,6 +8,7 @@ import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.recycleview.holder.PeakHolder;
 import com.sang.common.recycleview.inter.IXAdapter;
 import com.sang.common.recycleview.inter.OnItemTouchHelper;
+import com.sang.common.utils.JLog;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,7 +20,7 @@ import java.util.List;
  * 带看记录使用的ViewPager
  */
 
-public abstract class BaseAdapter<T> extends RecyclerView.Adapter implements IXAdapter<T> ,OnItemTouchHelper {
+public abstract class BaseAdapter<T> extends RecyclerView.Adapter implements IXAdapter<T>, OnItemTouchHelper {
 
 
     public Context context;
@@ -39,8 +40,10 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter implements IXA
 
     public void addHeard(PeakHolder heardHolder) {
         heads.add(heardHolder);
-    }  public void addHeard(int index,PeakHolder heardHolder) {
-        heads.add(index,heardHolder);
+    }
+
+    public void addHeard(int index, PeakHolder heardHolder) {
+        heads.add(index, heardHolder);
     }
 
     public void removeHeard(PeakHolder heardHolder) {
@@ -170,26 +173,26 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter implements IXA
 
     @Override
     public void onMove(int fromPosition, int toPosition) {
-        Collections.swap(list,fromPosition,toPosition);
-        notifyItemMoved(fromPosition,toPosition);
+        if (fromPosition>=0&&toPosition<list.size()) {
+            Collections.swap(list, fromPosition, toPosition);
+            notifyItemMoved(fromPosition, toPosition);
+        }
     }
 
     @Override
     public void onSwipe(int position) {
         list.remove(position);
-        /**
-         * 通知移除
-         */
         notifyItemRemoved(position);
     }
 
     private RecyclerView.ViewHolder selectHolder;
+
     @Override
     public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
-        if (viewHolder!=null&&actionState==2) {
-            selectHolder=viewHolder;
+        if (viewHolder != null && actionState == 2) {
+            selectHolder = viewHolder;
             viewHolder.itemView.animate().scaleX(0.9f).scaleY(0.9f).start();
-        }else if (selectHolder!=null&&actionState==0){
+        } else if (selectHolder != null && actionState == 0) {
             selectHolder.itemView.animate().scaleX(1f).scaleY(1f).start();
         }
     }
