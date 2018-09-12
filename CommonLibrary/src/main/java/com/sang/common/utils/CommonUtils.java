@@ -2,7 +2,9 @@ package com.sang.common.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.net.Uri;
+import android.os.Parcelable;
 import android.text.TextUtils;
 
 import java.util.regex.Matcher;
@@ -75,14 +77,13 @@ public class CommonUtils {
     /**
      * 启动到应用商店app详情界面
      *
-     * @param appPkg    目标App的包名
      * @param marketPkg 应用商店包名 ,如果为""则由系统弹出应用商店列表供用户选择,否则调转到目标市场的应用详情界面，某些应用商店可能会失败
      */
-    public static void launchAppDetail(Context context, String appPkg, String marketPkg) {
+    public static void launchAppDetail(Context context, String marketPkg) {
         try {
-            if (TextUtils.isEmpty(appPkg)) return;
 
-            Uri uri = Uri.parse("market://details?id=" + appPkg);
+
+            Uri uri = Uri.parse("market://details?id=" + context.getApplicationInfo().packageName);
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             if (!TextUtils.isEmpty(marketPkg)) {
                 intent.setPackage(marketPkg);
@@ -93,4 +94,33 @@ public class CommonUtils {
             e.printStackTrace();
         }
     }
-}
+
+     /**
+     * 启动到应用商店app详情界面
+     *
+     *
+     */
+    public static void launchAppDetail(Context context) {
+        //华为
+        boolean huawei = DeviceUtils.getDeviceBrand().equalsIgnoreCase("Huawei");
+        boolean honor = DeviceUtils.getDeviceBrand().equalsIgnoreCase("honor");
+        boolean oppo = DeviceUtils.getDeviceBrand().equalsIgnoreCase("OPPO");
+        boolean vivo = DeviceUtils.getDeviceBrand().equalsIgnoreCase("vivo");
+        boolean xiaomi = DeviceUtils.getDeviceBrand().equalsIgnoreCase("Xiaomi");
+        String pkg="com.tencent.android.qqdownloader";
+        if (honor||huawei||oppo||vivo||xiaomi){
+            pkg="";
+        }
+        //如果安装了应用宝
+        if (TextUtils.isEmpty(pkg)||DeviceUtils.isPkgInstalled(context, pkg)){
+            launchAppDetail(context,pkg);
+        }else {//没有应用市场，浏览器跳转
+            Uri uri = Uri.parse("http://a.app.qq.com/o/simple.jsp?pkgname="+context.getApplicationInfo().packageName);
+            Intent it = new Intent(Intent.ACTION_VIEW, uri);
+            context.startActivity(it);
+        }
+
+
+    }
+
+    }

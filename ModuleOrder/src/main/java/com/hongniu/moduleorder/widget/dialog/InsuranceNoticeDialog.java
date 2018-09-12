@@ -50,8 +50,6 @@ public class InsuranceNoticeDialog extends Dialog {
                 dismiss();
             }
         });
-
-
         setContentView(inflate);
         getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, DeviceUtils.dip2px(context, 450));
         getWindow().setWindowAnimations(R.style.dialog_ani);

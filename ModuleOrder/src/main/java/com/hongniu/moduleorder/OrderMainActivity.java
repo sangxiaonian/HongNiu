@@ -102,7 +102,6 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
         loaction.init(this);
         loaction.setListener(this);
 
-
         PermissionUtils.applyMap(this, new PermissionUtils.onApplyPermission() {
             @Override
             public void hasPermission(List<String> granted, boolean isAll) {
@@ -177,19 +176,20 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     /**
      * 显示强制更新接口
      */
-    public void showUpAleart(String msg){
+    public void showUpAleart(String msg) {
         CenterAlertDialog alertDialog = new CenterAlertDialog(mContext);
         new CenterAlertBuilder()
                 .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
                     @Override
                     public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
-                         CommonUtils.launchAppDetail(mContext,getApplicationInfo().packageName,"");
-                        dialog.dismiss();
+                        CommonUtils.launchAppDetail(mContext);
                     }
 
                 })
                 .hideBtLeft()
                 .hideContent()
+                .setCancelable(false)
+                .setCanceledOnTouchOutside(false)
                 .setDialogTitle(msg)
                 .creatDialog(alertDialog)
                 .show();
@@ -289,7 +289,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
             if (event.start) {//开始记录数据
 
                 //首次创建位置信息收集数据
-                if (upLoactionUtils==null){
+                if (upLoactionUtils == null) {
                     if (!DeviceUtils.isOpenGps(mContext)) {
                         showAleart("为了更准确的记录您的轨迹信息，请打开GPS");
                     }
@@ -297,7 +297,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                     upLoactionUtils.setOrderInfor(event.orderID, event.cardID, event.destinationLatitude, event.destinationLongitude);
                     JLog.i("创建位置信息收集器");
                     //更新位置信息收起器
-                }else if (!upLoactionUtils.getCarID().equals(event.cardID)){
+                } else if (!upLoactionUtils.getCarID().equals(event.cardID)) {
                     upLoactionUtils.onDestroy();
                     if (!DeviceUtils.isOpenGps(mContext)) {
                         showAleart("为了更准确的记录您的轨迹信息，请打开GPS");
@@ -468,16 +468,8 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.src_finance) {
-
-            CommonUtils.launchAppDetail(this,"com.tencent.mm","");
-
             ArouterUtils.getInstance().builder(ArouterParamsFinance.activity_finance_activity).navigation(mContext);
         } else if (i == R.id.src_me) {
-
-
-            CommonUtils.launchAppDetail(this,"com.hongniu.supply","");
-
-
             drawerLayout.openDrawer(Gravity.START);
         } else if (i == R.id.ll_order) {
             ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_create).navigation(mContext);
@@ -576,9 +568,9 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
             );
             //发送当前的定位数据
             Event.UpLoaction upLoaction = new Event.UpLoaction(aMapLocation.getLatitude(), aMapLocation.getLongitude());
-            upLoaction.bearing=aMapLocation.getBearing();
-            upLoaction.movingTime=aMapLocation.getTime();
-            upLoaction.speed=aMapLocation.getSpeed();
+            upLoaction.bearing = aMapLocation.getBearing();
+            upLoaction.movingTime = aMapLocation.getTime();
+            upLoaction.speed = aMapLocation.getSpeed();
             BusFactory.getBus().postSticky(upLoaction);
         } else {
             //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
@@ -588,20 +580,17 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
 
     /**
      * 位置信息变化
+     *
      * @param event
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void upLoaction(Event.UpLoaction event) {
         if (event != null) {
             if (upLoactionUtils != null) {
-                upLoactionUtils.add(event.latitude, event.longitude, event.movingTime, event.speed,event.bearing);
+                upLoactionUtils.add(event.latitude, event.longitude, event.movingTime, event.speed, event.bearing);
             }
         }
     }
-
-
-
-
 
 
 }

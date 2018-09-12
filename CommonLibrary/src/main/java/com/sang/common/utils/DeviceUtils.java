@@ -200,4 +200,26 @@ public class DeviceUtils {
         LocationManager locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
+
+    /**
+     * 判断是否安装指定报名的App
+     * @param
+     * @param pkgName 报名
+     * @return
+     */
+    public static boolean isPkgInstalled(Context context,String pkgName) {
+        PackageInfo packageInfo = null;
+        try {
+            packageInfo = context.getPackageManager().getPackageInfo(pkgName, 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            packageInfo = null;
+            e.printStackTrace();
+        }
+        if (packageInfo == null) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
 }
