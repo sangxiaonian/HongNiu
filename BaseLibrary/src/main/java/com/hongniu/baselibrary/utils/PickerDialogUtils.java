@@ -80,7 +80,7 @@ public class PickerDialogUtils {
      */
     public static OptionsPickerBuilder creatPickerDialog(Context mContext, OnOptionsSelectListener listener) {
         int size = 14;
-        int contentSize = 15;
+        int contentSize = 18;
         OptionsPickerBuilder pvOptions = new OptionsPickerBuilder(mContext, listener)
                 .setTitleColor(mContext.getResources().getColor(R.color.color_content_light))
                 .setSubmitColor(mContext.getResources().getColor(R.color.color_title_dark))
