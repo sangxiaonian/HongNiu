@@ -107,7 +107,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:textColor="@color/color_content_light"
-            android:text="我已阅读并同于"
+            android:text="我已阅读并同意"
             android:textSize="13sp"
             android:layout_height="wrap_content" />
 
@@ -115,7 +115,7 @@
             android:id="@+id/tv_notice"
             android:layout_width="wrap_content"
             android:textColor="@color/color_title_dark"
-            android:text="《泓牛(远恒)货运综合险》"
+            android:text="@string/order_insruance_police"
             android:textSize="13sp"
             android:layout_height="wrap_content" />
 

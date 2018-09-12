@@ -174,11 +174,37 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     }
 
 
+    /**
+     * 显示强制更新接口
+     */
+    public void showUpAleart(String msg){
+        CenterAlertDialog alertDialog = new CenterAlertDialog(mContext);
+        new CenterAlertBuilder()
+                .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
+                    @Override
+                    public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
+                         CommonUtils.launchAppDetail(mContext,getApplicationInfo().packageName,"");
+                        dialog.dismiss();
+                    }
+
+                })
+                .hideBtLeft()
+                .hideContent()
+                .setDialogTitle(msg)
+                .creatDialog(alertDialog)
+                .show();
+    }
+
+    @Override
+    protected void showAleart(String msg) {
+        super.showAleart(msg);
+    }
+
     @Override
     protected void initData() {
         super.initData();
         if (Utils.checkInfor()) {
-            tvName.setText(Utils.getPersonInfor().getContact() == null ? "" : Utils.getPersonInfor().getContact());
+            tvName.setText(Utils.getPersonInfor().getContact() == null ? "待完善" : Utils.getPersonInfor().getContact());
         }
         tvPhone.setText(Utils.getLoginInfor().getMobile() == null ? "" : Utils.getLoginInfor().getMobile());
         switchTitle.post(new Runnable() {
@@ -442,8 +468,16 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.src_finance) {
+
+            CommonUtils.launchAppDetail(this,"com.tencent.mm","");
+
             ArouterUtils.getInstance().builder(ArouterParamsFinance.activity_finance_activity).navigation(mContext);
         } else if (i == R.id.src_me) {
+
+
+            CommonUtils.launchAppDetail(this,"com.hongniu.supply","");
+
+
             drawerLayout.openDrawer(Gravity.START);
         } else if (i == R.id.ll_order) {
             ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_create).navigation(mContext);

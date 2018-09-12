@@ -51,10 +51,8 @@
     <string name="order_pay">支付订单</string>
     <string name="order_pay_success_driver_start">完成支付司机即可开始发车</string>
     <string name="order_pay_you_maybe_need">您可能需要</string>
-    <string name="order_pay_insurance_name">泓牛(远恒)货运综合险</string>
+    <string name="order_pay_insurance_name">人保货运险</string>
     <string name="order_pay_insurance_detail">低保费，运货更安心</string>
-    <string name="order_pay_insurance_notice_title">中国人保财险公路货物运输保险</string>
-    <string name="order_pay_insurance_notice_content">中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险中国人保财险公路货物运输保险</string>
     <string name="order_pay_insurance_notice_bt">同意以上，开始投保</string>
     <string name="order_pay_bus_insurance">购买保险</string>
     <string name="order_pay_pay_ways">运费支付渠道</string>
@@ -70,6 +68,8 @@
     <string name="order_pay_cancle_insurance">取消保险</string>
     <string name="order_pay_insruance_buy_des">发车前可购买保险</string>
     <string name="order_pay_insruance_pay">购买保险</string>
+    <string name="order_insruance_police">中国人保财险公路货物运输保险条款</string>
+
 
 
     <!--保单生成-->
