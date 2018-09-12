@@ -51,6 +51,7 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
     protected View tool;
     private LoadDialog loading;
     protected Disposable disposable;
+    private CenterAlertDialog alertDialog;
 
 
     @Override
@@ -206,6 +207,10 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
     }
 
     protected void showAleart(String msg, final DialogControl.OnButtonRightClickListener listener) {
+        if (alertDialog==null){
+            alertDialog = new CenterAlertDialog(mContext);
+
+        }
         new CenterAlertBuilder()
                 .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
                     @Override
@@ -220,7 +225,7 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
                 .hideBtLeft()
                 .hideContent()
                 .setDialogTitle(msg)
-                .creatDialog(new CenterAlertDialog(mContext))
+                .creatDialog(alertDialog)
                 .show();
     }
 
