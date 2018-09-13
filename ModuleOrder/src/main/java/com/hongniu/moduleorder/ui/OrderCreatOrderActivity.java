@@ -32,6 +32,7 @@ import com.hongniu.moduleorder.widget.CarNumPop;
 import com.sang.common.event.BusFactory;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.ConvertUtils;
+import com.sang.common.utils.JLog;
 import com.sang.common.widget.ItemView;
 import com.sang.common.widget.dialog.BottomAlertDialog;
 import com.sang.common.widget.dialog.builder.BottomAlertBuilder;
@@ -50,7 +51,7 @@ import io.reactivex.disposables.Disposable;
  * 创建订单
  */
 @Route(path = ArouterParamOrder.activity_order_create)
-public class OrderCreatOrderActivity extends BaseActivity implements View.OnClickListener, OnTimeSelectListener, CarNumPop.onItemClickListener{
+public class OrderCreatOrderActivity extends BaseActivity implements View.OnClickListener, OnTimeSelectListener, CarNumPop.onItemClickListener {
 
 
     public Handler handler = new Handler() {
@@ -58,9 +59,9 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
 
-            if (msg.what==0) {
+            if (msg.what == 0) {
                 getCarNum();
-            }else {
+            } else {
                 getDriverInfor();
             }
         }
@@ -85,10 +86,8 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     private Button btSave;
 
     private CarNumPop<OrderCarNumbean> pop;
-    private CarNumPop<OrderDriverPhoneBean> driverPop;
     private OrderCreatParamBean paramBean = new OrderCreatParamBean();
     List<OrderCarNumbean> carNumbeans = new ArrayList<>();
-    List<OrderDriverPhoneBean> driverBeans = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +117,6 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         btSave = findViewById(R.id.bt_entry);
         timePickerView = PickerDialogUtils.initTimePicker(mContext, this, new boolean[]{true, true, true, false, false, false});
         pop = new CarNumPop<OrderCarNumbean>(mContext);
-        driverPop = new CarNumPop<OrderDriverPhoneBean>(mContext);
 
     }
 
@@ -146,6 +144,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
                 handler.removeMessages(0);
                 handler.removeMessages(1);
                 if (!TextUtils.isEmpty(itemCarNum.getTextCenter()) && show) {
+
                     handler.sendEmptyMessageDelayed(0, 300);
                 }
                 show = true;
@@ -167,14 +166,13 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
             public void afterTextChanged(Editable s) {
                 handler.removeMessages(1);
                 handler.removeMessages(0);
-                if (CommonUtils.isPhone(itemDriverPhone.getTextCenter())&&show) {
+                if (CommonUtils.isPhone(itemDriverPhone.getTextCenter()) && show) {
                     handler.sendEmptyMessageDelayed(1, 300);
                 }
                 show = true;
             }
         });
         pop.setListener(this);
-        driverPop.setListener(this);
 
     }
 
@@ -226,9 +224,9 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
                 .subscribe(new NetObserver<List<OrderDriverPhoneBean>>(null) {
                     @Override
                     public void doOnSuccess(List<OrderDriverPhoneBean> data) {
-                        if (data!=null&&!data.isEmpty()) {
+                        if (data != null && !data.isEmpty()) {
                             OrderDriverPhoneBean bean = data.get(0);
-                            show=false;
+                            show = false;
                             itemDriverPhone.setTextCenter(bean.getMobile());
                             itemDriverName.setTextCenter(bean.getContact());
                             itemDriverName.getEtCenter().requestFocus();
@@ -342,8 +340,8 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     public void onStartEvent(OrderEvent.StartLoactionEvent startLoactionEvent) {
         if (startLoactionEvent != null && startLoactionEvent.t != null) {
             itemStartLocation.setTextCenter(startLoactionEvent.t.getTitle());
-            paramBean.setStartLatitude( startLoactionEvent.t.getLatLonPoint().getLatitude());
-            paramBean.setStartLongitude( startLoactionEvent.t.getLatLonPoint().getLongitude());
+            paramBean.setStartLatitude(startLoactionEvent.t.getLatLonPoint().getLatitude());
+            paramBean.setStartLongitude(startLoactionEvent.t.getLatLonPoint().getLongitude());
             paramBean.setStartPlaceInfo(startLoactionEvent.t.getTitle());
         }
     }
@@ -353,8 +351,8 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     public void onEndEvent(OrderEvent.EndLoactionEvent endLoactionEvent) {
         if (endLoactionEvent != null && endLoactionEvent.t != null) {
             itemEndLocation.setTextCenter(endLoactionEvent.t.getTitle());
-            paramBean.setDestinationLatitude( endLoactionEvent.t.getLatLonPoint().getLatitude());
-            paramBean.setDestinationLongitude( endLoactionEvent.t.getLatLonPoint().getLongitude());
+            paramBean.setDestinationLatitude(endLoactionEvent.t.getLatLonPoint().getLatitude());
+            paramBean.setDestinationLongitude(endLoactionEvent.t.getLatLonPoint().getLongitude());
             paramBean.setDestinationInfo(endLoactionEvent.t.getTitle());
         }
     }
@@ -425,11 +423,10 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         }
 
 
-
         if (TextUtils.isEmpty(itemCarNum.getTextCenter())) {
             showAleart(itemCarNum.getTextCenterHide());
             return false;
-        }else if (!  CommonUtils.carNumMatches(itemCarNum.getTextCenter())){
+        } else if (!CommonUtils.carNumMatches(itemCarNum.getTextCenter())) {
             showAleart(getString(R.string.carnum_error));
             return false;
         }
@@ -437,7 +434,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         if (TextUtils.isEmpty(itemCarPhone.getTextCenter())) {
             showAleart(itemCarPhone.getTextCenterHide());
             return false;
-        }else if (!  CommonUtils.isPhone(itemCarPhone.getTextCenter())){
+        } else if (!CommonUtils.isPhone(itemCarPhone.getTextCenter())) {
             showAleart(getString(R.string.phone_error));
             return false;
         }
@@ -455,7 +452,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         if (TextUtils.isEmpty(itemDriverPhone.getTextCenter())) {
             showAleart(itemDriverPhone.getTextCenterHide());
             return false;
-        }else if (!  CommonUtils.isPhone(itemDriverPhone.getTextCenter())){
+        } else if (!CommonUtils.isPhone(itemDriverPhone.getTextCenter())) {
             showAleart(getString(R.string.phone_error));
             return false;
         }
@@ -472,16 +469,15 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     @Override
     public void onItemClick(View tragetView, int position, Object data) {
         pop.dismiss();
-        driverPop.dismiss();
         show = false;
-        if (tragetView!=null){
-            if (tragetView.getId()==R.id.item_car_num&&data instanceof OrderCarNumbean){
-                OrderCarNumbean bean= (OrderCarNumbean) data;
+        if (tragetView != null) {
+            if (tragetView.getId() == R.id.item_car_num && data instanceof OrderCarNumbean) {
+                OrderCarNumbean bean = (OrderCarNumbean) data;
                 itemCarNum.setTextCenter(bean.getCarNumber());
                 itemCarPhone.setTextCenter(bean.getContactMobile());
                 itemCarName.setTextCenter(bean.getContactName());
-            }else if (tragetView.getId()==R.id.item_driver_phone&&data instanceof OrderDriverPhoneBean){
-                OrderDriverPhoneBean bean= (OrderDriverPhoneBean) data;
+            } else if (tragetView.getId() == R.id.item_driver_phone && data instanceof OrderDriverPhoneBean) {
+                OrderDriverPhoneBean bean = (OrderDriverPhoneBean) data;
                 itemDriverPhone.setTextCenter(bean.getMobile());
                 itemDriverName.setTextCenter(bean.getContact());
             }
@@ -491,7 +487,6 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
 
     @Override
     public void onDissmiss() {
-        show = false;
     }
 
 }

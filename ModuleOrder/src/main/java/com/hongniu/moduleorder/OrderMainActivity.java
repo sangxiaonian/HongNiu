@@ -561,7 +561,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     public void onLocationChanged(AMapLocation aMapLocation) {
         //可在其中解析amapLocation获取相应内容。
         if (aMapLocation.getErrorCode() == 0) {//定位成功
-            JLog.d("测试后台打点：" + DeviceUtils.isOpenGps(mContext)
+            JLog.v("测试后台打点：" + DeviceUtils.isOpenGps(mContext)
                     + "\n Latitude：" + aMapLocation.getLatitude()
                     + "\n Longitude：" + aMapLocation.getLongitude()
                     + "\n" + ConvertUtils.formatTime(aMapLocation.getTime(), "yyyy-MM-dd HH:mm:ss")

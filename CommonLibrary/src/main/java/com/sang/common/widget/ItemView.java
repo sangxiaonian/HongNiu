@@ -167,6 +167,7 @@ public class ItemView extends FrameLayout {
     public void setEditable(boolean editable) {
         this.editable = editable;
         if (editable) {
+            viewFound.setVisibility(GONE);
             viewFound.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -177,6 +178,7 @@ public class ItemView extends FrameLayout {
                 }
             });
         } else {
+            viewFound.setVisibility(VISIBLE);
             etCenter.setInputType(InputType.TYPE_NULL);
             viewFound.setOnClickListener(new OnClickListener() {
                 @Override
