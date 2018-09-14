@@ -1,11 +1,7 @@
 package com.sang.common.widget.dialog.inter;
 
 import android.app.Dialog;
-import android.graphics.Typeface;
-import android.text.TextUtils;
 import android.view.View;
-
-import com.sang.common.widget.dialog.CenterAlertDialog;
 
 /**
  * 作者： ${PING} on 2018/8/6.
@@ -18,6 +14,13 @@ public class DialogControl {
     public interface OnButtonBottomClickListener {
         void onBottomClick(View view, IBottomDialog dialog);
     }
+
+    public interface OnEntryClickListener<T>{
+        void onEntryClick(Dialog dialog, int position, T data);
+    }
+
+
+
 
     /**
      * Bottom dialog 点击上部按钮

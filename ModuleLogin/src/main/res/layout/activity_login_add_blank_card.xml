@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_bg_dark"
+    android:orientation="vertical"
+    tools:context=".ui.LoginAddBlankCardActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:textSize="13sp"
+        android:layout_marginTop="@dimen/app_gap"
+        android:textColor="#999999"
+        android:layout_marginLeft="@dimen/app_gap"
+        android:text="请绑定本人收款方式"
+        android:layout_marginBottom="@dimen/app_item_gap"
+        android:layout_height="wrap_content" />
+
+    <com.sang.common.widget.ItemView
+        android:id="@+id/item_blank_name"
+        style="@style/itemview"
+        app:textcenterhide="请输入银行名称"
+        app:textleft="银行" />
+
+    <com.sang.common.widget.ItemView
+        android:id="@+id/item_blank_address"
+        style="@style/itemview"
+        app:textcenterhide="请输入银行卡开户行"
+        app:textleft="开户行" />
+
+    <com.sang.common.widget.ItemView
+        android:id="@+id/item_owner_name"
+        style="@style/itemview"
+        app:textcenterhide="请输入持卡人姓名"
+        app:textleft="持卡人" />
+
+    <com.sang.common.widget.ItemView
+        android:id="@+id/item_blank_card_num"
+        style="@style/itemview"
+        app:showline="false"
+        app:centerLength="19"
+        app:centerType="phone"
+        app:textcenterhide="请输入银行卡号"
+        app:textleft="卡号" />
+
+    <Button
+        style="@style/bt_sum"
+        android:id="@+id/bt_sum"
+
+        android:layout_marginTop="30dp"
+        android:text="@string/save" />
+
+</LinearLayout>

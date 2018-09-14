@@ -1,5 +1,6 @@
 package com.hongniu.modulelogin.ui;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,8 +13,10 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.widget.dialog.PayWaysDialog;
 import com.hongniu.modulelogin.R;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
@@ -22,19 +25,23 @@ import com.sang.common.recycleview.touchhelper.DragSortHelper;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.CenteredImageSpan;
+import com.sang.common.widget.dialog.inter.DialogControl;
 import com.sang.thirdlibrary.pay.wechat.WeChatAppPay;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 我的收款方式
  */
 @Route(path = ArouterParamLogin.activity_pay_ways)
-public class LoginPayWaysActivity extends BaseActivity {
+public class LoginPayWaysActivity extends BaseActivity implements DialogControl.OnEntryClickListener<String> {
 
     RecyclerView recyclerView;
     private ArrayList<String> datas;
     private XAdapter<String> adapter;
+    private PayWaysDialog dialog;
 
 
     @Override
@@ -54,6 +61,14 @@ public class LoginPayWaysActivity extends BaseActivity {
         LinearLayoutManager manager = new LinearLayoutManager(mContext);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(manager);
+
+
+        List<String> payWays = Arrays.asList(getResources().getStringArray(R.array.order_pay_way));
+        dialog = new PayWaysDialog(mContext);
+        dialog.builder()
+                .setEntryClickListener(this)
+                .setDatas(payWays);
+
     }
 
     @Override
@@ -123,8 +138,9 @@ public class LoginPayWaysActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
 
-                        WeChatAppPay.jumpToXia(mContext, Param.isDebug);
-                        adapter.notifyDataSetChanged();
+                        dialog.show(v);
+
+
                     }
                 });
 
@@ -135,9 +151,29 @@ public class LoginPayWaysActivity extends BaseActivity {
 
         DragSortHelper dragSortHelper = new DragSortHelper(adapter);
         ItemTouchHelper helper = new ItemTouchHelper(dragSortHelper);
-        dragSortHelper.addIngoreItem(adapter.getItemCount()-1);
+        dragSortHelper.addIngoreItem(adapter.getItemCount() - 1);
         recyclerView.setAdapter(adapter);
         helper.attachToRecyclerView(recyclerView);
 
+    }
+
+    /**
+     * 选择支付方式
+     *
+     * @param dialog
+     * @param position
+     * @param data
+     */
+    @Override
+    public void onEntryClick(Dialog dialog, int position, String data) {
+        dialog.dismiss();
+        switch (position) {
+            case 0://绑定微信
+                WeChatAppPay.jumpToXia(mContext, Param.isDebug);
+                break;
+            case 1://绑定银联卡
+                ArouterUtils.getInstance().builder( ArouterParamLogin.activity_login_add_blank_card).navigation(this);
+                break;
+        }
     }
 }

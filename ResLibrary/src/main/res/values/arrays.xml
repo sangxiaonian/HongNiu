@@ -17,6 +17,13 @@
         <item>已收货</item>
     </string-array>
 
+    <!--绑定付款方式-->
+  <string-array name="order_pay_way">
+        <item>绑定微信</item>
+        <item>绑定银联卡</item>
+
+    </string-array>
+
 
 
 

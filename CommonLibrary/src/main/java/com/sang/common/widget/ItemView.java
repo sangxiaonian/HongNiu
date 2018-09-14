@@ -144,22 +144,18 @@ public class ItemView extends FrameLayout {
     private void setCenter(int maxLength, int centerType) {
         if (centerType == 1) {//手机号
             etCenter.setInputType(InputType.TYPE_CLASS_PHONE);
-            etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
+            etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength<0?11:maxLength)});
             etCenter.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
         } else if (centerType == 2) {//身份证号
-            etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(18)});
+            etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength<0?18:maxLength)});
             etCenter.setKeyListener(DigitsKeyListener.getInstance("xX0123456789"));
         } else if (centerType == 3) {//数字
             etCenter.setFilters(new InputFilter[]{new PointLengthFilter()});
             etCenter.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
 //            etCenter.setKeyListener(DigitsKeyListener.getInstance("0123456789."));
         } else {
-            if (maxLength > 0) {
-                etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength),new SpaceFilter()});
-            }else {
-                etCenter.setFilters(new InputFilter[]{ new SpaceFilter()});
+            etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength<0?Integer.MAX_VALUE:maxLength),new SpaceFilter()});
 
-            }
         }
     }
 

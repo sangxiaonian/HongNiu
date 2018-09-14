@@ -38,5 +38,9 @@ public class ArouterParamLogin {
      * 收款方式
      */
     public static final String activity_pay_ways = "/login/activity_pay_ways";
+    /**
+     * 绑定银行卡
+     */
+    public static final String activity_login_add_blank_card = "/login/activity_login_add_blank_card";
 
 }

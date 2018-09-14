@@ -5,12 +5,12 @@
     <application>
         <activity
             android:name=".LoginActivity"
-            android:windowSoftInputMode="stateVisible"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".LoginSmsVerifyActivity"
-              android:windowSoftInputMode="stateVisible"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".ui.LoginCarInforActivity"
             android:screenOrientation="portrait" />
@@ -27,6 +27,7 @@
         <activity
             android:name=".ui.LoginCarListActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".ui.LoginAddBlankCardActivity"></activity>
     </application>
 
 </manifest>
