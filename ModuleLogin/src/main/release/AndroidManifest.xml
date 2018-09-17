@@ -27,7 +27,9 @@
         <activity
             android:name=".ui.LoginCarListActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.LoginAddBlankCardActivity"></activity>
+        <activity
+            android:name=".ui.LoginAddBlankCardActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

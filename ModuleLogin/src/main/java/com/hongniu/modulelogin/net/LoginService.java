@@ -8,6 +8,7 @@ import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
 import com.hongniu.modulelogin.entity.LoginCarInforBean;
 import com.hongniu.modulelogin.entity.LoginSMSParams;
+import com.hongniu.modulelogin.entity.PayInforBeans;
 
 import java.util.List;
 
@@ -72,6 +73,21 @@ public interface LoginService {
      */
     @POST("hongniu/api/car/selectpagecar")
     Observable<CommonBean<PageBean<LoginCarInforBean>>> getCarList(@Body PagerParambean parambean);
+
+ /**
+     * 获取我的付款方式
+     *
+     * @return
+     */
+    @POST("hongniu/api/refund/queryMyCards")
+    Observable<CommonBean< List<PayInforBeans>>> queryMyPayInforList(@Body PayInforBeans beans);
+/**
+     * 新增银行卡付款方式
+     *
+     * @return
+     */
+    @POST("hongniu/api/refund/add")
+    Observable<CommonBean<String>> addBlankCard(@Body PayInforBeans beans);
 
 
 }

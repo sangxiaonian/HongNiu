@@ -20,9 +20,19 @@
         android:layout_marginBottom="@dimen/app_gap"
         android:textSize="14sp" />
 
-    <android.support.v7.widget.RecyclerView
+    <com.hongniu.baselibrary.widget.XRefreshLayout
+        android:id="@+id/refresh"
         android:layout_width="match_parent"
-        android:id="@+id/rv"
-        android:layout_height="match_parent"/>
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv"
+            android:overScrollMode="never"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+    </com.hongniu.baselibrary.widget.XRefreshLayout>
 
 </LinearLayout>

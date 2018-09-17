@@ -1,5 +1,6 @@
 package com.hongniu.modulelogin.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -8,8 +9,11 @@ import android.widget.Button;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.modulelogin.R;
 import com.hongniu.modulelogin.entity.LoginEvent;
+import com.hongniu.modulelogin.entity.PayInforBeans;
+import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.sang.common.event.BusFactory;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.ItemView;
@@ -79,10 +83,27 @@ public class LoginAddBlankCardActivity extends BaseActivity implements View.OnCl
         int i = v.getId();
         if (i == R.id.bt_sum) {
             if (check()){
-                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show(R.string.login_add_car_success);
-                finish();
+                PayInforBeans beans =new PayInforBeans();
+                setValue(beans);
+                HttpLoginFactory.addBlankCard(beans)
+                .subscribe(new NetObserver<String>(this) {
+                    @Override
+                    public void doOnSuccess(String data) {
+                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show(R.string.login_add_car_success);
+                        setResult(1);
+                        finish();
+                    }
+                });
+
             }
 
         }
+    }
+
+    private void setValue(PayInforBeans beans) {
+        beans.setBankName(itemBlankName.getTextCenter());
+        beans.setDepositBank(itemBlankAddress.getTextCenter());
+        beans.setAccountName(itemOwnerName.getTextCenter());
+        beans.setCardNo(itemBlankCardNum.getTextCenter());
     }
 }

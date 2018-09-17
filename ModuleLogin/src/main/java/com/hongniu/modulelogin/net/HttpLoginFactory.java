@@ -9,6 +9,7 @@ import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
 import com.hongniu.modulelogin.entity.LoginCarInforBean;
 import com.hongniu.modulelogin.entity.LoginSMSParams;
+import com.hongniu.modulelogin.entity.PayInforBeans;
 import com.sang.common.net.rx.RxUtils;
 import com.sang.common.utils.ConvertUtils;
 
@@ -130,6 +131,29 @@ public class HttpLoginFactory {
 
         PagerParambean bean = new PagerParambean(currentPage);
         return LoginClient.getInstance().getLoginService().getCarList(bean).compose(RxUtils.<CommonBean<PageBean<LoginCarInforBean>>>getSchedulersObservableTransformer());
+
+    }
+
+    /**
+     * 获取车辆类型
+     */
+    public static Observable<CommonBean<List<PayInforBeans>>> queryMyPayInforList() {
+
+        PayInforBeans bean = new PayInforBeans();
+        return LoginClient.getInstance().getLoginService()
+                .queryMyPayInforList(bean)
+                .compose(RxUtils.<CommonBean<List<PayInforBeans>>>getSchedulersObservableTransformer());
+
+    }
+
+    /**
+     * 新增银行卡收款方式
+     */
+    public static Observable<CommonBean<String>> addBlankCard(PayInforBeans bean) {
+
+        return LoginClient.getInstance().getLoginService()
+                .addBlankCard(bean)
+                .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
 
     }
 
