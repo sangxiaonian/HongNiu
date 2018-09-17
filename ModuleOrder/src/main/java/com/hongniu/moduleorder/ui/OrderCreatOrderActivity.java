@@ -42,6 +42,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -115,7 +116,19 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         itemDriverName = findViewById(R.id.item_driver_name);
         itemDriverPhone = findViewById(R.id.item_driver_phone);
         btSave = findViewById(R.id.bt_entry);
-        timePickerView = PickerDialogUtils.initTimePicker(mContext, this, new boolean[]{true, true, true, false, false, false});
+//        timePickerView = PickerDialogUtils.initTimePicker(mContext, this, new boolean[]{true, true, true, false, false, false});
+
+
+        Calendar startDate = Calendar.getInstance();
+
+        Calendar endDate = Calendar.getInstance();
+        endDate.set( startDate.get(Calendar.YEAR)+2, 12, 31);
+          timePickerView = PickerDialogUtils.creatTimePicker(mContext, this, new boolean[]{true, true, true, false, false, false})
+                .setRangDate(startDate,endDate)
+                .build();
+        timePickerView.setKeyBackCancelable(false);//系统返回键监听屏蔽掉
+
+
         pop = new CarNumPop<OrderCarNumbean>(mContext);
 
     }
