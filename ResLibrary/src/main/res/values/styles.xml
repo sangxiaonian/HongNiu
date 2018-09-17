@@ -5,10 +5,11 @@
         <!-- Customize your theme here. -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-         <item name="colorPrimary">@color/color_white</item>
+        <item name="colorPrimary">@color/color_white</item>
         <item name="colorPrimaryDark">@color/color_white</item>
         <item name="colorAccent">@color/color_light</item>
     </style>
+
     <style name="tranTheme" parent="AppTheme">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@color/color_tran</item>
@@ -47,5 +48,12 @@
         <item name="android:paddingLeft">@dimen/app_gap</item>
         <item name="android:paddingRight">@dimen/app_gap</item>
         <item name="android:background">@color/color_bg</item>
+    </style>
+
+    <style name="viewPoint">
+        <item name="android:layout_width">8dp</item>
+        <item name="android:layout_height">8dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:background">@drawable/shape_circle_ffffff</item>
     </style>
 </resources>

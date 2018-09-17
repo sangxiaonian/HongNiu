@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="绑定微信"
+            android:text="添加收款方式"
             android:textColor="@color/color_order_color"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="@+id/textView2"

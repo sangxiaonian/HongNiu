@@ -135,7 +135,7 @@ public class HttpLoginFactory {
     }
 
     /**
-     * 获取车辆类型
+     * 查询收款方式列表
      */
     public static Observable<CommonBean<List<PayInforBeans>>> queryMyPayInforList() {
 
@@ -143,6 +143,21 @@ public class HttpLoginFactory {
         return LoginClient.getInstance().getLoginService()
                 .queryMyPayInforList(bean)
                 .compose(RxUtils.<CommonBean<List<PayInforBeans>>>getSchedulersObservableTransformer());
+
+    }
+  /**
+     * 更改默认收款方式
+   * @param id 付款方式ID
+   * @param isDefault  1 默认 0 非默认
+   */
+    public static Observable<CommonBean<String>> changeDefaultPayWay(String id, int isDefault) {
+
+        PayInforBeans bean = new PayInforBeans();
+        bean.setIsDefault(isDefault);
+        bean.setId(id);
+        return LoginClient.getInstance().getLoginService()
+                .changeDefaultPayWay(bean)
+                .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
 
     }
 

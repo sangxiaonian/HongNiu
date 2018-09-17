@@ -32,7 +32,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/app_item_gap"
@@ -43,16 +43,73 @@
         app:layout_constraintStart_toEndOf="@+id/src_icon_small"
         app:layout_constraintTop_toTopOf="@+id/src_icon_small" />
 
-    <TextView
-        android:id="@+id/tv_phone"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/ll_num"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
         android:layout_marginTop="13dp"
-        android:text="133333"
-        android:textColor="@color/color_white"
-        android:textSize="24sp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/src_icon_small"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_title">
+
+        <View style="@style/viewPoint" />
+
+        <View style="@style/viewPoint" />
+
+        <View style="@style/viewPoint" />
+
+        <View style="@style/viewPoint" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <View style="@style/viewPoint" />
+
+        <View style="@style/viewPoint" />
+
+        <View style="@style/viewPoint" />
+
+        <View style="@style/viewPoint" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <View style="@style/viewPoint" />
+
+        <View style="@style/viewPoint" />
+
+        <View style="@style/viewPoint" />
+
+        <View style="@style/viewPoint" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tv_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="133333"
+            android:textColor="@color/color_white"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/img_default"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/icon_dqsk_68" />
 
 
 </android.support.constraint.ConstraintLayout>

@@ -74,14 +74,23 @@ public interface LoginService {
     @POST("hongniu/api/car/selectpagecar")
     Observable<CommonBean<PageBean<LoginCarInforBean>>> getCarList(@Body PagerParambean parambean);
 
- /**
+    /**
      * 获取我的付款方式
      *
      * @return
      */
     @POST("hongniu/api/refund/queryMyCards")
-    Observable<CommonBean< List<PayInforBeans>>> queryMyPayInforList(@Body PayInforBeans beans);
-/**
+    Observable<CommonBean<List<PayInforBeans>>> queryMyPayInforList(@Body PayInforBeans beans);
+
+    /**
+     * 更改默认收款方式
+     *
+     * @return
+     */
+    @POST("hongniu/api/refund/modifyDefault")
+    Observable<CommonBean<String>> changeDefaultPayWay(@Body PayInforBeans beans);
+
+    /**
      * 新增银行卡付款方式
      *
      * @return
