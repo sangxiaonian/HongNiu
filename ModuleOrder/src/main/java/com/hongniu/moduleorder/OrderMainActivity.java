@@ -121,7 +121,6 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
             ArouterUtils.getInstance().builder(ArouterParamLogin.activity_login).navigation(mContext);
             finish();
         }
-        JLog.i("----------重新打开App-------");
     }
 
     @Override
@@ -183,6 +182,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                 .setCancelable(false)
                 .setCanceledOnTouchOutside(false)
                 .setDialogTitle(msg)
+                .setBtRight("立即更新")
                 .creatDialog(alertDialog)
                 .show();
     }
@@ -484,7 +484,6 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
      */
     @Override
     public void onPopuDismsss(BasePopu popu, View target) {
-
         switchTitle.closeSwitch();
     }
 
@@ -498,6 +497,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.src_finance) {
+
             ArouterUtils.getInstance().builder(ArouterParamsFinance.activity_finance_activity).navigation(mContext);
         } else if (i == R.id.src_me) {
             drawerLayout.openDrawer(Gravity.START);

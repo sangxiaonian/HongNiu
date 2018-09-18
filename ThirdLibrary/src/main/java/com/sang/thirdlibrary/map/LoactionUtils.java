@@ -132,7 +132,7 @@ public class LoactionUtils {
 
     public void stopLoaction() {
         if (mLocationClient != null) {
-            JLog.e("停止定位-----true");
+            mLocationClient.disableBackgroundLocation(true);
             mLocationClient.stopLocation();
             mLocationClient.disableBackgroundLocation(true);
         }
