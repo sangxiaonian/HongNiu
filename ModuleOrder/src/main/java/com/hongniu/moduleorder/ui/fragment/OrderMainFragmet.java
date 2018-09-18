@@ -162,7 +162,7 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
                         itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-//                                onCheckPath(data);
+                                onCheckPath(data);
                             }
                         });
                     }

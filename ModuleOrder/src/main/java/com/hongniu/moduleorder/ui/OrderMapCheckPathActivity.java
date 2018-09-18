@@ -3,20 +3,16 @@ package com.hongniu.moduleorder.ui;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.SystemClock;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.amap.api.maps.AMap;
-import com.amap.api.maps.CameraUpdate;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.BitmapDescriptor;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
-import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.LatLngBounds;
 import com.amap.api.maps.model.PolylineOptions;
-import com.amap.api.navi.enums.LaneAction;
 import com.amap.api.trace.LBSTraceClient;
 import com.amap.api.trace.TraceListener;
 import com.amap.api.trace.TraceLocation;
@@ -27,18 +23,14 @@ import com.hongniu.baselibrary.widget.order.OrderDetailItem;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.entity.LocationBean;
-import com.hongniu.moduleorder.entity.PathBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.sang.common.event.BusFactory;
-import com.sang.common.net.error.NetException;
 import com.sang.common.net.rx.BaseObserver;
 import com.sang.common.net.rx.RxUtils;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.JLog;
-import com.sang.thirdlibrary.map.MapUtils;
 import com.sang.thirdlibrary.map.MarkUtils;
-import com.sang.thirdlibrary.map.utils.MapConverUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -46,14 +38,13 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Observable;
 import io.reactivex.functions.Function;
 
 /**
  * 查看轨迹
  */
 @Route(path = ArouterParamOrder.activity_map_check_path)
-public class OrderMapCheckPathActivity extends BaseActivity  {
+public class OrderMapCheckPathActivity extends BaseActivity {
 
 
     private MapView mapView;
@@ -117,17 +108,9 @@ public class OrderMapCheckPathActivity extends BaseActivity  {
         textureList.add(mRedTexture);
         List<Integer> textureIndexs = new ArrayList<Integer>();
         textureIndexs.add(0);
-//        lineOption = new PolylineOptions()
-//
-//                .setCustomTextureList(textureList)
-//                .setCustomTextureIndex(textureIndexs)
-//                .setUseTexture(true)
-//                .width(DeviceUtils.dip2px(mContext, 5));
-
-        lineOption=  new PolylineOptions()
+        lineOption = new PolylineOptions()
                 .width(DeviceUtils.dip2px(mContext, 5))
-                        .color(Color.parseColor("#43BFA3"));
-
+                .color(Color.parseColor("#43BFA3"));
 
 
     }
@@ -161,43 +144,54 @@ public class OrderMapCheckPathActivity extends BaseActivity  {
     }
 
 
-
     /**
      * 绘制轨迹
+     *
      * @param linePatch
      */
-    private void drawPath(List<LatLng> linePatch){
+    private void drawPath(List<LatLng> linePatch) {
 
-        LatLngBounds.Builder builder2 = new LatLngBounds.Builder();
-        builder2.include(new LatLng(bean.getStartLatitude(),bean.getStartLongitude()));
-        builder2.include(new LatLng(bean.getDestinationLatitude(),bean.getDestinationLongitude()));
-        LatLngBounds latlngBounds = builder2.build();
-        aMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latlngBounds,DeviceUtils.dip2px(mContext,50)));
 
 
         lineOption.addAll(linePatch);
         mapView.getMap().addPolyline(lineOption);
-   }
-    private void drawPathWithTrace(final OrderDetailBean bean){
+    }
+
+    private void drawPathWithTrace(final OrderDetailBean bean) {
 
         HttpOrderFactory.getPath(bean.getId())
                 .map(new Function<List<LocationBean>, List<TraceLocation>>() {
                     @Override
                     public List<TraceLocation> apply(List<LocationBean> data) throws Exception {
+
+                        if (!data.isEmpty()) {
+                            MarkUtils.addMark(aMap,
+                                    BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.icon_carmap_50))
+                                    , data.get(data.size()-1).getLatitude(), data.get(data.size()-1).getLongitude()
+                            );
+
+                        }
+
+                        LatLngBounds.Builder builder2 = new LatLngBounds.Builder();
+                        builder2.include(new LatLng(bean.getStartLatitude(), bean.getStartLongitude()));
                         List<TraceLocation> result = new ArrayList<>();
-                            if (data != null) {
-                                for (LocationBean o : data ) {
-                                    if (o.getLatitude() != 0 && o.getLongitude() != 0) {
-                                        TraceLocation location=new TraceLocation();
-                                        location.setBearing(o.getDirection());
-                                        location.setSpeed((float) o.getSpeed());
-                                        location.setTime(ConvertUtils.StrToDate(o.getMovingTime(),"yyyy-MM-dd HH:mm:ss").getTime());
-                                        location.setLatitude(o.getLatitude());
-                                        location.setLongitude(o.getLongitude());
-                                        result.add(location);
-                                    }
+                        if (data != null) {
+                            for (LocationBean o : data) {
+                                if (o.getLatitude() != 0 && o.getLongitude() != 0) {
+                                    TraceLocation location = new TraceLocation();
+                                    location.setBearing(o.getDirection());
+                                    location.setSpeed((float) o.getSpeed());
+                                    location.setTime(ConvertUtils.StrToDate(o.getMovingTime(), "yyyy-MM-dd HH:mm:ss").getTime());
+                                    location.setLatitude(o.getLatitude());
+                                    location.setLongitude(o.getLongitude());
+                                    result.add(location);
+                                    builder2.include(new LatLng(o.getLatitude(),o.getLongitude()));
                                 }
                             }
+                        }
+                        builder2.include(new LatLng(bean.getDestinationLatitude(), bean.getDestinationLongitude()));
+                        LatLngBounds latlngBounds = builder2.build();
+                        aMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latlngBounds, DeviceUtils.dip2px(mContext, 50)));
 
                         return result;
                     }
@@ -217,9 +211,9 @@ public class OrderMapCheckPathActivity extends BaseActivity  {
                                         @Override
                                         public void onRequestFailed(int i, String s) {
 
-                                            List<LatLng> list=new ArrayList<>();
+                                            List<LatLng> list = new ArrayList<>();
                                             for (TraceLocation location : result) {
-                                                list.add(new LatLng(location.getLatitude(),location.getLongitude()));
+                                                list.add(new LatLng(location.getLatitude(), location.getLongitude()));
                                             }
                                             JLog.e("纠偏失败");
                                             drawPath(list);
@@ -251,20 +245,34 @@ public class OrderMapCheckPathActivity extends BaseActivity  {
     }
 
 
-   private void drawPathWithNoTrace(final OrderDetailBean bean){
+    private void drawPathWithNoTrace(final OrderDetailBean bean) {
         HttpOrderFactory.getPath(bean.getId())
                 .map(new Function<List<LocationBean>, List<LatLng>>() {
                     @Override
                     public List<LatLng> apply(List<LocationBean> data) throws Exception {
+                        if (!data.isEmpty()) {
+                            MarkUtils.addMark(aMap,
+                                    BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.icon_carmap_50))
+                                    , data.get(data.size()-1).getLatitude(), data.get(data.size()-1).getLongitude()
+                            );
+
+                        }
+                        LatLngBounds.Builder builder2 = new LatLngBounds.Builder();
+                        builder2.include(new LatLng(bean.getStartLatitude(), bean.getStartLongitude()));
                         List<LatLng> result = new ArrayList<>();
-                            if (data != null) {
-                                for (LocationBean o : data ) {
-                                    if (o.getLatitude() != 0 && o.getLongitude() != 0) {
-                                        LatLng latLng=new LatLng(o.getLatitude(),o.getLongitude());
-                                        result.add(latLng);
-                                    }
+                        if (data != null) {
+                            for (LocationBean o : data) {
+                                if (o.getLatitude() != 0 && o.getLongitude() != 0) {
+                                    LatLng latLng = new LatLng(o.getLatitude(), o.getLongitude());
+                                    result.add(latLng);
+                                    builder2.include(latLng);
+
                                 }
                             }
+                        }
+                        LatLngBounds latlngBounds = builder2.build();
+                        aMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latlngBounds, DeviceUtils.dip2px(mContext, 50)));
+
 
                         return result;
                     }
@@ -291,16 +299,16 @@ public class OrderMapCheckPathActivity extends BaseActivity  {
                 });
 
 
-   }
+    }
 
     private void drawMark(OrderDetailBean bean) {
 
         MarkUtils.addMark(aMap,
-                BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(),  R.mipmap.start))
+                BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.start))
                 , bean.getStartLatitude(), bean.getStartLongitude()
         );
         MarkUtils.addMark(aMap,
-                BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(),  R.mipmap.end))
+                BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.end))
                 , bean.getDestinationLatitude(), bean.getDestinationLongitude()
         );
     }
