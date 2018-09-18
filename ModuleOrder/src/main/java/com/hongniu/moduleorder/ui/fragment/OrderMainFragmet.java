@@ -167,11 +167,13 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
                         item.setIdentity(roleState);
                         item.setInfor(data);
                         item.setOnButtonClickListener(OrderMainFragmet.this);
-
                         itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                onCheckPath(data);
+//                                onCheckPath(data);
+//                                OrderEvent.UpLoactionEvent upLoactionEvent = new OrderEvent.UpLoactionEvent();
+//                                upLoactionEvent.start = true;
+//                                BusFactory.getBus().post(upLoactionEvent);
                             }
                         });
                     }
@@ -180,6 +182,7 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
         };
     }
 
+    private boolean start;
     @Override
     protected Observable<CommonBean<PageBean<OrderDetailBean>>> getListDatas() {
         queryBean.setPageNum(currentPage);
@@ -488,7 +491,6 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
                                 .map(new Function<Integer, Integer>() {
                                     @Override
                                     public Integer apply(Integer integer) throws Exception {
-                                        JLog.i(Thread.currentThread().getName());
                                         OrderEvent.UpLoactionEvent upLoactionEvent = new OrderEvent.UpLoactionEvent();
                                         upLoactionEvent.start = true;
                                         BusFactory.getBus().post(upLoactionEvent);
@@ -514,8 +516,11 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
                                     @Override
                                     public boolean test(Double aDouble) throws Exception {
                                         JLog.i(Thread.currentThread().getName());
+                                        OrderEvent.UpLoactionEvent upLoactionEvent = new OrderEvent.UpLoactionEvent();
+                                        upLoactionEvent.start = false;
+                                        BusFactory.getBus().post(upLoactionEvent);
                                         if (aDouble > Param.ENTRY_MIN) {
-                                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("距离发货地点还有" + aDouble + "公里，无法开始发车");
+                                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("距离发货地点还有" + ConvertUtils.changeFloat(aDouble/1000,1) + "公里，无法开始发车");
                                         }
                                         return aDouble < Param.ENTRY_MIN;
                                     }
@@ -525,6 +530,7 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
                                     public ObservableSource<CommonBean<String>> apply(Double aDouble) throws Exception {
 
                                         return HttpOrderFactory.driverStart(orderBean.getId());
+
                                     }
                                 })
                                 .subscribe(new NetObserver<String>(OrderMainFragmet.this) {

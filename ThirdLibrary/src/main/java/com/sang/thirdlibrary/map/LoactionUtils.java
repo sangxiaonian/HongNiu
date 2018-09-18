@@ -16,7 +16,6 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.sang.common.utils.JLog;
 import com.sang.thirdlibrary.R;
-import com.sang.thirdlibrary.map.utils.ErrorInfo;
 
 /**
  * 作者： ${PING} on 2018/8/22.
@@ -29,6 +28,7 @@ public class LoactionUtils {
     private AMapLocationListener listener;
     private int errorCode = Integer.MAX_VALUE;
 
+    private boolean loactioning;//是否正在定位
     public AMapLocationClient mLocationClient = null;
     //声明定位回调监听器
     public AMapLocationListener mLocationListener = new AMapLocationListener() {
@@ -43,8 +43,8 @@ public class LoactionUtils {
             //可在其中解析amapLocation获取相应内容。
             if (aMapLocation.getErrorCode() == 0) {//定位成功
                 if (aMapLocation.getErrorCode() != errorCode) {
-                    JLog.i("----------------");
-                    mLocationClient.enableBackgroundLocation(NOTIFYID, buildNotification(context, context.getString(R.string.app_name) + "正在为您提供定位服务"));
+                    changeNotify();
+
                 }
             } else {
                 //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
@@ -52,7 +52,7 @@ public class LoactionUtils {
                         + aMapLocation.getErrorCode() + ", errInfo:"
                         + aMapLocation.getErrorInfo());
                 if (aMapLocation.getErrorCode() != errorCode) {
-                    mLocationClient.enableBackgroundLocation(NOTIFYID, buildNotification(context, ErrorInfo.getLoactionError(aMapLocation.getErrorCode())));
+                    changeNotify();
                 }
 
             }
@@ -61,16 +61,18 @@ public class LoactionUtils {
         }
     };
     private AMapLocationClientOption mLocationOption;
+    private boolean showFront;
 
     public void onDestroy() {
         if (mLocationClient != null) {
+            loactioning=false;
             mLocationClient.stopLocation();
             mLocationClient.onDestroy();
         }
     }
 
     public void upInterval(float v) {
-        JLog.e("更改频率："+v);
+        JLog.e("更改频率：" + v);
         float dis = v / 1000;
         if (dis < 10) {
             setInterval(3000);
@@ -82,6 +84,16 @@ public class LoactionUtils {
             setInterval(60 * 1000);
         }
 
+
+    }
+
+    /**
+     * 是否显示弹窗
+     */
+    public void showFront(boolean showFront) {
+        this.showFront = showFront;
+
+        changeNotify();
 
     }
 
@@ -132,6 +144,7 @@ public class LoactionUtils {
 
     public void stopLoaction() {
         if (mLocationClient != null) {
+            loactioning=false;
             mLocationClient.disableBackgroundLocation(true);
             mLocationClient.stopLocation();
             mLocationClient.disableBackgroundLocation(true);
@@ -144,14 +157,24 @@ public class LoactionUtils {
          * 设置定位场景，目前支持三种场景（签到、出行、运动，默认无场景）
          */
         if (null != mLocationClient) {
-            mLocationClient.enableBackgroundLocation(NOTIFYID, buildNotification(context, context.getString(R.string.app_name) + "正在为您提供定位服务"));
-
+            changeNotify();
+            loactioning=true;
             mLocationClient.setLocationOption(mLocationOption);
             //设置场景模式后最好调用一次stop，再调用start以保证场景模式生效
             mLocationClient.stopLocation();
             mLocationClient.startLocation();
         }
-        JLog.i("开始定位");
+    }
+
+    private void changeNotify() {
+        if (mLocationClient!=null) {
+            if (showFront&&loactioning) {
+                mLocationClient.enableBackgroundLocation(NOTIFYID, buildNotification(context, context.getString(R.string.app_name) + "正在为您提供定位服务"));
+            } else {
+                mLocationClient.disableBackgroundLocation(true);
+            }
+        }
+
     }
 
 
@@ -174,7 +197,7 @@ public class LoactionUtils {
             if (!isCreateChannel) {
                 @SuppressLint("WrongConstant")
                 NotificationChannel notificationChannel = new NotificationChannel(channelId,
-                        NOTIFICATION_CHANNEL_NAME, NotificationManager.IMPORTANCE_MAX);
+                        NOTIFICATION_CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
                 notificationChannel.enableLights(true);//是否在桌面icon右上角展示小圆点
                 notificationChannel.setLightColor(Color.BLUE); //小圆点颜色
                 notificationChannel.setShowBadge(true); //是否在久按桌面图标时显示此渠道的通知

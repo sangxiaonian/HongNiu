@@ -53,6 +53,7 @@ import com.sang.common.widget.popu.inter.OnPopuDismissListener;
 import com.sang.thirdlibrary.map.LoactionUtils;
 import com.sang.thirdlibrary.map.utils.MapConverUtils;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -261,7 +262,24 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     protected void onStart() {
         super.onStart();
         BusFactory.getBus().post(new CloseActivityEvent());
-//        loaction.startLoaction();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (loaction!=null){
+            loaction.showFront(false);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (loaction!=null){
+            loaction.showFront(true);
+        }
+
     }
 
     @Override
@@ -304,12 +322,12 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                 PermissionUtils.applyMap(this, new PermissionUtils.onApplyPermission() {
                     @Override
                     public void hasPermission(List<String> granted, boolean isAll) {
-                        loaction.startLoaction();
                         if (TextUtils.isEmpty(event.cardID)){
                             loaction.setInterval(1000);
+                        }else {
+                            loaction.startLoaction();
                         }
                         //首次创建位置信息收集数据
-
                         if (upLoactionUtils == null) {
                             if (!DeviceUtils.isOpenGps(mContext)) {
                                 showAleart("为了更准确的记录您的轨迹信息，请打开GPS");
@@ -328,7 +346,6 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                             JLog.i("更新位置信息收集器");
                         }
                     }
-
                     @Override
                     public void noPermission(List<String> denied, boolean quick) {
                     }
@@ -344,6 +361,11 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
             }
         }
     }
+
+
+
+
+
 
 
     @Override
