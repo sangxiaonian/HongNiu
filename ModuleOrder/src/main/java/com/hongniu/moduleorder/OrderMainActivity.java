@@ -276,17 +276,20 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     @Override
     protected void onStop() {
         super.onStop();
-        if (loaction!=null){
-            loaction.showFront(true);
-        }
+
 
     }
+
+
+
 
     @Override
     protected boolean getUseEventBus() {
         return true;
     }
 
+
+    //进入首页时候，根据获取到的数据切换当前角色
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onMessageEvent(final RoleTypeBean event) {
         if (event != null) {
@@ -363,6 +366,15 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     }
 
 
+    //App 进入后台时候
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onInBackgrond(final Event.OnBackground event) {
+        if (event != null) {
+            if (loaction!=null){
+                loaction.showFront(DeviceUtils.isBackGround(mContext));
+            }
+        }
+    }
 
 
 

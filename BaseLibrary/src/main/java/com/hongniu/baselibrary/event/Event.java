@@ -37,6 +37,21 @@ public class Event {
     }
 
     /**
+     * APP进入后台
+     */
+    public static class OnBackground implements IBus.IEvent {
+        //App是否在前台
+        public boolean onFront;
+
+        public OnBackground(boolean onFront) {
+            this.onFront = onFront;
+        }
+
+        public OnBackground() {
+        }
+    }
+
+    /**
      * 更新位置信息
      */
     public static class UpLoaction implements IBus.IEvent {

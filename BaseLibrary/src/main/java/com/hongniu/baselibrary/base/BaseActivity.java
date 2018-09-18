@@ -20,10 +20,12 @@ import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CloseActivityEvent;
+import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.utils.Utils;
 import com.sang.common.event.BusFactory;
 import com.sang.common.net.error.NetException;
 import com.sang.common.net.listener.TaskControl;
+import com.sang.common.utils.DeviceUtils;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.LoadDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
@@ -68,6 +70,7 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
         if (getUseEventBus() || reciveClose()) {
             BusFactory.getBus().register(this);
         }
+        BusFactory.getBus().post(new Event.OnBackground());
     }
 
     @Override
@@ -77,9 +80,16 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        BusFactory.getBus().post(new Event.OnBackground());
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         BugClient.getInstance().onPause(this);
+
     }
 
     @Override
