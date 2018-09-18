@@ -48,7 +48,6 @@ public class LoactionUpUtils {
 
 
     public void add(double latitude, double longitude, long movingTime, float speed, float bearing) {
-        JLog.i("位置信息变化");
         if (loactionInfor == null || TextUtils.isEmpty(loactionInfor.cardID) || TextUtils.isEmpty(loactionInfor.orderId)) {
             return;
         }

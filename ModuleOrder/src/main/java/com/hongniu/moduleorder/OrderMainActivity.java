@@ -6,6 +6,7 @@ import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -304,7 +305,11 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                     @Override
                     public void hasPermission(List<String> granted, boolean isAll) {
                         loaction.startLoaction();
+                        if (TextUtils.isEmpty(event.cardID)){
+                            loaction.setInterval(1000);
+                        }
                         //首次创建位置信息收集数据
+
                         if (upLoactionUtils == null) {
                             if (!DeviceUtils.isOpenGps(mContext)) {
                                 showAleart("为了更准确的记录您的轨迹信息，请打开GPS");
@@ -585,7 +590,6 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
         //可在其中解析amapLocation获取相应内容。
-        JLog.i("----------------------:" + aMapLocation.getErrorCode() + aMapLocation.getErrorInfo());
         if (aMapLocation.getErrorCode() == 0) {//定位成功
             JLog.v("测试后台打点：" + DeviceUtils.isOpenGps(mContext)
                     + "\n Latitude：" + aMapLocation.getLatitude()

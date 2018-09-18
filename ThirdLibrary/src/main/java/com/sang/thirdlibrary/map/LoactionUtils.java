@@ -70,6 +70,7 @@ public class LoactionUtils {
     }
 
     public void upInterval(float v) {
+        JLog.e("更改频率："+v);
         float dis = v / 1000;
         if (dis < 10) {
             setInterval(3000);
@@ -131,6 +132,7 @@ public class LoactionUtils {
 
     public void stopLoaction() {
         if (mLocationClient != null) {
+            JLog.e("停止定位-----true");
             mLocationClient.stopLocation();
             mLocationClient.disableBackgroundLocation(true);
         }
