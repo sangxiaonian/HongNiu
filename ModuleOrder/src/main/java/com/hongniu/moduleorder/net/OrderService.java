@@ -14,6 +14,7 @@ import com.hongniu.moduleorder.entity.OrderMainQueryBean;
 import com.hongniu.moduleorder.entity.OrderParamBean;
 import com.hongniu.moduleorder.entity.PathBean;
 import com.hongniu.moduleorder.entity.QueryInsurancePriceBean;
+import com.hongniu.moduleorder.entity.VersionBean;
 import com.hongniu.moduleorder.entity.WxPayBean;
 
 import java.util.List;
@@ -27,6 +28,15 @@ import retrofit2.http.POST;
  */
 public interface OrderService {
 
+
+    /**
+     * 检查版本更新
+     *
+     * @return
+     * @param infor
+     */
+    @POST("hongniu/api/app/getVersion")
+    Observable<CommonBean<VersionBean>> checkVersion(@Body VersionBean infor);
 
     /**
      * 创建订单

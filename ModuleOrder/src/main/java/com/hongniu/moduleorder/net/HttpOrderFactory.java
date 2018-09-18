@@ -19,6 +19,7 @@ import com.hongniu.moduleorder.entity.OrderMainQueryBean;
 import com.hongniu.moduleorder.entity.OrderParamBean;
 import com.hongniu.moduleorder.entity.PathBean;
 import com.hongniu.moduleorder.entity.QueryInsurancePriceBean;
+import com.hongniu.moduleorder.entity.VersionBean;
 import com.hongniu.moduleorder.entity.WxPayBean;
 import com.sang.common.net.error.NetException;
 import com.sang.common.net.rx.RxUtils;
@@ -33,6 +34,20 @@ import io.reactivex.functions.Function;
  * 作者： ${PING} on 2018/8/15.
  */
 public class HttpOrderFactory {
+
+    /**
+     * 检查版本更新
+     *
+     */
+    public static Observable<CommonBean<VersionBean>> checkVersion() {
+        VersionBean bean=new VersionBean();
+        bean.setType(2);
+        return OrderClient.getInstance().getService()
+                .checkVersion(bean)
+
+                .compose(RxUtils.<CommonBean<VersionBean>>getSchedulersObservableTransformer());
+
+    }
 
     /**
      * 创建订单

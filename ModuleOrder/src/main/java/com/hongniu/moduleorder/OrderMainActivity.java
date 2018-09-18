@@ -21,6 +21,7 @@ import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CloseActivityEvent;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
@@ -30,6 +31,8 @@ import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.control.OrderMainControl;
 import com.hongniu.moduleorder.control.SwitchStateListener;
+import com.hongniu.moduleorder.entity.VersionBean;
+import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.present.OrderMainPresenter;
 import com.hongniu.moduleorder.utils.LoactionUpUtils;
 import com.hongniu.moduleorder.widget.OrderMainTitlePop;
@@ -213,6 +216,28 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                 guideTitle.showGuide();
             }
         });
+
+        //检查版本更新
+//        checkVersion();
+
+
+    }
+
+    /**
+     * 检查版本号，确定是否需要更新
+     */
+    private void checkVersion(){
+
+        HttpOrderFactory.checkVersion()
+
+                .subscribe(new NetObserver<VersionBean>(null) {
+                    @Override
+                    public void doOnSuccess(VersionBean data) {
+                        if (data!=null&&data.getVersionCode()>DeviceUtils.getVersionCode(mContext)){
+                            showUpAleart(data.getVersionName());
+                        }
+                    }
+                });
     }
 
     @Override
