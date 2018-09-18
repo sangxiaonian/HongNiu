@@ -57,6 +57,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
 
 /**
  * 订单列表Fragment
@@ -480,8 +482,13 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
                         dialog.dismiss();
                         if (latLng.latitude == 0 || latLng.longitude == 0) {
                             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("正在获取当前位置，请稍后再试");
+                            OrderEvent.UpLoactionEvent upLoactionEvent = new OrderEvent.UpLoactionEvent();
+                            upLoactionEvent.start = true;
+                            upLoactionEvent.destinationLatitude = orderBean.getDestinationLatitude();
+                            upLoactionEvent.destinationLongitude = orderBean.getDestinationLongitude();
+                            BusFactory.getBus().post(upLoactionEvent);
+
                         } else if (v > Param.ENTRY_MIN) {//距离过大，超过确认订单的最大距离
-//                        if (false) {
                             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("距离发货地点还有" + ConvertUtils.changeFloat(v / 1000,1) + "公里，无法开始发车");
                         } else {
                             HttpOrderFactory.driverStart(orderBean.getId())
@@ -494,7 +501,6 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
                                             upLoactionEvent.cardID = orderBean.getCarId();
                                             upLoactionEvent.destinationLatitude = orderBean.getDestinationLatitude();
                                             upLoactionEvent.destinationLongitude = orderBean.getDestinationLongitude();
-
                                             BusFactory.getBus().post(upLoactionEvent);
                                             BusFactory.getBus().post(new OrderEvent.OrderUpdate(roleState));
 

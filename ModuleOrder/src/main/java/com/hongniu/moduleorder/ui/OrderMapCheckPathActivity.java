@@ -163,13 +163,11 @@ public class OrderMapCheckPathActivity extends BaseActivity {
                 .map(new Function<List<LocationBean>, List<TraceLocation>>() {
                     @Override
                     public List<TraceLocation> apply(List<LocationBean> data) throws Exception {
-
-                        if (!data.isEmpty()) {
+                        if (data != null&&!data.isEmpty()) {
                             MarkUtils.addMark(aMap,
                                     BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.icon_carmap_50))
                                     , data.get(data.size()-1).getLatitude(), data.get(data.size()-1).getLongitude()
                             );
-
                         }
 
                         LatLngBounds.Builder builder2 = new LatLngBounds.Builder();
@@ -202,7 +200,7 @@ public class OrderMapCheckPathActivity extends BaseActivity {
                     @Override
                     public void onNext(final List<TraceLocation> result) {
                         super.onNext(result);
-                        if (result == null || result.isEmpty()) {
+                        if (result == null || result.size()<2) {
                             showAleart("当前订单暂无位置信息");
                             onTaskSuccess();
                         } else {

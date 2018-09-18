@@ -14,6 +14,7 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.sang.common.utils.JLog;
 import com.sang.thirdlibrary.R;
 import com.sang.thirdlibrary.map.utils.ErrorInfo;
 
@@ -42,6 +43,7 @@ public class LoactionUtils {
             //可在其中解析amapLocation获取相应内容。
             if (aMapLocation.getErrorCode() == 0) {//定位成功
                 if (aMapLocation.getErrorCode() != errorCode) {
+                    JLog.i("----------------");
                     mLocationClient.enableBackgroundLocation(NOTIFYID, buildNotification(context, context.getString(R.string.app_name) + "正在为您提供定位服务"));
                 }
             } else {
@@ -62,6 +64,7 @@ public class LoactionUtils {
 
     public void onDestroy() {
         if (mLocationClient != null) {
+            mLocationClient.stopLocation();
             mLocationClient.onDestroy();
         }
     }
@@ -114,7 +117,6 @@ public class LoactionUtils {
         mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
         mLocationOption.setNeedAddress(true);
         mLocationOption.setSensorEnable(true);
-        mLocationClient.enableBackgroundLocation(NOTIFYID, buildNotification(context, context.getString(R.string.app_name) + "正在为您提供定位服务"));
     }
 
     /**
@@ -127,17 +129,27 @@ public class LoactionUtils {
         startLoaction();
     }
 
+    public void stopLoaction() {
+        if (mLocationClient != null) {
+            mLocationClient.stopLocation();
+            mLocationClient.disableBackgroundLocation(true);
+        }
+    }
+
 
     public void startLoaction() {
         /**
          * 设置定位场景，目前支持三种场景（签到、出行、运动，默认无场景）
          */
         if (null != mLocationClient) {
+            mLocationClient.enableBackgroundLocation(NOTIFYID, buildNotification(context, context.getString(R.string.app_name) + "正在为您提供定位服务"));
+
             mLocationClient.setLocationOption(mLocationOption);
             //设置场景模式后最好调用一次stop，再调用start以保证场景模式生效
             mLocationClient.stopLocation();
             mLocationClient.startLocation();
         }
+        JLog.i("开始定位");
     }
 
 
@@ -158,6 +170,7 @@ public class LoactionUtils {
             }
             String channelId = context.getPackageName();
             if (!isCreateChannel) {
+                @SuppressLint("WrongConstant")
                 NotificationChannel notificationChannel = new NotificationChannel(channelId,
                         NOTIFICATION_CHANNEL_NAME, NotificationManager.IMPORTANCE_MAX);
                 notificationChannel.enableLights(true);//是否在桌面icon右上角展示小圆点

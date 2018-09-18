@@ -6,7 +6,6 @@ import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -105,17 +104,6 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
         loaction.init(this);
         loaction.setListener(this);
 
-        PermissionUtils.applyMap(this, new PermissionUtils.onApplyPermission() {
-            @Override
-            public void hasPermission(List<String> granted, boolean isAll) {
-                loaction.startLoaction();
-            }
-
-            @Override
-            public void noPermission(List<String> denied, boolean quick) {
-
-            }
-        });
     }
 
     @Override
@@ -226,14 +214,14 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     /**
      * 检查版本号，确定是否需要更新
      */
-    private void checkVersion(){
+    private void checkVersion() {
 
         HttpOrderFactory.checkVersion()
 
                 .subscribe(new NetObserver<VersionBean>(null) {
                     @Override
                     public void doOnSuccess(VersionBean data) {
-                        if (data!=null&&data.getVersionCode()>DeviceUtils.getVersionCode(mContext)){
+                        if (data != null && data.getVersionCode() > DeviceUtils.getVersionCode(mContext)) {
                             showUpAleart(data.getVersionName());
                         }
                     }
@@ -272,7 +260,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     protected void onStart() {
         super.onStart();
         BusFactory.getBus().post(new CloseActivityEvent());
-        loaction.startLoaction();
+//        loaction.startLoaction();
     }
 
     @Override
@@ -308,34 +296,46 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
 
     //开始或停止记录用户位置信息
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onStartLoactionMessage(OrderEvent.UpLoactionEvent event) {
+    public void onStartLoactionMessage(final OrderEvent.UpLoactionEvent event) {
         if (event != null) {
             //如果有正在运输中的订单，则此时获取到用户的位置信息
             if (event.start) {//开始记录数据
-
-                //首次创建位置信息收集数据
-                if (upLoactionUtils == null) {
-                    if (!DeviceUtils.isOpenGps(mContext)) {
-                        showAleart("为了更准确的记录您的轨迹信息，请打开GPS");
+                PermissionUtils.applyMap(this, new PermissionUtils.onApplyPermission() {
+                    @Override
+                    public void hasPermission(List<String> granted, boolean isAll) {
+                        loaction.startLoaction();
+                        //首次创建位置信息收集数据
+                        if (upLoactionUtils == null) {
+                            if (!DeviceUtils.isOpenGps(mContext)) {
+                                showAleart("为了更准确的记录您的轨迹信息，请打开GPS");
+                            }
+                            upLoactionUtils = new LoactionUpUtils();
+                            upLoactionUtils.setOrderInfor(event.orderID, event.cardID, event.destinationLatitude, event.destinationLongitude);
+                            JLog.i("创建位置信息收集器");
+                            //更新位置信息收起器
+                        } else if (!upLoactionUtils.getCarID().equals(event.cardID)) {
+                            upLoactionUtils.onDestroy();
+                            if (!DeviceUtils.isOpenGps(mContext)) {
+                                showAleart("为了更准确的记录您的轨迹信息，请打开GPS");
+                            }
+                            upLoactionUtils = new LoactionUpUtils();
+                            upLoactionUtils.setOrderInfor(event.orderID, event.cardID, event.destinationLatitude, event.destinationLongitude);
+                            JLog.i("更新位置信息收集器");
+                        }
                     }
-                    upLoactionUtils = new LoactionUpUtils();
-                    upLoactionUtils.setOrderInfor(event.orderID, event.cardID, event.destinationLatitude, event.destinationLongitude);
-                    JLog.i("创建位置信息收集器");
-                    //更新位置信息收起器
-                } else if (!upLoactionUtils.getCarID().equals(event.cardID)) {
-                    upLoactionUtils.onDestroy();
-                    if (!DeviceUtils.isOpenGps(mContext)) {
-                        showAleart("为了更准确的记录您的轨迹信息，请打开GPS");
-                    }
-                    upLoactionUtils = new LoactionUpUtils();
-                    upLoactionUtils.setOrderInfor(event.orderID, event.cardID, event.destinationLatitude, event.destinationLongitude);
-                    JLog.i("更新位置信息收集器");
-                }
 
+                    @Override
+                    public void noPermission(List<String> denied, boolean quick) {
+                    }
+                });
             } else {
                 if (upLoactionUtils != null) {
                     upLoactionUtils.onDestroy();
                 }
+                if (loaction != null) {
+                    loaction.stopLoaction();
+                }
+
             }
         }
     }
@@ -585,6 +585,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
         //可在其中解析amapLocation获取相应内容。
+        JLog.i("----------------------:" + aMapLocation.getErrorCode() + aMapLocation.getErrorInfo());
         if (aMapLocation.getErrorCode() == 0) {//定位成功
             JLog.v("测试后台打点：" + DeviceUtils.isOpenGps(mContext)
                     + "\n Latitude：" + aMapLocation.getLatitude()
