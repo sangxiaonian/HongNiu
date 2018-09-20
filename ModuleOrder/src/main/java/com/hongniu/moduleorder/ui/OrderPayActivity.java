@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
+import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
@@ -465,12 +466,14 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
 
     @Override
     public void noticeClick(BuyInsuranceDialog buyInsuranceDialog, boolean checked, int i) {
-        buyInsuranceDialog.dismiss();
+//        buyInsuranceDialog.dismiss();
         if (i==0){
+            ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5).withString(Param.TRAN, Param.insurance_polic).navigation(mContext);
 
-            noticeDialog.show(Param.insurance_polic);
+//            noticeDialog.show(Param.insurance_polic);
         }else {
-            noticeDialog.show(Param.insurance_notify);
+            ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5).withString(Param.TRAN, Param.insurance_notify).navigation(mContext);
+//            noticeDialog.show(Param.insurance_notify);
 
         }
     }

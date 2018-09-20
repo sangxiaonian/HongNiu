@@ -28,6 +28,7 @@ import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.utils.Utils;
+import com.hongniu.baselibrary.widget.dialog.UpDialog;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.control.OrderMainControl;
 import com.hongniu.moduleorder.control.SwitchStateListener;
@@ -169,7 +170,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
      * 显示强制更新接口
      */
     public void showUpAleart(String msg) {
-        CenterAlertDialog alertDialog = new CenterAlertDialog(mContext);
+        UpDialog alertDialog = new UpDialog(mContext);
         new CenterAlertBuilder()
                 .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
                     @Override

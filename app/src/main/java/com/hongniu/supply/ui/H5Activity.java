@@ -33,6 +33,16 @@ public class H5Activity extends BaseActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        if (webView.canGoBack()){
+            webView.goBack();
+        }else {
+            super.onBackPressed();
+
+        }
+    }
+
+    @Override
     protected void initData() {
         super.initData();
 
