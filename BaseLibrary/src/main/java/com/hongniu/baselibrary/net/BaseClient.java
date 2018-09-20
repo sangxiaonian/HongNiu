@@ -6,27 +6,33 @@ import com.hongniu.baselibrary.utils.Utils;
 import com.sang.common.net.HttpClient;
 import com.sang.common.net.OkHttp;
 import com.sang.common.utils.ConvertUtils;
+import com.sang.common.utils.JLog;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okio.Buffer;
 
 /**
  * 作者： ${PING} on 2018/8/13.
  */
 public class BaseClient {
     private final HttpClient httpClient;
+
     private static class InnerLoginClient {
         private static BaseClient client = new BaseClient();
     }
+
     public static BaseClient getInstance() {
         return InnerLoginClient.client;
     }
+
     private BaseClient() {
-          httpClient = new HttpClient(Param.url)
+        httpClient = new HttpClient(Param.url)
                 .addInterceptor(new Interceptor() {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
@@ -42,12 +48,19 @@ public class BaseClient {
                         LoginBean infor = Utils.getLoginInfor();
                         if (infor != null) {
                             RequestBody body = request.body();
-                            String s = body.toString();
+                            String params = "";
+                            if (body != null) {
+                                Buffer buffer = new Buffer();
+                                body.writeTo(buffer);
+                                params = buffer.readUtf8();
+                            }
                             requestBuilder.addHeader("usercode", infor.getToken())
                                     .addHeader("codetype", "token")
                                     .addHeader("hn_app_key", Param.AppKey)
-                                    .addHeader("hn_sign", ConvertUtils.MD5(s, Param.AppSecret))
+                                    .addHeader("hn_sign", ConvertUtils.MD5(Param.AppSecret, params))
                             ;
+
+
                         }
 
                         Request newRequest = requestBuilder.build();
@@ -55,7 +68,7 @@ public class BaseClient {
                     }
                 })
                 .addInterceptor(OkHttp.getLogInterceptor())
-          ;
+        ;
     }
 
     public <T> T creatService(Class<T> t) {

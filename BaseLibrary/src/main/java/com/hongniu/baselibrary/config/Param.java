@@ -20,7 +20,8 @@ public class Param {
 
     static {
         if (isDebug) {
-            url = "http://47.104.130.110:8080/";
+//            url = "http://47.104.130.110:8080/";
+            url = "http://cdffc116.ngrok.io/";
             hongniu_agreement = "http://47.104.130.110:8080/static/service.html";
             insurance_agreement = "http://47.104.130.110:8080/static/insurance.html";
         } else {
@@ -48,7 +49,6 @@ public class Param {
     public static final String key = "85274113a1ce1c39";
     public static final String AppKey = "c33fbf23b76246bf8ee4a3d00b621e03";
     public static final String AppSecret = "a7735d245d4241ff9f94-a3ecf7b5fedc";
-
 
     public static final String TRAN = "tran";
 
