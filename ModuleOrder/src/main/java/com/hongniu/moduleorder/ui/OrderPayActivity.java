@@ -325,6 +325,14 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
         } else if (i == R.id.rl_wechact) {//选择微信支付
             checkbox.setChecked(!checkbox.isChecked());
         } else if (i == R.id.bt_pay) {//支付订单
+
+            //如果是正式环境，保费不能低于5元
+            if (!Param.isDebug&&insurancePrice>0&&insurancePrice<5){
+                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("保费不能低于5元");
+
+                return;
+            }
+
             if (!isInsurance) {//订单支付界面
                 if (onLine) {//线上支付
 
