@@ -19,6 +19,7 @@ import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
+import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CreatInsuranceBean;
 import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.utils.Utils;
@@ -31,7 +32,6 @@ import com.hongniu.moduleorder.widget.dialog.BuyInsuranceDialog;
 import com.hongniu.moduleorder.widget.dialog.InsuranceNoticeDialog;
 import com.sang.common.event.BusFactory;
 import com.sang.common.utils.ConvertUtils;
-import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
@@ -42,7 +42,6 @@ import com.sang.thirdlibrary.pay.wechat.WeChatAppPay;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
 /**
@@ -201,7 +200,6 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
         if (!isInsurance&&onLine&&buyInsurance){
             builder.append("（含保费"+ ConvertUtils.changeFloat(insurancePrice,2)+"元）");
         }
-        JLog.i(tranPrice.length()+"");
         ForegroundColorSpan span = new ForegroundColorSpan( getResources().getColor(R.color.color_light));
         builder.setSpan(span, 0, tranPrice.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         tvPayAll.setText(builder);
@@ -466,9 +464,15 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
     }
 
     @Override
-    public void noticeClick(BuyInsuranceDialog buyInsuranceDialog, boolean checked) {
+    public void noticeClick(BuyInsuranceDialog buyInsuranceDialog, boolean checked, int i) {
         buyInsuranceDialog.dismiss();
-        noticeDialog.show();
+        if (i==0){
+
+            noticeDialog.show(Param.insurance_polic);
+        }else {
+            noticeDialog.show(Param.insurance_notify);
+
+        }
     }
 
 

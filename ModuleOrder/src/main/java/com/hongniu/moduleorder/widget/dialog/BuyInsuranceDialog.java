@@ -1,7 +1,6 @@
 package com.hongniu.moduleorder.widget.dialog;
 
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
@@ -10,8 +9,14 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.InputFilter;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +31,7 @@ import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.sang.common.utils.PointLengthFilter;
+import com.sang.common.utils.ToastUtils;
 
 import io.reactivex.disposables.Disposable;
 
@@ -116,14 +122,14 @@ public class BuyInsuranceDialog extends Dialog implements TextWatcher, DialogInt
         });
 
         tv_notice = inflate.findViewById(R.id.tv_notice);
-        tv_notice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) {
-                    listener.noticeClick(BuyInsuranceDialog.this, checkbox.isChecked());
-                }
-            }
-        });
+        tv_notice.setMovementMethod(LinkMovementMethod.getInstance());
+
+//        SpannableStringBuilder builder = new SpannableStringBuilder(context.getString(R.string.order_insruance_police));
+        SpannableStringBuilder builder = getSpannableStringBuilder(context);
+        tv_notice.setHighlightColor(context.getResources().getColor(R.color.color_tran));
+        tv_notice.setText(builder);
+
+
         bt_sum = inflate.findViewById(R.id.bt_sum);
         bt_sum.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,6 +148,72 @@ public class BuyInsuranceDialog extends Dialog implements TextWatcher, DialogInt
         getWindow().setGravity(Gravity.BOTTOM);
         getWindow().setBackgroundDrawable(new ColorDrawable(0x00000000));
         setOnDismissListener(this);
+    }
+
+    @NonNull
+    private SpannableStringBuilder getSpannableStringBuilder(Context context) {
+        SpannableStringBuilder builder = new SpannableStringBuilder(context.getString(R.string.order_insruance_police_front));
+        ForegroundColorSpan span = new ForegroundColorSpan(context.getResources().getColor(R.color.color_content_light));
+        int end = builder.length();
+        final int clickStart=end;
+        builder.setSpan(span, 0, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        //点击保险条款
+        builder.append(context.getString(R.string.order_insruance_police)) ;
+        ClickableSpan driverClick = new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                if (listener != null) {
+                    listener.noticeClick(BuyInsuranceDialog.this, checkbox.isChecked(),0);
+//                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("保险条款");
+                }
+            }
+            //去除连接下划线
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                /**set textColor**/
+                ds.setColor(ds.linkColor);
+                /**Remove the underline**/
+                ds.setUnderlineText(false);
+            }
+        };
+        int start = end;
+        end=builder.length();
+        builder.setSpan(driverClick,start ,end, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+
+        builder.append("、");
+        start=builder.length();
+        builder.append(context.getString(R.string.order_insruance_notify));
+        end=builder.length();
+         //点击投保须知
+
+        ClickableSpan notifyClick = new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                if (listener != null) {
+                    listener.noticeClick(BuyInsuranceDialog.this, checkbox.isChecked(),1);
+                }
+            }
+            //去除连接下划线
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                /**set textColor**/
+                ds.setColor(ds.linkColor);
+                /**Remove the underline**/
+                ds.setUnderlineText(false);
+            }
+        };
+        builder.setSpan(notifyClick, start,end, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        final int clickEnd=end;
+        ForegroundColorSpan clickSpan = new ForegroundColorSpan(context.getResources().getColor(R.color.color_title_dark));
+        builder.setSpan(clickSpan, clickStart,clickEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+
+        ForegroundColorSpan spanEnd = new ForegroundColorSpan(context.getResources().getColor(R.color.color_content_light));
+        start = builder.length();
+        builder.append(context.getString(R.string.order_insruance_police_end));
+        builder.setSpan(spanEnd, start, builder.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return builder;
     }
 
     /**
@@ -217,6 +289,6 @@ public class BuyInsuranceDialog extends Dialog implements TextWatcher, DialogInt
          */
         void entryClick(Dialog dialog, boolean checked, String cargoPrice);
 
-        void noticeClick(BuyInsuranceDialog buyInsuranceDialog, boolean checked);
+        void noticeClick(BuyInsuranceDialog buyInsuranceDialog, boolean checked, int i);
     }
 }

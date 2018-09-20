@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.moduleorder.R;
 import com.sang.common.utils.DeviceUtils;
+import com.sang.common.utils.JLog;
 import com.sang.common.widget.dialog.inter.DialogControl;
 
 /**
@@ -55,6 +56,9 @@ public class InsuranceNoticeDialog extends Dialog {
         getWindow().setWindowAnimations(R.style.dialog_ani);
         getWindow().setGravity(Gravity.BOTTOM);
         getWindow().setBackgroundDrawable(new ColorDrawable(0x00000000));
+
+
+
     }
 
 
@@ -63,11 +67,13 @@ public class InsuranceNoticeDialog extends Dialog {
         this.listener = listener;
     }
 
-    @Override
-    public void show() {
-        super.show();
+
+
+
+    public void show(String url) {
+        show();
         if (webview!=null){
-            webview.loadUrl(Param.insurance_agreement);
+            webview.loadUrl(url);
         }
     }
 }
