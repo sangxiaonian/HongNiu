@@ -52,7 +52,7 @@
     <string name="order_pay_success_driver_start">完成支付司机即可开始发车</string>
     <string name="order_pay_you_maybe_need">您可能需要</string>
     <string name="order_pay_insurance_name">人保货物运输保险</string>
-    <string name="order_pay_insurance_detail">低保费，运货更安心</string>
+    <string name="order_pay_insurance_detail">牛人保，运货更安心</string>
     <string name="order_pay_insurance_notice_bt">同意以上，开始投保</string>
     <string name="order_pay_bus_insurance">购买保险</string>
     <string name="order_pay_pay_ways">运费支付渠道</string>
