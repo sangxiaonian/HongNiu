@@ -122,7 +122,7 @@ public class LoginPayWaysActivity extends BaseActivity implements DialogControl.
 
                         bgIcon.setVisibility(data.getPayWays() == 1 ? View.VISIBLE : View.GONE);
                         imgDefault.setVisibility(data.getIsDefault() == 1 ? View.VISIBLE : View.GONE);
-                        ImageLoader.getLoader().load(mContext, icon, data.getPayWays() == 1 ? R.mipmap.icon_skfs_wechat_40 : R.mipmap.app_logo);
+                        ImageLoader.getLoader().load(mContext, icon, data.getPayWays() == 1 ? R.mipmap.icon_skfs_wechat_40 : R.mipmap.icon_yl_40);
                         tvTitle.setText(data.getBankName() == null ? "" : data.getBankName());
                         if (data.getPayWays() == 0) {//银联卡号
                             if (data.getCardNo() != null) {

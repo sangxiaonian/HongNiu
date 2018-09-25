@@ -1,21 +1,21 @@
 package com.hongniu.moduleorder.net;
 
 import com.hongniu.baselibrary.entity.CommonBean;
-import com.hongniu.baselibrary.entity.OrderDetailBean;
-import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.CreatInsuranceBean;
+import com.hongniu.baselibrary.entity.OrderCreatBean;
+import com.hongniu.baselibrary.entity.OrderDetailBean;
+import com.hongniu.baselibrary.entity.OrderIdBean;
+import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.moduleorder.entity.LocationBean;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
-import com.hongniu.baselibrary.entity.OrderCreatBean;
 import com.hongniu.moduleorder.entity.OrderCreatParamBean;
-import com.hongniu.baselibrary.entity.OrderIdBean;
 import com.hongniu.moduleorder.entity.OrderDriverPhoneBean;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
 import com.hongniu.moduleorder.entity.OrderParamBean;
 import com.hongniu.moduleorder.entity.PathBean;
 import com.hongniu.moduleorder.entity.QueryInsurancePriceBean;
 import com.hongniu.moduleorder.entity.VersionBean;
-import com.hongniu.moduleorder.entity.WxPayBean;
+import com.sang.thirdlibrary.pay.entiy.PayBean;
 
 import java.util.List;
 
@@ -32,8 +32,8 @@ public interface OrderService {
     /**
      * 检查版本更新
      *
-     * @return
      * @param infor
+     * @return
      */
     @POST("hongniu/api/app/getVersion")
     Observable<CommonBean<VersionBean>> checkVersion(@Body VersionBean infor);
@@ -57,7 +57,8 @@ public interface OrderService {
      */
     @POST("hongniu/api/car/querynumber")
     Observable<CommonBean<List<OrderCarNumbean>>> getCarNum(@Body OrderCarNumbean infor);
-  /**
+
+    /**
      * 获取车牌号联想
      * <p>
      * 参数名称	是否必须	数据类型	描述
@@ -118,7 +119,7 @@ public interface OrderService {
      * @return
      */
     @POST("hongniu/wx/jsApiPay")
-    Observable<CommonBean<WxPayBean>> payOrderOffLine(@Body OrderParamBean infor);
+    Observable<CommonBean<PayBean>> payOrderOffLine(@Body OrderParamBean infor);
 
     /**
      * 银联支付
@@ -132,7 +133,7 @@ public interface OrderService {
      * @return
      */
     @POST("hongniu/api/unionpay/unionpaytn")
-    Observable<CommonBean<WxPayBean>> payUnionOffLine(@Body OrderParamBean infor);
+    Observable<CommonBean<PayBean>> payUnionOffLine(@Body OrderParamBean infor);
 
     /**
      * 创建保单
@@ -156,7 +157,8 @@ public interface OrderService {
      */
     @POST("hongniu/api/order/start")
     Observable<CommonBean<String>> driverStart(@Body OrderIdBean infor);
-   /**
+
+    /**
      * 确认到达
      * id	true	number	订单id
      */
@@ -171,14 +173,13 @@ public interface OrderService {
     Observable<CommonBean<OrderDetailBean>> entryReceiveCargo(@Body OrderIdBean infor);
 
 
-
-
     /**
      * 上传所有位置信息
      */
     @POST("hongniu/api/position/save")
     Observable<CommonBean<String>> upLoaction(@Body List<LocationBean> locationBeans);
-/**
+
+    /**
      * 获取指定订单所有位置信息
      */
     @POST("hongniu/api/position/list")

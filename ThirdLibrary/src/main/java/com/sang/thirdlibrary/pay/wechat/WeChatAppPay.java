@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 
 import com.sang.thirdlibrary.pay.PayConfig;
+import com.sang.thirdlibrary.pay.control.PayControl;
+import com.sang.thirdlibrary.pay.entiy.PayBean;
 import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -13,7 +15,20 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
  * 作者： ${桑小年} on 2018/8/26.
  * 努力，为梦长留
  */
-public class WeChatAppPay {
+public class WeChatAppPay implements PayControl.IPayClient {
+    private boolean isDebug;
+
+    @Override
+    public void setDebug(boolean isDebug) {
+        this.isDebug=isDebug;
+    }
+
+    @Override
+    public void pay(Activity activity, PayBean data) {
+        pay(activity, data.getPartnerId(), data.getPrePayId(), data.getPrepay_id()
+                , data.getNonceStr(), data.getTimeStamp(), data.getPaySign()
+        );
+    }
 
     /**
      * @param activity
@@ -24,9 +39,8 @@ public class WeChatAppPay {
      * @param timeStamp    时间戳
      * @param sign         sign
      */
-    public static void pay(Activity activity, String partnerId, String prepayId, String packageValue, String nonceStr, String timeStamp, String sign) {
+    private static void pay(Activity activity, String partnerId, String prepayId, String packageValue, String nonceStr, String timeStamp, String sign) {
         IWXAPI api;
-
         api = WXAPIFactory.createWXAPI(activity, PayConfig.weChatAppid);
         PayReq request = new PayReq();
         //应用ID

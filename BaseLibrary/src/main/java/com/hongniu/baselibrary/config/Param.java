@@ -22,7 +22,8 @@ public class Param {
 
     static {
         if (isDebug) {
-            url = "http://47.104.130.110:8080/";
+//            url = "http://47.104.130.110:8080/";
+            url = "http://40a2a251.ngrok.io";
         } else {
             url = "https://api.hongniudai.cn/";
 

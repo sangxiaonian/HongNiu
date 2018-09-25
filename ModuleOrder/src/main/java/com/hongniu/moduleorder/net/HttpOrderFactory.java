@@ -20,15 +20,16 @@ import com.hongniu.moduleorder.entity.OrderParamBean;
 import com.hongniu.moduleorder.entity.PathBean;
 import com.hongniu.moduleorder.entity.QueryInsurancePriceBean;
 import com.hongniu.moduleorder.entity.VersionBean;
-import com.hongniu.moduleorder.entity.WxPayBean;
 import com.sang.common.net.error.NetException;
 import com.sang.common.net.rx.RxUtils;
+import com.sang.thirdlibrary.pay.entiy.PayBean;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
 
 /**
  * 作者： ${PING} on 2018/8/15.
@@ -130,20 +131,31 @@ public class HttpOrderFactory {
      * onlinePay    true	boolean	是否线上支付,false=线下支付
      * payType      true	    int 	支付方式 0微信支付 1银联支付 2线下支付
      */
-    public static Observable<CommonBean<WxPayBean>> payOrderOffLine(OrderParamBean bean) {
+    public static Observable<CommonBean<PayBean>> payOrderOffLine(OrderParamBean bean) {
         //支付方式
         int payType = bean.getPayType();
         if (payType == 1) {
             return OrderClient.getInstance()
                     .getService()
                     .payUnionOffLine(bean)
-                    .compose(RxUtils.<CommonBean<WxPayBean>>getSchedulersObservableTransformer());
+                    .filter(new Predicate<CommonBean<PayBean>>() {
+                        @Override
+                        public boolean test(CommonBean<PayBean> payBeanCommonBean) throws Exception {
+                            PayBean data = payBeanCommonBean.getData();
+                            if (data !=null&&"00".equals(data.getCode())){
+                                return true;
+                            }else {
+                                throw new NetException(500,data.getMsg());
+                            }
+                        }
+                    })
+                    .compose(RxUtils.<CommonBean<PayBean>>getSchedulersObservableTransformer());
 
         } else {
             return OrderClient.getInstance()
                     .getService()
                     .payOrderOffLine(bean)
-                    .compose(RxUtils.<CommonBean<WxPayBean>>getSchedulersObservableTransformer());
+                    .compose(RxUtils.<CommonBean<PayBean>>getSchedulersObservableTransformer());
         }
 
 

@@ -1,6 +1,7 @@
 package com.hongniu.moduleorder.ui;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -27,17 +28,21 @@ import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.entity.OrderParamBean;
-import com.hongniu.moduleorder.entity.WxPayBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.widget.dialog.BuyInsuranceDialog;
 import com.hongniu.moduleorder.widget.dialog.InsuranceNoticeDialog;
 import com.sang.common.event.BusFactory;
 import com.sang.common.utils.ConvertUtils;
+import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
+import com.sang.thirdlibrary.pay.PayClient;
 import com.sang.thirdlibrary.pay.PayConfig;
+import com.sang.thirdlibrary.pay.control.PayControl;
+import com.sang.thirdlibrary.pay.entiy.PayBean;
+import com.sang.thirdlibrary.pay.unionpay.UnionPayClient;
 import com.sang.thirdlibrary.pay.wechat.WeChatAppPay;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -69,10 +74,10 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
     private RadioButton rbOffline;//线下支付
     private ViewGroup rlWechact;//微信支付
     private ImageView cbWechat;//选择是否微信支付
-    private ViewGroup  rlAli        ;//支付宝
-    private ImageView   cbAli        ;//选择是否支付宝支付
-    private ViewGroup  rlUnion      ;//银联支付
-    private ImageView   cbUnion      ;//选择是银联支付
+    private ViewGroup rlAli;//支付宝
+    private ImageView cbAli;//选择是否支付宝支付
+    private ViewGroup rlUnion;//银联支付
+    private ImageView cbUnion;//选择是银联支付
 
 
     private Button btPay;//支付订单
@@ -103,7 +108,8 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
     private boolean isInsurance;
     private String orderID = "";//订单号
     private String orderNum = "";//订单号
-    private int payType=-1;
+    private int payType = -1;
+    private PayClient payClient;
 
 
     @Override
@@ -138,11 +144,11 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
         tv_change_cargo_price = findViewById(R.id.tv_change_cargo_price);
         rl_tran = findViewById(R.id.rl_tran);
         tv_des = findViewById(R.id.tv_des);
-        rlAli   =findViewById(R.id.rl_ali   );
-        cbAli   =findViewById(R.id.ali_box   );
-        rlUnion =findViewById(R.id.rl_union );
-        cbUnion =findViewById(R.id.union_box );
-        payOnline =findViewById(R.id.pay_online);
+        rlAli = findViewById(R.id.rl_ali);
+        cbAli = findViewById(R.id.ali_box);
+        rlUnion = findViewById(R.id.rl_union);
+        cbUnion = findViewById(R.id.union_box);
+        payOnline = findViewById(R.id.pay_online);
 
         buyInsuranceDialog = new BuyInsuranceDialog(mContext);
 
@@ -363,9 +369,9 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
                             bean = creatBuyParams(true, true, false);
                         }
                         HttpOrderFactory.payOrderOffLine(bean)
-                                .subscribe(new NetObserver<WxPayBean>(this) {
+                                .subscribe(new NetObserver<PayBean>(this) {
                                     @Override
-                                    public void doOnSuccess(WxPayBean data) {
+                                    public void doOnSuccess(PayBean data) {
                                         startWeChatPay(data, buyInsurance);
                                     }
                                 });
@@ -378,9 +384,9 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
                     if (buyInsurance) {//购买保险
                         if (checkPayType()) {
                             HttpOrderFactory.payOrderOffLine(creatBuyParams(false, true, true))
-                                    .subscribe(new NetObserver<WxPayBean>(this) {
+                                    .subscribe(new NetObserver<PayBean>(this) {
                                         @Override
-                                        public void doOnSuccess(WxPayBean data) {
+                                        public void doOnSuccess(PayBean data) {
                                             startWeChatPay(data, true);
 
                                         }
@@ -392,9 +398,9 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
 
                     } else {//不购买保险
                         HttpOrderFactory.payOrderOffLine(creatBuyParams(false, true, false))
-                                .subscribe(new NetObserver<WxPayBean>(this) {
+                                .subscribe(new NetObserver<PayBean>(this) {
                                     @Override
-                                    public void doOnSuccess(WxPayBean data) {
+                                    public void doOnSuccess(PayBean data) {
                                         finish();
                                         ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
                                     }
@@ -405,10 +411,11 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
                 if (checkPayType()) {
                     //单独购买保险
                     if (cargoPrice > 0) {
+                        buyInsurance = true;
                         HttpOrderFactory.payOrderOffLine(creatBuyParams(true, false, true))
-                                .subscribe(new NetObserver<WxPayBean>(this) {
+                                .subscribe(new NetObserver<PayBean>(this) {
                                     @Override
-                                    public void doOnSuccess(WxPayBean data) {
+                                    public void doOnSuccess(PayBean data) {
                                         startWeChatPay(data, true);
                                     }
                                 });
@@ -432,15 +439,15 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
 
     //检测支付方式
     private boolean checkPayType() {
-        return payType!=-1;
+        return payType != -1;
     }
 
     //更改支付方式
     private void changePayType(int payType) {
-        this.payType=payType;
-        cbWechat.setImageResource(payType==0?R.mipmap.icon_xz_36:R.mipmap.icon_wxz_36);
-        cbAli.setImageResource(payType==1?R.mipmap.icon_xz_36:R.mipmap.icon_wxz_36);
-        cbUnion.setImageResource(payType==1?R.mipmap.icon_xz_36:R.mipmap.icon_wxz_36);
+        this.payType = payType;
+        cbWechat.setImageResource(payType == 0 ? R.mipmap.icon_xz_36 : R.mipmap.icon_wxz_36);
+        cbAli.setImageResource(payType == 1 ? R.mipmap.icon_xz_36 : R.mipmap.icon_wxz_36);
+        cbUnion.setImageResource(payType == 1 ? R.mipmap.icon_xz_36 : R.mipmap.icon_wxz_36);
     }
 
     /**
@@ -449,24 +456,24 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
      * @param data
      * @param isCreatInsurance
      */
-    private void startWeChatPay(WxPayBean data, boolean isCreatInsurance) {
-
-        if (payType==0) {
-//            CreatInsuranceBean creatInsuranceBean = new CreatInsuranceBean();
-//            creatInsuranceBean.setGoodsValue(cargoPrice + "");
-//            creatInsuranceBean.setOrderNum(orderNum);
-//            Event.CraetInsurance insurance = new Event.CraetInsurance(creatInsuranceBean);
-//            insurance.isCreatInsurance = isCreatInsurance;
-//            BusFactory.getBus().postSticky(insurance);
-//            WeChatAppPay.pay(this, data.getPartnerId(), data.getPrePayId(), data.getPrepay_id()
-//                    , data.getNonceStr(), data.getTimeStamp(), data.getPaySign()
-//            );
-            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("微信支付");
-        }else if (payType==1){
-            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("银联支付");
-        }else {
+    private void startWeChatPay(PayBean data, boolean isCreatInsurance) {
+        PayControl.IPayClient client = null;
+        if (payType == 0) {
+            CreatInsuranceBean creatInsuranceBean = new CreatInsuranceBean();
+            creatInsuranceBean.setGoodsValue(cargoPrice + "");
+            creatInsuranceBean.setOrderNum(orderNum);
+            Event.CraetInsurance insurance = new Event.CraetInsurance(creatInsuranceBean);
+            insurance.isCreatInsurance = isCreatInsurance;
+            BusFactory.getBus().postSticky(insurance);
+            client = new WeChatAppPay();
+        } else if (payType == 1) {
+            client = new UnionPayClient();
+        } else {
             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("无效支付方式");
         }
+        payClient = new PayClient(client);
+        payClient.setDebug(Param.isDebug);
+        payClient.pay(this, data);
     }
 
 
@@ -486,10 +493,11 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
         bean.setAppid(PayConfig.weChatAppid);
         bean.setOnlinePay(onLine);
         //线上支付或者购买保险的时候使用选中的支付方式，线下支付一律为2
-        bean.setPayType((onLine||policy)?payType:2);
+        bean.setPayType((onLine || policy) ? payType : 2);
         return bean;
 
     }
+
 
     @Override
     public void entryClick(Dialog dialog, boolean checked, String cargoPrice) {
@@ -500,8 +508,6 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
                         @Override
                         public void doOnSuccess(String data) {
                             insurancePrice = Float.parseFloat(data);
-
-
                             switchToBuyInsurance(false);
                         }
                     });
@@ -514,15 +520,10 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
 
     @Override
     public void noticeClick(BuyInsuranceDialog buyInsuranceDialog, boolean checked, int i) {
-//        buyInsuranceDialog.dismiss();
         if (i == 0) {
             ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5).withString(Param.TRAN, Param.insurance_polic).navigation(mContext);
-
-//            noticeDialog.show(Param.insurance_polic);
         } else {
             ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5).withString(Param.TRAN, Param.insurance_notify).navigation(mContext);
-//            noticeDialog.show(Param.insurance_notify);
-
         }
     }
 
@@ -557,5 +558,36 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
         noticeDialog.dismiss();
         buyInsuranceDialog.setReadInsurance(true);
         buyInsuranceDialog.show();
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        String msg = "";
+        String str = data.getExtras().getString("pay_result");
+        if (str.equalsIgnoreCase("success")) {
+
+            msg = "支付成功！";
+            if (buyInsurance) {
+
+                CreatInsuranceBean creatInsuranceBean = new CreatInsuranceBean();
+                creatInsuranceBean.setGoodsValue(cargoPrice + "");
+                creatInsuranceBean.setOrderNum(orderNum);
+
+                ArouterUtils.getInstance().builder(ArouterParamOrder.activity_insurance_creat)
+                        .withParcelable(Param.TRAN, creatInsuranceBean)
+                        .navigation(this);
+            } else {
+                ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_main)
+                        .navigation(this);
+            }
+        } else if (str.equalsIgnoreCase("fail")) {
+            msg = "支付失败！";
+        } else if (str.equalsIgnoreCase("cancel")) {
+            msg = "取消支付";
+        }
+        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show(msg);
+
     }
 }

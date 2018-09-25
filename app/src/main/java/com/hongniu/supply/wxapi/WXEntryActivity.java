@@ -60,8 +60,6 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler 
                     .withString(Param.TRAN, extraData)
                     .navigation(this);
             finish();
-
-
         }
     }
 

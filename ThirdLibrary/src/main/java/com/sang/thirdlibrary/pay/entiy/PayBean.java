@@ -1,4 +1,4 @@
-package com.hongniu.moduleorder.entity;
+package com.sang.thirdlibrary.pay.entiy;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
  * 作者： ${桑小年} on 2018/8/26.
  * 努力，为梦长留
  */
-public class WxPayBean {
+public class PayBean {
 
 
 
@@ -39,6 +39,37 @@ public class WxPayBean {
      */
     private String paySign;
 
+    /**
+     *银联支付的账单号
+     */
+    private String tn;
+    private String code;
+    private String msg;
+
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public String getTn() {
+        return tn;
+    }
+
+    public void setTn(String tn) {
+        this.tn = tn;
+    }
 
     public String getTimeStamp() {
         return timeStamp;
