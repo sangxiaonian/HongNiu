@@ -8,12 +8,12 @@ import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.CreatInsuranceBean;
 import com.hongniu.baselibrary.entity.OrderCreatBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
+import com.hongniu.baselibrary.entity.OrderIdBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.moduleorder.entity.LocationBean;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
 import com.hongniu.moduleorder.entity.OrderCreatParamBean;
-import com.hongniu.baselibrary.entity.OrderIdBean;
 import com.hongniu.moduleorder.entity.OrderDriverPhoneBean;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
 import com.hongniu.moduleorder.entity.OrderParamBean;
@@ -37,10 +37,9 @@ public class HttpOrderFactory {
 
     /**
      * 检查版本更新
-     *
      */
     public static Observable<CommonBean<VersionBean>> checkVersion() {
-        VersionBean bean=new VersionBean();
+        VersionBean bean = new VersionBean();
         bean.setType(2);
         return OrderClient.getInstance().getService()
                 .checkVersion(bean)
@@ -70,9 +69,10 @@ public class HttpOrderFactory {
         bean.setCarNumber(carNum);
         return OrderClient.getInstance().getService().getCarNum(bean).compose(RxUtils.<CommonBean<List<OrderCarNumbean>>>getSchedulersObservableTransformer());
 
-    }/**
+    }
+
+    /**
      * 获取到所有司机手机号
-     *
      */
     public static Observable<CommonBean<List<OrderDriverPhoneBean>>> getDriverPhone(String mobile) {
         OrderDriverPhoneBean bean = new OrderDriverPhoneBean();
@@ -128,12 +128,24 @@ public class HttpOrderFactory {
      * hasFreight   true	boolean	是否付运费，true=是
      * hasPolicy    true	boolean	是否买保险，true=是
      * onlinePay    true	boolean	是否线上支付,false=线下支付
+     * payType      true	    int 	支付方式 0微信支付 1银联支付 2线下支付
      */
     public static Observable<CommonBean<WxPayBean>> payOrderOffLine(OrderParamBean bean) {
-        return OrderClient.getInstance()
-                .getService()
-                .payOrderOffLine(bean)
-                .compose(RxUtils.<CommonBean<WxPayBean>>getSchedulersObservableTransformer());
+        //支付方式
+        int payType = bean.getPayType();
+        if (payType == 1) {
+            return OrderClient.getInstance()
+                    .getService()
+                    .payUnionOffLine(bean)
+                    .compose(RxUtils.<CommonBean<WxPayBean>>getSchedulersObservableTransformer());
+
+        } else {
+            return OrderClient.getInstance()
+                    .getService()
+                    .payOrderOffLine(bean)
+                    .compose(RxUtils.<CommonBean<WxPayBean>>getSchedulersObservableTransformer());
+        }
+
 
     }
 
@@ -207,7 +219,6 @@ public class HttpOrderFactory {
     }
 
 
-
     /**
      * 上传位置数据
      *
@@ -226,25 +237,25 @@ public class HttpOrderFactory {
      * @param orderID
      */
     public static Observable<List<LocationBean>> getPath(String orderID) {
-        OrderIdBean bean =new OrderIdBean();
+        OrderIdBean bean = new OrderIdBean();
         bean.setOrderId(orderID);
-         return OrderClient.getInstance()
+        return OrderClient.getInstance()
                 .getService()
                 .getPath(bean)
-                 .map(new Function<CommonBean<PathBean>, List<LocationBean>>() {
-                     @Override
-                     public List<LocationBean> apply(CommonBean<PathBean> pathBeanCommonBean) throws Exception {
-                         if (pathBeanCommonBean.getCode() == 200) {
+                .map(new Function<CommonBean<PathBean>, List<LocationBean>>() {
+                    @Override
+                    public List<LocationBean> apply(CommonBean<PathBean> pathBeanCommonBean) throws Exception {
+                        if (pathBeanCommonBean.getCode() == 200) {
                             return pathBeanCommonBean.getData().getList();
 
-                         } else {
-                             throw new NetException(pathBeanCommonBean.getCode(), pathBeanCommonBean.getMsg());
-                         }
+                        } else {
+                            throw new NetException(pathBeanCommonBean.getCode(), pathBeanCommonBean.getMsg());
+                        }
 
-                     }
-                 })
+                    }
+                })
 
-               ;
+                ;
     }
 
     /**

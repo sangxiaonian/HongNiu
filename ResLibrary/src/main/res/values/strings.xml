@@ -62,6 +62,12 @@
     <string name="order_pay_chose_pay_ways">选择支付方式</string>
     <string name="order_pay_wechat">微信支付</string>
     <string name="order_pay_wechat_discribe">微信安全支付</string>
+    <string name="order_pay_ali">支付宝</string>
+    <string name="order_pay_ali_discribe">不可使用花呗</string>
+    <string name="order_pay_union">银联支付</string>
+    <string name="order_pay_union_discribe">中国银联在线支付服务</string>
+
+
     <string name="order_pay_all_price">支付总额</string>
     <string name="order_pay_order_pay">支付订单</string>
     <string name="order_pay_change_cargo_price">修改金额</string>
@@ -73,7 +79,6 @@
     <string name="order_insruance_notify">《投保须知》</string>
     <string name="order_insruance_police_front">本人承诺投保信息的真实性，理解并同意</string>
     <string name="order_insruance_police_end">的全部内容</string>
-
 
 
     <!--保单生成-->

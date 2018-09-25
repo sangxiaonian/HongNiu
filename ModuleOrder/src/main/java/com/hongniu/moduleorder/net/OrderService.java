@@ -121,6 +121,20 @@ public interface OrderService {
     Observable<CommonBean<WxPayBean>> payOrderOffLine(@Body OrderParamBean infor);
 
     /**
+     * 银联支付
+     * orderNum     true	string	订单号
+     * openid       true	string	微信用户openid
+     * hasFreight   true	boolean	是否付运费，true=是
+     * hasPolicy    true	boolean	是否买保险，true=是
+     * onlinePay    true	boolean	是否线上支付,false=线下支付
+     *
+     * @param infor 订单ID
+     * @return
+     */
+    @POST("hongniu/api/unionpay/unionpaytn")
+    Observable<CommonBean<WxPayBean>> payUnionOffLine(@Body OrderParamBean infor);
+
+    /**
      * 创建保单
      * orderNum	true	string	订单编号
      * goodsValue	true	number	货物价值

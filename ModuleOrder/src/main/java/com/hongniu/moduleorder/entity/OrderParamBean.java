@@ -10,6 +10,10 @@ public class OrderParamBean {
      * true	string	订单ID
      */
     private String id;
+    /**
+     * 支付方式 0微信支付 1银联支付 2线下支付
+     */
+    private int payType=-1;
 
     /**
      * true	string	订单号
@@ -35,6 +39,14 @@ public class OrderParamBean {
     public String getOrderId() {
         return id
                 ;
+    }
+
+    public int getPayType() {
+        return payType;
+    }
+
+    public void setPayType(int payType) {
+        this.payType = payType;
     }
 
     public void setOrderId(String orderId) {

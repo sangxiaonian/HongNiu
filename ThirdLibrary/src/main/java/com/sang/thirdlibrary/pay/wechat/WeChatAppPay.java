@@ -1,5 +1,6 @@
 package com.sang.thirdlibrary.pay.wechat;
 
+import android.app.Activity;
 import android.content.Context;
 
 import com.sang.thirdlibrary.pay.PayConfig;
@@ -15,18 +16,18 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 public class WeChatAppPay {
 
     /**
-     * @param context
+     * @param activity
      * @param partnerId    商户号
      * @param prepayId     预支付交易会话ID
-     * @param packageValue 预支付交易会话ID
+     * @param packageValue 固定值
      * @param nonceStr     随机字符串
      * @param timeStamp    时间戳
      * @param sign         sign
      */
-    public static void pay(Context context, String partnerId, String prepayId, String packageValue, String nonceStr, String timeStamp, String sign) {
+    public static void pay(Activity activity, String partnerId, String prepayId, String packageValue, String nonceStr, String timeStamp, String sign) {
         IWXAPI api;
 
-        api = WXAPIFactory.createWXAPI(context, PayConfig.weChatAppid);
+        api = WXAPIFactory.createWXAPI(activity, PayConfig.weChatAppid);
         PayReq request = new PayReq();
         //应用ID
         request.appId = PayConfig.weChatAppid;
