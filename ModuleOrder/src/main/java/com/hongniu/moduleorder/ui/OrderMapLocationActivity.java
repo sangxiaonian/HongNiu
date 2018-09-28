@@ -97,10 +97,10 @@ public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implement
 
         if (start) {
             marker = aMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.start))));
-            etSearch.setHint("从哪里发货");
+            etSearch.setText("从哪里发货");
         } else {
             marker = aMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.end))));
-            etSearch.setHint("在哪里收货");
+            etSearch.setText("在哪里收货");
         }
 
     }

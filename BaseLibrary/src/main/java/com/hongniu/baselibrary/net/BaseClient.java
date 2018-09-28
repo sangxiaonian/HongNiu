@@ -8,6 +8,7 @@ import com.sang.common.net.OkHttp;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.JLog;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -36,33 +37,29 @@ public class BaseClient {
                 .addInterceptor(new Interceptor() {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
-                        /**添加header这几步一定要分开写 不然header会无效 别问我为什么
-                         *我看了build源码 看返回了一个新的对象 猜想是要一个新的对象来接收
-                         * 我就只定义了一个新的对象来接受新的Request
-                         * 后面应该就可以，但是我没确定是否成功 ，然后我就全部都拆开了吧buider对象
-                         * request的新的对象都分开之后 就能看到成功了。。。。巨大的bug 真是让人头疼
-                         */
+
                         Request request = chain.request();
                         Request.Builder requestBuilder = request.newBuilder();
                         requestBuilder.addHeader("Content-Type", "application/json;charset=UTF-8");
                         LoginBean infor = Utils.getLoginInfor();
                         if (infor != null) {
-                            RequestBody body = request.body();
-                            String params = "";
-                            if (body != null) {
-                                Buffer buffer = new Buffer();
-                                body.writeTo(buffer);
-                                params = buffer.readUtf8();
-                            }
-                            requestBuilder.addHeader("usercode", infor.getToken())
-                                    .addHeader("codetype", "token")
-                                    .addHeader("hn_app_key", Param.AppKey)
-                                    .addHeader("hn_sign", ConvertUtils.MD5(Param.AppSecret, params))
-                            ;
-
-
+                            requestBuilder.addHeader("usercode", infor.getToken());
                         }
-
+//                        timestamp，randomNumber这两个字段都用字符串类型的，timestamp时间格式:YYYY-MM-dd hh:mm:ss:SSS
+                        //精确到毫秒的时间戳
+                        final String time = ConvertUtils.formatTime(System.currentTimeMillis(), "YYYY-MM-dd hh:mm:ss:SSS");
+                        final String random = String.valueOf(ConvertUtils.getRandom(0, 1000000));
+                        final StringBuffer buffer = new StringBuffer();
+                        buffer.append(Param.AppSecret)
+                                .append(time.replace(" ", ""))
+                                .append(random);
+                        final String sign = ConvertUtils.MD5(buffer.toString().trim().replace(" ", ""));
+                        requestBuilder.addHeader("timestamp", time)
+                                .addHeader("randomNumber", random)
+                                .addHeader("hn_sign", sign)
+                                .addHeader("codetype", "token")
+                                .addHeader("hn_app_key", Param.AppKey)
+                        ;
                         Request newRequest = requestBuilder.build();
                         return chain.proceed(newRequest);
                     }
