@@ -1,5 +1,11 @@
 apply plugin: 'com.android.application'
 
+
+// 显示的时间格式，形如20171110
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getDefault());
+}
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
@@ -32,6 +38,18 @@ android {
             storePassword 'hongniu'
             keyAlias '泓牛供应链'
             keyPassword 'hongniu'
+        }
+    }
+
+    //自定义打包
+//    ①output.outputFile.parent表示生成apk的路径，这个是默认路径在项目/app/build/outpus/apk，当然我们可以自己写路径。
+//    ②defaultConfig.applicationId表示defaultConfig标签下的名称。
+//    ③buildType.name指编译类型，就是debug或者release
+//    ④defaultConfig.versionName表示在defaultConfig标签下写的版本号
+//    ⑤releaseTime()表示我们定义的得到日期的函数
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "app_"+ buildType.name + "_v${defaultConfig.versionName}-${releaseTime()}.apk"
         }
     }
 
