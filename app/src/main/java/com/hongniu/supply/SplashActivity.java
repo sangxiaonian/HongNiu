@@ -15,6 +15,7 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.supply.net.HttpAppFactory;
+import com.sang.common.utils.JLog;
 import com.sang.common.utils.SharedPreferencesUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -60,7 +61,8 @@ public class SplashActivity extends BaseActivity {
                         @Override
                         public void run() throws Exception {
                             long l = 1500 - (SystemClock.currentThreadTimeMillis() - time);
-                            handler.sendEmptyMessageDelayed(0, l > 0 ? l : 1);
+                            handler.sendEmptyMessageDelayed(0, l > 10 ? l : 1);
+                            JLog.i("----------------------");
                         }
                     })
                     .subscribe(new NetObserver<RoleTypeBean>(null) {
@@ -76,9 +78,22 @@ public class SplashActivity extends BaseActivity {
                             EventBus.getDefault().postSticky(data);
                         }
 
+//                        @Override
+//                        public void onError(Throwable e) {
+//                            su
+//                            EventBus.getDefault().postSticky(new RoleTypeBean());
+//                        }
+
+
                         @Override
                         public void onError(Throwable e) {
+                            super.onError(e);
                             EventBus.getDefault().postSticky(new RoleTypeBean());
+                        }
+
+                        @Override
+                        public void onComplete() {
+                            super.onComplete();
                         }
                     });
         } else {

@@ -44,7 +44,7 @@ public class LoginAboutUsActivity extends BaseActivity implements View.OnClickLi
     protected void initData() {
         super.initData();
         try {
-            itemAobutHongNiu.setTextRight(DeviceUtils.getVersionName(mContext));
+            itemAobutHongNiu.setTextRight(DeviceUtils.getVersionName(mContext)+(Param.isDebug?"debug":""));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -65,8 +65,6 @@ public class LoginAboutUsActivity extends BaseActivity implements View.OnClickLi
      */
     @Override
     public void onClick(View v) {
-
-        JLog.i(v.getId() + "????" + R.id.item_about_hongniu);
 
         if (v.getId() == R.id.item_about_hongniu) {
         } else if (v.getId() == R.id.item_terms_of_service) {
