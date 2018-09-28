@@ -472,7 +472,8 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("无效支付方式");
         }
         payClient = new PayClient(client);
-        payClient.setDebug(Param.isDebug);
+        //此处用来区分正式和测试环境，设置debug为true的时候使用测试环境，默认为正式环境
+//        payClient.setDebug(Param.isDebug);
         payClient.pay(this, data);
     }
 

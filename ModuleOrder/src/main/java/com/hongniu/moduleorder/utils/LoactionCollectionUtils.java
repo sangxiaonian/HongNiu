@@ -19,6 +19,8 @@ import com.sang.common.utils.JLog;
 public class LoactionCollectionUtils implements INaviInfoCallback {
 
     private OrderDetailBean orderInfor;
+    //是否是模拟导航，默认情况下是false，模拟导航情况下，不更新数据
+    private boolean isSimulate;
 
 
     public LoactionCollectionUtils() {
@@ -33,7 +35,7 @@ public class LoactionCollectionUtils implements INaviInfoCallback {
 
     @Override
     public void onGetNavigationText(String s) {
-
+        JLog.i(s);
     }
 
 
@@ -43,7 +45,7 @@ public class LoactionCollectionUtils implements INaviInfoCallback {
     @Override
     public void onLocationChange(AMapNaviLocation aMapNaviLocation) {
         float bearing = aMapNaviLocation.getBearing();
-        if (currentBear != bearing) {
+        if (currentBear != bearing&&!isSimulate) {
             currentBear = bearing;
             Event.UpLoaction upLoaction = new Event.UpLoaction(aMapNaviLocation.getCoord().getLatitude(), aMapNaviLocation.getCoord().getLongitude());
             upLoaction.bearing = aMapNaviLocation.getBearing();
@@ -59,11 +61,17 @@ public class LoactionCollectionUtils implements INaviInfoCallback {
         JLog.i("onArriveDestination:" + b);
     }
 
-    //开始导航
+
+    /**
+     *     //开始导航
+
+     * @param i 1 真是的导航，2虚拟导航
+     */
     @Override
     public void onStartNavi(int i) {
         JLog.i("onStartNavi:" + i);
-        if (orderInfor != null) {
+        isSimulate=(i!=1);
+        if (orderInfor != null&&!isSimulate) {
             OrderEvent.UpLoactionEvent upLoactionEvent = new OrderEvent.UpLoactionEvent();
             upLoactionEvent.start = true;
             upLoactionEvent.orderID = orderInfor.getId();
