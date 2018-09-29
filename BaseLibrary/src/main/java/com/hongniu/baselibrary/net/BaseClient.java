@@ -45,9 +45,9 @@ public class BaseClient {
                         if (infor != null) {
                             requestBuilder.addHeader("usercode", infor.getToken());
                         }
-//                        timestamp，randomNumber这两个字段都用字符串类型的，timestamp时间格式:YYYY-MM-dd hh:mm:ss:SSS
+//                        timestamp，randomNumber这两个字段都用字符串类型的，timestamp时间格式:yyyy-MM-dd hh:mm:ss:SSS
                         //精确到毫秒的时间戳
-                        final String time = ConvertUtils.formatTime(System.currentTimeMillis(), "YYYY-MM-dd hh:mm:ss:SSS");
+                        final String time = ConvertUtils.formatTime(System.currentTimeMillis(), "yyyy-MM-dd hh:mm:ss:SSS");
                         final String random = String.valueOf(ConvertUtils.getRandom(0, 1000000));
                         final StringBuffer buffer = new StringBuffer();
                         buffer.append(Param.AppSecret)
