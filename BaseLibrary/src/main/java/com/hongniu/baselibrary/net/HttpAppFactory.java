@@ -1,4 +1,4 @@
-package com.hongniu.supply.net;
+package com.hongniu.baselibrary.net;
 
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.RoleTypeBean;

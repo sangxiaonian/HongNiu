@@ -182,7 +182,6 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
         };
     }
 
-    private boolean start;
     @Override
     protected Observable<CommonBean<PageBean<OrderDetailBean>>> getListDatas() {
         queryBean.setPageNum(currentPage);
@@ -343,7 +342,12 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
                                 .subscribe(new NetObserver<OrderDetailBean>(OrderMainFragmet.this) {
                                     @Override
                                     public void doOnSuccess(OrderDetailBean data) {
-                                        queryData(true, true);
+                                    }
+
+                                    @Override
+                                    public void onComplete() {
+                                        super.onComplete();
+                                        BusFactory.getBus().post(new OrderEvent.OrderUpdate(roleState));
                                     }
                                 });
                     }
@@ -465,7 +469,13 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
                                 .subscribe(new NetObserver<OrderDetailBean>(OrderMainFragmet.this) {
                                     @Override
                                     public void doOnSuccess(OrderDetailBean data) {
+                                    }
+
+                                    @Override
+                                    public void onComplete() {
+                                        super.onComplete();
                                         BusFactory.getBus().post(new OrderEvent.OrderUpdate(roleState));
+
                                     }
                                 });
                     }
@@ -545,8 +555,11 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
                                         bean.setDestinationLatitude(orderBean.getDestinationLatitude());
                                         bean.setDestinationLongitude(orderBean.getDestinationLongitude());
                                         EventBus.getDefault().post(bean);
+                                    }
+                                    @Override
+                                    public void onComplete() {
+                                        super.onComplete();
                                         BusFactory.getBus().post(new OrderEvent.OrderUpdate(roleState));
-
                                     }
                                 });
 
@@ -603,6 +616,9 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
                                 , orderBean.getDestinationLatitude(), orderBean.getDestinationLongitude());
                         dialog.dismiss();
                         if (latLng.latitude == 0 || latLng.longitude == 0) {
+                            OrderEvent.UpLoactionEvent upLoactionEvent = new OrderEvent.UpLoactionEvent();
+                            upLoactionEvent.start = true;
+                            BusFactory.getBus().post(upLoactionEvent);
                             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("正在获取当前位置，请稍后再试");
                         } else if (v > Param.ENTRY_MIN) {//距离过大，超过确认订单的最大距离
                             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("距离收货地点还有" + ConvertUtils.changeFloat(v / 1000, 1) + "公里，无法确认到达");
@@ -612,6 +628,11 @@ public class OrderMainFragmet extends RefrushFragmet<OrderDetailBean> implements
                                         @Override
                                         public void doOnSuccess(String data) {
                                             BusFactory.getBus().post(new OrderEvent.UpLoactionEvent());
+                                        }
+
+                                        @Override
+                                        public void onComplete() {
+                                            super.onComplete();
                                             BusFactory.getBus().post(new OrderEvent.OrderUpdate(roleState));
                                         }
                                     });

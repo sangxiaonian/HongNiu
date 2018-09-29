@@ -12,9 +12,9 @@ import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
-import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
-import com.hongniu.supply.net.HttpAppFactory;
+import com.hongniu.baselibrary.net.HttpAppFactory;
+import com.hongniu.baselibrary.utils.Utils;
 import com.sang.common.utils.JLog;
 import com.sang.common.utils.SharedPreferencesUtils;
 
@@ -62,7 +62,6 @@ public class SplashActivity extends BaseActivity {
                         public void run() throws Exception {
                             long l = 1500 - (SystemClock.currentThreadTimeMillis() - time);
                             handler.sendEmptyMessageDelayed(0, l > 10 ? l : 1);
-                            JLog.i("----------------------");
                         }
                     })
                     .subscribe(new NetObserver<RoleTypeBean>(null) {
@@ -77,13 +76,6 @@ public class SplashActivity extends BaseActivity {
                         public void doOnSuccess(RoleTypeBean data) {
                             EventBus.getDefault().postSticky(data);
                         }
-
-//                        @Override
-//                        public void onError(Throwable e) {
-//                            su
-//                            EventBus.getDefault().postSticky(new RoleTypeBean());
-//                        }
-
 
                         @Override
                         public void onError(Throwable e) {

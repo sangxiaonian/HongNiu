@@ -3,6 +3,7 @@ package com.hongniu.moduleorder;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -26,6 +27,7 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CloseActivityEvent;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.event.Event;
+import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.dialog.UpDialog;
@@ -59,6 +61,9 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
+
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
 
 /**
  * 订单中心主页
@@ -106,6 +111,29 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
         loaction = LoactionUtils.getInstance();
         loaction.init(this);
         loaction.setListener(this);
+
+        HttpAppFactory.getRoleType()
+
+                .subscribe(new NetObserver<RoleTypeBean>(null) {
+
+                    @Override
+                    public void doOnSuccess(RoleTypeBean data) {
+                        EventBus.getDefault().postSticky(data);
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        EventBus.getDefault().postSticky(new RoleTypeBean());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        super.onComplete();
+                    }
+                });
+
+
+
 
     }
 
@@ -277,8 +305,6 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     @Override
     protected void onStop() {
         super.onStop();
-
-
     }
 
 

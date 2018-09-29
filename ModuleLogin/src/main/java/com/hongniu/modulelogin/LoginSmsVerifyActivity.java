@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.google.gson.Gson;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
@@ -17,13 +16,18 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.LoginBean;
 import com.hongniu.baselibrary.entity.LoginPersonInfor;
+import com.hongniu.baselibrary.entity.RoleTypeBean;
+import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.sang.common.net.error.NetException;
-import com.sang.common.utils.SharedPreferencesUtils;
 import com.sang.common.widget.VericationView;
 
+import org.greenrobot.eventbus.EventBus;
+
+import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
+import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Function;
 
 @Route(path = ArouterParamLogin.activity_sms_verify)
@@ -130,28 +134,47 @@ public class LoginSmsVerifyActivity extends BaseActivity implements VericationVi
                 .map(new Function<CommonBean<LoginBean>, CommonBean<LoginBean>>() {
                     @Override
                     public CommonBean<LoginBean> apply(CommonBean<LoginBean> loginBeanCommonBean) throws Exception {
-                        if (loginBeanCommonBean.getCode()==200){
+                        if (loginBeanCommonBean.getCode() == 200) {
 
                             Utils.saveLoginInfor(loginBeanCommonBean.getData());
                             return loginBeanCommonBean;
-                        }else {
-                            throw new NetException(loginBeanCommonBean.getCode(),loginBeanCommonBean.getMsg());
+                        } else {
+                            throw new NetException(loginBeanCommonBean.getCode(), loginBeanCommonBean.getMsg());
                         }
                     }
                 })
 
-                //登录成功之后，查询获取个人信息
-                .flatMap(new Function<CommonBean<LoginBean>, ObservableSource<CommonBean<LoginPersonInfor>>>() {
+                .flatMap(new Function<CommonBean<LoginBean>, Observable<CommonBean<String>>>() {
                     @Override
-                    public ObservableSource<CommonBean<LoginPersonInfor>> apply(CommonBean<LoginBean> loginBeanCommonBean) throws Exception {
-                        return HttpLoginFactory.getPersonInfor();
+                    public Observable<CommonBean<String>> apply(CommonBean<LoginBean> loginBeanCommonBean) throws Exception {
+                        return Observable.zip(
+                                HttpAppFactory.getRoleType()
+                                , HttpLoginFactory.getPersonInfor()
+                                , new BiFunction<CommonBean<RoleTypeBean>, CommonBean<LoginPersonInfor>, CommonBean<String>>() {
+                                    @Override
+                                    public CommonBean<String> apply(CommonBean<RoleTypeBean> roleTypeBeanCommonBean, CommonBean<LoginPersonInfor> loginPersonInforCommonBean) throws Exception {
+
+                                        if (roleTypeBeanCommonBean.getCode() == 200) {
+                                            EventBus.getDefault().postSticky(roleTypeBeanCommonBean.getData());
+                                        } else {
+                                            throw new NetException(roleTypeBeanCommonBean.getCode(), roleTypeBeanCommonBean.getMsg());
+                                        }
+                                        if (loginPersonInforCommonBean.getCode() == 200) {
+                                            Utils.savePersonInfor(loginPersonInforCommonBean.getData());
+                                        } else {
+                                            throw new NetException(loginPersonInforCommonBean.getCode(), loginPersonInforCommonBean.getMsg());
+                                        }
+
+                                        return new CommonBean<String>();
+                                    }
+                                }
+
+                        );
                     }
                 })
-                .subscribe(new NetObserver<LoginPersonInfor>(this) {
+                .subscribe(new NetObserver<String>(this) {
                     @Override
-                    public void doOnSuccess(LoginPersonInfor data) {
-                        //储存个人信息
-                        Utils.savePersonInfor(data);
+                    public void doOnSuccess(String data) {
                         ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_main).navigation(mContext);
 
                     }

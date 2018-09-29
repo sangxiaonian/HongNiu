@@ -1,6 +1,4 @@
-package com.hongniu.supply.net;
-
-import com.hongniu.baselibrary.net.BaseClient;
+package com.hongniu.baselibrary.net;
 
 /**
  * 作者： ${PING} on 2018/8/13.
