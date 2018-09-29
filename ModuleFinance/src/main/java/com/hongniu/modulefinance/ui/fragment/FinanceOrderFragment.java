@@ -70,6 +70,7 @@ public class FinanceOrderFragment extends RefrushFragmet<OrderDetailBean> {
         super.initData();
 
         headHolder = new FinanceExpendHeadHolder(getContext(), rv);
+
         RecycleViewSupportEmpty empty = null;
         if (rv instanceof RecycleViewSupportEmpty) {
             empty = (RecycleViewSupportEmpty) rv;
@@ -92,7 +93,7 @@ public class FinanceOrderFragment extends RefrushFragmet<OrderDetailBean> {
             headHolder.hideVisDes();
         }
         adapter.addHeard(0, headHolder);
-
+//        headHolder.showGuide(getActivity());
 
     }
 

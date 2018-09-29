@@ -39,24 +39,25 @@ public class FinanceExpendHeadHolder extends PeakHolder {
         super(context, parent, R.layout.finance_item_head_expend);
 
 
-
-
-
     }
-
+    public boolean show=true;
     @Override
     public void initView(int position) {
         super.initView(position);
         tvDes = itemView.findViewById(R.id.tv_des);
         vist = itemView.findViewById(R.id.vistorgram);
         vist = itemView.findViewById(R.id.vistorgram);
-   itemView.findViewById(R.id.ll_vis_des).setVisibility(hideVisDes?View.GONE:View.VISIBLE);
+        itemView.findViewById(R.id.ll_vis_des).setVisibility(hideVisDes ? View.GONE : View.VISIBLE);
         if (title != null) {
             tvDes.setText(title);
         }
+        if (show){
+            show=false;
+            showGuide((Activity) context);
+        }
     }
 
-    public void showGuide(Activity activity){
+    public void showGuide(Activity activity) {
         BaseGuide guidexffx = new BaseGuide();
         guidexffx.setMsg("左右滑动，查看每月对比")
                 .setView(vist)
@@ -80,7 +81,7 @@ public class FinanceExpendHeadHolder extends PeakHolder {
     }
 
     public void setCurrentX(int i) {
-        this.currentX=i;
+        this.currentX = i;
         itemView.post(new Runnable() {
             @Override
             public void run() {
@@ -95,6 +96,6 @@ public class FinanceExpendHeadHolder extends PeakHolder {
      * 隐藏柱状图的颜色描述信息
      */
     public void hideVisDes() {
-        hideVisDes=true;
+        hideVisDes = true;
     }
 }

@@ -51,7 +51,7 @@ public class FinanceOrderAdapter extends XAdapter<OrderDetailBean> {
 
                 } else if (financeType == 2) {//收入
                     buffer.append("+");
-                    tvTime.setText("收款时间：" +( data.getPayTime()==null?"":data.getPayTime()));
+                    tvTime.setText("收款时间：" +( "--"));
 //
                 } else {//所有情况
 

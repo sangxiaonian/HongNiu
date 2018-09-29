@@ -54,17 +54,11 @@ public class FinanceExpendFragment extends BaseFragment implements RadioGroup.On
 
     }
 
-
-
-
-
     @Override
     protected void initListener() {
         super.initListener();
         rg.setOnCheckedChangeListener(this);
         rbLeft.performClick();
-
-
     }
 
 
