@@ -237,7 +237,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
         });
 
         //检查版本更新
-//        checkVersion();
+        checkVersion();
 
 
     }
@@ -252,8 +252,12 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                 .subscribe(new NetObserver<VersionBean>(null) {
                     @Override
                     public void doOnSuccess(VersionBean data) {
-                        if (data != null && data.getVersionCode() > DeviceUtils.getVersionCode(mContext)) {
-                            showUpAleart(data.getVersionName());
+                        try {
+                            if (data != null && !data.getVersionCode().equals(DeviceUtils.getVersionName(mContext)) ) {
+                                showUpAleart(data.getVersionName());
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
                     }
                 });

@@ -11,7 +11,7 @@ public class VersionBean {
     /**
      * false	number	版本号
       */
-    private int   versionCode 	;
+    private String   versionCode 	;
     /**
      * true	string	版本说明
       */
@@ -25,11 +25,11 @@ public class VersionBean {
         this.type = type;
     }
 
-    public int getVersionCode() {
+    public String getVersionCode() {
         return versionCode;
     }
 
-    public void setVersionCode(int versionCode) {
+    public void setVersionCode(String versionCode) {
         this.versionCode = versionCode;
     }
 
