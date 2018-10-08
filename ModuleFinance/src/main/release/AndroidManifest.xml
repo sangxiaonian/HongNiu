@@ -10,7 +10,8 @@
             android:name=".ui.FinanceSearchActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.FinanceWalletActivity" />
-        <activity android:name=".ui.FinanceNiuActivity"></activity>
+        <activity android:name=".ui.FinanceNiuActivity" />
+        <activity android:name=".ui.FinanceCarOrderDetailActivity"></activity>
     </application>
 
 </manifest>

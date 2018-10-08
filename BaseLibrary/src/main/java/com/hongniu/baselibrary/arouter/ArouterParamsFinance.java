@@ -37,5 +37,10 @@ public class ArouterParamsFinance {
      */
     public final static String activity_finance_niu = "/finance/activity_finance_niu";
 
+  /**
+     * 车辆订单详情
+     */
+    public final static String activity_finance_car_order_detail = "/finance/activity_finance_car_order_detail";
+
 
 }

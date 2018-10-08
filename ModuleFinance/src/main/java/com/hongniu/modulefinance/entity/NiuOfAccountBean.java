@@ -7,5 +7,10 @@ package com.hongniu.modulefinance.entity;
 public class NiuOfAccountBean {
 
 
+    /**
+     * 车牌号
+     */
+    public String carNum="沪A88888";
+
 
 }

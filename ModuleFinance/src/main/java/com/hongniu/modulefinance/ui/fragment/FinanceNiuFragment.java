@@ -7,10 +7,13 @@ import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.RefrushFragmet;
+import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.modulefinance.R;
+import com.hongniu.modulefinance.control.OnItemClickListener;
 import com.hongniu.modulefinance.entity.BalanceOfAccountBean;
 import com.hongniu.modulefinance.entity.NiuOfAccountBean;
 import com.hongniu.modulefinance.net.HttpFinanceFactory;
@@ -29,7 +32,7 @@ import io.reactivex.Observable;
  *
  */
 @Route(path = ArouterParamsFinance.fragment_finance_niu)
-public class FinanceNiuFragment extends RefrushFragmet<NiuOfAccountBean>{
+public class FinanceNiuFragment extends RefrushFragmet<NiuOfAccountBean> implements OnItemClickListener<NiuOfAccountBean> {
 
     @Override
     protected View initView(LayoutInflater inflater) {
@@ -55,6 +58,13 @@ public class FinanceNiuFragment extends RefrushFragmet<NiuOfAccountBean>{
 
     @Override
     protected XAdapter<NiuOfAccountBean> getAdapter(List<NiuOfAccountBean> datas) {
-        return new NiuOfAccountAdapter(getContext(),datas);
+        NiuOfAccountAdapter niuOfAccountAdapter = new NiuOfAccountAdapter(getContext(), datas);
+        niuOfAccountAdapter.setItemClickListener(this);
+        return niuOfAccountAdapter;
+    }
+
+    @Override
+    public void onItemClick(int position, NiuOfAccountBean niuOfAccountBean) {
+        ArouterUtils.getInstance().builder(ArouterParamsFinance.activity_finance_car_order_detail).withString(Param.TRAN,niuOfAccountBean.carNum).navigation(getContext());
     }
 }
