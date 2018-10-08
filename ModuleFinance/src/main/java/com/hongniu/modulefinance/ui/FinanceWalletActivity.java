@@ -17,6 +17,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.config.Param;
 import com.hongniu.modulefinance.R;
 import com.hongniu.modulefinance.control.FinanceWalletControl;
 import com.hongniu.modulefinance.present.WalletPresenter;
@@ -46,8 +47,8 @@ public class FinanceWalletActivity extends BaseActivity implements FinanceWallet
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finance_wallet);
-        setToolbarDarkTitle("我的钱包");
-        setToolbarSrcRight("财务");
+        setToolbarDarkTitle(getString(R.string.wallet_title));
+        setToolbarSrcRight(getString(R.string.finance));
         present = new WalletPresenter(this);
         initView();
         initData();
@@ -73,20 +74,20 @@ public class FinanceWalletActivity extends BaseActivity implements FinanceWallet
     @Override
     protected void initData() {
         super.initData();
-        tvBalanceOfAccount.setText(getString(R.string.money_symbol) + "1800.00");
-        tvBalanceOfUnentry.setText("( 您有" + 300 + "元待入账金额 )");
-        SpannableStringBuilder builder = new SpannableStringBuilder();
-        builder.append("您有");
-        final int start = builder.length();
-        builder.append("123");
-        final int end = builder.length();
-        builder.append("个牛币");
-        ForegroundColorSpan span = new ForegroundColorSpan(getResources().getColor(R.color.color_light));
-        builder.setSpan(span, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        tvNiuBalanceOfAccount.setText(builder);
-        tvNiuBalanceOfUnentry.setText(30 + "牛币待入账");
-
-
+        if (Param.isDebug) {
+            tvBalanceOfAccount.setText(getString(R.string.money_symbol) + "1800.00");
+            tvBalanceOfUnentry.setText("( 您有" + 300 + "元待入账金额 )");
+            SpannableStringBuilder builder = new SpannableStringBuilder();
+            builder.append("您有");
+            final int start = builder.length();
+            builder.append("123");
+            final int end = builder.length();
+            builder.append("个牛币");
+            ForegroundColorSpan span = new ForegroundColorSpan(getResources().getColor(R.color.color_light));
+            builder.setSpan(span, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            tvNiuBalanceOfAccount.setText(builder);
+            tvNiuBalanceOfUnentry.setText(30 + "牛币待入账");
+        }
 
 
     }
@@ -122,8 +123,7 @@ public class FinanceWalletActivity extends BaseActivity implements FinanceWallet
 
         } else if (i == R.id.ll_niu) {
 
-
-            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("牛币账户");
+            ArouterUtils.getInstance().builder(ArouterParamsFinance.activity_finance_niu).navigation(this);
         }
     }
 
@@ -142,9 +142,11 @@ public class FinanceWalletActivity extends BaseActivity implements FinanceWallet
             fragmentTransaction.hide(currentFrament);
         }
         if (checkedId == rbLeft.getId()) {
-            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("账户余额");
             if (blankFrangmet==null) {
                 blankFrangmet = (Fragment) ArouterUtils.getInstance().builder(ArouterParamsFinance.fragment_finance_wallet).navigation(this);
+                Bundle bundle = new Bundle();
+                bundle.putInt(Param.TRAN, 1);
+                blankFrangmet.setArguments(bundle);
                 fragmentTransaction.add(R.id.content,blankFrangmet);
             }else {
                 fragmentTransaction.show(blankFrangmet);
@@ -154,13 +156,15 @@ public class FinanceWalletActivity extends BaseActivity implements FinanceWallet
         } else   {
             if (unEntryFrangmet==null){
                 unEntryFrangmet= (Fragment) ArouterUtils.getInstance().builder(ArouterParamsFinance.fragment_finance_wallet).navigation(this);
+                Bundle bundle = new Bundle();
+                bundle.putInt(Param.TRAN, 2);
+                blankFrangmet.setArguments(bundle);
                 fragmentTransaction.add(R.id.content,unEntryFrangmet);
             }else {
                 fragmentTransaction.show(unEntryFrangmet);
             }
             currentFrament=unEntryFrangmet;
 
-            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("牛币账户");
         }
         fragmentTransaction.commitAllowingStateLoss();
 

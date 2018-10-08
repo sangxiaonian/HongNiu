@@ -6,6 +6,7 @@ import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.modulefinance.entity.BalanceOfAccountBean;
 import com.hongniu.modulefinance.entity.FinanceOrderBean;
+import com.hongniu.modulefinance.entity.NiuOfAccountBean;
 import com.hongniu.modulefinance.entity.QueryExpendBean;
 import com.hongniu.modulefinance.entity.QueryExpendResultBean;
 import com.sang.common.net.rx.RxUtils;
@@ -98,6 +99,31 @@ public class HttpFinanceFactory {
                         int random = ConvertUtils.getRandom(19, 21);
                         for (int i = 0; i < random; i++) {
                             balanceOfAccountBeans.add(new BalanceOfAccountBean());
+                        }
+                        pageBean.setList(balanceOfAccountBeans);
+                        bean.setData(pageBean);
+
+                        return bean;
+                    }
+                });
+    }
+    /**
+     * 牛币待入账，已入账查询
+     */
+    public static Observable<CommonBean<PageBean<NiuOfAccountBean>>> gueryNiuList() {
+        return Observable.just(1)
+                .map(new Function<Integer, CommonBean<PageBean<NiuOfAccountBean>>>() {
+                    @Override
+                    public CommonBean<PageBean<NiuOfAccountBean>> apply(Integer integer) throws Exception {
+
+                        CommonBean<PageBean<NiuOfAccountBean>> bean = new CommonBean<>();
+                        bean.setCode(200);
+
+                        PageBean<NiuOfAccountBean> pageBean = new PageBean<>();
+                        ArrayList<NiuOfAccountBean> balanceOfAccountBeans = new ArrayList<>();
+                        int random = ConvertUtils.getRandom(19, 21);
+                        for (int i = 0; i < random; i++) {
+                            balanceOfAccountBeans.add(new NiuOfAccountBean());
                         }
                         pageBean.setList(balanceOfAccountBeans);
                         bean.setData(pageBean);

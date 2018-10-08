@@ -27,11 +27,11 @@
         android:paddingRight="2dp"
         android:textColor="@color/color_white"
         android:textSize="@dimen/text_min_11sp"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_order"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_title"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/tv_order" />
+        app:layout_constraintTop_toTopOf="@+id/tv_title" />
 
     <TextView
         android:id="@+id/tv_car_num"
@@ -43,9 +43,9 @@
         android:text="订单号："
         android:textColor="@color/color_title_dark"
         android:textSize="@dimen/text_small_14"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_order"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_title"
         app:layout_constraintStart_toEndOf="@+id/tv_identity"
-        app:layout_constraintTop_toTopOf="@+id/tv_order" />
+        app:layout_constraintTop_toTopOf="@+id/tv_title" />
 
     <TextView
         android:id="@+id/tv_order"
@@ -66,9 +66,9 @@
         android:layout_marginEnd="@dimen/app_gap"
         android:textSize="@dimen/text_small_14"
         android:textColor="@color/color_order_color"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_order"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_order" />
+        app:layout_constraintTop_toTopOf="@+id/tv_title" />
 
     <TextView
         android:id="@+id/line_top"
@@ -78,7 +78,7 @@
         android:background="@color/color_line_eeeeee"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_order" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
     <ImageView
         android:id="@+id/imageView"

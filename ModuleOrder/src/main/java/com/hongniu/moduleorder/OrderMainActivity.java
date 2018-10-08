@@ -235,13 +235,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                 guideTitle.showGuide();
             }
         });
-
-        //检查版本更新
-        if (!Param.isDebug) {
-            checkVersion();
-        }
-
-
+        checkVersion();
     }
 
     /**

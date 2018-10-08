@@ -1,5 +1,7 @@
 package com.hongniu.modulefinance.ui.fragment;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -10,8 +12,10 @@ import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.modulefinance.R;
 import com.hongniu.modulefinance.entity.BalanceOfAccountBean;
+import com.hongniu.modulefinance.entity.NiuOfAccountBean;
 import com.hongniu.modulefinance.net.HttpFinanceFactory;
 import com.hongniu.modulefinance.ui.adapter.BalanceOfAccountAdapter;
+import com.hongniu.modulefinance.ui.adapter.NiuOfAccountAdapter;
 import com.sang.common.recycleview.adapter.XAdapter;
 
 import java.util.List;
@@ -20,15 +24,22 @@ import io.reactivex.Observable;
 
 /**
  * 作者： ${PING} on 2018/10/8.
- *  1余额明细 2待入账明细
+ * 牛币相关，待入账，已入账等
+ *  1 待入账 2已入账
+ *
  */
-@Route(path = ArouterParamsFinance.fragment_finance_wallet)
-public class FinanceWalletFragment extends RefrushFragmet<BalanceOfAccountBean>{
+@Route(path = ArouterParamsFinance.fragment_finance_niu)
+public class FinanceNiuFragment extends RefrushFragmet<NiuOfAccountBean>{
 
     @Override
     protected View initView(LayoutInflater inflater) {
         View inflate = inflater.inflate(R.layout.fragment_finance_wallet, null);
         return inflate;
+    }
+
+    @Override
+    public void setArguments(@Nullable Bundle args) {
+        super.setArguments(args);
     }
 
     @Override
@@ -38,12 +49,12 @@ public class FinanceWalletFragment extends RefrushFragmet<BalanceOfAccountBean>{
     }
 
     @Override
-    protected Observable<CommonBean<PageBean<BalanceOfAccountBean>>> getListDatas() {
-        return HttpFinanceFactory.gueryBananceOfAccount();
+    protected Observable<CommonBean<PageBean<NiuOfAccountBean>>> getListDatas() {
+        return HttpFinanceFactory.gueryNiuList();
     }
 
     @Override
-    protected XAdapter<BalanceOfAccountBean> getAdapter(List<BalanceOfAccountBean> datas) {
-        return new BalanceOfAccountAdapter(getContext(),datas);
+    protected XAdapter<NiuOfAccountBean> getAdapter(List<NiuOfAccountBean> datas) {
+        return new NiuOfAccountAdapter(getContext(),datas);
     }
 }

@@ -10,8 +10,7 @@
     <include
         android:id="@+id/tool"
         layout="@layout/toolbar"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -42,7 +41,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingLeft="26dp"
-            android:text="￥1000.2"
+            android:text="￥0"
             android:textColor="@color/color_white"
             android:textSize="36sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -56,7 +55,7 @@
             android:paddingBottom="18dp"
             android:paddingLeft="26dp"
             android:paddingTop="@dimen/app_item_gap"
-            android:text="（您有300元待入账）"
+            android:text="（您有0元待入账）"
             android:textColor="@color/color_white"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -103,7 +102,6 @@
             android:layout_marginRight="@dimen/app_item_gap"
             android:layout_weight="1"
             android:maxLines="1"
-            android:text="@string/order_pay_offline"
             android:textColor="@color/color_title_dark"
             android:textSize="@dimen/text_small" />
 
@@ -112,7 +110,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxLines="1"
-            android:text="@string/save"
+            android:text="0牛币待入账"
             android:textColor="@color/color_content_light"
             android:textSize="@dimen/text_small" />
 
@@ -126,40 +124,22 @@
 
     <RadioGroup
         android:id="@+id/rg"
-        android:background="@color/color_white"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
+        style="@style/RadioGroup"
         android:layout_marginBottom="@dimen/app_gap"
         android:layout_marginTop="@dimen/app_model_gap"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/app_gap"
-        android:paddingRight="@dimen/app_gap"
-
         app:layout_constraintTop_toBottomOf="@id/ll_niu">
 
         <RadioButton
             android:id="@+id/rb_left"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/select_line_eee_ddd"
-            android:button="@null"
-            android:gravity="center"
-            android:text="运费"
-            android:textColor="@drawable/selector_color_999_333"
-            android:textSize="14sp" />
+            style="@style/RadioButton"
+            android:text="余额明细"
+             />
 
         <RadioButton
             android:id="@+id/rb_right"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/select_line_eee_ddd"
-            android:button="@null"
-            android:gravity="center"
-            android:text="保费"
-            android:textColor="@drawable/selector_color_999_333"
-            android:textSize="14sp" />
+            style="@style/RadioButton"
+            android:text="待入账明细"
+            />
 
     </RadioGroup>
 
