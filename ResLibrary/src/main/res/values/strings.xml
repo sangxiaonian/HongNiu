@@ -95,5 +95,10 @@
     <string name="carnum_error">车牌号错误</string>
     <string name="order_map_search_error">抱歉，没有搜索到结果，请换个关键词试试</string>
 
+    <!--我的钱包-->
+    <string name="wallet_title">我的钱包</string>
+    <string name="wallet_balance_of_account">账户余额(元)</string>
+    <string name="money_symbol">￥</string>
+
 
 </resources>

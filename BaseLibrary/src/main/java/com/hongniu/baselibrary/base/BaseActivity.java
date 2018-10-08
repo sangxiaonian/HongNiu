@@ -156,6 +156,10 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
             tvToolbarTitle.setText(title);
         }
 
+        if (tvToolbarRight!=null){
+            tvToolbarRight.setTextColor(Color.WHITE);
+        }
+
         StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.color_title_dark), false);
 
 

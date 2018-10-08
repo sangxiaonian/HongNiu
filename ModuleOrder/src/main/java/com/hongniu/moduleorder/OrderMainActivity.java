@@ -237,7 +237,9 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
         });
 
         //检查版本更新
-        checkVersion();
+        if (!Param.isDebug) {
+            checkVersion();
+        }
 
 
     }
@@ -563,7 +565,8 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
         int i = v.getId();
         if (i == R.id.src_finance) {
 
-            ArouterUtils.getInstance().builder(ArouterParamsFinance.activity_finance_activity).navigation(mContext);
+//            ArouterUtils.getInstance().builder(ArouterParamsFinance.activity_finance_activity).navigation(mContext);
+            ArouterUtils.getInstance().builder(ArouterParamsFinance.activity_finance_wallet).navigation(mContext);
         } else if (i == R.id.src_me) {
             drawerLayout.openDrawer(Gravity.START);
         } else if (i == R.id.ll_order) {

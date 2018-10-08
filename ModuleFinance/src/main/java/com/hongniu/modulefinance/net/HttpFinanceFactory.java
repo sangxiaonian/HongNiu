@@ -4,10 +4,13 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
+import com.hongniu.modulefinance.entity.BalanceOfAccountBean;
 import com.hongniu.modulefinance.entity.FinanceOrderBean;
 import com.hongniu.modulefinance.entity.QueryExpendBean;
 import com.hongniu.modulefinance.entity.QueryExpendResultBean;
 import com.sang.common.net.rx.RxUtils;
+import com.sang.common.recycleview.holder.BaseHolder;
+import com.sang.common.utils.ConvertUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,4 +81,29 @@ public class HttpFinanceFactory {
                 ;
     }
 
+    /**
+     * 余额明细
+     */
+    public static Observable<CommonBean<PageBean<BalanceOfAccountBean>>> gueryBananceOfAccount() {
+        return Observable.just(1)
+                .map(new Function<Integer, CommonBean<PageBean<BalanceOfAccountBean>>>() {
+                    @Override
+                    public CommonBean<PageBean<BalanceOfAccountBean>> apply(Integer integer) throws Exception {
+
+                        CommonBean<PageBean<BalanceOfAccountBean>> bean = new CommonBean<>();
+                        bean.setCode(200);
+
+                        PageBean<BalanceOfAccountBean> pageBean = new PageBean<>();
+                        ArrayList<BalanceOfAccountBean> balanceOfAccountBeans = new ArrayList<>();
+                        int random = ConvertUtils.getRandom(19, 21);
+                        for (int i = 0; i < random; i++) {
+                            balanceOfAccountBeans.add(new BalanceOfAccountBean());
+                        }
+                        pageBean.setList(balanceOfAccountBeans);
+                        bean.setData(pageBean);
+
+                        return bean;
+                    }
+                });
+    }
 }

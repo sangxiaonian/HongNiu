@@ -19,6 +19,15 @@ public class ArouterParamsFinance {
      * 财务收入支出数据
      */
     public final static String fragment_finance_order = "/finance/fragment_finance_order";
+ /**
+     * 我的钱包页面
+     */
+    public final static String activity_finance_wallet = "/finance/activity_finance_wallet";
+
+    /**
+     * 余额明细、待入账明细等
+     */
+    public final static String fragment_finance_wallet = "/finance/fragment_finance_wallet";
 
 
 }
