@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
+import java.util.Collection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -64,11 +65,12 @@ public class CommonUtils {
 
     /**
      * 是否是邮箱
+     *
      * @param email
      * @return
      */
     public static boolean isEmail(String email) {
-        String regist="^([a-zA-Z0-9]+[_|\\_|\\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\\_|\\.]?)*[a-zA-Z0-9]+\\.[a-zA-Z]{2,3}$";
+        String regist = "^([a-zA-Z0-9]+[_|\\_|\\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\\_|\\.]?)*[a-zA-Z0-9]+\\.[a-zA-Z]{2,3}$";
         Matcher p = Pattern.compile(regist).matcher(email);
         return p.matches();
     }
@@ -89,16 +91,14 @@ public class CommonUtils {
                 intent.setPackage(marketPkg);
             }
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-           context.startActivity(intent);
+            context.startActivity(intent);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-     /**
+    /**
      * 启动到应用商店app详情界面
-     *
-     *
      */
     public static void launchAppDetail(Context context) {
         //华为
@@ -107,15 +107,15 @@ public class CommonUtils {
         boolean oppo = DeviceUtils.getDeviceBrand().equalsIgnoreCase("OPPO");
         boolean vivo = DeviceUtils.getDeviceBrand().equalsIgnoreCase("vivo");
         boolean xiaomi = DeviceUtils.getDeviceBrand().equalsIgnoreCase("Xiaomi");
-        String pkg="com.tencent.android.qqdownloader";
-        if (honor||huawei||oppo||vivo||xiaomi){
-            pkg="";
+        String pkg = "com.tencent.android.qqdownloader";
+        if (honor || huawei || oppo || vivo || xiaomi) {
+            pkg = "";
         }
         //如果安装了应用宝
-        if (TextUtils.isEmpty(pkg)||DeviceUtils.isPkgInstalled(context, pkg)){
-            launchAppDetail(context,pkg);
-        }else {//没有应用市场，浏览器跳转
-            Uri uri = Uri.parse("http://a.app.qq.com/o/simple.jsp?pkgname="+context.getApplicationInfo().packageName);
+        if (TextUtils.isEmpty(pkg) || DeviceUtils.isPkgInstalled(context, pkg)) {
+            launchAppDetail(context, pkg);
+        } else {//没有应用市场，浏览器跳转
+            Uri uri = Uri.parse("http://a.app.qq.com/o/simple.jsp?pkgname=" + context.getApplicationInfo().packageName);
             Intent it = new Intent(Intent.ACTION_VIEW, uri);
             context.startActivity(it);
         }
@@ -123,4 +123,14 @@ public class CommonUtils {
 
     }
 
+    /**
+     * 判断集合是否为空
+     * @param datas
+     * @return 如果集合为null 或 size==0 true ，否则为false
+     */
+    public static boolean isEmptyCollection(Collection<?> datas){
+        return datas==null||datas.isEmpty();
     }
+
+
+}

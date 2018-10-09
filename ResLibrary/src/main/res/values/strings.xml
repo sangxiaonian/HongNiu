@@ -111,6 +111,6 @@
     <string name="wallet_balance_withdrawal">提现金额</string>
     <string name="wallet_balance_withdrawal_all">全部提现</string>
     <string name="wallet_balance_withdrawal_title">账户提现</string>
-    <string name="wallet_balance_account_num">账户余额 %1$s</string>
+    <string name="wallet_balance_account_num">账户余额￥ %1$s</string>
 
 </resources>

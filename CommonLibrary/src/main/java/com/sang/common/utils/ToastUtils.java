@@ -32,7 +32,7 @@ public class ToastUtils implements IToast {
         toastSuccess = new ToastSuccess(context);
         toastCenter = new ToastCenter(context);
         toastNormal = new ToastNormal(context);
-        toast=toastNormal;
+        toast = toastNormal;
     }
 
 

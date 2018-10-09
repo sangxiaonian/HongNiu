@@ -9,11 +9,11 @@
         <activity
             android:name=".ui.FinanceSearchActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.FinanceWalletActivity" />
-        <activity android:name=".ui.FinanceNiuActivity" />
-        <activity android:name=".ui.FinanceCarOrderDetailActivity" />
-        <activity android:name=".ui.FinanceBalanceActivity" />
-        <activity android:name=".ui.FinanceBalanceWithDrawalActivity"></activity>
+        <activity android:name=".ui.FinanceWalletActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ui.FinanceNiuActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ui.FinanceCarOrderDetailActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.FinanceBalanceActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.FinanceBalanceWithDrawalActivity" android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

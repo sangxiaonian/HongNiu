@@ -8,15 +8,22 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.FinanceActivity">
+        <activity android:name=".ui.FinanceWalletActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.FinanceSearchActivity"/>
 
+        <activity
+            android:name=".ui.FinanceSearchActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.FinanceActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ui.FinanceNiuActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ui.FinanceCarOrderDetailActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.FinanceBalanceActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.FinanceBalanceWithDrawalActivity" android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
