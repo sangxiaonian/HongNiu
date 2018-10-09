@@ -11,7 +11,9 @@
             android:screenOrientation="portrait" />
         <activity android:name=".ui.FinanceWalletActivity" />
         <activity android:name=".ui.FinanceNiuActivity" />
-        <activity android:name=".ui.FinanceCarOrderDetailActivity"></activity>
+        <activity android:name=".ui.FinanceCarOrderDetailActivity" />
+        <activity android:name=".ui.FinanceBalanceActivity" />
+        <activity android:name=".ui.FinanceBalanceWithDrawalActivity"></activity>
     </application>
 
 </manifest>

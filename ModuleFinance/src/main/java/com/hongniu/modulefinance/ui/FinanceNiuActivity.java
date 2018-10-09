@@ -55,8 +55,8 @@ public class FinanceNiuActivity extends BaseActivity implements RadioGroup.OnChe
     @Override
     protected void initData() {
         super.initData();
-        tvNiu.setText(String.format(getResources().getString(R.string.wallet_niu_of_account), 0));
-        tvNiuUnEntry.setText(String.format(getResources().getString(R.string.wallet_niu_unentry_count), 0));
+        tvNiu.setText(String.format(getResources().getString(R.string.wallet_niu_of_account), "120"));
+        tvNiuUnEntry.setText(String.format(getResources().getString(R.string.wallet_niu_unentry_count), "30"));
     }
 
     @Override

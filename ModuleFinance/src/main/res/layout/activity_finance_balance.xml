@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_bg_dark"
+    tools:context=".ui.FinanceBalanceActivity">
+
+    <include
+        android:id="@+id/tool"
+        layout="@layout/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_balance_withdrawal"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:background="@color/color_light_light"
+        android:gravity="center"
+        android:text="@string/wallet_balance_wait_entry"
+        android:textColor="@color/color_light"
+        android:textSize="@dimen/text_small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tool" />
+
+    <TextView
+        android:id="@+id/tv_balance_des"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:text="@string/wallet_balance_can_withdrawal_des"
+        android:textColor="@color/color_title_dark"
+        android:textSize="@dimen/text_small_16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_balance_withdrawal" />
+
+
+    <TextView
+        android:id="@+id/tv_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/app_item_gap"
+        android:text="0.00"
+        android:textColor="@color/color_title_dark"
+        android:textSize="45sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_balance_des" />
+
+    <Button
+        style="@style/bt_sum"
+        android:id="@+id/bt_sum"
+        android:layout_marginTop="125dp"
+        android:text="@string/wallet_withdrawal"
+        app:layout_constraintTop_toBottomOf="@id/tv_balance" />
+</android.support.constraint.ConstraintLayout>

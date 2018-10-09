@@ -104,6 +104,13 @@
     <string name="wallet_niu_of_account">%1$s 个</string>
     <string name="wallet_niu_unentry_count">您有 %1$s 个牛币待入账</string>
 
-
+    <string name="wallet_balance_account">账户余额</string>
+    <string name="wallet_balance_wait_entry">您有 %1$s 元入账后可提现</string>
+    <string name="wallet_balance_can_withdrawal_des">可提现余额</string>
+    <string name="wallet_withdrawal">提现</string>
+    <string name="wallet_balance_withdrawal">提现金额</string>
+    <string name="wallet_balance_withdrawal_all">全部提现</string>
+    <string name="wallet_balance_withdrawal_title">账户提现</string>
+    <string name="wallet_balance_account_num">账户余额 %1$s</string>
 
 </resources>

@@ -116,13 +116,9 @@ public class FinanceWalletActivity extends BaseActivity implements FinanceWallet
     @Override
     public void onClick(View v) {
         int i = v.getId();
-
         if (i == R.id.con_balance) {
-            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("账户余额");
-
-
+            ArouterUtils.getInstance().builder(ArouterParamsFinance.activity_finance_balance).navigation(this);
         } else if (i == R.id.ll_niu) {
-
             ArouterUtils.getInstance().builder(ArouterParamsFinance.activity_finance_niu).navigation(this);
         }
     }

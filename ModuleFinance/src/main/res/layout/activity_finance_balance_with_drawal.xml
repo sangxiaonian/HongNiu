@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_bg_dark"
+    tools:context=".ui.FinanceBalanceWithDrawalActivity">
+
+    <include
+        android:id="@+id/tool"
+        layout="@layout/toolbar"
+        app:layout_constraintBottom_toTopOf="@+id/con_pay_way"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/con_pay_way"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/app_model_gap"
+        android:background="@color/color_white"
+        android:paddingBottom="@dimen/app_model_gap"
+        android:paddingLeft="@dimen/app_gap"
+        android:paddingRight="@dimen/app_gap"
+        android:paddingTop="@dimen/app_model_gap"
+        app:layout_constraintBottom_toTopOf="@+id/con_withdrawal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tool">
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/icon_ylzf_40"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_pay_way"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_pay_way"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/app_model_gap"
+            android:textColor="@color/color_title_dark"
+            android:textSize="@dimen/text_small_14"
+            app:layout_constraintStart_toEndOf="@+id/img"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_pay_account"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_item_gap"
+            android:textColor="@color/color_content_light"
+            android:textSize="@dimen/text_min_12sp"
+            app:layout_constraintStart_toStartOf="@id/tv_pay_way"
+            app:layout_constraintTop_toBottomOf="@id/tv_pay_way" />
+
+        <ImageView
+            android:layout_width="@dimen/img_go_size"
+            android:layout_height="@dimen/img_go_size"
+            android:layout_marginRight="@dimen/app_gap"
+            android:src="@mipmap/icon_gary_arrowmore_20"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/con_withdrawal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/app_model_gap"
+        android:background="@color/color_white"
+        android:paddingBottom="35dp"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+
+        android:paddingTop="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/con_pay_way">
+
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/wallet_balance_withdrawal"
+            android:textColor="@color/color_title_dark"
+            android:textSize="@dimen/text_small" />
+
+        <TextView
+            android:id="@+id/tv_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/money_symbol"
+            android:textColor="@color/color_title_dark"
+            android:textSize="45sp"
+            app:layout_constraintBottom_toBottomOf="@+id/et_balance"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv" />
+
+        <EditText
+            android:id="@+id/et_balance"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_model_gap"
+            android:background="@color/color_tran"
+            android:inputType="numberDecimal"
+            android:textColor="@color/color_title_dark"
+            android:textSize="45sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_unit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_unit"
+            app:layout_constraintTop_toBottomOf="@id/tv" />
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="@dimen/app_gap"
+            android:background="@color/color_line"
+            app:layout_constraintTop_toBottomOf="@id/et_balance" />
+
+        <TextView
+            android:id="@+id/tv_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="账户余额￥ 0 "
+            android:textColor="@color/color_order_color_6d6d6d"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/line" />
+
+        <TextView
+            android:id="@+id/tv_withdrawal_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/app_model_gap"
+            android:text="@string/wallet_balance_withdrawal_all"
+            android:textColor="@color/color_light"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintStart_toEndOf="@id/tv_balance"
+            app:layout_constraintTop_toTopOf="@id/tv_balance" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <Button
+        android:enabled="false"
+        style="@style/bt_sum"
+        android:id="@+id/bt_sum"
+        android:layout_marginTop="@dimen/app_gap"
+        app:layout_constraintTop_toBottomOf="@id/con_withdrawal"
+        android:text="立刻提现" />
+
+</android.support.constraint.ConstraintLayout>
