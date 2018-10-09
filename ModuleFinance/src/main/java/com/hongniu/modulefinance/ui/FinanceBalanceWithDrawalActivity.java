@@ -16,10 +16,13 @@ import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.NetObserver;
+import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.net.HttpAppFactory;
+import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.modulefinance.R;
 import com.hongniu.modulefinance.entity.AccountInforBean;
 import com.hongniu.modulefinance.widget.AccountDialog;
-import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.dialog.PasswordDialog;
 import com.sang.common.widget.dialog.inter.DialogControl;
@@ -67,7 +70,7 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
         btSum = findViewById(R.id.bt_sum);
         conPay = findViewById(R.id.con_pay_way);
         accountDialog = new AccountDialog(this);
-        passwordDialog=new PasswordDialog(this);
+        passwordDialog = new PasswordDialog(this);
     }
 
 
@@ -101,7 +104,7 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.bt_sum) {
-            passwordDialog.setCount(withdrawal+"");
+            passwordDialog.setCount(withdrawal + "");
             passwordDialog.show();
         } else if (i == R.id.tv_withdrawal_all) {
             etBalance.setText(withdrawal + "");
@@ -147,6 +150,7 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
 
     /**
      * 取消支付
+     *
      * @param dialog
      */
     @Override
@@ -163,17 +167,29 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
      */
     @Override
     public void onInputPassWordSuccess(DialogControl.IDialog dialog, String passWord) {
-            dialog.dismiss();
-            ToastUtils.getInstance().show("提现成功");
+        dialog.dismiss();
+        ToastUtils.getInstance().show("提现成功");
 
     }
 
     /**
      * 忘记密码
+     *
      * @param dialog
      */
     @Override
     public void onForgetPassowrd(DialogControl.IDialog dialog) {
-        ToastUtils.getInstance().show("忘记密码");
+        HttpAppFactory.getSmsCode(Utils.getLoginInfor().getMobile())
+                .subscribe(new NetObserver<String>(this) {
+                    @Override
+                    public void doOnSuccess(String data) {
+                        ArouterUtils.getInstance()
+                                .builder(ArouterParamLogin.activity_sms_verify)
+                                .withInt(Param.VERTYPE,1)
+                                .withString(Param.TRAN, Utils.getLoginInfor().getMobile())
+                                .navigation(mContext);
+                    }
+                });
+
     }
 }

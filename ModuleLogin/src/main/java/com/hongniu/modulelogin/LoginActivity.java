@@ -18,6 +18,7 @@ import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.SharedPreferencesUtils;
@@ -105,7 +106,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         if (i == R.id.bt_login) {
             final String phone = etPhone.getText().toString().trim();
             if (CommonUtils.isPhone(phone)) {
-                HttpLoginFactory.getSmsCode(phone)
+                HttpAppFactory.getSmsCode(phone)
                         .subscribe(new NetObserver<String>(this) {
                             @Override
                             public void doOnSuccess(String data) {

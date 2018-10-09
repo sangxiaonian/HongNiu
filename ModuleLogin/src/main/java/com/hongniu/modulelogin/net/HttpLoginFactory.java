@@ -26,20 +26,7 @@ import okhttp3.ResponseBody;
 public class HttpLoginFactory {
 
 
-    /**
-     * 登录时候获取验证码
-     *
-     * @param mobile 手机号
-     */
-    public static Observable<CommonBean<String>> getSmsCode(String mobile) {
-        LoginSMSParams params = new LoginSMSParams();
-        params.setMobile(mobile);
-        params.setCode(ConvertUtils.MD5(mobile, Param.key));
-        return LoginClient.getInstance().getLoginService()
-                .getSmsCode(params)
-                .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer())
-                ;
-    }
+
 
     /**
      * 使用验证码登录
