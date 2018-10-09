@@ -7,6 +7,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Build;
+import android.os.IBinder;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -164,10 +165,19 @@ public class DeviceUtils {
         }
     }
 
+    /**
+     * 如果此方法失效，在xml文件中加入
+     * android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
+     * @param etCenter
+     */
     public static void hideSoft(View etCenter) {
-        if (etCenter != null) {
-            InputMethodManager inputMethodManager = (InputMethodManager) etCenter.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(etCenter.getWindowToken(), 0);
+
+        if (etCenter!=null) {
+            IBinder token = etCenter.getWindowToken();
+            InputMethodManager inputMethodManager = (InputMethodManager) etCenter.getContext()
+                    .getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(token,
+                    InputMethodManager.HIDE_IMPLICIT_ONLY);
         }
     }
 

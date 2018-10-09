@@ -19,7 +19,9 @@ import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.modulefinance.R;
 import com.hongniu.modulefinance.entity.AccountInforBean;
 import com.hongniu.modulefinance.widget.AccountDialog;
+import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.ToastUtils;
+import com.sang.common.widget.dialog.PasswordDialog;
 import com.sang.common.widget.dialog.inter.DialogControl;
 
 import java.util.ArrayList;
@@ -29,7 +31,7 @@ import java.util.List;
  * 余额提现界面
  */
 @Route(path = ArouterParamsFinance.activity_finance_balance_with_drawal)
-public class FinanceBalanceWithDrawalActivity extends BaseActivity implements View.OnClickListener, TextWatcher, AccountDialog.OnDialogClickListener {
+public class FinanceBalanceWithDrawalActivity extends BaseActivity implements View.OnClickListener, TextWatcher, AccountDialog.OnDialogClickListener, PasswordDialog.OnPasswordDialogListener {
 
     private ImageView imgPayIcon;
     private TextView tvPayWay;
@@ -40,7 +42,8 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
     private Button btSum;
     private ConstraintLayout conPay;
     private float withdrawal;//提现金额
-AccountDialog accountDialog;
+    AccountDialog accountDialog;
+    PasswordDialog passwordDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +53,6 @@ AccountDialog accountDialog;
         initView();
         initData();
         initListener();
-
     }
 
     @Override
@@ -64,18 +66,19 @@ AccountDialog accountDialog;
         etBalance = findViewById(R.id.et_balance);
         btSum = findViewById(R.id.bt_sum);
         conPay = findViewById(R.id.con_pay_way);
-        accountDialog=new AccountDialog(this);
+        accountDialog = new AccountDialog(this);
+        passwordDialog=new PasswordDialog(this);
     }
 
 
     @Override
     protected void initData() {
         super.initData();
-        withdrawal=1500.25f;
+        withdrawal = 1500.25f;
         imgPayIcon.setImageResource(R.mipmap.icon_ylzf_40);
         tvPayWay.setText("中国工商银行");
         tvPayAccount.setText("尾号 4889 储蓄卡");
-        tvWithDrawale.setText(String.format(getString(R.string.wallet_balance_account_num), withdrawal+""));
+        tvWithDrawale.setText(String.format(getString(R.string.wallet_balance_account_num), withdrawal + ""));
     }
 
     @Override
@@ -86,6 +89,7 @@ AccountDialog accountDialog;
         etBalance.addTextChangedListener(this);
         conPay.setOnClickListener(this);
         accountDialog.setListener(this);
+        passwordDialog.setListener(this);
     }
 
     /**
@@ -97,15 +101,14 @@ AccountDialog accountDialog;
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.bt_sum) {
-            ToastUtils.getInstance().show("立即提现");
-
+            passwordDialog.setCount(withdrawal+"");
+            passwordDialog.show();
         } else if (i == R.id.tv_withdrawal_all) {
-            etBalance.setText(withdrawal+"");
+            etBalance.setText(withdrawal + "");
             etBalance.setSelection(etBalance.getText().toString().length());
 
-        }else if (i==R.id.con_pay_way){//选择支付方式
-            ToastUtils.getInstance().show("选择支付方式");
-            List<AccountInforBean> datas=new ArrayList<>();
+        } else if (i == R.id.con_pay_way) {//选择支付方式
+            List<AccountInforBean> datas = new ArrayList<>();
             datas.add(new AccountInforBean());
             datas.add(new AccountInforBean());
             datas.add(new AccountInforBean());
@@ -140,5 +143,37 @@ AccountDialog accountDialog;
     @Override
     public void onAddClick(DialogControl.IDialog dialog) {
         ArouterUtils.getInstance().builder(ArouterParamLogin.activity_pay_ways).navigation(this);
+    }
+
+    /**
+     * 取消支付
+     * @param dialog
+     */
+    @Override
+    public void onCancle(DialogControl.IDialog dialog) {
+        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("取消支付");
+        dialog.dismiss();
+    }
+
+    /**
+     * 密码输入完成
+     *
+     * @param dialog
+     * @param passWord
+     */
+    @Override
+    public void onInputPassWordSuccess(DialogControl.IDialog dialog, String passWord) {
+            dialog.dismiss();
+            ToastUtils.getInstance().show("提现成功");
+
+    }
+
+    /**
+     * 忘记密码
+     * @param dialog
+     */
+    @Override
+    public void onForgetPassowrd(DialogControl.IDialog dialog) {
+        ToastUtils.getInstance().show("忘记密码");
     }
 }
