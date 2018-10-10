@@ -179,17 +179,22 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
      */
     @Override
     public void onForgetPassowrd(DialogControl.IDialog dialog) {
-        HttpAppFactory.getSmsCode(Utils.getLoginInfor().getMobile())
-                .subscribe(new NetObserver<String>(this) {
-                    @Override
-                    public void doOnSuccess(String data) {
-                        ArouterUtils.getInstance()
-                                .builder(ArouterParamLogin.activity_sms_verify)
-                                .withInt(Param.VERTYPE,1)
-                                .withString(Param.TRAN, Utils.getLoginInfor().getMobile())
-                                .navigation(mContext);
-                    }
-                });
+        ArouterUtils.getInstance()
+                .builder(ArouterParamLogin.activity_sms_verify)
+                .withInt(Param.VERTYPE,1)
+                .withString(Param.TRAN, Utils.getLoginInfor().getMobile())
+                .navigation(mContext);
+//        HttpAppFactory.getSmsCode(Utils.getLoginInfor().getMobile())
+//                .subscribe(new NetObserver<String>(this) {
+//                    @Override
+//                    public void doOnSuccess(String data) {
+//                        ArouterUtils.getInstance()
+//                                .builder(ArouterParamLogin.activity_sms_verify)
+//                                .withInt(Param.VERTYPE,1)
+//                                .withString(Param.TRAN, Utils.getLoginInfor().getMobile())
+//                                .navigation(mContext);
+//                    }
+//                });
 
     }
 }
