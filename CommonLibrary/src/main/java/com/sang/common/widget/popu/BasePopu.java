@@ -32,8 +32,8 @@ public class BasePopu {
         pop.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-                if (dismissListener!=null){
-                    dismissListener.onPopuDismsss(BasePopu.this,tragetView);
+                if (dismissListener != null) {
+                    dismissListener.onPopuDismsss(BasePopu.this, tragetView);
                 }
             }
         });

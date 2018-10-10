@@ -3,7 +3,6 @@ package com.hongniu.moduleorder;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -62,9 +61,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
-
 /**
  * 订单中心主页
  */
@@ -97,7 +93,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
 
     private TextView tvName, tvPhone;
     private LoactionUpUtils upLoactionUtils;//上传位置信息
-    private int position=1;
+    private int position = 1;
 
 
     @Override
@@ -122,6 +118,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                     public void doOnSuccess(RoleTypeBean data) {
                         EventBus.getDefault().postSticky(data);
                     }
+
                     @Override
                     public void onError(Throwable e) {
                         super.onError(e);
@@ -133,8 +130,6 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                         super.onComplete();
                     }
                 });
-
-
 
 
     }
@@ -197,7 +192,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
             public void onClick(View v) {
                 ArouterUtils.getInstance()
                         .builder(ArouterParamOrder.activity_order_search)
-                        .withInt(Param.TRAN,position)
+                        .withInt(Param.TRAN, position)
                         .navigation(mContext);
 
             }
@@ -261,7 +256,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                     @Override
                     public void doOnSuccess(VersionBean data) {
                         try {
-                            if (data != null && !data.getVersionCode().equals(DeviceUtils.getVersionName(mContext)) ) {
+                            if (data != null && !data.getVersionCode().equals(DeviceUtils.getVersionName(mContext))) {
                                 showUpAleart(data.getVersionName());
                             }
                         } catch (Exception e) {
@@ -311,7 +306,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     @Override
     protected void onResume() {
         super.onResume();
-        if (loaction!=null){
+        if (loaction != null) {
             loaction.showFront(false);
         }
     }
@@ -320,8 +315,6 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     protected void onStop() {
         super.onStop();
     }
-
-
 
 
     @Override
@@ -366,9 +359,9 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                 PermissionUtils.applyMap(this, new PermissionUtils.onApplyPermission() {
                     @Override
                     public void hasPermission(List<String> granted, boolean isAll) {
-                        if (TextUtils.isEmpty(event.cardID)){
+                        if (TextUtils.isEmpty(event.cardID)) {
                             loaction.setInterval(1000);
-                        }else {
+                        } else {
                             loaction.startLoaction();
                         }
                         //首次创建位置信息收集数据
@@ -390,6 +383,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                             JLog.i("更新位置信息收集器");
                         }
                     }
+
                     @Override
                     public void noPermission(List<String> denied, boolean quick) {
                     }
@@ -411,14 +405,11 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onInBackgrond(final Event.OnBackground event) {
         if (event != null) {
-            if (loaction!=null){
+            if (loaction != null) {
                 loaction.showFront(DeviceUtils.isBackGround(mContext));
             }
         }
     }
-
-
-
 
 
     @Override
@@ -483,7 +474,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
      * @param position
      */
     private void changeStaff(int position) {
-        this.position=position;
+        this.position = position;
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         if (currentFragmeng != null) {
             fragmentTransaction.hide(currentFragmeng);

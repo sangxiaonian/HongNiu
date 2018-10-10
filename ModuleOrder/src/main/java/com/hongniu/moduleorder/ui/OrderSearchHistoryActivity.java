@@ -1,6 +1,5 @@
 package com.hongniu.moduleorder.ui;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -88,7 +87,7 @@ public class OrderSearchHistoryActivity extends RefrushActivity<OrderSearchBean>
         rolas.add("车主");
         rolas.add("司机");
 
-        switchView.setTitle(rolas.get(position-1));
+        switchView.setTitle(rolas.get(position - 1));
 
         pop.setSelectPosition(position - 1);
         pop.upDatas(rolas);
@@ -181,9 +180,9 @@ public class OrderSearchHistoryActivity extends RefrushActivity<OrderSearchBean>
 
     @Override
     public void onBackPressed() {
-        if (pop.isShow()){
+        if (pop.isShow()) {
             pop.dismiss();
-        }else {
+        } else {
             super.onBackPressed();
         }
     }

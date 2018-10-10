@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,8 +45,8 @@ public class OrderSearchPop<T> extends BasePopu {
         pop.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-                if (dismissListener!=null){
-                    dismissListener.onPopuDismsss(OrderSearchPop.this,tragetView);
+                if (dismissListener != null) {
+                    dismissListener.onPopuDismsss(OrderSearchPop.this, tragetView);
                 }
             }
         });
