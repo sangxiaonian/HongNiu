@@ -1,7 +1,6 @@
 package com.sang.common.widget;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -18,7 +17,6 @@ import android.widget.LinearLayout;
 
 import com.sang.common.R;
 import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.JLog;
 
 /**
  * 作者： ${PING} on 2018/1/12.
@@ -33,6 +31,8 @@ public class VericationView extends LinearLayout implements TextWatcher, View.On
     private int childLayout;
     private OnCompleteListener listener;
     private int type;
+
+    private OnContentChangeListener onChangeListener;
 
     public VericationView(Context context) {
         super(context);
@@ -80,6 +80,10 @@ public class VericationView extends LinearLayout implements TextWatcher, View.On
     public void setListener(OnCompleteListener listener) {
         this.listener = listener;
         requestLayout();
+    }
+
+    public void setOnChangeListener(OnContentChangeListener onChangeListener) {
+        this.onChangeListener = onChangeListener;
     }
 
     /**
@@ -201,14 +205,31 @@ public class VericationView extends LinearLayout implements TextWatcher, View.On
             } else {
                 stringBuilder.append(content);
             }
-
         }
+
+        if (onChangeListener != null) {
+            onChangeListener.onContentChange(mEditCount,stringBuilder.toString());
+        }
+
         if (full) {
             if (listener != null) {
                 listener.onComplete(stringBuilder.toString());
             }
 
         }
+    }
+
+    public String getContent() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (int i = 0; i < mEditCount; i++) {
+            EditText editText = (EditText) getChildAt(i);
+            String content = editText.getText().toString();
+
+            stringBuilder.append(content);
+
+        }
+        return stringBuilder.toString();
     }
 
 
@@ -294,5 +315,14 @@ public class VericationView extends LinearLayout implements TextWatcher, View.On
 
     public interface OnCompleteListener {
         void onComplete(String content);
+    }
+
+    public interface OnContentChangeListener {
+        /**
+         * 验证码输入框内容变化监听
+         * @param mEditCount 验证码总共位数
+         * @param content    已输入的内容
+         */
+        void onContentChange(int mEditCount, String content);
     }
 }

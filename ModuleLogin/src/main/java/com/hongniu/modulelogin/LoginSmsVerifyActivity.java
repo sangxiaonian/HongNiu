@@ -138,7 +138,8 @@ public class LoginSmsVerifyActivity extends BaseActivity implements VericationVi
     public void onComplete(String content) {
 
         if (type==1){//忘记密码
-            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("设置新密码");
+            ArouterUtils.getInstance().builder(ArouterParamLogin.activity_login_password).withInt(Param.TRAN,1).navigation(this);
+            finish();
         }else if (type==0){//登录
             HttpLoginFactory
                     .loginBySms(phone, content)

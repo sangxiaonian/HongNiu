@@ -42,5 +42,9 @@ public class ArouterParamLogin {
      * 绑定银行卡
      */
     public static final String activity_login_add_blank_card = "/login/activity_login_add_blank_card";
+  /**
+     * 修改设置密码界面
+     */
+    public static final String activity_login_password = "/login/activity_login_password";
 
 }

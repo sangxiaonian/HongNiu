@@ -30,7 +30,7 @@
         <activity
             android:name=".ui.LoginAddBlankCardActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.LoginPasswordActivity"></activity>
+        <activity android:name=".ui.LoginPasswordActivity" android:windowSoftInputMode="stateVisible"/>
     </application>
 
 </manifest>
