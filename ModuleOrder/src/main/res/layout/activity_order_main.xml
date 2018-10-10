@@ -3,10 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer"
-    android:background="@color/color_bg_dark"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-   >
+    android:background="@color/color_bg_dark">
 
 
     <RelativeLayout
@@ -17,7 +16,7 @@
         <RelativeLayout
             android:id="@+id/rl_title"
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
+            android:layout_height="45sp"
             android:background="@color/color_bg">
 
             <com.sang.common.widget.SwitchTextLayout
@@ -30,19 +29,28 @@
                 app:openColor="@color/color_title_dark"
                 app:openIcon="@drawable/icon_arrow_down_333"
                 app:title="@string/order_main_title" />
+
+            <ImageView
+                android:id="@+id/img_search"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/app_gap"
+                app:srcCompat="@drawable/icon_search_333333" />
         </RelativeLayout>
 
         <FrameLayout
-            android:layout_below="@id/rl_title"
-            android:layout_width="match_parent"
             android:id="@+id/content"
-            android:layout_height="match_parent"/>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/rl_title" />
 
 
         <LinearLayout
-            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:gravity="center_vertical">
@@ -92,18 +100,18 @@
 
     <LinearLayout
         android:id="@+id/ll_left"
-        android:layout_gravity="start"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="start"
         android:background="@color/color_white"
         android:orientation="vertical"
         android:paddingLeft="30dp">
 
         <TextView
-            android:layout_marginTop="80dp"
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
 
             android:textColor="@color/color_title_dark"
             android:textSize="24sp" />
@@ -187,10 +195,10 @@
                 </LinearLayout>
 
                 <View
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
                     android:layout_width="190dp"
                     android:layout_height="0.5dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
                     android:background="@color/color_line" />
 
                 <LinearLayout

@@ -97,6 +97,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
 
     private TextView tvName, tvPhone;
     private LoactionUpUtils upLoactionUtils;//上传位置信息
+    private int position=1;
 
 
     @Override
@@ -104,6 +105,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_main);
         setToolbarTitle("");
+
         present = new OrderMainPresenter(this);
         initView();
         initData();
@@ -190,6 +192,16 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
         ;
         guideTitle.setNextGuide(guideFinance);
 
+        findViewById(R.id.img_search).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArouterUtils.getInstance()
+                        .builder(ArouterParamOrder.activity_order_search)
+                        .withInt(Param.TRAN,position)
+                        .navigation(mContext);
+
+            }
+        });
 
     }
 
@@ -284,6 +296,8 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
 
         titlePop.setListener(this);
         titlePop.setOnDismissListener(this);
+
+
     }
 
 
@@ -469,6 +483,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
      * @param position
      */
     private void changeStaff(int position) {
+        this.position=position;
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         if (currentFragmeng != null) {
             fragmentTransaction.hide(currentFragmeng);

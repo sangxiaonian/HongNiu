@@ -1,5 +1,6 @@
 package com.sang.common.utils;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
@@ -168,19 +169,26 @@ public class DeviceUtils {
     /**
      * 如果此方法失效，在xml文件中加入
      * android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
-     * @param etCenter
+     *
+     * @param view
      */
-    public static void hideSoft(View etCenter) {
+    public static void hideSoft(View view) {
 
-        if (etCenter!=null) {
-            IBinder token = etCenter.getWindowToken();
-            InputMethodManager inputMethodManager = (InputMethodManager) etCenter.getContext()
-                    .getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(token,
-                    InputMethodManager.HIDE_IMPLICIT_ONLY);
+
+        if (view != null) {
+            InputMethodManager inputmanger = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputmanger.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
 
+    public static void closeSoft(Activity activity){
+        View view = activity .getWindow().peekDecorView();
+        if (view != null) {
+            InputMethodManager inputmanger = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputmanger.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+
+    }
 
     public static boolean softOpen(Context context) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -213,11 +221,12 @@ public class DeviceUtils {
 
     /**
      * 判断是否安装指定报名的App
+     *
      * @param
      * @param pkgName 报名
      * @return
      */
-    public static boolean isPkgInstalled(Context context,String pkgName) {
+    public static boolean isPkgInstalled(Context context, String pkgName) {
         PackageInfo packageInfo = null;
         try {
             packageInfo = context.getPackageManager().getPackageInfo(pkgName, 0);

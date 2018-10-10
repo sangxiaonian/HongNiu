@@ -17,11 +17,13 @@ import com.hongniu.moduleorder.entity.OrderCreatParamBean;
 import com.hongniu.moduleorder.entity.OrderDriverPhoneBean;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
 import com.hongniu.moduleorder.entity.OrderParamBean;
+import com.hongniu.moduleorder.entity.OrderSearchBean;
 import com.hongniu.moduleorder.entity.PathBean;
 import com.hongniu.moduleorder.entity.QueryInsurancePriceBean;
 import com.hongniu.moduleorder.entity.VersionBean;
 import com.sang.common.net.error.NetException;
 import com.sang.common.net.rx.RxUtils;
+import com.sang.common.utils.ConvertUtils;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
 
 import java.util.ArrayList;
@@ -309,4 +311,31 @@ public class HttpOrderFactory {
 
 
     }
+
+    /**
+     * 搜索订单
+     * @return
+     */
+    public static Observable<CommonBean<PageBean<OrderSearchBean>>> searchOrder() {
+            return Observable.just(1)
+                    .map(new Function<Integer, CommonBean<PageBean<OrderSearchBean>>>() {
+                        @Override
+                        public CommonBean<PageBean<OrderSearchBean>> apply(Integer integer) throws Exception {
+
+                            CommonBean<PageBean<OrderSearchBean>> bean = new CommonBean<>();
+                            bean.setCode(200);
+
+                            PageBean<OrderSearchBean> pageBean = new PageBean<>();
+                            ArrayList<OrderSearchBean> balanceOfAccountBeans = new ArrayList<>();
+                            int random = ConvertUtils.getRandom(19, 21);
+                            for (int i = 0; i < random; i++) {
+                                balanceOfAccountBeans.add(new OrderSearchBean());
+                            }
+                            pageBean.setList(balanceOfAccountBeans);
+                            bean.setData(pageBean);
+
+                            return bean;
+                        }
+                    });
+        }
 }

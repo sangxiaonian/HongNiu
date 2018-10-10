@@ -15,7 +15,7 @@ import com.sang.common.widget.popu.inter.OnPopuDismissListener;
 public class BasePopu {
 
     protected PopupWindow pop;
-    OnPopuDismissListener dismissListener;
+    protected OnPopuDismissListener dismissListener;
     protected View tragetView;
 
     public BasePopu(Context context) {

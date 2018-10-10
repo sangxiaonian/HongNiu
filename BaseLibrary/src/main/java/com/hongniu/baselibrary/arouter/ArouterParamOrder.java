@@ -40,9 +40,13 @@ public class ArouterParamOrder {
      * 地图查看轨迹
      */
     public static final String activity_order_map_path = "/order/activity_order_map_path";
- /**
+    /**
      * 地图查看轨迹
      */
     public static final String activity_map_check_path = "/order/activity_map_check_path";
+    /**
+     * 订单列表搜索页面
+     */
+    public static final String activity_order_search = "/order/activity_order_search";
 
 }
