@@ -44,7 +44,7 @@ public class LoginAboutUsActivity extends BaseActivity implements View.OnClickLi
     protected void initData() {
         super.initData();
         try {
-            itemAobutHongNiu.setTextRight(DeviceUtils.getVersionName(mContext)+(Param.isDebug?"debug":""));
+            itemAobutHongNiu.setTextRight(DeviceUtils.getVersionName(mContext));
         } catch (Exception e) {
             e.printStackTrace();
         }
