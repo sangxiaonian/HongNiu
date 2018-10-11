@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 
 // 显示的时间格式，形如20171110
 def releaseTime() {
-    return new Date().format("yyyy-MM-dd", TimeZone.getDefault());
+    return new Date().format("MM-dd-HH-mm", TimeZone.getDefault());
 }
 
 android {

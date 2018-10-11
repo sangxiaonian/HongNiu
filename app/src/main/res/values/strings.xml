@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">泓牛供应链</string>
+    <!--<string name="app_name">泓牛供应链</string>-->
+    <string name="app_name">泓牛远恒物流自动下单服务APP管理端软件</string>
 </resources>

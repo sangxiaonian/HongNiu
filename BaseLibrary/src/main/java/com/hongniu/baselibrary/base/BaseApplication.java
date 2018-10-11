@@ -33,7 +33,7 @@ public class BaseApplication extends MultiDexApplication {
         ARouter.init(this); // 尽可能早，推荐在Application中初始化
         BugClient.getInstance().init(this);
 
-        ToastUtils.getInstance().init(this);
+        ToastUtils.getInstance().init(      this);
         SharedPreferencesUtils.getInstance().initSharePreference(this);
     }
 }

@@ -39,9 +39,9 @@ public class SplashActivity extends BaseActivity {
                         ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_main).navigation(mContext);
                     } else {
                         ArouterUtils.getInstance().builder(ArouterParamLogin.activity_login).navigation(mContext);
-                        sendEmptyMessageDelayed(1, 500);
                     }
                 }
+              sendEmptyMessageDelayed(1,500);
             } else {
                 finish();
             }
@@ -57,13 +57,6 @@ public class SplashActivity extends BaseActivity {
         setToolbarTitle("");
         if (Utils.isLogin()) {
             HttpAppFactory.getRoleType()
-                    .doFinally(new Action() {
-                        @Override
-                        public void run() throws Exception {
-                            long l = 1500 - (SystemClock.currentThreadTimeMillis() - time);
-                            handler.sendEmptyMessageDelayed(0, l > 10 ? l : 1);
-                        }
-                    })
                     .subscribe(new NetObserver<RoleTypeBean>(null) {
 
                         @Override
@@ -81,11 +74,15 @@ public class SplashActivity extends BaseActivity {
                         public void onError(Throwable e) {
                             super.onError(e);
                             EventBus.getDefault().postSticky(new RoleTypeBean());
+                            long l = 1500 - (SystemClock.currentThreadTimeMillis() - time);
+                            handler.sendEmptyMessageDelayed(0, l > 10 ? l : 1);
                         }
 
                         @Override
                         public void onComplete() {
                             super.onComplete();
+                            long l = 1500 - (SystemClock.currentThreadTimeMillis() - time);
+                            handler.sendEmptyMessageDelayed(0, l > 10 ? l : 1);
                         }
                     });
         } else {
@@ -111,9 +108,12 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
 
-        handler.removeMessages(0);
-        handler.removeMessages(1);
-        handler = null;
+        if (handler!=null) {
+            handler.removeMessages(0);
+            handler.removeMessages(1);
+            handler = null;
+        }
+
 
         super.onDestroy();
 
