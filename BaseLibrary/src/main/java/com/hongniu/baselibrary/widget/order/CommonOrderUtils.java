@@ -15,6 +15,8 @@ public class CommonOrderUtils {
     public static final String ORDER_START_CAR = "开始发车";
     public static final String ORDER_CHECK_ROUT = "查看路线";
     public static final String ORDER_ENTRY_ARRIVE = "确认到达";
+    public static final String ORDER_CHECK_RECEIPT = "查看回单";
+    public static final String ORDER_UP_RECEIPT = "上传回单";
 
 
     /*********************不同订单状态的文案***************************/

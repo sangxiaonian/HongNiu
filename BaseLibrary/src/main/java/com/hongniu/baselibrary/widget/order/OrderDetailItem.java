@@ -29,11 +29,13 @@ import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_BUY_IN
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CANCLE;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_INSURANCE;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_PATH;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_RECEIPT;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_ROUT;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_ENTRY_ARRIVE;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_ENTRY_ORDER;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_PAY;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_START_CAR;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_UP_RECEIPT;
 
 /**
  * 作者： ${PING} on 2018/8/7.
@@ -500,6 +502,20 @@ public class OrderDetailItem extends FrameLayout {
                     listener.onEntryArrive(orderBean);
                 } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("确认到达");
+                }
+                break;
+            case ORDER_CHECK_RECEIPT://    = "查看回单";
+                if (listener != null) {
+                    listener.onCheckReceipt(orderBean);
+                } else {
+                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("查看回单");
+                }
+                break;
+            case ORDER_UP_RECEIPT://    = "上传回单";
+                if (listener != null) {
+                    listener.onUpReceipt(orderBean);
+                } else {
+                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("上传回单");
                 }
                 break;
 

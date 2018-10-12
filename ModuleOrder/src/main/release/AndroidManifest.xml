@@ -62,7 +62,7 @@
 
         <service android:name="com.amap.api.location.APSService" />
 
-
+        <activity android:name=".ui.OrderCheckReceiptActivity"></activity>
     </application>
 
 </manifest>

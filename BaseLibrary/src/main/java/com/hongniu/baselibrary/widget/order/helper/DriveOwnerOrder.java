@@ -9,6 +9,7 @@ import com.hongniu.baselibrary.widget.order.CommonOrderUtils;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_ROUT;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_ENTRY_ARRIVE;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_START_CAR;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_UP_RECEIPT;
 
 
 /**
@@ -83,7 +84,7 @@ public class DriveOwnerOrder implements OrderDetailItemControl.IOrderItemHelper 
                 stateMsg = ORDER_ENTRY_ARRIVE;
                 break;
             case HAS_ARRIVED://已到达
-
+                stateMsg = ORDER_UP_RECEIPT;
                 break;
             case RECEIPT://已收货
             case REFUND://退款

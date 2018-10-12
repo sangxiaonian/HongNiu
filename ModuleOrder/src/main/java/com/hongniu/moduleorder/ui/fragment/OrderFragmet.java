@@ -454,6 +454,27 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
                 .show();
     }
 
+    /**
+     * ORDER_ENTRY_ARRIVE        ="查看回单";
+     *
+     * @param orderBean
+     */
+    @Override
+    public void onCheckReceipt(OrderDetailBean orderBean) {
+        ToastUtils.getInstance().show("查看回单");
+
+    }
+
+    /**
+     * ORDER_ENTRY_ARRIVE        ="上传回单";
+     *
+     * @param orderBean
+     */
+    @Override
+    public void onUpReceipt(OrderDetailBean orderBean) {
+        ToastUtils.getInstance().show("上传回单");
+    }
+
     protected CenterAlertBuilder creatDialog(String title, String content, String btleft, String
             btRight) {
         return new CenterAlertBuilder()

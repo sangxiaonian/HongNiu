@@ -10,6 +10,7 @@ import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_BUY_IN
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CANCLE;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_INSURANCE;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_PATH;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_RECEIPT;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_ENTRY_ORDER;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_PAY;
 
@@ -61,8 +62,11 @@ public class CargoOwnerOrder implements OrderDetailItemControl.IOrderItemHelper 
                 break;
             case HAS_ARRIVED://已到达
                 if (insurance) {
+                    //一期为查看保单
                     stateMsg = ORDER_CHECK_INSURANCE;
                 }
+                //此为二期，更改为查看回单
+                stateMsg = ORDER_CHECK_RECEIPT;
                 break;
             case RECEIPT://已收货
                 if (insurance) {
