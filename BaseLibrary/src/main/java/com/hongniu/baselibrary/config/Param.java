@@ -52,6 +52,7 @@ public class Param {
     public static final String AppSecret = "a7735d245d4241ff9f94-a3ecf7b5fedc";
 
     public static final String TRAN = "tran";
+    public static final String TITLE = "TITLE";
     public static final String VERTYPE = "VERTYPE";//验证码使用类型
 
 

@@ -10,10 +10,13 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.RefrushActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
+import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
+import com.hongniu.baselibrary.widget.order.helper.CargoOwnerOrder;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.entity.OrderSearchBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
@@ -31,6 +34,10 @@ import java.util.List;
 
 import io.reactivex.Observable;
 
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CARGO_OWNER;
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CAR_OWNER;
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.DRIVER;
+
 /**
  * 订单搜索历史界面
  */
@@ -43,6 +50,7 @@ public class OrderSearchHistoryActivity extends RefrushActivity<OrderSearchBean>
     private OrderSearchPop<String> pop;
     List<String> rolas;
     private int position = 0;//
+    private OrderDetailItemControl.RoleState roleState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,16 +77,17 @@ public class OrderSearchHistoryActivity extends RefrushActivity<OrderSearchBean>
     protected void initData() {
         super.initData();
         //货主是3 司机1 车主 1
-        int type = getIntent().getIntExtra(Param.TRAN, 3);
-        switch (type) {
-            case 1:
+        roleState= (OrderDetailItemControl.RoleState) getIntent().getSerializableExtra(Param.TRAN);
+       roleState= roleState==null? CARGO_OWNER:roleState;
+        switch (roleState) {
+            case CARGO_OWNER:
+                position = 1;
+                break;
+            case CAR_OWNER:
                 position = 2;
                 break;
-            case 2:
+            case DRIVER:
                 position = 3;
-                break;
-            case 3:
-                position = 1;
                 break;
         }
 
@@ -132,7 +141,12 @@ public class OrderSearchHistoryActivity extends RefrushActivity<OrderSearchBean>
                         itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                ToastUtils.getInstance().show("点击" + position);
+                                ArouterUtils.getInstance()
+                                        .builder(ArouterParamOrder.activity_order_search_result)
+                                        .withSerializable(Param.TRAN, roleState)
+                                        .withString(Param.TITLE,"沪A88888")
+                                        .navigation(mContext);
+
                             }
                         });
                     }
@@ -164,6 +178,16 @@ public class OrderSearchHistoryActivity extends RefrushActivity<OrderSearchBean>
         pop.dismiss();
         switchView.closeSwitch();
         this.position = position + 1;
+        switch (this.position){
+            case 1:
+                roleState=CARGO_OWNER;
+                break;case 2:
+                roleState=CAR_OWNER;
+                break;case 3:
+                roleState=DRIVER;
+                break;
+
+        }
         switchView.setTitle(rolas.get(position));
     }
 

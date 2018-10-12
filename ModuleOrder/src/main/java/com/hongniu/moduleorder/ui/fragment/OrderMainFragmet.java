@@ -35,6 +35,10 @@ import java.util.List;
 
 import io.reactivex.Observable;
 
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CARGO_OWNER;
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CAR_OWNER;
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.DRIVER;
+
 /**
  * 订单列表Fragment
  */
@@ -55,18 +59,19 @@ public class OrderMainFragmet extends OrderFragmet implements SwitchStateListene
     @Override
     public void setArguments(@Nullable Bundle args) {
         super.setArguments(args);
-        int anInt = args.getInt(Param.TRAN);
-        switch (anInt) {
-            case 0:
-                roleState = OrderDetailItemControl.RoleState.CARGO_OWNER;//货主
+
+        roleState = (OrderDetailItemControl.RoleState) args.get(Param.TRAN);
+        if (roleState == null) {
+            roleState = CARGO_OWNER;
+        }
+        switch (roleState) {
+            case CARGO_OWNER:
                 queryBean.setUserType(3);
                 break;
-            case 1:
-                roleState = OrderDetailItemControl.RoleState.CAR_OWNER;
+            case CAR_OWNER:
                 queryBean.setUserType(1);
                 break;
-            case 2:
-                roleState = OrderDetailItemControl.RoleState.DRIVER;
+            case DRIVER:
                 queryBean.setUserType(2);
                 break;
         }
@@ -94,7 +99,7 @@ public class OrderMainFragmet extends OrderFragmet implements SwitchStateListene
             states.add(s);
         }
 
-        if (roleState != OrderDetailItemControl.RoleState.CARGO_OWNER) {
+        if (roleState != CARGO_OWNER) {
             states.remove(1);
         }
 
@@ -104,7 +109,6 @@ public class OrderMainFragmet extends OrderFragmet implements SwitchStateListene
         view.setLayoutParams(params);
         adapter.addFoot(new PeakHolder(view));
     }
-
 
 
     @Override
@@ -168,12 +172,12 @@ public class OrderMainFragmet extends OrderFragmet implements SwitchStateListene
             queryBean.setHasFreight(null);
             if (position == 0) {//全部状态
                 queryBean.setQueryStatus(null);
-            } else if (position == 1 && roleState == OrderDetailItemControl.RoleState.CARGO_OWNER) {//待支付状态
+            } else if (position == 1 && roleState == CARGO_OWNER) {//待支付状态
                 queryBean.setQueryStatus(null);
                 queryBean.setHasFreight(false);
             } else {
                 queryBean.setHasFreight(true);
-                if (roleState == OrderDetailItemControl.RoleState.CARGO_OWNER) {
+                if (roleState == CARGO_OWNER) {
                     queryBean.setQueryStatus((position) + "");
                 } else {
                     queryBean.setQueryStatus((1 + position) + "");
@@ -249,8 +253,6 @@ public class OrderMainFragmet extends OrderFragmet implements SwitchStateListene
     public void setRoalState(OrderDetailItemControl.RoleState state) {
         this.roleState = state;
     }
-
-
 
 
 }

@@ -70,27 +70,6 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
     public OrderFragmet() {
     }
 
-    @Override
-    public void setArguments(@Nullable Bundle args) {
-        super.setArguments(args);
-        int anInt = args.getInt(Param.TRAN);
-        switch (anInt) {
-            case 0:
-                roleState = OrderDetailItemControl.RoleState.CARGO_OWNER;//货主
-                queryBean.setUserType(3);
-                break;
-            case 1:
-                roleState = OrderDetailItemControl.RoleState.CAR_OWNER;
-                queryBean.setUserType(1);
-                break;
-            case 2:
-                roleState = OrderDetailItemControl.RoleState.DRIVER;
-                queryBean.setUserType(2);
-                break;
-        }
-
-
-    }
 
 
     @Override

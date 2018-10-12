@@ -63,7 +63,8 @@
         <service android:name="com.amap.api.location.APSService" />
 
         <activity android:name=".ui.OrderScanReceiptActivity" />
-        <activity android:name=".ui.OrderUpReceiptActivity"></activity>
+        <activity android:name=".ui.OrderUpReceiptActivity" />
+        <activity android:name=".ui.OrderSearchResultActivity"></activity>
     </application>
 
 </manifest>

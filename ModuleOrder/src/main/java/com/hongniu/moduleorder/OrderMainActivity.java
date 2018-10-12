@@ -30,6 +30,7 @@ import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.dialog.UpDialog;
+import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.control.OrderMainControl;
 import com.hongniu.moduleorder.control.SwitchStateListener;
@@ -60,6 +61,10 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
+
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CARGO_OWNER;
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CAR_OWNER;
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.DRIVER;
 
 /**
  * 订单中心主页
@@ -93,7 +98,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
 
     private TextView tvName, tvPhone;
     private LoactionUpUtils upLoactionUtils;//上传位置信息
-    private int position = 1;
+    private OrderDetailItemControl.RoleState roleState = CARGO_OWNER;
 
 
     @Override
@@ -109,29 +114,6 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
         loaction = LoactionUtils.getInstance();
         loaction.init(this);
         loaction.setListener(this);
-
-        HttpAppFactory.getRoleType()
-
-                .subscribe(new NetObserver<RoleTypeBean>(null) {
-
-                    @Override
-                    public void doOnSuccess(RoleTypeBean data) {
-                        EventBus.getDefault().postSticky(data);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        super.onError(e);
-                        EventBus.getDefault().postSticky(new RoleTypeBean());
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        super.onComplete();
-                    }
-                });
-
-
     }
 
     @Override
@@ -192,7 +174,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
             public void onClick(View v) {
                 ArouterUtils.getInstance()
                         .builder(ArouterParamOrder.activity_order_search)
-                        .withInt(Param.TRAN, position)
+                        .withSerializable(Param.TRAN, roleState)
                         .navigation(mContext);
 
             }
@@ -479,7 +461,19 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
      * @param position
      */
     private void changeStaff(int position) {
-        this.position = position;
+        switch (position) {
+            case 3:
+                this.roleState = CARGO_OWNER;
+                break;
+            case 1:
+                this.roleState = CAR_OWNER;
+                break;
+            case 2:
+                this.roleState = DRIVER;
+                break;
+        }
+
+
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         if (currentFragmeng != null) {
             fragmentTransaction.hide(currentFragmeng);
@@ -489,7 +483,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
             if (carOwnerFragmeng == null) {
                 carOwnerFragmeng = (Fragment) ArouterUtils.getInstance().builder(ArouterParamOrder.fragment_order_main).navigation(this);
                 Bundle bundle = new Bundle();
-                bundle.putInt(Param.TRAN, 1);
+                bundle.putSerializable(Param.TRAN, roleState);
                 carOwnerFragmeng.setArguments(bundle);
                 fragmentTransaction.add(R.id.content, carOwnerFragmeng);
             } else {
@@ -502,7 +496,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
             if (driverFragmeng == null) {
                 driverFragmeng = (Fragment) ArouterUtils.getInstance().builder(ArouterParamOrder.fragment_order_main).navigation(this);
                 Bundle bundle = new Bundle();
-                bundle.putInt(Param.TRAN, 2);
+                bundle.putSerializable(Param.TRAN, roleState);
                 driverFragmeng.setArguments(bundle);
                 fragmentTransaction.add(R.id.content, driverFragmeng);
             } else {
@@ -514,7 +508,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
             if (cargoFragment == null) {
                 cargoFragment = (Fragment) ArouterUtils.getInstance().builder(ArouterParamOrder.fragment_order_main).navigation(this);
                 Bundle bundle = new Bundle();
-                bundle.putInt(Param.TRAN, 0);
+                bundle.putSerializable(Param.TRAN, roleState);
                 cargoFragment.setArguments(bundle);
                 fragmentTransaction.add(R.id.content, cargoFragment);
             } else {

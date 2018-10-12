@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.OrderSearchResultActivity">
+
+
+    <FrameLayout
+        android:id="@+id/toolbar_left"
+        android:layout_width="wrap_content"
+        android:layout_height="?actionBarSize"
+        android:background="@color/white"
+        android:clickable="true"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/toolbar_src_left"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:background="@color/color_tran"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/icon_back_36" />
+    </FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/frame"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/toolbar_left"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/toolbar_left"
+        app:layout_constraintTop_toTopOf="@id/toolbar_left">
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:id="@+id/toolbar_title"
+            android:layout_width="match_parent"
+            android:layout_height="31dp"
+            android:layout_marginBottom="@dimen/app_item_gap"
+            android:layout_marginRight="@dimen/app_gap"
+            android:layout_marginTop="@dimen/app_item_gap"
+            android:background="@drawable/shape_4_f3f3f3"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/app_model_gap"
+            android:singleLine="true"
+            android:text="@string/save"
+            android:textColor="@color/color_title_dark"
+            android:textSize="13sp" />
+    </RelativeLayout>
+
+
+    <FrameLayout
+        android:id="@+id/content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/frame" />
+
+</android.support.constraint.ConstraintLayout>
