@@ -183,6 +183,12 @@
                     app:textleft="货物重量"
                     app:textright="吨" />
 
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:id="@+id/rv_pic"
+                    android:layout_margin="@dimen/app_gap"
+                    android:layout_height="80dp"/>
+                
                 <com.sang.common.widget.ItemView
                     android:id="@+id/item_price"
                     style="@style/itemview"

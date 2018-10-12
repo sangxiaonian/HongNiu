@@ -1,13 +1,19 @@
 package com.hongniu.moduleorder.ui;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
@@ -21,6 +27,7 @@ import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.utils.PickerDialogUtils;
+import com.hongniu.baselibrary.utils.PictureSelectorUtils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
@@ -29,7 +36,14 @@ import com.hongniu.moduleorder.entity.OrderCreatParamBean;
 import com.hongniu.moduleorder.entity.OrderDriverPhoneBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.widget.CarNumPop;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.sang.common.event.BusFactory;
+import com.sang.common.imgload.ImageLoader;
+import com.sang.common.recycleview.adapter.XAdapter;
+import com.sang.common.recycleview.holder.BaseHolder;
+import com.sang.common.recycleview.holder.PeakHolder;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.JLog;
@@ -86,9 +100,12 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
 
     private Button btSave;
 
+    private RecyclerView rv;
     private CarNumPop<OrderCarNumbean> pop;
     private OrderCreatParamBean paramBean = new OrderCreatParamBean();
     List<OrderCarNumbean> carNumbeans = new ArrayList<>();
+    XAdapter<LocalMedia> adapter;
+    List<LocalMedia> pics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +113,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         setContentView(R.layout.activity_order_creat_order);
         setToolbarTitle(getString(R.string.order_create_order));
         initView();
+        initData();
         initListener();
     }
 
@@ -117,7 +135,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         itemDriverPhone = findViewById(R.id.item_driver_phone);
         btSave = findViewById(R.id.bt_entry);
 //        timePickerView = PickerDialogUtils.initTimePicker(mContext, this, new boolean[]{true, true, true, false, false, false});
-
+        rv=findViewById(R.id.rv_pic);
 
         Calendar startDate = Calendar.getInstance();
 
@@ -131,6 +149,47 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
 
         pop = new CarNumPop<OrderCarNumbean>(mContext);
 
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+        LinearLayoutManager manager=new LinearLayoutManager(mContext);
+        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        rv.setLayoutManager(manager);
+        pics=new ArrayList<>();
+        adapter=new XAdapter<LocalMedia>(mContext,pics) {
+            @Override
+            public BaseHolder<LocalMedia> initHolder(ViewGroup parent, int viewType) {
+                return new BaseHolder<LocalMedia>(mContext,parent,R.layout.order_item_creat_order_img){
+                    @Override
+                    public void initView(View itemView, final int position, LocalMedia data) {
+                        super.initView(itemView, position, data);
+                        ImageView img = itemView.findViewById(R.id.img);
+                        ImageLoader.getLoader().load(mContext,img,data.getPath());
+                        img.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                PictureSelectorUtils.openExternalPreview((Activity) mContext,position,pics);
+                            }
+                        });
+                    }
+                };
+            }
+        };
+        adapter.addFoot(new PeakHolder(mContext,rv,R.layout.order_item_creat_order_img_foot){
+            @Override
+            public void initView(int position) {
+                super.initView(position);
+                getItemView().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        PictureSelectorUtils.showPicture((Activity) mContext,pics);
+                    }
+                });
+            }
+        });
+        rv.setAdapter(adapter);
     }
 
     @Override
@@ -469,7 +528,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
             showAleart(getString(R.string.phone_error));
             return false;
         }
-        ;
+
 
         return true;
 
@@ -500,6 +559,27 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
 
     @Override
     public void onDissmiss() {
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case PictureConfig.CHOOSE_REQUEST:
+                    // 图片、视频、音频选择结果回调
+                    List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
+                    // 例如 LocalMedia 里面返回三种path
+                    // 1.media.getPath(); 为原图path
+                    // 2.media.getCutPath();为裁剪后path，需判断media.isCut();是否为true  注意：音视频除外
+                    // 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true  注意：音视频除外
+                    // 如果裁剪并压缩了，以取压缩路径为准，因为是先裁剪后压缩的
+                    pics.clear();
+                    pics.addAll(selectList);
+                    adapter.notifyDataSetChanged();
+                    break;
+            }
+        }
     }
 
 }
