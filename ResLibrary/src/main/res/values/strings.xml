@@ -113,5 +113,6 @@
     <string name="wallet_balance_withdrawal_title">账户提现</string>
     <string name="wallet_balance_account_num">账户余额￥ %1$s</string>
     <string name="order_search_des">发车编号、车牌号、货物、订单号</string>
+    <string name="order_up_receipt">上传回单</string>
 
 </resources>

@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.alibaba.android.arouter.facade.annotation.Route;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Poi;
 import com.amap.api.navi.AmapNaviPage;
@@ -30,6 +29,7 @@ import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
+import com.hongniu.moduleorder.ui.OrderScanReceiptActivity;
 import com.hongniu.moduleorder.utils.LoactionCollectionUtils;
 import com.hongniu.moduleorder.utils.OrderUtils;
 import com.sang.common.event.BusFactory;
@@ -47,6 +47,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -462,6 +463,13 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
     @Override
     public void onCheckReceipt(OrderDetailBean orderBean) {
         ToastUtils.getInstance().show("查看回单");
+        List<String> list=new ArrayList<>();
+        list.add("https://www.baidu.com/img/bd_logo1.png");
+        list.add("https://www.baidu.com/img/bd_logo1.png");
+        list.add("https://www.baidu.com/img/bd_logo1.png");
+        list.add("https://www.baidu.com/img/bd_logo1.png");
+
+        OrderScanReceiptActivity.launchActivity(getActivity(),0,1,list);
 
     }
 
@@ -472,7 +480,7 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
      */
     @Override
     public void onUpReceipt(OrderDetailBean orderBean) {
-        ToastUtils.getInstance().show("上传回单");
+        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_up_receipt).navigation(getContext());
     }
 
     protected CenterAlertBuilder creatDialog(String title, String content, String btleft, String

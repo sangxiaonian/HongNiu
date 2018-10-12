@@ -3,8 +3,8 @@ package com.hongniu.baselibrary.widget.order.helper;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.baselibrary.widget.order.CommonOrderUtils;
+import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_BUY_INSURANCE;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CANCLE;

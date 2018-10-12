@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="80dp"
     android:layout_height="80dp"
-    android:background="@drawable/shape_stoke_xu_dddddd"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@drawable/shape_stoke_xu_dddddd">
 
     <ImageView
         android:id="@+id/img"
-        android:layout_width="15dp"
-        app:srcCompat="@drawable/icon_camera_dddddd"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="23dp"
+        android:layout_height="23dp"
         android:layout_marginTop="28dp"
         android:scaleType="centerCrop"
-        android:layout_height="15dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/icon_camera_dddddd" />
+
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/app_item_gap"
         android:text="添加货单"
         android:textColor="@color/color_et_hide"
         android:textSize="@dimen/text_min_11sp"
-        android:layout_width="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/img"
-        android:layout_height="wrap_content" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/img" />
 </android.support.constraint.ConstraintLayout>

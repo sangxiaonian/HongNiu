@@ -26,11 +26,27 @@ public class OrderEvent {
             this.t = t;
         }
     }
-  public static class SearchPioItem implements IBus.IEvent {
+
+    public static class SearchPioItem implements IBus.IEvent {
         public PoiItem t;
 
         public SearchPioItem(PoiItem t) {
             this.t = t;
+        }
+    }
+
+    /**
+     * 删除指定位置图片
+     */
+    public static class DeletedPic implements IBus.IEvent {
+        private   int position;
+
+        public int getPosition() {
+            return position;
+        }
+
+        public DeletedPic(int position) {
+          this.position=position;
         }
     }
 
@@ -44,8 +60,6 @@ public class OrderEvent {
             this.roleState = roleState;
         }
     }
-
-
 
 
     /**

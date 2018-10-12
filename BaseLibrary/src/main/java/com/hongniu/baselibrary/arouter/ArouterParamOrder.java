@@ -48,5 +48,9 @@ public class ArouterParamOrder {
      * 订单列表搜索页面
      */
     public static final String activity_order_search = "/order/activity_order_search";
+    /**
+     * 上传保单
+     */
+    public static final String activity_order_up_receipt = "/order/activity_order_up_receipt";
 
 }
