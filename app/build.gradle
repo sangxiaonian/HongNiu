@@ -57,7 +57,8 @@ android {
     buildTypes {
 
         debug {
-
+            // 为版本名添加后缀
+            versionNameSuffix "-debug"
             signingConfig signingConfigs.release
         }
         release {

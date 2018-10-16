@@ -253,8 +253,17 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                     @Override
                     public void doOnSuccess(VersionBean data) {
                         try {
-                            if (data != null && !data.getVersionCode().equals(DeviceUtils.getVersionName(mContext)) ) {
-                                showUpAleart(data.getVersionName());
+                            try {
+                                if (data != null && !TextUtils.isEmpty(data.getVersionCode())) {
+                                    String versionName = DeviceUtils.getVersionName(mContext);
+                                    String current = versionName.replace(".","").replace("-debug","");
+                                    String needUpdata = data.getVersionCode().replace(".","");
+                                    if (Integer.parseInt(current)<Integer.parseInt(needUpdata)){
+                                        showUpAleart(data.getVersionName());
+                                    }
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
