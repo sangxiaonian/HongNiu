@@ -1,3 +1,3 @@
 include ':app', ':CommonLibrary', ':ResLibrary', ':ThirdLibrary', ':BaseLibrary', ':ModuleLogin',
-        ':ModulePersonalCenter', ':ModuleOrder', ':ModuleFinance', ':pickerview', ':wheelview',':xcalendar'
+         ':ModuleOrder', ':ModuleFinance', ':pickerview', ':wheelview',':xcalendar'
 

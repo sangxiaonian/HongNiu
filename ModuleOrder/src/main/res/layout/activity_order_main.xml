@@ -112,7 +112,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="80dp"
-
             android:textColor="@color/color_title_dark"
             android:textSize="24sp" />
 
@@ -145,15 +144,28 @@
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:scaleType="fitCenter"
-                        android:src="@mipmap/icon_me_skfs_32" />
+                        android:src="@mipmap/icon_yqyl_32" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/app_gap"
-                        android:text="收款方式"
+                        android:text="邀请有礼"
                         android:textColor="@color/color_title_dark"
                         android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="领取佣金"
+                        android:paddingLeft="@dimen/app_item_gap"
+                        android:paddingRight="@dimen/app_item_gap"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:layout_marginLeft="@dimen/app_model_gap"
+                        android:textSize="@dimen/text_min_11sp"
+                        android:background="@drawable/shape_2_f04428"
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
 
                 <LinearLayout
