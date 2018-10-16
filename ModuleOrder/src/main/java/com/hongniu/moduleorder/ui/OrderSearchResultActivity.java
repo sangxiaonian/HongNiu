@@ -39,7 +39,7 @@ public class OrderSearchResultActivity extends BaseActivity {
     @Override
     protected void initView() {
         super.initView();
-        fragment= (Fragment) ArouterUtils.getInstance().builder(ArouterParamOrder.fragment_order_main).navigation();
+        fragment= (Fragment) ArouterUtils.getInstance().builder(ArouterParamOrder.fragment_order_search).navigation();
         OrderDetailItemControl.RoleState roleState = (OrderDetailItemControl.RoleState) getIntent().getSerializableExtra(Param.TRAN);
         if (roleState == null) {
             roleState = CARGO_OWNER;

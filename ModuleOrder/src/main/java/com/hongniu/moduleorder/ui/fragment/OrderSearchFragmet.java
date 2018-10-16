@@ -1,14 +1,11 @@
 package com.hongniu.moduleorder.ui.fragment;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
-import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
@@ -17,14 +14,16 @@ import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.SwitchStateListener;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.widget.OrderMainPop;
+import com.hongniu.moduleorder.widget.OrderTimePop;
 import com.sang.common.recycleview.holder.PeakHolder;
 import com.sang.common.utils.DeviceUtils;
+import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.SwitchTextLayout;
 import com.sang.common.widget.popu.BasePopu;
 import com.sang.common.widget.popu.inter.OnPopuDismissListener;
+import com.sangxiaonian.xcalendar.entity.DateBean;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -35,19 +34,17 @@ import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleSt
  * 订单列表Fragment
  */
 @Route(path = ArouterParamOrder.fragment_order_search)
-public class OrderSearchFragmet extends OrderFragmet implements SwitchStateListener, SwitchTextLayout.OnSwitchListener, OrderMainPop.OnPopuClickListener, OnPopuDismissListener {
+public class OrderSearchFragmet extends OrderFragmet implements SwitchStateListener, SwitchTextLayout.OnSwitchListener, OrderMainPop.OnPopuClickListener, OnPopuDismissListener, OrderTimePop.OnCalenderListener {
     private SwitchTextLayout switchLeft;
     private SwitchTextLayout switchRight;
-    private int leftSelection;
     private int rightSelection;
     private OrderMainPop<String> orderMainPop;
-    private List<String> times;
     private List<String> states;
+    private OrderTimePop timePop;
 
 
     public OrderSearchFragmet() {
     }
-
 
 
     @Override
@@ -62,6 +59,7 @@ public class OrderSearchFragmet extends OrderFragmet implements SwitchStateListe
     protected void initData() {
         super.initData();
         orderMainPop = new OrderMainPop<>(getContext());
+        timePop = new OrderTimePop(getContext());
         String[] stringArray = getResources().getStringArray(R.array.order_main_state);
         states = new ArrayList<>();
         for (String s : stringArray) {
@@ -72,7 +70,6 @@ public class OrderSearchFragmet extends OrderFragmet implements SwitchStateListe
             states.remove(1);
         }
 
-        times = Arrays.asList(getResources().getStringArray(R.array.order_main_time));
         View view = new View(getContext());
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DeviceUtils.dip2px(getContext(), 75));
         view.setLayoutParams(params);
@@ -94,6 +91,8 @@ public class OrderSearchFragmet extends OrderFragmet implements SwitchStateListe
         switchLeft.setListener(this);
         orderMainPop.setOnDismissListener(this);
         orderMainPop.setListener(this);
+        timePop.setListener(this);
+        timePop.setOnDismissListener(this);
 
     }
 
@@ -111,47 +110,22 @@ public class OrderSearchFragmet extends OrderFragmet implements SwitchStateListe
 
     @Override
     public void onPopuClick(OrderMainPop pop, View view, int position) {
-
-        if (view.getId() == R.id.switch_left) {//时间
-            leftSelection = position;
-            switchLeft.setTitle(position == 0 ? getString(R.string.order_main_start_time) : times.get(position));
-            String time = null;
-            switch (position) {
-                case 0://全部
-                    break;
-                case 1://今天
-                    time = "today";
-
-                    break;
-                case 2://明天
-                    time = "tomorrow";
-                    break;
-                case 3://本周
-                    time = "thisweek";
-                    break;
-                case 4://下周
-                    time = "nextweek";
-                    break;
-            }
-            queryBean.setDeliveryDateType(time);
-        } else if (view.getId() == R.id.switch_right) {
-            rightSelection = position;
-            switchRight.setTitle(states.get(position));
+        rightSelection = position;
+        switchRight.setTitle(states.get(position));
+        queryBean.setQueryStatus(null);
+        queryBean.setHasFreight(null);
+        if (position == 0) {//全部状态
             queryBean.setQueryStatus(null);
-            queryBean.setHasFreight(null);
-            if (position == 0) {//全部状态
-                queryBean.setQueryStatus(null);
-            } else if (position == 1 && roleState == CARGO_OWNER) {//待支付状态
-                queryBean.setQueryStatus(null);
-                queryBean.setHasFreight(false);
+        } else if (position == 1 && roleState == CARGO_OWNER) {//待支付状态
+            queryBean.setQueryStatus(null);
+            queryBean.setHasFreight(false);
+        } else {
+            queryBean.setHasFreight(true);
+            if (roleState == CARGO_OWNER) {
+                queryBean.setQueryStatus((position) + "");
             } else {
-                queryBean.setHasFreight(true);
-                if (roleState == CARGO_OWNER) {
-                    queryBean.setQueryStatus((position) + "");
-                } else {
-                    queryBean.setQueryStatus((1 + position) + "");
+                queryBean.setQueryStatus((1 + position) + "");
 
-                }
             }
         }
         queryData(true, true);
@@ -166,11 +140,10 @@ public class OrderSearchFragmet extends OrderFragmet implements SwitchStateListe
             switchRight.closeSwitch();
 
             if (open) {
-                orderMainPop.setSelectPosition(leftSelection);
-                orderMainPop.upDatas(times);
-                orderMainPop.show(view);
-            } else {
+                timePop.show(view);
                 orderMainPop.dismiss();
+            } else {
+                timePop.dismiss();
             }
 
         } else if (view.getId() == R.id.switch_right) {
@@ -178,10 +151,10 @@ public class OrderSearchFragmet extends OrderFragmet implements SwitchStateListe
             switchLeft.setSelect(false);
             switchLeft.closeSwitch();
             if (open) {
-
                 orderMainPop.setSelectPosition(rightSelection);
                 orderMainPop.upDatas(states);
                 orderMainPop.show(view);
+                timePop.dismiss();
             } else {
                 orderMainPop.dismiss();
 
@@ -224,4 +197,18 @@ public class OrderSearchFragmet extends OrderFragmet implements SwitchStateListe
     }
 
 
+    @Override
+    public void onClickEntry(OrderTimePop pop, View target, DateBean start, DateBean end) {
+        pop.dismiss();
+
+        if (end == null && start == null) {
+            return;
+        } else if (start == null) {
+            start = end;
+        } else if (end == null) {
+            end = start;
+        }
+        ToastUtils.getInstance().show(start.getYear() + "年" + (start.getMonth() + 1) + "月" + start.getDay() + "日-" +
+                        end.getYear() + "年" + (end.getMonth() + 1) + "月" + end.getDay() + "日");
+    }
 }

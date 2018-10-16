@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/week"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="日"
+            android:textColor="#666666"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="一"
+            android:textColor="#666666"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="二"
+            android:textColor="#666666"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="三"
+            android:textColor="#666666"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="四"
+            android:textColor="#666666"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="五"
+            android:textColor="#666666"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="六"
+            android:textColor="#666666"
+            android:textSize="11sp" />
+
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp" />
+    </FrameLayout>
+
+
+    <com.sangxiaonian.xcalendar.SequenceCalendar
+        android:id="@+id/calendar"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="@color/white" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingBottom="@dimen/app_gap"
+        android:paddingLeft="@dimen/app_gap"
+        android:paddingTop="@dimen/app_gap">
+
+        <TextView
+            android:id="@+id/tv_reset"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_marginRight="@dimen/app_item_gap"
+            android:layout_weight="1"
+            android:background="@drawable/shape_2_stoke_dddddd"
+            android:gravity="center"
+            android:text="重置"
+            android:textColor="@color/color_title_dark"
+            android:textSize="@dimen/text_small_16" />
+
+        <TextView
+            android:id="@+id/tv_entry"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="@dimen/app_item_gap"
+            android:layout_marginRight="@dimen/app_item_gap"
+            android:layout_weight="1"
+            android:background="@drawable/shape_radius_2_f06f28"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_small_16" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view_out"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#55000000" />
+
+</LinearLayout>
