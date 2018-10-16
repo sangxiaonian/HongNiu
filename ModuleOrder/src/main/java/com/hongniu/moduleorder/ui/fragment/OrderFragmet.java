@@ -57,6 +57,8 @@ import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CARGO_OWNER;
+
 /**
  * 订单列表Fragment
  */
@@ -83,7 +85,28 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
             latLng = new LatLng(event.latitude, event.longitude);
         }
     }
+    @Override
+    public void setArguments(@Nullable Bundle args) {
+        super.setArguments(args);
 
+        roleState = (OrderDetailItemControl.RoleState) args.get(Param.TRAN);
+        if (roleState == null) {
+            roleState = CARGO_OWNER;
+        }
+        switch (roleState) {
+            case CARGO_OWNER:
+                queryBean.setUserType(3);
+                break;
+            case CAR_OWNER:
+                queryBean.setUserType(1);
+                break;
+            case DRIVER:
+                queryBean.setUserType(2);
+                break;
+        }
+
+
+    }
 
     @Override
     public XAdapter<OrderDetailBean> getAdapter(List<OrderDetailBean> datas) {

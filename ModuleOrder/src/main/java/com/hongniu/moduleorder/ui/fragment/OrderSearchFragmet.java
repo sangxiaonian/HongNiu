@@ -7,16 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.amap.api.maps.model.LatLng;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
-import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.moduleorder.R;
-import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.control.SwitchStateListener;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.widget.OrderMainPop;
@@ -26,9 +23,6 @@ import com.sang.common.widget.SwitchTextLayout;
 import com.sang.common.widget.popu.BasePopu;
 import com.sang.common.widget.popu.inter.OnPopuDismissListener;
 
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,14 +30,12 @@ import java.util.List;
 import io.reactivex.Observable;
 
 import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CARGO_OWNER;
-import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CAR_OWNER;
-import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.DRIVER;
 
 /**
  * 订单列表Fragment
  */
-@Route(path = ArouterParamOrder.fragment_order_main)
-public class OrderMainFragmet extends OrderFragmet implements SwitchStateListener, SwitchTextLayout.OnSwitchListener, OrderMainPop.OnPopuClickListener, OnPopuDismissListener {
+@Route(path = ArouterParamOrder.fragment_order_search)
+public class OrderSearchFragmet extends OrderFragmet implements SwitchStateListener, SwitchTextLayout.OnSwitchListener, OrderMainPop.OnPopuClickListener, OnPopuDismissListener {
     private SwitchTextLayout switchLeft;
     private SwitchTextLayout switchRight;
     private int leftSelection;
@@ -53,8 +45,9 @@ public class OrderMainFragmet extends OrderFragmet implements SwitchStateListene
     private List<String> states;
 
 
-    public OrderMainFragmet() {
+    public OrderSearchFragmet() {
     }
+
 
 
     @Override
@@ -62,8 +55,6 @@ public class OrderMainFragmet extends OrderFragmet implements SwitchStateListene
         View inflate = inflater.inflate(R.layout.fragment_order_main_fragmet, null);
         switchLeft = inflate.findViewById(R.id.switch_left);
         switchRight = inflate.findViewById(R.id.switch_right);
-
-
         return inflate;
     }
 

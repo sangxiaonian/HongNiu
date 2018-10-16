@@ -5,8 +5,8 @@ ext {
     compileSdkVersion = 27
     minSdkVersion = 19
     targetSdkVersion = 28
-    versionCode = 0
-    versionName = "1.0.0"
+    versionCode = 3
+    versionName = "1.1.0"
 //    buildToolsVersion = "1.0"
     Arouter_Complier = "1.1.4"
 

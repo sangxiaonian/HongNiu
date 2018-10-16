@@ -48,6 +48,10 @@ public class ArouterParamOrder {
      * 订单列表搜索页面
      */
     public static final String activity_order_search = "/order/activity_order_search";    /**
+     * 订单列表搜索页面
+     */
+    public static final String fragment_order_search = "/order/fragment_order_search";
+    /**
      * 订单列表搜索结果页面
      */
     public static final String activity_order_search_result = "/order/activity_order_search_result";
