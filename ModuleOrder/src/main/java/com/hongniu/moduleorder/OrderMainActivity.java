@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
+import com.hongniu.baselibrary.arouter.ArouterParamFestivity;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
@@ -633,7 +634,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
 
         } else if (i == R.id.ll_pay_method) {
             drawerLayout.closeDrawer(Gravity.START);
-            ArouterUtils.getInstance().builder(ArouterParamLogin.activity_pay_ways).navigation(mContext);
+            ArouterUtils.getInstance().builder(ArouterParamFestivity.activity_festivity_invite).navigation(mContext);
 
         }
     }

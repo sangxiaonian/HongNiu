@@ -82,9 +82,9 @@ dependencies {
         implementation project(':ModuleOrder')
         implementation project(':BaseLibrary')
         implementation project(':ModuleFinance')
+        implementation project(':ModuleFestivity')
     } else {
         implementation project(':BaseLibrary')
 
     }
-
 }

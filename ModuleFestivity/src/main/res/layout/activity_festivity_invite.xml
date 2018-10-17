@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_bg"
+    tools:context=".ui.FestivityInviteActivity">
+
+    <include
+        android:id="@+id/tool"
+        layout="@layout/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        android:src="@mipmap/img_bg_yqyl"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tool">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/img1"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="fitXY"
+                android:src="@mipmap/img_bg_yqyl"
+                app:layout_constraintDimensionRatio="h,375:455"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="60dp"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/img_yqyl_bz"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/img1" />
+
+            <ImageView
+                android:id="@+id/img_logo"
+                android:layout_width="86dp"
+                android:layout_height="37dp"
+                android:layout_marginTop="25dp"
+                android:src="@mipmap/img_logo_yqyl"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="邀请好友 赚取佣金"
+                android:textColor="#FC7A35"
+                android:textSize="35sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/img_logo" />
+
+            <TextView
+                android:id="@+id/tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_item_gap"
+                android:text="更快 · 更好 · 更懂你"
+                android:textColor="#b3ffffff"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv1" />
+
+            <TextView
+                android:id="@+id/tv_invite_count"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/shape_2_stoke_4dffffff"
+                android:gravity="center"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv2" />
+
+            <View
+                android:id="@+id/bg1"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/shape_4_ffffff"
+                app:layout_constraintDimensionRatio="h,64:54"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_invite_count" />
+
+            <View
+                android:id="@+id/bg2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/shape_4_stoke_f06f28"
+                app:layout_constraintBottom_toBottomOf="@id/bg1"
+                app:layout_constraintEnd_toEndOf="@id/bg1"
+                app:layout_constraintStart_toStartOf="@id/bg1"
+                app:layout_constraintTop_toTopOf="@id/bg1" />
+
+            <TextView
+                android:id="@+id/tv3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="您赚取的佣金(元)"
+                android:textColor="@color/color_content_light"
+                android:textSize="@dimen/text_small"
+                app:layout_constraintEnd_toEndOf="@id/bg2"
+                app:layout_constraintStart_toStartOf="@id/bg2"
+                app:layout_constraintTop_toTopOf="@id/bg2" />
+
+            <TextView
+                android:id="@+id/tv_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@color/color_title_dark"
+                android:textSize="45sp"
+                app:layout_constraintEnd_toEndOf="@id/bg2"
+                app:layout_constraintStart_toStartOf="@id/bg2"
+                app:layout_constraintTop_toBottomOf="@id/tv3" />
+
+            <ImageView
+                android:id="@+id/img_go"
+                app:layout_constraintStart_toEndOf="@id/tv_money"
+                app:layout_constraintTop_toTopOf="@id/tv_money"
+                app:layout_constraintBottom_toBottomOf="@id/tv_money"
+
+                android:layout_width="@dimen/img_go_size"
+                android:layout_height="@dimen/img_go_size"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/app_item_gap"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/icon_gary_arrowmore_20" />
+
+            <Button
+                android:id="@+id/bt_share"
+                style="@style/bt_sum"
+                android:layout_width="0dp"
+                android:layout_marginTop="20dp"
+                android:text="邀请微信好友"
+                app:layout_constraintEnd_toEndOf="@id/bg2"
+                app:layout_constraintStart_toStartOf="@id/bg2"
+                app:layout_constraintTop_toBottomOf="@id/tv_money" />
+
+            <TextView
+                android:id="@+id/tv_invite_scan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="当面二维码邀请"
+                android:textColor="#FC7A35"
+                android:textSize="@dimen/text_small_14"
+                app:layout_constraintEnd_toEndOf="@id/bg2"
+                app:layout_constraintStart_toStartOf="@id/bg2"
+                app:layout_constraintTop_toBottomOf="@id/bt_share" />
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+
+
+</android.support.constraint.ConstraintLayout>
