@@ -3,6 +3,7 @@ package com.hongniu.moduleorder;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -116,11 +117,6 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
         loaction.setListener(this);
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
-
 
 
 
@@ -226,6 +222,8 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                 guideTitle.showGuide();
             }
         });
+
+        //检查版本更新
         checkVersion();
     }
 
@@ -295,7 +293,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     @Override
     protected void onResume() {
         super.onResume();
-        if (loaction != null) {
+        if (loaction!=null){
             loaction.showFront(false);
         }
     }
@@ -394,7 +392,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onInBackgrond(final Event.OnBackground event) {
         if (event != null) {
-            if (loaction != null) {
+            if (loaction!=null){
                 loaction.showFront(DeviceUtils.isBackGround(mContext));
             }
         }
