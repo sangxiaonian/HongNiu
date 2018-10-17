@@ -33,6 +33,14 @@
                     app:openColor="@color/color_title_dark"
                     app:openIcon="@drawable/icon_arrow_down_333"
                     app:title="@string/order_main_title" />
+                <ImageView
+                    android:id="@+id/img_search"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/app_gap"
+                    app:srcCompat="@drawable/icon_search_333333" />
             </RelativeLayout>
 
             <FrameLayout
