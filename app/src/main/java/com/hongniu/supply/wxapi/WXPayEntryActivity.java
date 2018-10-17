@@ -10,10 +10,12 @@ import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CreatInsuranceBean;
 import com.hongniu.baselibrary.event.Event;
+import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.supply.R;
 import com.sang.common.event.BusFactory;
 import com.sang.common.utils.JLog;
 import com.sang.thirdlibrary.pay.PayConfig;
+import com.sang.thirdlibrary.pay.entiy.PayResult;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -55,22 +57,26 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 
     @Override
     public void onResp(BaseResp resp) {
-        JLog.i("-----------------------------------");
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
             if (resp.errCode == 0) {
-                Toast.makeText(this, "支付成功", Toast.LENGTH_LONG).show();
-                if (insuranceBean != null&&insurance) {
-                    ArouterUtils.getInstance().builder(ArouterParamOrder.activity_insurance_creat)
-                            .withParcelable(Param.TRAN,insuranceBean)
-                            .navigation(this);
-                }else {
-                    ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_main)
-                            .navigation(this);
-                }
+                BusFactory.getBus().post(new PayResult(PayResult.SUCCESS));
+//                Toast.makeText(this, "支付成功", Toast.LENGTH_LONG).show();
+//                if (insuranceBean != null&&insurance) {
+//                    ArouterUtils.getInstance().builder(ArouterParamOrder.activity_insurance_creat)
+//                            .withParcelable(Param.TRAN,insuranceBean)
+//                            .navigation(this);
+//                }else {
+//                    ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_main)
+//                            .navigation(this);
+//                }
             } else if (resp.errCode == -2) {
-                Toast.makeText(this, "取消支付", Toast.LENGTH_LONG).show();
+                BusFactory.getBus().post(new PayResult(PayResult.CANCEL));
+
+//                Toast.makeText(this, "取消支付", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(this, "支付失败", Toast.LENGTH_LONG).show();
+                BusFactory.getBus().post(new PayResult(PayResult.FAIL));
+
+//                Toast.makeText(this, "支付失败", Toast.LENGTH_LONG).show();
             }
             finish();
         }

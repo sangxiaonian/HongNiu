@@ -11,7 +11,7 @@ public class OrderParamBean {
      */
     private String id;
     /**
-     * 支付方式 0微信支付 1银联支付 2线下支付
+     * 支付方式 0微信支付 1银联支付 2线下支付 3支付宝 4余额
      */
     private int payType=-1;
 

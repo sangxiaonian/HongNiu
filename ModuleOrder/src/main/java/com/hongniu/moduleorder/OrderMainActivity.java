@@ -117,9 +117,11 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-//        super.onSaveInstanceState(outState, outPersistentState);
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
+
+
 
 
     @Override

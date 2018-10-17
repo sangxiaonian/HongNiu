@@ -25,6 +25,7 @@ import com.sang.common.net.error.NetException;
 import com.sang.common.net.rx.RxUtils;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
+import com.sang.thirdlibrary.pay.entiy.PayType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -131,15 +132,15 @@ public class HttpOrderFactory {
      * hasFreight   true	boolean	是否付运费，true=是
      * hasPolicy    true	boolean	是否买保险，true=是
      * onlinePay    true	boolean	是否线上支付,false=线下支付
-     * payType      true	    int 	支付方式 0微信支付 1银联支付 2线下支付
+     * payType      true	    int 	支付方式 0微信支付 1银联支付 2线下支付 3 支付宝
      */
     public static Observable<CommonBean<PayBean>> payOrderOffLine(OrderParamBean bean) {
         //支付方式
         int payType = bean.getPayType();
-        if (payType == 1) {
+        if (payType == 1) {//银联支付
             return OrderClient.getInstance()
                     .getService()
-                    .payUnionOffLine(bean)
+                    .payUnion(bean)
                     .filter(new Predicate<CommonBean<PayBean>>() {
                         @Override
                         public boolean test(CommonBean<PayBean> payBeanCommonBean) throws Exception {
@@ -153,11 +154,23 @@ public class HttpOrderFactory {
                     })
                     .compose(RxUtils.<CommonBean<PayBean>>getSchedulersObservableTransformer());
 
-        } else {
+        } else if (payType == 0){//微信付款
+            return OrderClient.getInstance()
+                    .getService()
+                    .payWeChat(bean)
+                    .compose(RxUtils.<CommonBean<PayBean>>getSchedulersObservableTransformer());
+        }else if (payType == 3){//支付宝
+            return OrderClient.getInstance()
+                    .getService()
+                    .payAli(bean)
+                    .compose(RxUtils.<CommonBean<PayBean>>getSchedulersObservableTransformer());
+        }else if (payType==2){//线下支付
             return OrderClient.getInstance()
                     .getService()
                     .payOrderOffLine(bean)
                     .compose(RxUtils.<CommonBean<PayBean>>getSchedulersObservableTransformer());
+        }else {
+            return null;
         }
 
 

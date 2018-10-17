@@ -91,6 +91,7 @@
         android:background="@color/color_line"
         android:layout_height="0.5dp"/>
     <LinearLayout
+        android:background="@color/white"
         android:layout_marginTop="@dimen/app_gap"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -99,9 +100,10 @@
             android:button="@null"
             android:gravity="center"
             android:layout_marginTop="2dp"
+            android:layout_marginRight="@dimen/app_item_gap"
             android:background="@drawable/selector_check_bg"
-            android:layout_width="20dp"
-            android:layout_height="20dp" />
+            android:layout_width="15dp"
+            android:layout_height="15dp" />
 
 
         <TextView

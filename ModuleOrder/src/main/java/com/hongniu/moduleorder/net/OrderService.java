@@ -108,6 +108,19 @@ public interface OrderService {
     Observable<CommonBean<OrderDetailBean>> cancleOrder(@Body OrderIdBean infor);
 
     /**
+     * 微信支付
+     * orderNum     true	string	订单号
+     * openid       true	string	微信用户openid
+     * hasFreight   true	boolean	是否付运费，true=是
+     * hasPolicy    true	boolean	是否买保险，true=是
+     * onlinePay    true	boolean	是否线上支付,false=线下支付
+     *
+     * @param infor 订单ID
+     * @return
+     */
+    @POST("hongniu/wx/jsApiPay")
+    Observable<CommonBean<PayBean>> payWeChat(@Body OrderParamBean infor);
+   /**
      * 线下支付订单
      * orderNum     true	string	订单号
      * openid       true	string	微信用户openid
@@ -133,7 +146,20 @@ public interface OrderService {
      * @return
      */
     @POST("hongniu/api/unionpay/unionpaytn")
-    Observable<CommonBean<PayBean>> payUnionOffLine(@Body OrderParamBean infor);
+    Observable<CommonBean<PayBean>> payUnion(@Body OrderParamBean infor);
+ /**
+     * 支付宝支付
+     * orderNum     true	string	订单号
+     * openid       true	string	微信用户openid
+     * hasFreight   true	boolean	是否付运费，true=是
+     * hasPolicy    true	boolean	是否买保险，true=是
+     * onlinePay    true	boolean	是否线上支付,false=线下支付
+     *
+     * @param infor 订单ID
+     * @return
+     */
+    @POST("hongniu/api/alipay/getorderinfo")
+    Observable<CommonBean<PayBean>> payAli(@Body OrderParamBean infor);
 
     /**
      * 创建保单
