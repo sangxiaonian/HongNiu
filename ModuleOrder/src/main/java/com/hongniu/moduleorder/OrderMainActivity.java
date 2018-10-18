@@ -634,7 +634,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
 
         } else if (i == R.id.ll_pay_method) {
             drawerLayout.closeDrawer(Gravity.START);
-            ArouterUtils.getInstance().builder(ArouterParamFestivity.activity_festivity_invite).navigation(mContext);
+            ArouterUtils.getInstance().builder(ArouterParamFestivity.activity_festivity_home).navigation(mContext);
 
         }
     }

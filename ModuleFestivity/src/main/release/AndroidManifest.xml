@@ -3,7 +3,9 @@
     package="xiaonian.sang.com.festivitymodule">
 
     <application>
-        <activity android:name=".ui.FestivityInviteActivity"></activity>
+        <activity android:name=".invite.ui.FestivityInviteActivity" />
+        <activity android:name=".invite.ui.FestivityInviteDetailActivity" />
+        <activity android:name=".invite.ui.FestivityBrokerageActivity"></activity>
     </application>
 
 </manifest>

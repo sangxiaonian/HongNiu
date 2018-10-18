@@ -54,13 +54,15 @@ public class H5Activity extends BaseActivity implements XWebView.OnReceivedTitle
     protected void initData() {
         super.initData();
          h5Config = (H5Config) getIntent().getSerializableExtra(Param.TRAN);
-        if (h5Config.isDarkTitle){
-            setToolbarDarkTitle(h5Config.title);
-        }else {
-            setToolbarTitle(h5Config.title);
+        if (h5Config!=null) {
+            if (h5Config.isDarkTitle){
+                setToolbarDarkTitle(h5Config.title);
+            }else {
+                setToolbarTitle(h5Config.title);
+            }
+            webView.setOnReceivedTitleListener(this);
+            webView.loadUrl(h5Config.url);
         }
-        webView.setOnReceivedTitleListener(this);
-        webView.loadUrl(h5Config.url);
     }
 
     @Override

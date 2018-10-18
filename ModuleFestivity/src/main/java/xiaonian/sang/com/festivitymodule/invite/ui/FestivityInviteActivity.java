@@ -1,4 +1,4 @@
-package xiaonian.sang.com.festivitymodule.ui;
+package xiaonian.sang.com.festivitymodule.invite.ui;
 
 import android.os.Bundle;
 import android.text.Spannable;
@@ -10,7 +10,11 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamFestivity;
+import com.hongniu.baselibrary.arouter.ArouterParamsApp;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.entity.H5Config;
 import com.sang.common.utils.ToastUtils;
 
 import xiaonian.sang.com.festivitymodule.R;
@@ -18,9 +22,9 @@ import xiaonian.sang.com.festivitymodule.R;
 /**
  * @data 2018/10/17
  * @Author PING
- * @Description 邀请有礼
+ * @Description 邀请有礼活动
  */
-@Route(path = ArouterParamFestivity.activity_festivity_invite)
+@Route(path = ArouterParamFestivity.activity_festivity_home)
 public class FestivityInviteActivity extends BaseActivity implements View.OnClickListener {
 
     private TextView tv_invite_count;//邀请总人数
@@ -76,9 +80,11 @@ public class FestivityInviteActivity extends BaseActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.tv_invite_count) {
-            ToastUtils.getInstance().show("邀请人数");
+//            ToastUtils.getInstance().show("邀请人数");
+            ArouterUtils.getInstance().builder(ArouterParamFestivity.activity_festivity_invite_detail).navigation(this);
         } else if (v.getId() == R.id.tv_money) {
-            ToastUtils.getInstance().show("佣金");
+//            ToastUtils.getInstance().show("佣金");
+            ArouterUtils.getInstance().builder(ArouterParamFestivity.activity_festivity_brokerage).navigation(this);
 
         } else if (v.getId() == R.id.bt_share) {
             ToastUtils.getInstance().show("微信分享");
@@ -87,7 +93,9 @@ public class FestivityInviteActivity extends BaseActivity implements View.OnClic
             ToastUtils.getInstance().show("当面邀请");
 
         }else   if (v.getId() == R.id.tv_invite_rule) {
-            ToastUtils.getInstance().show("邀请规则");
+//            ToastUtils.getInstance().show("邀请规则");
+            H5Config h5Config = new H5Config("邀请规则", Param.hongniu_agreement, true);
+            ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5).withSerializable(Param.TRAN,h5Config).navigation(this);
 
         }
     }

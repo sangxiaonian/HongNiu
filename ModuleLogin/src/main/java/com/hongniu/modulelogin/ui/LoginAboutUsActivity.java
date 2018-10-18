@@ -13,7 +13,6 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.H5Config;
 import com.hongniu.modulelogin.R;
 import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.JLog;
 import com.sang.common.widget.ItemView;
 
 @Route(path = ArouterParamLogin.activity_about_us)
@@ -69,7 +68,7 @@ public class LoginAboutUsActivity extends BaseActivity implements View.OnClickLi
 
         if (v.getId() == R.id.item_about_hongniu) {
         } else if (v.getId() == R.id.item_terms_of_service) {
-            H5Config h5Config=new H5Config(getString(R.string.hongniu_agreement),Param.hongniu_agreement,true);
+            H5Config h5Config = new H5Config(getString(R.string.hongniu_agreement), Param.hongniu_agreement, true);
             ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5).withSerializable(Param.TRAN, h5Config).navigation(mContext);
 
         }
