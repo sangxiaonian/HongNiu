@@ -17,7 +17,7 @@
         app:editable="false"
         app:srcshow="true"
         app:textcenterhide=""
-        app:textleft="泓牛供应链软件许可及服务协议" />
+        app:textleft="@string/hongniu_agreement" />
 
     <com.sang.common.widget.ItemView
         android:id="@+id/item_about_hongniu"

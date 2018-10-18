@@ -16,6 +16,7 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.moduleorder.R;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.JLog;
+import com.sang.common.widget.XWebView;
 import com.sang.common.widget.dialog.inter.DialogControl;
 
 /**
@@ -24,7 +25,7 @@ import com.sang.common.widget.dialog.inter.DialogControl;
 public class InsuranceNoticeDialog extends Dialog {
 
 
-    private WebView webview;
+    private XWebView webview;
     private Button bt_sum;
     private DialogControl.OnButtonBottomClickListener listener;
 

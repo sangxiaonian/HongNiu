@@ -18,6 +18,7 @@ import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.entity.H5Config;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.sang.common.utils.CommonUtils;
@@ -123,7 +124,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             }
 
         } else if (i == R.id.tv_clause) {
-            ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5).withString(Param.TRAN,Param.hongniu_agreement).navigation(this);
+            H5Config h5Config=new H5Config(getString(R.string.hongniu_agreement),Param.hongniu_agreement,true);
+            ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5).withSerializable(Param.TRAN,h5Config).navigation(this);
         }
     }
 }

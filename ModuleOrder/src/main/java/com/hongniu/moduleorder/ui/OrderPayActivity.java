@@ -24,6 +24,7 @@ import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CreatInsuranceBean;
+import com.hongniu.baselibrary.entity.H5Config;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
@@ -427,8 +428,8 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
         cbYue.setImageResource(payType == PayType.OTHER ? R.mipmap.icon_xz_36 : R.mipmap.icon_wxz_36);
     }
 
-    private void pay(OrderParamBean bean){
-        if (payType!=PayType.OTHER) {
+    private void pay(OrderParamBean bean) {
+        if (payType != PayType.OTHER) {
             HttpOrderFactory.payOrderOffLine(bean)
                     .subscribe(new NetObserver<PayBean>(this) {
                         @Override
@@ -436,7 +437,7 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
                             startWeChatPay(data);
                         }
                     });
-        }else {
+        } else {
             ToastUtils.getInstance().show("余额支付");
         }
     }
@@ -444,8 +445,8 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
 
     /**
      * 吊起微信支付
-     *  @param data
      *
+     * @param data
      */
     private void startWeChatPay(PayBean data) {
         PayControl.IPayClient client = null;
@@ -525,11 +526,14 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
 
     @Override
     public void noticeClick(BuyInsuranceDialog buyInsuranceDialog, boolean checked, int i) {
+        H5Config h5Config;
         if (i == 0) {
-            ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5).withString(Param.TRAN, Param.insurance_polic).navigation(mContext);
+            h5Config = new H5Config(getString(R.string.order_insruance_police), Param.insurance_polic, true);
         } else {
-            ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5).withString(Param.TRAN, Param.insurance_notify).navigation(mContext);
+            h5Config = new H5Config(getString(R.string.order_insruance_notify), Param.insurance_notify, true);
         }
+        ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5).withSerializable(Param.TRAN, h5Config).navigation(this);
+
     }
 
 

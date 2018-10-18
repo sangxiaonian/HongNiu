@@ -27,6 +27,7 @@ public class FestivityInviteActivity extends BaseActivity implements View.OnClic
     private TextView tv_money;//赚取的佣金
     private Button bt_share;//微信分享
     private TextView tv_invite_scan;//二维码邀请
+    private TextView tv_invite_rule;//邀请规则
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public class FestivityInviteActivity extends BaseActivity implements View.OnClic
         tv_money = findViewById(R.id.tv_money);
         bt_share = findViewById(R.id.bt_share);
         tv_invite_scan = findViewById(R.id.tv_invite_scan);
+        tv_invite_rule = findViewById(R.id.tv_invite_rule);
 
     }
 
@@ -63,6 +65,7 @@ public class FestivityInviteActivity extends BaseActivity implements View.OnClic
         tv_money.setOnClickListener(this);
         bt_share.setOnClickListener(this);
         tv_invite_scan.setOnClickListener(this);
+        tv_invite_rule.setOnClickListener(this);
     }
 
     /**
@@ -82,6 +85,9 @@ public class FestivityInviteActivity extends BaseActivity implements View.OnClic
 
         } else if (v.getId() == R.id.tv_invite_scan) {
             ToastUtils.getInstance().show("当面邀请");
+
+        }else   if (v.getId() == R.id.tv_invite_rule) {
+            ToastUtils.getInstance().show("邀请规则");
 
         }
     }
