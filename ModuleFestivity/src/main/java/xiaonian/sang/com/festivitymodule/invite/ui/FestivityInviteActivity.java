@@ -1,5 +1,6 @@
 package xiaonian.sang.com.festivitymodule.invite.ui;
 
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -16,6 +17,7 @@ import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.H5Config;
 import com.sang.common.utils.ToastUtils;
+import com.sang.thirdlibrary.share.ShareClient;
 
 import xiaonian.sang.com.festivitymodule.R;
 
@@ -87,8 +89,8 @@ public class FestivityInviteActivity extends BaseActivity implements View.OnClic
             ArouterUtils.getInstance().builder(ArouterParamFestivity.activity_festivity_brokerage).navigation(this);
 
         } else if (v.getId() == R.id.bt_share) {
-            ToastUtils.getInstance().show("微信分享");
-
+//            ToastUtils.getInstance().show("微信分享");
+            new ShareClient(1).shareUrl(mContext,"https://www.baidu.com/",getString(R.string.festivity_invite_share_title),getString(R.string.festivity_invite_share_des), BitmapFactory.decodeResource(getResources(),R.mipmap.app_logo));
         } else if (v.getId() == R.id.tv_invite_scan) {
             ToastUtils.getInstance().show("当面邀请");
 

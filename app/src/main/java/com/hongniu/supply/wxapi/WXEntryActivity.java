@@ -3,13 +3,16 @@ package com.hongniu.supply.wxapi;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.supply.R;
+import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.JLog;
+import com.sang.common.utils.ToastUtils;
 import com.sang.thirdlibrary.pay.PayConfig;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
@@ -59,9 +62,30 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler 
             ArouterUtils.getInstance().builder(ArouterParamLogin.activity_pay_ways)
                     .withString(Param.TRAN, extraData)
                     .navigation(this);
-            finish();
+        }else if (resp.getType() == ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX){
+            String result = "";
+            switch (resp.errCode) {
+                case BaseResp.ErrCode.ERR_OK:
+                    result = "发送成功";
+                    break;
+                case BaseResp.ErrCode.ERR_USER_CANCEL:
+                    result = "分享取消";
+                    break;
+                case BaseResp.ErrCode.ERR_AUTH_DENIED:
+                    result = "发送失败";
+                    break;
+                default:
+                    result = "出现异常";
+                    break;
+            }
+            ToastUtils.getInstance().show(result);
+            DeviceUtils.moveToFront(mContext);
         }
+        finish();
+
     }
+
+
 
 
 }
