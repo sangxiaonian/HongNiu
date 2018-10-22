@@ -2,6 +2,7 @@ package com.hongniu.baselibrary.base;
 
 import android.support.multidex.MultiDexApplication;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.hongniu.baselibrary.config.Param;
 import com.sang.common.utils.SharedPreferencesUtils;
 import com.sang.common.utils.ToastUtils;
@@ -21,7 +22,9 @@ public class BaseApplication extends MultiDexApplication {
         final IWXAPI msgApi = WXAPIFactory.createWXAPI(this, null);
 // 将该app注册到微信
         msgApi.registerApp(Param.weChatAppid);
+
         BugClient.getInstance().init(this);
+
         ToastUtils.getInstance().init(this);
         SharedPreferencesUtils.getInstance().initSharePreference(this);
     }

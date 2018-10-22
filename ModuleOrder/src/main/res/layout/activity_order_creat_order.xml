@@ -187,7 +187,7 @@
                     android:layout_width="match_parent"
                     android:id="@+id/rv_pic"
                     android:layout_margin="@dimen/app_gap"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="80dp"/>
                 
                 <com.sang.common.widget.ItemView
                     android:id="@+id/item_price"
