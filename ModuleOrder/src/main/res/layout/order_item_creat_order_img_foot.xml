@@ -1,28 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="80dp"
-    android:layout_height="80dp"
-    android:background="@drawable/shape_stoke_xu_dddddd">
+    android:layout_width="78dp"
+    android:layout_height="78dp"
+    android:layout_margin="5dp"
+    >
+
+    <ImageView
+        android:id="@+id/img_bg"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:src="@drawable/shape_stoke_xu_dddddd"
+        android:layout_width="0dp"
+        android:layout_height="0dp" />
 
     <ImageView
         android:id="@+id/img"
         android:layout_width="23dp"
         android:layout_height="23dp"
-        android:layout_marginTop="28dp"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tv"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/icon_camera_dddddd" />
 
     <TextView
+        android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/app_item_gap"
         android:text="添加货单"
         android:textColor="@color/color_et_hide"
         android:textSize="@dimen/text_min_11sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/img" />

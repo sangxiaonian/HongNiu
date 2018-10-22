@@ -19,6 +19,7 @@ import com.hongniu.baselibrary.utils.PictureSelectorUtils;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
+import com.hongniu.moduleorder.ui.adapter.PicAdapter;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -74,30 +75,8 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
         rv.setLayoutManager(manager);
         pics = new ArrayList<>();
 
-        adapter = new XAdapter<LocalMedia>(mContext, pics) {
-            @Override
-            public BaseHolder<LocalMedia> initHolder(ViewGroup parent, int viewType) {
-                return new BaseHolder<LocalMedia>(mContext, parent, R.layout.order_item_creat_order_img) {
-                    @Override
-                    public void initView(View itemView, final int position, LocalMedia data) {
-                        super.initView(itemView, position, data);
-                        ImageView img = itemView.findViewById(R.id.img);
-                        ImageLoader.getLoader().load(mContext, img, data.getPath());
-                        img.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                List<String> list=new ArrayList<>();
-                                for (LocalMedia pic : pics) {
-                                    list.add(pic.getPath());
-                                }
-                                OrderScanReceiptActivity.launchActivity((Activity) mContext,1,position,list);
-                            }
-                        });
-                    }
-                };
-            }
-        };
-        adapter.addFoot(new PeakHolder(mContext,rv,R.layout.order_item_creat_order_img_foot){
+        adapter = new PicAdapter(mContext,pics);
+        adapter.addFoot(new PeakHolder(mContext,rv,R.layout.order_item_up_receive_img_foot){
             @Override
             public void initView(int position) {
                 super.initView(position);
