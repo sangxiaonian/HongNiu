@@ -12,6 +12,7 @@ import com.sangxiaonian.xcalendar.adapter.rvadapter.SequenceAdapter;
 import com.sangxiaonian.xcalendar.entity.DateBean;
 import com.sangxiaonian.xcalendar.utils.CalendarUtils;
 
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,14 +46,21 @@ public class SequenceCalendar extends RecyclerView {
         endYear=CalendarUtils.getInstance().getCurrentYear()+1;
         endMonth=11;
         dates=new ArrayList<>();
+        int currentMonth = CalendarUtils.getInstance().getCurrentMonth();
+        int currentYear = CalendarUtils.getInstance().getCurrentYear();
+        int currentPosition = 0;
         for (int i = startYear; i <=endYear ; i++) {
             for (int j = 0; j <12 ; j++) {
                 dates.add(new DateBean(i,j,1));
+                if (i== currentYear&&j==currentMonth){
+                    currentPosition=dates.size()-1;
+                }
             }
         }
         LinearLayoutManager manager=new LinearLayoutManager(context);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         setLayoutManager(manager);
+        manager.scrollToPosition(currentPosition);
         adapter=new SequenceAdapter(context,dates);
         setAdapter(adapter);
         new LinearSnapHelper().attachToRecyclerView(this);

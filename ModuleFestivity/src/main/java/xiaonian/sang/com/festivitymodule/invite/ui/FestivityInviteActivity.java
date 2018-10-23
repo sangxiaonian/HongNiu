@@ -14,12 +14,15 @@ import com.hongniu.baselibrary.arouter.ArouterParamFestivity;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.H5Config;
 import com.sang.common.utils.ToastUtils;
 import com.sang.thirdlibrary.share.ShareClient;
 
 import xiaonian.sang.com.festivitymodule.R;
+import xiaonian.sang.com.festivitymodule.invite.entity.QueryInvitedInfo;
+import xiaonian.sang.com.festivitymodule.net.HttpFestivityFactory;
 
 /**
  * @data 2018/10/17
@@ -62,6 +65,17 @@ public class FestivityInviteActivity extends BaseActivity implements View.OnClic
 
         tv_invite_count.setText(getSpanner(0));
         tv_money.setText("0");
+
+
+        HttpFestivityFactory.queryInvitedInfor()
+                .subscribe(new NetObserver<QueryInvitedInfo>(this) {
+                    @Override
+                    public void doOnSuccess(QueryInvitedInfo data) {
+
+                    }
+                });
+
+
     }
 
     @Override

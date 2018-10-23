@@ -30,6 +30,7 @@ import com.sang.thirdlibrary.pay.entiy.PayType;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.MaybeSource;
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
@@ -291,8 +292,6 @@ public class HttpOrderFactory {
      * @param poiSearch
      */
     public static Observable<CommonBean<PageBean<PoiItem>>> searchPio(PoiSearch poiSearch) {
-
-
         return Observable.just(poiSearch)
                 .map(new Function<PoiSearch, PoiResult>() {
 
@@ -330,25 +329,24 @@ public class HttpOrderFactory {
      * @return
      */
     public static Observable<CommonBean<PageBean<OrderSearchBean>>> searchOrder() {
-            return Observable.just(1)
-                    .map(new Function<Integer, CommonBean<PageBean<OrderSearchBean>>>() {
-                        @Override
-                        public CommonBean<PageBean<OrderSearchBean>> apply(Integer integer) throws Exception {
 
-                            CommonBean<PageBean<OrderSearchBean>> bean = new CommonBean<>();
-                            bean.setCode(200);
+        return OrderClient.getInstance()
+                .getService()
+                .querySearchHistory()
+                .map(new Function<CommonBean<List<OrderSearchBean>>, CommonBean<PageBean<OrderSearchBean>>>() {
+                    @Override
+                    public CommonBean<PageBean<OrderSearchBean>> apply(CommonBean<List<OrderSearchBean>> listCommonBean) throws Exception {
+                        CommonBean<PageBean<OrderSearchBean>> bean = new CommonBean<>();
+                        bean.setCode(listCommonBean.getCode());
+                        bean.setMsg(listCommonBean.getMsg());
+                        PageBean<OrderSearchBean> pageBean = new PageBean<>();
+                        pageBean.setList(listCommonBean.getData());
+                        bean.setData(pageBean);
+                        return bean;
+                    }
+                })
+                .compose(RxUtils.<CommonBean<PageBean<OrderSearchBean>>>getSchedulersObservableTransformer());
 
-                            PageBean<OrderSearchBean> pageBean = new PageBean<>();
-                            ArrayList<OrderSearchBean> balanceOfAccountBeans = new ArrayList<>();
-                            int random = ConvertUtils.getRandom(19, 21);
-                            for (int i = 0; i < random; i++) {
-                                balanceOfAccountBeans.add(new OrderSearchBean());
-                            }
-                            pageBean.setList(balanceOfAccountBeans);
-                            bean.setData(pageBean);
 
-                            return bean;
-                        }
-                    });
         }
 }

@@ -28,7 +28,6 @@ public class OrderSearchResultActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_search_result);
-
         initView();
         initData();
         initListener();
@@ -40,19 +39,22 @@ public class OrderSearchResultActivity extends BaseActivity {
     protected void initView() {
         super.initView();
         fragment= (Fragment) ArouterUtils.getInstance().builder(ArouterParamOrder.fragment_order_search).navigation();
-        OrderDetailItemControl.RoleState roleState = (OrderDetailItemControl.RoleState) getIntent().getSerializableExtra(Param.TRAN);
-        if (roleState == null) {
-            roleState = CARGO_OWNER;
-        }
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(Param.TRAN, roleState);
-        fragment.setArguments(bundle);
+
     }
 
     @Override
     protected void initData() {
         super.initData();
-        setToolbarTitle(getIntent().getStringExtra(Param.TITLE));
+        OrderDetailItemControl.RoleState roleState = (OrderDetailItemControl.RoleState) getIntent().getSerializableExtra(Param.TRAN);
+        if (roleState == null) {
+            roleState = CARGO_OWNER;
+        }
+        String title = getIntent().getStringExtra(Param.TITLE);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Param.TRAN, roleState);
+        bundle.putString(Param.TITLE, title);
+        fragment.setArguments(bundle);
+        setToolbarTitle(title);
         getSupportFragmentManager().beginTransaction().replace(R.id.content,fragment).commit();
     }
 }

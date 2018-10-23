@@ -12,6 +12,7 @@ import com.hongniu.moduleorder.entity.OrderCreatParamBean;
 import com.hongniu.moduleorder.entity.OrderDriverPhoneBean;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
 import com.hongniu.moduleorder.entity.OrderParamBean;
+import com.hongniu.moduleorder.entity.OrderSearchBean;
 import com.hongniu.moduleorder.entity.PathBean;
 import com.hongniu.moduleorder.entity.QueryInsurancePriceBean;
 import com.hongniu.moduleorder.entity.VersionBean;
@@ -210,6 +211,12 @@ public interface OrderService {
      */
     @POST("hongniu/api/position/list")
     Observable<CommonBean<PathBean>> getPath(@Body OrderIdBean infor);
+
+    /**
+     * 查询订单历史搜索记录
+     */
+    @POST("hongniu/api/user/querySearchHistory")
+    Observable<CommonBean<List<OrderSearchBean>>> querySearchHistory();
 
 
 }

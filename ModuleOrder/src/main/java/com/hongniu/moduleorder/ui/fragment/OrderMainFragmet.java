@@ -89,12 +89,6 @@ public class OrderMainFragmet extends OrderFragmet implements SwitchStateListene
     }
 
 
-    @Override
-    protected Observable<CommonBean<PageBean<OrderDetailBean>>> getListDatas() {
-        queryBean.setPageNum(currentPage);
-        return HttpOrderFactory.queryOrder(queryBean);
-
-    }
 
     @Override
     protected void initListener() {

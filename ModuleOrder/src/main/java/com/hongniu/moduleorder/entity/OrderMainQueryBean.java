@@ -30,6 +30,43 @@ public class OrderMainQueryBean {
      */
     private String deliveryDateType;
 
+    /**
+     * 搜索内容
+     */
+    private String searchText;
+    /**
+     * 起始发车日期
+     */
+    private String deliveryDateStart;
+    /**
+     * 结束发车日期
+     */
+    private String deliveryDateEnd;
+
+    public String getSearchText() {
+        return searchText;
+    }
+
+    public void setSearchText(String searchText) {
+        this.searchText = searchText;
+    }
+
+    public String getDeliveryDateStart() {
+        return deliveryDateStart;
+    }
+
+    public void setDeliveryDateStart(String deliveryDateStart) {
+        this.deliveryDateStart = deliveryDateStart;
+    }
+
+    public String getDeliveryDateEnd() {
+        return deliveryDateEnd;
+    }
+
+    public void setDeliveryDateEnd(String deliveryDateEnd) {
+        this.deliveryDateEnd = deliveryDateEnd;
+    }
+
     public int getPageSize() {
         return pageSize;
     }

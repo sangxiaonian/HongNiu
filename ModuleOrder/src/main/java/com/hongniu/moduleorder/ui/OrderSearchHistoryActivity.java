@@ -69,6 +69,7 @@ public class OrderSearchHistoryActivity extends RefrushActivity<OrderSearchBean>
         btCancel = findViewById(R.id.bt_cancle);
         switchView = findViewById(R.id.switch_left);
         pop = new OrderSearchPop<>(mContext);
+        refresh.setEnableLoadMore(false);
 
     }
 
@@ -100,6 +101,7 @@ public class OrderSearchHistoryActivity extends RefrushActivity<OrderSearchBean>
 
         pop.setSelectPosition(position - 1);
         pop.upDatas(rolas);
+        queryData(true, true);
 
     }
 
@@ -111,7 +113,13 @@ public class OrderSearchHistoryActivity extends RefrushActivity<OrderSearchBean>
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     DeviceUtils.hideSoft(etSearch);
-                    queryData(true, true);
+//                    queryData(true, true);
+                    ArouterUtils.getInstance()
+                            .builder(ArouterParamOrder.activity_order_search_result)
+                            .withSerializable(Param.TRAN, roleState)
+                            .withString(Param.TITLE,etSearch.getText().toString().trim())
+                            .navigation(mContext);
+
                 }
                 return false;
             }
@@ -134,17 +142,17 @@ public class OrderSearchHistoryActivity extends RefrushActivity<OrderSearchBean>
             public BaseHolder<OrderSearchBean> initHolder(ViewGroup parent, int viewType) {
                 return new BaseHolder<OrderSearchBean>(mContext, parent, R.layout.order_item_order_search) {
                     @Override
-                    public void initView(View itemView, final int position, OrderSearchBean data) {
+                    public void initView(View itemView, final int position, final OrderSearchBean data) {
                         super.initView(itemView, position, data);
                         TextView tv = itemView.findViewById(R.id.tv_title);
-                        tv.setText("沪A88888");
+                        tv.setText(data.getText()==null?"":data.getText());
                         itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 ArouterUtils.getInstance()
                                         .builder(ArouterParamOrder.activity_order_search_result)
                                         .withSerializable(Param.TRAN, roleState)
-                                        .withString(Param.TITLE,"沪A88888")
+                                        .withString(Param.TITLE,data.getText())
                                         .navigation(mContext);
 
                             }

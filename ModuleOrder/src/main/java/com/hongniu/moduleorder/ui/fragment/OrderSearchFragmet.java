@@ -1,11 +1,14 @@
 package com.hongniu.moduleorder.ui.fragment;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
+import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
@@ -16,14 +19,17 @@ import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.widget.OrderMainPop;
 import com.hongniu.moduleorder.widget.OrderTimePop;
 import com.sang.common.recycleview.holder.PeakHolder;
+import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.SwitchTextLayout;
 import com.sang.common.widget.popu.BasePopu;
 import com.sang.common.widget.popu.inter.OnPopuDismissListener;
 import com.sangxiaonian.xcalendar.entity.DateBean;
+import com.sangxiaonian.xcalendar.utils.CalendarUtils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -41,6 +47,7 @@ public class OrderSearchFragmet extends OrderFragmet implements SwitchStateListe
     private OrderMainPop<String> orderMainPop;
     private List<String> states;
     private OrderTimePop timePop;
+    private String title;
 
 
     public OrderSearchFragmet() {
@@ -77,12 +84,44 @@ public class OrderSearchFragmet extends OrderFragmet implements SwitchStateListe
     }
 
 
+//    @Override
+//    protected Observable<CommonBean<PageBean<OrderDetailBean>>> getListDatas() {
+//        queryBean.setPageNum(currentPage);
+//        return HttpOrderFactory.queryOrder(queryBean);
+//
+//    }
+
+
     @Override
     protected Observable<CommonBean<PageBean<OrderDetailBean>>> getListDatas() {
-        queryBean.setPageNum(currentPage);
-        return HttpOrderFactory.queryOrder(queryBean);
+        queryBean.setSearchText(title);
+        return super.getListDatas();
+    }
+
+    @Override
+    public void setArguments(@Nullable Bundle args) {
+        super.setArguments(args);
+
+        title = args.getString(Param.TITLE);
+        roleState = (OrderDetailItemControl.RoleState) args.get(Param.TRAN);
+        if (roleState == null) {
+            roleState = CARGO_OWNER;
+        }
+        switch (roleState) {
+            case CARGO_OWNER:
+                queryBean.setUserType(3);
+                break;
+            case CAR_OWNER:
+                queryBean.setUserType(1);
+                break;
+            case DRIVER:
+                queryBean.setUserType(2);
+                break;
+        }
+
 
     }
+
 
     @Override
     protected void initListener() {
@@ -208,7 +247,12 @@ public class OrderSearchFragmet extends OrderFragmet implements SwitchStateListe
         } else if (end == null) {
             end = start;
         }
-        ToastUtils.getInstance().show(start.getYear() + "年" + (start.getMonth() + 1) + "月" + start.getDay() + "日-" +
-                        end.getYear() + "年" + (end.getMonth() + 1) + "月" + end.getDay() + "日");
+        Calendar startCalendar = Calendar.getInstance();
+        startCalendar.set(start.getYear(), start.getMonth(), start.getDay());
+        Calendar endCalendar = Calendar.getInstance();
+        endCalendar.set(end.getYear(), end.getMonth(), end.getDay());
+        queryBean.setDeliveryDateStart(ConvertUtils.formatTime(startCalendar.getTime(), "yyyy-MM-dd"));
+        queryBean.setDeliveryDateEnd(ConvertUtils.formatTime(endCalendar.getTime(), "yyyy-MM-dd"));
+        queryData(true,true);
     }
 }

@@ -2,6 +2,7 @@ package xiaonian.sang.com.festivitymodule.net;
 
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
+import com.sang.common.net.rx.RxUtils;
 import com.sang.common.utils.ConvertUtils;
 
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import io.reactivex.Observable;
 import io.reactivex.functions.Function;
 import xiaonian.sang.com.festivitymodule.invite.entity.BrokerageDetailsBean;
 import xiaonian.sang.com.festivitymodule.invite.entity.InviteDetailBean;
+import xiaonian.sang.com.festivitymodule.invite.entity.QueryInvitedInfo;
 
 /**
  * 作者： ${PING} on 2018/8/15.
@@ -17,8 +19,16 @@ import xiaonian.sang.com.festivitymodule.invite.entity.InviteDetailBean;
 public class HttpFestivityFactory {
 
 
+    public static Observable<CommonBean<QueryInvitedInfo>> queryInvitedInfor(){
+        return FestivityClient.getInstance().getService()
+                .queryInvitedInfo()
+                .compose(RxUtils.<CommonBean<QueryInvitedInfo>>getSchedulersObservableTransformer())
+                ;
+    }
+
+
     /**
-     * 搜索订单
+     * 搜索邀请人详情
      *
      * @return
      */
