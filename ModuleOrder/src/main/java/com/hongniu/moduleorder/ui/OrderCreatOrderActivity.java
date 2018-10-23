@@ -35,6 +35,7 @@ import com.hongniu.moduleorder.entity.OrderCarNumbean;
 import com.hongniu.moduleorder.entity.OrderCreatParamBean;
 import com.hongniu.moduleorder.entity.OrderDriverPhoneBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
+import com.hongniu.moduleorder.ui.adapter.PicAdapter;
 import com.hongniu.moduleorder.widget.CarNumPop;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
@@ -141,7 +142,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
 
         Calendar endDate = Calendar.getInstance();
         endDate.set( startDate.get(Calendar.YEAR)+2, 12, 31);
-          timePickerView = PickerDialogUtils.creatTimePicker(mContext, this, new boolean[]{true, true, true, false, false, false})
+        timePickerView = PickerDialogUtils.creatTimePicker(mContext, this, new boolean[]{true, true, true, false, false, false})
                 .setRangDate(startDate,endDate)
                 .build();
         timePickerView.setKeyBackCancelable(false);//系统返回键监听屏蔽掉
@@ -158,25 +159,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);
         rv.setLayoutManager(manager);
         pics=new ArrayList<>();
-        adapter=new XAdapter<LocalMedia>(mContext,pics) {
-            @Override
-            public BaseHolder<LocalMedia> initHolder(ViewGroup parent, int viewType) {
-                return new BaseHolder<LocalMedia>(mContext,parent,R.layout.order_item_creat_order_img){
-                    @Override
-                    public void initView(View itemView, final int position, LocalMedia data) {
-                        super.initView(itemView, position, data);
-                        ImageView img = itemView.findViewById(R.id.img);
-                        ImageLoader.getLoader().load(mContext,img,data.getPath());
-                        img.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                PictureSelectorUtils.openExternalPreview((Activity) mContext,position,pics);
-                            }
-                        });
-                    }
-                };
-            }
-        };
+        adapter=new PicAdapter(mContext,pics);
         adapter.addFoot(new PeakHolder(mContext,rv,R.layout.order_item_creat_order_img_foot){
             @Override
             public void initView(int position) {
@@ -303,11 +286,6 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
                             itemDriverName.setTextCenter(bean.getContact());
                             itemDriverName.getEtCenter().requestFocus();
                         }
-//                        driverBeans.clear();
-//                        driverBeans.addAll(data);
-//
-//                        driverPop.upData(itemDriverPhone.getTextCenter(), driverBeans);
-//                        driverPop.show(itemDriverPhone);
                     }
 
                     @Override

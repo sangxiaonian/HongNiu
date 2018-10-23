@@ -6,25 +6,20 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.base.BaseActivity;
-import com.hongniu.baselibrary.entity.CloseActivityEvent;
 import com.hongniu.baselibrary.utils.PictureSelectorUtils;
-import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
+import com.hongniu.moduleorder.ui.adapter.PicAdapter;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.sang.common.imgload.ImageLoader;
 import com.sang.common.recycleview.adapter.XAdapter;
-import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.recycleview.holder.PeakHolder;
 import com.sang.common.utils.ToastUtils;
 
@@ -63,7 +58,7 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
         super.initView();
         etRemark = findViewById(R.id.et_remark);
         rv = findViewById(R.id.rv);
-        btSum=findViewById(R.id.bt_sum);
+        btSum = findViewById(R.id.bt_sum);
     }
 
     @Override
@@ -74,37 +69,15 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
         rv.setLayoutManager(manager);
         pics = new ArrayList<>();
 
-        adapter = new XAdapter<LocalMedia>(mContext, pics) {
-            @Override
-            public BaseHolder<LocalMedia> initHolder(ViewGroup parent, int viewType) {
-                return new BaseHolder<LocalMedia>(mContext, parent, R.layout.order_item_creat_order_img) {
-                    @Override
-                    public void initView(View itemView, final int position, LocalMedia data) {
-                        super.initView(itemView, position, data);
-                        ImageView img = itemView.findViewById(R.id.img);
-                        ImageLoader.getLoader().load(mContext, img, data.getPath());
-                        img.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                List<String> list=new ArrayList<>();
-                                for (LocalMedia pic : pics) {
-                                    list.add(pic.getPath());
-                                }
-                                OrderScanReceiptActivity.launchActivity((Activity) mContext,1,position,list);
-                            }
-                        });
-                    }
-                };
-            }
-        };
-        adapter.addFoot(new PeakHolder(mContext,rv,R.layout.order_item_creat_order_img_foot){
+        adapter = new PicAdapter(mContext, pics);
+        adapter.addFoot(new PeakHolder(mContext, rv, R.layout.order_item_up_receive_img_foot) {
             @Override
             public void initView(int position) {
                 super.initView(position);
                 getItemView().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        PictureSelectorUtils.showPicture((Activity) mContext,pics);
+                        PictureSelectorUtils.showPicture((Activity) mContext, pics);
                     }
                 });
             }
@@ -149,7 +122,7 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(OrderEvent.DeletedPic event) {
-        if (event!=null&&event.getPosition()>=0&&event.getPosition()<pics.size()){
+        if (event != null && event.getPosition() >= 0 && event.getPosition() < pics.size()) {
             pics.remove(event.getPosition());
             adapter.notifyItemDeleted(event.getPosition());
         }
@@ -162,7 +135,7 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
      */
     @Override
     public void onClick(View v) {
-        if (v.getId()==R.id.bt_sum){
+        if (v.getId() == R.id.bt_sum) {
             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
             finish();
         }
