@@ -1,6 +1,9 @@
 package com.hongniu.baselibrary.widget.order;
 
 import com.hongniu.baselibrary.entity.OrderDetailBean;
+import com.hongniu.baselibrary.widget.order.helper.ButtonInforBean;
+
+import java.util.List;
 
 /**
  * 作者： ${PING} on 2018/8/7.
@@ -68,23 +71,30 @@ public class OrderDetailItemControl {
      */
     public interface IOrderItemHelper {
 
-
-        int getLeftVisibility();
-
-        int getRightVisibility();
-
-
         /**
-         * 获取左侧按钮信息
-         */
-        String getBtLeftInfor();
-
-        /**
-         * 获取右侧
+         * 是否购买保险
          *
+         * @param insurance true 已经购买
          * @return
          */
-        String getBtRightInfor();
+        IOrderItemHelper setInsurance(boolean insurance);
+
+        /**
+         * 是否存在货单
+         *
+         * @param hasGoodsImage true 存在
+         * @return
+         */
+        IOrderItemHelper setHasGoodsImage(boolean hasGoodsImage);
+
+        /**
+         * 是否购存在回单
+         *
+         * @param hasReceiptImage true 存在
+         * @return
+         */
+        IOrderItemHelper setHasReceiptImage(boolean hasReceiptImage);
+
 
         /**
          * 获取订单当前状态
@@ -93,6 +103,10 @@ public class OrderDetailItemControl {
          */
         String getOrderState();
 
+        /**
+         * 获取要显示的按钮类型
+         */
+        List<ButtonInforBean> getButtonInfors();
 
     }
 
@@ -168,7 +182,7 @@ public class OrderDetailItemControl {
         void onEntryArrive(OrderDetailBean orderBean);
 
         /**
-         * ORDER_ENTRY_ARRIVE        ="查看回单";
+         * ORDER_CHECK_RECEIPT        ="查看回单";
          *
          * @param orderBean
          */
@@ -176,11 +190,32 @@ public class OrderDetailItemControl {
 
 
         /**
-         * ORDER_ENTRY_ARRIVE        ="上传回单";
+         * ORDER_UP_RECEIPT        ="上传回单";
          *
          * @param orderBean
          */
         void onUpReceipt(OrderDetailBean orderBean);
+
+        /**
+         * ORDER_CHANGE_RECEIPT        ="修改回单";
+         *
+         * @param orderBean
+         */
+        void onChangeReceipt(OrderDetailBean orderBean);
+
+        /**
+         * ORDER_CHANGE        ="修改订单";
+         *
+         * @param orderBean
+         */
+        void onChangeOrder(OrderDetailBean orderBean);
+
+        /**
+         * ORDER_CHECK_GOODS        ="查看货单";
+         *
+         * @param orderBean
+         */
+        void onCheckGoods(OrderDetailBean orderBean);
 
 
     }

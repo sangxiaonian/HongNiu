@@ -485,6 +485,37 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
         ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_up_receipt).navigation(getContext());
     }
 
+    /**
+     * ORDER_CHANGE_RECEIPT        ="修改回单";
+     *
+     * @param orderBean
+     */
+    @Override
+    public void onChangeReceipt(OrderDetailBean orderBean) {
+        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_up_receipt).navigation(getContext());
+
+    }
+
+    /**
+     * ORDER_CHANGE        ="修改订单";
+     *
+     * @param orderBean
+     */
+    @Override
+    public void onChangeOrder(OrderDetailBean orderBean) {
+        ToastUtils.getInstance().show("修改订单");
+    }
+
+    /**
+     * ORDER_CHECK_GOODS        ="查看货单";
+     *
+     * @param orderBean
+     */
+    @Override
+    public void onCheckGoods(OrderDetailBean orderBean) {
+        ToastUtils.getInstance().show("查看货单");
+    }
+
     protected CenterAlertBuilder creatDialog(String title, String content, String btleft, String
             btRight) {
         return new CenterAlertBuilder()

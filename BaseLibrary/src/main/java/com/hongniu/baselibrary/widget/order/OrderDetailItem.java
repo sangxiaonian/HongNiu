@@ -9,14 +9,18 @@ import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.hongniu.baselibrary.R;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.widget.OrderProgress;
+import com.hongniu.baselibrary.widget.order.helper.ButtonInforBean;
 import com.hongniu.baselibrary.widget.order.helper.OrderItemHelper;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.ConvertUtils;
@@ -25,8 +29,13 @@ import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.CenteredImageSpan;
 import com.sang.thirdlibrary.map.utils.MapConverUtils;
 
+import java.util.List;
+
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_BUY_INSURANCE;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CANCLE;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHANGE;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHANGE_RECEIPT;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_GOODS;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_INSURANCE;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_PATH;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_RECEIPT;
@@ -41,7 +50,7 @@ import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_UP_REC
  * 作者： ${PING} on 2018/8/7.
  * 订单详情
  */
-public class OrderDetailItem extends FrameLayout {
+public class OrderDetailItem extends FrameLayout implements View.OnClickListener {
 
     private TextView tvIdentity;
     private TextView tv_order;
@@ -53,7 +62,7 @@ public class OrderDetailItem extends FrameLayout {
     private TextView bt_left;
     private TextView bt_right;
     private TextView tv_order_detail;
-    private View llBottom;
+    private ViewGroup llBottom;
     private View lineBottom;
 
     //当前角色 货主、车主、司机
@@ -116,6 +125,8 @@ public class OrderDetailItem extends FrameLayout {
             setTiem(ConvertUtils.formatString(data.getDeliveryDate(), "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd"));
         }
 
+        //对于司机，隐藏保费
+        hideInsurance(roleState == OrderDetailItemControl.RoleState.DRIVER);
 
         String money = data.getMoney();
         if (!TextUtils.isEmpty(money)) {
@@ -188,14 +199,10 @@ public class OrderDetailItem extends FrameLayout {
             );
         }
 
-        buildButton(data.isInsurance());
+        buildButton(data.isInsurance(), data.isHasGoodsImage(), data.isHasReceiptImage());
 
-        //对于司机，不显示运费
-        if (roleState == OrderDetailItemControl.RoleState.DRIVER) {
-            setPrice("");
-            hideBottom(bt_left.getVisibility() != VISIBLE && bt_right.getVisibility() != VISIBLE);
-
-        }
+        //司机隐藏价格控件
+        tv_price.setVisibility(roleState == OrderDetailItemControl.RoleState.DRIVER ? GONE : VISIBLE);
 
 
     }
@@ -203,15 +210,10 @@ public class OrderDetailItem extends FrameLayout {
 
     private boolean hideButton;
 
+
     public void hideButton(boolean hideButton) {
         this.hideButton = hideButton;
-        if (hideButton) {
-            bt_left.setVisibility(GONE);
-            bt_right.setVisibility(GONE);
-
-            return;
-        }
-
+        buildButton(false,false,false);
     }
 
     /**
@@ -402,37 +404,29 @@ public class OrderDetailItem extends FrameLayout {
     }
 
 
-    public void buildButton(boolean b) {
-
+    /**
+     * @param b               是否购买保险
+     * @param hasGoodsImage   是否有回单，是否有货单
+     * @param hasReceiptImage
+     */
+    public void buildButton(boolean b, boolean hasGoodsImage, boolean hasReceiptImage) {
+        llBottom.removeAllViews();
         if (hideButton) {
-            bt_left.setVisibility(GONE);
-            bt_right.setVisibility(GONE);
-
+            hideBottom(true);
             return;
         }
-
-        final OrderDetailItemControl.IOrderItemHelper helper = new OrderItemHelper(orderState, roleState, b);
-        bt_left.setVisibility(helper.getLeftVisibility());
-        bt_right.setVisibility(helper.getRightVisibility());
-
-        if (bt_right.getVisibility() == VISIBLE) {
-            bt_right.setText(helper.getBtRightInfor());
-            bt_right.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    clickEvent(helper.getBtRightInfor());
-                }
-            });
+        final OrderDetailItemControl.IOrderItemHelper helper = new OrderItemHelper(orderState, roleState);
+        helper.setInsurance(b)
+                .setHasGoodsImage(hasGoodsImage)
+                .setHasReceiptImage(hasReceiptImage)
+        ;
+        List<ButtonInforBean> infors = helper.getButtonInfors();
+        for (ButtonInforBean infor : infors) {
+            TextView button = creatButton(infor);
+            llBottom.addView(button);
+            button.setOnClickListener(this);
         }
-        if (bt_left.getVisibility() == VISIBLE) {
-            bt_left.setText(helper.getBtLeftInfor());
-            bt_left.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    clickEvent(helper.getBtLeftInfor());
-                }
-            });
-        }
+        hideBottom(llBottom.getChildCount()==0);
     }
 
     public void setOnButtonClickListener(OrderDetailItemControl.OnOrderDetailBtClickListener listener) {
@@ -517,8 +511,27 @@ public class OrderDetailItem extends FrameLayout {
                 } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("上传回单");
                 }
+                break;  case ORDER_CHANGE_RECEIPT://    = "修改回单";
+                if (listener != null) {
+                    listener.onChangeReceipt(orderBean);
+                } else {
+                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("修改回单");
+                }
                 break;
-
+            case ORDER_CHANGE://修改订单
+                if (listener != null) {
+                    listener.onChangeOrder(orderBean);
+                } else {
+                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("修改订单");
+                }
+                break;
+              case ORDER_CHECK_GOODS://查看货单
+                if (listener != null) {
+                    listener.onCheckGoods(orderBean);
+                } else {
+                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("查看货单");
+                }
+                break;
         }
     }
 
@@ -540,5 +553,31 @@ public class OrderDetailItem extends FrameLayout {
      */
     public void hideInsurance(boolean hideInsurance) {
         this.hideInsurance = hideInsurance;
+    }
+
+
+    public TextView creatButton(ButtonInforBean infor) {
+        TextView button = new TextView(getContext());
+        button.setTextColor(infor.getType() == 1 ? getResources().getColor(R.color.white) : getResources().getColor(R.color.color_title_dark));
+        button.setBackgroundResource(infor.getType() == 1 ? R.drawable.shape_2_f06f28 : R.drawable.shape_2_stoke_dddddd);
+        button.setGravity(Gravity.CENTER);
+        MarginLayoutParams params = new MarginLayoutParams(DeviceUtils.dip2px(getContext(), 72), DeviceUtils.dip2px(getContext(), 27));
+        params.setMargins(DeviceUtils.dip2px(getContext(), 10), 0, 0, 0);
+        button.setLayoutParams(params);
+        button.setTextSize(13);
+        button.setText(infor.getText() == null ? "" : infor.getText());
+        return button;
+    }
+
+    /**
+     * Called when a view has been clicked.
+     *
+     * @param v The view that was clicked.
+     */
+    @Override
+    public void onClick(View v) {
+        if (v instanceof TextView) {
+            clickEvent(((TextView) v).getText().toString().trim());
+        }
     }
 }

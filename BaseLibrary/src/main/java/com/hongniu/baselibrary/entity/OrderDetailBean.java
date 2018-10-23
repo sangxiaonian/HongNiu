@@ -149,6 +149,14 @@ public class OrderDetailBean {
      * true boolean 是否购买保险，true=是
      */
     private boolean insurance;
+    /**
+     * 是否有货单
+     */
+    private boolean hasGoodsImage;
+    /**
+     * 是否有回单
+     */
+    private boolean hasReceiptImage;
 
 
     /**
@@ -172,21 +180,6 @@ public class OrderDetailBean {
      */
     protected String payWay;
 
-    public String getUserMobile() {
-        return userMobile;
-    }
-
-    public void setUserMobile(String userMobile) {
-        this.userMobile = userMobile;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
 
     /**
      * false	string	保单号
@@ -290,6 +283,38 @@ public class OrderDetailBean {
 
     public String getPayWay() {
         return payWay;
+    }
+
+    public String getUserMobile() {
+        return userMobile;
+    }
+
+    public void setUserMobile(String userMobile) {
+        this.userMobile = userMobile;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public boolean isHasGoodsImage() {
+        return hasGoodsImage;
+    }
+
+    public void setHasGoodsImage(boolean hasGoodsImage) {
+        this.hasGoodsImage = hasGoodsImage;
+    }
+
+    public boolean isHasReceiptImage() {
+        return hasReceiptImage;
+    }
+
+    public void setHasReceiptImage(boolean hasReceiptImage) {
+        this.hasReceiptImage = hasReceiptImage;
     }
 
     //获取支付方式的描述
