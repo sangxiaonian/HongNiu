@@ -20,6 +20,10 @@ public class Param {
     public static String insurance_polic;
     //投保须知
     public static String insurance_notify;
+    /**
+     * 最大图片数
+     */
+    public static int IMAGECOUNT=10;
 
     static {
         if (isDebug) {
@@ -44,9 +48,9 @@ public class Param {
      */
     public static final int ENTRY_MIN = 5000;
     //回单
-    public static final int REEIVE = 1;
+    public static final int REEIVE = 2;
     //货单
-    public static final int GOODS= 2;
+    public static final int GOODS= 1;
 
 
     //    AppKey: c33fbf23b76246bf8ee4a3d00b621e03

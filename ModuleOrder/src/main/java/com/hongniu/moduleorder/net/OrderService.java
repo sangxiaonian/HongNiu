@@ -16,6 +16,7 @@ import com.hongniu.moduleorder.entity.OrderParamBean;
 import com.hongniu.moduleorder.entity.OrderSearchBean;
 import com.hongniu.moduleorder.entity.PathBean;
 import com.hongniu.moduleorder.entity.QueryInsurancePriceBean;
+import com.hongniu.moduleorder.entity.QueryReceiveBean;
 import com.hongniu.moduleorder.entity.UpImgData;
 import com.hongniu.moduleorder.entity.VersionBean;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
@@ -237,11 +238,23 @@ public interface OrderService {
     @POST("hongniu/api/file/upload")
     Observable<CommonBean<UpImgData>> uploadMultipleTypeFile(@Part("classify") int type,
                                                              @Part MultipartBody.Part image);
- /**
+
+    /**
      * 上传回单
      */
     @POST("hongniu/api/order/saveReceiptInfo")
     Observable<CommonBean<String>> upReceiver(@Body UpReceiverBean infor);
+
+    /**
+     * 查看回单信息
+     */
+    @POST("hongniu/api/order/queryReceiptInfo")
+    Observable<CommonBean<QueryReceiveBean>> queryReceiptInfo(@Body UpReceiverBean infor);
+ /**
+     * 删除指定回单ID
+     */
+    @POST("hongniu/api/order/deleteReceiptImage")
+    Observable<CommonBean<String>> deleteReceiptImage(@Body UpReceiverBean infor);
 
 
 }

@@ -1,5 +1,7 @@
 package com.hongniu.moduleorder.net;
 
+import android.text.TextUtils;
+
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
@@ -21,6 +23,7 @@ import com.hongniu.moduleorder.entity.OrderParamBean;
 import com.hongniu.moduleorder.entity.OrderSearchBean;
 import com.hongniu.moduleorder.entity.PathBean;
 import com.hongniu.moduleorder.entity.QueryInsurancePriceBean;
+import com.hongniu.moduleorder.entity.QueryReceiveBean;
 import com.hongniu.moduleorder.entity.UpImgData;
 import com.hongniu.moduleorder.entity.VersionBean;
 import com.sang.common.net.error.NetException;
@@ -363,33 +366,32 @@ public class HttpOrderFactory {
      */
     public static Observable<List<UpImgData>> upImageUrl(final int type, final List<String> paths) {
         return Observable.just(paths)
-                .map(new Function<List<String>, List<MultipartBody.Part>>() {
+                .map(new Function<List<String>, List<Observable<CommonBean<UpImgData>>>>() {
                     @Override
-                    public List<MultipartBody.Part> apply(List<String> strings) throws Exception {
-                        List<MultipartBody.Part> parts = new ArrayList<>();
-                        for (String string : strings) {
-                            File file = new File(string);
-                            RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/from-data"), file);
-                            MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
-                            parts.add(body);
-
-                        }
-                        return parts;
-                    }
-                })
-                .map(new Function<List<MultipartBody.Part>, List<Observable<CommonBean<UpImgData>>>>() {
-                    @Override
-                    public List<Observable<CommonBean<UpImgData>>> apply(List<MultipartBody.Part> parts) throws Exception {
+                    public List<Observable<CommonBean<UpImgData>>> apply(List<String> strings) throws Exception {
                         List<Observable<CommonBean<UpImgData>>> commonBeans = new ArrayList<>();
-                        for (MultipartBody.Part part : parts) {
-                            commonBeans.add(OrderClient.getInstance()
-                                    .getService()
-                                    .uploadMultipleTypeFile(type, part));
+                        for (String string : strings) {
+                            if (TextUtils.isEmpty(string)||string.startsWith("http")){
+                                CommonBean<UpImgData> bean = new CommonBean<>();
+                                bean.setCode(200);
+                                UpImgData data=new UpImgData();
+                                data.setAbsolutePath(string);
+                                data.setPath(string);
+                                bean.setData(data);
+                                commonBeans.add(Observable.just(bean));
+                            }else {
+                                File file = new File(string);
+                                RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/from-data"), file);
+                                MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+                                commonBeans.add(OrderClient.getInstance()
+                                        .getService()
+                                        .uploadMultipleTypeFile(type, body));
+                            }
                         }
-
                         return commonBeans;
                     }
                 })
+
                 .flatMap(new Function<List<Observable<CommonBean<UpImgData>>>, ObservableSource<List<CommonBean<UpImgData>>>>() {
 
                     @Override
@@ -402,7 +404,6 @@ public class HttpOrderFactory {
                                         for (Object object : objects) {
                                             list.add((CommonBean<UpImgData>) object);
                                         }
-
                                         return list;
                                     }
                                 });
@@ -429,27 +430,63 @@ public class HttpOrderFactory {
      * @return
      */
     public static Observable<CommonBean<String>> upReceive(final String orderID, final String remark, final List<String> paths) {
-        return upImageUrl(Param.REEIVE, paths)
-                .flatMap(new Function<List<UpImgData>, ObservableSource<CommonBean<String>>>() {
-                    @Override
-                    public ObservableSource<CommonBean<String>> apply(List<UpImgData> upImgData) throws Exception {
-                        UpReceiverBean receiver = new UpReceiverBean();
-                        receiver.setOrderId(orderID);
-                        receiver.setRemark(remark);
-                        if (!CommonUtils.isEmptyCollection(upImgData)) {
-                            List<String> list = new ArrayList<>();
-                            for (UpImgData upImgDatum : upImgData) {
-                                list.add(upImgDatum.getAbsolutePath());
+        if (CommonUtils.isEmptyCollection(paths)){
+            UpReceiverBean receiver = new UpReceiverBean();
+            receiver.setOrderId(orderID);
+            receiver.setRemark(remark);
+            return OrderClient.getInstance().getService().upReceiver(receiver) .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
+        }else {
+            return upImageUrl(Param.REEIVE, paths)
+                    .flatMap(new Function<List<UpImgData>, ObservableSource<CommonBean<String>>>() {
+                        @Override
+                        public ObservableSource<CommonBean<String>> apply(List<UpImgData> upImgData) throws Exception {
+                            UpReceiverBean receiver = new UpReceiverBean();
+                            receiver.setOrderId(orderID);
+                            receiver.setRemark(remark);
+                            if (!CommonUtils.isEmptyCollection(upImgData)) {
+                                List<String> list = new ArrayList<>();
+                                for (UpImgData upImgDatum : upImgData) {
+                                    if (!TextUtils.isEmpty(upImgDatum.getAbsolutePath())) {
+                                        list.add(upImgDatum.getAbsolutePath());
+                                    }
+                                }
+                                receiver.setImageUrls(list);
                             }
-                            receiver.setImageUrls(list);
+                            return OrderClient.getInstance().getService().upReceiver(receiver);
                         }
-                        return OrderClient.getInstance().getService().upReceiver(receiver);
-                    }
-                })
-                .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
+                    })
+                    .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
+        }
+
+    }
+
+    /**
+     * 查看回单
+     *
+     * @return
+     */
+    public static Observable<CommonBean<QueryReceiveBean>> queryReceiptInfo(final String orderID) {
+        UpReceiverBean receiver = new UpReceiverBean();
+        receiver.setOrderId(orderID);
+        return OrderClient.getInstance().getService().queryReceiptInfo(receiver)
+                        .compose(RxUtils.<CommonBean<QueryReceiveBean>>getSchedulersObservableTransformer());
 
 
     }
 
 
+    /**
+     * 删除指定回单
+     * @param orderID
+     * @param imgID
+     */
+    public static Observable<CommonBean<String>> deletedReceiveImage(String orderID, String imgID) {
+        UpReceiverBean receiver = new UpReceiverBean();
+        receiver.setOrderId(orderID);
+        receiver.setImageId(imgID);
+        return OrderClient.getInstance().getService().deleteReceiptImage(receiver)
+                .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
+
+
+    }
 }

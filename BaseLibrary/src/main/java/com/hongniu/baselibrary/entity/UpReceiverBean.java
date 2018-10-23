@@ -11,15 +11,19 @@ public class UpReceiverBean {
     /**
      * true	number	订单ID
      */
-    private String orderId	;
+    private String orderId;
     /**
      * false	string	备注
      */
-    private String remark	;
+    private String remark;
+    /**
+     * 图片Id
+     */
+    private String imageId;
     /**
      * false	arrary	图片url数组(增量)
      */
-    private List<String> imageUrls	;
+    private List<String> imageUrls;
 
     public String getOrderId() {
         return orderId;
@@ -42,6 +46,15 @@ public class UpReceiverBean {
     }
 
     public void setImageUrls(List<String> imageUrls) {
+
         this.imageUrls = imageUrls;
+    }
+
+    public String getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(String imageId) {
+        this.imageId = imageId;
     }
 }

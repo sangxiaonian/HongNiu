@@ -1,5 +1,7 @@
 package com.sang.common.net.error;
 
+import android.os.NetworkOnMainThreadException;
+
 import com.google.gson.JsonParseException;
 
 import org.json.JSONException;
@@ -56,6 +58,8 @@ public class ExceptionEngine {
             msg = "非法参数异常";
         }else if (e instanceof UnknownHostException) {
             msg = "网络异常，无法连接到服务器";
+        }else if (e instanceof NetworkOnMainThreadException) {
+            msg = "请勿在主线程进行网络请求";
         } else {
             msg = e.getMessage();
         }

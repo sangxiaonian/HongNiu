@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.widget.Toast;
 
 import com.hongniu.baselibrary.R;
+import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.ui.PicturePreview;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
@@ -24,7 +25,11 @@ import io.reactivex.disposables.Disposable;
  */
 public class PictureSelectorUtils {
 
-    public static void showPicture(final Activity activity, List<LocalMedia> list){
+    public static void showPicture(final Activity activity,  List<LocalMedia> list){
+        showPicture(activity, Param.IMAGECOUNT,list);
+    }
+
+    public static void showPicture(final Activity activity, int count, List<LocalMedia> list){
 
         // 清空图片缓存，包括裁剪、压缩后的图片 注意:必须要在上传完成后调用 必须要获取权限
         RxPermissions permissions = new RxPermissions(activity);
@@ -53,7 +58,7 @@ public class PictureSelectorUtils {
         PictureSelector.create(activity)
                 .openGallery(PictureMimeType.ofImage())//全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
                 .theme( R.style.picture_white_style)//主题样式(不设置为默认样式) 也可参考demo values/styles下 例如：R.style.picture.white.style
-                .maxSelectNum(10)// 最大图片选择数量 int
+                .maxSelectNum(count)// 最大图片选择数量 int
                 .minSelectNum(1)// 最小选择数量 int
                 .imageSpanCount(4)// 每行显示个数 int
                 .selectionMode(PictureConfig.MULTIPLE)// 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE

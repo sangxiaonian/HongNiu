@@ -28,6 +28,7 @@ import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
+import com.hongniu.moduleorder.entity.QueryReceiveBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.ui.OrderScanReceiptActivity;
 import com.hongniu.moduleorder.utils.LoactionCollectionUtils;
@@ -35,6 +36,7 @@ import com.hongniu.moduleorder.utils.OrderUtils;
 import com.sang.common.event.BusFactory;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
+import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
@@ -73,7 +75,6 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
     }
 
 
-
     @Override
     protected boolean getUseEventBus() {
         return true;
@@ -85,6 +86,7 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
             latLng = new LatLng(event.latitude, event.longitude);
         }
     }
+
     @Override
     public void setArguments(@Nullable Bundle args) {
         super.setArguments(args);
@@ -464,14 +466,25 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
      */
     @Override
     public void onCheckReceipt(OrderDetailBean orderBean) {
-        ToastUtils.getInstance().show("查看回单");
-        List<String> list=new ArrayList<>();
-        list.add("https://www.baidu.com/img/bd_logo1.png");
-        list.add("https://www.baidu.com/img/bd_logo1.png");
-        list.add("https://www.baidu.com/img/bd_logo1.png");
-        list.add("https://www.baidu.com/img/bd_logo1.png");
+        HttpOrderFactory.queryReceiptInfo(orderBean.getId())
+                .subscribe(new NetObserver<QueryReceiveBean>(this) {
+                    @Override
+                    public void doOnSuccess(QueryReceiveBean data) {
+                        final List<String> list = new ArrayList<>();
+                        List<QueryReceiveBean.ImagesBean> images = data.getImages();
+                        if (!CommonUtils.isEmptyCollection(images)) {
+                            for (QueryReceiveBean.ImagesBean image : images) {
+                                list.add(image.getImageUrl());
+                            }
+                        }
+                        OrderScanReceiptActivity.launchActivity(getActivity(), 0, 0, list);
 
-        OrderScanReceiptActivity.launchActivity(getActivity(),0,0,list);
+                    }
+
+
+                });
+
+//
 
     }
 
@@ -483,7 +496,7 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
     @Override
     public void onUpReceipt(OrderDetailBean orderBean) {
         ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_up_receipt)
-                .withString(Param.TRAN,orderBean.getId()).navigation(getContext());
+                .withString(Param.TRAN, orderBean.getId()).navigation(getContext());
     }
 
     /**
@@ -492,9 +505,19 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
      * @param orderBean
      */
     @Override
-    public void onChangeReceipt(OrderDetailBean orderBean) {
-        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_up_receipt).navigation(getContext());
+    public void onChangeReceipt(final OrderDetailBean orderBean) {
+        HttpOrderFactory.queryReceiptInfo(orderBean.getId())
+                .subscribe(new NetObserver<QueryReceiveBean>(this) {
+                    @Override
+                    public void doOnSuccess(QueryReceiveBean data) {
+                        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_up_receipt)
+                                .withString(Param.TRAN, orderBean.getId()).navigation(getContext());
+                        BusFactory.getBus().postSticky(new OrderEvent.UpReceiver(data));
 
+                    }
+
+
+                });
     }
 
     /**

@@ -4,6 +4,7 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.services.core.PoiItem;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
+import com.hongniu.moduleorder.entity.QueryReceiveBean;
 import com.sang.common.event.IBus;
 
 /**
@@ -39,14 +40,14 @@ public class OrderEvent {
      * 删除指定位置图片
      */
     public static class DeletedPic implements IBus.IEvent {
-        private   int position;
+        private int position;
 
         public int getPosition() {
             return position;
         }
 
         public DeletedPic(int position) {
-          this.position=position;
+            this.position = position;
         }
     }
 
@@ -88,6 +89,7 @@ public class OrderEvent {
     }
 
 
+
     /**
      * 查看轨迹
      */
@@ -118,4 +120,15 @@ public class OrderEvent {
     }
 
 
+    /**
+     * 修改回单
+     */
+    public static class UpReceiver implements IBus.IEvent {
+
+      public   QueryReceiveBean bean;
+
+        public UpReceiver(QueryReceiveBean bean) {
+            this.bean = bean;
+        }
+    }
 }

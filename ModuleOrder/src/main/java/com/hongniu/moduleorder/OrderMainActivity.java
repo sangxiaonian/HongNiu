@@ -353,7 +353,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                             loaction.startLoaction();
                         }
                         //首次创建位置信息收集数据
-                        if (upLoactionUtils == null) {
+                        if (upLoactionUtils == null||TextUtils.isEmpty(upLoactionUtils.getCarID())) {
                             if (!DeviceUtils.isOpenGps(mContext)) {
                                 showAleart("为了更准确的记录您的轨迹信息，请打开GPS");
                             }

@@ -15,20 +15,20 @@ import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
-import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.utils.PictureSelectorUtils;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OnItemClickListener;
+import com.hongniu.moduleorder.control.OnItemDeletedClickListener;
 import com.hongniu.moduleorder.control.OrderEvent;
-import com.hongniu.moduleorder.entity.UpImgData;
+import com.hongniu.moduleorder.entity.QueryReceiveBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.ui.adapter.PicAdapter;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.sang.common.recycleview.adapter.XAdapter;
+import com.sang.common.event.BusFactory;
 import com.sang.common.recycleview.holder.PeakHolder;
-import com.sang.common.utils.JLog;
+import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.ToastUtils;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -37,7 +37,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.support.v7.widget.GridLayoutManager.*;
+import static android.support.v7.widget.GridLayoutManager.SpanSizeLookup;
 
 /**
  * @data 2018/10/12
@@ -45,7 +45,7 @@ import static android.support.v7.widget.GridLayoutManager.*;
  * @Description 上传/修改回单
  */
 @Route(path = ArouterParamOrder.activity_order_up_receipt)
-public class OrderUpReceiptActivity extends BaseActivity implements View.OnClickListener, OnItemClickListener<LocalMedia> {
+public class OrderUpReceiptActivity extends BaseActivity implements View.OnClickListener, OnItemClickListener<LocalMedia>,OnItemDeletedClickListener<LocalMedia> {
 
     private RecyclerView rv;
     private EditText etRemark;
@@ -54,6 +54,9 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
     private Button btSum;
 
     public String orderID;
+
+    private List<LocalMedia> urlImages=new ArrayList<>();
+    private QueryReceiveBean bean;//传入的数据
 
 
     @Override
@@ -80,12 +83,12 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
         orderID = getIntent().getStringExtra(Param.TRAN);
         GridLayoutManager manager = new GridLayoutManager(mContext, 4);
 
-        manager.setSpanSizeLookup(new SpanSizeLookup(){
+        manager.setSpanSizeLookup(new SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                if (position<=pics.size()){
+                if (position <= pics.size()) {
                     return 1;
-                }else {
+                } else {
                     return 4;
                 }
             }
@@ -95,7 +98,6 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
         rv.setLayoutManager(manager);
         pics = new ArrayList<>();
         adapter = new PicAdapter(mContext, pics);
-        adapter.setOnItemClickListener(this);
         adapter.addFoot(new PeakHolder(mContext, rv, R.layout.order_item_up_receive_img_foot) {
             @Override
             public void initView(int position) {
@@ -103,18 +105,17 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
                 getItemView().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        PictureSelectorUtils.showPicture((Activity) mContext, pics);
+                        pics.removeAll(urlImages);
+                        if (pics.size()>=Param.IMAGECOUNT){
+                            ToastUtils.getInstance().show("已达到图片最大数量");
+                        }else {
+                            PictureSelectorUtils.showPicture((Activity) mContext,Param.IMAGECOUNT- pics.size(),pics);
+                        }
                     }
                 });
             }
         });
-//        adapter.addFoot(new PeakHolder(mContext,rv,R.layout.item_remark){
-//            @Override
-//            public void initView(int position) {
-//                super.initView(position);
-//                etRemark=itemView.findViewById(R.id.et_remark);
-//            }
-//        });
+
         rv.setAdapter(adapter);
     }
 
@@ -123,6 +124,9 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
     protected void initListener() {
         super.initListener();
         btSum.setOnClickListener(this);
+        adapter.setOnItemClickListener(this);
+
+        adapter.setDeletedClickListener(this);
     }
 
     @Override
@@ -139,6 +143,7 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
                     // 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true  注意：音视频除外
                     // 如果裁剪并压缩了，以取压缩路径为准，因为是先裁剪后压缩的
                     pics.clear();
+                    pics.addAll(urlImages);
                     pics.addAll(selectList);
                     adapter.notifyDataSetChanged();
                     break;
@@ -152,11 +157,47 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(OrderEvent.DeletedPic event) {
+    public void onMessageEvent(final OrderEvent.DeletedPic event) {
         if (event != null && event.getPosition() >= 0 && event.getPosition() < pics.size()) {
-            pics.remove(event.getPosition());
-            adapter.notifyItemDeleted(event.getPosition());
+            if (event.getPosition()<urlImages.size()){
+                QueryReceiveBean.ImagesBean imagesBean = bean.getImages().get(event.getPosition());
+                HttpOrderFactory.deletedReceiveImage(orderID,imagesBean.getId())
+                .subscribe(new NetObserver<String>(this) {
+                    @Override
+                    public void doOnSuccess(String data) {
+                        pics.remove(event.getPosition());
+                        urlImages.remove(event.getPosition());
+                        bean.getImages().remove(event.getPosition());
+                        adapter.notifyItemDeleted(event.getPosition());
+                    }
+                })
+                ;
+
+            }else {
+                pics.remove(event.getPosition());
+                adapter.notifyItemDeleted(event.getPosition());
+            }
         }
+    }
+
+    @Subscribe(sticky = true,threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(OrderEvent.UpReceiver event) {
+        QueryReceiveBean bean = event.bean;
+        if (bean !=null){
+            this.bean =event.bean;
+           etRemark.setText(bean.getRemark()==null?"":bean.getRemark());
+           if (!CommonUtils.isEmptyCollection(bean.getImages())){
+               urlImages.clear();
+               for (QueryReceiveBean.ImagesBean imagesBean : bean.getImages()) {
+                   LocalMedia media=new LocalMedia();
+                   media.setPath(imagesBean.getImageUrl());
+                   urlImages.add(media);
+               }
+           }
+           pics.addAll(0,urlImages);
+           adapter.notifyDataSetChanged();
+       }
+        BusFactory.getBus().removeStickyEvent(event);
     }
 
 
@@ -191,5 +232,16 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
             strings.add(pic.getPath());
         }
         OrderScanReceiptActivity.launchActivity(this, 0, 0, strings);
+    }
+
+    /**
+     * 条目被点击
+     *
+     * @param position
+     * @param localMedia
+     */
+    @Override
+    public void onItemDeletedClick(int position, LocalMedia localMedia) {
+        BusFactory.getBus().post(new OrderEvent.DeletedPic(position));
     }
 }

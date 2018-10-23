@@ -7,6 +7,7 @@ import android.widget.ImageView;
 
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OnItemClickListener;
+import com.hongniu.moduleorder.control.OnItemDeletedClickListener;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.sang.common.imgload.ImageLoader;
 import com.sang.common.recycleview.adapter.XAdapter;
@@ -22,7 +23,12 @@ public class PicAdapter  extends XAdapter<LocalMedia>{
 
 
     OnItemClickListener<LocalMedia> listener;
+    OnItemDeletedClickListener<LocalMedia> deletedClickListener;
 
+
+    public void setDeletedClickListener(OnItemDeletedClickListener<LocalMedia> deletedClickListener) {
+        this.deletedClickListener = deletedClickListener;
+    }
 
     public PicAdapter(Context context, List<LocalMedia> list) {
         super(context, list);
@@ -52,8 +58,12 @@ public class PicAdapter  extends XAdapter<LocalMedia>{
                 img_deleted.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        list.remove(data);
-                         notifyItemDeleted(position);
+                        if (deletedClickListener==null) {
+                            list.remove(data);
+                            notifyItemDeleted(position);
+                        }else {
+                            deletedClickListener.onItemDeletedClick(position,data);
+                        }
 //                                PictureSelectorUtils.openExternalPreview((Activity) mContext,position,pics);
                     }
                 });
