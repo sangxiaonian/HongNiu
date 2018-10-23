@@ -482,7 +482,8 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
      */
     @Override
     public void onUpReceipt(OrderDetailBean orderBean) {
-        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_up_receipt).navigation(getContext());
+        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_up_receipt)
+                .withString(Param.TRAN,orderBean.getId()).navigation(getContext());
     }
 
     /**

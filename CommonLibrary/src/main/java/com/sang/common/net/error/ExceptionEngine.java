@@ -5,6 +5,7 @@ import com.google.gson.JsonParseException;
 import org.json.JSONException;
 
 import java.net.ConnectException;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.text.ParseException;
 
@@ -46,6 +47,8 @@ public class ExceptionEngine {
                 || e instanceof ParseException) {
             msg = "数据解析错误";            //均视为解析错误
         } else if (e instanceof ConnectException) {
+            msg = "服务器连接失败";
+        } else if (e instanceof SocketException) {
             msg = "服务器连接失败";
         }else if (e instanceof SSLHandshakeException) {
             msg = "签名证书异常";

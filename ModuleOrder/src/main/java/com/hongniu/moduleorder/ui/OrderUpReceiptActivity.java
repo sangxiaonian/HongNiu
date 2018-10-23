@@ -3,6 +3,7 @@ package com.hongniu.moduleorder.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -12,16 +13,22 @@ import android.widget.EditText;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.NetObserver;
+import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.utils.PictureSelectorUtils;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OnItemClickListener;
 import com.hongniu.moduleorder.control.OrderEvent;
+import com.hongniu.moduleorder.entity.UpImgData;
+import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.ui.adapter.PicAdapter;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.PeakHolder;
+import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -30,10 +37,12 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.support.v7.widget.GridLayoutManager.*;
+
 /**
  * @data 2018/10/12
  * @Author PING
- * @Description 上传回单
+ * @Description 上传/修改回单
  */
 @Route(path = ArouterParamOrder.activity_order_up_receipt)
 public class OrderUpReceiptActivity extends BaseActivity implements View.OnClickListener, OnItemClickListener<LocalMedia> {
@@ -41,8 +50,11 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
     private RecyclerView rv;
     private EditText etRemark;
     private List<LocalMedia> pics;
-    private PicAdapter  adapter;
+    private PicAdapter adapter;
     private Button btSum;
+
+    public String orderID;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,11 +77,23 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
     @Override
     protected void initData() {
         super.initData();
-        LinearLayoutManager manager = new LinearLayoutManager(mContext);
-        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        orderID = getIntent().getStringExtra(Param.TRAN);
+        GridLayoutManager manager = new GridLayoutManager(mContext, 4);
+
+        manager.setSpanSizeLookup(new SpanSizeLookup(){
+            @Override
+            public int getSpanSize(int position) {
+                if (position<=pics.size()){
+                    return 1;
+                }else {
+                    return 4;
+                }
+            }
+        });
+
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
         rv.setLayoutManager(manager);
         pics = new ArrayList<>();
-
         adapter = new PicAdapter(mContext, pics);
         adapter.setOnItemClickListener(this);
         adapter.addFoot(new PeakHolder(mContext, rv, R.layout.order_item_up_receive_img_foot) {
@@ -84,9 +108,14 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
                 });
             }
         });
+//        adapter.addFoot(new PeakHolder(mContext,rv,R.layout.item_remark){
+//            @Override
+//            public void initView(int position) {
+//                super.initView(position);
+//                etRemark=itemView.findViewById(R.id.et_remark);
+//            }
+//        });
         rv.setAdapter(adapter);
-
-
     }
 
 
@@ -130,16 +159,22 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
         }
     }
 
-    /**
-     * Called when a view has been clicked.
-     *
-     * @param v The view that was clicked.
-     */
+
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.bt_sum) {
-            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
-            finish();
+            List<String> list = new ArrayList<>();
+            for (LocalMedia pic : pics) {
+                list.add(pic.getPath());
+            }
+            HttpOrderFactory.upReceive(orderID, etRemark.getText().toString().trim(), list)
+                    .subscribe(new NetObserver<String>(this) {
+                        @Override
+                        public void doOnSuccess(String data) {
+                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
+                            finish();
+                        }
+                    });
         }
     }
 
@@ -151,10 +186,10 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
      */
     @Override
     public void onItemClick(int position, LocalMedia localMedia) {
-        List<String> strings=new ArrayList<>();
+        List<String> strings = new ArrayList<>();
         for (LocalMedia pic : pics) {
             strings.add(pic.getPath());
         }
-        OrderScanReceiptActivity.launchActivity(this,0,0,strings);
+        OrderScanReceiptActivity.launchActivity(this, 0, 0, strings);
     }
 }

@@ -13,7 +13,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -213,7 +212,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
 
     public void hideButton(boolean hideButton) {
         this.hideButton = hideButton;
-        buildButton(false,false,false);
+        buildButton(false, false, false);
     }
 
     /**
@@ -426,7 +425,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
             llBottom.addView(button);
             button.setOnClickListener(this);
         }
-        hideBottom(llBottom.getChildCount()==0);
+        hideBottom(llBottom.getChildCount() == 0);
     }
 
     public void setOnButtonClickListener(OrderDetailItemControl.OnOrderDetailBtClickListener listener) {
@@ -511,7 +510,8 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                 } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("上传回单");
                 }
-                break;  case ORDER_CHANGE_RECEIPT://    = "修改回单";
+                break;
+            case ORDER_CHANGE_RECEIPT://    = "修改回单";
                 if (listener != null) {
                     listener.onChangeReceipt(orderBean);
                 } else {
@@ -525,7 +525,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("修改订单");
                 }
                 break;
-              case ORDER_CHECK_GOODS://查看货单
+            case ORDER_CHECK_GOODS://查看货单
                 if (listener != null) {
                     listener.onCheckGoods(orderBean);
                 } else {

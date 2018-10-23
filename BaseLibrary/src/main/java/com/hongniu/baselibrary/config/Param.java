@@ -8,6 +8,7 @@ public class Param {
     public static final boolean isDebug = true;
 
 
+
     public static final String weChatAppid = "wxa9d4be10effd4626";
     public static String url;
 
@@ -42,6 +43,10 @@ public class Param {
      * 确认到达时候，距离目的地的最小距离 单位 千米
      */
     public static final int ENTRY_MIN = 5000;
+    //回单
+    public static final int REEIVE = 1;
+    //货单
+    public static final int GOODS= 2;
 
 
     //    AppKey: c33fbf23b76246bf8ee4a3d00b621e03
