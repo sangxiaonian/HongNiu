@@ -471,7 +471,7 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
         list.add("https://www.baidu.com/img/bd_logo1.png");
         list.add("https://www.baidu.com/img/bd_logo1.png");
 
-        OrderScanReceiptActivity.launchActivity(getActivity(),0,1,list);
+        OrderScanReceiptActivity.launchActivity(getActivity(),0,0,list);
 
     }
 

@@ -8,7 +8,6 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,7 +91,6 @@ public class PictureImageGridAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     public void bindImagesData(List<LocalMedia> images) {
         this.images = images;
-        Log.i("tag","---------"+images.size());
         notifyDataSetChanged();
     }
 
@@ -322,8 +320,8 @@ public class PictureImageGridAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
         if (selectImages.size() >= maxSelectNum && !isChecked) {
             boolean eqImg = pictureType.startsWith(PictureConfig.IMAGE);
-            String str = eqImg ? context.getString(R.string.picture_message_max_num, maxSelectNum)
-                    : context.getString(R.string.picture_message_video_max_num, maxSelectNum);
+            String str = eqImg ? context.getString(R.string.picture_message_max_num, maxSelectNum + "")
+                    : context.getString(R.string.picture_message_video_max_num, maxSelectNum + "");
             ToastManage.s(context, str);
             return;
         }

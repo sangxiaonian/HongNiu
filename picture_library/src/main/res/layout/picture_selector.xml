@@ -59,10 +59,15 @@
             <TextView
                 android:id="@+id/picture_tv_ok"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center|left"
-                android:paddingRight="12dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="@string/picture_please_select"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:background="@drawable/shape_2_f06f28"
+                android:layout_marginRight="12dp"
                 android:textColor="?attr/picture.complete.textColor"
                 android:textSize="14sp" />
 

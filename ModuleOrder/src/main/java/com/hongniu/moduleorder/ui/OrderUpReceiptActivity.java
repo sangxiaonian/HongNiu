@@ -14,6 +14,7 @@ import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.utils.PictureSelectorUtils;
 import com.hongniu.moduleorder.R;
+import com.hongniu.moduleorder.control.OnItemClickListener;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.ui.adapter.PicAdapter;
 import com.luck.picture.lib.PictureSelector;
@@ -35,12 +36,12 @@ import java.util.List;
  * @Description 上传回单
  */
 @Route(path = ArouterParamOrder.activity_order_up_receipt)
-public class OrderUpReceiptActivity extends BaseActivity implements View.OnClickListener {
+public class OrderUpReceiptActivity extends BaseActivity implements View.OnClickListener, OnItemClickListener<LocalMedia> {
 
     private RecyclerView rv;
     private EditText etRemark;
     private List<LocalMedia> pics;
-    private XAdapter<LocalMedia> adapter;
+    private PicAdapter  adapter;
     private Button btSum;
 
     @Override
@@ -70,6 +71,7 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
         pics = new ArrayList<>();
 
         adapter = new PicAdapter(mContext, pics);
+        adapter.setOnItemClickListener(this);
         adapter.addFoot(new PeakHolder(mContext, rv, R.layout.order_item_up_receive_img_foot) {
             @Override
             public void initView(int position) {
@@ -139,5 +141,20 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
             finish();
         }
+    }
+
+    /**
+     * 条目被点击
+     *
+     * @param position
+     * @param localMedia
+     */
+    @Override
+    public void onItemClick(int position, LocalMedia localMedia) {
+        List<String> strings=new ArrayList<>();
+        for (LocalMedia pic : pics) {
+            strings.add(pic.getPath());
+        }
+        OrderScanReceiptActivity.launchActivity(this,0,0,strings);
     }
 }

@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.hongniu.moduleorder.R;
+import com.hongniu.moduleorder.control.OnItemClickListener;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.sang.common.imgload.ImageLoader;
 import com.sang.common.recycleview.adapter.XAdapter;
@@ -19,8 +20,16 @@ import java.util.List;
  */
 public class PicAdapter  extends XAdapter<LocalMedia>{
 
+
+    OnItemClickListener<LocalMedia> listener;
+
+
     public PicAdapter(Context context, List<LocalMedia> list) {
         super(context, list);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener<LocalMedia>  listener) {
+        this.listener = listener;
     }
 
     @Override
@@ -29,6 +38,14 @@ public class PicAdapter  extends XAdapter<LocalMedia>{
             @Override
             public void initView(View itemView, final int position, final LocalMedia data) {
                 super.initView(itemView, position, data);
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (listener!=null){
+                            listener.onItemClick(position,data);
+                        }
+                    }
+                });
                 ImageView img = itemView.findViewById(R.id.img);
                 ImageView img_deleted = itemView.findViewById(R.id.img_deleted);
                 ImageLoader.getLoader().load(mContext,img,data.getPath());
