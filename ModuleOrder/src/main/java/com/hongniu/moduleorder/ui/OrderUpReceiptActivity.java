@@ -84,18 +84,6 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
         super.initData();
         orderID = getIntent().getStringExtra(Param.TRAN);
         GridLayoutManager manager = new GridLayoutManager(mContext, 4);
-
-        manager.setSpanSizeLookup(new SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                if (position <= pics.size()) {
-                    return 1;
-                } else {
-                    return 4;
-                }
-            }
-        });
-
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         rv.setLayoutManager(manager);
         pics = new ArrayList<>();

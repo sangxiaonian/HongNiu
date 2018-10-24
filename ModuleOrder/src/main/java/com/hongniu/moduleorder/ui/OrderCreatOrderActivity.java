@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -155,8 +156,8 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     @Override
     protected void initData() {
         super.initData();
-        LinearLayoutManager manager=new LinearLayoutManager(mContext);
-        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        GridLayoutManager manager = new GridLayoutManager(mContext, 4);
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
         rv.setLayoutManager(manager);
         pics=new ArrayList<>();
         adapter=new PicAdapter(mContext,pics);
