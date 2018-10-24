@@ -41,14 +41,21 @@ public class OrderEvent {
      */
     public static class DeletedPic implements IBus.IEvent {
         private int position;
+        private String path;
 
         public int getPosition() {
             return position;
         }
 
-        public DeletedPic(int position) {
-            this.position = position;
+        public String getPath() {
+            return path;
         }
+
+        public DeletedPic(int position, String path) {
+            this.position = position;
+            this.path = path;
+        }
+
     }
 
     /**

@@ -52,13 +52,13 @@ public class ExceptionEngine {
             msg = "服务器连接失败";
         } else if (e instanceof SocketException) {
             msg = "服务器连接失败";
-        }else if (e instanceof SSLHandshakeException) {
+        } else if (e instanceof SSLHandshakeException) {
             msg = "签名证书异常";
         } else if (e instanceof IllegalArgumentException) {
             msg = "非法参数异常";
-        }else if (e instanceof UnknownHostException) {
+        } else if (e instanceof UnknownHostException) {
             msg = "网络异常，无法连接到服务器";
-        }else if (e instanceof NetworkOnMainThreadException) {
+        } else if (e instanceof NetworkOnMainThreadException) {
             msg = "请勿在主线程进行网络请求";
         } else {
             msg = e.getMessage();

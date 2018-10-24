@@ -32,6 +32,20 @@ public class ImageLoaderControl {
         void loadHeaed(Context context, ImageView imageView, Object img);
 
         /**
+         * 设置全局占位图 ，优先级低
+         *
+         * @param imgID
+         */
+        void globalPlaceholder(int imgID);
+
+        /**
+         * 设置全局加载错误时候的图片 ，优先级低
+         *
+         * @param imgID
+         */
+        void globalErrorImg(int imgID);
+
+        /**
          * 设置占位图
          *
          * @param imgID

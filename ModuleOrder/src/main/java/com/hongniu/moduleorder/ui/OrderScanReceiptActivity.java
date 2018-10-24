@@ -89,8 +89,8 @@ public class OrderScanReceiptActivity extends BaseActivity implements ViewPager.
                 @Override
                 public void onClick(View v) {
                     if (currentPosition >= 0 && currentPosition < lists.size()) {
+                        BusFactory.getBus().post(new OrderEvent.DeletedPic(currentPosition,lists.get(currentPosition)));
                         lists.remove(currentPosition);
-                        BusFactory.getBus().post(new OrderEvent.DeletedPic(currentPosition));
                         currentPosition = currentPosition >= lists.size() ? lists.size() - 1 : currentPosition;
                         pagerAdapter.notifyDataSetChanged();
                         changeIndex(currentPosition);

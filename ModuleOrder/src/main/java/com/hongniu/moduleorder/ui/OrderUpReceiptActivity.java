@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,6 +28,7 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.sang.common.event.BusFactory;
+import com.sang.common.imgload.ImageLoader;
 import com.sang.common.recycleview.holder.PeakHolder;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.ToastUtils;
@@ -105,11 +107,16 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
                 getItemView().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        pics.removeAll(urlImages);
                         if (pics.size()>=Param.IMAGECOUNT){
                             ToastUtils.getInstance().show("已达到图片最大数量");
                         }else {
-                            PictureSelectorUtils.showPicture((Activity) mContext,Param.IMAGECOUNT- pics.size(),pics);
+                            List<LocalMedia> list = new ArrayList<>();
+                            for (LocalMedia pic : pics) {
+                                if (!TextUtils.isEmpty(pic.getPath())&&!pic.getPath().startsWith("http")){
+                                    list.add(pic);
+                                }
+                            }
+                            PictureSelectorUtils.showPicture((Activity) mContext,Param.IMAGECOUNT- pics.size(),list);
                         }
                     }
                 });
@@ -156,29 +163,6 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
         return true;
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(final OrderEvent.DeletedPic event) {
-        if (event != null && event.getPosition() >= 0 && event.getPosition() < pics.size()) {
-            if (event.getPosition()<urlImages.size()){
-                QueryReceiveBean.ImagesBean imagesBean = bean.getImages().get(event.getPosition());
-                HttpOrderFactory.deletedReceiveImage(orderID,imagesBean.getId())
-                .subscribe(new NetObserver<String>(this) {
-                    @Override
-                    public void doOnSuccess(String data) {
-                        pics.remove(event.getPosition());
-                        urlImages.remove(event.getPosition());
-                        bean.getImages().remove(event.getPosition());
-                        adapter.notifyItemDeleted(event.getPosition());
-                    }
-                })
-                ;
-
-            }else {
-                pics.remove(event.getPosition());
-                adapter.notifyItemDeleted(event.getPosition());
-            }
-        }
-    }
 
     @Subscribe(sticky = true,threadMode = ThreadMode.MAIN)
     public void onMessageEvent(OrderEvent.UpReceiver event) {
@@ -231,7 +215,7 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
         for (LocalMedia pic : pics) {
             strings.add(pic.getPath());
         }
-        OrderScanReceiptActivity.launchActivity(this, 0, 0, strings);
+        OrderScanReceiptActivity.launchActivity(this, 0, position, strings);
     }
 
     /**
@@ -241,7 +225,23 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
      * @param localMedia
      */
     @Override
-    public void onItemDeletedClick(int position, LocalMedia localMedia) {
-        BusFactory.getBus().post(new OrderEvent.DeletedPic(position));
+    public void onItemDeletedClick(final int position, LocalMedia localMedia) {
+        String path = localMedia.getPath();
+        if (!TextUtils.isEmpty(path)&&path.startsWith("http")){
+            QueryReceiveBean.ImagesBean imagesBean = bean.getImages().get(position);
+            HttpOrderFactory.deletedReceiveImage(orderID,imagesBean.getId())
+                    .subscribe(new NetObserver<String>(this) {
+                        @Override
+                        public void doOnSuccess(String data) {
+                            pics.remove(position);
+                            urlImages.remove(position);
+                            bean.getImages().remove(position);
+                            adapter.notifyItemDeleted(position);
+                        }
+                    });
+        }else {
+            pics.remove(position);
+            adapter.notifyItemDeleted(position);
+        }
     }
 }

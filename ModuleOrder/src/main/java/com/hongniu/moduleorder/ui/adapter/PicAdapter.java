@@ -64,7 +64,6 @@ public class PicAdapter  extends XAdapter<LocalMedia>{
                         }else {
                             deletedClickListener.onItemDeletedClick(position,data);
                         }
-//                                PictureSelectorUtils.openExternalPreview((Activity) mContext,position,pics);
                     }
                 });
             }

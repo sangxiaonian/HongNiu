@@ -16,6 +16,13 @@ import com.sang.common.imgload.ImageLoader;
 
 import java.util.List;
 
+/**
+ *@data  2018/10/24
+ *@Author PING
+ *@Description 图片预览
+ *
+ *
+ */
 public class SimpleFragmentAdapter extends PagerAdapter {
 
 
@@ -50,7 +57,6 @@ public class SimpleFragmentAdapter extends PagerAdapter {
         final SubsamplingScaleImageView longImg = (SubsamplingScaleImageView) contentView.findViewById(R.id.longImg);
         String path =  images.get(position);
 
-        boolean isHttp = PictureMimeType.isHttp(path);
 
         imageView.setVisibility( View.VISIBLE);
         longImg.setVisibility(  View.GONE);

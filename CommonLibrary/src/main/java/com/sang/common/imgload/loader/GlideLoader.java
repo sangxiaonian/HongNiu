@@ -3,10 +3,10 @@ package com.sang.common.imgload.loader;
 import android.content.Context;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.sang.common.imgload.control.ImageLoaderControl;
+import com.sang.common.imgload.loader.glide.GlideApp;
 
 /**
  * 作者： ${桑小年} on 2018/7/28.
@@ -21,6 +21,8 @@ public class GlideLoader implements ImageLoaderControl.IImageLoader {
     private boolean skipMemoryCache;
     private int headPlaceholder;
     private int headErrorImg;
+    private int tempPlaceholder;//临时展位图
+    private int tempErrorImg;
 
 
     public GlideLoader() {
@@ -36,7 +38,8 @@ public class GlideLoader implements ImageLoaderControl.IImageLoader {
      */
     @Override
     public void load(Context context, ImageView imageView, Object img) {
-        Glide.with(context).load(img).apply(getOptions(placeholder, errorImg)).into(imageView);
+        GlideApp.with(context).load(img).apply(getOptions(placeholder, errorImg)).into(imageView);
+
     }
 
     /**
@@ -48,7 +51,7 @@ public class GlideLoader implements ImageLoaderControl.IImageLoader {
      */
     @Override
     public void loadHeaed(Context context, ImageView imageView, Object img) {
-        Glide.with(context).load(img).apply(getOptions(headPlaceholder, headErrorImg)).into(imageView);
+        GlideApp.with(context).load(img).apply(getOptions(headPlaceholder, headErrorImg)).into(imageView);
     }
 
     /**
@@ -57,7 +60,7 @@ public class GlideLoader implements ImageLoaderControl.IImageLoader {
      * @param imgID
      */
     @Override
-    public void placeholder(int imgID) {
+    public void globalPlaceholder(int imgID) {
         this.placeholder = imgID;
 
     }
@@ -68,8 +71,28 @@ public class GlideLoader implements ImageLoaderControl.IImageLoader {
      * @param imgID
      */
     @Override
-    public void errorImg(int imgID) {
+    public void globalErrorImg(int imgID) {
         this.errorImg = imgID;
+    }
+
+    /**
+     * 设置占位图
+     *
+     * @param imgID
+     */
+    @Override
+    public void placeholder(int imgID) {
+        this.tempPlaceholder = imgID;
+    }
+
+    /**
+     * 设置加载错误时候的图片
+     *
+     * @param imgID
+     */
+    @Override
+    public void errorImg(int imgID) {
+        this.tempErrorImg = imgID;
     }
 
     /**
@@ -103,11 +126,18 @@ public class GlideLoader implements ImageLoaderControl.IImageLoader {
     public RequestOptions getOptions(int placeholder, int errorImg) {
         RequestOptions options = new RequestOptions();
         options.fitCenter();
-        if (placeholder != 0) {
+        if (tempPlaceholder != 0) {
+            options.placeholder(tempPlaceholder);
+            tempPlaceholder=0;
+        } else if (placeholder != 0) {
             options.placeholder(placeholder);
         }
-        if (errorImg != 0) {
-            options.placeholder(errorImg);
+
+        if (tempErrorImg != 0) {
+            options.error(tempErrorImg);
+            tempErrorImg=0;
+        } else if (errorImg != 0) {
+            options.error(errorImg);
         }
         if (skipMemoryCache) {
             options.skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE);
