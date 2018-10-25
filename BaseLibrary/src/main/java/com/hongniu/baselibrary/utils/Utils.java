@@ -6,11 +6,18 @@ import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
+import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.LoginBean;
 import com.hongniu.baselibrary.entity.LoginPersonInfor;
-import com.hongniu.baselibrary.entity.PayInforBeans;
+import com.hongniu.baselibrary.entity.QueryPayPassword;
+import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.sang.common.utils.SharedPreferencesUtils;
+
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.functions.Function;
 
 /**
  * 作者： ${PING} on 2018/8/15.
@@ -85,6 +92,7 @@ public class Utils {
 
     /**
      * 储存登录信息
+     *
      * @param data
      */
     public static void saveLoginInfor(LoginBean data) {
@@ -97,11 +105,13 @@ public class Utils {
         SharedPreferencesUtils.getInstance().putString(Param.PERSON_ONFOR, new Gson().toJson(data));
     }
 
-    public static void getDesByPayInfor(PayInforBeans beans){
-
+    public static boolean querySetPassword() {
+        return SharedPreferencesUtils.getInstance().getBoolean(Param.HASPAYPASSWORD);
     }
 
-
+    public static boolean setPassword(boolean has) {
+        return SharedPreferencesUtils.getInstance().putBoolean(Param.HASPAYPASSWORD, has);
+    }
 
 
 }

@@ -6,6 +6,7 @@ import com.hongniu.baselibrary.entity.LoginBean;
 import com.hongniu.baselibrary.entity.LoginPersonInfor;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
+import com.hongniu.baselibrary.entity.QueryPayPassword;
 import com.hongniu.modulelogin.entity.LoginCarInforBean;
 import com.hongniu.modulelogin.entity.LoginSMSParams;
 import com.hongniu.baselibrary.entity.PayInforBeans;
@@ -25,6 +26,9 @@ public interface LoginService {
 
     @POST("hongniu/api/login/login")
     Observable<CommonBean<LoginBean>> loginBySms(@Body LoginSMSParams params);
+
+    @POST("hongniu/api/login/ckeckcode")
+    Observable<CommonBean<LoginBean>> ckeckcode(@Body LoginSMSParams params);
 
     /**
      * 获取个人信息
@@ -95,6 +99,14 @@ public interface LoginService {
      */
     @POST("hongniu/api/refund/add")
     Observable<CommonBean<String>> addBlankCard(@Body PayInforBeans beans);
+
+    /**
+     * 设置支付密码
+     *
+     * @return
+     */
+    @POST("hongniu/api/refund/add")
+    Observable<CommonBean<QueryPayPassword>> setPayPassword(@Body QueryPayPassword beans);
 
 
 }

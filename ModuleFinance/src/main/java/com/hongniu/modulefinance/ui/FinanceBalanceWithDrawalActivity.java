@@ -22,6 +22,7 @@ import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.PayInforBeans;
+import com.hongniu.baselibrary.entity.QueryPayPassword;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.modulefinance.R;
@@ -161,9 +162,23 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.bt_sum) {
-            String trim = etBalance.getText().toString().trim();
-            passwordDialog.setCount(trim);
-            passwordDialog.show();
+            final String trim = etBalance.getText().toString().trim();
+            if (Utils.querySetPassword()) {
+                passwordDialog.setCount(trim);
+                passwordDialog.show();
+            }else {
+                HttpAppFactory.getSmsCode(Utils.getLoginInfor().getMobile())
+                        .subscribe(new NetObserver<String>(this) {
+                            @Override
+                            public void doOnSuccess(String data) {
+                                ArouterUtils.getInstance()
+                                        .builder(ArouterParamLogin.activity_sms_verify)
+                                        .withInt(Param.VERTYPE,1)
+                                        .withString(Param.TRAN, Utils.getLoginInfor().getMobile())
+                                        .navigation(mContext);
+                            }
+                        });
+            }
         } else if (i == R.id.tv_withdrawal_all) {
             etBalance.setText(withdrawal);
             etBalance.setSelection(etBalance.getText().toString().length());

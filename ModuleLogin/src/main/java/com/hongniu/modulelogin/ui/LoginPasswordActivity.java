@@ -8,9 +8,14 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.entity.QueryPayPassword;
+import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.modulelogin.R;
+import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.sang.common.utils.CommonUtils;
+import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.VericationView;
@@ -146,12 +151,23 @@ public class LoginPasswordActivity extends BaseActivity implements View.OnClickL
      */
     @Override
     public void onClick(View v) {
-
         switch (state) {
             //设置和确认密码时候，进行操作
             case SETPASSWORD:
-                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show("密码设置成功");
-                finish();
+                if (type==0){//设置密码
+                    HttpLoginFactory.setPayPassword(ConvertUtils.MD5(vericationView.getContent()))
+                    .subscribe(new NetObserver<QueryPayPassword>(this) {
+                        @Override
+                        public void doOnSuccess(QueryPayPassword data) {
+                            Utils.setPassword(data.isSetPassWord());
+                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show("密码设置成功");
+                            finish();
+                        }
+                    });
+                }else {//修改密码
+
+                }
+
                 break;
             case NEWPASSWORDENTRY:
                 if (password != null && password.equals(vericationView.getContent())) {

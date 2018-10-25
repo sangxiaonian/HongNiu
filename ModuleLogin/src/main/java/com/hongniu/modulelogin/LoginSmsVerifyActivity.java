@@ -33,7 +33,7 @@ import io.reactivex.functions.Function;
 
 /**
  * 输入验证码页面
- * 此页面目前有两种作用 由参数type决定， 传入 key Param.VERTYPE value int类型 0 登录 1重置支付密码
+ * 此页面目前有两种作用 由参数type决定， 传入 key Param.VERTYPE value int类型 0 登录 1设置密码
  */
 @Route(path = ArouterParamLogin.activity_sms_verify)
 public class LoginSmsVerifyActivity extends BaseActivity implements VericationView.OnCompleteListener {
@@ -138,8 +138,16 @@ public class LoginSmsVerifyActivity extends BaseActivity implements VericationVi
     public void onComplete(String content) {
 
         if (type==1){//忘记密码
-            ArouterUtils.getInstance().builder(ArouterParamLogin.activity_login_password).withInt(Param.TRAN,1).navigation(this);
-            finish();
+            HttpLoginFactory
+                    .checkSms(phone, content)
+                    .subscribe(new NetObserver<LoginBean>(this) {
+                        @Override
+                        public void doOnSuccess(LoginBean data) {
+                            ArouterUtils.getInstance().builder(ArouterParamLogin.activity_login_password).withInt(Param.TRAN,0).navigation(mContext);
+                            finish();
+                        }
+                    });
+
         }else if (type==0){//登录
             HttpLoginFactory
                     .loginBySms(phone, content)

@@ -79,6 +79,8 @@ public class Param {
     public static final String LOGIN_ONFOR = "LOGIN_ONFOR";
     //个人信息
     public static final String PERSON_ONFOR = "PERSON_ONFOR";
+    //是否有设置过密码
+    public static final String HASPAYPASSWORD = "HASPAYPASSWORD";
     /**
      * 退出登录
      */

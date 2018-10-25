@@ -3,6 +3,7 @@ package com.hongniu.baselibrary.net;
 import com.hongniu.baselibrary.entity.CarTypeBean;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PayInforBeans;
+import com.hongniu.baselibrary.entity.QueryPayPassword;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.entity.SMSParams;
 
@@ -41,6 +42,15 @@ public interface AppService {
      */
     @POST("hongniu/api/refund/queryMyCards")
     Observable<CommonBean<List<PayInforBeans>>> queryMyCards(@Body PayInforBeans beans);
+
+
+    /**
+     * 查询是否已经设置过支付密码
+     *
+     * @return
+     */
+    @POST("hongniu/api/account/accountdetails")
+    Observable<CommonBean<QueryPayPassword>> queryPayPassword();
 
 }
 

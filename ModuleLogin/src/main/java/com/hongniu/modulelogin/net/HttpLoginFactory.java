@@ -6,6 +6,7 @@ import com.hongniu.baselibrary.entity.LoginBean;
 import com.hongniu.baselibrary.entity.LoginPersonInfor;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
+import com.hongniu.baselibrary.entity.QueryPayPassword;
 import com.hongniu.modulelogin.entity.LoginCarInforBean;
 import com.hongniu.modulelogin.entity.LoginSMSParams;
 import com.hongniu.baselibrary.entity.PayInforBeans;
@@ -38,6 +39,21 @@ public class HttpLoginFactory {
         params.setCheckCode(code);
         return LoginClient.getInstance().getLoginService()
                 .loginBySms(params)
+                .compose(RxUtils.<CommonBean<LoginBean>>getSchedulersObservableTransformer())
+                ;
+    }
+   /**
+     * 使用验证码登录
+     *
+     * @param mobile 手机号
+     * @param code   验证码
+     */
+    public static Observable<CommonBean<LoginBean>> checkSms(String mobile, String code) {
+        LoginSMSParams params = new LoginSMSParams();
+        params.setMobile(mobile);
+        params.setCheckCode(code);
+        return LoginClient.getInstance().getLoginService()
+                .ckeckcode(params)
                 .compose(RxUtils.<CommonBean<LoginBean>>getSchedulersObservableTransformer())
                 ;
     }
@@ -147,4 +163,15 @@ public class HttpLoginFactory {
 
     }
 
+    /**
+     * 设置支付密码
+     * @param content
+     */
+    public static Observable<CommonBean<QueryPayPassword>> setPayPassword(String content) {
+        QueryPayPassword payPassword=new QueryPayPassword();
+        payPassword.passWord=content;
+        return LoginClient.getInstance().getLoginService()
+                .setPayPassword(payPassword)
+                .compose(RxUtils.<CommonBean<QueryPayPassword>>getSchedulersObservableTransformer());
+    }
 }

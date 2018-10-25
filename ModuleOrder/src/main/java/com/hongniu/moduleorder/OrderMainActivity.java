@@ -26,6 +26,7 @@ import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CloseActivityEvent;
+import com.hongniu.baselibrary.entity.QueryPayPassword;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.net.HttpAppFactory;
@@ -46,6 +47,7 @@ import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.JLog;
+import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.SwitchTextLayout;
 import com.sang.common.widget.dialog.BottomAlertDialog;
 import com.sang.common.widget.dialog.CenterAlertDialog;
@@ -228,6 +230,8 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
         checkVersion();
     }
 
+
+
     /**
      * 检查版本号，确定是否需要更新
      */
@@ -288,6 +292,13 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     protected void onStart() {
         super.onStart();
         BusFactory.getBus().post(new CloseActivityEvent());
+        HttpAppFactory.queryPayPassword()
+                .subscribe(new NetObserver<QueryPayPassword>(this) {
+                    @Override
+                    public void doOnSuccess(QueryPayPassword data) {
+                        Utils.setPassword(data.isSetPassWord());
+                    }
+                });
 
     }
 
