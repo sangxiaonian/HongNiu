@@ -14,6 +14,7 @@ import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
+import com.sang.common.utils.CommonUtils;
 
 import java.util.List;
 
@@ -58,24 +59,29 @@ public class FestivityInviteDetailActivity extends RefrushActivity<InviteDetailB
                         TextView tvPhone = itemView.findViewById(R.id.tv_phone);
                         StringBuffer name = new StringBuffer();
                         if (!TextUtils.isEmpty(data.getContact())) {
-                            name.append(data.getContact());
-                            if (name.length() <= 2) {
-                                name.replace(0, 1, "*");
-                            } else {
-                                String re = "";
-                                for (int i = 1; i < name.length(); i++) {
-                                    re += "*";
+
+                            if (CommonUtils.isPhone(data.getContact())){
+                                name.append(data.contact).replace(3, 7, "****");
+                            }else {
+                                name.append(data.getContact());
+                                if (name.length() <= 2) {
+                                    name.replace(0, 1, "*");
+                                } else {
+                                    String re = "";
+                                    for (int i = 1; i < name.length() - 1; i++) {
+                                        re += "*";
+                                    }
+                                    name.replace(1, name.length() - 1, re);
                                 }
-                                name.replace(1, name.length(), re);
                             }
                         }
                         tvName.setText(String.format(getString(R.string.username_infor), name));
                         String format;
                         if (data.getMobile() != null) {
                             if (data.getMobile().length() >= 11) {
-                                format = String.format(getString(R.string.username_infor), new StringBuffer(data.contact).replace(3, 7, "****"));
+                                format = String.format(getString(R.string.username_infor), new StringBuffer(data.mobile).replace(3, 7, "****"));
                             } else {
-                                format = String.format(getString(R.string.username_infor), data.contact);
+                                format = String.format(getString(R.string.username_infor), data.mobile);
 
                             }
                         } else {
