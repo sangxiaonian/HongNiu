@@ -12,6 +12,7 @@ import com.sang.common.widget.dialog.ListBottomDialog;
 
 /**
  * 作者： ${PING} on 2018/9/14.
+ * 我的收款方式弹出的Dialog，微信和银联收款方式
  */
 public class PayWaysDialog  extends ListBottomDialog<String> {
 

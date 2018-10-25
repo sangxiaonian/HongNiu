@@ -115,5 +115,7 @@
     <string name="order_search_des">发车编号、车牌号、货物、订单号</string>
     <string name="order_up_receipt">上传回单</string>
     <string name="hongniu_agreement">泓牛供应链软件许可及服务协议</string>
+    <string name="username_infor">用户名：%1$s</string>
+    <string name="phone_infor">手机号：</string>
 
 </resources>

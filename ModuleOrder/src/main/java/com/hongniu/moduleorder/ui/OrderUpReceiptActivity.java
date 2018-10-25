@@ -216,17 +216,10 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
     public void onItemDeletedClick(final int position, LocalMedia localMedia) {
         String path = localMedia.getPath();
         if (!TextUtils.isEmpty(path)&&path.startsWith("http")){
-            QueryReceiveBean.ImagesBean imagesBean = bean.getImages().get(position);
-            HttpOrderFactory.deletedReceiveImage(orderID,imagesBean.getId())
-                    .subscribe(new NetObserver<String>(this) {
-                        @Override
-                        public void doOnSuccess(String data) {
-                            pics.remove(position);
-                            urlImages.remove(position);
-                            bean.getImages().remove(position);
-                            adapter.notifyItemDeleted(position);
-                        }
-                    });
+            pics.remove(position);
+            urlImages.remove(position);
+            bean.getImages().remove(position);
+            adapter.notifyItemDeleted(position);
         }else {
             pics.remove(position);
             adapter.notifyItemDeleted(position);

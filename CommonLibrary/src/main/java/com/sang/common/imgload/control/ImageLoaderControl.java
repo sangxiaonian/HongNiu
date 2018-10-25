@@ -3,6 +3,8 @@ package com.sang.common.imgload.control;
 import android.content.Context;
 import android.widget.ImageView;
 
+import com.sang.common.imgload.loader.GlideLoader;
+
 
 /**
  * 作者： ${桑小年} on 2018/7/28.
@@ -76,7 +78,7 @@ public class ImageLoaderControl {
         /**
          * 当前加载跳过缓存
          */
-        void skipMemoryCache();
+        IImageLoader skipMemoryCache();
 
 
     }

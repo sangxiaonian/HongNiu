@@ -476,7 +476,7 @@ public class HttpOrderFactory {
 
 
     /**
-     * 删除指定回单
+     * 删除指定回单 （接口已经废弃，暂时无需调用）
      * @param orderID
      * @param imgID
      */
@@ -486,7 +486,5 @@ public class HttpOrderFactory {
         receiver.setImageId(imgID);
         return OrderClient.getInstance().getService().deleteReceiptImage(receiver)
                 .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
-
-
     }
 }

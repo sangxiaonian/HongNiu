@@ -359,7 +359,6 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     }
 
     private void getValue() {
-
         paramBean.setDepartNum(itemStartCarNum.getTextCenter());
         paramBean.setGoodName(itemCargoName.getTextCenter());
         paramBean.setGoodVolume(itemCargoSize.getTextCenter());

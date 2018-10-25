@@ -2,6 +2,7 @@ package xiaonian.sang.com.festivitymodule.net;
 
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
+import com.hongniu.baselibrary.entity.PagerParambean;
 import com.sang.common.net.rx.RxUtils;
 import com.sang.common.utils.ConvertUtils;
 
@@ -31,27 +32,12 @@ public class HttpFestivityFactory {
      * 搜索邀请人详情
      *
      * @return
+     * @param bean
      */
-    public static Observable<CommonBean<PageBean<InviteDetailBean>>> getInviteDetails() {
-        return Observable.just(1)
-                .map(new Function<Integer, CommonBean<PageBean<InviteDetailBean>>>() {
-                    @Override
-                    public CommonBean<PageBean<InviteDetailBean>> apply(Integer integer) throws Exception {
-
-                        CommonBean<PageBean<InviteDetailBean>> bean = new CommonBean<>();
-                        bean.setCode(200);
-
-                        PageBean<InviteDetailBean> pageBean = new PageBean<>();
-                        ArrayList<InviteDetailBean> balanceOfAccountBeans = new ArrayList<>();
-                        int random = ConvertUtils.getRandom(19, 21);
-                        for (int i = 0; i < random; i++) {
-                            balanceOfAccountBeans.add(new InviteDetailBean());
-                        }
-                        pageBean.setList(balanceOfAccountBeans);
-                        bean.setData(pageBean);
-                        return bean;
-                    }
-                });
+    public static Observable<CommonBean<PageBean<InviteDetailBean>>> getInviteDetails(PagerParambean bean) {
+        return FestivityClient.getInstance().getService()
+                .getInviteDetails(bean)
+                .compose(RxUtils.<CommonBean<PageBean<InviteDetailBean>>>getSchedulersObservableTransformer());
     }
 
     /**

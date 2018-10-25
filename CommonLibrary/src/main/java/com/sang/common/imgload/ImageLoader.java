@@ -121,7 +121,8 @@ public class ImageLoader implements ImageLoaderControl.IImageLoader {
      * 跳过缓存
      */
     @Override
-    public void skipMemoryCache() {
+    public ImageLoaderControl.IImageLoader skipMemoryCache() {
         realLoader.skipMemoryCache();
+        return this;
     }
 }

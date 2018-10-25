@@ -119,8 +119,9 @@ public class GlideLoader implements ImageLoaderControl.IImageLoader {
      * 当前一次不适用缓存
      */
     @Override
-    public void skipMemoryCache() {
+    public ImageLoaderControl.IImageLoader skipMemoryCache() {
         skipMemoryCache = true;
+        return this;
     }
 
     public RequestOptions getOptions(int placeholder, int errorImg) {

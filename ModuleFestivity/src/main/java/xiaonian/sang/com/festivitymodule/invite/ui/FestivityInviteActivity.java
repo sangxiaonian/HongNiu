@@ -17,12 +17,15 @@ import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.H5Config;
+import com.hongniu.baselibrary.utils.Utils;
 import com.sang.common.utils.ToastUtils;
+import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.thirdlibrary.share.ShareClient;
 
 import xiaonian.sang.com.festivitymodule.R;
 import xiaonian.sang.com.festivitymodule.invite.entity.QueryInvitedInfo;
 import xiaonian.sang.com.festivitymodule.net.HttpFestivityFactory;
+import xiaonian.sang.com.festivitymodule.widget.ScanDialog;
 
 /**
  * @data 2018/10/17
@@ -37,6 +40,7 @@ public class FestivityInviteActivity extends BaseActivity implements View.OnClic
     private Button bt_share;//微信分享
     private TextView tv_invite_scan;//二维码邀请
     private TextView tv_invite_rule;//邀请规则
+    private QueryInvitedInfo invitedInfor;//个人邀请信息
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,16 +71,22 @@ public class FestivityInviteActivity extends BaseActivity implements View.OnClic
         tv_money.setText("0");
 
 
+       getData();
+    }
+
+
+    private void getData(){
         HttpFestivityFactory.queryInvitedInfor()
                 .subscribe(new NetObserver<QueryInvitedInfo>(this) {
                     @Override
                     public void doOnSuccess(QueryInvitedInfo data) {
-
+                        invitedInfor=data;
+                        tv_invite_count.setText(getSpanner(data.getInvitedCount()));
                     }
                 });
-
-
     }
+
+
 
     @Override
     protected void initListener() {
@@ -104,12 +114,21 @@ public class FestivityInviteActivity extends BaseActivity implements View.OnClic
 
         } else if (v.getId() == R.id.bt_share) {
 //            ToastUtils.getInstance().show("微信分享");
-            new ShareClient(1).shareUrl(mContext,"https://www.baidu.com/",getString(R.string.festivity_invite_share_title),getString(R.string.festivity_invite_share_des), BitmapFactory.decodeResource(getResources(),R.mipmap.app_logo));
+            if (invitedInfor!=null){
+                new ShareClient(1).shareUrl(mContext,invitedInfor.getInvitedUrl(),getString(R.string.festivity_invite_share_title),getString(R.string.festivity_invite_share_des), BitmapFactory.decodeResource(getResources(),R.mipmap.app_logo));
+            }else {
+                getData();
+            }
+
         } else if (v.getId() == R.id.tv_invite_scan) {
             ToastUtils.getInstance().show("当面邀请");
-
+            if (invitedInfor!=null){
+                showScanDialog(Utils.getPersonInfor().getContact() == null ? "待完善" : Utils.getPersonInfor().getContact()
+                        ,invitedInfor.getInvitedQrCodeUrl());
+            }else {
+                getData();
+            }
         }else   if (v.getId() == R.id.tv_invite_rule) {
-//            ToastUtils.getInstance().show("邀请规则");
             H5Config h5Config = new H5Config("邀请规则", Param.hongniu_agreement, true);
             ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5).withSerializable(Param.TRAN,h5Config).navigation(this);
 
@@ -128,6 +147,15 @@ public class FestivityInviteActivity extends BaseActivity implements View.OnClic
         builder.setSpan(span, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         return builder;
+    }
+
+
+    private void showScanDialog(String title,String img){
+          new CenterAlertBuilder()
+                .setDialogTitle("邀请人："+title)
+                .setDialogContent(img)
+                .creatDialog(new ScanDialog(mContext)).show();
+
     }
 
 
