@@ -4,13 +4,14 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
+import com.hongniu.modulefinance.entity.AccountFloowParamBean;
+import com.hongniu.modulefinance.entity.AllBalanceOfAccountBean;
 import com.hongniu.modulefinance.entity.BalanceOfAccountBean;
-import com.hongniu.modulefinance.entity.FinanceOrderBean;
 import com.hongniu.modulefinance.entity.NiuOfAccountBean;
 import com.hongniu.modulefinance.entity.QueryExpendBean;
 import com.hongniu.modulefinance.entity.QueryExpendResultBean;
+import com.hongniu.modulefinance.entity.WalletHomeDetail;
 import com.sang.common.net.rx.RxUtils;
-import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.utils.ConvertUtils;
 
 import java.util.ArrayList;
@@ -83,30 +84,57 @@ public class HttpFinanceFactory {
     }
 
     /**
-     * 余额明细
+     * 查询钱包账户详情
+     *
+     * @return
      */
-    public static Observable<CommonBean<PageBean<BalanceOfAccountBean>>> gueryBananceOfAccount() {
-        return Observable.just(1)
-                .map(new Function<Integer, CommonBean<PageBean<BalanceOfAccountBean>>>() {
-                    @Override
-                    public CommonBean<PageBean<BalanceOfAccountBean>> apply(Integer integer) throws Exception {
-
-                        CommonBean<PageBean<BalanceOfAccountBean>> bean = new CommonBean<>();
-                        bean.setCode(200);
-
-                        PageBean<BalanceOfAccountBean> pageBean = new PageBean<>();
-                        ArrayList<BalanceOfAccountBean> balanceOfAccountBeans = new ArrayList<>();
-                        int random = ConvertUtils.getRandom(19, 21);
-                        for (int i = 0; i < random; i++) {
-                            balanceOfAccountBeans.add(new BalanceOfAccountBean());
-                        }
-                        pageBean.setList(balanceOfAccountBeans);
-                        bean.setData(pageBean);
-
-                        return bean;
-                    }
-                });
+    public static Observable<CommonBean<WalletHomeDetail>> queryAccountdetails() {
+        return FinanceClient.getInstance().getService().queryAccountdetails()
+                .compose(RxUtils.<CommonBean<WalletHomeDetail>>getSchedulersObservableTransformer())
+                ;
     }
+ /**
+     * 查询钱包账户详情
+     *
+     * @return
+     */
+    public static Observable<CommonBean<WalletHomeDetail>> queryMyCards() {
+        return FinanceClient.getInstance().getService().queryMyCards()
+                .compose(RxUtils.<CommonBean<WalletHomeDetail>>getSchedulersObservableTransformer())
+                ;
+    }
+
+    /**
+     * 余额明细/待入账明细
+     *
+     * @param type        1余额 2待入账
+     * @param currentPage
+     */
+    public static Observable<CommonBean<PageBean<BalanceOfAccountBean>>> gueryBananceOfAccount(final int type, int currentPage) {
+        final AccountFloowParamBean bean = new AccountFloowParamBean();
+        bean.setFlowtype(type);
+        bean.setPageNum(currentPage);
+        bean.setPageSize(Param.PAGE_SIZE);
+        return FinanceClient
+                .getInstance()
+                .getService()
+                .queryAccountFllows(bean)
+                .map(new Function<CommonBean<AllBalanceOfAccountBean>, CommonBean<PageBean<BalanceOfAccountBean>>>() {
+                    @Override
+                    public CommonBean<PageBean<BalanceOfAccountBean>> apply(CommonBean<AllBalanceOfAccountBean> bean) throws Exception {
+                        CommonBean<PageBean<BalanceOfAccountBean>> result = new CommonBean<>();
+                        result.setCode(bean.getCode());
+                        result.setMsg(bean.getMsg());
+                        if (bean.getCode() == 200) {
+                            result.setData(type == 1 ? bean.getData().getAccountFlows() : bean.getData().getTobeaccountFlows());
+                        }
+                        return result;
+                    }
+                })
+                .compose(RxUtils.<CommonBean<PageBean<BalanceOfAccountBean>>>getSchedulersObservableTransformer())
+                ;
+    }
+
     /**
      * 牛币待入账，已入账查询
      */

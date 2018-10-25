@@ -1,10 +1,13 @@
-package com.hongniu.modulelogin.entity;
+package com.hongniu.baselibrary.entity;
 
 /**
  * 作者： ${PING} on 2018/9/17.
  * 收款方式的信息
  */
 public class PayInforBeans {
+
+
+
 
     /**
      * 是否是默认支付方式   1默认，0非默认
@@ -36,7 +39,28 @@ public class PayInforBeans {
     /**
      * 支付方式 1微信支付，0银联支付  （此参数为个人写入，方便区别，非接口返回参数）
      */
-    private int payWays;
+    private int type;
+
+  private String  openId	;//true	String	微信openid
+  private String  wxNickName;//
+    // 	true	String	微信昵称
+
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
+    }
+
+    public String getWxNickName() {
+        return wxNickName;
+    }
+
+    public void setWxNickName(String wxNickName) {
+        this.wxNickName = wxNickName;
+    }
 
     public String getId() {
         return id;
@@ -54,12 +78,12 @@ public class PayInforBeans {
         this.isDefault = isDefault;
     }
 
-    public int getPayWays() {
-        return payWays;
+    public int getType() {
+        return type;
     }
 
-    public void setPayWays(int payWays) {
-        this.payWays = payWays;
+    public void setType(int type) {
+        this.type = type;
     }
 
     public String getBankName() {

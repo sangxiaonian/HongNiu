@@ -1,8 +1,11 @@
 package com.hongniu.modulefinance.ui;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
@@ -18,23 +21,26 @@ import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.entity.PayInforBeans;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.modulefinance.R;
-import com.hongniu.modulefinance.entity.AccountInforBean;
 import com.hongniu.modulefinance.widget.AccountDialog;
+import com.hongniu.modulefinance.widget.CreatAccountDialog;
+import com.sang.common.utils.CommonUtils;
+import com.sang.common.utils.PointLengthFilter;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.dialog.PasswordDialog;
 import com.sang.common.widget.dialog.inter.DialogControl;
+import com.sang.thirdlibrary.pay.wechat.WeChatAppPay;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 余额提现界面
  */
 @Route(path = ArouterParamsFinance.activity_finance_balance_with_drawal)
-public class FinanceBalanceWithDrawalActivity extends BaseActivity implements View.OnClickListener, TextWatcher, AccountDialog.OnDialogClickListener, PasswordDialog.OnPasswordDialogListener {
+public class FinanceBalanceWithDrawalActivity extends BaseActivity implements View.OnClickListener, TextWatcher, AccountDialog.OnDialogClickListener, PasswordDialog.OnPasswordDialogListener, CreatAccountDialog.OnAddNewPayWayListener {
 
     private ImageView imgPayIcon;
     private TextView tvPayWay;
@@ -44,9 +50,10 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
     private EditText etBalance;//全部提现
     private Button btSum;
     private ConstraintLayout conPay;
-    private float withdrawal;//提现金额
+    private String withdrawal;//提现金额
     AccountDialog accountDialog;
     PasswordDialog passwordDialog;
+    private CreatAccountDialog creatAccountDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,18 +78,66 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
         conPay = findViewById(R.id.con_pay_way);
         accountDialog = new AccountDialog(this);
         passwordDialog = new PasswordDialog(this);
+        creatAccountDialog = new CreatAccountDialog(mContext);
     }
 
 
     @Override
     protected void initData() {
         super.initData();
-        withdrawal = 1500.25f;
-        imgPayIcon.setImageResource(R.mipmap.icon_ylzf_40);
-        tvPayWay.setText("中国工商银行");
-        tvPayAccount.setText("尾号 4889 储蓄卡");
-        tvWithDrawale.setText(String.format(getString(R.string.wallet_balance_account_num), withdrawal + ""));
+        etBalance.setFilters(new InputFilter[]{new PointLengthFilter()});
+        etBalance.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        withdrawal = getIntent().getStringExtra(Param.TRAN);
+        withdrawal = TextUtils.isEmpty(withdrawal) ? "0" : withdrawal;
+        tvWithDrawale.setText(String.format(getString(R.string.wallet_balance_account_num), withdrawal));
+        HttpAppFactory.queryMyCards()
+                .subscribe(new NetObserver<List<PayInforBeans>>(this) {
+                    @Override
+                    public void doOnSuccess(List<PayInforBeans> data) {
+                        if (!CommonUtils.isEmptyCollection(data)) {
+                            PayInforBeans def = null;
+                            for (PayInforBeans datum : data) {
+                                if (datum.getIsDefault() == 1) {
+                                    def = datum;
+                                    break;
+                                }
+                            }
+                            def = (def == null) ? data.get(0) : def;
+                            initPayWay(def);
+
+                        }
+                    }
+                })
+        ;
+
+
     }
+
+
+    private void initPayWay(PayInforBeans def) {
+        if (def == null) {
+            return;
+        }
+        if (def.getType() == 0) {//微信
+            imgPayIcon.setImageResource(R.mipmap.icon_wechat_40);
+            tvPayWay.setText(getString(R.string.wallet_balance_withDrawal_weiChat));
+            tvPayAccount.setText(String.format(getString(R.string.account), def.getWxNickName()) == null ? "" : def.getWxNickName());
+        } else if (def.getType() == 1) {//银行卡
+            imgPayIcon.setImageResource(R.mipmap.icon_ylzf_40);
+            tvPayWay.setText(def.getBankName() == null ? "" : def.getBankName());
+            if (def.getCardNo() != null && def.getCardNo().length() > 4) {
+                tvPayAccount.setText(String.format(getString(R.string.wallet_balance_withdrawal_card_num), def.getCardNo().substring(0, 4)));
+            } else {
+                tvPayAccount.setText(String.format(getString(R.string.wallet_balance_withdrawal_card_num), ""));
+            }
+
+        } else if (def.getType() == 3) {//支付宝
+            imgPayIcon.setImageResource(R.mipmap.icon_zfb_40);
+            tvPayWay.setText(getString(R.string.wallet_balance_withDrawal_ali));
+            tvPayAccount.setText(String.format(getString(R.string.account), def.getWxNickName()) == null ? "" : def.getWxNickName());
+        }
+    }
+
 
     @Override
     protected void initListener() {
@@ -93,6 +148,8 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
         conPay.setOnClickListener(this);
         accountDialog.setListener(this);
         passwordDialog.setListener(this);
+        creatAccountDialog.setListener(this);
+
     }
 
     /**
@@ -104,20 +161,26 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.bt_sum) {
-            passwordDialog.setCount(withdrawal + "");
+            String trim = etBalance.getText().toString().trim();
+            passwordDialog.setCount(trim);
             passwordDialog.show();
         } else if (i == R.id.tv_withdrawal_all) {
-            etBalance.setText(withdrawal + "");
+            etBalance.setText(withdrawal);
             etBalance.setSelection(etBalance.getText().toString().length());
 
         } else if (i == R.id.con_pay_way) {//选择支付方式
-            List<AccountInforBean> datas = new ArrayList<>();
-            datas.add(new AccountInforBean());
-            datas.add(new AccountInforBean());
-            datas.add(new AccountInforBean());
-            datas.add(new AccountInforBean());
-            accountDialog.setData(datas);
-            accountDialog.show();
+            HttpAppFactory.queryMyCards()
+                    .subscribe(new NetObserver<List<PayInforBeans>>(this) {
+                        @Override
+                        public void doOnSuccess(List<PayInforBeans> data) {
+                            if (!CommonUtils.isEmptyCollection(data)) {
+                                accountDialog.setData(data);
+                                accountDialog.show();
+                            }
+                        }
+                    })
+            ;
+
 
         }
     }
@@ -139,13 +202,17 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
     }
 
     @Override
-    public void onChoice(DialogControl.IDialog dialog, int position, AccountInforBean bean) {
+    public void onChoice(DialogControl.IDialog dialog, int position, PayInforBeans bean) {
+        initPayWay(bean);
         dialog.dismiss();
     }
 
     @Override
     public void onAddClick(DialogControl.IDialog dialog) {
-        ArouterUtils.getInstance().builder(ArouterParamLogin.activity_pay_ways).navigation(this);
+        dialog.dismiss();
+
+        creatAccountDialog.show();
+
     }
 
     /**
@@ -181,7 +248,7 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
     public void onForgetPassowrd(DialogControl.IDialog dialog) {
         ArouterUtils.getInstance()
                 .builder(ArouterParamLogin.activity_sms_verify)
-                .withInt(Param.VERTYPE,1)
+                .withInt(Param.VERTYPE, 1)
                 .withString(Param.TRAN, Utils.getLoginInfor().getMobile())
                 .navigation(mContext);
 //        HttpAppFactory.getSmsCode(Utils.getLoginInfor().getMobile())
@@ -196,5 +263,22 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
 //                    }
 //                });
 
+    }
+
+    @Override
+    public void onAddUnipay(DialogControl.IDialog dialog) {
+        dialog.dismiss();
+        ArouterUtils.getInstance().builder(ArouterParamLogin.activity_login_add_blank_card).navigation((Activity) mContext,1);
+    }
+
+    @Override
+    public void onAddWechat(DialogControl.IDialog dialog) {
+        dialog.dismiss();
+        WeChatAppPay.jumpToXia(mContext, false);
+    }
+
+    @Override
+    public void onAddAli(DialogControl.IDialog dialog) {
+        dialog.dismiss();
     }
 }

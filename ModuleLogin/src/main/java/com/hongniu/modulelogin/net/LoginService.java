@@ -8,7 +8,7 @@ import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
 import com.hongniu.modulelogin.entity.LoginCarInforBean;
 import com.hongniu.modulelogin.entity.LoginSMSParams;
-import com.hongniu.modulelogin.entity.PayInforBeans;
+import com.hongniu.baselibrary.entity.PayInforBeans;
 
 import java.util.List;
 

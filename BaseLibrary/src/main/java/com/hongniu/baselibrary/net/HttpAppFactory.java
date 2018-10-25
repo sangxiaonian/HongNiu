@@ -2,12 +2,17 @@ package com.hongniu.baselibrary.net;
 
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.PayInforBeans;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.entity.SMSParams;
 import com.sang.common.net.rx.RxUtils;
 import com.sang.common.utils.ConvertUtils;
 
+import java.util.List;
+
 import io.reactivex.Observable;
+import retrofit2.http.Body;
+import retrofit2.http.POST;
 
 /**
  * 作者： ${PING} on 2018/8/13.
@@ -37,6 +42,19 @@ public class HttpAppFactory {
                 .getSmsCode(params)
                 .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer())
                 ;
+    }
+
+
+    /**
+     * 查询收款方式列表
+     */
+    public static Observable<CommonBean<List<PayInforBeans>>> queryMyCards() {
+
+        PayInforBeans bean = new PayInforBeans();
+        return AppClient.getInstance().getService()
+                .queryMyCards(bean)
+                .compose(RxUtils.<CommonBean<List<PayInforBeans>>>getSchedulersObservableTransformer());
+
     }
 
 }

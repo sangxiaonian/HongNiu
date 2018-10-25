@@ -46,8 +46,6 @@ public abstract class RefrushFragmet<T> extends BaseFragment implements OnRefres
             refresh.setOnRefreshListener(this);
             refresh.setOnLoadMoreListener(this);
         }
-
-
         return view;
     }
 

@@ -1,6 +1,5 @@
 package com.hongniu.modulelogin.net;
 
-import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CarTypeBean;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.LoginBean;
@@ -9,9 +8,8 @@ import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
 import com.hongniu.modulelogin.entity.LoginCarInforBean;
 import com.hongniu.modulelogin.entity.LoginSMSParams;
-import com.hongniu.modulelogin.entity.PayInforBeans;
+import com.hongniu.baselibrary.entity.PayInforBeans;
 import com.sang.common.net.rx.RxUtils;
-import com.sang.common.utils.ConvertUtils;
 
 import java.util.List;
 
@@ -121,17 +119,7 @@ public class HttpLoginFactory {
 
     }
 
-    /**
-     * 查询收款方式列表
-     */
-    public static Observable<CommonBean<List<PayInforBeans>>> queryMyPayInforList() {
 
-        PayInforBeans bean = new PayInforBeans();
-        return LoginClient.getInstance().getLoginService()
-                .queryMyPayInforList(bean)
-                .compose(RxUtils.<CommonBean<List<PayInforBeans>>>getSchedulersObservableTransformer());
-
-    }
   /**
      * 更改默认收款方式
    * @param id 付款方式ID
@@ -152,7 +140,7 @@ public class HttpLoginFactory {
      * 新增银行卡收款方式
      */
     public static Observable<CommonBean<String>> addBlankCard(PayInforBeans bean) {
-
+        bean.setType(1);
         return LoginClient.getInstance().getLoginService()
                 .addBlankCard(bean)
                 .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());

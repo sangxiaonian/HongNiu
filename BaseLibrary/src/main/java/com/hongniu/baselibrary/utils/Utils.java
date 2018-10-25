@@ -9,6 +9,7 @@ import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.LoginBean;
 import com.hongniu.baselibrary.entity.LoginPersonInfor;
+import com.hongniu.baselibrary.entity.PayInforBeans;
 import com.sang.common.utils.SharedPreferencesUtils;
 
 /**
@@ -52,11 +53,6 @@ public class Utils {
      */
     public static boolean checkInfor() {
         LoginPersonInfor personInfor = getPersonInfor();
-//        {
-//            "address":"上海", "city":"武汉市", "cityId":"1682", "contact":"桑小年", "district":
-//            "武汉市", "districtId":"1682", "email":"45316497@qq.com", "idnumber":
-//            "410184199111111111", "mobile":"15515871516", "province":"湖北省", "provinceId":"1681"
-//        }
         if (personInfor == null) {
             return false;
         } else if (TextUtils.isEmpty(personInfor.getAddress())
@@ -99,6 +95,13 @@ public class Utils {
     public static void savePersonInfor(LoginPersonInfor data) {
         //储存个人信息
         SharedPreferencesUtils.getInstance().putString(Param.PERSON_ONFOR, new Gson().toJson(data));
+    }
+
+    public static void getDesByPayInfor(PayInforBeans beans){
 
     }
+
+
+
+
 }

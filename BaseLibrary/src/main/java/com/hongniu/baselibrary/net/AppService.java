@@ -2,6 +2,7 @@ package com.hongniu.baselibrary.net;
 
 import com.hongniu.baselibrary.entity.CarTypeBean;
 import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.PayInforBeans;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.entity.SMSParams;
 
@@ -33,7 +34,13 @@ public interface AppService {
      */
     @POST("hongniu/api/login/getcheckcode")
     Observable<CommonBean<String>> getSmsCode(@Body SMSParams params);
-
+    /**
+     * 获取我的付款方式
+     *
+     * @return
+     */
+    @POST("hongniu/api/refund/queryMyCards")
+    Observable<CommonBean<List<PayInforBeans>>> queryMyCards(@Body PayInforBeans beans);
 
 }
 

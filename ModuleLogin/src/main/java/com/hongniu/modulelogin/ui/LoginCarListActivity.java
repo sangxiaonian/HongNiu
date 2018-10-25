@@ -26,6 +26,13 @@ import java.util.List;
 
 import io.reactivex.Observable;
 
+/**
+ *@data  2018/10/25
+ *@Author PING
+ *@Description 我的车辆
+ *
+ *
+ */
 @Route(path = ArouterParamLogin.activity_car_list)
 public class LoginCarListActivity extends RefrushActivity<LoginCarInforBean> implements View.OnClickListener {
 

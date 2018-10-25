@@ -17,11 +17,13 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.modulefinance.R;
 import com.hongniu.modulefinance.control.FinanceWalletControl;
+import com.hongniu.modulefinance.entity.WalletHomeDetail;
+import com.hongniu.modulefinance.net.HttpFinanceFactory;
 import com.hongniu.modulefinance.present.WalletPresenter;
-import com.sang.common.utils.ToastUtils;
 
 /**
  * 我的钱包首页
@@ -40,9 +42,12 @@ public class FinanceWalletActivity extends BaseActivity implements FinanceWallet
     private RadioButton rbLeft;//余额明细
     private RadioButton rbRight;//待入账明细
 
-     private Fragment blankFrangmet;//余额明细
-     private Fragment currentFrament;//余额明细
-     private Fragment unEntryFrangmet;//待入账明细
+    private Fragment blankFrangmet;//余额明细
+    private Fragment currentFrament;//余额明细
+    private Fragment unEntryFrangmet;//待入账明细
+
+    private WalletHomeDetail walletDetail;//账户数据
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,22 +79,37 @@ public class FinanceWalletActivity extends BaseActivity implements FinanceWallet
     @Override
     protected void initData() {
         super.initData();
-        if (Param.isDebug) {
-            tvBalanceOfAccount.setText(getString(R.string.money_symbol) + "1800.00");
-            tvBalanceOfUnentry.setText("( 您有" + 300 + "元待入账金额 )");
-            SpannableStringBuilder builder = new SpannableStringBuilder();
-            builder.append("您有");
-            final int start = builder.length();
-            builder.append("123");
-            final int end = builder.length();
-            builder.append("个牛币");
-            ForegroundColorSpan span = new ForegroundColorSpan(getResources().getColor(R.color.color_light));
-            builder.setSpan(span, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            tvNiuBalanceOfAccount.setText(builder);
-            tvNiuBalanceOfUnentry.setText(30 + "牛币待入账");
-        }
+        tvBalanceOfAccount.setText(String.format(getString(R.string.money_symbol_des), "0"));
+        tvBalanceOfUnentry.setText(String.format(getString(R.string.wallet_balance_wait_enty), "0"));
+        tvNiuBalanceOfAccount.setText(getNew("0"));
+        tvNiuBalanceOfAccount.setText(getNew("0"));
+        tvNiuBalanceOfUnentry.setText(String.format(getString(R.string.wallet_balance_niu_unentry_count), "0"));
+
+        HttpFinanceFactory.queryAccountdetails()
+                .subscribe(new NetObserver<WalletHomeDetail>(this) {
+                    @Override
+                    public void doOnSuccess(WalletHomeDetail data) {
+                        walletDetail=data;
+                        tvBalanceOfAccount.setText(String.format(getString(R.string.money_symbol_des), data.getAvailableBalance()));
+                        tvBalanceOfUnentry.setText(String.format(getString(R.string.wallet_balance_wait_enty), data.getTobeCreditedBalance()));
+                        tvNiuBalanceOfAccount.setText(getNew(data.getAvailableIntegral()));
+                        tvNiuBalanceOfUnentry.setText(String.format(getString(R.string.wallet_balance_niu_unentry_count), data.getTobeCreditedIntegral()));
+                    }
+                });
 
 
+    }
+
+    private SpannableStringBuilder getNew(String count) {
+        SpannableStringBuilder builder = new SpannableStringBuilder();
+        builder.append("您有");
+        final int start = builder.length();
+        builder.append(count);
+        final int end = builder.length();
+        builder.append("个牛币");
+        ForegroundColorSpan span = new ForegroundColorSpan(getResources().getColor(R.color.color_light));
+        builder.setSpan(span, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return builder;
     }
 
 
@@ -117,9 +137,15 @@ public class FinanceWalletActivity extends BaseActivity implements FinanceWallet
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.con_balance) {
-            ArouterUtils.getInstance().builder(ArouterParamsFinance.activity_finance_balance).navigation(this);
+            ArouterUtils.getInstance()
+                    .builder(ArouterParamsFinance.activity_finance_balance)
+                    .withParcelable(Param.TRAN,walletDetail)
+                    .navigation(this);
         } else if (i == R.id.ll_niu) {
-            ArouterUtils.getInstance().builder(ArouterParamsFinance.activity_finance_niu).navigation(this);
+            ArouterUtils.getInstance()
+                    .builder(ArouterParamsFinance.activity_finance_niu)
+                    .withParcelable(Param.TRAN,walletDetail)
+                    .navigation(this);
         }
     }
 
@@ -134,36 +160,35 @@ public class FinanceWalletActivity extends BaseActivity implements FinanceWallet
     public void onCheckedChanged(RadioGroup group, int checkedId) {
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        if (currentFrament!=null){
+        if (currentFrament != null) {
             fragmentTransaction.hide(currentFrament);
         }
         if (checkedId == rbLeft.getId()) {
-            if (blankFrangmet==null) {
+            if (blankFrangmet == null) {
                 blankFrangmet = (Fragment) ArouterUtils.getInstance().builder(ArouterParamsFinance.fragment_finance_wallet).navigation(this);
                 Bundle bundle = new Bundle();
                 bundle.putInt(Param.TRAN, 1);
                 blankFrangmet.setArguments(bundle);
-                fragmentTransaction.add(R.id.content,blankFrangmet);
-            }else {
+                fragmentTransaction.add(R.id.content, blankFrangmet);
+            } else {
                 fragmentTransaction.show(blankFrangmet);
             }
 
-            currentFrament=blankFrangmet;
-        } else   {
-            if (unEntryFrangmet==null){
-                unEntryFrangmet= (Fragment) ArouterUtils.getInstance().builder(ArouterParamsFinance.fragment_finance_wallet).navigation(this);
+            currentFrament = blankFrangmet;
+        } else {
+            if (unEntryFrangmet == null) {
+                unEntryFrangmet = (Fragment) ArouterUtils.getInstance().builder(ArouterParamsFinance.fragment_finance_wallet).navigation(this);
                 Bundle bundle = new Bundle();
                 bundle.putInt(Param.TRAN, 2);
-                blankFrangmet.setArguments(bundle);
-                fragmentTransaction.add(R.id.content,unEntryFrangmet);
-            }else {
+                unEntryFrangmet.setArguments(bundle);
+                fragmentTransaction.add(R.id.content, unEntryFrangmet);
+            } else {
                 fragmentTransaction.show(unEntryFrangmet);
             }
-            currentFrament=unEntryFrangmet;
+            currentFrament = unEntryFrangmet;
 
         }
         fragmentTransaction.commitAllowingStateLoss();
-
 
     }
 }

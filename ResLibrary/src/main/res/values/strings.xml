@@ -9,6 +9,8 @@
     <string name="splash_title">更快 更好 更懂你</string>
     <string name="phone_error">请输入正确手机号码</string>
     <string name="money_symbol">￥</string>
+    <string name="money_symbol_des">￥%1$s </string>
+    <string name="account">账号 %1$s </string>
 
     <!--Login-->
     <string name="login_title">欢迎登录泓牛</string>
@@ -112,6 +114,14 @@
     <string name="wallet_balance_withdrawal_all">全部提现</string>
     <string name="wallet_balance_withdrawal_title">账户提现</string>
     <string name="wallet_balance_account_num">账户余额￥ %1$s</string>
+    <string name="wallet_balance_wait_enty">( 您有 %1$s 元待入账金额 )</string>
+    <string name="wallet_balance_niu_unentry_count"> %1$s 个牛币待入账</string>
+    <string name="wallet_balance_withDrawal_ali">支付宝收款</string>
+    <string name="wallet_balance_withDrawal_weiChat">微信收款</string>
+    <string name="wallet_balance_withdrawal_card_num">尾号 %1$s 储蓄卡</string>
+
+
+
     <string name="order_search_des">发车编号、车牌号、货物、订单号</string>
     <string name="order_up_receipt">上传回单</string>
     <string name="hongniu_agreement">泓牛供应链软件许可及服务协议</string>

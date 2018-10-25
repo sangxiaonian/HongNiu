@@ -1,11 +1,14 @@
 package com.hongniu.modulefinance.ui.fragment;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.base.RefrushFragmet;
+import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.modulefinance.R;
@@ -20,10 +23,15 @@ import io.reactivex.Observable;
 
 /**
  * 作者： ${PING} on 2018/10/8.
- *  1余额明细 2待入账明细
+ * type 1余额明细 2待入账明细
  */
 @Route(path = ArouterParamsFinance.fragment_finance_wallet)
-public class FinanceWalletFragment extends RefrushFragmet<BalanceOfAccountBean>{
+public class FinanceWalletFragment extends RefrushFragmet<BalanceOfAccountBean> {
+
+    /**
+     * 类型
+     */
+    private int type;
 
     @Override
     protected View initView(LayoutInflater inflater) {
@@ -38,12 +46,18 @@ public class FinanceWalletFragment extends RefrushFragmet<BalanceOfAccountBean>{
     }
 
     @Override
+    public void setArguments(@Nullable Bundle args) {
+        super.setArguments(args);
+        type = args.getInt(Param.TRAN);
+    }
+
+    @Override
     protected Observable<CommonBean<PageBean<BalanceOfAccountBean>>> getListDatas() {
-        return HttpFinanceFactory.gueryBananceOfAccount();
+        return HttpFinanceFactory.gueryBananceOfAccount(type, currentPage);
     }
 
     @Override
     protected XAdapter<BalanceOfAccountBean> getAdapter(List<BalanceOfAccountBean> datas) {
-        return new BalanceOfAccountAdapter(getContext(),datas);
+        return new BalanceOfAccountAdapter(getContext(), datas);
     }
 }

@@ -9,8 +9,9 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.config.Param;
 import com.hongniu.modulefinance.R;
-import com.sang.common.utils.ToastUtils;
+import com.hongniu.modulefinance.entity.WalletHomeDetail;
 
 /**
  * 余额详情
@@ -21,7 +22,7 @@ public class FinanceBalanceActivity extends BaseActivity implements View.OnClick
     private TextView tvBanlaceWithdrawal;//待入账提现
     private TextView tvBanlace;//账户余额
     private Button btSum;//提现
-
+    WalletHomeDetail walletDetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +45,9 @@ public class FinanceBalanceActivity extends BaseActivity implements View.OnClick
     @Override
     protected void initData() {
         super.initData();
-        tvBanlace.setText(String.format("%1$s", 100));
-        tvBanlaceWithdrawal.setText(String.format(getString(R.string.wallet_balance_wait_entry), "30"));
+        walletDetail = getIntent().getParcelableExtra(Param.TRAN);
+        tvBanlace.setText(String.format("%1$s", walletDetail == null ? "0" : walletDetail.getAvailableBalance()));
+        tvBanlaceWithdrawal.setText(String.format(getString(R.string.wallet_balance_wait_entry), walletDetail == null ? "0" : walletDetail.getTobeCreditedBalance()));
     }
 
     @Override
@@ -57,6 +59,12 @@ public class FinanceBalanceActivity extends BaseActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
-        ArouterUtils.getInstance().builder(ArouterParamsFinance.activity_finance_balance_with_drawal).navigation(this);
+
+        ArouterUtils
+                .getInstance()
+                .builder(ArouterParamsFinance.activity_finance_balance_with_drawal)
+                .withString(Param.TRAN, walletDetail == null ? "0" : walletDetail.getAvailableBalance())
+                .navigation(this);
+
     }
 }

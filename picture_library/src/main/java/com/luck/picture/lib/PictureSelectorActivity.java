@@ -314,8 +314,8 @@ public class PictureSelectorActivity extends PictureBaseActivity implements View
                     // 因为onActivityResult里手动添加拍照后的照片，
                     // 如果查询出来的图片大于或等于当前adapter集合的图片则取更新后的，否则就取本地的
 //                    if (localImg.size() >= images.size()) {
-                        images = localImg;
-                        folderWindow.bindFolder(folders);
+                    images = localImg;
+                    folderWindow.bindFolder(folders);
 //                    }
                 }
                 if (adapter != null) {
@@ -499,8 +499,8 @@ public class PictureSelectorActivity extends PictureBaseActivity implements View
             boolean eqImg = pictureType.startsWith(PictureConfig.IMAGE);
             if (config.minSelectNum > 0 && config.selectionMode == PictureConfig.MULTIPLE) {
                 if (size < config.minSelectNum) {
-                    String str = eqImg ? getString(R.string.picture_min_img_num, config.minSelectNum+"")
-                            : getString(R.string.picture_min_video_num, config.minSelectNum+"");
+                    String str = eqImg ? getString(R.string.picture_min_img_num, config.minSelectNum + "")
+                            : getString(R.string.picture_min_video_num, config.minSelectNum + "");
                     ToastManage.s(mContext, str);
                     return;
                 }
@@ -740,7 +740,7 @@ public class PictureSelectorActivity extends PictureBaseActivity implements View
      */
     @Override
     public void onItemClick(int position, String folderName, List<LocalMedia> images) {
-        this.position=position;
+        this.position = position;
         boolean camera = StringUtils.isCamera(folderName);
         camera = config.isCamera ? camera : false;
         adapter.setShowCamera(camera);
@@ -1126,7 +1126,6 @@ public class PictureSelectorActivity extends PictureBaseActivity implements View
                 break;
         }
     }
-
 
 
 }
