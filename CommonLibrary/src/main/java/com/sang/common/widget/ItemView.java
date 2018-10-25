@@ -161,6 +161,11 @@ public class ItemView extends FrameLayout {
 
 
     public void setEditable(boolean editable) {
+        if (!isEnabled()){
+            viewFound.setVisibility(VISIBLE);
+            viewFound.setOnClickListener(null);
+            return;
+        }
         this.editable = editable;
         if (editable) {
             viewFound.setVisibility(GONE);
@@ -251,4 +256,13 @@ public class ItemView extends FrameLayout {
     public String getTextCenterHide() {
         return textCenterHide = etCenter.getHint().toString().trim();
     }
+
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        setEditable(editable);
+    }
+
+
 }

@@ -60,8 +60,8 @@ public class OrderDetailItemControl {
         CAR_OWNER,//车主
         CARGO_OWNER,//货主
         DRIVER;//司机
-
     }
+
 
 
     /**

@@ -117,5 +117,7 @@
     <string name="hongniu_agreement">泓牛供应链软件许可及服务协议</string>
     <string name="username_infor">用户名：%1$s</string>
     <string name="phone_infor">手机号：</string>
+    <string name="order_change">修改订单</string>
+    <string name="order_entry_change">确定修改订单</string>
 
 </resources>

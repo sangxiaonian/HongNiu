@@ -29,7 +29,7 @@ import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
 import com.hongniu.moduleorder.entity.QueryReceiveBean;
-import com.hongniu.moduleorder.entity.UpImgData;
+import com.hongniu.baselibrary.entity.UpImgData;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.ui.OrderScanReceiptActivity;
 import com.hongniu.moduleorder.utils.LoactionCollectionUtils;
@@ -528,7 +528,11 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
      */
     @Override
     public void onChangeOrder(OrderDetailBean orderBean) {
-        ToastUtils.getInstance().show("修改订单");
+
+        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_create).navigation(getContext());
+        BusFactory.getBus().postSticky(new OrderEvent.ChangeOrder(orderBean.getId()));
+
+
     }
 
     /**

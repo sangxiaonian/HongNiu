@@ -17,23 +17,18 @@ import com.hongniu.moduleorder.entity.OrderSearchBean;
 import com.hongniu.moduleorder.entity.PathBean;
 import com.hongniu.moduleorder.entity.QueryInsurancePriceBean;
 import com.hongniu.moduleorder.entity.QueryReceiveBean;
-import com.hongniu.moduleorder.entity.UpImgData;
+import com.hongniu.baselibrary.entity.UpImgData;
 import com.hongniu.moduleorder.entity.VersionBean;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
 
 import java.util.List;
-import java.util.Map;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
-import retrofit2.http.PartMap;
 
 /**
  * 作者： ${PING} on 2018/8/15.
@@ -57,6 +52,23 @@ public interface OrderService {
      */
     @POST("hongniu/api/order/add")
     Observable<CommonBean<OrderDetailBean>> creatOrder(@Body OrderCreatParamBean infor);
+
+    /**
+     * 修改订单
+     *
+     * @return
+     */
+    @POST("hongniu//api/order/updateOrder")
+    Observable<CommonBean<OrderDetailBean>> changeOrder(@Body OrderCreatParamBean infor);
+
+    /**
+     * 查询订单详情
+     *
+     * @return
+     * @param infor
+     */
+    @POST("hongniu/api/order/detail")
+    Observable<CommonBean<OrderDetailBean>> queryOrderDetail(@Body OrderParamBean infor);
 
     /**
      * 获取车牌号联想
@@ -250,7 +262,8 @@ public interface OrderService {
      */
     @POST("hongniu/api/order/queryReceiptInfo")
     Observable<CommonBean<QueryReceiveBean>> queryReceiptInfo(@Body UpReceiverBean infor);
- /**
+
+    /**
      * 删除指定回单ID
      */
     @POST("hongniu/api/order/deleteReceiptImage")

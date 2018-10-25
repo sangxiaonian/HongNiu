@@ -5,6 +5,8 @@ import android.text.TextUtils;
 import com.hongniu.baselibrary.widget.order.CommonOrderUtils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 
+import java.util.List;
+
 /**
  * 作者： ${PING} on 2018/8/7.
  * 订单详情相关数据
@@ -207,6 +209,20 @@ public class OrderDetailBean {
      * 角色类似 1车主 2司机 3 货主
      */
     private int roleType;
+
+    /**
+     * 货单信息
+     */
+    private List<UpImgData> goodsImages;
+
+
+    public List<UpImgData> getGoodsImages() {
+        return goodsImages;
+    }
+
+    public void setGoodsImages(List<UpImgData> goodsImages) {
+        this.goodsImages = goodsImages;
+    }
 
     public int getRoleType() {
         return roleType;

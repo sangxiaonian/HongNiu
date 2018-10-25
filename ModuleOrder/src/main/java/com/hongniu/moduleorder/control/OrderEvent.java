@@ -96,7 +96,6 @@ public class OrderEvent {
     }
 
 
-
     /**
      * 查看轨迹
      */
@@ -132,10 +131,26 @@ public class OrderEvent {
      */
     public static class UpReceiver implements IBus.IEvent {
 
-      public   QueryReceiveBean bean;
+        public QueryReceiveBean bean;
 
         public UpReceiver(QueryReceiveBean bean) {
             this.bean = bean;
+        }
+    }
+
+    /**
+     * 修改订单信息
+     */
+    public static class ChangeOrder implements IBus.IEvent {
+
+        public OrderDetailBean bean;
+        public String orderID;
+        public ChangeOrder(OrderDetailBean bean) {
+            this.bean = bean;
+        }
+
+        public ChangeOrder(String orderID) {
+            this.orderID = orderID;
         }
     }
 }

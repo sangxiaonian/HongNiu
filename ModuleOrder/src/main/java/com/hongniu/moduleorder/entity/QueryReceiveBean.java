@@ -1,5 +1,7 @@
 package com.hongniu.moduleorder.entity;
 
+import com.hongniu.baselibrary.entity.UpImgData;
+
 import java.util.List;
 
 /**

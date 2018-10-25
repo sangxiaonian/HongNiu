@@ -22,7 +22,7 @@ import com.hongniu.moduleorder.control.OnItemClickListener;
 import com.hongniu.moduleorder.control.OnItemDeletedClickListener;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.entity.QueryReceiveBean;
-import com.hongniu.moduleorder.entity.UpImgData;
+import com.hongniu.baselibrary.entity.UpImgData;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.ui.adapter.PicAdapter;
 import com.luck.picture.lib.PictureSelector;
@@ -96,13 +96,7 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
                         if (pics.size() >= Param.IMAGECOUNT) {
                             ToastUtils.getInstance().show("已达到图片最大数量");
                         } else {
-                            List<LocalMedia> list = new ArrayList<>();
-                            for (LocalMedia pic : pics) {
-                                if (!TextUtils.isEmpty(pic.getPath()) && !pic.getPath().startsWith("http")) {
-                                    list.add(pic);
-                                }
-                            }
-                            PictureSelectorUtils.showPicture((Activity) mContext, Param.IMAGECOUNT - pics.size(), list);
+                            PictureSelectorUtils.showPicture((Activity) mContext, pics);
                         }
                     }
                 });
@@ -136,7 +130,6 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
                     // 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true  注意：音视频除外
                     // 如果裁剪并压缩了，以取压缩路径为准，因为是先裁剪后压缩的
                     pics.clear();
-                    dealImgURl();
                     pics.addAll(selectList);
                     adapter.notifyDataSetChanged();
                     break;
@@ -144,16 +137,6 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
         }
     }
 
-    private void dealImgURl() {
-        if (bean != null && !CommonUtils.isEmptyCollection(bean.getImages())) {
-            for (UpImgData imagesBean : bean.getImages()) {
-                LocalMedia media = new LocalMedia();
-                media.setPath(imagesBean.getAbsolutePath());
-                media.setRelativePath(imagesBean.getPath());
-                pics.add(media);
-            }
-        }
-    }
 
     @Override
     protected boolean getUseEventBus() {
@@ -167,7 +150,14 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
         if (bean != null) {
             this.bean = event.bean;
             etRemark.setText(bean.getRemark() == null ? "" : bean.getRemark());
-            dealImgURl();
+            if (!CommonUtils.isEmptyCollection(bean.getImages())) {
+                for (UpImgData imagesBean : bean.getImages()) {
+                    LocalMedia media = new LocalMedia();
+                    media.setPath(imagesBean.getAbsolutePath());
+                    media.setRelativePath(imagesBean.getPath());
+                    pics.add(media);
+                }
+            }
             adapter.notifyDataSetChanged();
         }
         BusFactory.getBus().removeStickyEvent(event);
@@ -184,6 +174,7 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
                 data.setAbsolutePath(pic.getPath());
                 list.add(data);
             }
+            //点击保存按钮
             HttpOrderFactory.upReceive(orderID, etRemark.getText().toString().trim(), list)
                     .subscribe(new NetObserver<String>(this) {
                         @Override
@@ -218,14 +209,7 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
      */
     @Override
     public void onItemDeletedClick(final int position, LocalMedia localMedia) {
-        String path = localMedia.getPath();
-        if (!TextUtils.isEmpty(path) && path.startsWith("http")) {
-            pics.remove(position);
-            bean.getImages().remove(position);
-            adapter.notifyItemDeleted(position);
-        } else {
-            pics.remove(position);
-            adapter.notifyItemDeleted(position);
-        }
+        pics.remove(position);
+        adapter.notifyItemDeleted(position);
     }
 }

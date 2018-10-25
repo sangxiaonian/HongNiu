@@ -454,15 +454,11 @@ public class PictureSelectorActivity extends PictureBaseActivity implements View
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.picture_left_back || id == R.id.picture_right) {
-//            if (folderWindow.isShowing()) {
-//                folderWindow.dismiss();
-//            } else {
-//                closeActivity();
-//            }
-
-            startActivity(new Intent(this, A.class));
-
-
+            if (folderWindow.isShowing()) {
+                folderWindow.dismiss();
+            } else {
+                closeActivity();
+            }
         }
         if (id == R.id.picture_title) {
             if (folderWindow.isShowing()) {
@@ -503,8 +499,8 @@ public class PictureSelectorActivity extends PictureBaseActivity implements View
             boolean eqImg = pictureType.startsWith(PictureConfig.IMAGE);
             if (config.minSelectNum > 0 && config.selectionMode == PictureConfig.MULTIPLE) {
                 if (size < config.minSelectNum) {
-                    String str = eqImg ? getString(R.string.picture_min_img_num, config.minSelectNum)
-                            : getString(R.string.picture_min_video_num, config.minSelectNum);
+                    String str = eqImg ? getString(R.string.picture_min_img_num, config.minSelectNum+"")
+                            : getString(R.string.picture_min_video_num, config.minSelectNum+"");
                     ToastManage.s(mContext, str);
                     return;
                 }

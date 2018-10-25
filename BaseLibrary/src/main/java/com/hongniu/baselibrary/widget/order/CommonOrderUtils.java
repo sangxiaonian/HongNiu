@@ -1,6 +1,10 @@
 package com.hongniu.baselibrary.widget.order;
 
 
+import android.text.TextUtils;
+
+import com.hongniu.baselibrary.entity.OrderDetailBean;
+
 /**
  * 作者： ${PING} on 2018/8/2.
  */
@@ -177,6 +181,21 @@ public class CommonOrderUtils {
                 break;
         }
         return role;
+    }
+
+
+
+    /**
+     * 判断是否是线上支付
+     * @param payType
+     * @return true 线上支付
+     */
+    public static boolean isPayOnLine(String payType){
+        return !TextUtils.isEmpty(payType)&&TextUtils.equals("2",payType);
+    }
+
+    public static void getPayWay(int payType){
+
     }
 
 
