@@ -29,6 +29,7 @@ import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
 import com.hongniu.moduleorder.entity.QueryReceiveBean;
+import com.hongniu.moduleorder.entity.UpImgData;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.ui.OrderScanReceiptActivity;
 import com.hongniu.moduleorder.utils.LoactionCollectionUtils;
@@ -471,10 +472,10 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
                     @Override
                     public void doOnSuccess(QueryReceiveBean data) {
                         final List<String> list = new ArrayList<>();
-                        List<QueryReceiveBean.ImagesBean> images = data.getImages();
+                        List<UpImgData> images = data.getImages();
                         if (!CommonUtils.isEmptyCollection(images)) {
-                            for (QueryReceiveBean.ImagesBean image : images) {
-                                list.add(image.getImageUrl());
+                            for (UpImgData image : images) {
+                                list.add(image.getAbsolutePath());
                             }
                         }
                         OrderScanReceiptActivity.launchActivity(getActivity(), 0, 0, list);

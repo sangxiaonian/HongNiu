@@ -364,24 +364,21 @@ public class HttpOrderFactory {
      *
      * @return
      */
-    public static Observable<List<UpImgData>> upImageUrl(final int type, final List<String> paths) {
+    public static Observable<List<UpImgData>> upImageUrl(final int type, final List<UpImgData> paths) {
         return Observable.just(paths)
-                .map(new Function<List<String>, List<Observable<CommonBean<UpImgData>>>>() {
+                .map(new Function<List<UpImgData>, List<Observable<CommonBean<UpImgData>>>>() {
                     @Override
-                    public List<Observable<CommonBean<UpImgData>>> apply(List<String> strings) throws Exception {
+                    public List<Observable<CommonBean<UpImgData>>> apply(List<UpImgData> strings) throws Exception {
                         List<Observable<CommonBean<UpImgData>>> commonBeans = new ArrayList<>();
-                        for (String string : strings) {
-                            if (TextUtils.isEmpty(string)||string.startsWith("http")){
+                        for (UpImgData imgData : strings) {
+                            if (TextUtils.isEmpty(imgData.getAbsolutePath())||imgData.getAbsolutePath().startsWith("http")){
                                 CommonBean<UpImgData> bean = new CommonBean<>();
                                 bean.setCode(200);
-                                UpImgData data=new UpImgData();
-                                data.setAbsolutePath(string);
-                                data.setPath(string);
-                                bean.setData(data);
+                                bean.setData(imgData);
                                 commonBeans.add(Observable.just(bean));
                             }else {
-                                File file = new File(string);
-                                RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/from-data"), file);
+                                File file = new File(imgData.getAbsolutePath());
+                                RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/from-imgData"), file);
                                 MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
                                 commonBeans.add(OrderClient.getInstance()
                                         .getService()
@@ -429,7 +426,7 @@ public class HttpOrderFactory {
      *
      * @return
      */
-    public static Observable<CommonBean<String>> upReceive(final String orderID, final String remark, final List<String> paths) {
+    public static Observable<CommonBean<String>> upReceive(final String orderID, final String remark, final List<UpImgData> paths) {
         if (CommonUtils.isEmptyCollection(paths)){
             UpReceiverBean receiver = new UpReceiverBean();
             receiver.setOrderId(orderID);
@@ -446,8 +443,8 @@ public class HttpOrderFactory {
                             if (!CommonUtils.isEmptyCollection(upImgData)) {
                                 List<String> list = new ArrayList<>();
                                 for (UpImgData upImgDatum : upImgData) {
-                                    if (!TextUtils.isEmpty(upImgDatum.getAbsolutePath())) {
-                                        list.add(upImgDatum.getAbsolutePath());
+                                    if (!TextUtils.isEmpty(upImgDatum.getPath())) {
+                                        list.add(upImgDatum.getPath());
                                     }
                                 }
                                 receiver.setImageUrls(list);

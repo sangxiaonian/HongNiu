@@ -22,13 +22,13 @@ import com.hongniu.moduleorder.control.OnItemClickListener;
 import com.hongniu.moduleorder.control.OnItemDeletedClickListener;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.entity.QueryReceiveBean;
+import com.hongniu.moduleorder.entity.UpImgData;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.ui.adapter.PicAdapter;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.sang.common.event.BusFactory;
-import com.sang.common.imgload.ImageLoader;
 import com.sang.common.recycleview.holder.PeakHolder;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.ToastUtils;
@@ -39,15 +39,13 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.support.v7.widget.GridLayoutManager.SpanSizeLookup;
-
 /**
  * @data 2018/10/12
  * @Author PING
  * @Description 上传/修改回单
  */
 @Route(path = ArouterParamOrder.activity_order_up_receipt)
-public class OrderUpReceiptActivity extends BaseActivity implements View.OnClickListener, OnItemClickListener<LocalMedia>,OnItemDeletedClickListener<LocalMedia> {
+public class OrderUpReceiptActivity extends BaseActivity implements View.OnClickListener, OnItemClickListener<LocalMedia>, OnItemDeletedClickListener<LocalMedia> {
 
     private RecyclerView rv;
     private EditText etRemark;
@@ -57,7 +55,7 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
 
     public String orderID;
 
-    private List<LocalMedia> urlImages=new ArrayList<>();
+    //    private List<LocalMedia> urlImages=new ArrayList<>();
     private QueryReceiveBean bean;//传入的数据
 
 
@@ -95,16 +93,16 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
                 getItemView().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (pics.size()>=Param.IMAGECOUNT){
+                        if (pics.size() >= Param.IMAGECOUNT) {
                             ToastUtils.getInstance().show("已达到图片最大数量");
-                        }else {
+                        } else {
                             List<LocalMedia> list = new ArrayList<>();
                             for (LocalMedia pic : pics) {
-                                if (!TextUtils.isEmpty(pic.getPath())&&!pic.getPath().startsWith("http")){
+                                if (!TextUtils.isEmpty(pic.getPath()) && !pic.getPath().startsWith("http")) {
                                     list.add(pic);
                                 }
                             }
-                            PictureSelectorUtils.showPicture((Activity) mContext,Param.IMAGECOUNT- pics.size(),list);
+                            PictureSelectorUtils.showPicture((Activity) mContext, Param.IMAGECOUNT - pics.size(), list);
                         }
                     }
                 });
@@ -138,10 +136,21 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
                     // 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true  注意：音视频除外
                     // 如果裁剪并压缩了，以取压缩路径为准，因为是先裁剪后压缩的
                     pics.clear();
-                    pics.addAll(urlImages);
+                    dealImgURl();
                     pics.addAll(selectList);
                     adapter.notifyDataSetChanged();
                     break;
+            }
+        }
+    }
+
+    private void dealImgURl() {
+        if (bean != null && !CommonUtils.isEmptyCollection(bean.getImages())) {
+            for (UpImgData imagesBean : bean.getImages()) {
+                LocalMedia media = new LocalMedia();
+                media.setPath(imagesBean.getAbsolutePath());
+                media.setRelativePath(imagesBean.getPath());
+                pics.add(media);
             }
         }
     }
@@ -152,23 +161,15 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
     }
 
 
-    @Subscribe(sticky = true,threadMode = ThreadMode.MAIN)
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onMessageEvent(OrderEvent.UpReceiver event) {
         QueryReceiveBean bean = event.bean;
-        if (bean !=null){
-            this.bean =event.bean;
-           etRemark.setText(bean.getRemark()==null?"":bean.getRemark());
-           if (!CommonUtils.isEmptyCollection(bean.getImages())){
-               urlImages.clear();
-               for (QueryReceiveBean.ImagesBean imagesBean : bean.getImages()) {
-                   LocalMedia media=new LocalMedia();
-                   media.setPath(imagesBean.getImageUrl());
-                   urlImages.add(media);
-               }
-           }
-           pics.addAll(0,urlImages);
-           adapter.notifyDataSetChanged();
-       }
+        if (bean != null) {
+            this.bean = event.bean;
+            etRemark.setText(bean.getRemark() == null ? "" : bean.getRemark());
+            dealImgURl();
+            adapter.notifyDataSetChanged();
+        }
         BusFactory.getBus().removeStickyEvent(event);
     }
 
@@ -176,9 +177,12 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.bt_sum) {
-            List<String> list = new ArrayList<>();
+            List<UpImgData> list = new ArrayList<>();
             for (LocalMedia pic : pics) {
-                list.add(pic.getPath());
+                UpImgData data=new UpImgData();
+                data.setPath(pic.getRelativePath());
+                data.setAbsolutePath(pic.getPath());
+                list.add(data);
             }
             HttpOrderFactory.upReceive(orderID, etRemark.getText().toString().trim(), list)
                     .subscribe(new NetObserver<String>(this) {
@@ -215,12 +219,11 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
     @Override
     public void onItemDeletedClick(final int position, LocalMedia localMedia) {
         String path = localMedia.getPath();
-        if (!TextUtils.isEmpty(path)&&path.startsWith("http")){
+        if (!TextUtils.isEmpty(path) && path.startsWith("http")) {
             pics.remove(position);
-            urlImages.remove(position);
             bean.getImages().remove(position);
             adapter.notifyItemDeleted(position);
-        }else {
+        } else {
             pics.remove(position);
             adapter.notifyItemDeleted(position);
         }

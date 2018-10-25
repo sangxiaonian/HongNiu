@@ -14,6 +14,9 @@ import android.text.TextUtils;
  */
 
 public class LocalMedia implements Parcelable {
+    //相对路径
+   private String relativePath;
+    //路径
     private String path;
     private String compressPath;
     private String cutPath;
@@ -27,6 +30,7 @@ public class LocalMedia implements Parcelable {
     private boolean compressed;
     private int width;
     private int height;
+
 
     public LocalMedia() {
 
@@ -57,6 +61,35 @@ public class LocalMedia implements Parcelable {
         this.num = num;
         this.mimeType = mimeType;
     }
+
+    protected LocalMedia(Parcel in) {
+        relativePath = in.readString();
+        path = in.readString();
+        compressPath = in.readString();
+        cutPath = in.readString();
+        duration = in.readLong();
+        isChecked = in.readByte() != 0;
+        isCut = in.readByte() != 0;
+        position = in.readInt();
+        num = in.readInt();
+        mimeType = in.readInt();
+        pictureType = in.readString();
+        compressed = in.readByte() != 0;
+        width = in.readInt();
+        height = in.readInt();
+    }
+
+    public static final Creator<LocalMedia> CREATOR = new Creator<LocalMedia>() {
+        @Override
+        public LocalMedia createFromParcel(Parcel in) {
+            return new LocalMedia(in);
+        }
+
+        @Override
+        public LocalMedia[] newArray(int size) {
+            return new LocalMedia[size];
+        }
+    };
 
     public String getPictureType() {
         if (TextUtils.isEmpty(pictureType)) {
@@ -101,6 +134,17 @@ public class LocalMedia implements Parcelable {
         this.duration = duration;
     }
 
+    /**
+     * 获取相对路径
+     * @return
+     */
+    public String getRelativePath() {
+        return relativePath;
+    }
+
+    public void setRelativePath(String relativePath) {
+        this.relativePath = relativePath;
+    }
 
     public boolean isChecked() {
         return isChecked;
@@ -171,48 +215,31 @@ public class LocalMedia implements Parcelable {
         return 0;
     }
 
+    /**
+     * Flatten this object in to a Parcel.
+     *
+     * @param dest  The Parcel in which the object should be written.
+     * @param flags Additional flags about how the object should be written.
+     *              May be 0 or {@link #PARCELABLE_WRITE_RETURN_VALUE}.
+     */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.path);
-        dest.writeString(this.compressPath);
-        dest.writeString(this.cutPath);
-        dest.writeLong(this.duration);
-        dest.writeByte(this.isChecked ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.isCut ? (byte) 1 : (byte) 0);
-        dest.writeInt(this.position);
-        dest.writeInt(this.num);
-        dest.writeInt(this.mimeType);
-        dest.writeString(this.pictureType);
-        dest.writeByte(this.compressed ? (byte) 1 : (byte) 0);
-        dest.writeInt(this.width);
-        dest.writeInt(this.height);
+
+        dest.writeString(relativePath);
+        dest.writeString(path);
+        dest.writeString(compressPath);
+        dest.writeString(cutPath);
+        dest.writeLong(duration);
+        dest.writeByte((byte) (isChecked ? 1 : 0));
+        dest.writeByte((byte) (isCut ? 1 : 0));
+        dest.writeInt(position);
+        dest.writeInt(num);
+        dest.writeInt(mimeType);
+        dest.writeString(pictureType);
+        dest.writeByte((byte) (compressed ? 1 : 0));
+        dest.writeInt(width);
+        dest.writeInt(height);
     }
 
-    protected LocalMedia(Parcel in) {
-        this.path = in.readString();
-        this.compressPath = in.readString();
-        this.cutPath = in.readString();
-        this.duration = in.readLong();
-        this.isChecked = in.readByte() != 0;
-        this.isCut = in.readByte() != 0;
-        this.position = in.readInt();
-        this.num = in.readInt();
-        this.mimeType = in.readInt();
-        this.pictureType = in.readString();
-        this.compressed = in.readByte() != 0;
-        this.width = in.readInt();
-        this.height = in.readInt();
-    }
 
-    public static final Parcelable.Creator<LocalMedia> CREATOR = new Parcelable.Creator<LocalMedia>() {
-        @Override
-        public LocalMedia createFromParcel(Parcel source) {
-            return new LocalMedia(source);
-        }
-
-        @Override
-        public LocalMedia[] newArray(int size) {
-            return new LocalMedia[size];
-        }
-    };
 }

@@ -15,7 +15,7 @@ public class QueryReceiveBean {
      */
 
     private String remark;
-    private List<ImagesBean> images;
+    private List<UpImgData> images;
 
     public String getRemark() {
         return remark;
@@ -25,37 +25,13 @@ public class QueryReceiveBean {
         this.remark = remark;
     }
 
-    public List<ImagesBean> getImages() {
+    public List<UpImgData> getImages() {
         return images;
     }
 
-    public void setImages(List<ImagesBean> images) {
+    public void setImages(List<UpImgData> images) {
         this.images = images;
     }
 
-    public static class ImagesBean {
-        /**
-         * id : 1
-         * imageUrl : null
-         */
 
-        private String id;
-        private String imageUrl;
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getImageUrl() {
-            return imageUrl;
-        }
-
-        public void setImageUrl(String imageUrl) {
-            this.imageUrl = imageUrl;
-        }
-    }
 }
