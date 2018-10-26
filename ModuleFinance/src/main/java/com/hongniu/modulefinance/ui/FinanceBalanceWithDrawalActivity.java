@@ -22,9 +22,9 @@ import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.PayInforBeans;
-import com.hongniu.baselibrary.entity.QueryPayPassword;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.Utils;
+import com.hongniu.baselibrary.widget.PayPasswordKeyBord;
 import com.hongniu.modulefinance.R;
 import com.hongniu.modulefinance.widget.AccountDialog;
 import com.hongniu.modulefinance.widget.CreatAccountDialog;
@@ -41,7 +41,7 @@ import java.util.List;
  * 余额提现界面
  */
 @Route(path = ArouterParamsFinance.activity_finance_balance_with_drawal)
-public class FinanceBalanceWithDrawalActivity extends BaseActivity implements View.OnClickListener, TextWatcher, AccountDialog.OnDialogClickListener, PasswordDialog.OnPasswordDialogListener, CreatAccountDialog.OnAddNewPayWayListener {
+public class FinanceBalanceWithDrawalActivity extends BaseActivity implements View.OnClickListener, TextWatcher, AccountDialog.OnDialogClickListener, CreatAccountDialog.OnAddNewPayWayListener, PayPasswordKeyBord.PayKeyBordListener {
 
     private ImageView imgPayIcon;
     private TextView tvPayWay;
@@ -53,7 +53,7 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
     private ConstraintLayout conPay;
     private String withdrawal;//提现金额
     AccountDialog accountDialog;
-    PasswordDialog passwordDialog;
+    PayPasswordKeyBord passwordDialog;
     private CreatAccountDialog creatAccountDialog;
 
     @Override
@@ -78,7 +78,9 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
         btSum = findViewById(R.id.bt_sum);
         conPay = findViewById(R.id.con_pay_way);
         accountDialog = new AccountDialog(this);
-        passwordDialog = new PasswordDialog(this);
+        passwordDialog = new PayPasswordKeyBord(this);
+
+
         creatAccountDialog = new CreatAccountDialog(mContext);
     }
 
@@ -148,7 +150,8 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
         etBalance.addTextChangedListener(this);
         conPay.setOnClickListener(this);
         accountDialog.setListener(this);
-        passwordDialog.setListener(this);
+        passwordDialog.sePaytListener(this);
+        passwordDialog.setProgressListener(this);
         creatAccountDialog.setListener(this);
 
     }
@@ -163,22 +166,9 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
         int i = v.getId();
         if (i == R.id.bt_sum) {
             final String trim = etBalance.getText().toString().trim();
-            if (Utils.querySetPassword()) {
-                passwordDialog.setCount(trim);
-                passwordDialog.show();
-            }else {
-                HttpAppFactory.getSmsCode(Utils.getLoginInfor().getMobile())
-                        .subscribe(new NetObserver<String>(this) {
-                            @Override
-                            public void doOnSuccess(String data) {
-                                ArouterUtils.getInstance()
-                                        .builder(ArouterParamLogin.activity_sms_verify)
-                                        .withInt(Param.VERTYPE,1)
-                                        .withString(Param.TRAN, Utils.getLoginInfor().getMobile())
-                                        .navigation(mContext);
-                            }
-                        });
-            }
+            passwordDialog.setPayCount(trim);
+            passwordDialog.show();
+
         } else if (i == R.id.tv_withdrawal_all) {
             etBalance.setText(withdrawal);
             etBalance.setSelection(etBalance.getText().toString().length());
@@ -225,7 +215,6 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
     @Override
     public void onAddClick(DialogControl.IDialog dialog) {
         dialog.dismiss();
-
         creatAccountDialog.show();
 
     }
@@ -261,29 +250,39 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
      */
     @Override
     public void onForgetPassowrd(DialogControl.IDialog dialog) {
+        dialog.dismiss();
         ArouterUtils.getInstance()
                 .builder(ArouterParamLogin.activity_sms_verify)
                 .withInt(Param.VERTYPE, 1)
                 .withString(Param.TRAN, Utils.getLoginInfor().getMobile())
                 .navigation(mContext);
-//        HttpAppFactory.getSmsCode(Utils.getLoginInfor().getMobile())
-//                .subscribe(new NetObserver<String>(this) {
-//                    @Override
-//                    public void doOnSuccess(String data) {
-//                        ArouterUtils.getInstance()
-//                                .builder(ArouterParamLogin.activity_sms_verify)
-//                                .withInt(Param.VERTYPE,1)
-//                                .withString(Param.TRAN, Utils.getLoginInfor().getMobile())
-//                                .navigation(mContext);
-//                    }
-//                });
 
+    }
+
+    /**
+     * 从未设置过密码
+     *
+     * @param dialog
+     */
+    @Override
+    public void hasNoPassword(DialogControl.IDialog dialog) {
+        HttpAppFactory.getSmsCode(Utils.getLoginInfor().getMobile())
+                .subscribe(new NetObserver<String>(this) {
+                    @Override
+                    public void doOnSuccess(String data) {
+                        ArouterUtils.getInstance()
+                                .builder(ArouterParamLogin.activity_sms_verify)
+                                .withInt(Param.VERTYPE, 1)
+                                .withString(Param.TRAN, Utils.getLoginInfor().getMobile())
+                                .navigation(mContext);
+                    }
+                });
     }
 
     @Override
     public void onAddUnipay(DialogControl.IDialog dialog) {
         dialog.dismiss();
-        ArouterUtils.getInstance().builder(ArouterParamLogin.activity_login_add_blank_card).navigation((Activity) mContext,1);
+        ArouterUtils.getInstance().builder(ArouterParamLogin.activity_login_add_blank_card).navigation((Activity) mContext, 1);
     }
 
     @Override

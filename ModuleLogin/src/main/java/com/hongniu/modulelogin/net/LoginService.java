@@ -10,6 +10,7 @@ import com.hongniu.baselibrary.entity.QueryPayPassword;
 import com.hongniu.modulelogin.entity.LoginCarInforBean;
 import com.hongniu.modulelogin.entity.LoginSMSParams;
 import com.hongniu.baselibrary.entity.PayInforBeans;
+import com.hongniu.modulelogin.entity.SetPayPassWord;
 
 import java.util.List;
 
@@ -28,7 +29,7 @@ public interface LoginService {
     Observable<CommonBean<LoginBean>> loginBySms(@Body LoginSMSParams params);
 
     @POST("hongniu/api/login/ckeckcode")
-    Observable<CommonBean<LoginBean>> ckeckcode(@Body LoginSMSParams params);
+    Observable<CommonBean<String>> ckeckcode(@Body LoginSMSParams params);
 
     /**
      * 获取个人信息
@@ -104,9 +105,10 @@ public interface LoginService {
      * 设置支付密码
      *
      * @return
+     * @param beans
      */
-    @POST("hongniu/api/refund/add")
-    Observable<CommonBean<QueryPayPassword>> setPayPassword(@Body QueryPayPassword beans);
+    @POST("hongniu/api/account/setpass")
+    Observable<CommonBean<String>> setPayPassword(@Body SetPayPassWord beans);
 
 
 }

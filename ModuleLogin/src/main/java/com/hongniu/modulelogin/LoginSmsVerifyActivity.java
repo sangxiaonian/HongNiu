@@ -21,6 +21,7 @@ import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.sang.common.net.error.NetException;
+import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.VericationView;
 
@@ -137,12 +138,13 @@ public class LoginSmsVerifyActivity extends BaseActivity implements VericationVi
     @Override
     public void onComplete(String content) {
 
-        if (type==1){//忘记密码
+        if (type==1){//设置密码
+            JLog.i("设置密码");
             HttpLoginFactory
                     .checkSms(phone, content)
-                    .subscribe(new NetObserver<LoginBean>(this) {
+                    .subscribe(new NetObserver<String>(this) {
                         @Override
-                        public void doOnSuccess(LoginBean data) {
+                        public void doOnSuccess(String data) {
                             ArouterUtils.getInstance().builder(ArouterParamLogin.activity_login_password).withInt(Param.TRAN,0).navigation(mContext);
                             finish();
                         }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -148,7 +149,7 @@ public class PasswordDialog implements DialogControl.IDialog, View.OnClickListen
         tvTitle.post(new Runnable() {
             @Override
             public void run() {
-                tvTitle.setText("提现金额 "+(count==null?"0":count) +" 元");
+                tvTitle.setText("提现金额 "+(TextUtils.isEmpty(count)?"0":count) +" 元");
             }
         });
 

@@ -156,10 +156,10 @@ public class LoginPasswordActivity extends BaseActivity implements View.OnClickL
             case SETPASSWORD:
                 if (type==0){//设置密码
                     HttpLoginFactory.setPayPassword(ConvertUtils.MD5(vericationView.getContent()))
-                    .subscribe(new NetObserver<QueryPayPassword>(this) {
+                    .subscribe(new NetObserver<String>(this) {
                         @Override
-                        public void doOnSuccess(QueryPayPassword data) {
-                            Utils.setPassword(data.isSetPassWord());
+                        public void doOnSuccess(String data) {
+                            Utils.setPassword(true);
                             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show("密码设置成功");
                             finish();
                         }

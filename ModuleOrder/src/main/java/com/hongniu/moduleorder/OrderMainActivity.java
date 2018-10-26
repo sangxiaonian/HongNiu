@@ -215,10 +215,12 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     @Override
     protected void initData() {
         super.initData();
-        if (Utils.checkInfor()) {
-            tvName.setText(Utils.getPersonInfor().getContact() == null ? "待完善" : Utils.getPersonInfor().getContact());
+        if (Utils.getLoginInfor()!=null) {
+            if (Utils.checkInfor()) {
+                tvName.setText(Utils.getPersonInfor().getContact() == null ? "待完善" : Utils.getPersonInfor().getContact());
+            }
+            tvPhone.setText(Utils.getLoginInfor().getMobile() == null ? "" : Utils.getLoginInfor().getMobile());
         }
-        tvPhone.setText(Utils.getLoginInfor().getMobile() == null ? "" : Utils.getLoginInfor().getMobile());
         switchTitle.post(new Runnable() {
             @Override
             public void run() {

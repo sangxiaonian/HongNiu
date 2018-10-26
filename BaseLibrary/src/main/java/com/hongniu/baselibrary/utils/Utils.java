@@ -105,13 +105,25 @@ public class Utils {
         SharedPreferencesUtils.getInstance().putString(Param.PERSON_ONFOR, new Gson().toJson(data));
     }
 
-    public static boolean querySetPassword() {
-        return SharedPreferencesUtils.getInstance().getBoolean(Param.HASPAYPASSWORD);
+    public static boolean querySetPassword( ) {
+        boolean aBoolean = SharedPreferencesUtils.getInstance().getBoolean(Param.HASPAYPASSWORD);
+
+
+        return aBoolean;
     }
 
     public static boolean setPassword(boolean has) {
+
+
+
+
         return SharedPreferencesUtils.getInstance().putBoolean(Param.HASPAYPASSWORD, has);
     }
 
+
+
+    public interface QueryPasswordListener{
+        void onGetPassword(boolean hasSet);
+    }
 
 }
