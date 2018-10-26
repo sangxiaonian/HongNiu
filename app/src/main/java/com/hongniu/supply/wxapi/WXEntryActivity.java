@@ -66,13 +66,13 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler 
             String result = "";
             switch (resp.errCode) {
                 case BaseResp.ErrCode.ERR_OK:
-                    result = "发送成功";
+                    result = "分享成功";
                     break;
                 case BaseResp.ErrCode.ERR_USER_CANCEL:
                     result = "分享取消";
                     break;
                 case BaseResp.ErrCode.ERR_AUTH_DENIED:
-                    result = "发送失败";
+                    result = "分享失败";
                     break;
                 default:
                     result = "出现异常";

@@ -139,7 +139,6 @@ public class LoginSmsVerifyActivity extends BaseActivity implements VericationVi
     public void onComplete(String content) {
 
         if (type==1){//设置密码
-            JLog.i("设置密码");
             HttpLoginFactory
                     .checkSms(phone, content)
                     .subscribe(new NetObserver<String>(this) {

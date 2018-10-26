@@ -53,6 +53,7 @@ public class ItemView extends FrameLayout {
     private int srcRight = -1;
     private boolean srcshow;
     private int colorRight;
+    private int colorLeft;
     private boolean isSingleLine = true;
 
     public ItemView(@NonNull Context context) {
@@ -87,6 +88,7 @@ public class ItemView extends FrameLayout {
             centerType = ta.getInt(R.styleable.ItemView_centerType, 0);
             srcRight = ta.getInt(R.styleable.ItemView_srcRight, -1);
             colorRight = ta.getInt(R.styleable.ItemView_colorRight, 0);
+            colorLeft = ta.getInt(R.styleable.ItemView_colorLeft, 0);
             srcshow = ta.getBoolean(R.styleable.ItemView_srcshow, false);
             isSingleLine = ta.getBoolean(R.styleable.ItemView_isSingleLine, true);
             ta.recycle();
@@ -108,6 +110,7 @@ public class ItemView extends FrameLayout {
         setSrcRight(srcRight);
         setSrcshow(srcshow);
         setColorRight(colorRight);
+        setColorLeft(colorLeft);
         setIsSingleLine(isSingleLine);
         setCenter(maxLength, centerType);
 
@@ -120,6 +123,13 @@ public class ItemView extends FrameLayout {
     }
 
     private void setColorRight(int colorRight) {
+        this.colorRight = colorRight;
+        if (colorRight != 0) {
+            tvRight.setTextColor(colorRight);
+        }
+    }
+
+    private void setColorLeft(int colorRight) {
         this.colorRight = colorRight;
         if (colorRight != 0) {
             tvRight.setTextColor(colorRight);
@@ -144,24 +154,24 @@ public class ItemView extends FrameLayout {
     private void setCenter(int maxLength, int centerType) {
         if (centerType == 1) {//手机号
             etCenter.setInputType(InputType.TYPE_CLASS_PHONE);
-            etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength<0?11:maxLength)});
+            etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength < 0 ? 11 : maxLength)});
             etCenter.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
         } else if (centerType == 2) {//身份证号
-            etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength<0?18:maxLength)});
+            etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength < 0 ? 18 : maxLength)});
             etCenter.setKeyListener(DigitsKeyListener.getInstance("xX0123456789"));
         } else if (centerType == 3) {//数字
             etCenter.setFilters(new InputFilter[]{new PointLengthFilter()});
-            etCenter.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
+            etCenter.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
 //            etCenter.setKeyListener(DigitsKeyListener.getInstance("0123456789."));
         } else {
-            etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength<0?Integer.MAX_VALUE:maxLength),new SpaceFilter()});
+            etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength < 0 ? Integer.MAX_VALUE : maxLength), new SpaceFilter()});
 
         }
     }
 
 
     public void setEditable(boolean editable) {
-        if (!isEnabled()){
+        if (!isEnabled()) {
             viewFound.setVisibility(VISIBLE);
             viewFound.setOnClickListener(null);
             return;

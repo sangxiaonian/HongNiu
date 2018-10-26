@@ -87,7 +87,7 @@ public class Utils {
         if (!TextUtils.isEmpty(string)) {
             return new Gson().fromJson(string, LoginPersonInfor.class);
         }
-        return null;
+        return new LoginPersonInfor();
     }
 
     /**

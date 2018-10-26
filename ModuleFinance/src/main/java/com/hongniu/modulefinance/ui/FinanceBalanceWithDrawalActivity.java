@@ -310,9 +310,7 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
     public void onForgetPassowrd(DialogControl.IDialog dialog) {
         dialog.dismiss();
         ArouterUtils.getInstance()
-                .builder(ArouterParamLogin.activity_sms_verify)
-                .withInt(Param.VERTYPE, 1)
-                .withString(Param.TRAN, Utils.getLoginInfor().getMobile())
+                .builder(ArouterParamLogin.activity_login_forget_pass)
                 .navigation(mContext);
 
     }
