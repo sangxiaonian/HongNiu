@@ -1,6 +1,5 @@
 package com.hongniu.baselibrary.widget;
 
-import android.app.Dialog;
 import android.content.Context;
 
 import com.hongniu.baselibrary.base.NetObserver;
@@ -92,14 +91,14 @@ public class PayPasswordKeyBord implements PasswordDialog.OnPasswordDialogListen
 
     /**
      * 密码输入完成
-     *
-     * @param dialog
+     *  @param dialog
+     * @param count
      * @param passWord
      */
     @Override
-    public void onInputPassWordSuccess(DialogControl.IDialog dialog, String passWord) {
+    public void onInputPassWordSuccess(DialogControl.IDialog dialog, String count, String passWord) {
         if (payListener != null) {
-            payListener.onInputPassWordSuccess(dialog, passWord);
+            payListener.onInputPassWordSuccess(dialog,count, passWord);
         }
     }
 
@@ -156,11 +155,11 @@ public class PayPasswordKeyBord implements PasswordDialog.OnPasswordDialogListen
 
         /**
          * 密码输入完成
-         *
-         * @param dialog
-         * @param passWord
+         *  @param dialog
+         * @param count      金额
+         * @param passWord   密码
          */
-        void onInputPassWordSuccess(DialogControl.IDialog dialog, String passWord);
+        void onInputPassWordSuccess(DialogControl.IDialog dialog, String count, String passWord);
 
         /**
          * 忘记密码

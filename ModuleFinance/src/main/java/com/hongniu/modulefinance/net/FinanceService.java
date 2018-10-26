@@ -5,6 +5,7 @@ import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.modulefinance.entity.AccountFloowParamBean;
 import com.hongniu.modulefinance.entity.AllBalanceOfAccountBean;
+import com.hongniu.modulefinance.entity.BalanceWithDrawBean;
 import com.hongniu.modulefinance.entity.QueryExpendBean;
 import com.hongniu.modulefinance.entity.QueryExpendResultBean;
 import com.hongniu.modulefinance.entity.WalletHomeDetail;
@@ -84,6 +85,16 @@ public interface FinanceService {
      */
     @POST("hongniu/api/refund/queryMyCards")
     Observable<CommonBean<WalletHomeDetail>> queryMyCards();
+
+
+  /**
+     * 提现
+     *
+     * @return
+   * @param bean
+     */
+    @POST("hongniu//api/account/withdraw")
+    Observable<CommonBean<String>> withdraw(@Body BalanceWithDrawBean bean);
 
 
 }

@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.sang.common.R;
 import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.JLog;
 import com.sang.common.widget.VericationView;
 import com.sang.common.widget.dialog.inter.DialogControl;
 
@@ -136,7 +135,7 @@ public class PasswordDialog implements DialogControl.IDialog, View.OnClickListen
     @Override
     public void onComplete(String content) {
         if (listener!=null){
-            listener.onInputPassWordSuccess(this,content);
+            listener.onInputPassWordSuccess(this,count,content);
         }
     }
 
@@ -165,9 +164,10 @@ public class PasswordDialog implements DialogControl.IDialog, View.OnClickListen
         /**
          * 密码输入完成
          * @param dialog
+         * @param count
          * @param passWord
          */
-        void onInputPassWordSuccess(DialogControl.IDialog dialog,String passWord);
+        void onInputPassWordSuccess(DialogControl.IDialog dialog, String count, String passWord);
 
         /**
          * 忘记密码

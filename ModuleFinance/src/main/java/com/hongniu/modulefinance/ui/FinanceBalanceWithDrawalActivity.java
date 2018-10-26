@@ -1,6 +1,7 @@
 package com.hongniu.modulefinance.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.text.Editable;
@@ -26,12 +27,12 @@ import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.PayPasswordKeyBord;
 import com.hongniu.modulefinance.R;
+import com.hongniu.modulefinance.net.HttpFinanceFactory;
 import com.hongniu.modulefinance.widget.AccountDialog;
 import com.hongniu.modulefinance.widget.CreatAccountDialog;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.PointLengthFilter;
 import com.sang.common.utils.ToastUtils;
-import com.sang.common.widget.dialog.PasswordDialog;
 import com.sang.common.widget.dialog.inter.DialogControl;
 import com.sang.thirdlibrary.pay.wechat.WeChatAppPay;
 
@@ -55,6 +56,7 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
     AccountDialog accountDialog;
     PayPasswordKeyBord passwordDialog;
     private CreatAccountDialog creatAccountDialog;
+    private PayInforBeans payInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +123,7 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
         if (def == null) {
             return;
         }
+        this.payInfo = def;
         if (def.getType() == 0) {//微信
             imgPayIcon.setImageResource(R.mipmap.icon_wechat_40);
             tvPayWay.setText(getString(R.string.wallet_balance_withDrawal_weiChat));
@@ -165,9 +168,13 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.bt_sum) {
-            final String trim = etBalance.getText().toString().trim();
-            passwordDialog.setPayCount(trim);
-            passwordDialog.show();
+            if (payInfo != null) {
+                final String trim = etBalance.getText().toString().trim();
+                passwordDialog.setPayCount(trim);
+                passwordDialog.show();
+            } else {
+                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("请选择提现方式");
+            }
 
         } else if (i == R.id.tv_withdrawal_all) {
             etBalance.setText(withdrawal);
@@ -234,12 +241,22 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
      * 密码输入完成
      *
      * @param dialog
+     * @param count
      * @param passWord
      */
     @Override
-    public void onInputPassWordSuccess(DialogControl.IDialog dialog, String passWord) {
+    public void onInputPassWordSuccess(DialogControl.IDialog dialog, String count, String passWord) {
         dialog.dismiss();
-        ToastUtils.getInstance().show("提现成功");
+        HttpFinanceFactory.withdraw(count, passWord, payInfo.getId())
+                .subscribe(new NetObserver<String>(this) {
+                    @Override
+                    public void doOnSuccess(String data) {
+                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
+                        Intent intent = new Intent();
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    }
+                });
 
     }
 

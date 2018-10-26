@@ -1,5 +1,6 @@
 package com.hongniu.modulefinance.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -64,7 +65,13 @@ public class FinanceBalanceActivity extends BaseActivity implements View.OnClick
                 .getInstance()
                 .builder(ArouterParamsFinance.activity_finance_balance_with_drawal)
                 .withString(Param.TRAN, walletDetail == null ? "0" : walletDetail.getAvailableBalance())
-                .navigation(this);
+                .navigation(this,1);
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        finish();
     }
 }

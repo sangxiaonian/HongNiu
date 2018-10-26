@@ -7,6 +7,7 @@ import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.modulefinance.entity.AccountFloowParamBean;
 import com.hongniu.modulefinance.entity.AllBalanceOfAccountBean;
 import com.hongniu.modulefinance.entity.BalanceOfAccountBean;
+import com.hongniu.modulefinance.entity.BalanceWithDrawBean;
 import com.hongniu.modulefinance.entity.NiuOfAccountBean;
 import com.hongniu.modulefinance.entity.QueryExpendBean;
 import com.hongniu.modulefinance.entity.QueryExpendResultBean;
@@ -93,7 +94,8 @@ public class HttpFinanceFactory {
                 .compose(RxUtils.<CommonBean<WalletHomeDetail>>getSchedulersObservableTransformer())
                 ;
     }
- /**
+
+    /**
      * 查询钱包账户详情
      *
      * @return
@@ -101,6 +103,20 @@ public class HttpFinanceFactory {
     public static Observable<CommonBean<WalletHomeDetail>> queryMyCards() {
         return FinanceClient.getInstance().getService().queryMyCards()
                 .compose(RxUtils.<CommonBean<WalletHomeDetail>>getSchedulersObservableTransformer())
+                ;
+    }
+
+    /**
+     * 余额提现
+     * @param amount       提现金额
+     * @param payPassword  密码
+     * @param refundId     提现方式的ID
+     * @return
+     */
+    public static Observable<CommonBean<String>> withdraw(String amount,String payPassword,String refundId) {
+        BalanceWithDrawBean bean=new BalanceWithDrawBean(amount,ConvertUtils.MD5(payPassword),refundId);
+        return FinanceClient.getInstance().getService().withdraw(bean)
+                .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer())
                 ;
     }
 
