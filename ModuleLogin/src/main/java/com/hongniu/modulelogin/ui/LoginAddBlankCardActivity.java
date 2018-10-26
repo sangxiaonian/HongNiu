@@ -9,6 +9,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
+import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.modulelogin.R;
 import com.hongniu.baselibrary.entity.PayInforBeans;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
@@ -82,7 +83,7 @@ public class LoginAddBlankCardActivity extends BaseActivity implements View.OnCl
             if (check()) {
                 PayInforBeans beans = new PayInforBeans();
                 setValue(beans);
-                HttpLoginFactory.addBlankCard(beans)
+                HttpAppFactory.addBlankCard(beans)
                         .subscribe(new NetObserver<String>(this) {
                             @Override
                             public void doOnSuccess(String data) {

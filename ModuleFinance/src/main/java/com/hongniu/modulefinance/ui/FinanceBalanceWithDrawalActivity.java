@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.google.gson.Gson;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
@@ -27,14 +28,24 @@ import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.PayPasswordKeyBord;
 import com.hongniu.modulefinance.R;
+import com.hongniu.modulefinance.entity.AppletInforBean;
 import com.hongniu.modulefinance.net.HttpFinanceFactory;
 import com.hongniu.modulefinance.widget.AccountDialog;
 import com.hongniu.modulefinance.widget.CreatAccountDialog;
+import com.sang.common.event.BusFactory;
 import com.sang.common.utils.CommonUtils;
+import com.sang.common.utils.DeviceUtils;
+import com.sang.common.utils.JLog;
 import com.sang.common.utils.PointLengthFilter;
 import com.sang.common.utils.ToastUtils;
+import com.sang.common.widget.dialog.BottomAlertDialog;
+import com.sang.common.widget.dialog.builder.BottomAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
 import com.sang.thirdlibrary.pay.wechat.WeChatAppPay;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -67,6 +78,7 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
         initData();
         initListener();
     }
+
 
     @Override
     protected void initView() {
@@ -159,6 +171,34 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
 
     }
 
+
+    @Override
+    protected boolean getUseEventBus() {
+        return true;
+    }
+
+    /**
+     * 接收到小程序的数据
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onReceiveApplet(String msg) {
+        DeviceUtils.moveToFront(mContext);
+        PayInforBeans beans = new PayInforBeans();
+        AppletInforBean appletInforBean = new Gson().fromJson(msg, AppletInforBean.class);
+        beans.setIv(appletInforBean.getIv());
+        beans.setEncryptedData(appletInforBean.getEncryptedData());
+        beans.setCode(appletInforBean.getCode());
+        HttpAppFactory.addWeiChat(beans)
+                .subscribe(new NetObserver<String>(this) {
+                    @Override
+                    public void doOnSuccess(String data) {
+                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show("微信添加成功");
+                    }
+                });
+
+    }
+
+
     /**
      * Called when a view has been clicked.
      *
@@ -245,7 +285,8 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
      * @param passWord
      */
     @Override
-    public void onInputPassWordSuccess(DialogControl.IDialog dialog, String count, String passWord) {
+    public void onInputPassWordSuccess(DialogControl.IDialog dialog, String count, String
+            passWord) {
         dialog.dismiss();
         HttpFinanceFactory.withdraw(count, passWord, payInfo.getId())
                 .subscribe(new NetObserver<String>(this) {

@@ -22,6 +22,8 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import org.greenrobot.eventbus.EventBus;
+
 public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler {
 
     private static final int TIMELINE_SUPPORTED_VERSION = 0x21020001;
@@ -58,10 +60,8 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler 
         if (resp.getType() == ConstantsAPI.COMMAND_LAUNCH_WX_MINIPROGRAM) {
             WXLaunchMiniProgram.Resp launchMiniProResp = (WXLaunchMiniProgram.Resp) resp;
             String extraData = launchMiniProResp.extMsg; // 对应JsApi navigateBackApplication中的extraData字段数据
-            JLog.i(extraData);
-            ArouterUtils.getInstance().builder(ArouterParamLogin.activity_pay_ways)
-                    .withString(Param.TRAN, extraData)
-                    .navigation(this);
+            finish();
+            EventBus.getDefault().postSticky(extraData);
         }else if (resp.getType() == ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX){
             String result = "";
             switch (resp.errCode) {
@@ -80,8 +80,9 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler 
             }
             ToastUtils.getInstance().show(result);
             DeviceUtils.moveToFront(mContext);
+            finish();
+
         }
-        finish();
 
     }
 

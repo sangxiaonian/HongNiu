@@ -8,7 +8,9 @@ public class PayInforBeans {
 
 
 
-
+    private String encryptedData;
+    private String iv;
+    private String code;
     /**
      * 是否是默认支付方式   1默认，0非默认
      */
@@ -45,6 +47,30 @@ public class PayInforBeans {
   private String  wxNickName;//
     // 	true	String	微信昵称
 
+
+    public String getEncryptedData() {
+        return encryptedData;
+    }
+
+    public void setEncryptedData(String encryptedData) {
+        this.encryptedData = encryptedData;
+    }
+
+    public String getIv() {
+        return iv;
+    }
+
+    public void setIv(String iv) {
+        this.iv = iv;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public String getOpenId() {
         return openId;

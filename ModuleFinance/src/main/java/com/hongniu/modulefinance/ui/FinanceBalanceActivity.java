@@ -72,6 +72,8 @@ public class FinanceBalanceActivity extends BaseActivity implements View.OnClick
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
         finish();
     }
 }

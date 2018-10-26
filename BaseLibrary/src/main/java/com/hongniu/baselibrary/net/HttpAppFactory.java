@@ -66,5 +66,23 @@ public class HttpAppFactory {
                 .compose(RxUtils.<CommonBean<QueryPayPassword>>getSchedulersObservableTransformer());
 
     }
+    /**
+     * 新增收款方式
+     */
+    public static Observable<CommonBean<String>> addBlankCard(PayInforBeans bean) {
+        bean.setType(1);
+        return AppClient.getInstance().getService()
+                .addPayWays(bean)
+                .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
 
+    }   /**
+     * 新增收款方式
+     */
+    public static Observable<CommonBean<String>> addWeiChat(PayInforBeans bean) {
+        bean.setType(0);
+        return AppClient.getInstance().getService()
+                .addPayWays(bean)
+                .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
+
+    }
 }

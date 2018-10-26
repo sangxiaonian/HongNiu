@@ -1,5 +1,6 @@
 package com.hongniu.modulefinance.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,7 @@ import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.modulefinance.R;
 import com.hongniu.modulefinance.control.FinanceWalletControl;
 import com.hongniu.modulefinance.entity.WalletHomeDetail;
@@ -85,10 +87,17 @@ public class FinanceWalletActivity extends BaseActivity implements FinanceWallet
         tvNiuBalanceOfAccount.setText(getNew("0"));
         tvNiuBalanceOfUnentry.setText(String.format(getString(R.string.wallet_balance_niu_unentry_count), "0"));
 
+        upInfor();
+
+
+    }
+
+    private void upInfor(){
         HttpFinanceFactory.queryAccountdetails()
                 .subscribe(new NetObserver<WalletHomeDetail>(this) {
                     @Override
                     public void doOnSuccess(WalletHomeDetail data) {
+                        data.getSetPassWord();
                         walletDetail=data;
                         tvBalanceOfAccount.setText(String.format(getString(R.string.money_symbol_des), data.getAvailableBalance()));
                         tvBalanceOfUnentry.setText(String.format(getString(R.string.wallet_balance_wait_enty), data.getTobeCreditedBalance()));
@@ -96,8 +105,6 @@ public class FinanceWalletActivity extends BaseActivity implements FinanceWallet
                         tvNiuBalanceOfUnentry.setText(String.format(getString(R.string.wallet_balance_niu_unentry_count), data.getTobeCreditedIntegral()));
                     }
                 });
-
-
     }
 
     private SpannableStringBuilder getNew(String count) {
@@ -189,6 +196,15 @@ public class FinanceWalletActivity extends BaseActivity implements FinanceWallet
 
         }
         fragmentTransaction.commitAllowingStateLoss();
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode==RESULT_OK){
+            upInfor();
+        }
 
     }
 }

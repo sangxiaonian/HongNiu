@@ -52,6 +52,14 @@ public interface AppService {
     @POST("hongniu/api/account/accountdetails")
     Observable<CommonBean<QueryPayPassword>> queryPayPassword();
 
+    /**
+     * 新增付款方式
+     *
+     * @return
+     */
+    @POST("hongniu/api/refund/add")
+    Observable<CommonBean<String>> addPayWays(@Body PayInforBeans beans);
+
 }
 
 
