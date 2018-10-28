@@ -5,66 +5,49 @@ package com.hongniu.modulefinance.entity;
  * 余额明细
  */
 public class BalanceOfAccountBean {
-
-
     /**
-     * id : 103
      * accountCode : HN000329
-     * userName : asdfasdf
-     * amount : 1000.0
-     * fundtype : 5
-     * inorexptype : 1
-     * createTime : 2018-10-25 18:44:12
+     * amount : 1002220.0
+     * amtStr : +1000.00
      * carteUserName : zhoujg77
-     * relPayBillno : 1231231
-     * relAccountCode : null
-     * relAccountName : null
-     * remark : 充值
-     * ref1 : null
-     * ref2 : null
-     * ref3 : null
-     * ref4 : null
-     * inorexptypeStr : 收入
-     * income : 1000.0
-     * expend : null
-     * surplus : null
-     * fundtypeStr : 充值
+     * createTime : 2018-10-15 15:14:04
+     * flowType : 1
      * fundsources : 4
+     * fundtype : 5
+     * fundtypeStr : 充值
+     * id : 6
+     * income : 1000.0
+     * inorexptype : 1
+     * inorexptypeStr : 收入
+     * isMe : 1
      * ordernumber : 12312313
+     * relPayBillno : 1231231
+     * remark : 充值
+     * subtitle : 12312313
+     * title : 账号充值
+     * userName : asdfasdf
      */
 
-    private int id;
     private String accountCode;
-    private String userName;
     private double amount;
-//  流水来源  1支付2提现3转账4退款5充值
-    private int fundtype;
-    private int inorexptype;
-    private String createTime;
+    private String amtStr;
     private String carteUserName;
-    private String relPayBillno;
-    private Object relAccountCode;
-    private Object relAccountName;
-    private String remark;
-    private String ref1;
-    private Object ref2;
-    private Object ref3;
-    private Object ref4;
-    private String inorexptypeStr;
-    private double income;
-    private Object expend;
-    private Object surplus;
-    private String fundtypeStr;
+    private String createTime;
+    private String flowType;
     private int fundsources;
+    private int fundtype;
+    private String fundtypeStr;
+    private int id;
+    private double income;
+    private int inorexptype;
+    private String inorexptypeStr;
+    private String isMe;
     private String ordernumber;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    private String relPayBillno;
+    private String remark;
+    private String subtitle;
+    private String title;
+    private String userName;
 
     public String getAccountCode() {
         return accountCode;
@@ -72,14 +55,6 @@ public class BalanceOfAccountBean {
 
     public void setAccountCode(String accountCode) {
         this.accountCode = accountCode;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 
     public double getAmount() {
@@ -90,28 +65,12 @@ public class BalanceOfAccountBean {
         this.amount = amount;
     }
 
-    public int getFundtype() {
-        return fundtype;
+    public String getAmtStr() {
+        return amtStr;
     }
 
-    public void setFundtype(int fundtype) {
-        this.fundtype = fundtype;
-    }
-
-    public int getInorexptype() {
-        return inorexptype;
-    }
-
-    public void setInorexptype(int inorexptype) {
-        this.inorexptype = inorexptype;
-    }
-
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
+    public void setAmtStr(String amtStr) {
+        this.amtStr = amtStr;
     }
 
     public String getCarteUserName() {
@@ -122,108 +81,20 @@ public class BalanceOfAccountBean {
         this.carteUserName = carteUserName;
     }
 
-    public String getRelPayBillno() {
-        return relPayBillno;
+    public String getCreateTime() {
+        return createTime;
     }
 
-    public void setRelPayBillno(String relPayBillno) {
-        this.relPayBillno = relPayBillno;
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
     }
 
-    public Object getRelAccountCode() {
-        return relAccountCode;
+    public String getFlowType() {
+        return flowType;
     }
 
-    public void setRelAccountCode(Object relAccountCode) {
-        this.relAccountCode = relAccountCode;
-    }
-
-    public Object getRelAccountName() {
-        return relAccountName;
-    }
-
-    public void setRelAccountName(Object relAccountName) {
-        this.relAccountName = relAccountName;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public String getRef1() {
-        return ref1;
-    }
-
-    public void setRef1(String ref1) {
-        this.ref1 = ref1;
-    }
-
-    public Object getRef2() {
-        return ref2;
-    }
-
-    public void setRef2(Object ref2) {
-        this.ref2 = ref2;
-    }
-
-    public Object getRef3() {
-        return ref3;
-    }
-
-    public void setRef3(Object ref3) {
-        this.ref3 = ref3;
-    }
-
-    public Object getRef4() {
-        return ref4;
-    }
-
-    public void setRef4(Object ref4) {
-        this.ref4 = ref4;
-    }
-
-    public String getInorexptypeStr() {
-        return inorexptypeStr;
-    }
-
-    public void setInorexptypeStr(String inorexptypeStr) {
-        this.inorexptypeStr = inorexptypeStr;
-    }
-
-    public double getIncome() {
-        return income;
-    }
-
-    public void setIncome(double income) {
-        this.income = income;
-    }
-
-    public Object getExpend() {
-        return expend;
-    }
-
-    public void setExpend(Object expend) {
-        this.expend = expend;
-    }
-
-    public Object getSurplus() {
-        return surplus;
-    }
-
-    public void setSurplus(Object surplus) {
-        this.surplus = surplus;
-    }
-
-    public String getFundtypeStr() {
-        return fundtypeStr;
-    }
-
-    public void setFundtypeStr(String fundtypeStr) {
-        this.fundtypeStr = fundtypeStr;
+    public void setFlowType(String flowType) {
+        this.flowType = flowType;
     }
 
     public int getFundsources() {
@@ -234,6 +105,62 @@ public class BalanceOfAccountBean {
         this.fundsources = fundsources;
     }
 
+    public int getFundtype() {
+        return fundtype;
+    }
+
+    public void setFundtype(int fundtype) {
+        this.fundtype = fundtype;
+    }
+
+    public String getFundtypeStr() {
+        return fundtypeStr;
+    }
+
+    public void setFundtypeStr(String fundtypeStr) {
+        this.fundtypeStr = fundtypeStr;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public double getIncome() {
+        return income;
+    }
+
+    public void setIncome(double income) {
+        this.income = income;
+    }
+
+    public int getInorexptype() {
+        return inorexptype;
+    }
+
+    public void setInorexptype(int inorexptype) {
+        this.inorexptype = inorexptype;
+    }
+
+    public String getInorexptypeStr() {
+        return inorexptypeStr;
+    }
+
+    public void setInorexptypeStr(String inorexptypeStr) {
+        this.inorexptypeStr = inorexptypeStr;
+    }
+
+    public String getIsMe() {
+        return isMe;
+    }
+
+    public void setIsMe(String isMe) {
+        this.isMe = isMe;
+    }
+
     public String getOrdernumber() {
         return ordernumber;
     }
@@ -241,6 +168,50 @@ public class BalanceOfAccountBean {
     public void setOrdernumber(String ordernumber) {
         this.ordernumber = ordernumber;
     }
+
+    public String getRelPayBillno() {
+        return relPayBillno;
+    }
+
+    public void setRelPayBillno(String relPayBillno) {
+        this.relPayBillno = relPayBillno;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getSubtitle() {
+        return subtitle;
+    }
+
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+
+
+
 
 
 }

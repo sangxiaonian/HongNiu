@@ -163,15 +163,14 @@ public class HttpLoginFactory {
 
     }
 
-    /**
-     * 设置支付密码
-     * @param content
-     */
-    public static Observable<CommonBean<String>> setPayPassword(String content) {
-        SetPayPassWord payPassword=new SetPayPassWord();
-        payPassword.passWord=content;
-        return LoginClient.getInstance().getLoginService()
+
+
+    public static Observable<CommonBean<String>> upPassword(String passwordMd5, String smsCode) {
+        SetPayPassWord payPassword=new SetPayPassWord(passwordMd5,smsCode);
+       return LoginClient.getInstance().getLoginService()
                 .setPayPassword(payPassword)
                 .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
     }
+
+
 }

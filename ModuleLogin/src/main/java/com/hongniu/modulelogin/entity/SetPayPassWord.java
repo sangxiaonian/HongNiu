@@ -4,13 +4,27 @@ package com.hongniu.modulelogin.entity;
  * 作者： ${PING} on 2018/10/26.
  */
 public class SetPayPassWord {
-    public String passWord;
+    public String newPassWord;
+    public String checkCode;
 
-    public String getPassWord() {
-        return passWord;
+    public SetPayPassWord(String newPassWord, String checkCode) {
+        this.newPassWord = newPassWord;
+        this.checkCode = checkCode;
     }
 
-    public void setPassWord(String passWord) {
-        this.passWord = passWord;
+    public String getNewPassWord() {
+        return newPassWord;
+    }
+
+    public void setNewPassWord(String newPassWord) {
+        this.newPassWord = newPassWord;
+    }
+
+    public String getCheckCode() {
+        return checkCode;
+    }
+
+    public void setCheckCode(String checkCode) {
+        this.checkCode = checkCode;
     }
 }

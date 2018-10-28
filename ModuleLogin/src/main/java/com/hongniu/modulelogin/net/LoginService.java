@@ -102,12 +102,12 @@ public interface LoginService {
     Observable<CommonBean<String>> addBlankCard(@Body PayInforBeans beans);
 
     /**
-     * 设置支付密码
+     * 设置/更新支付密码
      *
      * @return
      * @param beans
      */
-    @POST("hongniu/api/account/setpass")
+    @POST("hongniu//api/account/updatepass")
     Observable<CommonBean<String>> setPayPassword(@Body SetPayPassWord beans);
 
 

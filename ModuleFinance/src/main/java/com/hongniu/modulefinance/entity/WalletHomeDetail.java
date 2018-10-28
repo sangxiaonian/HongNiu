@@ -55,7 +55,7 @@ public class WalletHomeDetail implements Parcelable {
     /**
      *  true	double	可用牛贝
       */
-    private String availableIntegral	   ;
+    private String availableIntegral="0"	   ;
     /**
      *    	true	double	锁定牛贝
       */
@@ -188,7 +188,7 @@ public class WalletHomeDetail implements Parcelable {
     }
 
     public String getAvailableIntegral() {
-        return availableIntegral;
+        return availableIntegral==null?"0":availableIntegral;
     }
 
     public void setAvailableIntegral(String availableIntegral) {

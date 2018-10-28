@@ -5,7 +5,6 @@ import android.os.Bundle;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.base.RefrushActivity;
-import com.hongniu.baselibrary.base.RefrushFragmet;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
@@ -13,7 +12,6 @@ import com.hongniu.modulefinance.R;
 import com.hongniu.modulefinance.entity.NiuOfAccountBean;
 import com.hongniu.modulefinance.net.HttpFinanceFactory;
 import com.hongniu.modulefinance.ui.adapter.FinanceCarOrderDetailAdapter;
-import com.hongniu.modulefinance.ui.adapter.NiuOfAccountAdapter;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.widget.SwitchTextLayout;
@@ -60,7 +58,7 @@ public class FinanceCarOrderDetailActivity extends RefrushActivity<NiuOfAccountB
 
     @Override
     protected Observable<CommonBean<PageBean<NiuOfAccountBean>>> getListDatas() {
-        return HttpFinanceFactory.gueryNiuList();
+        return HttpFinanceFactory.gueryNiuList(currentPage, 1);
     }
 
     @Override

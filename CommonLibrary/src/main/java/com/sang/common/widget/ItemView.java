@@ -163,9 +163,15 @@ public class ItemView extends FrameLayout {
             etCenter.setFilters(new InputFilter[]{new PointLengthFilter()});
             etCenter.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
 //            etCenter.setKeyListener(DigitsKeyListener.getInstance("0123456789."));
+        }else if (centerType == 4) {//密码
+            etCenter.setFilters(new InputFilter[]{new PointLengthFilter()});
+            etCenter.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+            etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength < 0 ? Integer.MAX_VALUE : maxLength), new SpaceFilter()});
+            etCenter.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
+
+
         } else {
             etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength < 0 ? Integer.MAX_VALUE : maxLength), new SpaceFilter()});
-
         }
     }
 

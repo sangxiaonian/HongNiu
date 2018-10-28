@@ -15,7 +15,6 @@ import com.hongniu.modulefinance.entity.WalletHomeDetail;
 import com.sang.common.net.rx.RxUtils;
 import com.sang.common.utils.ConvertUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -153,27 +152,21 @@ public class HttpFinanceFactory {
 
     /**
      * 牛币待入账，已入账查询
+     * @param currentPage
+     * @param type
      */
-    public static Observable<CommonBean<PageBean<NiuOfAccountBean>>> gueryNiuList() {
-        return Observable.just(1)
-                .map(new Function<Integer, CommonBean<PageBean<NiuOfAccountBean>>>() {
-                    @Override
-                    public CommonBean<PageBean<NiuOfAccountBean>> apply(Integer integer) throws Exception {
+    public static Observable<CommonBean<PageBean<NiuOfAccountBean>>> gueryNiuList(int currentPage, int type) {
+        AccountFloowParamBean bean = new AccountFloowParamBean();
+        bean.setFlowtype(type);
+        bean.setPageNum(currentPage);
+        bean.setPageSize(Param.PAGE_SIZE);
+       return FinanceClient
+                .getInstance()
+                .getService()
+                .queryNiuAccountFllows(bean)
+               .compose(RxUtils.<CommonBean<PageBean<NiuOfAccountBean>>>getSchedulersObservableTransformer())
+               ;
 
-                        CommonBean<PageBean<NiuOfAccountBean>> bean = new CommonBean<>();
-                        bean.setCode(200);
 
-                        PageBean<NiuOfAccountBean> pageBean = new PageBean<>();
-                        ArrayList<NiuOfAccountBean> balanceOfAccountBeans = new ArrayList<>();
-                        int random = ConvertUtils.getRandom(19, 21);
-                        for (int i = 0; i < random; i++) {
-                            balanceOfAccountBeans.add(new NiuOfAccountBean());
-                        }
-                        pageBean.setList(balanceOfAccountBeans);
-                        bean.setData(pageBean);
-
-                        return bean;
-                    }
-                });
     }
 }

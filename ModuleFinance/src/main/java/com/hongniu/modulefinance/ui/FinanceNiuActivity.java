@@ -13,7 +13,7 @@ import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.modulefinance.R;
-import com.sang.common.utils.ConvertUtils;
+import com.hongniu.modulefinance.entity.WalletHomeDetail;
 
 /**
  * 牛币账户
@@ -30,6 +30,7 @@ public class FinanceNiuActivity extends BaseActivity implements RadioGroup.OnChe
     private Fragment blankFrangmet;//已入账
     private Fragment currentFrament;
     private Fragment unEntryFrangmet;//待入账明细
+    private WalletHomeDetail walletHomeDetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +56,9 @@ public class FinanceNiuActivity extends BaseActivity implements RadioGroup.OnChe
     @Override
     protected void initData() {
         super.initData();
-        tvNiu.setText(String.format(getResources().getString(R.string.wallet_niu_of_account), "120"));
-        tvNiuUnEntry.setText(String.format(getResources().getString(R.string.wallet_niu_unentry_count), "30"));
+        walletHomeDetail = getIntent().getParcelableExtra(Param.TRAN);
+        tvNiu.setText(String.format(getResources().getString(R.string.wallet_niu_of_account), walletHomeDetail == null ? "0" : walletHomeDetail.getAvailableIntegral()));
+        tvNiuUnEntry.setText(String.format(getResources().getString(R.string.wallet_niu_unentry_count), walletHomeDetail == null ? "0" : walletHomeDetail.getTobeCreditedIntegral()));
     }
 
     @Override
@@ -69,31 +71,31 @@ public class FinanceNiuActivity extends BaseActivity implements RadioGroup.OnChe
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        if (currentFrament!=null){
+        if (currentFrament != null) {
             fragmentTransaction.hide(currentFrament);
         }
         if (checkedId == rbLeft.getId()) {
-            if (blankFrangmet==null) {
+            if (blankFrangmet == null) {
                 blankFrangmet = (Fragment) ArouterUtils.getInstance().builder(ArouterParamsFinance.fragment_finance_niu).navigation(this);
                 Bundle bundle = new Bundle();
                 bundle.putInt(Param.TRAN, 1);
                 blankFrangmet.setArguments(bundle);
-                fragmentTransaction.add(R.id.content,blankFrangmet);
-            }else {
+                fragmentTransaction.add(R.id.content, blankFrangmet);
+            } else {
                 fragmentTransaction.show(blankFrangmet);
             }
-            currentFrament=blankFrangmet;
-        } else   {
-            if (unEntryFrangmet==null){
-                unEntryFrangmet= (Fragment) ArouterUtils.getInstance().builder(ArouterParamsFinance.fragment_finance_niu).navigation(this);
+            currentFrament = blankFrangmet;
+        } else {
+            if (unEntryFrangmet == null) {
+                unEntryFrangmet = (Fragment) ArouterUtils.getInstance().builder(ArouterParamsFinance.fragment_finance_niu).navigation(this);
                 Bundle bundle = new Bundle();
                 bundle.putInt(Param.TRAN, 2);
                 blankFrangmet.setArguments(bundle);
-                fragmentTransaction.add(R.id.content,unEntryFrangmet);
-            }else {
+                fragmentTransaction.add(R.id.content, unEntryFrangmet);
+            } else {
                 fragmentTransaction.show(unEntryFrangmet);
             }
-            currentFrament=unEntryFrangmet;
+            currentFrament = unEntryFrangmet;
         }
         fragmentTransaction.commitAllowingStateLoss();
     }

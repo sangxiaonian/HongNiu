@@ -46,7 +46,6 @@ public class LoginSmsVerifyActivity extends BaseActivity implements VericationVi
 
     private final int originTime = 60;
     private int currentTime;
-    private int type;//类型
 
     private Handler handler = new Handler() {
         @Override
@@ -70,8 +69,6 @@ public class LoginSmsVerifyActivity extends BaseActivity implements VericationVi
         setContentView(R.layout.activity_login_sms_verify);
         setToolbarTitle("");
         phone = getIntent().getStringExtra(Param.TRAN);
-        type = getIntent().getIntExtra(Param.VERTYPE,0);
-
         initView();
         initData();
         initListener();
@@ -138,18 +135,6 @@ public class LoginSmsVerifyActivity extends BaseActivity implements VericationVi
     @Override
     public void onComplete(String content) {
 
-        if (type==1){//设置密码
-            HttpLoginFactory
-                    .checkSms(phone, content)
-                    .subscribe(new NetObserver<String>(this) {
-                        @Override
-                        public void doOnSuccess(String data) {
-                            ArouterUtils.getInstance().builder(ArouterParamLogin.activity_login_password).withInt(Param.TRAN,0).navigation(mContext);
-                            finish();
-                        }
-                    });
-
-        }else if (type==0){//登录
             HttpLoginFactory
                     .loginBySms(phone, content)
                     .map(new Function<CommonBean<LoginBean>, CommonBean<LoginBean>>() {
@@ -200,7 +185,7 @@ public class LoginSmsVerifyActivity extends BaseActivity implements VericationVi
 
                         }
                     });
-        }
+
 
     }
 

@@ -3,8 +3,10 @@ package com.hongniu.modulelogin.ui;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
@@ -13,13 +15,15 @@ import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.modulelogin.R;
+import com.hongniu.modulelogin.net.HttpLoginFactory;
+import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.ItemView;
 
 /**
  * @data 2018/10/26
  * @Author PING
- * @Description 忘记支付密码界面
+ * @Description 忘记/设置支付密码界面
  */
 @Route(path = ArouterParamLogin.activity_login_forget_pass)
 public class LoginForgetPassActivity extends BaseActivity implements View.OnClickListener {
@@ -28,7 +32,7 @@ public class LoginForgetPassActivity extends BaseActivity implements View.OnClic
     private ItemView itemSms;
     private ItemView itemPass;
     private ItemView itemNewPass;
-    private Button sendSms;
+    private TextView sendSms;
     private Button buSum;
 
     private final int originTime = 60;
@@ -100,14 +104,65 @@ public class LoginForgetPassActivity extends BaseActivity implements View.OnClic
                     .subscribe(new NetObserver<String>(this) {
                         @Override
                         public void doOnSuccess(String data) {
-                            handler.sendEmptyMessage(0);
+                            startCountTime();
                         }
                     });
 
 
         } else if (v.getId() == R.id.bt_sum) {
-            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
+            if (check()) {
+                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
+                String trim = itemPass.getTextCenter();
+
+                HttpLoginFactory
+                        .upPassword(ConvertUtils.MD5(trim),itemSms.getTextCenter())
+                        .subscribe(new NetObserver<String>(this) {
+                            @Override
+                            public void doOnSuccess(String data) {
+                                Utils.setPassword(true);
+                                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
+                                finish();
+                            }
+                        });
+
+            }
+
 
         }
+    }
+
+    private boolean check() {
+        if (TextUtils.isEmpty(itemSms.getTextCenter())) {
+            showAleart(itemSms.getTextCenterHide());
+            return false;
+        }
+        if (TextUtils.isEmpty(itemPass.getTextCenter())) {
+            showAleart(itemPass.getTextCenterHide());
+            return false;
+        }
+
+        if (itemPass.getTextCenter().toString().trim().length()<6) {
+            showAleart(itemPass.getTextCenterHide());
+            return false;
+        }
+
+        if (TextUtils.isEmpty(itemNewPass.getTextCenter())) {
+            showAleart(itemNewPass.getTextCenterHide());
+            return false;
+        }
+
+
+
+        if (!TextUtils.equals(itemPass.getTextCenter(),itemNewPass.getTextCenter())){
+            showAleart("两次密码输入不一致");
+            return false;
+        }
+        return true;
+
+    }
+
+    private void startCountTime() {
+        currentTime = originTime;
+        handler.sendEmptyMessageDelayed(0, 0);
     }
 }

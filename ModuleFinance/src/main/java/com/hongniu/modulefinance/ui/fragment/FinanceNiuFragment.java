@@ -34,6 +34,8 @@ import io.reactivex.Observable;
 @Route(path = ArouterParamsFinance.fragment_finance_niu)
 public class FinanceNiuFragment extends RefrushFragmet<NiuOfAccountBean> implements OnItemClickListener<NiuOfAccountBean> {
 
+    private int type;
+
     @Override
     protected View initView(LayoutInflater inflater) {
         View inflate = inflater.inflate(R.layout.fragment_finance_wallet, null);
@@ -43,6 +45,7 @@ public class FinanceNiuFragment extends RefrushFragmet<NiuOfAccountBean> impleme
     @Override
     public void setArguments(@Nullable Bundle args) {
         super.setArguments(args);
+         type = args.getInt(Param.TRAN);
     }
 
     @Override
@@ -53,7 +56,7 @@ public class FinanceNiuFragment extends RefrushFragmet<NiuOfAccountBean> impleme
 
     @Override
     protected Observable<CommonBean<PageBean<NiuOfAccountBean>>> getListDatas() {
-        return HttpFinanceFactory.gueryNiuList();
+        return HttpFinanceFactory.gueryNiuList(currentPage,type);
     }
 
     @Override
