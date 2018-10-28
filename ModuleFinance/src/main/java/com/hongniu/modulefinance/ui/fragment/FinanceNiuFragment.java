@@ -68,6 +68,6 @@ public class FinanceNiuFragment extends RefrushFragmet<NiuOfAccountBean> impleme
 
     @Override
     public void onItemClick(int position, NiuOfAccountBean niuOfAccountBean) {
-        ArouterUtils.getInstance().builder(ArouterParamsFinance.activity_finance_car_order_detail).withString(Param.TRAN,niuOfAccountBean.carNum).navigation(getContext());
+        ArouterUtils.getInstance().builder(ArouterParamsFinance.activity_finance_car_order_detail).withString(Param.TRAN,niuOfAccountBean.getCarNumber()).navigation(getContext());
     }
 }

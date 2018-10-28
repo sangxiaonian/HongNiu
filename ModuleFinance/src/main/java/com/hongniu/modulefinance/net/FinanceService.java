@@ -6,7 +6,9 @@ import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.modulefinance.entity.AccountFloowParamBean;
 import com.hongniu.modulefinance.entity.AllBalanceOfAccountBean;
 import com.hongniu.modulefinance.entity.BalanceWithDrawBean;
-import com.hongniu.modulefinance.entity.NiuOfAccountBean;
+import com.hongniu.modulefinance.entity.CareNumPageBean;
+import com.hongniu.modulefinance.entity.FinanceQueryCarDetailMap;
+import com.hongniu.modulefinance.entity.NiuFlowAcountBean;
 import com.hongniu.modulefinance.entity.QueryExpendBean;
 import com.hongniu.modulefinance.entity.QueryExpendResultBean;
 import com.hongniu.modulefinance.entity.WalletHomeDetail;
@@ -78,6 +80,7 @@ public interface FinanceService {
      */
     @POST("hongniu/api/account/accountflows")
     Observable<CommonBean<AllBalanceOfAccountBean>> queryAccountFllows(@Body AccountFloowParamBean bean);
+
     /**
      * 查询牛币账户流水
      *
@@ -85,7 +88,16 @@ public interface FinanceService {
      * @return
      */
     @POST("hongniu/api/account/accountintegralflows")
-    Observable<CommonBean<PageBean<NiuOfAccountBean>>> queryNiuAccountFllows(@Body AccountFloowParamBean bean);
+    Observable<CommonBean<NiuFlowAcountBean>> queryNiuAccountFllows(@Body AccountFloowParamBean bean);
+
+    /**
+     * 查询车辆订单明细
+     *
+     * @param bean
+     * @return
+     */
+    @POST("hongniu//api/account/cardetails")
+    Observable<CommonBean<FinanceQueryCarDetailMap>> queryCarOrderDetails(@Body CareNumPageBean bean);
 
     /**
      * 获取我的支付方式

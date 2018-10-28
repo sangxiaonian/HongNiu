@@ -90,7 +90,7 @@ public class FinanceNiuActivity extends BaseActivity implements RadioGroup.OnChe
                 unEntryFrangmet = (Fragment) ArouterUtils.getInstance().builder(ArouterParamsFinance.fragment_finance_niu).navigation(this);
                 Bundle bundle = new Bundle();
                 bundle.putInt(Param.TRAN, 2);
-                blankFrangmet.setArguments(bundle);
+                unEntryFrangmet.setArguments(bundle);
                 fragmentTransaction.add(R.id.content, unEntryFrangmet);
             } else {
                 fragmentTransaction.show(unEntryFrangmet);

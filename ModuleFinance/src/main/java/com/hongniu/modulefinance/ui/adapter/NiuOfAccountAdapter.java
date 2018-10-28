@@ -39,9 +39,9 @@ public class NiuOfAccountAdapter extends XAdapter<NiuOfAccountBean> {
                 TextView tvTime = itemView.findViewById(R.id.tv_time);
                 TextView tvPrice = itemView.findViewById(R.id.tv_price);
                 tvCarNum.setVisibility(View.GONE);
-                tvOrder.setText("车牌号码：" + "皖B555555");
-                tvTime.setText("创建车辆时间：" + "2018-06-30 23:30:53");
-                tvPrice.setText("1" + "个");
+                tvOrder.setText(String.format(mContext.getString(R.string.car_num),data.getCarNumber())  );
+                tvTime.setText(String.format(mContext.getString(R.string.finance_niu_creat_car_time),data.getCreateTime())  );
+                tvPrice.setText(data.getIntegral()+ "个");
 
 
                 itemView.setOnClickListener(new View.OnClickListener() {

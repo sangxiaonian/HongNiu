@@ -129,5 +129,7 @@
     <string name="phone_infor">手机号：</string>
     <string name="order_change">修改订单</string>
     <string name="order_entry_change">确定修改订单</string>
+    <string name="finance_niu_creat_car_time">创建车辆时间：%1$s</string>
+    <string name="car_num">车牌号码：%1$s</string>
 
 </resources>

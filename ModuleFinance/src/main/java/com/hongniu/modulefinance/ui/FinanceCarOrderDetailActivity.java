@@ -9,7 +9,7 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.modulefinance.R;
-import com.hongniu.modulefinance.entity.NiuOfAccountBean;
+import com.hongniu.modulefinance.entity.FinanceQueryCarDetailBean;
 import com.hongniu.modulefinance.net.HttpFinanceFactory;
 import com.hongniu.modulefinance.ui.adapter.FinanceCarOrderDetailAdapter;
 import com.sang.common.recycleview.adapter.XAdapter;
@@ -25,10 +25,9 @@ import io.reactivex.Observable;
  * 车辆订单明细页面
  */
 @Route(path = ArouterParamsFinance.activity_finance_car_order_detail)
-public class FinanceCarOrderDetailActivity extends RefrushActivity<NiuOfAccountBean> {
+public class FinanceCarOrderDetailActivity extends RefrushActivity<FinanceQueryCarDetailBean> {
 
     private String title;
-    private SwitchTextLayout switchTime;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,30 +38,30 @@ public class FinanceCarOrderDetailActivity extends RefrushActivity<NiuOfAccountB
         initView();
         initData();
         initListener();
+//        refresh.hideLoadFinish();
+        refresh.setEnableLoadMore(false);
     }
 
 
     @Override
     protected void initView() {
         super.initView();
-        switchTime=findViewById(R.id.switch_time);
 
     }
 
     @Override
     protected void initData() {
         super.initData();
-        switchTime.setTitle(  ConvertUtils.formatTime(new Date().getTime(),"yyyy年MM月"));
         queryData(true);
     }
 
     @Override
-    protected Observable<CommonBean<PageBean<NiuOfAccountBean>>> getListDatas() {
-        return HttpFinanceFactory.gueryNiuList(currentPage, 1);
+    protected Observable<CommonBean<PageBean<FinanceQueryCarDetailBean>>> getListDatas() {
+        return HttpFinanceFactory.queryCarOrderDetails(currentPage, title);
     }
 
     @Override
-    protected XAdapter<NiuOfAccountBean> getAdapter(List<NiuOfAccountBean> datas) {
+    protected XAdapter<FinanceQueryCarDetailBean> getAdapter(List<FinanceQueryCarDetailBean> datas) {
         return new FinanceCarOrderDetailAdapter(this, datas);
     }
 }

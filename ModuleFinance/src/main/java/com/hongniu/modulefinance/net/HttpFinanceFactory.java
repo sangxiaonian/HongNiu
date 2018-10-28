@@ -8,6 +8,10 @@ import com.hongniu.modulefinance.entity.AccountFloowParamBean;
 import com.hongniu.modulefinance.entity.AllBalanceOfAccountBean;
 import com.hongniu.modulefinance.entity.BalanceOfAccountBean;
 import com.hongniu.modulefinance.entity.BalanceWithDrawBean;
+import com.hongniu.modulefinance.entity.CareNumPageBean;
+import com.hongniu.modulefinance.entity.FinanceQueryCarDetailBean;
+import com.hongniu.modulefinance.entity.FinanceQueryCarDetailMap;
+import com.hongniu.modulefinance.entity.NiuFlowAcountBean;
 import com.hongniu.modulefinance.entity.NiuOfAccountBean;
 import com.hongniu.modulefinance.entity.QueryExpendBean;
 import com.hongniu.modulefinance.entity.QueryExpendResultBean;
@@ -15,7 +19,10 @@ import com.hongniu.modulefinance.entity.WalletHomeDetail;
 import com.sang.common.net.rx.RxUtils;
 import com.sang.common.utils.ConvertUtils;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
@@ -155,7 +162,7 @@ public class HttpFinanceFactory {
      * @param currentPage
      * @param type
      */
-    public static Observable<CommonBean<PageBean<NiuOfAccountBean>>> gueryNiuList(int currentPage, int type) {
+    public static Observable<CommonBean<PageBean<NiuOfAccountBean>>> gueryNiuList(int currentPage, final int type) {
         AccountFloowParamBean bean = new AccountFloowParamBean();
         bean.setFlowtype(type);
         bean.setPageNum(currentPage);
@@ -164,9 +171,71 @@ public class HttpFinanceFactory {
                 .getInstance()
                 .getService()
                 .queryNiuAccountFllows(bean)
+               .map(new Function<CommonBean<NiuFlowAcountBean>, CommonBean<PageBean<NiuOfAccountBean>>>() {
+                   @Override
+                   public CommonBean<PageBean<NiuOfAccountBean>> apply(CommonBean<NiuFlowAcountBean> niuFlowAcountBeanCommonBean) throws Exception {
+                       CommonBean<PageBean<NiuOfAccountBean>> commonBean=new CommonBean<>();
+                       commonBean.setCode(niuFlowAcountBeanCommonBean.getCode());
+                       commonBean.setMsg(niuFlowAcountBeanCommonBean.getMsg());
+                       if (type==1){
+                           commonBean.setData(niuFlowAcountBeanCommonBean.getData().getIntegralFlows());
+                       }else {
+                           commonBean.setData(niuFlowAcountBeanCommonBean.getData().getTobeIntegralFlows());
+
+                       }
+                       return commonBean;
+                   }
+               })
                .compose(RxUtils.<CommonBean<PageBean<NiuOfAccountBean>>>getSchedulersObservableTransformer())
                ;
 
 
     }
+ /**
+     * 牛币待入账，已入账查询
+  * @param currentPage
+  */
+    public static Observable<CommonBean<PageBean<FinanceQueryCarDetailBean>>> queryCarOrderDetails(int currentPage, final String carNumber) {
+        CareNumPageBean bean = new CareNumPageBean(currentPage,carNumber);
+
+       return FinanceClient
+                .getInstance()
+                .getService()
+                .queryCarOrderDetails(bean)
+                .map(new Function<CommonBean<FinanceQueryCarDetailMap>, CommonBean<PageBean<FinanceQueryCarDetailBean>>>() {
+                    @Override
+                    public CommonBean<PageBean<FinanceQueryCarDetailBean>> apply(CommonBean<FinanceQueryCarDetailMap> financeQueryCarDetailCommonBean) throws Exception {
+
+                        CommonBean<PageBean<FinanceQueryCarDetailBean>> bean = new CommonBean<>();
+                        bean.setMsg(financeQueryCarDetailCommonBean.getMsg());
+                        bean.setCode(financeQueryCarDetailCommonBean.getCode());
+                        PageBean<FinanceQueryCarDetailBean> pageBean=new PageBean<>();
+                        pageBean.setList(new ArrayList<FinanceQueryCarDetailBean>());
+                        bean.setData(pageBean);
+                        FinanceQueryCarDetailMap data = financeQueryCarDetailCommonBean.getData();
+                        if (data!=null&&data.getCarDetails()!=null){
+                            Map<String, List<OrderDetailBean>> carDetails = data.getCarDetails();
+                            Set<String> strings =carDetails.keySet();
+                            for (String string : strings) {
+                                pageBean.getList().add(new FinanceQueryCarDetailBean(1,string,null));
+                                List<OrderDetailBean> beans = carDetails.get(string);
+                                for (OrderDetailBean orderDetailBean : beans) {
+                                    pageBean.getList().add(new FinanceQueryCarDetailBean(0,string,orderDetailBean));
+                                }
+                            }
+                        }
+                        return bean;
+                    }
+                })
+               .compose(RxUtils.<CommonBean<PageBean<FinanceQueryCarDetailBean>>>getSchedulersObservableTransformer())
+               ;
+
+
+    }
+
+
+
+
+
+
 }
