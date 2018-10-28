@@ -15,7 +15,16 @@ public class QueryInvitedInfo {
 
     private int invitedCount;
     private String invitedUrl;
+    private String rebateTotalAmount;
     private String invitedQrCodeUrl;
+
+    public String getRebateTotalAmount() {
+        return rebateTotalAmount;
+    }
+
+    public void setRebateTotalAmount(String rebateTotalAmount) {
+        this.rebateTotalAmount = rebateTotalAmount;
+    }
 
     public int getInvitedCount() {
         return invitedCount;

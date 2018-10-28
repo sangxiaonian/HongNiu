@@ -38,7 +38,7 @@ public class FestivityBrokerageActivity extends RefrushActivity<BrokerageDetails
 
     @Override
     protected Observable<CommonBean<PageBean<BrokerageDetailsBean>>> getListDatas() {
-        return HttpFestivityFactory.getBrokerageDetails();
+        return HttpFestivityFactory.getBrokerageDetails(currentPage);
     }
 
     @Override
@@ -55,10 +55,10 @@ public class FestivityBrokerageActivity extends RefrushActivity<BrokerageDetails
                         TextView tvTime  =itemView.findViewById(R.id.tv_time );
                         TextView tvMoney  =itemView.findViewById(R.id.tv_money );
 
-                        tvName.setText("好友保费返佣（"+"测试好友"+"）");
-                        tvOrder.setText("订单号："+"D1822822929");
-                        tvTime.setText("收款时间："+"2018-06-30 23:30:53");
-                        tvMoney.setText("+"+"100.00");
+                        tvName.setText("好友保费返佣（"+data.getRebateName()+"）");
+                        tvOrder.setText("订单号："+data.getOrderNum());
+                        tvTime.setText("收款时间："+data.getCreateTime());
+                        tvMoney.setText("+"+data.getAmount());
                     }
                 };
             }

@@ -44,26 +44,14 @@ public class HttpFestivityFactory {
      * 获取我的佣金明细
      *
      * @return
+     * @param currentPage
      */
-    public static Observable<CommonBean<PageBean<BrokerageDetailsBean>>> getBrokerageDetails() {
-        return Observable.just(1)
-                .map(new Function<Integer, CommonBean<PageBean<BrokerageDetailsBean>>>() {
-                    @Override
-                    public CommonBean<PageBean<BrokerageDetailsBean>> apply(Integer integer) throws Exception {
+    public static Observable<CommonBean<PageBean<BrokerageDetailsBean>>> getBrokerageDetails(int currentPage) {
+        PagerParambean bean =new PagerParambean(currentPage);
+        return FestivityClient.getInstance().getService()
+                .getRebateFlows(bean)
+                .compose(RxUtils.<CommonBean<PageBean<BrokerageDetailsBean>>>getSchedulersObservableTransformer());
 
-                        CommonBean<PageBean<BrokerageDetailsBean>> bean = new CommonBean<>();
-                        bean.setCode(200);
 
-                        PageBean<BrokerageDetailsBean> pageBean = new PageBean<>();
-                        ArrayList<BrokerageDetailsBean> balanceOfAccountBeans = new ArrayList<>();
-                        int random = ConvertUtils.getRandom(19, 21);
-                        for (int i = 0; i < random; i++) {
-                            balanceOfAccountBeans.add(new BrokerageDetailsBean());
-                        }
-                        pageBean.setList(balanceOfAccountBeans);
-                        bean.setData(pageBean);
-                        return bean;
-                    }
-                });
     }
 }
