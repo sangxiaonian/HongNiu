@@ -1,5 +1,6 @@
 package com.hongniu.modulefinance.ui;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
@@ -15,6 +16,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
@@ -97,12 +99,17 @@ public class FinanceWalletActivity extends BaseActivity implements FinanceWallet
                 .subscribe(new NetObserver<WalletHomeDetail>(this) {
                     @Override
                     public void doOnSuccess(WalletHomeDetail data) {
-                        data.getSetPassWord();
+                        Utils.setPassword(data.isSetPassWord());
                         walletDetail=data;
                         tvBalanceOfAccount.setText(String.format(getString(R.string.money_symbol_des), data.getAvailableBalance()));
                         tvBalanceOfUnentry.setText(String.format(getString(R.string.wallet_balance_wait_enty), data.getTobeCreditedBalance()));
                         tvNiuBalanceOfAccount.setText(getNew(data.getAvailableIntegral()));
                         tvNiuBalanceOfUnentry.setText(String.format(getString(R.string.wallet_balance_niu_unentry_count), data.getTobeCreditedIntegral()));
+                        if (!data.isSetPassWord()){//到设置密码界面
+                            ArouterUtils.getInstance().builder(ArouterParamLogin.activity_login_forget_pass)
+                                    .withInt(Param.TRAN,1)
+                                    .navigation((Activity) mContext,1);
+                        }
                     }
                 });
     }

@@ -1,5 +1,6 @@
 package com.hongniu.modulelogin.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -12,10 +13,12 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
+import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.modulelogin.R;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
+import com.sang.common.net.OkHttp;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.ItemView;
@@ -58,7 +61,8 @@ public class LoginForgetPassActivity extends BaseActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_forget_pass);
-        setToolbarTitle("忘记支付密码");
+        int type = getIntent().getIntExtra(Param.TRAN, 0);
+        setToolbarTitle(type==0?"忘记支付密码":"设置支付密码");
         initView();
         initData();
         initListener();
@@ -100,7 +104,7 @@ public class LoginForgetPassActivity extends BaseActivity implements View.OnClic
         if (v.getId() == R.id.bt_sms) {
             ToastUtils.getInstance().show("发送验证码");
 
-            HttpAppFactory.getSmsCode(Utils.getLoginInfor().getContact())
+            HttpAppFactory.getSmsCode(Utils.getLoginInfor().getMobile())
                     .subscribe(new NetObserver<String>(this) {
                         @Override
                         public void doOnSuccess(String data) {
@@ -121,6 +125,8 @@ public class LoginForgetPassActivity extends BaseActivity implements View.OnClic
                             public void doOnSuccess(String data) {
                                 Utils.setPassword(true);
                                 ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
+                                Intent intent=new Intent();
+                                setResult(RESULT_OK,intent);
                                 finish();
                             }
                         });
