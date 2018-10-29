@@ -3,7 +3,7 @@ package com.hongniu.moduleorder.control;
 import android.text.SpannableStringBuilder;
 
 import com.hongniu.baselibrary.entity.CommonBean;
-import com.hongniu.moduleorder.entity.OrderParamBean;
+import com.hongniu.baselibrary.entity.WalletDetail;
 import com.sang.common.net.listener.TaskControl;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
 
@@ -83,19 +83,47 @@ public class OrderPayControl {
          * 单独购买保险却尚未选择保险
          */
         void noChoiceInsurance();
+
+        /**
+         * 是否默认选中微信，余额是否充足
+         * @param isEnough true 余额充足
+         * @param payType
+         */
+        void isHasEnoughBalance(boolean isEnough, int payType);
+
+        /**
+         * 选中余额支付，但是余额不足
+         */
+        void showNoEnoughBalance();
+
+        /**
+         * 选中余额支付
+         */
+        void onSelectYuePay();
+
+        /**
+         * 显示支付密码键盘
+         * @param money
+         */
+        void showPasswordDialog(double money);
+
+        /**
+         * 没置过支付密码
+         */
+        void hasNoSetPassword();
     }
 
     public interface IOrderPayPresent {
 
         /**
          * 储存其他界面传入的参数
-         *
-         * @param insurance 是否是购买保险界面
+         *  @param insurance 是否是购买保险界面
          * @param money     金额
          * @param orderID   订单ID
          * @param orderNum  订单号
+         * @param listener
          */
-        void saveTranDate(boolean insurance, float money, String orderID, String orderNum);
+        void saveTranDate(boolean insurance, float money, String orderID, String orderNum, TaskControl.OnTaskListener listener);
 
         /**
          * 线上支付被点击
@@ -144,6 +172,18 @@ public class OrderPayControl {
          * 支付成功
          */
         void paySucccessed();
+
+        /**
+         * 当选择余额支付的时候
+         */
+        void onChoiceYuePay();
+
+        /**
+         * 支付密码输入完成
+         * @param passWord
+         * @param listener
+         */
+        void setPayPassoword(String passWord, TaskControl.OnTaskListener listener);
     }
 
     public interface IOrderPayMode {
@@ -157,6 +197,16 @@ public class OrderPayControl {
          */
         void saveTranDate(boolean insurance, float money, String orderID, String orderNum);
 
+        /**
+         * 查询账户余额
+         */
+        Observable<CommonBean<WalletDetail>> queryAccount();
+
+        /**
+         * 储存钱包账号信息
+         * @param data
+         */
+        void setAccountInfor(WalletDetail data);
         /**
          * 获取订单ID
          *
@@ -223,8 +273,9 @@ public class OrderPayControl {
 
         /**
          * 开始支付
+         * @param passWord
          */
-        Observable<CommonBean<PayBean>> getPayParams();
+        Observable<CommonBean<PayBean>> getPayParams(String passWord);
 
 
         int getPayType();
@@ -242,6 +293,13 @@ public class OrderPayControl {
          * @return
          */
         String getCargoPrice();
+
+
+        /**
+         * 账户余额是否充足
+         * @return
+         */
+        boolean isHasEnoughBalance();
     }
 
 }

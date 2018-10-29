@@ -1,9 +1,14 @@
 package com.hongniu.moduleorder.mode;
 
+import android.text.TextUtils;
+
 import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.WalletDetail;
+import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.moduleorder.control.OrderPayControl;
 import com.hongniu.moduleorder.entity.OrderParamBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
+import com.sang.common.utils.ConvertUtils;
 import com.sang.thirdlibrary.pay.PayConfig;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
 
@@ -23,6 +28,7 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
     private boolean buyInsurance;//是否需要购买保险
     private int payType;//选择支付方式
     private boolean isOnLine;//true 线上支付，false 线下支付
+    private WalletDetail wallletInfor;
 
     /**
      * 储存其他界面传入的参数
@@ -38,6 +44,24 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
         this.money = money;
         this.orderID = orderID;
         this.orderNum = orderNum;
+    }
+
+    /**
+     * 查询账户余额
+     */
+    @Override
+    public Observable<CommonBean<WalletDetail>> queryAccount() {
+      return HttpAppFactory.queryAccountdetails();
+    }
+
+    /**
+     * 储存钱包账号信息
+     *
+     * @param data
+     */
+    @Override
+    public void setAccountInfor(WalletDetail data) {
+        this.wallletInfor=data;
     }
 
     /**
@@ -170,10 +194,11 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
 
     /**
      * 开始支付
+     * @param passWord
      */
     @Override
-    public Observable<CommonBean<PayBean>> getPayParams() {
-        return HttpOrderFactory.payOrderOffLine(creatBuyParams(isOnLine, !insurance, buyInsurance));
+    public Observable<CommonBean<PayBean>> getPayParams(String passWord) {
+        return HttpOrderFactory.payOrderOffLine(creatBuyParams(passWord,isOnLine, !insurance, buyInsurance));
     }
 
     //获取支付方式
@@ -213,14 +238,29 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
     }
 
     /**
+     * 账户余额是否充足
+     *
+     * @return
+     */
+    @Override
+    public boolean isHasEnoughBalance() {
+        return wallletInfor!=null&&Float.parseFloat(wallletInfor.getAvailableBalance())>=getMoney();
+    }
+
+    /**
+     *
+     * @param passWord   余额支付时候需要支付密码
      * @param onLine     线上线下支付方式
      * @param hasFrenght 是否支付运费（单独购买保险的时候不支付运费）
      * @param policy     是否购买保险
      * @return
      */
-    private OrderParamBean creatBuyParams(boolean onLine, boolean hasFrenght, boolean policy) {
+    private OrderParamBean creatBuyParams(String passWord, boolean onLine, boolean hasFrenght, boolean policy) {
         OrderParamBean bean = new OrderParamBean();
         bean.setOrderNum(orderNum);
+        if (!TextUtils.isEmpty(passWord)){
+            bean.setPayPassword(ConvertUtils.MD5(passWord));
+        }
         bean.setHasFreight(hasFrenght);
         bean.setHasPolicy(policy);
         bean.setAppid(PayConfig.weChatAppid);

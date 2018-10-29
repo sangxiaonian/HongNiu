@@ -13,7 +13,7 @@ import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.modulefinance.R;
-import com.hongniu.modulefinance.entity.WalletHomeDetail;
+import com.hongniu.baselibrary.entity.WalletDetail;
 
 /**
  * 牛币账户
@@ -30,7 +30,7 @@ public class FinanceNiuActivity extends BaseActivity implements RadioGroup.OnChe
     private Fragment blankFrangmet;//已入账
     private Fragment currentFrament;
     private Fragment unEntryFrangmet;//待入账明细
-    private WalletHomeDetail walletHomeDetail;
+    private WalletDetail walletHomeDetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

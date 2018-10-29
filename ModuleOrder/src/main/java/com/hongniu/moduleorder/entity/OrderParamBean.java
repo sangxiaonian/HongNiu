@@ -35,6 +35,16 @@ public class OrderParamBean  {
      * true	boolean	是否线上支付,false=线下支付
      */
     private boolean onlinePay;
+    private String payPassword;
+
+
+    public String getPayPassword() {
+        return payPassword;
+    }
+
+    public void setPayPassword(String payPassword) {
+        this.payPassword = payPassword;
+    }
 
     public String getOrderId() {
         return id

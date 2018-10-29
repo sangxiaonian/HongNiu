@@ -25,7 +25,7 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.modulefinance.R;
 import com.hongniu.modulefinance.control.FinanceWalletControl;
-import com.hongniu.modulefinance.entity.WalletHomeDetail;
+import com.hongniu.baselibrary.entity.WalletDetail;
 import com.hongniu.modulefinance.net.HttpFinanceFactory;
 import com.hongniu.modulefinance.present.WalletPresenter;
 
@@ -50,7 +50,7 @@ public class FinanceWalletActivity extends BaseActivity implements FinanceWallet
     private Fragment currentFrament;//余额明细
     private Fragment unEntryFrangmet;//待入账明细
 
-    private WalletHomeDetail walletDetail;//账户数据
+    private WalletDetail walletDetail;//账户数据
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,9 +96,9 @@ public class FinanceWalletActivity extends BaseActivity implements FinanceWallet
 
     private void upInfor(){
         HttpFinanceFactory.queryAccountdetails()
-                .subscribe(new NetObserver<WalletHomeDetail>(this) {
+                .subscribe(new NetObserver<WalletDetail>(this) {
                     @Override
-                    public void doOnSuccess(WalletHomeDetail data) {
+                    public void doOnSuccess(WalletDetail data) {
                         Utils.setPassword(data.isSetPassWord());
                         walletDetail=data;
                         tvBalanceOfAccount.setText(String.format(getString(R.string.money_symbol_des), data.getAvailableBalance()));

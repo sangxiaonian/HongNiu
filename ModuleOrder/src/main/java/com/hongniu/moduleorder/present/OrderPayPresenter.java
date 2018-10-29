@@ -6,17 +6,14 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 
-import com.hongniu.baselibrary.arouter.ArouterParamOrder;
-import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.NetObserver;
-import com.hongniu.baselibrary.config.Param;
-import com.hongniu.baselibrary.entity.CreatInsuranceBean;
+import com.hongniu.baselibrary.entity.WalletDetail;
+import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderPayControl;
 import com.hongniu.moduleorder.mode.OrderPayMode;
 import com.sang.common.net.listener.TaskControl;
 import com.sang.common.utils.ConvertUtils;
-import com.sang.common.utils.ToastUtils;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
 
 /**
@@ -40,9 +37,10 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
      * @param money     金额
      * @param orderID   订单ID
      * @param orderNum  订单号
+     * @param listener
      */
     @Override
-    public void saveTranDate(boolean insurance, float money, String orderID, String orderNum) {
+    public void saveTranDate(boolean insurance, final float money, String orderID, String orderNum, TaskControl.OnTaskListener listener) {
         mode.saveTranDate(insurance, money, orderID, orderNum);
         view.setTranDate(money, orderID, orderNum);
         if (insurance) {//如果是购买保险
@@ -50,6 +48,19 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
         } else {
             view.showPayOrder();
         }
+
+        mode.queryAccount()
+                .subscribe(new NetObserver<WalletDetail>(listener) {
+                    @Override
+                    public void doOnSuccess(WalletDetail data) {
+                        mode.setAccountInfor(data);
+                        view.isHasEnoughBalance(mode.isHasEnoughBalance(), mode.getPayType());
+
+                    }
+                })
+        ;
+
+
     }
 
     /**
@@ -95,6 +106,9 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
 
 
         view.showPayCount(builder);
+        //判断是否需要切换支付方式
+        view.isHasEnoughBalance(mode.isHasEnoughBalance(), mode.getPayType());
+
 
     }
 
@@ -154,18 +168,26 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
      */
     @Override
     public void pay(TaskControl.OnTaskListener listener) {
-        if (mode.isInsurance()&&!mode.isBuyInsurance()) {
-            ToastUtils.getInstance().show("请选择投保金额");
+        if (mode.isInsurance() && !mode.isBuyInsurance()) {
             view.noChoiceInsurance();
-        }else {
-            mode.getPayParams()
-                    .subscribe(new NetObserver<PayBean>(listener) {
-                        @Override
-                        public void doOnSuccess(PayBean data) {
-                            view.jumpToPay(data, mode.getPayType());
+        } else {
+            if (mode.getPayType() == 4) {//余额支付
+                if (Utils.querySetPassword()) {//设置过支付密码
+                    view.showPasswordDialog(mode.getMoney());
+                } else {
+                    view.hasNoSetPassword();
+                }
+            } else {
+                mode.getPayParams(null)
+                        .subscribe(new NetObserver<PayBean>(listener) {
+                            @Override
+                            public void doOnSuccess(PayBean data) {
+                                view.jumpToPay(data, mode.getPayType());
+                            }
+                        });
+            }
 
-                        }
-                    });
+
         }
 
 
@@ -178,11 +200,40 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
     public void paySucccessed() {
         if (mode.isBuyInsurance()) {
             //调往保险购买界面
-            view.jumpToInsurance(mode.getCargoPrice(),mode.getOrderNum());
+            view.jumpToInsurance(mode.getCargoPrice(), mode.getOrderNum());
 
         } else {
             view.jumpToMain();
 
         }
+    }
+
+    /**
+     * 当选择余额支付的时候
+     */
+    @Override
+    public void onChoiceYuePay() {
+        if (!mode.isHasEnoughBalance()) {
+            view.showNoEnoughBalance();
+        } else {
+            view.onSelectYuePay();
+        }
+    }
+
+    /**
+     * 支付密码输入完成
+     *
+     * @param passWord
+     * @param listener
+     */
+    @Override
+    public void setPayPassoword(String passWord, TaskControl.OnTaskListener listener) {
+        mode.getPayParams(passWord)
+                .subscribe(new NetObserver<PayBean>(listener) {
+                    @Override
+                    public void doOnSuccess(PayBean data) {
+                        view.jumpToPay(data, mode.getPayType());
+                    }
+                });
     }
 }

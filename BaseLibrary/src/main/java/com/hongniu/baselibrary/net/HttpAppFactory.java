@@ -6,12 +6,15 @@ import com.hongniu.baselibrary.entity.PayInforBeans;
 import com.hongniu.baselibrary.entity.QueryPayPassword;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.entity.SMSParams;
+import com.hongniu.baselibrary.entity.WalletDetail;
+import com.hongniu.baselibrary.utils.Utils;
 import com.sang.common.net.rx.RxUtils;
 import com.sang.common.utils.ConvertUtils;
 
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.functions.Function;
 
 /**
  * 作者： ${PING} on 2018/8/13.
@@ -66,6 +69,7 @@ public class HttpAppFactory {
                 .compose(RxUtils.<CommonBean<QueryPayPassword>>getSchedulersObservableTransformer());
 
     }
+
     /**
      * 新增收款方式
      */
@@ -75,7 +79,9 @@ public class HttpAppFactory {
                 .addPayWays(bean)
                 .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
 
-    }   /**
+    }
+
+    /**
      * 新增收款方式
      */
     public static Observable<CommonBean<String>> addWeiChat(PayInforBeans bean) {
@@ -85,4 +91,27 @@ public class HttpAppFactory {
                 .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
 
     }
+
+    /**
+     * 查询钱包账户详情
+     *
+     * @return
+     */
+    public static Observable<CommonBean<WalletDetail>> queryAccountdetails() {
+        return AppClient.getInstance().getService().queryAccountdetails()
+                .map(new Function<CommonBean<WalletDetail>, CommonBean<WalletDetail>>() {
+                    @Override
+                    public CommonBean<WalletDetail> apply(CommonBean<WalletDetail> walletDetailCommonBean) throws Exception {
+                        if (walletDetailCommonBean != null
+                                && walletDetailCommonBean.getCode() == 200
+                                && walletDetailCommonBean.getData() != null) {
+                            Utils.setPassword(walletDetailCommonBean.getData().isSetPassWord());
+                        }
+                        return walletDetailCommonBean;
+                    }
+                })
+                .compose(RxUtils.<CommonBean<WalletDetail>>getSchedulersObservableTransformer())
+                ;
+    }
+
 }

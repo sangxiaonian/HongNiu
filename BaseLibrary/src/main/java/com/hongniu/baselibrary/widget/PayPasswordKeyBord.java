@@ -21,7 +21,7 @@ import io.reactivex.disposables.Disposable;
 public class PayPasswordKeyBord implements PasswordDialog.OnPasswordDialogListener, TaskControl.OnTaskListener {
 
     PasswordDialog passwordDialog;
-    private LoadDialog loading;
+
     protected Disposable disposable;
 
     PayKeyBordListener payListener;

@@ -4,16 +4,14 @@ import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.modulefinance.entity.AccountFloowParamBean;
-import com.hongniu.modulefinance.entity.AllBalanceOfAccountBean;
 import com.hongniu.modulefinance.entity.BalanceOfAccountBean;
 import com.hongniu.modulefinance.entity.BalanceWithDrawBean;
 import com.hongniu.modulefinance.entity.CareNumPageBean;
 import com.hongniu.modulefinance.entity.FinanceQueryCarDetailMap;
-import com.hongniu.modulefinance.entity.NiuFlowAcountBean;
 import com.hongniu.modulefinance.entity.NiuOfAccountBean;
 import com.hongniu.modulefinance.entity.QueryExpendBean;
 import com.hongniu.modulefinance.entity.QueryExpendResultBean;
-import com.hongniu.modulefinance.entity.WalletHomeDetail;
+import com.hongniu.baselibrary.entity.WalletDetail;
 
 import java.util.List;
 
@@ -66,13 +64,6 @@ public interface FinanceService {
     Observable<CommonBean<PageBean<OrderDetailBean>>> queryFinance(@Body QueryExpendBean infor);
 
 
-    /**
-     * 查询钱包账户详情
-     *
-     * @return
-     */
-    @POST("hongniu/api/account/accountdetails")
-    Observable<CommonBean<WalletHomeDetail>> queryAccountdetails();
 
     /**
      * 查询钱包账户流水
@@ -107,7 +98,7 @@ public interface FinanceService {
      * @return
      */
     @POST("hongniu/api/refund/queryMyCards")
-    Observable<CommonBean<WalletHomeDetail>> queryMyCards();
+    Observable<CommonBean<WalletDetail>> queryMyCards();
 
 
     /**

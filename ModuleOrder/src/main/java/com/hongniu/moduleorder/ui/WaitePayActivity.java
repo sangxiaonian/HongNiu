@@ -27,9 +27,7 @@ public class WaitePayActivity extends BaseActivity {
     public static final String PAYTYPE = "payType";
     public static final String PAYINFOR = "payInfor";
     public static final String ISDEUBG = "ISDEUBG";
-    private int payType;
-    private PayBean bean;
-    private boolean isDebug;
+    private ImageView img;
 
 
     @Override
@@ -37,26 +35,30 @@ public class WaitePayActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_waite_pay);
         setToolbarTitle("等待付款");
-        payType = getIntent().getIntExtra(PAYTYPE, 0);
-        bean = getIntent().getParcelableExtra(PAYINFOR);
-        isDebug = getIntent().getBooleanExtra(ISDEUBG,false);
+        int payType = getIntent().getIntExtra(PAYTYPE, 0);
+        PayBean bean = getIntent().getParcelableExtra(PAYINFOR);
+        boolean isDebug = getIntent().getBooleanExtra(ISDEUBG, false);
 //        0微信支付 1银联支付 2线下支付 3支付宝 4余额
         initView();
         switch (payType) {
             case 0://微信支付
-                new WeChatAppPay() .pay(this, bean);
+                new WeChatAppPay().pay(this, bean);
                 break;
             case 1://银联支付
-                new UnionPayClient().setDebug(isDebug).pay(this,   bean);
-                break;
-            case 2://线下支付
-                BusFactory.getBus().post(new PayResult(PayResult.SUCCESS));
+                new UnionPayClient().setDebug(isDebug).pay(this, bean);
                 break;
             case 3://支付宝支付
-                new AliPay().setDebug(isDebug).pay(this,  bean);
+                new AliPay().setDebug(isDebug).pay(this, bean);
                 break;
+
+            case 2://线下支付
             case 4://余额支付
-                BusFactory.getBus().post(new PayResult(PayResult.SUCCESS));
+                img.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        BusFactory.getBus().post(new PayResult(PayResult.SUCCESS));
+                    }
+                }, 500);
                 break;
         }
 
@@ -66,7 +68,7 @@ public class WaitePayActivity extends BaseActivity {
     @Override
     protected void initView() {
         super.initView();
-        ImageView img = findViewById(R.id.img);
+        img = findViewById(R.id.img);
         ImageLoader.getLoader().load(this, img, R.raw.listloading);
     }
 
@@ -104,7 +106,7 @@ public class WaitePayActivity extends BaseActivity {
 
 
     public static void startPay(Activity activity, int payType, PayBean payBean) {
-        startPay(activity, payType, payBean,false);
+        startPay(activity, payType, payBean, false);
     }
 
     public static void startPay(Activity activity, int payType, PayBean payBean, boolean isDebug) {

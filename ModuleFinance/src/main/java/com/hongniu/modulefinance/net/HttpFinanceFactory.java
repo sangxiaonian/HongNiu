@@ -4,18 +4,17 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
+import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.modulefinance.entity.AccountFloowParamBean;
-import com.hongniu.modulefinance.entity.AllBalanceOfAccountBean;
 import com.hongniu.modulefinance.entity.BalanceOfAccountBean;
 import com.hongniu.modulefinance.entity.BalanceWithDrawBean;
 import com.hongniu.modulefinance.entity.CareNumPageBean;
 import com.hongniu.modulefinance.entity.FinanceQueryCarDetailBean;
 import com.hongniu.modulefinance.entity.FinanceQueryCarDetailMap;
-import com.hongniu.modulefinance.entity.NiuFlowAcountBean;
 import com.hongniu.modulefinance.entity.NiuOfAccountBean;
 import com.hongniu.modulefinance.entity.QueryExpendBean;
 import com.hongniu.modulefinance.entity.QueryExpendResultBean;
-import com.hongniu.modulefinance.entity.WalletHomeDetail;
+import com.hongniu.baselibrary.entity.WalletDetail;
 import com.sang.common.net.rx.RxUtils;
 import com.sang.common.utils.ConvertUtils;
 
@@ -95,22 +94,11 @@ public class HttpFinanceFactory {
      *
      * @return
      */
-    public static Observable<CommonBean<WalletHomeDetail>> queryAccountdetails() {
-        return FinanceClient.getInstance().getService().queryAccountdetails()
-                .compose(RxUtils.<CommonBean<WalletHomeDetail>>getSchedulersObservableTransformer())
+    public static Observable<CommonBean<WalletDetail>> queryAccountdetails() {
+        return HttpAppFactory.queryAccountdetails()
                 ;
     }
 
-    /**
-     * 查询钱包账户详情
-     *
-     * @return
-     */
-    public static Observable<CommonBean<WalletHomeDetail>> queryMyCards() {
-        return FinanceClient.getInstance().getService().queryMyCards()
-                .compose(RxUtils.<CommonBean<WalletHomeDetail>>getSchedulersObservableTransformer())
-                ;
-    }
 
     /**
      * 余额提现

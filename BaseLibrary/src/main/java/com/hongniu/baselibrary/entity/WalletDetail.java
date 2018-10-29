@@ -1,4 +1,4 @@
-package com.hongniu.modulefinance.entity;
+package com.hongniu.baselibrary.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -7,7 +7,7 @@ import android.os.Parcelable;
  * 作者： ${PING} on 2018/10/25.
  * 钱包首页账户详情
  */
-public class WalletHomeDetail implements Parcelable {
+public class WalletDetail implements Parcelable {
     /**
      *      true	string	会员代码
       */
@@ -70,7 +70,7 @@ public class WalletHomeDetail implements Parcelable {
     private String tobeCreditedBalance;
 
 
-    protected WalletHomeDetail(Parcel in) {
+    protected WalletDetail(Parcel in) {
         accountCode = in.readString();
         userId = in.readString();
         userName = in.readString();
@@ -88,15 +88,15 @@ public class WalletHomeDetail implements Parcelable {
         tobeCreditedBalance = in.readString();
     }
 
-    public static final Creator<WalletHomeDetail> CREATOR = new Creator<WalletHomeDetail>() {
+    public static final Creator<WalletDetail> CREATOR = new Creator<WalletDetail>() {
         @Override
-        public WalletHomeDetail createFromParcel(Parcel in) {
-            return new WalletHomeDetail(in);
+        public WalletDetail createFromParcel(Parcel in) {
+            return new WalletDetail(in);
         }
 
         @Override
-        public WalletHomeDetail[] newArray(int size) {
-            return new WalletHomeDetail[size];
+        public WalletDetail[] newArray(int size) {
+            return new WalletDetail[size];
         }
     };
 

@@ -6,6 +6,7 @@ import com.hongniu.baselibrary.entity.PayInforBeans;
 import com.hongniu.baselibrary.entity.QueryPayPassword;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.entity.SMSParams;
+import com.hongniu.baselibrary.entity.WalletDetail;
 
 import java.util.List;
 
@@ -59,6 +60,15 @@ public interface AppService {
      */
     @POST("hongniu/api/refund/add")
     Observable<CommonBean<String>> addPayWays(@Body PayInforBeans beans);
+
+    /**
+     * 查询钱包账户详情
+     *
+     * @return
+     */
+    @POST("hongniu/api/account/accountdetails")
+    Observable<CommonBean<WalletDetail>> queryAccountdetails();
+
 
 }
 

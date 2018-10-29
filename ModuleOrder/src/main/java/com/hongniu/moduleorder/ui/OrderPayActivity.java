@@ -23,12 +23,14 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CreatInsuranceBean;
 import com.hongniu.baselibrary.entity.H5Config;
 import com.hongniu.baselibrary.utils.Utils;
+import com.hongniu.baselibrary.widget.PayPasswordKeyBord;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.control.OrderPayControl;
 import com.hongniu.moduleorder.present.OrderPayPresenter;
 import com.hongniu.moduleorder.widget.dialog.BuyInsuranceDialog;
 import com.sang.common.event.BusFactory;
+import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
@@ -54,7 +56,7 @@ import org.greenrobot.eventbus.ThreadMode;
  * 不购买保险，则直接显示完成订单
  */
 @Route(path = ArouterParamOrder.activity_order_pay)
-public class OrderPayActivity extends BaseActivity implements OrderPayControl.IOrderPayView, RadioGroup.OnCheckedChangeListener, View.OnClickListener, BuyInsuranceDialog.OnBuyInsuranceClickListener {
+public class OrderPayActivity extends BaseActivity implements OrderPayControl.IOrderPayView, RadioGroup.OnCheckedChangeListener, View.OnClickListener, BuyInsuranceDialog.OnBuyInsuranceClickListener, PayPasswordKeyBord.PayKeyBordListener {
 
     private TextView tvOrder;//订单号
     private ViewGroup btBuy;//购买保险
@@ -105,7 +107,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
         initListener();
         //默认选中微信支付
         payPresent = new OrderPayPresenter(this, this);
-        rlWechact.performClick();
+        onSelectYuePay();
     }
 
     @Override
@@ -163,9 +165,8 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
     public void onMessageEvent(OrderEvent.PayOrder event) {
         if (event != null) {
             //此处判断是否是购买保险
-            payPresent.saveTranDate(event.insurance, event.money, event.orderID, event.orderNum);
+            payPresent.saveTranDate(event.insurance, event.money, event.orderID, event.orderNum, this);
             rbOnline.performClick();
-
         }
         BusFactory.getBus().removeStickyEvent(event);
     }
@@ -219,15 +220,13 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
             changePayType(PayType.WECHAT);
             payPresent.setPayType(0);
         } else if (i == R.id.rl_ali) {//选择支付宝
-            //支付宝暂未接入，无效的支付方式
             changePayType(PayType.ALI);
             payPresent.setPayType(3);
         } else if (i == R.id.rl_union) {//选择银联
             changePayType(PayType.UNIONPAY);
             payPresent.setPayType(1);
         } else if (i == R.id.rl_yue) {//余额支付
-            changePayType(PayType.OTHER);
-            payPresent.setPayType(4);
+            payPresent.onChoiceYuePay();
         } else if (i == R.id.bt_pay) {//支付订单
             payPresent.pay(this);
         } else if (i == R.id.bt_cancle_insurance) {//取消保险
@@ -409,7 +408,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
      */
     @Override
     public void jumpToPay(PayBean data, int payType) {
-        WaitePayActivity.startPay(this, payType, data,true);
+        WaitePayActivity.startPay(this, payType, data, true);
     }
 
     /**
@@ -447,5 +446,125 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
         ToastUtils.getInstance().show("请选择投保金额");
     }
 
+    /**
+     * 是否默认选中微信
+     *
+     * @param isEnough
+     * @param payType
+     */
+    @Override
+    public void isHasEnoughBalance(boolean isEnough, int payType) {
+        //如果余额不充足，并且当前选中的是余额就选中微信
+        if (!isEnough && payType == 4) {
+            rlWechact.performClick();
+        }
 
+    }
+
+    /**
+     * 选中余额支付，但是余额不足
+     */
+    @Override
+    public void showNoEnoughBalance() {
+        ToastUtils.getInstance().show("余额不足");
+    }
+
+    /**
+     * 选中余额支付
+     */
+    @Override
+    public void onSelectYuePay() {
+        changePayType(PayType.OTHER);
+        payPresent.setPayType(4);
+    }
+
+    /**
+     * 显示支付密码键盘
+     *
+     * @param money
+     */
+    @Override
+    public void showPasswordDialog(double money) {
+        PayPasswordKeyBord payPasswordKeyBord = new PayPasswordKeyBord(this);
+        payPasswordKeyBord.setProgressListener(this);
+        payPasswordKeyBord.sePaytListener(this);
+        payPasswordKeyBord.setPayCount(ConvertUtils.changeFloat(money,2));
+        payPasswordKeyBord.show();
+
+    }
+
+    /**
+     * 没置过支付密码
+     */
+    @Override
+    public void hasNoSetPassword() {
+        creatDialog("使用余额支付前，必须设置泓牛支付密码", null, "取消", "去设置")
+                .setLeftClickListener(new DialogControl.OnButtonLeftClickListener() {
+                    @Override
+                    public void onLeftClick(View view, DialogControl.ICenterDialog dialog) {
+                        dialog.dismiss();
+                    }
+                })
+                .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
+                    @Override
+                    public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
+                        dialog.dismiss();
+                        ArouterUtils.getInstance()
+                                .builder(ArouterParamLogin.activity_login_forget_pass)
+                                .withInt(Param.TRAN, 1)
+                                .navigation(mContext);
+                    }
+                })
+                .creatDialog(new CenterAlertDialog(mContext))
+                .show();
+    }
+
+
+    /**
+     * 取消支付
+     *
+     * @param dialog
+     */
+    @Override
+    public void onCancle(DialogControl.IDialog dialog) {
+        dialog.dismiss();
+    }
+
+    /**
+     * 密码输入完成
+     *
+     * @param dialog
+     * @param count    金额
+     * @param passWord 密码
+     */
+    @Override
+    public void onInputPassWordSuccess(DialogControl.IDialog dialog, String count, String passWord) {
+        dialog.dismiss();
+        payPresent.setPayPassoword(passWord, this);
+    }
+
+    /**
+     * 忘记密码
+     *
+     * @param dialog
+     */
+    @Override
+    public void onForgetPassowrd(DialogControl.IDialog dialog) {
+        ArouterUtils.getInstance()
+                .builder(ArouterParamLogin.activity_login_forget_pass)
+                .navigation(mContext);
+    }
+
+    /**
+     * 从未设置过密码
+     *
+     * @param dialog
+     */
+    @Override
+    public void hasNoPassword(DialogControl.IDialog dialog) {
+        ArouterUtils.getInstance()
+                .builder(ArouterParamLogin.activity_login_forget_pass)
+                .withInt(Param.TRAN, 1)
+                .navigation(mContext);
+    }
 }

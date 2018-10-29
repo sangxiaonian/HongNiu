@@ -12,7 +12,7 @@ import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.modulefinance.R;
-import com.hongniu.modulefinance.entity.WalletHomeDetail;
+import com.hongniu.baselibrary.entity.WalletDetail;
 
 /**
  * 余额详情
@@ -23,7 +23,7 @@ public class FinanceBalanceActivity extends BaseActivity implements View.OnClick
     private TextView tvBanlaceWithdrawal;//待入账提现
     private TextView tvBanlace;//账户余额
     private Button btSum;//提现
-    WalletHomeDetail walletDetail;
+    WalletDetail walletDetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
