@@ -3,11 +3,15 @@ package com.sang.thirdlibrary.pay.ali;
 import android.app.Activity;
 import android.text.TextUtils;
 
+import com.alipay.sdk.app.EnvUtils;
 import com.alipay.sdk.app.PayTask;
 import com.sang.common.event.BusFactory;
+import com.sang.common.net.rx.RxUtils;
+import com.sang.common.utils.JLog;
 import com.sang.thirdlibrary.pay.control.PayControl;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
 import com.sang.thirdlibrary.pay.entiy.PayResult;
+import com.sang.thirdlibrary.pay.unionpay.UnionPayClient;
 
 import java.util.Map;
 
@@ -21,6 +25,8 @@ import io.reactivex.functions.Function;
  */
 public class AliPay implements PayControl.IPayClient {
 
+    private boolean isDebug;
+
     @Override
     public void pay(final Activity activity, PayBean bean) {
         Observable.just(bean)
@@ -32,6 +38,7 @@ public class AliPay implements PayControl.IPayClient {
                         return result;
                     }
                 })
+                .compose(RxUtils.<Map<String,String>>getSchedulersObservableTransformer())
                 .subscribe(new Observer<Map<String, String>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -39,7 +46,6 @@ public class AliPay implements PayControl.IPayClient {
                     @Override
                     public void onNext(Map<String, String> stringStringMap) {
                         AliPayResult payResult = new AliPayResult(stringStringMap);
-
                         String resultInfo = payResult.getResult();// 同步返回需要验证的信息
                         String resultStatus = payResult.getResultStatus();
                         // 判断resultStatus 为9000则代表支付成功
@@ -49,6 +55,8 @@ public class AliPay implements PayControl.IPayClient {
                         } else {
                             BusFactory.getBus().post(new  PayResult( PayResult.FAIL));
                         }
+
+                        JLog.i(payResult.toString());
                     }
 
                     @Override
@@ -66,7 +74,11 @@ public class AliPay implements PayControl.IPayClient {
     }
 
     @Override
-    public void setDebug(boolean isDebug) {
-
+    public PayControl.IPayClient setDebug(boolean isDebug) {
+        this.isDebug=isDebug;
+        if (isDebug){
+            EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
+        }
+        return this;
     }
 }

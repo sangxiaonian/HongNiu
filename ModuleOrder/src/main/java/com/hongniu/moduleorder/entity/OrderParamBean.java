@@ -5,7 +5,7 @@ package com.hongniu.moduleorder.entity;
  * 努力，为梦长留
  * 订单相关操作参数
  */
-public class OrderParamBean {
+public class OrderParamBean  {
     /**
      * true	string	订单ID
      */

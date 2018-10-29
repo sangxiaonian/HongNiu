@@ -197,17 +197,6 @@ public class HttpOrderFactory {
             return OrderClient.getInstance()
                     .getService()
                     .payUnion(bean)
-                    .filter(new Predicate<CommonBean<PayBean>>() {
-                        @Override
-                        public boolean test(CommonBean<PayBean> payBeanCommonBean) throws Exception {
-                            PayBean data = payBeanCommonBean.getData();
-                            if (data != null && "00".equals(data.getCode())) {
-                                return true;
-                            } else {
-                                throw new NetException(500, data.getMsg());
-                            }
-                        }
-                    })
                     .compose(RxUtils.<CommonBean<PayBean>>getSchedulersObservableTransformer());
 
         } else if (payType == 0) {//微信付款
@@ -225,7 +214,12 @@ public class HttpOrderFactory {
                     .getService()
                     .payOrderOffLine(bean)
                     .compose(RxUtils.<CommonBean<PayBean>>getSchedulersObservableTransformer());
-        } else {
+        } else if (payType == 4) {//余额支付
+            return OrderClient.getInstance()
+                    .getService()
+                    .payBalance(bean)
+                    .compose(RxUtils.<CommonBean<PayBean>>getSchedulersObservableTransformer());
+        }else {
             return null;
         }
 

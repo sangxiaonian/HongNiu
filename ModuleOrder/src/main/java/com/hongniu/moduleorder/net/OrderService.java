@@ -6,6 +6,7 @@ import com.hongniu.baselibrary.entity.OrderCreatBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.OrderIdBean;
 import com.hongniu.baselibrary.entity.PageBean;
+import com.hongniu.baselibrary.entity.UpImgData;
 import com.hongniu.baselibrary.entity.UpReceiverBean;
 import com.hongniu.moduleorder.entity.LocationBean;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
@@ -17,7 +18,6 @@ import com.hongniu.moduleorder.entity.OrderSearchBean;
 import com.hongniu.moduleorder.entity.PathBean;
 import com.hongniu.moduleorder.entity.QueryInsurancePriceBean;
 import com.hongniu.moduleorder.entity.QueryReceiveBean;
-import com.hongniu.baselibrary.entity.UpImgData;
 import com.hongniu.moduleorder.entity.VersionBean;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
 
@@ -64,8 +64,8 @@ public interface OrderService {
     /**
      * 查询订单详情
      *
-     * @return
      * @param infor
+     * @return
      */
     @POST("hongniu/api/order/detail")
     Observable<CommonBean<OrderDetailBean>> queryOrderDetail(@Body OrderParamBean infor);
@@ -186,6 +186,20 @@ public interface OrderService {
      */
     @POST("hongniu/api/alipay/getorderinfo")
     Observable<CommonBean<PayBean>> payAli(@Body OrderParamBean infor);
+
+    /**
+     * 余额支付
+     * orderNum     true	string	订单号
+     * openid       true	string	微信用户openid
+     * hasFreight   true	boolean	是否付运费，true=是
+     * hasPolicy    true	boolean	是否买保险，true=是
+     * onlinePay    true	boolean	是否线上支付,false=线下支付
+     *
+     * @param infor 订单ID
+     * @return
+     */
+    @POST("hongniu/api/account/accountpay")
+    Observable<CommonBean<PayBean>> payBalance(@Body OrderParamBean infor);
 
     /**
      * 创建保单

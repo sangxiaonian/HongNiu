@@ -6,6 +6,7 @@ import android.content.Context;
 import com.sang.thirdlibrary.pay.PayConfig;
 import com.sang.thirdlibrary.pay.control.PayControl;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
+import com.sang.thirdlibrary.pay.unionpay.UnionPayClient;
 import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -19,8 +20,9 @@ public class WeChatAppPay implements PayControl.IPayClient {
     private boolean isDebug;
 
     @Override
-    public void setDebug(boolean isDebug) {
+    public PayControl.IPayClient setDebug(boolean isDebug) {
         this.isDebug=isDebug;
+        return this;
     }
 
     @Override

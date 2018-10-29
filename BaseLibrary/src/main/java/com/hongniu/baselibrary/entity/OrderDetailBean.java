@@ -178,7 +178,7 @@ public class OrderDetailBean {
     private double longitude;
 
     /**
-     * false	string	支付方式(0微信,1银联,2线下支付)
+     * false	string	支付方式(0微信,1银联,2线下支付 3 支付宝 4余额支付
      */
     protected String payWay;
 
