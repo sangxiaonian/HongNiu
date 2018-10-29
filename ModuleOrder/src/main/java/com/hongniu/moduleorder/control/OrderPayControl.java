@@ -74,10 +74,11 @@ public class OrderPayControl {
 
         /**
          * 支付完成，开始购买保险
-         * @param cargoPrice
+         * @param price
          * @param orderNum
+         * @param orderID
          */
-        void jumpToInsurance(String cargoPrice, String orderNum);
+        void jumpToInsurance(String price, String orderNum, String orderID);
 
         /**
          * 单独购买保险却尚未选择保险

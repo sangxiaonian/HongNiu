@@ -35,11 +35,25 @@ public class WaitePayActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_waite_pay);
         setToolbarTitle("等待付款");
+        setToolbarSrcLeft(0);
+        initView();
+        initData();
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
+        img = findViewById(R.id.img);
+        ImageLoader.getLoader().load(this, img, R.raw.listloading);
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
         int payType = getIntent().getIntExtra(PAYTYPE, 0);
         PayBean bean = getIntent().getParcelableExtra(PAYINFOR);
         boolean isDebug = getIntent().getBooleanExtra(ISDEUBG, false);
 //        0微信支付 1银联支付 2线下支付 3支付宝 4余额
-        initView();
         switch (payType) {
             case 0://微信支付
                 new WeChatAppPay().pay(this, bean);
@@ -61,15 +75,6 @@ public class WaitePayActivity extends BaseActivity {
                 }, 500);
                 break;
         }
-
-
-    }
-
-    @Override
-    protected void initView() {
-        super.initView();
-        img = findViewById(R.id.img);
-        ImageLoader.getLoader().load(this, img, R.raw.listloading);
     }
 
     @Override
@@ -117,5 +122,8 @@ public class WaitePayActivity extends BaseActivity {
         activity.startActivityForResult(intent, 0);
     }
 
+    @Override
+    public void onBackPressed() {
 
+    }
 }

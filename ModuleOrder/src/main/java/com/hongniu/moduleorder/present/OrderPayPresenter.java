@@ -200,7 +200,7 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
     public void paySucccessed() {
         if (mode.isBuyInsurance()) {
             //调往保险购买界面
-            view.jumpToInsurance(mode.getCargoPrice(), mode.getOrderNum());
+            view.jumpToInsurance(mode.getCargoPrice(), mode.getOrderNum(),mode.getOrderId());
 
         } else {
             view.jumpToMain();

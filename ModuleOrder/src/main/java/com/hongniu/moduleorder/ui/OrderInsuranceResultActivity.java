@@ -13,6 +13,7 @@ import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.entity.QueryOrderStateBean;
 import com.hongniu.moduleorder.R;
 import com.hongniu.baselibrary.entity.OrderCreatBean;
 import com.hongniu.moduleorder.utils.OrderUtils;
@@ -29,7 +30,7 @@ public class OrderInsuranceResultActivity extends BaseActivity implements View.O
     private boolean success;
     private Button btCheck,btFinish;
     private TextView tvInsurance,tvInsuranceState;
-    OrderCreatBean insurance;
+    QueryOrderStateBean insurance;
     String error;
     private ImageView img;
 
@@ -38,9 +39,11 @@ public class OrderInsuranceResultActivity extends BaseActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_insurance_result);
         setToolbarTitle("");
-        insurance = getIntent().getParcelableExtra(Param.TRAN);
-
-
+        try {
+            insurance = (QueryOrderStateBean) getIntent().getSerializableExtra(Param.TRAN);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         success= insurance!=null;
 
         if (!success){

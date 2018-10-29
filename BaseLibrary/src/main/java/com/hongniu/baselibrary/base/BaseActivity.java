@@ -53,7 +53,7 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
     protected View tool;
     private LoadDialog loading;
     protected Disposable disposable;
-    private CenterAlertDialog alertDialog;
+    protected CenterAlertDialog alertDialog;
 
 
     @Override

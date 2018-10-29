@@ -2,7 +2,9 @@ package com.hongniu.baselibrary.net;
 
 import com.hongniu.baselibrary.entity.CarTypeBean;
 import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.OrderIdBean;
 import com.hongniu.baselibrary.entity.PayInforBeans;
+import com.hongniu.baselibrary.entity.QueryOrderStateBean;
 import com.hongniu.baselibrary.entity.QueryPayPassword;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.entity.SMSParams;
@@ -23,7 +25,17 @@ public interface AppService {
     Observable<CommonBean<List<CarTypeBean>>> getCarType();
 
     /**
+     * 查询订单状态
+     *
+     * @return
+     * @param bean
+     */
+    @POST("hongniu/api/order/queryOrder")
+    Observable<CommonBean<QueryOrderStateBean>> queryOrder(@Body OrderIdBean bean);
+
+    /**
      * 获取用户最近使用角色
+     *
      * @return
      */
     @POST("hongniu/api/user/queryUserRole")
@@ -31,11 +43,13 @@ public interface AppService {
 
     /**
      * 发送验证码
+     *
      * @param params
      * @return
      */
     @POST("hongniu/api/login/getcheckcode")
     Observable<CommonBean<String>> getSmsCode(@Body SMSParams params);
+
     /**
      * 获取我的付款方式
      *

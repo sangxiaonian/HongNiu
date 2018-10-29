@@ -424,15 +424,17 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
     /**
      * 支付完成，开始购买保险
      *
-     * @param cargoPrice
+     * @param price
      * @param orderNum
+     * @param orderID
      */
     @Override
-    public void jumpToInsurance(String cargoPrice, String orderNum) {
+    public void jumpToInsurance(String price, String orderNum, String orderID) {
         CreatInsuranceBean creatInsuranceBean = new CreatInsuranceBean();
-        creatInsuranceBean.setGoodsValue(cargoPrice);
+        creatInsuranceBean.setGoodsValue(price);
         creatInsuranceBean.setOrderNum(orderNum);
-        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_insurance_creat)
+        creatInsuranceBean.setOrderID(orderID);
+        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_query_insurance)
                 .withParcelable(Param.TRAN, creatInsuranceBean)
                 .navigation(this);
         finish();

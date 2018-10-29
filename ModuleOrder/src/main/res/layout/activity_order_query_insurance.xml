@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="正在等待您完成付款"
+            android:text="系统正在为您生成保单中 "
             android:textColor="@color/color_title_dark"
             android:textSize="18sp" />
 
@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="跳转支付平台中，请耐心等待"
+            android:text="保单生成中，请耐心等待"
             android:textColor="@color/color_content_light"
             android:textSize="13sp" />
 

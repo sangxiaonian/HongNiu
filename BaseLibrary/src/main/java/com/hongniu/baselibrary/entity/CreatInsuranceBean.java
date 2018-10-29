@@ -15,26 +15,12 @@ public class CreatInsuranceBean implements Parcelable {
 
     //货物价值
     public String goodsValue;
+    public String orderID;
+
+
 
     public CreatInsuranceBean() {
     }
-
-    public CreatInsuranceBean(Parcel in) {
-        orderNum = in.readString();
-        goodsValue = in.readString();
-    }
-
-    public static final Creator<CreatInsuranceBean> CREATOR = new Creator<CreatInsuranceBean>() {
-        @Override
-        public CreatInsuranceBean createFromParcel(Parcel in) {
-            return new CreatInsuranceBean(in);
-        }
-
-        @Override
-        public CreatInsuranceBean[] newArray(int size) {
-            return new CreatInsuranceBean[size];
-        }
-    };
 
     public String getOrderNum() {
         return orderNum;
@@ -52,31 +38,41 @@ public class CreatInsuranceBean implements Parcelable {
         this.goodsValue = goodsValue;
     }
 
-    /**
-     * Describe the kinds of special objects contained in this Parcelable
-     * instance's marshaled representation. For example, if the object will
-     * include a file descriptor in the output of {@link #writeToParcel(Parcel, int)},
-     * the return value of this method must include the
-     * {@link #CONTENTS_FILE_DESCRIPTOR} bit.
-     *
-     * @return a bitmask indicating the set of special object types marshaled
-     * by this Parcelable object instance.
-     */
+    public String getOrderID() {
+        return orderID;
+    }
+
+    public void setOrderID(String orderID) {
+        this.orderID = orderID;
+    }
+
+    protected CreatInsuranceBean(Parcel in) {
+        orderNum = in.readString();
+        goodsValue = in.readString();
+        orderID = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(orderNum);
+        dest.writeString(goodsValue);
+        dest.writeString(orderID);
+    }
+
     @Override
     public int describeContents() {
         return 0;
     }
 
-    /**
-     * Flatten this object in to a Parcel.
-     *
-     * @param dest  The Parcel in which the object should be written.
-     * @param flags Additional flags about how the object should be written.
-     *              May be 0 or {@link #PARCELABLE_WRITE_RETURN_VALUE}.
-     */
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(orderNum);
-        dest.writeString(goodsValue);
-    }
+    public static final Creator<CreatInsuranceBean> CREATOR = new Creator<CreatInsuranceBean>() {
+        @Override
+        public CreatInsuranceBean createFromParcel(Parcel in) {
+            return new CreatInsuranceBean(in);
+        }
+
+        @Override
+        public CreatInsuranceBean[] newArray(int size) {
+            return new CreatInsuranceBean[size];
+        }
+    };
 }

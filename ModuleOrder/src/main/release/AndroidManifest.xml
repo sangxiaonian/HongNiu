@@ -65,7 +65,8 @@
         <activity android:name=".ui.OrderScanReceiptActivity" />
         <activity android:name=".ui.OrderUpReceiptActivity" />
         <activity android:name=".ui.OrderSearchResultActivity" />
-        <activity android:name=".ui.WaitePayActivity"></activity>
+        <activity android:name=".ui.WaitePayActivity" />
+        <activity android:name=".ui.OrderQueryInsuranceActivity"></activity>
     </application>
 
 </manifest>
