@@ -141,18 +141,7 @@ public class HttpFinanceFactory {
                 .getInstance()
                 .getService()
                 .queryAccountFllows(bean)
-                .map(new Function<CommonBean<AllBalanceOfAccountBean>, CommonBean<PageBean<BalanceOfAccountBean>>>() {
-                    @Override
-                    public CommonBean<PageBean<BalanceOfAccountBean>> apply(CommonBean<AllBalanceOfAccountBean> bean) throws Exception {
-                        CommonBean<PageBean<BalanceOfAccountBean>> result = new CommonBean<>();
-                        result.setCode(bean.getCode());
-                        result.setMsg(bean.getMsg());
-                        if (bean.getCode() == 200) {
-                            result.setData(type == 1 ? bean.getData().getAccountFlows() : bean.getData().getTobeaccountFlows());
-                        }
-                        return result;
-                    }
-                })
+
                 .compose(RxUtils.<CommonBean<PageBean<BalanceOfAccountBean>>>getSchedulersObservableTransformer())
                 ;
     }
@@ -171,21 +160,6 @@ public class HttpFinanceFactory {
                 .getInstance()
                 .getService()
                 .queryNiuAccountFllows(bean)
-               .map(new Function<CommonBean<NiuFlowAcountBean>, CommonBean<PageBean<NiuOfAccountBean>>>() {
-                   @Override
-                   public CommonBean<PageBean<NiuOfAccountBean>> apply(CommonBean<NiuFlowAcountBean> niuFlowAcountBeanCommonBean) throws Exception {
-                       CommonBean<PageBean<NiuOfAccountBean>> commonBean=new CommonBean<>();
-                       commonBean.setCode(niuFlowAcountBeanCommonBean.getCode());
-                       commonBean.setMsg(niuFlowAcountBeanCommonBean.getMsg());
-                       if (type==1){
-                           commonBean.setData(niuFlowAcountBeanCommonBean.getData().getIntegralFlows());
-                       }else {
-                           commonBean.setData(niuFlowAcountBeanCommonBean.getData().getTobeIntegralFlows());
-
-                       }
-                       return commonBean;
-                   }
-               })
                .compose(RxUtils.<CommonBean<PageBean<NiuOfAccountBean>>>getSchedulersObservableTransformer())
                ;
 
