@@ -34,6 +34,7 @@ public class FestivityBrokerageActivity extends RefrushActivity<BrokerageDetails
         setContentView(R.layout.activity_festivity_brokerage);
         setToolbarTitle("我的佣金明细");
         initData();
+        queryData(true,true);
     }
 
     @Override

@@ -16,6 +16,7 @@ public class Param {
      * 泓牛协议
      */
     public static String hongniu_agreement;
+    public static String festivity_invity_notify;
     //保险条款
     public static String insurance_polic;
     //投保须知
@@ -31,11 +32,11 @@ public class Param {
 //            url = "http://b09daa47.ngrok.io/";
         } else {
             url = "https://api.hongniudai.cn/";
-
         }
         hongniu_agreement = "https://api.hongniudai.cn/" + "static/html/service.html";
         insurance_notify = "https://api.hongniudai.cn/" + "static/html/notice.html";
         insurance_polic = "https://api.hongniudai.cn/" + "static/html/insurance_2009.html";
+        festivity_invity_notify = url + "static/index.html#/invite_rule";
     }
 
 

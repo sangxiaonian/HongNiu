@@ -18,6 +18,7 @@ import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.H5Config;
 import com.hongniu.baselibrary.utils.Utils;
+import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.thirdlibrary.share.ShareClient;
@@ -81,7 +82,7 @@ public class FestivityInviteActivity extends BaseActivity implements View.OnClic
                     @Override
                     public void doOnSuccess(QueryInvitedInfo data) {
                         invitedInfor=data;
-                        tv_money.setText(data.getRebateTotalAmount()==null?"0":data.getRebateTotalAmount());
+                        tv_money.setText(ConvertUtils.changeFloat(data.getRebateTotalAmount(),2));
                         tv_invite_count.setText(getSpanner(data.getInvitedCount()));
                     }
                 });
@@ -116,21 +117,21 @@ public class FestivityInviteActivity extends BaseActivity implements View.OnClic
         } else if (v.getId() == R.id.bt_share) {
 //            ToastUtils.getInstance().show("微信分享");
             if (invitedInfor!=null){
-                new ShareClient(1).shareUrl(mContext,invitedInfor.getInvitedUrl(),getString(R.string.festivity_invite_share_title),getString(R.string.festivity_invite_share_des), BitmapFactory.decodeResource(getResources(),R.mipmap.app_logo));
+                new ShareClient(1).shareUrl(mContext,invitedInfor.getInvitedUrl(),invitedInfor.getTitle(),invitedInfor.getSubtitle(), BitmapFactory.decodeResource(getResources(),R.mipmap.app_logo));
             }else {
                 getData();
             }
 
         } else if (v.getId() == R.id.tv_invite_scan) {
-            ToastUtils.getInstance().show("当面邀请");
+//            ToastUtils.getInstance().show("当面邀请");
             if (invitedInfor!=null){
-                showScanDialog(Utils.getPersonInfor().getContact() == null ? "待完善" : Utils.getPersonInfor().getContact()
+                showScanDialog(invitedInfor.getInviterName()
                         ,invitedInfor.getInvitedQrCodeUrl());
             }else {
                 getData();
             }
         }else   if (v.getId() == R.id.tv_invite_rule) {
-            H5Config h5Config = new H5Config("邀请规则", Param.hongniu_agreement, true);
+            H5Config h5Config = new H5Config("邀请规则", Param.festivity_invity_notify, true);
             ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5).withSerializable(Param.TRAN,h5Config).navigation(this);
 
         }
