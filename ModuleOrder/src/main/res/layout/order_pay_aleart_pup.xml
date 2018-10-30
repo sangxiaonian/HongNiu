@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:layout_marginLeft="110dp"
+        android:background="@drawable/shape_trigon_b2000000" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/shape_5_b2000000"
+        android:paddingBottom="8dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="8dp"
+        android:text="选择线上支付时，运费将由平台代收，货主确认收货后，该订单线上支付的运费，将自动转入该订单对应的车主余额账户，余额账户随时可以提现。"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_min_12sp" />
+
+</LinearLayout>

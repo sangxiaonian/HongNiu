@@ -28,6 +28,7 @@ import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.control.OrderPayControl;
 import com.hongniu.moduleorder.present.OrderPayPresenter;
+import com.hongniu.moduleorder.widget.PayAleartPop;
 import com.hongniu.moduleorder.widget.dialog.BuyInsuranceDialog;
 import com.sang.common.event.BusFactory;
 import com.sang.common.utils.ConvertUtils;
@@ -66,6 +67,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
     private RadioButton rbOffline;//线下支付
     private ViewGroup rlWechact;//微信支付
     private ImageView cbWechat;//选择是否微信支付
+    private View imgDai;//代收款提示
     private ViewGroup rlAli;//支付宝
 
     private ImageView cbAli;//选择是否支付宝支付
@@ -95,6 +97,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
     private PayClient payClient;
 
     private OrderPayControl.IOrderPayPresent payPresent;
+    private PayAleartPop aleartPop;
 
 
     @Override
@@ -134,14 +137,13 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
         cbAli = findViewById(R.id.ali_box);
         rlUnion = findViewById(R.id.rl_union);
         cbUnion = findViewById(R.id.union_box);
-
         rlYue = findViewById(R.id.rl_yue);
         cbYue = findViewById(R.id.cb_yue);
-
         payOnline = findViewById(R.id.pay_online);
+        imgDai = findViewById(R.id.img_dai);
 
         buyInsuranceDialog = new BuyInsuranceDialog(mContext);
-
+          aleartPop=new PayAleartPop(this);
     }
 
     @Override
@@ -185,6 +187,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
         rlAli.setOnClickListener(this);
         rlUnion.setOnClickListener(this);
         rlYue.setOnClickListener(this);
+        imgDai.setOnClickListener(this);
     }
 
 
@@ -233,6 +236,9 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
             payPresent.clearInsurance();
         } else if (i == R.id.tv_change_cargo_price) {//修改保险金额
             buyInsuranceDialog.show();
+        }else if (i==R.id.img_dai){
+            ToastUtils.getInstance().show("提示");
+            aleartPop.show(v);
         }
     }
 

@@ -58,7 +58,7 @@
     <string name="order_pay_insurance_detail">牛人保，运货更安心</string>
     <string name="order_pay_insurance_notice_bt">同意以上，开始投保</string>
     <string name="order_pay_bus_insurance">购买保险</string>
-    <string name="order_pay_pay_ways">运费支付渠道</string>
+    <string name="order_pay_pay_ways">运费支付渠道(代收款)</string>
     <string name="order_pay_online">线上支付</string>
     <string name="order_pay_offline">线下支付</string>
     <string name="order_pay_charge">运费金额</string>

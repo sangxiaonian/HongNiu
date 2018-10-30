@@ -28,14 +28,15 @@ public class Param {
 
     static {
         if (isDebug) {
-            url = "http://47.104.130.110:8080/";
+//            url = "http://47.104.130.110:8080/";
+            url = "http://test.wxshare.hongniudai.cn/";
 //            url = "http://b09daa47.ngrok.io/";
         } else {
             url = "https://api.hongniudai.cn/";
         }
-        hongniu_agreement = "https://api.hongniudai.cn/" + "static/html/service.html";
-        insurance_notify = "https://api.hongniudai.cn/" + "static/html/notice.html";
-        insurance_polic = "https://api.hongniudai.cn/" + "static/html/insurance_2009.html";
+        hongniu_agreement = url + "static/html/service.html";
+        insurance_notify = url + "static/html/notice.html";
+        insurance_polic = url + "static/html/insurance_2009.html";
         festivity_invity_notify = url + "static/index.html#/invite_rule";
     }
 

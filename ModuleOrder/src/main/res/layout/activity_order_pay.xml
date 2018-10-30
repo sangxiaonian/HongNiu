@@ -263,18 +263,35 @@
                     android:orientation="vertical">
 
                     <LinearLayout
+                        android:gravity="center_vertical"
                         android:layout_width="match_parent"
+                        android:orientation="horizontal"
                         android:layout_height="wrap_content">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:text="@string/order_pay_pay_ways"
                             android:textColor="@color/color_order_color"
                             android:textSize="12sp" />
 
+                        <FrameLayout
+                            android:id="@+id/img_dai"
+                            android:gravity="center"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:src="@mipmap/icon_yw_20"
+                                android:layout_width="10dp"
+                                android:layout_margin="@dimen/app_item_gap"
+                                android:layout_height="10dp" />
+                        </FrameLayout>
+
+
                         <TextView
+                            android:gravity="right"
+                            android:layout_weight="1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/order_pay_charge"
