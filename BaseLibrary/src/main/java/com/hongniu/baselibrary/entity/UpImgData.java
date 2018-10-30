@@ -17,6 +17,20 @@ public class UpImgData {
     @SerializedName(value = "absolutePath", alternate = {"imageUrl"})
     private String  absolutePath;
 
+    /**
+     * 图片名称
+     */
+    private String  originalName;
+
+
+    public String getOriginalName() {
+        return originalName;
+    }
+
+    public void setOriginalName(String originalName) {
+        this.originalName = originalName;
+    }
+
     public String getPath() {
         return path;
     }

@@ -8,13 +8,18 @@ import com.hongniu.baselibrary.entity.QueryOrderStateBean;
 import com.hongniu.baselibrary.entity.QueryPayPassword;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.entity.SMSParams;
+import com.hongniu.baselibrary.entity.UpImgData;
 import com.hongniu.baselibrary.entity.WalletDetail;
 
 import java.util.List;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
+import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 /**
  * 作者： ${PING} on 2018/8/13.
@@ -27,8 +32,8 @@ public interface AppService {
     /**
      * 查询订单状态
      *
-     * @return
      * @param bean
+     * @return
      */
     @POST("hongniu/api/order/queryOrder")
     Observable<CommonBean<QueryOrderStateBean>> queryOrder(@Body OrderIdBean bean);
@@ -82,6 +87,15 @@ public interface AppService {
      */
     @POST("hongniu/api/account/accountdetails")
     Observable<CommonBean<WalletDetail>> queryAccountdetails();
+
+
+    @Multipart
+    @POST("hongniu/api/file/uploadFiles")
+    Observable<CommonBean<String>> uploadFilesWithParts(@Part("classify") int type, @Part() List<MultipartBody.Part> parts);
+
+//    @Multipart
+    @POST("hongniu/api/file/uploadFiles")
+    Observable<CommonBean<List<UpImgData>>> uploadFilesWithParts(@Body MultipartBody multipartBody);
 
 
 }

@@ -38,7 +38,6 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.functions.Function;
-import io.reactivex.functions.Predicate;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -107,10 +106,11 @@ public class HttpOrderFactory {
 
     /**
      * 查询订单数据
+     *
      * @param orderID
      */
     public static Observable<CommonBean<OrderDetailBean>> queryOrderDetail(String orderID) {
-        OrderParamBean bean =new OrderParamBean();
+        OrderParamBean bean = new OrderParamBean();
         bean.setOrderId(orderID);
         return OrderClient.getInstance()
                 .getService()
@@ -219,7 +219,7 @@ public class HttpOrderFactory {
                     .getService()
                     .payBalance(bean)
                     .compose(RxUtils.<CommonBean<PayBean>>getSchedulersObservableTransformer());
-        }else {
+        } else {
             return null;
         }
 
@@ -433,10 +433,10 @@ public class HttpOrderFactory {
      * @return
      */
     public static Observable<List<UpImgData>> upImageUrl(final int type, final List<UpImgData> paths) {
-        if (CommonUtils.isEmptyCollection(paths)){
+        if (CommonUtils.isEmptyCollection(paths)) {
             List<UpImgData> imgData = new ArrayList<>();
             return Observable.just(imgData);
-        }else {
+        } else {
             return Observable.just(paths)
                     .map(new Function<List<UpImgData>, List<Observable<CommonBean<UpImgData>>>>() {
                         @Override
@@ -499,19 +499,12 @@ public class HttpOrderFactory {
      *
      * @return
      */
-    public static Observable<CommonBean<String>> upReceive(final String orderID, final String remark, final List<UpImgData> paths) {
-
-        return upImageUrlToString(Param.REEIVE, paths)
-                .flatMap(new Function<List<String>, ObservableSource<CommonBean<String>>>() {
-                    @Override
-                    public ObservableSource<CommonBean<String>> apply(List<String> strings) throws Exception {
-                        UpReceiverBean receiver = new UpReceiverBean();
-                        receiver.setOrderId(orderID);
-                        receiver.setRemark(remark);
-                        receiver.setImageUrls(strings);
-                        return OrderClient.getInstance().getService().upReceiver(receiver);
-                    }
-                })
+    public static Observable<CommonBean<String>> upReceive(final String orderID, final String remark, final List<String> paths) {
+        UpReceiverBean receiver = new UpReceiverBean();
+        receiver.setOrderId(orderID);
+        receiver.setRemark(remark);
+        receiver.setImageUrls(paths);
+        return OrderClient.getInstance().getService().upReceiver(receiver)
                 .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
     }
 

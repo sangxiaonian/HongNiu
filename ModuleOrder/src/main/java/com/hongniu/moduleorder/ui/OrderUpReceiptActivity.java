@@ -16,7 +16,9 @@ import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.PictureSelectorUtils;
+import com.hongniu.baselibrary.utils.UpLoadImageUtils;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OnItemClickListener;
 import com.hongniu.moduleorder.control.OnItemDeletedClickListener;
@@ -31,11 +33,16 @@ import com.luck.picture.lib.entity.LocalMedia;
 import com.sang.common.event.BusFactory;
 import com.sang.common.recycleview.holder.PeakHolder;
 import com.sang.common.utils.CommonUtils;
+import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
+import com.sang.common.widget.dialog.CenterAlertDialog;
+import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
+import com.sang.common.widget.dialog.inter.DialogControl;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +52,7 @@ import java.util.List;
  * @Description 上传/修改回单
  */
 @Route(path = ArouterParamOrder.activity_order_up_receipt)
-public class OrderUpReceiptActivity extends BaseActivity implements View.OnClickListener, OnItemClickListener<LocalMedia>, OnItemDeletedClickListener<LocalMedia> {
+public class OrderUpReceiptActivity extends BaseActivity implements View.OnClickListener, OnItemClickListener<LocalMedia>, OnItemDeletedClickListener<LocalMedia>,UpLoadImageUtils.OnUpLoadListener {
 
     private RecyclerView rv;
     private EditText etRemark;
@@ -54,7 +61,7 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
     private Button btSum;
 
     public String orderID;
-
+    UpLoadImageUtils imageUtils=new UpLoadImageUtils();
     //    private List<LocalMedia> urlImages=new ArrayList<>();
     private QueryReceiveBean bean;//传入的数据
 
@@ -112,7 +119,7 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
         super.initListener();
         btSum.setOnClickListener(this);
         adapter.setOnItemClickListener(this);
-
+        imageUtils.setOnUpLoadListener(this);
         adapter.setDeletedClickListener(this);
     }
 
@@ -131,11 +138,13 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
                     // 如果裁剪并压缩了，以取压缩路径为准，因为是先裁剪后压缩的
                     pics.clear();
                     pics.addAll(selectList);
+                    imageUtils.upList(pics);
                     adapter.notifyDataSetChanged();
                     break;
             }
         }
     }
+
 
 
     @Override
@@ -167,22 +176,25 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.bt_sum) {
-            List<UpImgData> list = new ArrayList<>();
-            for (LocalMedia pic : pics) {
-                UpImgData data=new UpImgData();
-                data.setPath(pic.getRelativePath());
-                data.setAbsolutePath(pic.getPath());
-                list.add(data);
+            if (imageUtils.isFinish()){
+                // 如果没有更改过图片，则不上传
+                List<String> result = imageUtils.getResult();
+                if (result.size()==0&&!CommonUtils.isEmptyCollection(pics)){
+                    result=null;
+                }
+                //点击保存按钮
+                HttpOrderFactory.upReceive(orderID, etRemark.getText().toString().trim(), result)
+                        .subscribe(new NetObserver<String>(this) {
+                            @Override
+                            public void doOnSuccess(String data) {
+                                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
+                                finish();
+                            }
+                        });
+            }else {
+                ToastUtils.getInstance().show(imageUtils.unFinishCount()+"张图片上传中，请稍后");
             }
-            //点击保存按钮
-            HttpOrderFactory.upReceive(orderID, etRemark.getText().toString().trim(), list)
-                    .subscribe(new NetObserver<String>(this) {
-                        @Override
-                        public void doOnSuccess(String data) {
-                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
-                            finish();
-                        }
-                    });
+
         }
     }
 
@@ -211,5 +223,36 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
     public void onItemDeletedClick(final int position, LocalMedia localMedia) {
         pics.remove(position);
         adapter.notifyItemDeleted(position);
+    }
+
+    @Override
+    public void onUpLoadFail(int failCount) {
+        creatDialog("图片上传失败", "有"+failCount+"张图片上传失败，是否重新上传？", "放弃上传", "重新上传")
+                .setLeftClickListener(new DialogControl.OnButtonLeftClickListener() {
+                    @Override
+                    public void onLeftClick(View view, DialogControl.ICenterDialog dialog) {
+                        dialog.dismiss();
+                    }
+                })
+                .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
+                    @Override
+                    public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
+                        dialog.dismiss();
+                        imageUtils.reUpLoad();
+                    }
+                })
+                .creatDialog(new CenterAlertDialog(mContext))
+                .show();
+    }
+
+    private CenterAlertBuilder creatDialog(String title, String content, String btleft, String btRight) {
+        return new CenterAlertBuilder()
+                .setDialogTitle(title)
+                .setDialogContent(content)
+                .setBtLeft(btleft)
+                .setBtRight(btRight)
+                .setBtLeftColor(getResources().getColor(R.color.color_title_dark))
+                .setBtRightColor(getResources().getColor(R.color.color_white))
+                .setBtRightBgRes(R.drawable.shape_f06f28);
     }
 }

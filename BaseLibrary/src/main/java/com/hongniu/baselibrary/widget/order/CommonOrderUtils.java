@@ -191,7 +191,7 @@ public class CommonOrderUtils {
      * @return true 线上支付
      */
     public static boolean isPayOnLine(String payType){
-        return !TextUtils.isEmpty(payType)&&TextUtils.equals("2",payType);
+        return !TextUtils.isEmpty(payType)&&!TextUtils.equals("2",payType);
     }
 
     public static void getPayWay(int payType){

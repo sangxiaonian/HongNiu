@@ -8,15 +8,20 @@ import com.hongniu.baselibrary.entity.QueryOrderStateBean;
 import com.hongniu.baselibrary.entity.QueryPayPassword;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.entity.SMSParams;
+import com.hongniu.baselibrary.entity.UpImgData;
 import com.hongniu.baselibrary.entity.WalletDetail;
 import com.hongniu.baselibrary.utils.Utils;
 import com.sang.common.net.rx.RxUtils;
 import com.sang.common.utils.ConvertUtils;
 
+import java.io.File;
 import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 /**
  * 作者： ${PING} on 2018/8/13.
@@ -128,5 +133,30 @@ public class HttpAppFactory {
                 .compose(RxUtils.<CommonBean<WalletDetail>>getSchedulersObservableTransformer())
                 ;
     }
+
+
+    /**
+     * 上传多张图片
+     * @param type
+     * @param paths
+     * @return
+     */
+    public static Observable<CommonBean<List<UpImgData>>> upImage(int type, List<String> paths) {
+        MultipartBody.Builder builder = new MultipartBody.Builder();
+
+        for (String path : paths) {
+            File file = new File(path);
+            RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
+            builder.addFormDataPart("file", file.getName(), requestBody);
+        }
+        builder.addFormDataPart("classify", String.valueOf(type));
+
+        return AppClient.getInstance()
+                .getService()
+                .uploadFilesWithParts( builder.build())
+                .compose(RxUtils.<CommonBean<List<UpImgData>>>getSchedulersObservableTransformer())
+                ;
+    }
+
 
 }

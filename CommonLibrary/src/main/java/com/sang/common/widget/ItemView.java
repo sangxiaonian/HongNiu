@@ -3,6 +3,7 @@ package com.sang.common.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,12 +11,9 @@ import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.method.DigitsKeyListener;
-import android.text.method.PasswordTransformationMethod;
-import android.text.method.TextKeyListener;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -23,7 +21,6 @@ import android.widget.TextView;
 
 import com.sang.common.R;
 import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.JLog;
 import com.sang.common.utils.PointLengthFilter;
 import com.sang.common.utils.SpaceFilter;
 
@@ -55,6 +52,8 @@ public class ItemView extends FrameLayout {
     private int colorRight;
     private int colorLeft;
     private boolean isSingleLine = true;
+    private int colorCenter;
+    private int colorCenterHide;
 
     public ItemView(@NonNull Context context) {
         this(context, null, 0);
@@ -88,6 +87,8 @@ public class ItemView extends FrameLayout {
             centerType = ta.getInt(R.styleable.ItemView_centerType, 0);
             srcRight = ta.getInt(R.styleable.ItemView_srcRight, -1);
             colorRight = ta.getInt(R.styleable.ItemView_colorRight, 0);
+            colorCenter = ta.getInt(R.styleable.ItemView_colorCenter, Color.parseColor("#333333"));
+            colorCenterHide = ta.getInt(R.styleable.ItemView_colorCenterHide, Color.parseColor("#999999"));
             colorLeft = ta.getInt(R.styleable.ItemView_colorLeft, 0);
             srcshow = ta.getBoolean(R.styleable.ItemView_srcshow, false);
             isSingleLine = ta.getBoolean(R.styleable.ItemView_isSingleLine, true);
@@ -106,11 +107,16 @@ public class ItemView extends FrameLayout {
         setTextRight(textRight);
         setTextCenterHide(textCenterHide);
         setTextCenter(textCenter);
+
         setEditable(editable);
         setSrcRight(srcRight);
         setSrcshow(srcshow);
         setColorRight(colorRight);
         setColorLeft(colorLeft);
+        setColorCenter(colorCenter);
+        setColorCenterHide(colorCenter);
+
+
         setIsSingleLine(isSingleLine);
         setCenter(maxLength, centerType);
 
@@ -133,6 +139,20 @@ public class ItemView extends FrameLayout {
         this.colorRight = colorRight;
         if (colorRight != 0) {
             tvRight.setTextColor(colorRight);
+        }
+    }
+
+    private void setColorCenter(int colorCenter) {
+        this.colorCenter = colorCenter;
+        if (colorCenter != 0) {
+            etCenter.setTextColor(colorCenter);
+        }
+    }
+
+    private void setColorCenterHide(int colorCenterHide) {
+        this.colorCenterHide = colorCenterHide;
+        if (colorCenterHide != 0) {
+            etCenter.setHintTextColor(colorCenterHide);
         }
     }
 
@@ -163,7 +183,7 @@ public class ItemView extends FrameLayout {
             etCenter.setFilters(new InputFilter[]{new PointLengthFilter()});
             etCenter.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
 //            etCenter.setKeyListener(DigitsKeyListener.getInstance("0123456789."));
-        }else if (centerType == 4) {//密码
+        } else if (centerType == 4) {//密码
             etCenter.setFilters(new InputFilter[]{new PointLengthFilter()});
             etCenter.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
             etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength < 0 ? Integer.MAX_VALUE : maxLength), new SpaceFilter()});
@@ -180,7 +200,14 @@ public class ItemView extends FrameLayout {
         if (!isEnabled()) {
             viewFound.setVisibility(VISIBLE);
             viewFound.setOnClickListener(null);
+            etCenter.setTextColor(colorCenterHide);
+            tvLeft.setTextColor(colorCenterHide);
+            tvRight.setTextColor(colorCenterHide);
             return;
+        }else {
+            etCenter.setTextColor(colorCenter);
+            tvLeft.setTextColor(colorLeft);
+            tvRight.setTextColor(colorRight);
         }
         this.editable = editable;
         if (editable) {

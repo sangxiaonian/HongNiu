@@ -66,6 +66,8 @@
         <attr name="srcshow" format="boolean" />
         <attr name="isSingleLine" format="boolean" />
         <attr name="colorRight" format="color" />
+        <attr name="colorCenter" format="color" />
+        <attr name="colorCenterHide" format="color" />
         <attr name="colorLeft" format="color" />
         <attr name="centerType" format="enum">
             <enum name="normal" value="0" />
