@@ -558,12 +558,11 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
 
     public TextView creatButton(ButtonInforBean infor) {
         TextView button = new TextView(getContext());
+        button= (TextView) LayoutInflater.from(getContext()).inflate(R.layout.order_item_text,llBottom,false);
         button.setTextColor(infor.getType() == 1 ? getResources().getColor(R.color.white) : getResources().getColor(R.color.color_title_dark));
         button.setBackgroundResource(infor.getType() == 1 ? R.drawable.shape_2_f06f28 : R.drawable.shape_2_stoke_dddddd);
         button.setGravity(Gravity.CENTER);
-        MarginLayoutParams params = new MarginLayoutParams(DeviceUtils.dip2px(getContext(), 72), DeviceUtils.dip2px(getContext(), 27));
-        params.setMargins(DeviceUtils.dip2px(getContext(), 10), 0, 0, 0);
-        button.setLayoutParams(params);
+
         button.setTextSize(13);
         button.setText(infor.getText() == null ? "" : infor.getText());
         return button;

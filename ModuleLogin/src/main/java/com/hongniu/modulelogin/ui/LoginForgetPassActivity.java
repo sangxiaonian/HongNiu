@@ -82,8 +82,8 @@ public class LoginForgetPassActivity extends BaseActivity implements View.OnClic
     @Override
     protected void initData() {
         super.initData();
-        itemPhone.setTextCenter(Utils.getPersonInfor().getContact());
-
+        itemPhone.setTextCenter(Utils.getPersonInfor().getMobile());
+        itemPhone.setEnabled(false);
     }
 
     @Override
@@ -102,8 +102,6 @@ public class LoginForgetPassActivity extends BaseActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.bt_sms) {
-            ToastUtils.getInstance().show("发送验证码");
-
             HttpAppFactory.getSmsCode(Utils.getLoginInfor().getMobile())
                     .subscribe(new NetObserver<String>(this) {
                         @Override
