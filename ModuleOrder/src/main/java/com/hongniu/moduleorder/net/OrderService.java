@@ -278,6 +278,12 @@ public interface OrderService {
     Observable<CommonBean<QueryReceiveBean>> queryReceiptInfo(@Body UpReceiverBean infor);
 
     /**
+     * 查看货单信息
+     */
+    @POST("hongniu/api/order/queryGoodsImages")
+    Observable<CommonBean<List<UpImgData>>> queryCargotInfo(@Body UpReceiverBean infor);
+
+    /**
      * 删除指定回单ID
      */
     @POST("hongniu/api/order/deleteReceiptImage")

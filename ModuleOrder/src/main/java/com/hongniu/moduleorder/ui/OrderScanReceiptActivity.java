@@ -98,29 +98,29 @@ public class OrderScanReceiptActivity extends BaseActivity implements ViewPager.
                 }
             });
         } else if (type == 2) {
-            setToolbarSrcRight("重新上传");
+//            setToolbarSrcRight("重新上传");
             setToolbarDarkTitle("查看货单");
-            setToolbarRightClick(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    creatDialog()
-                            .setLeftClickListener(new DialogControl.OnButtonLeftClickListener() {
-                                @Override
-                                public void onLeftClick(View view, DialogControl.ICenterDialog dialog) {
-                                    dialog.dismiss();
-                                    finish();
-                                }
-                            })
-                            .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
-                                @Override
-                                public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
-                                    dialog.dismiss();
-                                    PictureSelectorUtils.showPicture((Activity) mContext,null);
-                                }
-                            })
-                    ;
-                }
-            });
+//            setToolbarRightClick(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    creatDialog()
+//                            .setLeftClickListener(new DialogControl.OnButtonLeftClickListener() {
+//                                @Override
+//                                public void onLeftClick(View view, DialogControl.ICenterDialog dialog) {
+//                                    dialog.dismiss();
+//                                    finish();
+//                                }
+//                            })
+//                            .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
+//                                @Override
+//                                public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
+//                                    dialog.dismiss();
+//                                    PictureSelectorUtils.showPicture((Activity) mContext,null);
+//                                }
+//                            })
+//                    ;
+//                }
+//            });
         }
 
 

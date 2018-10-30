@@ -542,7 +542,22 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
      */
     @Override
     public void onCheckGoods(OrderDetailBean orderBean) {
-        ToastUtils.getInstance().show("查看货单");
+        HttpOrderFactory.queryCargoInfo(orderBean.getId())
+                .subscribe(new NetObserver<List<UpImgData>>(this) {
+                    @Override
+                    public void doOnSuccess(List<UpImgData> data) {
+                        final List<String> list = new ArrayList<>();
+                        if (!CommonUtils.isEmptyCollection(data)) {
+                            for (UpImgData image : data) {
+                                list.add(image.getAbsolutePath());
+                            }
+                        }
+                        OrderScanReceiptActivity.launchActivity(getActivity(), 2, 0, list);
+
+                    }
+
+
+                });
     }
 
     protected CenterAlertBuilder creatDialog(String title, String content, String btleft, String

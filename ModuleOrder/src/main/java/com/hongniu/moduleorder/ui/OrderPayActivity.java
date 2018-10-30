@@ -237,7 +237,6 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
         } else if (i == R.id.tv_change_cargo_price) {//修改保险金额
             buyInsuranceDialog.show();
         }else if (i==R.id.img_dai){
-            ToastUtils.getInstance().show("提示");
             aleartPop.show(v);
         }
     }

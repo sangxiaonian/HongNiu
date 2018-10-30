@@ -508,6 +508,19 @@ public class HttpOrderFactory {
                 .compose(RxUtils.<CommonBean<QueryReceiveBean>>getSchedulersObservableTransformer());
 
 
+    }/**
+     * 查看货单
+     *
+     * @return
+     */
+    public static Observable<CommonBean<List<UpImgData>>> queryCargoInfo(final String orderID) {
+        UpReceiverBean receiver = new UpReceiverBean();
+        receiver.setOrderId(orderID);
+        return OrderClient.getInstance().getService().queryCargotInfo(receiver)
+                .compose(RxUtils.<CommonBean<List<UpImgData>>>getSchedulersObservableTransformer())
+                ;
+
+
     }
 
 
