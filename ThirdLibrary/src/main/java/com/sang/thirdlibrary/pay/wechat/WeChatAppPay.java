@@ -71,7 +71,7 @@ public class WeChatAppPay implements PayControl.IPayClient {
         IWXAPI api = WXAPIFactory.createWXAPI(context, PayConfig.weChatAppid);// 填对应开发平台移动应用AppId
         WXLaunchMiniProgram.Req req = new WXLaunchMiniProgram.Req();
         req.userName = "gh_736800cd3405"; // 填小程序原始id（官方实例请填写自己的小程序id）
-        req.path = "pages/authorize/authorize"; //拉起小程序页面的可带参路径，不填默认拉起小程序首页
+        req.path = "pages/authorize/authorize?from=app"; //拉起小程序页面的可带参路径，不填默认拉起小程序首页
 
         if (isDebug) {
             req.miniprogramType = WXLaunchMiniProgram.Req.MINIPROGRAM_TYPE_PREVIEW;// 可选打开 体验版

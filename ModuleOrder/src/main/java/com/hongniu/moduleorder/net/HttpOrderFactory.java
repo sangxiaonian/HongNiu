@@ -66,17 +66,10 @@ public class HttpOrderFactory {
      * @param list 货单图片
      * @param bean
      */
-    public static Observable<CommonBean<OrderDetailBean>> creatOrder(List<UpImgData> list, final OrderCreatParamBean bean) {
-        return upImageUrlToString(Param.GOODS, list)
-                .flatMap(new Function<List<String>, ObservableSource<CommonBean<OrderDetailBean>>>() {
-                    @Override
-                    public ObservableSource<CommonBean<OrderDetailBean>> apply(List<String> strings) throws Exception {
-                        bean.setGoodsImages(strings);
-                        return OrderClient.getInstance()
-                                .getService()
-                                .creatOrder(bean);
-                    }
-                })
+    public static Observable<CommonBean<OrderDetailBean>> creatOrder(List<String> list, final OrderCreatParamBean bean) {
+        return OrderClient.getInstance()
+                .getService()
+                .creatOrder(bean)
                 .compose(RxUtils.<CommonBean<OrderDetailBean>>getSchedulersObservableTransformer());
 
 
@@ -88,17 +81,12 @@ public class HttpOrderFactory {
      * @param list 货单图片
      * @param bean
      */
-    public static Observable<CommonBean<OrderDetailBean>> changeOrder(List<UpImgData> list, final OrderCreatParamBean bean) {
-        return upImageUrlToString(Param.GOODS, list)
-                .flatMap(new Function<List<String>, ObservableSource<CommonBean<OrderDetailBean>>>() {
-                    @Override
-                    public ObservableSource<CommonBean<OrderDetailBean>> apply(List<String> strings) throws Exception {
-                        bean.setGoodsImages(strings);
-                        return OrderClient.getInstance()
-                                .getService()
-                                .changeOrder(bean);
-                    }
-                })
+    public static Observable<CommonBean<OrderDetailBean>> changeOrder(List<String> list, final OrderCreatParamBean bean) {
+        bean.setGoodsImages(list);
+
+        return OrderClient.getInstance()
+                .getService()
+                .changeOrder(bean)
                 .compose(RxUtils.<CommonBean<OrderDetailBean>>getSchedulersObservableTransformer());
 
     }

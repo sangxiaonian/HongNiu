@@ -28,6 +28,7 @@ import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.utils.PickerDialogUtils;
 import com.hongniu.baselibrary.utils.PictureSelectorUtils;
+import com.hongniu.baselibrary.utils.UpLoadImageUtils;
 import com.hongniu.baselibrary.widget.order.CommonOrderUtils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.moduleorder.R;
@@ -50,7 +51,9 @@ import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.ItemView;
 import com.sang.common.widget.dialog.BottomAlertDialog;
+import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.BottomAlertBuilder;
+import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -67,7 +70,7 @@ import io.reactivex.disposables.Disposable;
  * 创建订单
  */
 @Route(path = ArouterParamOrder.activity_order_create)
-public class OrderCreatOrderActivity extends BaseActivity implements View.OnClickListener, OnTimeSelectListener, CarNumPop.onItemClickListener, OnItemDeletedClickListener<LocalMedia>, OnItemClickListener<LocalMedia> {
+public class OrderCreatOrderActivity extends BaseActivity implements View.OnClickListener, OnTimeSelectListener, CarNumPop.onItemClickListener, OnItemDeletedClickListener<LocalMedia>, OnItemClickListener<LocalMedia>,UpLoadImageUtils.OnUpLoadListener {
 
 
     public Handler handler = new Handler() {
@@ -109,6 +112,9 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     List<LocalMedia> pics;
     //是否是修改订单
     private boolean changeOrder;
+    private OrderDetailBean orderDetailBean;
+
+    UpLoadImageUtils imageUtils=new UpLoadImageUtils();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -185,6 +191,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     @Override
     protected void initListener() {
         super.initListener();
+        imageUtils.setOnUpLoadListener(this);
         itemStartTime.setOnClickListener(this);
         itemStartLocation.setOnClickListener(this);
         itemEndLocation.setOnClickListener(this);
@@ -334,60 +341,113 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         } else if (id == R.id.bt_entry) {
             if (check()) {
                 getValue();
+                if (imageUtils.isFinish()){
+                    // 如果没有更改过图片，则不上传
+                    List<String> result = imageUtils.getResult();
+                    if (result.size()==0&&!CommonUtils.isEmptyCollection(pics)){
+                        result=null;
+                    }
+                    if (!changeOrder) {
+                        HttpOrderFactory.creatOrder(result, paramBean)
+                                .subscribe(new NetObserver<OrderDetailBean>(this) {
+                                    @Override
+                                    public void doOnSuccess(OrderDetailBean data) {
+                                        OrderEvent.PayOrder payOrder = new OrderEvent.PayOrder();
+                                        payOrder.insurance = false;
+                                        payOrder.money = Float.parseFloat(paramBean.getMoney());
+                                        payOrder.orderID = data.getId();
+                                        payOrder.orderNum = data.getOrderNum();
+                                        BusFactory.getBus().postSticky(payOrder);
+                                        ArouterUtils.getInstance()
+                                                .builder(ArouterParamOrder.activity_order_pay)
+                                                .navigation(mContext);
+                                        BusFactory.getBus().postSticky(new Event.UpRoale(OrderDetailItemControl.RoleState.CARGO_OWNER));
+                                        finish();
+                                    }
+                                });
+                    } else {
+                        HttpOrderFactory.changeOrder(result, paramBean)
+                                .subscribe(new NetObserver<OrderDetailBean>(this) {
+                                    @Override
+                                    public void doOnSuccess(OrderDetailBean data) {
+                                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
+                                        finish();
+                                    }
+                                });
+                    }
 
-                List<UpImgData> list = new ArrayList<>();
-                for (LocalMedia pic : pics) {
-                    UpImgData data = new UpImgData();
-                    data.setPath(pic.getRelativePath());
-                    data.setAbsolutePath(pic.getPath());
-                    list.add(data);
+
+                }else {
+                    ToastUtils.getInstance().show(imageUtils.unFinishCount()+"张图片上传中，请稍后");
                 }
 
-                if (!changeOrder) {
-                    HttpOrderFactory.creatOrder(list, paramBean)
-                            .subscribe(new NetObserver<OrderDetailBean>(this) {
-                                @Override
-                                public void doOnSuccess(OrderDetailBean data) {
-                                    OrderEvent.PayOrder payOrder = new OrderEvent.PayOrder();
-                                    payOrder.insurance = false;
-                                    payOrder.money = Float.parseFloat(paramBean.getMoney());
-                                    payOrder.orderID = data.getId();
-                                    payOrder.orderNum = data.getOrderNum();
-                                    BusFactory.getBus().postSticky(payOrder);
-                                    ArouterUtils.getInstance()
-                                            .builder(ArouterParamOrder.activity_order_pay)
-                                            .navigation(mContext);
-                                    BusFactory.getBus().postSticky(new Event.UpRoale(OrderDetailItemControl.RoleState.CARGO_OWNER));
-                                    finish();
-                                }
-                            });
-                } else {
-                    HttpOrderFactory.changeOrder(list, paramBean)
-                            .subscribe(new NetObserver<OrderDetailBean>(this) {
-                                @Override
-                                public void doOnSuccess(OrderDetailBean data) {
-                                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
-                                    finish();
-                                }
-                            });
-                }
+
+
+
 
             }
         }
     }
 
     private void getValue() {
-        paramBean.setDepartNum(itemStartCarNum.getTextCenter());
-        paramBean.setGoodName(itemCargoName.getTextCenter());
-        paramBean.setGoodVolume(itemCargoSize.getTextCenter());
-        paramBean.setGoodWeight(itemCargoWeight.getTextCenter());
-        paramBean.setMoney(itemPrice.getTextCenter());
-        paramBean.setCarNum(itemCarNum.getTextCenter());
-        paramBean.setOwnerMobile(itemCarPhone.getTextCenter());
-        paramBean.setOwnerName(itemCarName.getTextCenter());
-        paramBean.setDriverName(itemDriverName.getTextCenter());
-        paramBean.setDriverMobile(itemDriverPhone.getTextCenter());
+        if (!changeOrder) {//如果是创建订单界面
+            paramBean.setDepartNum(itemStartCarNum.getTextCenter());
+            paramBean.setGoodName(itemCargoName.getTextCenter());
+            paramBean.setGoodVolume(itemCargoSize.getTextCenter());
+            paramBean.setGoodWeight(itemCargoWeight.getTextCenter());
+            paramBean.setMoney(itemPrice.getTextCenter());
+            paramBean.setCarNum(itemCarNum.getTextCenter());
+            paramBean.setOwnerMobile(itemCarPhone.getTextCenter());
+            paramBean.setOwnerName(itemCarName.getTextCenter());
+            paramBean.setDriverName(itemDriverName.getTextCenter());
+            paramBean.setDriverMobile(itemDriverPhone.getTextCenter());
+        } else {//如果是修改订单界面
+            if (!itemStartTime.isEnabled()) {//不可更改
+                paramBean.setDeliveryDate(null);
+            }
+            if (!itemStartLocation.isEnabled()) {//发货地点不可更改
+                paramBean.setStartLatitude(0);
+                paramBean.setStartLongitude(0);
+                paramBean.setStartPlaceInfo(null);
+            }
+            if (!itemEndLocation.isEnabled()) {//收货地点不可更改
+                paramBean.setDestinationLatitude(0);
+                paramBean.setDestinationLongitude(0);
+                paramBean.setDestinationInfo(null);
+            }
+            if (!itemStartCarNum.isEnabled()) {//发货编号不可更改
+                paramBean.setDepartNum(null);
+            }
+            if (!itemCargoName.isEnabled()) {//货物名称
+                paramBean.setGoodName(null);
 
+            }
+            if (!itemCargoSize.isEnabled()) {//货物体积
+                paramBean.setGoodVolume(null);
+            }
+            if (!itemCargoWeight.isEnabled()) {//货物重量
+                paramBean.setGoodWeight(null);
+            }
+            if (!itemPrice.isEnabled()) {//运费
+                paramBean.setMoney(null);
+            }
+            if (!itemCarNum.isEnabled()) {//运费
+                paramBean.setCarNum(null);
+            }
+            if (!itemCarPhone.isEnabled()) {//运费
+                paramBean.setOwnerMobile(null);
+            }
+            if (!itemCarName.isEnabled()) {//运费
+                paramBean.setOwnerName(null);
+            }
+            if (!itemDriverName.isEnabled()) {//运费
+                paramBean.setDriverName(null);
+            }
+            if (!itemDriverPhone.isEnabled()) {//运费
+                paramBean.setDriverMobile(null);
+            }
+
+        }
     }
 
     @Override
@@ -572,6 +632,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
                     // 如果裁剪并压缩了，以取压缩路径为准，因为是先裁剪后压缩的
                     pics.clear();
                     pics.addAll(selectList);
+                    imageUtils.upList(pics);
                     adapter.notifyDataSetChanged();
                     break;
             }
@@ -588,12 +649,12 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         changeOrder = true;
         if (event != null && event.orderID != null) {
             HttpOrderFactory.queryOrderDetail(event.orderID)
-            .subscribe(new NetObserver<OrderDetailBean>(this) {
-                @Override
-                public void doOnSuccess(OrderDetailBean data) {
-                    initValue(data);
-                }
-            });
+                    .subscribe(new NetObserver<OrderDetailBean>(this) {
+                        @Override
+                        public void doOnSuccess(OrderDetailBean data) {
+                            initValue(data);
+                        }
+                    });
         }
         BusFactory.getBus().removeStickyEvent(event);
     }
@@ -608,6 +669,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     public void onItemDeletedClick(final int position, LocalMedia localMedia) {
         pics.remove(position);
         adapter.notifyItemDeleted(position);
+        imageUtils.upList(pics);
     }
 
     private void initValue(OrderDetailBean orderDetailBean) {
@@ -616,9 +678,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         if (orderDetailBean == null) {
             return;
         }
-        if (paramBean == null) {
-            paramBean = new OrderCreatParamBean();
-        }
+        this.orderDetailBean = orderDetailBean;
         paramBean.setId(orderDetailBean.getId());
         paramBean.setDepartNum(orderDetailBean.getDepartNum());
         paramBean.setStartLatitude(orderDetailBean.getStartLatitude());
@@ -633,12 +693,10 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         paramBean.setGoodWeight(orderDetailBean.getGoodWeight());
         paramBean.setMoney(orderDetailBean.getMoney());
         paramBean.setCarNum(orderDetailBean.getCarNum());
-        paramBean.setCarInfo(orderDetailBean.getCarInfo());
         paramBean.setOwnerMobile(orderDetailBean.getOwnerMobile());
         paramBean.setOwnerName(orderDetailBean.getOwnerName());
         paramBean.setDriverName(orderDetailBean.getDriverName());
         paramBean.setDriverMobile(orderDetailBean.getDriverMobile());
-        paramBean.setPayWay(orderDetailBean.getPayWay());
 
 
         itemStartTime.setTextCenter(paramBean.getDeliveryDate());
@@ -657,7 +715,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
 
         dealImgURl(orderDetailBean);
         adapter.notifyDataSetChanged();
-
+        imageUtils.upList(pics);
         //更改是否可以修改订单
         changeOrderByState(orderDetailBean.getOrderState(), CommonOrderUtils.isPayOnLine(orderDetailBean.getPayWay()), orderDetailBean.isInsurance());
     }
@@ -749,14 +807,15 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
 
 
     private void dealImgURl(OrderDetailBean orderDetailBean) {
-        if ( orderDetailBean != null && !CommonUtils.isEmptyCollection( orderDetailBean.getGoodsImages())) {
-            for (UpImgData imagesBean :  orderDetailBean.getGoodsImages()) {
+        if (orderDetailBean != null && !CommonUtils.isEmptyCollection(orderDetailBean.getGoodsImages())) {
+            for (UpImgData imagesBean : orderDetailBean.getGoodsImages()) {
                 LocalMedia media = new LocalMedia();
                 media.setPath(imagesBean.getAbsolutePath());
                 media.setRelativePath(imagesBean.getPath());
                 pics.add(media);
             }
         }
+        imageUtils.upList(pics);
     }
 
     /**
@@ -768,5 +827,37 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     @Override
     public void onItemClick(int position, LocalMedia localMedia) {
 
+    }
+
+    @Override
+    public void onUpLoadFail(int failCount) {
+
+        creatDialog("图片上传失败", "有"+failCount+"张图片上传失败，是否重新上传？", "放弃上传", "重新上传")
+                .setLeftClickListener(new DialogControl.OnButtonLeftClickListener() {
+                    @Override
+                    public void onLeftClick(View view, DialogControl.ICenterDialog dialog) {
+                        dialog.dismiss();
+                    }
+                })
+                .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
+                    @Override
+                    public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
+                        dialog.dismiss();
+                        imageUtils.reUpLoad();
+                    }
+                })
+                .creatDialog(new CenterAlertDialog(mContext))
+                .show();
+    }
+
+    private CenterAlertBuilder creatDialog(String title, String content, String btleft, String btRight) {
+        return new CenterAlertBuilder()
+                .setDialogTitle(title)
+                .setDialogContent(content)
+                .setBtLeft(btleft)
+                .setBtRight(btRight)
+                .setBtLeftColor(getResources().getColor(R.color.color_title_dark))
+                .setBtRightColor(getResources().getColor(R.color.color_white))
+                .setBtRightBgRes(R.drawable.shape_f06f28);
     }
 }

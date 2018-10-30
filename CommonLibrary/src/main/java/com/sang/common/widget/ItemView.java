@@ -86,10 +86,10 @@ public class ItemView extends FrameLayout {
             maxLength = ta.getInt(R.styleable.ItemView_centerLength, -1);
             centerType = ta.getInt(R.styleable.ItemView_centerType, 0);
             srcRight = ta.getInt(R.styleable.ItemView_srcRight, -1);
-            colorRight = ta.getInt(R.styleable.ItemView_colorRight, 0);
-            colorCenter = ta.getInt(R.styleable.ItemView_colorCenter, Color.parseColor("#333333"));
-            colorCenterHide = ta.getInt(R.styleable.ItemView_colorCenterHide, Color.parseColor("#999999"));
-            colorLeft = ta.getInt(R.styleable.ItemView_colorLeft, 0);
+            colorRight = ta.getColor(R.styleable.ItemView_colorRight,  Color.parseColor("#333333"));
+            colorCenter = ta.getColor(R.styleable.ItemView_colorCenter, Color.parseColor("#333333"));
+            colorCenterHide = ta.getColor(R.styleable.ItemView_colorCenterHide, Color.parseColor("#c8c8c8"));
+            colorLeft = ta.getColor(R.styleable.ItemView_colorLeft,  Color.parseColor("#333333"));
             srcshow = ta.getBoolean(R.styleable.ItemView_srcshow, false);
             isSingleLine = ta.getBoolean(R.styleable.ItemView_isSingleLine, true);
             ta.recycle();
@@ -108,17 +108,19 @@ public class ItemView extends FrameLayout {
         setTextCenterHide(textCenterHide);
         setTextCenter(textCenter);
 
-        setEditable(editable);
         setSrcRight(srcRight);
         setSrcshow(srcshow);
         setColorRight(colorRight);
         setColorLeft(colorLeft);
         setColorCenter(colorCenter);
-        setColorCenterHide(colorCenter);
+        setColorCenterHide(colorCenterHide);
 
 
         setIsSingleLine(isSingleLine);
         setCenter(maxLength, centerType);
+
+        setEditable(editable);
+
 
     }
 
@@ -197,18 +199,7 @@ public class ItemView extends FrameLayout {
 
 
     public void setEditable(boolean editable) {
-        if (!isEnabled()) {
-            viewFound.setVisibility(VISIBLE);
-            viewFound.setOnClickListener(null);
-            etCenter.setTextColor(colorCenterHide);
-            tvLeft.setTextColor(colorCenterHide);
-            tvRight.setTextColor(colorCenterHide);
-            return;
-        }else {
-            etCenter.setTextColor(colorCenter);
-            tvLeft.setTextColor(colorLeft);
-            tvRight.setTextColor(colorRight);
-        }
+
         this.editable = editable;
         if (editable) {
             viewFound.setVisibility(GONE);
@@ -233,6 +224,21 @@ public class ItemView extends FrameLayout {
                 }
             });
         }
+
+        if (!isEnabled()) {
+            viewFound.setVisibility(VISIBLE);
+            viewFound.setOnClickListener(null);
+            etCenter.setTextColor(colorCenterHide);
+            tvLeft.setTextColor(colorCenterHide);
+            tvRight.setTextColor(colorCenterHide);
+            return;
+        }else {
+            etCenter.setTextColor(colorCenter);
+            tvLeft.setTextColor(colorLeft);
+            tvRight.setTextColor(colorRight);
+        }
+
+
     }
 
     public void setSrcshow(boolean srcshow) {

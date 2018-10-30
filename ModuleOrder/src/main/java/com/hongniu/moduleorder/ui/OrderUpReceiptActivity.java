@@ -167,6 +167,7 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
                     pics.add(media);
                 }
             }
+            imageUtils.upList(pics);
             adapter.notifyDataSetChanged();
         }
         BusFactory.getBus().removeStickyEvent(event);
@@ -223,6 +224,7 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
     public void onItemDeletedClick(final int position, LocalMedia localMedia) {
         pics.remove(position);
         adapter.notifyItemDeleted(position);
+        imageUtils.upList(pics);
     }
 
     @Override
