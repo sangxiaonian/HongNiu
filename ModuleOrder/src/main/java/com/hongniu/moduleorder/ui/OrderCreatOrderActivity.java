@@ -30,6 +30,7 @@ import com.hongniu.baselibrary.utils.PickerDialogUtils;
 import com.hongniu.baselibrary.utils.PictureSelectorUtils;
 import com.hongniu.baselibrary.utils.UpLoadImageUtils;
 import com.hongniu.baselibrary.widget.order.CommonOrderUtils;
+import com.hongniu.baselibrary.widget.order.OrderDetailItem;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OnItemClickListener;
@@ -70,7 +71,7 @@ import io.reactivex.disposables.Disposable;
  * 创建订单
  */
 @Route(path = ArouterParamOrder.activity_order_create)
-public class OrderCreatOrderActivity extends BaseActivity implements View.OnClickListener, OnTimeSelectListener, CarNumPop.onItemClickListener, OnItemDeletedClickListener<LocalMedia>, OnItemClickListener<LocalMedia>,UpLoadImageUtils.OnUpLoadListener {
+public class OrderCreatOrderActivity extends BaseActivity implements View.OnClickListener, OnTimeSelectListener, CarNumPop.onItemClickListener, OnItemDeletedClickListener<LocalMedia>, OnItemClickListener<LocalMedia>, UpLoadImageUtils.OnUpLoadListener {
 
 
     public Handler handler = new Handler() {
@@ -114,7 +115,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     private boolean changeOrder;
     private OrderDetailBean orderDetailBean;
 
-    UpLoadImageUtils imageUtils=new UpLoadImageUtils();
+    UpLoadImageUtils imageUtils = new UpLoadImageUtils(Param.GOODS);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -341,11 +342,11 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         } else if (id == R.id.bt_entry) {
             if (check()) {
                 getValue();
-                if (imageUtils.isFinish()){
+                if (imageUtils.isFinish()) {
                     // 如果没有更改过图片，则不上传
                     List<String> result = imageUtils.getResult();
-                    if (result.size()==0&&!CommonUtils.isEmptyCollection(pics)){
-                        result=null;
+                    if (result.size() == 0 && !CommonUtils.isEmptyCollection(pics)) {
+                        result = null;
                     }
                     if (!changeOrder) {
                         HttpOrderFactory.creatOrder(result, paramBean)
@@ -377,42 +378,37 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
                     }
 
 
-                }else {
-                    ToastUtils.getInstance().show(imageUtils.unFinishCount()+"张图片上传中，请稍后");
+                } else {
+                    ToastUtils.getInstance().show(imageUtils.unFinishCount() + "张图片上传中，请稍后");
                 }
-
-
-
-
 
             }
         }
     }
 
     private void getValue() {
-        if (!changeOrder) {//如果是创建订单界面
-            paramBean.setDepartNum(itemStartCarNum.getTextCenter());
-            paramBean.setGoodName(itemCargoName.getTextCenter());
-            paramBean.setGoodVolume(itemCargoSize.getTextCenter());
-            paramBean.setGoodWeight(itemCargoWeight.getTextCenter());
-            paramBean.setMoney(itemPrice.getTextCenter());
-            paramBean.setCarNum(itemCarNum.getTextCenter());
-            paramBean.setOwnerMobile(itemCarPhone.getTextCenter());
-            paramBean.setOwnerName(itemCarName.getTextCenter());
-            paramBean.setDriverName(itemDriverName.getTextCenter());
-            paramBean.setDriverMobile(itemDriverPhone.getTextCenter());
-        } else {//如果是修改订单界面
+        paramBean.setDepartNum(itemStartCarNum.getTextCenter());
+        paramBean.setGoodName(itemCargoName.getTextCenter());
+        paramBean.setGoodVolume(itemCargoSize.getTextCenter());
+        paramBean.setGoodWeight(itemCargoWeight.getTextCenter());
+        paramBean.setMoney(itemPrice.getTextCenter());
+        paramBean.setCarNum(itemCarNum.getTextCenter());
+        paramBean.setOwnerMobile(itemCarPhone.getTextCenter());
+        paramBean.setOwnerName(itemCarName.getTextCenter());
+        paramBean.setDriverName(itemDriverName.getTextCenter());
+        paramBean.setDriverMobile(itemDriverPhone.getTextCenter());
+        if (changeOrder) { //如果是修改订单界面,清除不可修改部分的内容
             if (!itemStartTime.isEnabled()) {//不可更改
                 paramBean.setDeliveryDate(null);
             }
             if (!itemStartLocation.isEnabled()) {//发货地点不可更改
-                paramBean.setStartLatitude(0);
-                paramBean.setStartLongitude(0);
+                paramBean.setStartLatitude(null);
+                paramBean.setStartLongitude(null);
                 paramBean.setStartPlaceInfo(null);
             }
             if (!itemEndLocation.isEnabled()) {//收货地点不可更改
-                paramBean.setDestinationLatitude(0);
-                paramBean.setDestinationLongitude(0);
+                paramBean.setDestinationLatitude(null);
+                paramBean.setDestinationLongitude(null);
                 paramBean.setDestinationInfo(null);
             }
             if (!itemStartCarNum.isEnabled()) {//发货编号不可更改
@@ -468,8 +464,8 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     public void onStartEvent(OrderEvent.StartLoactionEvent startLoactionEvent) {
         if (startLoactionEvent != null && startLoactionEvent.t != null) {
             itemStartLocation.setTextCenter(startLoactionEvent.t.getTitle());
-            paramBean.setStartLatitude(startLoactionEvent.t.getLatLonPoint().getLatitude());
-            paramBean.setStartLongitude(startLoactionEvent.t.getLatLonPoint().getLongitude());
+            paramBean.setStartLatitude(startLoactionEvent.t.getLatLonPoint().getLatitude()+"");
+            paramBean.setStartLongitude(startLoactionEvent.t.getLatLonPoint().getLongitude()+"");
             paramBean.setStartPlaceInfo(startLoactionEvent.t.getTitle());
         }
     }
@@ -479,8 +475,8 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     public void onEndEvent(OrderEvent.EndLoactionEvent endLoactionEvent) {
         if (endLoactionEvent != null && endLoactionEvent.t != null) {
             itemEndLocation.setTextCenter(endLoactionEvent.t.getTitle());
-            paramBean.setDestinationLatitude(endLoactionEvent.t.getLatLonPoint().getLatitude());
-            paramBean.setDestinationLongitude(endLoactionEvent.t.getLatLonPoint().getLongitude());
+            paramBean.setDestinationLatitude(endLoactionEvent.t.getLatLonPoint().getLatitude()+"");
+            paramBean.setDestinationLongitude(endLoactionEvent.t.getLatLonPoint().getLongitude()+"");
             paramBean.setDestinationInfo(endLoactionEvent.t.getTitle());
         }
     }
@@ -681,11 +677,11 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         this.orderDetailBean = orderDetailBean;
         paramBean.setId(orderDetailBean.getId());
         paramBean.setDepartNum(orderDetailBean.getDepartNum());
-        paramBean.setStartLatitude(orderDetailBean.getStartLatitude());
-        paramBean.setStartLongitude(orderDetailBean.getStartLongitude());
-        paramBean.setStartPlaceInfo(orderDetailBean.getStartPlaceInfo());
-        paramBean.setDestinationLatitude(orderDetailBean.getDestinationLatitude());
-        paramBean.setDestinationLongitude(orderDetailBean.getDestinationLongitude());
+        paramBean.setStartLatitude(orderDetailBean.getStartLatitude()+"");
+        paramBean.setStartLongitude(orderDetailBean.getStartLongitude()+"");
+        paramBean.setStartPlaceInfo(orderDetailBean.getStartPlaceInfo()+"");
+        paramBean.setDestinationLatitude(orderDetailBean.getDestinationLatitude()+"");
+        paramBean.setDestinationLongitude(orderDetailBean.getDestinationLongitude()+"");
         paramBean.setDestinationInfo(orderDetailBean.getDestinationInfo());
         paramBean.setDeliveryDate(orderDetailBean.getDeliveryDate());
         paramBean.setGoodName(orderDetailBean.getGoodName());
@@ -734,7 +730,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
                 break;
             case WAITE_START://待发车 ，根据保险和支付方式分为4中情况
                 if (isInsurance) {//购买保险情况
-                    //当订单状态为待发车，已购买保险且线上支付运费：只能修改：司机信息、货单图片；
+                    //当订单状态为待发车，买保险且已购线上支付运费：只能修改：司机信息、货单图片；
                     if (payOnLine) {
                         itemStartTime.setEnabled(false);
                         itemStartLocation.setEnabled(false);
@@ -832,7 +828,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     @Override
     public void onUpLoadFail(int failCount) {
 
-        creatDialog("图片上传失败", "有"+failCount+"张图片上传失败，是否重新上传？", "放弃上传", "重新上传")
+        creatDialog("图片上传失败", "有" + failCount + "张图片上传失败，是否重新上传？", "放弃上传", "重新上传")
                 .setLeftClickListener(new DialogControl.OnButtonLeftClickListener() {
                     @Override
                     public void onLeftClick(View view, DialogControl.ICenterDialog dialog) {

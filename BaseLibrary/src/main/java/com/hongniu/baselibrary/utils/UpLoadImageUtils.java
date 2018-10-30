@@ -20,7 +20,7 @@ import io.reactivex.disposables.Disposable;
 public class UpLoadImageUtils {
 
     OnUpLoadListener loadListener;
-
+    int type=Param.REEIVE;
     /**
      * 已经完成的图片
      */
@@ -30,6 +30,10 @@ public class UpLoadImageUtils {
 
     //0上传中 1完成 2失败
     private int state=1;
+
+    public UpLoadImageUtils(int type) {
+        this.type = type;
+    }
 
     public void setOnUpLoadListener(OnUpLoadListener loadListener) {
         this.loadListener = loadListener;
@@ -54,7 +58,7 @@ public class UpLoadImageUtils {
         }
 
       if (list.size()>0){
-          HttpAppFactory.upImage(Param.REEIVE,list)
+          HttpAppFactory.upImage(type,list)
                   .subscribe(new NetObserver<List<UpImgData>>(null) {
                       @Override
                       public void onSubscribe(Disposable d) {

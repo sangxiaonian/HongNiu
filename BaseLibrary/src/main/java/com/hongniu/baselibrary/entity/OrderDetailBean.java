@@ -343,6 +343,10 @@ public class OrderDetailBean {
             return "银联";
         } else if (payWay.equals("2")) {
             return "线下支付";
+        } else if (payWay.equals("3")) {
+            return "支付宝";
+        } else if (payWay.equals("4")) {
+            return "余额";
         } else {
             return "";
         }

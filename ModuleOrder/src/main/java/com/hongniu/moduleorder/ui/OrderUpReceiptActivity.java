@@ -61,7 +61,7 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
     private Button btSum;
 
     public String orderID;
-    UpLoadImageUtils imageUtils=new UpLoadImageUtils();
+    UpLoadImageUtils imageUtils=new UpLoadImageUtils(Param.REEIVE);
     //    private List<LocalMedia> urlImages=new ArrayList<>();
     private QueryReceiveBean bean;//传入的数据
 

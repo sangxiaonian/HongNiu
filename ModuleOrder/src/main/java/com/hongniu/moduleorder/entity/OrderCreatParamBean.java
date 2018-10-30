@@ -16,11 +16,11 @@ public class OrderCreatParamBean {
     /**
      * true	string	开始地点x坐标
      */
-    protected double startLatitude;
+    protected String startLatitude;
     /**
      * true	string	开始地点y坐标
      */
-    protected double startLongitude;
+    protected String startLongitude;
     /**
      * true	string	开始地点描述
      */
@@ -28,11 +28,11 @@ public class OrderCreatParamBean {
     /**
      * true	string	目的地x坐标
      */
-    protected double destinationLatitude;
+    protected String destinationLatitude;
     /**
      * true	string	目的地y坐标
      */
-    protected double destinationLongitude;
+    protected String destinationLongitude;
     /**
      * true	string	目的地描述
      */
@@ -111,19 +111,19 @@ public class OrderCreatParamBean {
         this.departNum = departNum;
     }
 
-    public double getStartLatitude() {
+    public String getStartLatitude() {
         return startLatitude;
     }
 
-    public void setStartLatitude(double startLatitude) {
+    public void setStartLatitude(String startLatitude) {
         this.startLatitude = startLatitude;
     }
 
-    public double getStartLongitude() {
+    public String getStartLongitude() {
         return startLongitude;
     }
 
-    public void setStartLongitude(double startLongitude) {
+    public void setStartLongitude(String startLongitude) {
         this.startLongitude = startLongitude;
     }
 
@@ -135,19 +135,19 @@ public class OrderCreatParamBean {
         this.startPlaceInfo = startPlaceInfo;
     }
 
-    public double getDestinationLatitude() {
+    public String getDestinationLatitude() {
         return destinationLatitude;
     }
 
-    public void setDestinationLatitude(double destinationLatitude) {
+    public void setDestinationLatitude(String destinationLatitude) {
         this.destinationLatitude = destinationLatitude;
     }
 
-    public double getDestinationLongitude() {
+    public String getDestinationLongitude() {
         return destinationLongitude;
     }
 
-    public void setDestinationLongitude(double destinationLongitude) {
+    public void setDestinationLongitude(String destinationLongitude) {
         this.destinationLongitude = destinationLongitude;
     }
 
