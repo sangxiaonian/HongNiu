@@ -2,8 +2,6 @@ package com.hongniu.moduleorder;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -47,7 +45,6 @@ import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.JLog;
-import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.SwitchTextLayout;
 import com.sang.common.widget.dialog.BottomAlertDialog;
 import com.sang.common.widget.dialog.CenterAlertDialog;
@@ -60,7 +57,6 @@ import com.sang.common.widget.popu.inter.OnPopuDismissListener;
 import com.sang.thirdlibrary.map.LoactionUtils;
 import com.sang.thirdlibrary.map.utils.MapConverUtils;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -119,8 +115,6 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
         loaction.init(this);
         loaction.setListener(this);
     }
-
-
 
 
     @Override
@@ -215,7 +209,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     @Override
     protected void initData() {
         super.initData();
-        if (Utils.getLoginInfor()!=null) {
+        if (Utils.getLoginInfor() != null) {
             if (Utils.checkInfor()) {
                 tvName.setText(Utils.getPersonInfor().getContact() == null ? "待完善" : Utils.getPersonInfor().getContact());
             }
@@ -233,7 +227,6 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     }
 
 
-
     /**
      * 检查版本号，确定是否需要更新
      */
@@ -247,11 +240,11 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                         try {
                             if (data != null && !TextUtils.isEmpty(data.getVersionCode())) {
                                 String versionName = DeviceUtils.getVersionName(mContext);
-                                String current = versionName.replace(".","").replace("-debug","");
-                                String needUpdata = data.getVersionCode().replace(".","");
-                                 if (Integer.parseInt(current)<Integer.parseInt(needUpdata)){
-                                     showUpAleart(data.getVersionName());
-                                 }
+                                String current = versionName.replace(".", "").replace("-debug", "");
+                                String needUpdata = data.getVersionCode().replace(".", "");
+                                if (Integer.parseInt(current) < Integer.parseInt(needUpdata)) {
+                                    showUpAleart(data.getVersionName());
+                                }
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -307,7 +300,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     @Override
     protected void onResume() {
         super.onResume();
-        if (loaction!=null){
+        if (loaction != null) {
             loaction.showFront(false);
         }
     }
@@ -366,7 +359,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                             loaction.startLoaction();
                         }
                         //首次创建位置信息收集数据
-                        if (upLoactionUtils == null||TextUtils.isEmpty(upLoactionUtils.getCarID())) {
+                        if (upLoactionUtils == null || TextUtils.isEmpty(upLoactionUtils.getCarID())) {
                             if (!DeviceUtils.isOpenGps(mContext)) {
                                 showAleart("为了更准确的记录您的轨迹信息，请打开GPS");
                             }
@@ -396,6 +389,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                 if (loaction != null) {
                     loaction.stopLoaction();
                 }
+                JLog.i("停止定位");
 
             }
         }
@@ -406,7 +400,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onInBackgrond(final Event.OnBackground event) {
         if (event != null) {
-            if (loaction!=null){
+            if (loaction != null) {
                 loaction.showFront(DeviceUtils.isBackGround(mContext));
             }
         }

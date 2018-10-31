@@ -28,41 +28,51 @@ public class BalanceOfAccountBean {
      * userName : asdfasdf
      */
 
-    private String accountCode;
-    private double amount;
     private String amtStr;
-    private String carteUserName;
     private String createTime;
-    private String flowType;
-    private int fundsources;
-    private int fundtype;
-    private String fundtypeStr;
+    private int flowType;
     private int id;
-    private double income;
     private int inorexptype;
-    private String inorexptypeStr;
-    private String isMe;
+    private int isMe;
     private String ordernumber;
-    private String relPayBillno;
-    private String remark;
     private String subtitle;
     private String title;
-    private String userName;
+    /**
+     * true	string	提现审核状态 0待审核 1 审核通过 2 审核不通过
+     */
+    private String reviewState	;
+    /**
+     * true	string	审核不通过的原因
+     */
+    private String reviewRemark	;
+    /**
+     * true	int	提现状态 0生成记录、1已发送、2提现成功、3提现失败
+     */
+    private String state	        ;
 
-    public String getAccountCode() {
-        return accountCode;
+
+    public String getReviewState() {
+        return reviewState;
     }
 
-    public void setAccountCode(String accountCode) {
-        this.accountCode = accountCode;
+    public void setReviewState(String reviewState) {
+        this.reviewState = reviewState;
     }
 
-    public double getAmount() {
-        return amount;
+    public String getReviewRemark() {
+        return reviewRemark;
     }
 
-    public void setAmount(double amount) {
-        this.amount = amount;
+    public void setReviewRemark(String reviewRemark) {
+        this.reviewRemark = reviewRemark;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     public String getAmtStr() {
@@ -73,13 +83,6 @@ public class BalanceOfAccountBean {
         this.amtStr = amtStr;
     }
 
-    public String getCarteUserName() {
-        return carteUserName;
-    }
-
-    public void setCarteUserName(String carteUserName) {
-        this.carteUserName = carteUserName;
-    }
 
     public String getCreateTime() {
         return createTime;
@@ -89,36 +92,12 @@ public class BalanceOfAccountBean {
         this.createTime = createTime;
     }
 
-    public String getFlowType() {
+    public int getFlowType() {
         return flowType;
     }
 
-    public void setFlowType(String flowType) {
+    public void setFlowType(int flowType) {
         this.flowType = flowType;
-    }
-
-    public int getFundsources() {
-        return fundsources;
-    }
-
-    public void setFundsources(int fundsources) {
-        this.fundsources = fundsources;
-    }
-
-    public int getFundtype() {
-        return fundtype;
-    }
-
-    public void setFundtype(int fundtype) {
-        this.fundtype = fundtype;
-    }
-
-    public String getFundtypeStr() {
-        return fundtypeStr;
-    }
-
-    public void setFundtypeStr(String fundtypeStr) {
-        this.fundtypeStr = fundtypeStr;
     }
 
     public int getId() {
@@ -129,14 +108,6 @@ public class BalanceOfAccountBean {
         this.id = id;
     }
 
-    public double getIncome() {
-        return income;
-    }
-
-    public void setIncome(double income) {
-        this.income = income;
-    }
-
     public int getInorexptype() {
         return inorexptype;
     }
@@ -145,19 +116,12 @@ public class BalanceOfAccountBean {
         this.inorexptype = inorexptype;
     }
 
-    public String getInorexptypeStr() {
-        return inorexptypeStr;
-    }
 
-    public void setInorexptypeStr(String inorexptypeStr) {
-        this.inorexptypeStr = inorexptypeStr;
-    }
-
-    public String getIsMe() {
+    public int getIsMe() {
         return isMe;
     }
 
-    public void setIsMe(String isMe) {
+    public void setIsMe(int isMe) {
         this.isMe = isMe;
     }
 
@@ -167,22 +131,6 @@ public class BalanceOfAccountBean {
 
     public void setOrdernumber(String ordernumber) {
         this.ordernumber = ordernumber;
-    }
-
-    public String getRelPayBillno() {
-        return relPayBillno;
-    }
-
-    public void setRelPayBillno(String relPayBillno) {
-        this.relPayBillno = relPayBillno;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
     }
 
     public String getSubtitle() {
@@ -201,13 +149,6 @@ public class BalanceOfAccountBean {
         this.title = title;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
 
 
 

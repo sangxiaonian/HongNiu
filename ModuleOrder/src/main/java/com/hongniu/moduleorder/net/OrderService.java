@@ -61,14 +61,6 @@ public interface OrderService {
     @POST("hongniu//api/order/updateOrder")
     Observable<CommonBean<OrderDetailBean>> changeOrder(@Body OrderCreatParamBean infor);
 
-    /**
-     * 查询订单详情
-     *
-     * @param infor
-     * @return
-     */
-    @POST("hongniu/api/order/detail")
-    Observable<CommonBean<OrderDetailBean>> queryOrderDetail(@Body OrderParamBean infor);
 
     /**
      * 获取车牌号联想

@@ -12,8 +12,10 @@ import com.hongniu.baselibrary.entity.OrderCreatBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.OrderIdBean;
 import com.hongniu.baselibrary.entity.PageBean;
+import com.hongniu.baselibrary.entity.QueryOrderParamBean;
 import com.hongniu.baselibrary.entity.UpImgData;
 import com.hongniu.baselibrary.entity.UpReceiverBean;
+import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.moduleorder.entity.LocationBean;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
@@ -98,12 +100,8 @@ public class HttpOrderFactory {
      * @param orderID
      */
     public static Observable<CommonBean<OrderDetailBean>> queryOrderDetail(String orderID) {
-        OrderParamBean bean = new OrderParamBean();
-        bean.setOrderId(orderID);
-        return OrderClient.getInstance()
-                .getService()
-                .queryOrderDetail(bean)
-                .compose(RxUtils.<CommonBean<OrderDetailBean>>getSchedulersObservableTransformer());
+
+        return HttpAppFactory.queryOrderDetail(orderID);
 
     }
 

@@ -5,10 +5,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.hongniu.baselibrary.widget.order.OrderDetailDialog;
 import com.hongniu.modulefinance.R;
+import com.hongniu.modulefinance.control.OnItemClickListener;
 import com.hongniu.modulefinance.entity.BalanceOfAccountBean;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
+import com.sang.common.widget.dialog.builder.BottomAlertBuilder;
 
 import java.util.List;
 
@@ -20,6 +23,11 @@ public class BalanceOfAccountAdapter extends XAdapter<BalanceOfAccountBean> {
 
     public BalanceOfAccountAdapter(Context context, List<BalanceOfAccountBean> list) {
         super(context, list);
+    }
+    OnItemClickListener<BalanceOfAccountBean> listener;
+
+    public void setListener(OnItemClickListener<BalanceOfAccountBean> listener) {
+        this.listener = listener;
     }
 
     @Override
@@ -33,29 +41,34 @@ public class BalanceOfAccountAdapter extends XAdapter<BalanceOfAccountBean> {
                 TextView tvTime = itemView.findViewById(R.id.tv_time);
                 TextView tvPrice = itemView.findViewById(R.id.tv_price);
 
-                tvOrder.setText(data.getTitle()==null?"":data.getTitle());
-                tvCarNum.setText(data.getSubtitle()==null?"":data.getSubtitle());
-                tvPrice.setText(data.getAmtStr());
-                tvTime.setText((data.getInorexptype()==2?"提现时间：":"收款时间：")+data.getCreateTime());
+                if (data.getFlowType() == 1) {//余额流水，
+                    tvCarNum.setText("订单号：" + (data.getSubtitle() == null ? "" : data.getSubtitle()));
+                } else {
+                    tvCarNum.setText("提现账户：" + (data.getSubtitle() == null ? "" : data.getSubtitle()));
+                }
 
-//                itemView.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
+                tvOrder.setText(data.getTitle() == null ? "" : data.getTitle());
+                tvPrice.setText(data.getAmtStr());
+                tvTime.setText((data.getInorexptype() == 2 ? "提现时间：" : "收款时间：") + data.getCreateTime());
+
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (listener!=null){
+                            listener.onItemClick(position,data);
+                        }
 //                        OrderDetailDialog orderDetailDialog = new OrderDetailDialog(context);
 //                        orderDetailDialog.setOrdetail(data);
 //                        new BottomAlertBuilder()
 //                                .creatDialog(orderDetailDialog)
 //                                .show();
-//
-//                    }
-//                });
+
+                    }
+                });
 //                ;
             }
         };
     }
-
-
-
 
 
 }

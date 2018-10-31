@@ -11,6 +11,7 @@ import java.util.List;
 
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHANGE_RECEIPT;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_GOODS;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_RECEIPT;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_ROUT;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_ENTRY_ARRIVE;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_START_CAR;
@@ -67,7 +68,7 @@ public class DriveOwnerOrder extends OwnerOrder implements OrderDetailItemContro
                 break;
             case RECEIPT://已收货
                 if (hasReceiptImage) {//回单存在
-                    buttonInfors.add( new ButtonInforBean(ORDER_CHANGE_RECEIPT));//修改回单
+                    buttonInfors.add( new ButtonInforBean(ORDER_CHECK_RECEIPT));//查看回单
                 }
                 break;
             case REFUND://退款

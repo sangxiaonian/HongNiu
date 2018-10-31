@@ -19,7 +19,7 @@ import io.reactivex.disposables.Disposable;
  * 努力，为梦长留
  */
 public class BaseFragment extends Fragment implements TaskControl.OnTaskListener {
-    TaskControl.OnTaskListener taskListener;
+    protected TaskControl.OnTaskListener taskListener;
     protected Disposable d;
 
     @Override

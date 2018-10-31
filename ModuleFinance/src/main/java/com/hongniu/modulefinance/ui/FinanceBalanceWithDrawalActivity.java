@@ -25,25 +25,19 @@ import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.PayInforBeans;
 import com.hongniu.baselibrary.net.HttpAppFactory;
-import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.PayPasswordKeyBord;
 import com.hongniu.modulefinance.R;
 import com.hongniu.modulefinance.entity.AppletInforBean;
 import com.hongniu.modulefinance.net.HttpFinanceFactory;
 import com.hongniu.modulefinance.widget.AccountDialog;
 import com.hongniu.modulefinance.widget.CreatAccountDialog;
-import com.sang.common.event.BusFactory;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.JLog;
 import com.sang.common.utils.PointLengthFilter;
 import com.sang.common.utils.ToastUtils;
-import com.sang.common.widget.dialog.BottomAlertDialog;
-import com.sang.common.widget.dialog.builder.BottomAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
 import com.sang.thirdlibrary.pay.wechat.WeChatAppPay;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -225,10 +219,9 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
                     .subscribe(new NetObserver<List<PayInforBeans>>(this) {
                         @Override
                         public void doOnSuccess(List<PayInforBeans> data) {
-                            if (!CommonUtils.isEmptyCollection(data)) {
-                                accountDialog.setData(data);
-                                accountDialog.show();
-                            }
+                            accountDialog.setData(data);
+                            accountDialog.show();
+
                         }
                     })
             ;

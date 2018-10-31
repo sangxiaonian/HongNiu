@@ -14,6 +14,7 @@ import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_RECEIPT;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_ENTRY_ORDER;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_PAY;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_START_CAR;
 
 
 /**
@@ -49,6 +50,7 @@ public class CargoOwnerOrder extends OwnerOrder implements OrderDetailItemContro
             case WAITE_START://待发车
 
                 buttonInfors.add(new ButtonInforBean(0, ORDER_CHANGE));//修改订单
+                buttonInfors.add(new ButtonInforBean(0, ORDER_START_CAR));//开始face
                 if (!insurance) {//未购买保险
                     buttonInfors.add(new ButtonInforBean(1, ORDER_BUY_INSURANCE));//购买保险
                 } else {//如果已经购买了保险

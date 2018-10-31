@@ -9,8 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.TextView;
 
+import com.hongniu.baselibrary.widget.WithDrawProgress;
 import com.hongniu.modulefinance.R;
+import com.hongniu.modulefinance.entity.BalanceOfAccountBean;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.widget.dialog.inter.DialogControl;
 
@@ -18,12 +21,21 @@ import com.sang.common.widget.dialog.inter.DialogControl;
  * 作者： ${PING} on 2018/10/9.
  * 添加新的提现到账方式
  */
-public class CreatAccountDialog implements DialogControl.IDialog, View.OnClickListener {
+public class WithDrawDialog implements DialogControl.IDialog, View.OnClickListener {
 
-    private View imgCancel, unipay, wechat, ali;//取消按钮
+    private View imgCancel ;//取消按钮
     private Dialog dialog;
 
     OnAddNewPayWayListener listener;
+    private TextView tv_start_title;
+    private TextView tv_start_time  ;
+    private TextView tv_center_title;
+    private TextView tv_center_time ;
+    private TextView tv_bottom_title;
+    private TextView tv_bottom_time ;
+    private TextView tv_money       ;
+    private TextView tv_withdraw    ;
+    private WithDrawProgress progress;
 
     public interface OnAddNewPayWayListener {
 
@@ -35,27 +47,33 @@ public class CreatAccountDialog implements DialogControl.IDialog, View.OnClickLi
 
     }
 
-    public CreatAccountDialog(@NonNull Context context) {
+    public WithDrawDialog(@NonNull Context context) {
         this(context, 0);
     }
 
 
-    public CreatAccountDialog(@NonNull Context context, int themeResId) {
+    public WithDrawDialog(@NonNull Context context, int themeResId) {
         initView(context, themeResId);
-        initData(context);
     }
 
     private void initView(Context context, int themeResId) {
-        View inflate = LayoutInflater.from(context).inflate(R.layout.dialog_account_add, null);
+        View inflate = LayoutInflater.from(context).inflate(R.layout.dialog_withdraw, null);
         imgCancel = inflate.findViewById(R.id.img_cancel);
+        tv_start_title = inflate.findViewById(R.id.tv_start_title);
+        tv_start_time   = inflate.findViewById(R.id.tv_start_time);
+        tv_center_title = inflate.findViewById(R.id.tv_center_title);
+        tv_center_time  = inflate.findViewById(R.id.tv_center_time);
+        tv_bottom_title = inflate.findViewById(R.id.tv_bottom_title);
+        tv_bottom_time  = inflate.findViewById(R.id.tv_bottom_time);
+        tv_money         = inflate.findViewById(R.id.tv_money);
+        tv_withdraw      = inflate.findViewById(R.id.tv_withdraw);
+        progress      = inflate.findViewById(R.id.progress);
 
-        unipay = inflate.findViewById(R.id.unipay);
-        wechat = inflate.findViewById(R.id.wechat);
-        ali = inflate.findViewById(R.id.ali);
+
         imgCancel.setOnClickListener(this);
-        ali.setOnClickListener(this);
-        wechat.setOnClickListener(this);
-        unipay.setOnClickListener(this);
+
+
+
 
         dialog = new Dialog(context, themeResId);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -66,15 +84,13 @@ public class CreatAccountDialog implements DialogControl.IDialog, View.OnClickLi
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0x00000000));
     }
 
-    private void initData(Context context) {
-        unipay.setVisibility(View.GONE);
-        ali.setVisibility(View.GONE);
+
+
+
+    public void setData(BalanceOfAccountBean balanceOfAccountBean){
 
     }
 
-    public void setListener(OnAddNewPayWayListener listener) {
-        this.listener = listener;
-    }
 
     @Override
     public void setCancelable(boolean cancelable) {

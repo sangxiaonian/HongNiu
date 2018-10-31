@@ -2,8 +2,10 @@ package com.hongniu.baselibrary.net;
 
 import com.hongniu.baselibrary.entity.CarTypeBean;
 import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.OrderIdBean;
 import com.hongniu.baselibrary.entity.PayInforBeans;
+import com.hongniu.baselibrary.entity.QueryOrderParamBean;
 import com.hongniu.baselibrary.entity.QueryOrderStateBean;
 import com.hongniu.baselibrary.entity.QueryPayPassword;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
@@ -79,6 +81,14 @@ public interface AppService {
      */
     @POST("hongniu/api/refund/add")
     Observable<CommonBean<String>> addPayWays(@Body PayInforBeans beans);
+    /**
+     * 查询订单详情
+     *
+     * @param infor
+     * @return
+     */
+    @POST("hongniu/api/order/detail")
+    Observable<CommonBean<OrderDetailBean>> queryOrderDetail(@Body QueryOrderParamBean infor);
 
     /**
      * 查询钱包账户详情

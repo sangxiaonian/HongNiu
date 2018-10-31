@@ -2,8 +2,10 @@ package com.hongniu.baselibrary.net;
 
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.OrderIdBean;
 import com.hongniu.baselibrary.entity.PayInforBeans;
+import com.hongniu.baselibrary.entity.QueryOrderParamBean;
 import com.hongniu.baselibrary.entity.QueryOrderStateBean;
 import com.hongniu.baselibrary.entity.QueryPayPassword;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
@@ -158,5 +160,20 @@ public class HttpAppFactory {
                 ;
     }
 
+    /**
+     * 查询订单数据
+     *
+     * @param orderID
+     */
+    public static Observable<CommonBean<OrderDetailBean>> queryOrderDetail(String orderID) {
+        QueryOrderParamBean bean = new QueryOrderParamBean();
+        bean.setId(orderID);
+        bean.setOrderNum(orderID);
+        return AppClient.getInstance()
+                .getService()
+                .queryOrderDetail(bean)
+                .compose(RxUtils.<CommonBean<OrderDetailBean>>getSchedulersObservableTransformer());
+
+    }
 
 }

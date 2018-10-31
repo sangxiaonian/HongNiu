@@ -1,6 +1,7 @@
 package com.hongniu.moduleorder.ui.fragment;
 
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.hongniu.baselibrary.entity.OrderCreatBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
+import com.hongniu.baselibrary.entity.UpImgData;
 import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItem;
@@ -29,7 +31,6 @@ import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
 import com.hongniu.moduleorder.entity.QueryReceiveBean;
-import com.hongniu.baselibrary.entity.UpImgData;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.ui.OrderScanReceiptActivity;
 import com.hongniu.moduleorder.utils.LoactionCollectionUtils;
@@ -61,6 +62,7 @@ import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 
 import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CARGO_OWNER;
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.DRIVER;
 
 /**
  * 订单列表Fragment
@@ -127,7 +129,6 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
                         itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-
                             }
                         });
                     }
@@ -156,7 +157,7 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
                     public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
                         dialog.dismiss();
                         HttpOrderFactory.cancleOrder(orderBean.getId())
-                                .subscribe(new NetObserver<OrderDetailBean>(OrderFragmet.this) {
+                                .subscribe(new NetObserver<OrderDetailBean>(taskListener) {
                                     @Override
                                     public void doOnSuccess(OrderDetailBean data) {
                                     }
@@ -283,7 +284,7 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
                     public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
                         dialog.dismiss();
                         HttpOrderFactory.entryReceiveCargo(orderBean.getId())
-                                .subscribe(new NetObserver<OrderDetailBean>(OrderFragmet.this) {
+                                .subscribe(new NetObserver<OrderDetailBean>(taskListener) {
                                     @Override
                                     public void doOnSuccess(OrderDetailBean data) {
                                     }
@@ -313,76 +314,104 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
                     @Override
                     public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
                         latLng = new LatLng(0, 0);
-                        Observable.just(1)
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .map(new Function<Integer, Integer>() {
-                                    @Override
-                                    public Integer apply(Integer integer) throws Exception {
-                                        OrderEvent.UpLoactionEvent upLoactionEvent = new OrderEvent.UpLoactionEvent();
-                                        upLoactionEvent.start = true;
-                                        BusFactory.getBus().post(upLoactionEvent);
-                                        return integer;
-                                    }
-                                })
-                                .observeOn(Schedulers.io())
-                                .map(new Function<Integer, Double>() {
-                                    @Override
-                                    public Double apply(Integer integer) throws Exception {
-                                        JLog.i(Thread.currentThread().getName());
-                                        while (latLng == null || latLng.latitude == 0) {
+                        if (roleState == DRIVER) {
+                            Observable.just(1)
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .map(new Function<Integer, Integer>() {
+                                        @Override
+                                        public Integer apply(Integer integer) throws Exception {
+                                            OrderEvent.UpLoactionEvent upLoactionEvent = new OrderEvent.UpLoactionEvent();
+                                            upLoactionEvent.start = true;
+                                            BusFactory.getBus().post(upLoactionEvent);
+                                            return integer;
+                                        }
+                                    })
+                                    .observeOn(Schedulers.io())
+                                    .map(new Function<Integer, Double>() {
+                                        @Override
+                                        public Double apply(Integer integer) throws Exception {
+                                            JLog.i(Thread.currentThread().getName());
+                                            while (latLng == null || latLng.latitude == 0) {
+                                                SystemClock.sleep(1000);
+                                            }
+                                            double v = MapConverUtils.caculeDis(latLng.latitude
+                                                    , latLng.longitude
+                                                    , orderBean.getStartLatitude(), orderBean.getStartLongitude());
+                                            return v;
+                                        }
+                                    })
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .filter(new Predicate<Double>() {
+                                        @Override
+                                        public boolean test(Double aDouble) throws Exception {
+                                            JLog.i(Thread.currentThread().getName());
+                                            OrderEvent.UpLoactionEvent upLoactionEvent = new OrderEvent.UpLoactionEvent();
+                                            upLoactionEvent.start = false;
+                                            BusFactory.getBus().post(upLoactionEvent);
+                                            if (aDouble > Param.ENTRY_MIN) {
+                                                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("距离发货地点还有" + ConvertUtils.changeFloat(aDouble / 1000, 1) + "公里，无法开始发车");
+
+                                            }
+                                            return aDouble < Param.ENTRY_MIN;
+                                        }
+                                    })
+                                    .flatMap(new Function<Double, ObservableSource<CommonBean<String>>>() {
+                                        @Override
+                                        public ObservableSource<CommonBean<String>> apply(Double aDouble) throws Exception {
+
+                                            return HttpOrderFactory.driverStart(orderBean.getId());
 
                                         }
-                                        double v = MapConverUtils.caculeDis(latLng.latitude
-                                                , latLng.longitude
-                                                , orderBean.getStartLatitude(), orderBean.getStartLongitude());
-                                        return v;
-                                    }
-                                })
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .filter(new Predicate<Double>() {
-                                    @Override
-                                    public boolean test(Double aDouble) throws Exception {
-                                        JLog.i(Thread.currentThread().getName());
-                                        OrderEvent.UpLoactionEvent upLoactionEvent = new OrderEvent.UpLoactionEvent();
-                                        upLoactionEvent.start = false;
-                                        BusFactory.getBus().post(upLoactionEvent);
-                                        if (aDouble > Param.ENTRY_MIN) {
-                                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("距离发货地点还有" + ConvertUtils.changeFloat(aDouble / 1000, 1) + "公里，无法开始发车");
+                                    })
+                                    .subscribe(new NetObserver<String>(taskListener) {
+
+
+                                        @Override
+                                        public void doOnSuccess(String data) {
+                                            RoleTypeBean bean = new RoleTypeBean();
+                                            bean.setRoleId(2);
+                                            bean.setCarId(orderBean.getCarId());
+                                            bean.setOrderId(orderBean.getId());
+                                            bean.setStartLatitude(orderBean.getStartLatitude());
+                                            bean.setStartLongitude(orderBean.getStartLongitude());
+                                            bean.setDestinationLatitude(orderBean.getDestinationLatitude());
+                                            bean.setDestinationLongitude(orderBean.getDestinationLongitude());
+                                            EventBus.getDefault().post(bean);
                                         }
-                                        return aDouble < Param.ENTRY_MIN;
-                                    }
-                                })
-                                .flatMap(new Function<Double, ObservableSource<CommonBean<String>>>() {
-                                    @Override
-                                    public ObservableSource<CommonBean<String>> apply(Double aDouble) throws Exception {
 
-                                        return HttpOrderFactory.driverStart(orderBean.getId());
-
-                                    }
-                                })
-                                .subscribe(new NetObserver<String>(OrderFragmet.this) {
-                                    @Override
-                                    public void doOnSuccess(String data) {
-                                        RoleTypeBean bean = new RoleTypeBean();
-                                        bean.setRoleId(2);
-                                        bean.setCarId(orderBean.getCarId());
-                                        bean.setOrderId(orderBean.getId());
-                                        bean.setStartLatitude(orderBean.getStartLatitude());
-                                        bean.setStartLongitude(orderBean.getStartLongitude());
-                                        bean.setDestinationLatitude(orderBean.getDestinationLatitude());
-                                        bean.setDestinationLongitude(orderBean.getDestinationLongitude());
-                                        EventBus.getDefault().post(bean);
-                                    }
-
-                                    @Override
-                                    public void onComplete() {
-                                        super.onComplete();
-                                        BusFactory.getBus().post(new OrderEvent.OrderUpdate(roleState));
-                                    }
-                                });
+                                        @Override
+                                        public void onComplete() {
+                                            super.onComplete();
+                                            BusFactory.getBus().post(new OrderEvent.OrderUpdate(roleState));
+                                        }
+                                    });
 
 
+                        } else {
+                            HttpOrderFactory.driverStart(orderBean.getId())
+                                    .subscribe(new NetObserver<String>(taskListener) {
+                                        @Override
+                                        public void doOnSuccess(String data) {
+                                            RoleTypeBean bean = new RoleTypeBean();
+                                            bean.setRoleId(2);
+                                            bean.setCarId(orderBean.getCarId());
+                                            bean.setOrderId(orderBean.getId());
+                                            bean.setStartLatitude(orderBean.getStartLatitude());
+                                            bean.setStartLongitude(orderBean.getStartLongitude());
+                                            bean.setDestinationLatitude(orderBean.getDestinationLatitude());
+                                            bean.setDestinationLongitude(orderBean.getDestinationLongitude());
+                                            EventBus.getDefault().post(bean);
+                                        }
+
+                                        @Override
+                                        public void onComplete() {
+                                            super.onComplete();
+                                            BusFactory.getBus().post(new OrderEvent.OrderUpdate(roleState));
+                                        }
+                                    });
+                        }
                         dialog.dismiss();
+
                     }
                 }).creatDialog(new CenterAlertDialog(getContext()))
                 .show();
@@ -442,7 +471,7 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
                             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("距离收货地点还有" + ConvertUtils.changeFloat(v / 1000, 1) + "公里，无法确认到达");
                         } else {
                             HttpOrderFactory.entryArrive(orderBean.getId())
-                                    .subscribe(new NetObserver<String>(OrderFragmet.this) {
+                                    .subscribe(new NetObserver<String>(taskListener) {
                                         @Override
                                         public void doOnSuccess(String data) {
                                             BusFactory.getBus().post(new OrderEvent.UpLoactionEvent());
