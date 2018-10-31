@@ -6,6 +6,7 @@ package com.hongniu.baselibrary.entity;
 public class QueryOrderParamBean {
     private String id;
     private String orderNum;
+    private String flowId;
 
     public String getId() {
         return id;
@@ -21,5 +22,13 @@ public class QueryOrderParamBean {
 
     public void setOrderNum(String orderNum) {
         this.orderNum = orderNum;
+    }
+
+    public String getFlowId() {
+        return flowId;
+    }
+
+    public void setFlowId(String flowId) {
+        this.flowId = flowId;
     }
 }

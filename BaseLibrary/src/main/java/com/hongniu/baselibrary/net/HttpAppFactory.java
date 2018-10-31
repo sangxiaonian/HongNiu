@@ -162,14 +162,15 @@ public class HttpAppFactory {
 
     /**
      * 查询订单数据
-     *
-     * @param orderID
+     *  @param orderID
      * @param ordernumber
+     * @param flowid
      */
-    public static Observable<CommonBean<OrderDetailBean>> queryOrderDetail(String orderID, String ordernumber) {
+    public static Observable<CommonBean<OrderDetailBean>> queryOrderDetail(String orderID, String ordernumber, String flowid) {
         QueryOrderParamBean bean = new QueryOrderParamBean();
         bean.setId(orderID);
         bean.setOrderNum(ordernumber);
+        bean.setFlowId(flowid);
         return AppClient.getInstance()
                 .getService()
                 .queryOrderDetail(bean)

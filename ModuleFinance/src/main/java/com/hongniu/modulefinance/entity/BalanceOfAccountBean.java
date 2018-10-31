@@ -32,7 +32,7 @@ public class BalanceOfAccountBean {
     private String amount;
     private String createTime;
     private int flowType;
-    private int id;
+    private String id;
     private int inorexptype;
     private int isMe;
     private String ordernumber;
@@ -134,11 +134,11 @@ public class BalanceOfAccountBean {
         this.flowType = flowType;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

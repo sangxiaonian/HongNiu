@@ -100,7 +100,7 @@ public class HttpOrderFactory {
      */
     public static Observable<CommonBean<OrderDetailBean>> queryOrderDetail(String orderID) {
 
-        return HttpAppFactory.queryOrderDetail(orderID,null);
+        return HttpAppFactory.queryOrderDetail(orderID,null,null);
 
     }
 
