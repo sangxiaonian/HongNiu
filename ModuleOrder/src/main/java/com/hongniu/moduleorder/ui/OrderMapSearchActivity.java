@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.poisearch.PoiSearch;
+import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.base.RefrushActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
@@ -27,11 +28,13 @@ import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.sang.common.event.BusFactory;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
+import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.DeviceUtils;
 
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
 
 public class OrderMapSearchActivity extends RefrushActivity<PoiItem> {
     private EditText etSearch;
@@ -114,6 +117,44 @@ public class OrderMapSearchActivity extends RefrushActivity<PoiItem> {
 
         return HttpOrderFactory.searchPio(poiSearch);
     }
+
+    protected void queryData(final boolean isClear) {
+        if (isClear) {
+            refresh.loadmoreFinished(true);
+            currentPage = 1;
+        }
+        getListDatas()
+                .subscribe(new NetObserver<PageBean<PoiItem>>(this) {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        if (isFirst) {
+                            isFirst = false;
+                            super.onSubscribe(d);
+                        }else {
+                            disposable=d;
+                        }
+                    }
+
+                    @Override
+                    public void doOnSuccess(PageBean<PoiItem> data) {
+                        if (isClear&&data != null &&!CommonUtils.isEmptyCollection(data.getList())) {
+                            datas.clear();
+                        }
+                        if (data != null &&!CommonUtils.isEmptyCollection(data.getList())) {
+                            currentPage++;
+                            datas.addAll(data.getList());
+                            if (data.getList().size() < Param.PAGE_SIZE) {
+                                showNoMore();
+                            }
+                        } else {
+                            showNoMore();
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+    }
+
+
 
     @Override
     protected XAdapter<PoiItem> getAdapter(List<PoiItem> datas) {
