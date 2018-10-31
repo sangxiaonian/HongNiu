@@ -99,7 +99,6 @@ public class WithDrawDialog implements DialogControl.IDialog, View.OnClickListen
         tv_money.setText(String.format(context.getString(R.string.money_symbol_des), balanceOfAccountBean.getAmount()));
         tv_withdraw.setText(balanceOfAccountBean.getSubtitle() == null ? "" : balanceOfAccountBean.getSubtitle());
         int reviewState = balanceOfAccountBean.getReviewState();
-        reviewState=2;
 
         tv_start_time.setTextColor(  Color.parseColor("#999999"));
         tv_start_title.setTextColor( Color.parseColor("#999999"));

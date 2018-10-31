@@ -168,7 +168,7 @@ public class HttpAppFactory {
     public static Observable<CommonBean<OrderDetailBean>> queryOrderDetail(String orderID) {
         QueryOrderParamBean bean = new QueryOrderParamBean();
         bean.setId(orderID);
-        bean.setOrderNum(orderID);
+//        bean.setOrderNum(orderID);
         return AppClient.getInstance()
                 .getService()
                 .queryOrderDetail(bean)

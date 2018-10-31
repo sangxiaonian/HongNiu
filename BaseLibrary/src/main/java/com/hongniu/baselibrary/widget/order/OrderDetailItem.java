@@ -201,7 +201,9 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
         buildButton(data.isInsurance(), data.isHasGoodsImage(), data.isHasReceiptImage());
 
         //司机隐藏价格控件
-        tv_price.setVisibility(roleState == OrderDetailItemControl.RoleState.DRIVER ? GONE : VISIBLE);
+        if (tv_price.getVisibility()!=GONE) {
+            tv_price.setVisibility(roleState == OrderDetailItemControl.RoleState.DRIVER ? GONE : VISIBLE);
+        }
 
 
     }
@@ -411,7 +413,8 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
     public void buildButton(boolean b, boolean hasGoodsImage, boolean hasReceiptImage) {
         llBottom.removeAllViews();
         if (hideButton) {
-            hideBottom(true);
+            llBottom.setVisibility(GONE);
+            lineBottom.setVisibility(GONE);
             return;
         }
         final OrderDetailItemControl.IOrderItemHelper helper = new OrderItemHelper(orderState, roleState);
@@ -542,6 +545,8 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
      * @param b
      */
     public void hideBottom(boolean b) {
+        hideButton = true;
+        tv_price.setVisibility(b ? GONE : VISIBLE);
         llBottom.setVisibility(b ? GONE : VISIBLE);
         lineBottom.setVisibility(b ? GONE : VISIBLE);
     }
@@ -558,7 +563,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
 
     public TextView creatButton(ButtonInforBean infor) {
         TextView button = new TextView(getContext());
-        button= (TextView) LayoutInflater.from(getContext()).inflate(R.layout.order_item_text,llBottom,false);
+        button = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.order_item_text, llBottom, false);
         button.setTextColor(infor.getType() == 1 ? getResources().getColor(R.color.white) : getResources().getColor(R.color.color_title_dark));
         button.setBackgroundResource(infor.getType() == 1 ? R.drawable.shape_2_f06f28 : R.drawable.shape_2_stoke_dddddd);
         button.setGravity(Gravity.CENTER);
