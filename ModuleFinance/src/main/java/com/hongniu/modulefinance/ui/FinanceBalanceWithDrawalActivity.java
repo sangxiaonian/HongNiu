@@ -130,6 +130,7 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
             return;
         }
         this.payInfo = def;
+        tvPayAccount.setVisibility(View.VISIBLE);
         if (def.getType() == 0) {//微信
             imgPayIcon.setImageResource(R.mipmap.icon_wechat_40);
             tvPayWay.setText(getString(R.string.wallet_balance_withDrawal_weiChat));
