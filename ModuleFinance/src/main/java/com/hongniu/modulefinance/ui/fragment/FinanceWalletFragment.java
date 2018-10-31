@@ -76,9 +76,8 @@ public class FinanceWalletFragment extends RefrushFragmet<BalanceOfAccountBean> 
     public void onItemClick(int position, BalanceOfAccountBean balanceOfAccountBean) {
         if (balanceOfAccountBean.getFlowType()==1) {//订单
             if (balanceOfAccountBean.getIsMe()==1){
-                ToastUtils.getInstance().show("展示订单详情");
-//                HttpAppFactory.queryOrderDetail(balanceOfAccountBean.getOrdernumber())
-                HttpAppFactory.queryOrderDetail( 7+"")
+//                ToastUtils.getInstance().show("展示订单详情");
+                HttpAppFactory.queryOrderDetail( null,balanceOfAccountBean.getOrdernumber())
                         .subscribe(new NetObserver<OrderDetailBean>(this) {
                             @Override
                             public void doOnSuccess(OrderDetailBean data) {
@@ -100,7 +99,7 @@ public class FinanceWalletFragment extends RefrushFragmet<BalanceOfAccountBean> 
             WithDrawDialog dialog=new WithDrawDialog(getContext());
             dialog.setData(balanceOfAccountBean);
             dialog.show();
-            ToastUtils.getInstance().show("提现");
+//            ToastUtils.getInstance().show("提现");
         }
     }
 }

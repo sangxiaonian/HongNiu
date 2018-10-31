@@ -164,11 +164,12 @@ public class HttpAppFactory {
      * 查询订单数据
      *
      * @param orderID
+     * @param ordernumber
      */
-    public static Observable<CommonBean<OrderDetailBean>> queryOrderDetail(String orderID) {
+    public static Observable<CommonBean<OrderDetailBean>> queryOrderDetail(String orderID, String ordernumber) {
         QueryOrderParamBean bean = new QueryOrderParamBean();
         bean.setId(orderID);
-//        bean.setOrderNum(orderID);
+        bean.setOrderNum(ordernumber);
         return AppClient.getInstance()
                 .getService()
                 .queryOrderDetail(bean)

@@ -12,7 +12,6 @@ import com.hongniu.baselibrary.entity.OrderCreatBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.OrderIdBean;
 import com.hongniu.baselibrary.entity.PageBean;
-import com.hongniu.baselibrary.entity.QueryOrderParamBean;
 import com.hongniu.baselibrary.entity.UpImgData;
 import com.hongniu.baselibrary.entity.UpReceiverBean;
 import com.hongniu.baselibrary.net.HttpAppFactory;
@@ -101,7 +100,7 @@ public class HttpOrderFactory {
      */
     public static Observable<CommonBean<OrderDetailBean>> queryOrderDetail(String orderID) {
 
-        return HttpAppFactory.queryOrderDetail(orderID);
+        return HttpAppFactory.queryOrderDetail(orderID,null);
 
     }
 
