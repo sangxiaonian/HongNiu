@@ -29,6 +29,7 @@ public class BalanceOfAccountBean {
      */
 
     private String amtStr;
+    private String amount;
     private String createTime;
     private int flowType;
     private int id;
@@ -37,10 +38,19 @@ public class BalanceOfAccountBean {
     private String ordernumber;
     private String subtitle;
     private String title;
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
+
     /**
      * true	string	提现审核状态 0待审核 1 审核通过 2 审核不通过
      */
-    private String reviewState	;
+    private int reviewState	;
     /**
      * true	string	审核不通过的原因
      */
@@ -49,18 +59,42 @@ public class BalanceOfAccountBean {
      * true	int	提现状态 0生成记录、1已发送、2提现成功、3提现失败
      */
     private String state	        ;
+    /**
+     * true	string	审核时间
+     */
+    private String  reviewTime	;
+    /**
+     * true	string	到账时间
+     */
+    private String  successTime;
 
 
-    public String getReviewState() {
+    public int getReviewState() {
         return reviewState;
     }
 
-    public void setReviewState(String reviewState) {
+    public void setReviewState(int reviewState) {
         this.reviewState = reviewState;
     }
 
     public String getReviewRemark() {
         return reviewRemark;
+    }
+
+    public String getReviewTime() {
+        return reviewTime;
+    }
+
+    public void setReviewTime(String reviewTime) {
+        this.reviewTime = reviewTime;
+    }
+
+    public String getSuccessTime() {
+        return successTime;
+    }
+
+    public void setSuccessTime(String successTime) {
+        this.successTime = successTime;
     }
 
     public void setReviewRemark(String reviewRemark) {

@@ -1,13 +1,17 @@
 package com.hongniu.baselibrary.widget;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.hongniu.baselibrary.R;
 import com.sang.common.utils.DeviceUtils;
 
 /**
@@ -29,6 +33,7 @@ public class WithDrawProgress extends View {
 
     protected int progress;
     protected int maxProgress;
+    private Bitmap mBitmap;
 
     public WithDrawProgress(Context context) {
         this(context, null, 0);
@@ -52,10 +57,24 @@ public class WithDrawProgress extends View {
         bitmapSize = DeviceUtils.dip2px(context, 30);
         passColor = Color.parseColor("#F06F28");
         unPassColor = Color.parseColor("#DDDDDD");
-
+        mBitmap= zoomImg(BitmapFactory.decodeResource(getResources(), R.mipmap.icon_cartime_60),DeviceUtils.dip2px(context,30),DeviceUtils.dip2px(context,30));
         progress = 50;
         maxProgress = 100;
 
+    }
+    public Bitmap zoomImg(Bitmap bm, int newWidth, int newHeight) {
+        // 获得图片的宽高
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        // 计算缩放比例
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        // 取得想要缩放的matrix参数
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleWidth, scaleHeight);
+        // 得到新的图片
+        Bitmap newbm = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, true);
+        return newbm;
     }
 
     @Override
@@ -78,6 +97,14 @@ public class WithDrawProgress extends View {
         drawPassLine(canvas, v, currentY);
         drawUnPass(canvas, v, currentY);
         drawPass(canvas, v, currentY);
+        canvas.drawBitmap(mBitmap,0,currentY-mBitmap.getHeight()/2,mPaint);
+
+    }
+
+
+    public void setCurrentProgress(int currentProgress){
+        progress=currentProgress<0?0:(currentProgress>maxProgress?maxProgress:currentProgress);
+        postInvalidate();
     }
 
 
@@ -92,9 +119,9 @@ public class WithDrawProgress extends View {
      */
     private void drawPass(Canvas canvas, float v, float currentY) {
         mPaint.setColor(passColor);
-        if (v == 0) {
+        if (v < 0.5) {
             canvas.drawCircle(startCenterX, startCenterY, radio, mPaint);
-        } else if (v == 0.5) {
+        } else if (v < 1) {
             canvas.drawCircle(startCenterX, startCenterY, radio, mPaint);
             canvas.drawCircle(centerX, centerY, radio, mPaint);
         } else if (v == 1) {
@@ -118,13 +145,11 @@ public class WithDrawProgress extends View {
      */
     private void drawUnPass(Canvas canvas, float v, float currentY) {
         mPaint.setColor(unPassColor);
-        if (v == 0) {
-            canvas.drawCircle(startCenterX, startCenterY, radio, mPaint);
-            canvas.drawCircle(centerX, centerY, radio, mPaint);
-        } else if (v == 0.5) {
+        if (v < 0.5) {
             canvas.drawCircle(endCenterX, endCenterY, radio, mPaint);
-        } else if (v == 1) {
-
+            canvas.drawCircle(centerX, centerY, radio, mPaint);
+        } else if (v <1) {
+            canvas.drawCircle(endCenterX, endCenterY, radio, mPaint);
         }
     }
 }
