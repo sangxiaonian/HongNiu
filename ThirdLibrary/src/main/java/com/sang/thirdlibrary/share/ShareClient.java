@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 
 import com.sang.thirdlibrary.share.wechat.WeChartShareSession;
+import com.sang.thirdlibrary.share.wechat.WeChartShareTimeLine;
 
 /**
  * 作者： ${PING} on 2018/10/18.
@@ -24,7 +25,7 @@ public class ShareClient {
         if (type == 1) {
             new WeChartShareSession().shareUrl(activity, url, title, des, bmp);
         } else {
-            new WeChartShareSession().shareUrl(activity, url, title, des, bmp);
+            new WeChartShareTimeLine().shareUrl(activity, url, title, des, bmp);
         }
     }
 

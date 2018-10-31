@@ -18,9 +18,11 @@ import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.H5Config;
 import com.hongniu.baselibrary.utils.Utils;
+import com.hongniu.baselibrary.widget.dialog.ShareDialog;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
+import com.sang.common.widget.dialog.inter.DialogControl;
 import com.sang.thirdlibrary.share.ShareClient;
 
 import xiaonian.sang.com.festivitymodule.R;
@@ -34,7 +36,7 @@ import xiaonian.sang.com.festivitymodule.widget.ScanDialog;
  * @Description 邀请有礼活动
  */
 @Route(path = ArouterParamFestivity.activity_festivity_home)
-public class FestivityInviteActivity extends BaseActivity implements View.OnClickListener {
+public class FestivityInviteActivity extends BaseActivity implements View.OnClickListener, ShareDialog.OnShareListener {
 
     private TextView tv_invite_count;//邀请总人数
     private TextView tv_money;//赚取的佣金
@@ -42,6 +44,7 @@ public class FestivityInviteActivity extends BaseActivity implements View.OnClic
     private TextView tv_invite_scan;//二维码邀请
     private TextView tv_invite_rule;//邀请规则
     private QueryInvitedInfo invitedInfor;//个人邀请信息
+    ShareDialog shareDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +64,7 @@ public class FestivityInviteActivity extends BaseActivity implements View.OnClic
         bt_share = findViewById(R.id.bt_share);
         tv_invite_scan = findViewById(R.id.tv_invite_scan);
         tv_invite_rule = findViewById(R.id.tv_invite_rule);
-
+        shareDialog = new ShareDialog(this);
     }
 
     @Override
@@ -72,22 +75,21 @@ public class FestivityInviteActivity extends BaseActivity implements View.OnClic
         tv_money.setText("0");
 
 
-       getData();
+        getData();
     }
 
 
-    private void getData(){
+    private void getData() {
         HttpFestivityFactory.queryInvitedInfor()
                 .subscribe(new NetObserver<QueryInvitedInfo>(this) {
                     @Override
                     public void doOnSuccess(QueryInvitedInfo data) {
-                        invitedInfor=data;
-                        tv_money.setText(ConvertUtils.changeFloat(data.getRebateTotalAmount(),2));
+                        invitedInfor = data;
+                        tv_money.setText(ConvertUtils.changeFloat(data.getRebateTotalAmount(), 2));
                         tv_invite_count.setText(getSpanner(data.getInvitedCount()));
                     }
                 });
     }
-
 
 
     @Override
@@ -98,6 +100,7 @@ public class FestivityInviteActivity extends BaseActivity implements View.OnClic
         bt_share.setOnClickListener(this);
         tv_invite_scan.setOnClickListener(this);
         tv_invite_rule.setOnClickListener(this);
+        shareDialog.setShareListener(this);
     }
 
     /**
@@ -116,33 +119,33 @@ public class FestivityInviteActivity extends BaseActivity implements View.OnClic
 
         } else if (v.getId() == R.id.bt_share) {
 //            ToastUtils.getInstance().show("微信分享");
-            if (invitedInfor!=null){
-                new ShareClient(1).shareUrl(mContext,invitedInfor.getInvitedUrl(),invitedInfor.getTitle(),invitedInfor.getSubtitle(), BitmapFactory.decodeResource(getResources(),R.mipmap.app_logo));
-            }else {
+            if (invitedInfor != null) {
+                shareDialog.show();
+            } else {
                 getData();
             }
 
         } else if (v.getId() == R.id.tv_invite_scan) {
 //            ToastUtils.getInstance().show("当面邀请");
-            if (invitedInfor!=null){
+            if (invitedInfor != null) {
                 showScanDialog(invitedInfor.getInviterName()
-                        ,invitedInfor.getInvitedQrCodeUrl());
-            }else {
+                        , invitedInfor.getInvitedQrCodeUrl());
+            } else {
                 getData();
             }
-        }else   if (v.getId() == R.id.tv_invite_rule) {
+        } else if (v.getId() == R.id.tv_invite_rule) {
             H5Config h5Config = new H5Config("邀请规则", Param.festivity_invity_notify, true);
-            ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5).withSerializable(Param.TRAN,h5Config).navigation(this);
+            ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5).withSerializable(Param.TRAN, h5Config).navigation(this);
 
         }
     }
 
 
-    private SpannableStringBuilder getSpanner(int count){
+    private SpannableStringBuilder getSpanner(int count) {
         SpannableStringBuilder builder = new SpannableStringBuilder();
         builder.append("您已成功邀请 ");
         int start = builder.length();
-        builder.append(count+"");
+        builder.append(count + "");
         int end = builder.length();
         builder.append(" 人");
         ForegroundColorSpan span = new ForegroundColorSpan(getResources().getColor(R.color.color_light));
@@ -152,13 +155,36 @@ public class FestivityInviteActivity extends BaseActivity implements View.OnClic
     }
 
 
-    private void showScanDialog(String title,String img){
-          new CenterAlertBuilder()
-                .setDialogTitle("邀请人："+title)
+    private void showScanDialog(String title, String img) {
+        new CenterAlertBuilder()
+                .setDialogTitle("邀请人：" + title)
                 .setDialogContent(img)
                 .creatDialog(new ScanDialog(mContext)).show();
 
     }
 
 
+    /**
+     * 分享到微信好友
+     *
+     * @param dialog
+     */
+    @Override
+    public void shareSession(DialogControl.IDialog dialog) {
+        dialog.dismiss();
+        new ShareClient(1).shareUrl(mContext, invitedInfor.getInvitedUrl(), invitedInfor.getTitle(), invitedInfor.getSubtitle(), BitmapFactory.decodeResource(getResources(), R.mipmap.app_logo));
+
+    }
+
+    /**
+     * 分享到微信朋友圈
+     *
+     * @param dialog
+     */
+    @Override
+    public void shareTimeLine(DialogControl.IDialog dialog) {
+        dialog.dismiss();
+        new ShareClient(0).shareUrl(mContext, invitedInfor.getInvitedUrl(), invitedInfor.getTitle(), invitedInfor.getSubtitle(), BitmapFactory.decodeResource(getResources(), R.mipmap.app_logo));
+
+    }
 }
