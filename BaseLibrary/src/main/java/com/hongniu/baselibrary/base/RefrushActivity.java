@@ -79,6 +79,16 @@ public abstract class RefrushActivity<T> extends BaseActivity implements OnRefre
         getListDatas()
                 .subscribe(new NetObserver<PageBean<T>>(this) {
                     @Override
+                    public void onSubscribe(Disposable d) {
+                        if (isFirst) {
+                            isFirst = false;
+                            super.onSubscribe(d);
+                        }else {
+                            disposable=d;
+                        }
+                    }
+
+                    @Override
                     public void doOnSuccess(PageBean<T> data) {
                         if (isClear) {
                             datas.clear();
@@ -106,10 +116,8 @@ public abstract class RefrushActivity<T> extends BaseActivity implements OnRefre
     @Override
     public void onTaskStart(Disposable d) {
         disposable = d;
-        if (isFirst) {
-            isFirst = false;
-            super.onTaskStart(d);
-        }
+        super.onTaskStart(d);
+
     }
 
     @Override

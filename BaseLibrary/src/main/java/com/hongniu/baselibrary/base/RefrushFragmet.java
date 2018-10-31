@@ -84,6 +84,18 @@ public abstract class RefrushFragmet<T> extends BaseFragment implements OnRefres
         }
         getListDatas()
                 .subscribe(new NetObserver<PageBean<T>>(this) {
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        if (isFirst) {
+                            isFirst = false;
+                            if (listener != null) {
+                                listener.onTaskStart(d);
+                            }
+                        }
+
+                    }
+
                     @Override
                     public void doOnSuccess(PageBean<T> data) {
                         if (isClear) {
@@ -110,11 +122,8 @@ public abstract class RefrushFragmet<T> extends BaseFragment implements OnRefres
 
     @Override
     public void onTaskStart(Disposable d) {
-        this.d = d;
-        if (isFirst) {
-            isFirst = false;
-            super.onTaskStart(d);
-        }
+        super.onTaskStart(d);
+
     }
 
     @Override
