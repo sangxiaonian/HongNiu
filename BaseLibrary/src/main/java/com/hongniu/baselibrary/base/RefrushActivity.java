@@ -37,6 +37,9 @@ public abstract class RefrushActivity<T> extends BaseActivity implements OnRefre
         super.setContentView(layoutResID);
         refresh = findViewById(R.id.refresh);
         rv = findViewById(R.id.rv);
+        LinearLayoutManager manager = new LinearLayoutManager(mContext);
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        rv.setLayoutManager(manager);
         if (refresh != null) {
             refresh.setOnRefreshListener(this);
             refresh.setOnLoadMoreListener(this);
@@ -47,9 +50,7 @@ public abstract class RefrushActivity<T> extends BaseActivity implements OnRefre
     @Override
     protected void initData() {
         super.initData();
-        LinearLayoutManager manager = new LinearLayoutManager(mContext);
-        manager.setOrientation(LinearLayoutManager.VERTICAL);
-        rv.setLayoutManager(manager);
+
         rv.setAdapter(adapter = getAdapter(datas));
 
     }

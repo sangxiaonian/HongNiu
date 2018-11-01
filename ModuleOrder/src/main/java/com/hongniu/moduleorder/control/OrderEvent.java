@@ -30,6 +30,7 @@ public class OrderEvent {
 
     public static class SearchPioItem implements IBus.IEvent {
         public PoiItem t;
+        public String key;
 
         public SearchPioItem(PoiItem t) {
             this.t = t;

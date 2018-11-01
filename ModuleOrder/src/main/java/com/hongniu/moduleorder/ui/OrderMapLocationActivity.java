@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -30,6 +31,7 @@ import com.sang.common.event.BusFactory;
 import com.sang.common.event.IBus;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
+import com.sang.common.recycleview.holder.PeakHolder;
 import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 import com.sang.thirdlibrary.map.MapUtils;
@@ -58,6 +60,7 @@ public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implement
     private Marker marker;
     MapUtils mapUtils;
     private PoiItem searchKey;
+    private PeakHolder header;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +105,14 @@ public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implement
             marker = aMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.end))));
             etSearch.setText("在哪里收货");
         }
-
+        header = new PeakHolder(mContext, rv, R.layout.order_item_loaction_head) {
+            @Override
+            public void initView(int position) {
+                super.initView(position);
+                TextView tvTitle = itemView.findViewById(R.id.tv_title);
+                tvTitle.setText(String.format(getString(R.string.map_search_aleart), key));
+            }
+        };
     }
 
     @Override
@@ -142,8 +152,7 @@ public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implement
                         } else {
                             img.setVisibility(View.GONE);
                         }
-
-                        tvDes.setText(data.getSnippet());
+                        tvDes.setText(data.getProvinceName() + data.getCityName() + data.getAdName() + data.getSnippet());
                         tvTitle.setText(data.getTitle());
                         itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -259,15 +268,21 @@ public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implement
     protected boolean getUseEventBus() {
         return true;
     }
-
+    String key;
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(final OrderEvent.SearchPioItem event) {
+    public void onMessageEvent(  OrderEvent.SearchPioItem event) {
         if (event != null) {
             this.searchKey = event.t;
             upData=false;
             searchBound=null;
             selectPositio = 0;
             mapUtils.moveTo(searchKey.getLatLonPoint().getLatitude(),searchKey.getLatLonPoint().getLongitude());
+            key =event.key;
+            if (TextUtils.isEmpty(key)){
+                adapter.removeHeard(header);
+            }else  {
+                adapter.addHeard(header);
+            }
             queryData(true, true);
         }
     }
