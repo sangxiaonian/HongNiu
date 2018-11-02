@@ -28,6 +28,7 @@ public class Param {
 
     static {
         if (isDebug) {
+            //test
 //            url = "http://47.104.130.110:8080/";
             url = "http://test.wxshare.hongniudai.cn/";
 //            url = "http://b09daa47.ngrok.io/";
