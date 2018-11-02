@@ -58,8 +58,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
     private TextView tv_start_loaction;
     private TextView tv_end_loaction;
     private TextView tv_price;
-    private TextView bt_left;
-    private TextView bt_right;
+    private TextView tv_instances;
     private TextView tv_order_detail;
     private ViewGroup llBottom;
     private View lineBottom;
@@ -99,8 +98,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
         tv_start_loaction = itemView.findViewById(R.id.tv_start_loaction);//发车地点
         tv_end_loaction = itemView.findViewById(R.id.tv_end_loaction);//到达地点
         tv_price = itemView.findViewById(R.id.tv_price);//运费
-        bt_left = itemView.findViewById(R.id.bt_left);//左侧按钮
-        bt_right = itemView.findViewById(R.id.bt_right);//右侧按钮
+        tv_instances = itemView.findViewById(R.id.tv_instances);//保费
         tv_order_detail = itemView.findViewById(R.id.tv_order_detail);//右侧按钮
         llBottom = itemView.findViewById(R.id.ll_bottom);//右侧按钮
         lineBottom = itemView.findViewById(R.id.line_bottom);//右侧按钮
@@ -131,11 +129,15 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
         if (!TextUtils.isEmpty(money)) {
             String s = TextUtils.isEmpty(data.getPayWayDes()) ? "" : ("(" + data.getPayWayDes() + ")");
             setPrice("运费：￥" + money + s);
-
         } else {
             setPrice("");
         }
 
+        if (hideInsurance||TextUtils.isEmpty(data.getPolicyNum())){
+            tv_instances.setVisibility(GONE);
+        }else {
+            setInsruancePrice((data.isInsurance() && data.getPolicyMoney() != null) ? data.getPolicyMoney() : "");
+        }
         setOrderState(data.getOrderState());
 
         if (data.getOrderState() == OrderDetailItemControl.OrderState.IN_TRANSIT) {//正在运输中
@@ -169,42 +171,47 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
 
                     setContent(data.getDepartNum(), data.getCarNum(), "货主：", data.getUserName(), data.getUserMobile()
                             , data.getGoodName(), "车主：", data.getOwnerName(), data.getOwnerMobile()
-                            , data.isInsurance(), data.getPolicyMoney()
+
                     );
                     break;
                 case CAR_OWNER:
                     setContent(data.getDepartNum(), data.getCarNum(), "货主：", data.getUserName(), data.getUserMobile()
                             , data.getGoodName(), "司机：", data.getDriverName(), data.getDriverMobile()
-                            , data.isInsurance(), data.getPolicyMoney()
                     );
                     break;
                 case CARGO_OWNER:
                     setContent(data.getDepartNum(), data.getCarNum(), "车主：", data.getOwnerName(), data.getOwnerMobile()
                             , data.getGoodName(), "司机：", data.getDriverName(), data.getDriverMobile()
-                            , data.isInsurance(), data.getPolicyMoney()
                     );
                     break;
                 default:
                     setContent(data.getDepartNum(), data.getCarNum(), "车主：", data.getOwnerName(), data.getOwnerMobile()
                             , data.getGoodName(), "司机：", data.getDriverName(), data.getDriverMobile()
-                            , data.isInsurance(), data.getPolicyMoney()
                     );
                     break;
             }
         } else {
             setContent(data.getDepartNum(), data.getCarNum(), "车主：", data.getOwnerName(), data.getOwnerMobile()
                     , data.getGoodName(), "司机：", data.getDriverName(), data.getDriverMobile()
-                    , data.isInsurance(), data.getPolicyMoney()
             );
         }
 
         buildButton(data.isInsurance(), data.isHasGoodsImage(), data.isHasReceiptImage());
 
-        //司机隐藏价格控件
-        if (tv_price.getVisibility()!=GONE) {
+        //司机隐藏价格,保险控件
+        if (tv_price.getVisibility() != GONE) {
             tv_price.setVisibility(roleState == OrderDetailItemControl.RoleState.DRIVER ? GONE : VISIBLE);
+            tv_instances.setVisibility(roleState == OrderDetailItemControl.RoleState.DRIVER ? GONE : VISIBLE);
         }
 
+
+    }
+
+    /**
+     * 设置保费
+     */
+    private void setInsruancePrice(String insruancePrice) {
+        tv_instances.setText(insruancePrice == null ? "" : ("保费：" + insruancePrice + "元"));
 
     }
 
@@ -302,31 +309,29 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
      */
     public void setContent(String startNum, String carNum, String roleTop, String carOwnerName,
                            final String carOwnerPhone, String cargo, String roleBottom,
-                           String driverName, final String driverPhone, boolean hasInsurance, String insuranceMoney) {
+                           String driverName, final String driverPhone) {
         tv_order_detail.setMovementMethod(LinkMovementMethod.getInstance());
         tv_order_detail.setText(getContent(startNum, carNum, roleTop, carOwnerName, carOwnerPhone, cargo
-                , roleBottom, driverName, driverPhone, hasInsurance, insuranceMoney
+                , roleBottom, driverName, driverPhone
         ));
     }
 
     /**
      * 获取中间内容
      *
-     * @param startNum       发车编号
-     * @param carNum         车牌号
-     * @param roleTop        第一个角色名字
-     * @param carOwnerName   车主姓名
-     * @param carOwnerPhone  车主电话
-     * @param cargo          货物
-     * @param roleBottom     下边角色
-     * @param driverName     司机姓名
-     * @param driverPhone    司机电话
-     * @param hasInsurance   是否支付保费
-     * @param insuranceMoney 保费金额
+     * @param startNum      发车编号
+     * @param carNum        车牌号
+     * @param roleTop       第一个角色名字
+     * @param carOwnerName  车主姓名
+     * @param carOwnerPhone 车主电话
+     * @param cargo         货物
+     * @param roleBottom    下边角色
+     * @param driverName    司机姓名
+     * @param driverPhone   司机电话
      */
     private SpannableStringBuilder getContent(String startNum, String carNum, String roleTop, String carOwnerName,
                                               final String carOwnerPhone, String cargo, String roleBottom,
-                                              String driverName, final String driverPhone, boolean hasInsurance, String insuranceMoney) {
+                                              String driverName, final String driverPhone) {
 
 
         int firstPoint = -1;
@@ -350,15 +355,10 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
             firstPoint = builder.toString().length();
         }
 
-        //如果设置隐藏保费，直接隐藏
-        if (hideInsurance) {
-            hasInsurance = false;
-        }
-
         builder.append("\n")
                 .append("货物：")
                 .append(cargo == null ? "" : cargo)
-                .append(hasInsurance ? ("（已支付" + insuranceMoney + "元保险费）") : "")
+//                .append(hasInsurance ? ("（已支付" + insuranceMoney + "元保险费）") : "")
                 .append("\n")
                 .append(roleBottom)
                 .append(driverName == null ? "" : driverName).append(" ")
@@ -428,8 +428,8 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
             llBottom.addView(button);
             button.setOnClickListener(this);
         }
-        llBottom.setVisibility(llBottom.getChildCount() == 0?GONE:VISIBLE);
-        lineBottom.setVisibility(llBottom.getChildCount() == 0?GONE:VISIBLE);
+        llBottom.setVisibility(llBottom.getChildCount() == 0 ? GONE : VISIBLE);
+        lineBottom.setVisibility(llBottom.getChildCount() == 0 ? GONE : VISIBLE);
     }
 
     public void setOnButtonClickListener(OrderDetailItemControl.OnOrderDetailBtClickListener listener) {
@@ -548,6 +548,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
     public void hideBottom(boolean b) {
 
         tv_price.setVisibility(b ? GONE : VISIBLE);
+        tv_instances.setVisibility(b ? GONE : VISIBLE);
         hideButton(b);
 
     }

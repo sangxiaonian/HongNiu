@@ -52,7 +52,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="825456185asdfasasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfdfasdfasdfasdfasdfasdfasdfasdf61"
         android:textColor="@color/color_title_dark"
         android:textSize="@dimen/text_small_14"
         app:layout_constraintEnd_toStartOf="@+id/tv_state"
@@ -150,16 +149,27 @@
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="@+id/tv_start_loaction" />
 
+
     <TextView
         android:id="@+id/tv_price"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/app_gap"
+        android:layout_marginTop="14dp"
         android:textColor="@color/color_title_dark"
         android:textSize="13sp"
-        android:layout_marginTop="14dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginLeft="@dimen/app_gap"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_end_loaction" />
+
+    <TextView
+        android:id="@+id/tv_instances"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/app_gap"
+        android:layout_marginTop="14dp"
+        android:textColor="@color/color_title_dark"
+        android:textSize="13sp"
+        app:layout_constraintStart_toEndOf="@id/tv_price"
         app:layout_constraintTop_toBottomOf="@+id/tv_end_loaction" />
 
 
@@ -174,7 +184,6 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_price" />
 
     <LinearLayout
-        android:weightSum="4"
         android:id="@+id/ll_bottom"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -183,30 +192,11 @@
         android:orientation="horizontal"
         android:paddingLeft="@dimen/app_gap"
         android:paddingRight="@dimen/app_gap"
+        android:weightSum="4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/line_bottom">
-        <TextView
-            android:id="@+id/bt_left"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="27dp"
-            android:background="@drawable/shape_2_stoke_dddddd"
-            android:gravity="center"
-            android:text="取消订单"
-            android:textSize="13sp" />
 
-
-        <TextView
-            android:id="@+id/bt_right"
-            android:layout_width="72dp"
-            android:layout_height="27dp"
-            android:layout_marginLeft="@dimen/app_gap"
-            android:background="@drawable/shape_2_f06f28"
-            android:gravity="center"
-            android:text="继续付款"
-            android:textColor="@color/color_white"
-            android:textSize="13sp" />
 
 
     </LinearLayout>

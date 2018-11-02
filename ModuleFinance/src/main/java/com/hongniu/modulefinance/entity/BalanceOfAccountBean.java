@@ -38,6 +38,7 @@ public class BalanceOfAccountBean {
     private String ordernumber;
     private String subtitle;
     private String title;
+    private String subheading;
 
     public String getAmount() {
         return amount;
@@ -68,6 +69,14 @@ public class BalanceOfAccountBean {
      */
     private String  successTime;
 
+
+    public String getSubheading() {
+        return subheading;
+    }
+
+    public void setSubheading(String subheading) {
+        this.subheading = subheading;
+    }
 
     public int getReviewState() {
         return reviewState;

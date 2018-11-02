@@ -36,20 +36,15 @@ public class BalanceOfAccountAdapter extends XAdapter<BalanceOfAccountBean> {
             @Override
             public void initView(View itemView, final int position, final BalanceOfAccountBean data) {
                 super.initView(itemView, position, data);
-                TextView tvOrder = itemView.findViewById(R.id.tv_title);
-                TextView tvCarNum = itemView.findViewById(R.id.tv_car_num);
+                TextView tvTitle = itemView.findViewById(R.id.tv_title);
+                TextView tvSubTitle = itemView.findViewById(R.id.tv_car_num);
                 TextView tvTime = itemView.findViewById(R.id.tv_time);
                 TextView tvPrice = itemView.findViewById(R.id.tv_price);
 
-                if (data.getFlowType() == 1) {//余额流水，
-                    tvCarNum.setText("订单号：" + (data.getSubtitle() == null ? "" : data.getSubtitle()));
-                } else {
-                    tvCarNum.setText("提现账户：" + (data.getSubtitle() == null ? "" : data.getSubtitle()));
-                }
-
-                tvOrder.setText(data.getTitle() == null ? "" : data.getTitle());
+                tvSubTitle.setText((data.getSubtitle() == null ? "" : data.getSubtitle()));
+                tvTitle.setText(data.getTitle() == null ? "" : data.getTitle());
                 tvPrice.setText(data.getAmtStr());
-                tvTime.setText((data.getInorexptype() == 2 ? "提现时间：" : "收款时间：") + data.getCreateTime());
+                tvTime.setText(data.getSubheading() +"："+ data.getCreateTime());
 
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -57,15 +52,8 @@ public class BalanceOfAccountAdapter extends XAdapter<BalanceOfAccountBean> {
                         if (listener!=null){
                             listener.onItemClick(position,data);
                         }
-//                        OrderDetailDialog orderDetailDialog = new OrderDetailDialog(context);
-//                        orderDetailDialog.setOrdetail(data);
-//                        new BottomAlertBuilder()
-//                                .creatDialog(orderDetailDialog)
-//                                .show();
-
                     }
                 });
-//                ;
             }
         };
     }
