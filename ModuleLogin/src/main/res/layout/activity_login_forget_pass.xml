@@ -57,7 +57,7 @@
         app:centerLength="6"
         app:centerType="password"
         android:layout_marginTop="@dimen/app_gap"
-        app:textcenterhide="请输入新支付密码"
+        app:textcenterhide="请输入六位支付密码"
         app:textleft="新密码" />
 
     <com.sang.common.widget.ItemView
@@ -66,7 +66,7 @@
         app:showline="false"
         app:centerLength="6"
         app:centerType="password"
-        app:textcenterhide="请再次输入新支付密码"
+        app:textcenterhide="请再次输入六位支付密码"
         app:textleft="确认新密码" />
 
 

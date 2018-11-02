@@ -484,7 +484,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     @Override
     public void onBackPressed() {
         new BottomAlertBuilder()
-                .setDialogTitle("确认要放弃下单吗？")
+                .setDialogTitle(changeOrder?"确认要放弃修改吗":"确认要放弃下单吗？")
                 .setTopClickListener(new DialogControl.OnButtonTopClickListener() {
                     @Override
                     public void onTopClick(View view, DialogControl.IBottomDialog dialog) {

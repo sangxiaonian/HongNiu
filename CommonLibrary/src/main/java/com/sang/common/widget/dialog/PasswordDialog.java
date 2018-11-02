@@ -30,6 +30,7 @@ public class PasswordDialog implements DialogControl.IDialog, View.OnClickListen
     private OnPasswordDialogListener listener;
     private String count;
     private TextView tvTitle;
+    private String payDes="金额";
 
     public PasswordDialog(@NonNull Context context) {
         this(context, 0);
@@ -148,9 +149,14 @@ public class PasswordDialog implements DialogControl.IDialog, View.OnClickListen
         tvTitle.post(new Runnable() {
             @Override
             public void run() {
-                tvTitle.setText("提现金额 "+(TextUtils.isEmpty(count)?"0":count) +" 元");
+                tvTitle.setText((payDes==null?"金额":payDes)+(TextUtils.isEmpty(count)?"0":count) +" 元");
             }
         });
+
+    }
+
+    public void setPayDes(String payDes) {
+        this.payDes=payDes;
 
     }
 

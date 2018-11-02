@@ -87,7 +87,7 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
         conPay = findViewById(R.id.con_pay_way);
         accountDialog = new AccountDialog(this);
         passwordDialog = new PayPasswordKeyBord(this);
-
+        passwordDialog.setPayDes("提现金额");
 
         creatAccountDialog = new CreatAccountDialog(mContext);
     }

@@ -56,13 +56,13 @@ public class LoginForgetPassActivity extends BaseActivity implements View.OnClic
             }
         }
     };
+    private int type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_forget_pass);
-        int type = getIntent().getIntExtra(Param.TRAN, 0);
-        setToolbarTitle(type==0?"忘记支付密码":"设置支付密码");
+          type = getIntent().getIntExtra(Param.TRAN, 0);
         initView();
         initData();
         initListener();
@@ -84,6 +84,11 @@ public class LoginForgetPassActivity extends BaseActivity implements View.OnClic
         super.initData();
         itemPhone.setTextCenter(Utils.getPersonInfor().getMobile());
         itemPhone.setEnabled(false);
+        setToolbarTitle(type==0?"忘记支付/提现密码":"设置泓牛支付/提现密码");
+        itemPass.setTextCenterHide(type==0?"请输入六位数字新密码":"请输入六位数字新密码");
+        itemNewPass.setTextCenterHide(type==0?"请再次输入六位数字新密码":"请再次输入六位数字密码");
+
+
     }
 
     @Override
@@ -112,17 +117,16 @@ public class LoginForgetPassActivity extends BaseActivity implements View.OnClic
 
 
         } else if (v.getId() == R.id.bt_sum) {
-            if (check()) {
-                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
-                String trim = itemPass.getTextCenter();
 
+            if (check()) {
+                String trim = itemPass.getTextCenter();
                 HttpLoginFactory
                         .upPassword(ConvertUtils.MD5(trim),itemSms.getTextCenter())
                         .subscribe(new NetObserver<String>(this) {
                             @Override
                             public void doOnSuccess(String data) {
                                 Utils.setPassword(true);
-                                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
+                                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show(type==0?"修改密码成功":"设置密码成功");
                                 Intent intent=new Intent();
                                 setResult(RESULT_OK,intent);
                                 finish();

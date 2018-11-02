@@ -43,7 +43,7 @@ public class DriveOwnerOrder extends OwnerOrder implements OrderDetailItemContro
         switch (state) {
             case WAITE_PAY://待支付
                 break;
-            case WAITE_START://待发车(已买保险)
+            case WAITE_START://待发车
                 if (hasGoodsImage) {//如果存在货单
                     buttonInfors.add(  new ButtonInforBean(ORDER_CHECK_GOODS));//查看货单
                 }

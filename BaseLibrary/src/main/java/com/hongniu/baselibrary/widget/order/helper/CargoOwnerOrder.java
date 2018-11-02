@@ -49,12 +49,15 @@ public class CargoOwnerOrder extends OwnerOrder implements OrderDetailItemContro
                 break;
             case WAITE_START://待发车
 
-                buttonInfors.add(new ButtonInforBean(0, ORDER_CHANGE));//修改订单
-                buttonInfors.add(new ButtonInforBean(0, ORDER_START_CAR));//开始face
+
                 if (!insurance) {//未购买保险
+                    buttonInfors.add(new ButtonInforBean(0, ORDER_CHANGE));//修改订单
+                    buttonInfors.add(new ButtonInforBean(0, ORDER_START_CAR));//开始发车
                     buttonInfors.add(new ButtonInforBean(1, ORDER_BUY_INSURANCE));//购买保险
                 } else {//如果已经购买了保险
                     buttonInfors.add(new ButtonInforBean(ORDER_CHECK_INSURANCE));//查看保单
+                    buttonInfors.add(new ButtonInforBean(0, ORDER_CHANGE));//修改订单
+                    buttonInfors.add(new ButtonInforBean(0, ORDER_START_CAR));//开始发车
                 }
                 break;
             case IN_TRANSIT://运输中

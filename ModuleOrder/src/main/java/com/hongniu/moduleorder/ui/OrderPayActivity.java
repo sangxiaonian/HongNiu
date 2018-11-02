@@ -94,7 +94,6 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
 
     private BuyInsuranceDialog buyInsuranceDialog;
 
-    private PayClient payClient;
 
     private OrderPayControl.IOrderPayPresent payPresent;
     private PayAleartPop aleartPop;
@@ -143,7 +142,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
         imgDai = findViewById(R.id.img_dai);
 
         buyInsuranceDialog = new BuyInsuranceDialog(mContext);
-          aleartPop=new PayAleartPop(this);
+        aleartPop = new PayAleartPop(this);
     }
 
     @Override
@@ -236,7 +235,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
             payPresent.clearInsurance();
         } else if (i == R.id.tv_change_cargo_price) {//修改保险金额
             buyInsuranceDialog.show();
-        }else if (i==R.id.img_dai){
+        } else if (i == R.id.img_dai) {
             aleartPop.show(v);
         }
     }
@@ -495,7 +494,8 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
         PayPasswordKeyBord payPasswordKeyBord = new PayPasswordKeyBord(this);
         payPasswordKeyBord.setProgressListener(this);
         payPasswordKeyBord.sePaytListener(this);
-        payPasswordKeyBord.setPayCount(ConvertUtils.changeFloat(money,2));
+        payPasswordKeyBord.setPayDes("付款金额");
+        payPasswordKeyBord.setPayCount(ConvertUtils.changeFloat(money, 2));
         payPasswordKeyBord.show();
 
     }

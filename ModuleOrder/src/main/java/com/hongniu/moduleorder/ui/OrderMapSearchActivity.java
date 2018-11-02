@@ -7,6 +7,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
+import android.view.TextureView;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import com.hongniu.baselibrary.base.RefrushActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
+import com.hongniu.baselibrary.widget.XRefreshLayout;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OnItemClickListener;
 import com.hongniu.moduleorder.control.OrderEvent;
@@ -78,9 +80,9 @@ public class OrderMapSearchActivity extends RefrushActivity<PoiItem> implements 
                         OrderEvent.SearchPioItem searchPioItem = new OrderEvent.SearchPioItem(datas.get(0));
                         searchPioItem.key= trim;
                         BusFactory.getBus().post(searchPioItem);
+                        DeviceUtils.hideSoft(etSearch);
                         onBackPressed();
                     }
-                    DeviceUtils.hideSoft(etSearch);
                 }
                 return true;
             }
@@ -114,10 +116,7 @@ public class OrderMapSearchActivity extends RefrushActivity<PoiItem> implements 
         query.setPageNum(currentPage);//设置查询页码
         query.setCityLimit(true);
         query.requireSubPois(true);
-
-
         PoiSearch poiSearch = new PoiSearch(mContext, query);
-
         return HttpOrderFactory.searchPio(poiSearch);
     }
 
@@ -125,6 +124,10 @@ public class OrderMapSearchActivity extends RefrushActivity<PoiItem> implements 
         if (isClear) {
             refresh.loadmoreFinished(true);
             currentPage = 1;
+        }
+        if (TextUtils.isEmpty(etSearch.getText().toString().trim())) {
+            refresh.finishRefresh(500);
+            return;
         }
         getListDatas()
                 .subscribe(new NetObserver<PageBean<PoiItem>>(this) {

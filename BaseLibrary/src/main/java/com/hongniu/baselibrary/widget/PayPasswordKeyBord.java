@@ -51,6 +51,12 @@ public class PayPasswordKeyBord implements PasswordDialog.OnPasswordDialogListen
         return this;
     }
 
+    //设置金额钱的文字
+    public void setPayDes(String payDes) {
+        passwordDialog.setPayDes(payDes);
+    }
+
+
     public void show() {
         if (Utils.querySetPassword()) {
             passwordDialog.show();
@@ -91,14 +97,15 @@ public class PayPasswordKeyBord implements PasswordDialog.OnPasswordDialogListen
 
     /**
      * 密码输入完成
-     *  @param dialog
+     *
+     * @param dialog
      * @param count
      * @param passWord
      */
     @Override
     public void onInputPassWordSuccess(DialogControl.IDialog dialog, String count, String passWord) {
         if (payListener != null) {
-            payListener.onInputPassWordSuccess(dialog,count, passWord);
+            payListener.onInputPassWordSuccess(dialog, count, passWord);
         }
     }
 
@@ -155,9 +162,10 @@ public class PayPasswordKeyBord implements PasswordDialog.OnPasswordDialogListen
 
         /**
          * 密码输入完成
-         *  @param dialog
-         * @param count      金额
-         * @param passWord   密码
+         *
+         * @param dialog
+         * @param count    金额
+         * @param passWord 密码
          */
         void onInputPassWordSuccess(DialogControl.IDialog dialog, String count, String passWord);
 
