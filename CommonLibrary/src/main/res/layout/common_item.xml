@@ -30,8 +30,6 @@
             android:layout_marginRight="@dimen/app_item_gap"
             android:layout_weight="1"
             android:background="@color/color_tran"
-            android:maxLines="1"
-            android:ellipsize="end"
             android:textColor="@color/color_title_dark"
             android:textColorHint="@color/color_et_hide"
             android:textSize="15sp" />

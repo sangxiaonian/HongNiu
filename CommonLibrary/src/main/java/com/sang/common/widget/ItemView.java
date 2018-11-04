@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.sang.common.R;
 import com.sang.common.utils.DeviceUtils;
+import com.sang.common.utils.JLog;
 import com.sang.common.utils.PointLengthFilter;
 import com.sang.common.utils.SpaceFilter;
 
@@ -116,18 +117,20 @@ public class ItemView extends FrameLayout {
         setColorCenterHide(colorCenterHide);
 
 
-        setIsSingleLine(isSingleLine);
         setCenter(maxLength, centerType);
 
         setEditable(editable);
+        setIsSingleLine(isSingleLine);
+        JLog.i(isSingleLine+">>>"+textLeft);
 
 
     }
 
     public void setIsSingleLine(boolean isSingleLine) {
         this.isSingleLine = isSingleLine;
-        etCenter.setMaxLines(isSingleLine ? 1 : Integer.MAX_VALUE);
         etCenter.setSingleLine(isSingleLine);
+//        etCenter.setMaxLines(isSingleLine ? 1 : Integer.MAX_VALUE);
+//        etCenter.setMaxLines(Integer.MAX_VALUE);
     }
 
     private void setColorRight(int colorRight) {
@@ -179,6 +182,7 @@ public class ItemView extends FrameLayout {
             etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength < 0 ? 11 : maxLength)});
             etCenter.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
         } else if (centerType == 2) {//身份证号
+
             etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength < 0 ? 18 : maxLength)});
             etCenter.setKeyListener(DigitsKeyListener.getInstance("xX0123456789"));
         } else if (centerType == 3) {//数字
@@ -190,9 +194,8 @@ public class ItemView extends FrameLayout {
             etCenter.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
             etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength < 0 ? Integer.MAX_VALUE : maxLength), new SpaceFilter()});
             etCenter.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
-
-
         } else {
+
             etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength < 0 ? Integer.MAX_VALUE : maxLength), new SpaceFilter()});
         }
     }
@@ -214,7 +217,9 @@ public class ItemView extends FrameLayout {
             });
         } else {
             viewFound.setVisibility(VISIBLE);
-            etCenter.setInputType(InputType.TYPE_NULL);
+            etCenter.clearFocus();
+            etCenter.setFocusableInTouchMode(false);
+            etCenter.setFocusable(false);
             viewFound.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -282,9 +287,7 @@ public class ItemView extends FrameLayout {
         return textLeft = tvLeft.getText().toString().trim();
     }
 
-    public void setSingleLine(boolean sing) {
-        etCenter.setSingleLine(showLine);
-    }
+
 
     public String getTextCenter() {
         return textCenter = etCenter.getText().toString().trim();
