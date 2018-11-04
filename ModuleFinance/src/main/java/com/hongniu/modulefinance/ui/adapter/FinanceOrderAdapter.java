@@ -64,6 +64,7 @@ public class FinanceOrderAdapter extends XAdapter<OrderDetailBean> {
                     public void onClick(View v) {
                         OrderDetailDialog orderDetailDialog = new OrderDetailDialog(context);
                         orderDetailDialog.setOrdetail(data);
+                        orderDetailDialog.hideBottom();
                         new BottomAlertBuilder()
                                 .creatDialog(orderDetailDialog)
                                 .show();

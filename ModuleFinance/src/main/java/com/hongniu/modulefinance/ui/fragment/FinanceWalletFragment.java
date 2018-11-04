@@ -83,6 +83,7 @@ public class FinanceWalletFragment extends RefrushFragmet<BalanceOfAccountBean> 
                             public void doOnSuccess(OrderDetailBean data) {
                                 OrderDetailDialog orderDetailDialog = new OrderDetailDialog(getContext());
                                 orderDetailDialog.setOrdetail(data);
+                                orderDetailDialog.hideButton();
                                 new BottomAlertBuilder()
                                         .creatDialog(orderDetailDialog)
                                         .show();

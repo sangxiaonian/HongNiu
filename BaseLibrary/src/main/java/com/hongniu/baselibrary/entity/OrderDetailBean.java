@@ -2,6 +2,7 @@ package com.hongniu.baselibrary.entity;
 
 import android.text.TextUtils;
 
+import com.google.gson.annotations.SerializedName;
 import com.hongniu.baselibrary.widget.order.CommonOrderUtils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 
@@ -208,6 +209,7 @@ public class OrderDetailBean {
     /**
      * 角色类似 1车主 2司机 3 货主
      */
+    @SerializedName(value = "roleType", alternate = {"role"})
     private int roleType;
 
     /**

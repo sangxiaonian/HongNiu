@@ -23,11 +23,10 @@ public class OrderDetailDialog implements DialogControl.IBottomDialog {
     private OrderDetailBean ordetail;
 
     public OrderDetailDialog(Context context) {
-          item = new OrderDetailItem(context);
+        item = new OrderDetailItem(context);
 //        item.setDebug();
 //        item.hideButton(true);
-        item.hideBottom(true);
-        item.hideInsurance(true);
+
         dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(item);
@@ -50,7 +49,7 @@ public class OrderDetailDialog implements DialogControl.IBottomDialog {
     @Override
     public void show() {
 
-        if (ordetail!=null){
+        if (ordetail != null) {
 
             item.setInfor(ordetail);
         }
@@ -138,4 +137,14 @@ public class OrderDetailDialog implements DialogControl.IBottomDialog {
     public void setOrdetail(OrderDetailBean ordetail) {
         this.ordetail = ordetail;
     }
+
+    public void hideButton( ) {
+        item.hideButton(true);
+    }
+    public void hideBottom( ) {
+        item.hideBottom(true);
+
+    }
+
+
 }
