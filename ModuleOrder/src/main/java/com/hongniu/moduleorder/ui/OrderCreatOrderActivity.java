@@ -50,6 +50,7 @@ import com.sang.common.event.BusFactory;
 import com.sang.common.recycleview.holder.PeakHolder;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.ConvertUtils;
+import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.ItemView;
 import com.sang.common.widget.dialog.BottomAlertDialog;
@@ -316,6 +317,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         int id = v.getId();
+        DeviceUtils.closeSoft(this);
         if (id == R.id.item_start_time) {
             timePickerView.show();
         } else if (id == R.id.item_start_loaction) {

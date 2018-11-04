@@ -76,12 +76,16 @@ public class FinanceWalletFragment extends RefrushFragmet<BalanceOfAccountBean> 
     public void onItemClick(int position, BalanceOfAccountBean balanceOfAccountBean) {
         if (balanceOfAccountBean.getFlowType()==1) {//订单
             if (balanceOfAccountBean.getIsMe()==1){
-//                ToastUtils.getInstance().show("展示订单详情");
+//
+
                 HttpAppFactory.queryOrderDetail( null,balanceOfAccountBean.getOrdernumber(),balanceOfAccountBean.getId())
                         .subscribe(new NetObserver<OrderDetailBean>(this) {
                             @Override
                             public void doOnSuccess(OrderDetailBean data) {
                                 OrderDetailDialog orderDetailDialog = new OrderDetailDialog(getContext());
+                                if (type==2){
+                                    data.setRoleType(1);
+                                }
                                 orderDetailDialog.setOrdetail(data);
                                 orderDetailDialog.hideButton();
                                 new BottomAlertBuilder()
