@@ -68,6 +68,7 @@ public class HttpOrderFactory {
      * @param bean
      */
     public static Observable<CommonBean<OrderDetailBean>> creatOrder(List<String> list, final OrderCreatParamBean bean) {
+        bean.setGoodsImages(list);
         return OrderClient.getInstance()
                 .getService()
                 .creatOrder(bean)

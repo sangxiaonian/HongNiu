@@ -41,8 +41,15 @@ public class MapSearchAdapter extends XAdapter<PoiItem> {
                 TextView tvDes = (TextView) itemView.findViewById(R.id.tv_des);
                 final ImageView img = itemView.findViewById(R.id.img);
                 img.setVisibility(View.GONE);
-                tvDes.setText(data.getProvinceName() + data.getCityName() + data.getAdName()
-                        + data.getSnippet());
+                String placeInfor;
+                if (data.getProvinceName()!=null&&data.getProvinceName().equals( data.getCityName())){
+                      placeInfor = data.getProvinceName()   + data.getAdName()
+                            + data.getSnippet();
+                }else {
+                      placeInfor = data.getProvinceName() + data.getCityName() + data.getAdName()
+                            + data.getSnippet();
+                }
+                tvDes.setText(placeInfor);
                 tvTitle.setText(data.getTitle());
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override

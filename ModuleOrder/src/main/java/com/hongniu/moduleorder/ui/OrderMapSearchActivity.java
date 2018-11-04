@@ -176,7 +176,11 @@ public class OrderMapSearchActivity extends RefrushActivity<PoiItem> implements 
      */
     @Override
     public void onItemClick(int position, PoiItem poiItem) {
-        BusFactory.getBus().post(new OrderEvent.SearchPioItem(poiItem));
+        OrderEvent.SearchPioItem searchPioItem = new OrderEvent.SearchPioItem(datas.get(0));
+        searchPioItem.key= poiItem.getTitle();
+        BusFactory.getBus().post(searchPioItem);
+        DeviceUtils.hideSoft(etSearch);
         onBackPressed();
+
     }
 }

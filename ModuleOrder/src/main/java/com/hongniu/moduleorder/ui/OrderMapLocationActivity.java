@@ -147,12 +147,29 @@ public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implement
                         TextView tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
                         TextView tvDes = (TextView) itemView.findViewById(R.id.tv_des);
                         ImageView img = itemView.findViewById(R.id.img);
+
+
+                        String placeInfor;
+                        if (data.getProvinceName()!=null&&data.getProvinceName().equals( data.getCityName())){
+                            placeInfor = data.getProvinceName()   + data.getAdName()
+                                    + data.getSnippet();
+                        }else {
+                            placeInfor = data.getProvinceName() + data.getCityName() + data.getAdName()
+                                    + data.getSnippet();
+                        }
+
                         if (selectPositio == position) {
                             img.setVisibility(View.VISIBLE);
+                            if (etSearch!=null&&!TextUtils.isEmpty(placeInfor)){
+//                                etSearch.setText(placeInfor);
+                            }
+
                         } else {
                             img.setVisibility(View.GONE);
                         }
-                        tvDes.setText(data.getProvinceName() + data.getCityName() + data.getAdName() + data.getSnippet());
+
+
+                        tvDes.setText(placeInfor);
                         tvTitle.setText(data.getTitle());
                         itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
