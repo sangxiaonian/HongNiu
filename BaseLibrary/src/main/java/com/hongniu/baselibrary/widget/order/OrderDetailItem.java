@@ -127,16 +127,18 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
 
         String money = data.getMoney();
         if (!TextUtils.isEmpty(money)) {
-            String s = TextUtils.isEmpty(data.getPayWayDes()) ? "" : ("(" + data.getPayWayDes() + ")");
+            String s = TextUtils.isEmpty(CommonOrderUtils.getPayWay(data.getPayWay())) ? "" : ("(" + CommonOrderUtils.getPayWay(data.getPayWay()) + ")");
             setPrice("运费：￥" + money + s);
         } else {
             setPrice("");
         }
 
-        if (hideInsurance||TextUtils.isEmpty(data.getPolicyNum())){
+        if (hideInsurance||!data.isInsurance()){
             tv_instances.setVisibility(GONE);
         }else {
-            setInsruancePrice((data.isInsurance() && data.getPolicyMoney() != null) ? data.getPolicyMoney() : "");
+            String s = TextUtils.isEmpty(CommonOrderUtils.getPayWay(data.getPolicyPayWay())) ? "" : ("(" + CommonOrderUtils.getPayWay(data.getPolicyPayWay()) + ")");
+            String plicy = "保费：" + data.getPolicyMoney() + "元" + s;
+            setInsruancePrice((data.isInsurance() && data.getPolicyMoney() != null) ? plicy : "");
         }
         setOrderState(data.getOrderState());
 
@@ -211,7 +213,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
      * 设置保费
      */
     private void setInsruancePrice(String insruancePrice) {
-        tv_instances.setText(insruancePrice == null ? "" : ("保费：" + insruancePrice + "元"));
+        tv_instances.setText(insruancePrice == null ? "" :  insruancePrice );
 
     }
 

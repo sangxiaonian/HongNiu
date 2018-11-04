@@ -3,8 +3,6 @@ package com.hongniu.baselibrary.widget.order;
 
 import android.text.TextUtils;
 
-import com.hongniu.baselibrary.entity.OrderDetailBean;
-
 /**
  * 作者： ${PING} on 2018/8/2.
  */
@@ -194,8 +192,27 @@ public class CommonOrderUtils {
         return !TextUtils.isEmpty(payType)&&!TextUtils.equals("2",payType);
     }
 
-    public static void getPayWay(int payType){
-
+    /**
+     * 根据支付方式获取对应的转换
+     * @param payWay
+     * @return
+     */
+    public static String getPayWay(String payWay){
+        if (TextUtils.isEmpty(payWay)) {
+            return "";
+        } else if (payWay.equals("0")) {
+            return "微信";
+        } else if (payWay.equals("1")) {
+            return "银联";
+        } else if (payWay.equals("2")) {
+            return "线下支付";
+        } else if (payWay.equals("3")) {
+            return "支付宝";
+        } else if (payWay.equals("4")) {
+            return "余额";
+        } else {
+            return "";
+        }
     }
 
 

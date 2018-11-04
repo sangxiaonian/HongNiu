@@ -152,6 +152,12 @@ public class OrderDetailBean {
      * true boolean 是否购买保险，true=是
      */
     private boolean insurance;
+
+    /**
+     * 保费的支付方式
+     */
+    private String policyPayWay;
+
     /**
      * 是否有货单
      */
@@ -337,24 +343,20 @@ public class OrderDetailBean {
 
     //获取支付方式的描述
     public String getPayWayDes() {
-        if (TextUtils.isEmpty(payWay)) {
-            return "";
-        } else if (payWay.equals("0")) {
-            return "微信";
-        } else if (payWay.equals("1")) {
-            return "银联";
-        } else if (payWay.equals("2")) {
-            return "线下支付";
-        } else if (payWay.equals("3")) {
-            return "支付宝";
-        } else if (payWay.equals("4")) {
-            return "余额";
-        } else {
-            return "";
-        }
+
+      return   CommonOrderUtils.getPayWay(payWay);
+
+
 
     }
 
+    public String getPolicyPayWay() {
+        return policyPayWay;
+    }
+
+    public void setPolicyPayWay(String policyPayWay) {
+        this.policyPayWay = policyPayWay;
+    }
 
     public void setPayWay(String payWay) {
         this.payWay = payWay;
