@@ -68,7 +68,7 @@ public class ToastCenter implements IToast {
 
     @Override
     public void show() {
-        toast.show();
+        show("");
     }
 
     @Override

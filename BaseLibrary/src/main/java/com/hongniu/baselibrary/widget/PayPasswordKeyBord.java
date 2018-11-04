@@ -62,25 +62,28 @@ public class PayPasswordKeyBord implements PasswordDialog.OnPasswordDialogListen
 
 
     public void show() {
-        if (Utils.querySetPassword()) {
-            passwordDialog.show();
-        } else {
-            HttpAppFactory.queryPayPassword()
-                    .subscribe(new NetObserver<QueryPayPassword>(this) {
-                        @Override
-                        public void doOnSuccess(QueryPayPassword data) {
-                            Utils.setPassword(data.isSetPassWord());
-                            if (data.isSetPassWord()) {
-                                passwordDialog.show();
-                            } else {
-                                if (payListener != null) {
-                                    payListener.hasNoPassword(passwordDialog);
-                                }
-                            }
-                        }
-                    });
 
-        }
+        passwordDialog.show();
+
+//        if (Utils.querySetPassword()) {
+//
+//        } else {
+//            HttpAppFactory.queryPayPassword()
+//                    .subscribe(new NetObserver<QueryPayPassword>(this) {
+//                        @Override
+//                        public void doOnSuccess(QueryPayPassword data) {
+//                            Utils.setPassword(data.isSetPassWord());
+//                            if (data.isSetPassWord()) {
+//                                passwordDialog.show();
+//                            } else {
+//                                if (payListener != null) {
+//                                    payListener.hasNoPassword(passwordDialog);
+//                                }
+//                            }
+//                        }
+//                    });
+//
+//        }
 
     }
 

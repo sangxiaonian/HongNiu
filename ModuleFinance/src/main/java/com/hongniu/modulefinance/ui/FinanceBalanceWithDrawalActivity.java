@@ -25,6 +25,7 @@ import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.PayInforBeans;
 import com.hongniu.baselibrary.net.HttpAppFactory;
+import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.PayPasswordKeyBord;
 import com.hongniu.modulefinance.R;
 import com.hongniu.modulefinance.entity.AppletInforBean;
@@ -35,6 +36,8 @@ import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.PointLengthFilter;
 import com.sang.common.utils.ToastUtils;
+import com.sang.common.widget.dialog.CenterAlertDialog;
+import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
 import com.sang.thirdlibrary.pay.wechat.WeChatAppPay;
 
@@ -101,6 +104,12 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
         withdrawal = getIntent().getStringExtra(Param.TRAN);
         withdrawal = TextUtils.isEmpty(withdrawal) ? "0" : withdrawal;
         tvWithDrawale.setText(String.format(getString(R.string.wallet_balance_account_num), withdrawal));
+
+        querPayWay();
+
+    }
+
+    private void querPayWay() {
         HttpAppFactory.queryMyCards()
                 .subscribe(new NetObserver<List<PayInforBeans>>(this) {
                     @Override
@@ -120,7 +129,6 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
                     }
                 })
         ;
-
 
     }
 
@@ -166,6 +174,11 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
 
     @Override
     protected boolean getUseEventBus() {
@@ -185,11 +198,20 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
         beans.setCode(appletInforBean.getCode());
         HttpAppFactory.addWeiChat(beans)
                 .subscribe(new NetObserver<String>(this) {
-                    @Override
-                    public void doOnSuccess(String data) {
-                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show("微信添加成功");
-                    }
-                });
+                               @Override
+                               public void doOnSuccess(String data) {
+                                   ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show("微信添加成功");
+                               }
+
+                               @Override
+                               public void onComplete() {
+                                   super.onComplete();
+                                   querPayWay();
+
+                               }
+                           }
+
+                );
 
     }
 
@@ -204,9 +226,13 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
         int i = v.getId();
         if (i == R.id.bt_sum) {
             if (payInfo != null) {
-                final String trim = etBalance.getText().toString().trim();
-                passwordDialog.setPayCount(trim);
-                passwordDialog.show();
+                if (Utils.querySetPassword()) {
+                    final String trim = etBalance.getText().toString().trim();
+                    passwordDialog.setPayCount(trim);
+                    passwordDialog.show();
+                } else {
+                    hasNoPassword(null);
+                }
             } else {
                 ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("请选择提现方式");
             }
@@ -317,14 +343,38 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
     @Override
     public void hasNoPassword(DialogControl.IDialog dialog) {
 
-        ArouterUtils.getInstance()
-                .builder(ArouterParamLogin.activity_login_forget_pass)
-                .withInt(Param.TRAN, 1)
-                .navigation(mContext);
+        creatDialog("使用余额支付前，必须设置泓牛支付密码", null, "取消", "去设置")
+                .setLeftClickListener(new DialogControl.OnButtonLeftClickListener() {
+                    @Override
+                    public void onLeftClick(View view, DialogControl.ICenterDialog dialog) {
+                        dialog.dismiss();
+                    }
+                })
+                .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
+                    @Override
+                    public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
+                        dialog.dismiss();
+                        ArouterUtils.getInstance()
+                                .builder(ArouterParamLogin.activity_login_forget_pass)
+                                .withInt(Param.TRAN, 1)
+                                .navigation(mContext);
+                    }
+                })
+                .creatDialog(new CenterAlertDialog(mContext))
+                .show();
 
 
     }
-
+    private CenterAlertBuilder creatDialog(String title, String content, String btleft, String btRight) {
+        return new CenterAlertBuilder()
+                .setDialogTitle(title)
+                .setDialogContent(content)
+                .setBtLeft(btleft)
+                .setBtRight(btRight)
+                .setBtLeftColor(getResources().getColor(R.color.color_title_dark))
+                .setBtRightColor(getResources().getColor(R.color.color_white))
+                .setBtRightBgRes(R.drawable.shape_f06f28);
+    }
     @Override
     public void onAddUnipay(DialogControl.IDialog dialog) {
         dialog.dismiss();

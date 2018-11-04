@@ -69,7 +69,7 @@ public class ToastNormal implements IToast {
 
     @Override
     public void show() {
-        toast.show();
+        show("");
     }
 
     @Override
