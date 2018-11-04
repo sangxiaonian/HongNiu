@@ -105,11 +105,7 @@ public class FinanceWalletActivity extends BaseActivity implements FinanceWallet
                         tvBalanceOfUnentry.setText(String.format(getString(R.string.wallet_balance_wait_enty), data.getTobeCreditedBalance()));
                         tvNiuBalanceOfAccount.setText(getNew(data.getAvailableIntegral()));
                         tvNiuBalanceOfUnentry.setText(String.format(getString(R.string.wallet_balance_niu_unentry_count), data.getTobeCreditedIntegral()));
-                        if (!data.isSetPassWord()){//到设置密码界面
-                            ArouterUtils.getInstance().builder(ArouterParamLogin.activity_login_forget_pass)
-                                    .withInt(Param.TRAN,1)
-                                    .navigation((Activity) mContext,1);
-                        }
+
                     }
                 });
     }
