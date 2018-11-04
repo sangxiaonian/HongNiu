@@ -59,6 +59,9 @@ public class DriveOwnerOrder extends OwnerOrder implements OrderDetailItemContro
                 buttonInfors.add(new ButtonInforBean(1, ORDER_ENTRY_ARRIVE));//确认到达
                 break;
             case HAS_ARRIVED://已到达
+                if (hasGoodsImage) {//如果存在货单
+                    buttonInfors.add(  new ButtonInforBean(ORDER_CHECK_GOODS));//查看货单
+                }
                 if (hasReceiptImage) {//回单存在
                     buttonInfors.add(  new ButtonInforBean(ORDER_CHANGE_RECEIPT));//修改回单
                 } else {
@@ -67,6 +70,9 @@ public class DriveOwnerOrder extends OwnerOrder implements OrderDetailItemContro
                 }
                 break;
             case RECEIPT://已收货
+                if (hasGoodsImage) {//如果存在货单
+                    buttonInfors.add(  new ButtonInforBean(ORDER_CHECK_GOODS));//查看货单
+                }
                 if (hasReceiptImage) {//回单存在
                     buttonInfors.add( new ButtonInforBean(ORDER_CHECK_RECEIPT));//查看回单
                 }

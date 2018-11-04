@@ -62,11 +62,13 @@ public class CarOwnerOrder extends OwnerOrder {
 
                 break;
             case HAS_ARRIVED://已到达
-                if (hasReceiptImage) {//如果存在回单
-                    buttonInfors.add(new ButtonInforBean(ORDER_CHECK_RECEIPT));//查看回单
-                }
+
                 if (hasGoodsImage) {//如果存在货单
                     buttonInfors.add(new ButtonInforBean(ORDER_CHECK_GOODS));//查看货单
+                }
+
+                if (hasReceiptImage) {//如果存在回单
+                    buttonInfors.add(new ButtonInforBean(ORDER_CHECK_RECEIPT));//查看回单
                 }
 
                 if (insurance) {//如果已经购买保险
@@ -74,6 +76,9 @@ public class CarOwnerOrder extends OwnerOrder {
                 }
                 break;
             case RECEIPT://已收货
+                if (hasGoodsImage) {//如果存在货单
+                    buttonInfors.add(new ButtonInforBean(ORDER_CHECK_GOODS));//查看货单
+                }
                 if (hasReceiptImage) {//如果存在回单
                     buttonInfors.add(new ButtonInforBean(ORDER_CHECK_RECEIPT));//查看回单
                 }

@@ -49,7 +49,9 @@ public class CargoOwnerOrder extends OwnerOrder implements OrderDetailItemContro
                 break;
             case WAITE_START://待发车
 
-
+                if (hasGoodsImage) {//如果存在货单
+                    buttonInfors.add(new ButtonInforBean(ORDER_CHECK_GOODS));//查看货单
+                }
                 if (!insurance) {//未购买保险
                     buttonInfors.add(new ButtonInforBean(0, ORDER_CHANGE));//修改订单
                     buttonInfors.add(new ButtonInforBean(0, ORDER_START_CAR));//开始发车
@@ -83,6 +85,9 @@ public class CargoOwnerOrder extends OwnerOrder implements OrderDetailItemContro
                 buttonInfors.add(new ButtonInforBean(1, ORDER_ENTRY_ORDER));//确认收货
                 break;
             case RECEIPT://已收货
+                if (hasGoodsImage) {//如果存在货单
+                    buttonInfors.add(new ButtonInforBean(ORDER_CHECK_GOODS));//查看货单
+                }
                 if (hasReceiptImage) {//如果存在回单
                     buttonInfors.add(new ButtonInforBean(ORDER_CHECK_RECEIPT));//查看回单
                 }
