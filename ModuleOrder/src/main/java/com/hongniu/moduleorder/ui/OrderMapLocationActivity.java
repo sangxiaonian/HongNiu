@@ -24,6 +24,7 @@ import com.hongniu.baselibrary.base.RefrushActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
+import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
@@ -148,15 +149,8 @@ public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implement
                         TextView tvDes = (TextView) itemView.findViewById(R.id.tv_des);
                         ImageView img = itemView.findViewById(R.id.img);
 
+                        String placeInfor=Utils.dealPioPlace(data);
 
-                        String placeInfor;
-                        if (data.getProvinceName()!=null&&data.getProvinceName().equals( data.getCityName())){
-                            placeInfor = data.getProvinceName()   + data.getAdName()
-                                    + data.getSnippet();
-                        }else {
-                            placeInfor = data.getProvinceName() + data.getCityName() + data.getAdName()
-                                    + data.getSnippet();
-                        }
 
                         if (selectPositio == position) {
                             img.setVisibility(View.VISIBLE);
@@ -204,6 +198,7 @@ public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implement
                 if (selectPositio >= 0 && datas.size() > selectPositio) {
                     IBus.IEvent event;
                     PoiItem poiItem = datas.get(selectPositio);
+
                     if (start) {
                         event = new OrderEvent.StartLoactionEvent(poiItem);
                     } else {

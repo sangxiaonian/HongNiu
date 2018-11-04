@@ -1,23 +1,19 @@
 package com.hongniu.baselibrary.utils;
 
 import android.app.Activity;
+import android.content.Context;
 import android.text.TextUtils;
 
+import com.amap.api.services.core.PoiItem;
 import com.google.gson.Gson;
+import com.hongniu.baselibrary.R;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
-import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.LoginBean;
 import com.hongniu.baselibrary.entity.LoginPersonInfor;
-import com.hongniu.baselibrary.entity.QueryPayPassword;
-import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.sang.common.utils.SharedPreferencesUtils;
-
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.functions.Function;
+import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 
 /**
  * 作者： ${PING} on 2018/8/15.
@@ -107,23 +103,40 @@ public class Utils {
 
     public static boolean querySetPassword( ) {
         boolean aBoolean = SharedPreferencesUtils.getInstance().getBoolean(Param.HASPAYPASSWORD);
-
-
         return aBoolean;
     }
 
     public static boolean setPassword(boolean has) {
-
-
-
-
         return SharedPreferencesUtils.getInstance().putBoolean(Param.HASPAYPASSWORD, has);
     }
 
-
-
-    public interface QueryPasswordListener{
-        void onGetPassword(boolean hasSet);
+    public static CenterAlertBuilder creatDialog(Context context,String title, String content, String btleft, String btRight) {
+        return new CenterAlertBuilder()
+                .setDialogTitle(title)
+                .setDialogContent(content)
+                .setBtLeft(btleft)
+                .setBtRight(btRight)
+                .setBtLeftColor(context.getResources().getColor(R.color.color_title_dark))
+                .setBtRightColor(context.getResources().getColor(R.color.color_white))
+                .setBtRightBgRes(R.drawable.shape_f06f28);
     }
 
+
+    /**
+     * 对地址显示进行处理
+     * @param data
+     */
+    public static String dealPioPlace(PoiItem data) {
+        String placeInfor="";
+        if (data!=null&&data.getProvinceName()!=null) {
+            if (data.getProvinceName().equals( data.getCityName())){
+                placeInfor = data.getProvinceName()   + data.getAdName()
+                        + data.getSnippet();
+            }else {
+                placeInfor = data.getProvinceName() + data.getCityName() + data.getAdName()
+                        + data.getSnippet();
+            }
+        }
+        return placeInfor;
+    }
 }

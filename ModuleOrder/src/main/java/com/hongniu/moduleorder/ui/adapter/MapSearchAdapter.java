@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amap.api.services.core.PoiItem;
+import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OnItemClickListener;
 import com.hongniu.moduleorder.control.OrderEvent;
@@ -41,14 +42,7 @@ public class MapSearchAdapter extends XAdapter<PoiItem> {
                 TextView tvDes = (TextView) itemView.findViewById(R.id.tv_des);
                 final ImageView img = itemView.findViewById(R.id.img);
                 img.setVisibility(View.GONE);
-                String placeInfor;
-                if (data.getProvinceName()!=null&&data.getProvinceName().equals( data.getCityName())){
-                      placeInfor = data.getProvinceName()   + data.getAdName()
-                            + data.getSnippet();
-                }else {
-                      placeInfor = data.getProvinceName() + data.getCityName() + data.getAdName()
-                            + data.getSnippet();
-                }
+                String placeInfor= Utils.dealPioPlace(data);
                 tvDes.setText(placeInfor);
                 tvTitle.setText(data.getTitle());
                 itemView.setOnClickListener(new View.OnClickListener() {

@@ -29,6 +29,7 @@ import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.utils.PickerDialogUtils;
 import com.hongniu.baselibrary.utils.PictureSelectorUtils;
 import com.hongniu.baselibrary.utils.UpLoadImageUtils;
+import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.order.CommonOrderUtils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItem;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
@@ -344,45 +345,59 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
                 getValue();
                 if (imageUtils.isFinish()) {
                     // 如果没有更改过图片，则不上传
-                    List<String> result = imageUtils.getResult();
-                    if (result.size() == 0 && !CommonUtils.isEmptyCollection(pics)) {
-                        result = null;
-                    }
-                    if (!changeOrder) {
-                        HttpOrderFactory.creatOrder(result, paramBean)
-                                .subscribe(new NetObserver<OrderDetailBean>(this) {
-                                    @Override
-                                    public void doOnSuccess(OrderDetailBean data) {
-                                        OrderEvent.PayOrder payOrder = new OrderEvent.PayOrder();
-                                        payOrder.insurance = false;
-                                        payOrder.money = Float.parseFloat(paramBean.getMoney());
-                                        payOrder.orderID = data.getId();
-                                        payOrder.orderNum = data.getOrderNum();
-                                        BusFactory.getBus().postSticky(payOrder);
-                                        ArouterUtils.getInstance()
-                                                .builder(ArouterParamOrder.activity_order_pay)
-                                                .navigation(mContext);
-                                        BusFactory.getBus().postSticky(new Event.UpRoale(OrderDetailItemControl.RoleState.CARGO_OWNER));
-                                        finish();
-                                    }
-                                });
-                    } else {
-                        HttpOrderFactory.changeOrder(result, paramBean)
-                                .subscribe(new NetObserver<OrderDetailBean>(this) {
-                                    @Override
-                                    public void doOnSuccess(OrderDetailBean data) {
-                                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
-                                        finish();
-                                    }
-                                });
-                    }
-
-
+                    upDate();
                 } else {
-                    ToastUtils.getInstance().show(imageUtils.unFinishCount() + "张图片上传中，请稍后");
+                    creatDialog(imageUtils.unFinishCount() + "张图片上传中", "是否放弃上传？", "确定放弃", "继续上传")
+                            .setLeftClickListener(new DialogControl.OnButtonLeftClickListener() {
+                                @Override
+                                public void onLeftClick(View view, DialogControl.ICenterDialog dialog) {
+                                    dialog.dismiss();
+                                    upDate();
+                                }
+                            })
+                            .creatDialog(new CenterAlertDialog(mContext))
+                            .show();
                 }
 
             }
+        }
+    }
+
+    /**
+     * 向服务器提交数据
+     */
+    private void upDate() {
+        List<String> result = imageUtils.getResult();
+        if (result.size() == 0 && !CommonUtils.isEmptyCollection(pics)) {
+            result = null;
+        }
+        if (!changeOrder) {
+            HttpOrderFactory.creatOrder(result, paramBean)
+                    .subscribe(new NetObserver<OrderDetailBean>(this) {
+                        @Override
+                        public void doOnSuccess(OrderDetailBean data) {
+                            OrderEvent.PayOrder payOrder = new OrderEvent.PayOrder();
+                            payOrder.insurance = false;
+                            payOrder.money = Float.parseFloat(paramBean.getMoney());
+                            payOrder.orderID = data.getId();
+                            payOrder.orderNum = data.getOrderNum();
+                            BusFactory.getBus().postSticky(payOrder);
+                            ArouterUtils.getInstance()
+                                    .builder(ArouterParamOrder.activity_order_pay)
+                                    .navigation(mContext);
+                            BusFactory.getBus().postSticky(new Event.UpRoale(OrderDetailItemControl.RoleState.CARGO_OWNER));
+                            finish();
+                        }
+                    });
+        } else {
+            HttpOrderFactory.changeOrder(result, paramBean)
+                    .subscribe(new NetObserver<OrderDetailBean>(this) {
+                        @Override
+                        public void doOnSuccess(OrderDetailBean data) {
+                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
+                            finish();
+                        }
+                    });
         }
     }
 
@@ -463,10 +478,11 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onStartEvent(OrderEvent.StartLoactionEvent startLoactionEvent) {
         if (startLoactionEvent != null && startLoactionEvent.t != null) {
-            itemStartLocation.setTextCenter(startLoactionEvent.t.getTitle());
+            String title= Utils.dealPioPlace(startLoactionEvent.t);
+            itemStartLocation.setTextCenter(title);
             paramBean.setStartLatitude(startLoactionEvent.t.getLatLonPoint().getLatitude()+"");
             paramBean.setStartLongitude(startLoactionEvent.t.getLatLonPoint().getLongitude()+"");
-            paramBean.setStartPlaceInfo(startLoactionEvent.t.getTitle());
+            paramBean.setStartPlaceInfo(title);
         }
     }
 
@@ -474,10 +490,11 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEndEvent(OrderEvent.EndLoactionEvent endLoactionEvent) {
         if (endLoactionEvent != null && endLoactionEvent.t != null) {
-            itemEndLocation.setTextCenter(endLoactionEvent.t.getTitle());
+            String title= Utils.dealPioPlace(endLoactionEvent.t);
+            itemEndLocation.setTextCenter(title);
             paramBean.setDestinationLatitude(endLoactionEvent.t.getLatLonPoint().getLatitude()+"");
             paramBean.setDestinationLongitude(endLoactionEvent.t.getLatLonPoint().getLongitude()+"");
-            paramBean.setDestinationInfo(endLoactionEvent.t.getTitle());
+            paramBean.setDestinationInfo(title);
         }
     }
 
