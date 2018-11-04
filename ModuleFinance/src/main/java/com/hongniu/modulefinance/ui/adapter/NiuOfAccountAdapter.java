@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * 作者： ${PING} on 2018/10/8.
- * 牛币已入账、待入账 Adapter
+ * 牛贝已入账、待入账 Adapter
  */
 public class NiuOfAccountAdapter extends XAdapter<NiuOfAccountBean> {
 

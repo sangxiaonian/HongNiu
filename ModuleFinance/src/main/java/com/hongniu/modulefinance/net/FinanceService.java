@@ -75,7 +75,7 @@ public interface FinanceService {
     Observable<CommonBean<PageBean<BalanceOfAccountBean>>> queryAccountFllows(@Body AccountFloowParamBean bean);
 
     /**
-     * 查询牛币账户流水
+     * 查询牛贝账户流水
      *
      * @param bean
      * @return

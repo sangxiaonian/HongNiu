@@ -61,7 +61,7 @@
             android:id="@+id/tv_niu_of_unentry"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="您有 0 个牛币待入账"
+            android:text="您有 0 个牛贝待入账"
             android:textColor="@color/color_content_light"
             android:textSize="13sp"
             app:layout_constraintEnd_toEndOf="parent"

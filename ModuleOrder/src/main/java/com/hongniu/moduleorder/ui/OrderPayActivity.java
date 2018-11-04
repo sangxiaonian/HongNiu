@@ -32,13 +32,12 @@ import com.hongniu.moduleorder.widget.PayAleartPop;
 import com.hongniu.moduleorder.widget.dialog.BuyInsuranceDialog;
 import com.sang.common.event.BusFactory;
 import com.sang.common.utils.ConvertUtils;
+import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
-import com.sang.thirdlibrary.pay.PayClient;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
-import com.sang.thirdlibrary.pay.entiy.PayType;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -97,6 +96,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
 
     private OrderPayControl.IOrderPayPresent payPresent;
     private PayAleartPop aleartPop;
+    private PayPasswordKeyBord payPasswordKeyBord;
 
 
     @Override
@@ -143,6 +143,11 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
 
         buyInsuranceDialog = new BuyInsuranceDialog(mContext);
         aleartPop = new PayAleartPop(this);
+
+        payPasswordKeyBord = new PayPasswordKeyBord(this);
+        payPasswordKeyBord.setProgressListener(this);
+        payPasswordKeyBord.sePaytListener(this);
+        payPasswordKeyBord.setPayDes("付款金额");
     }
 
     @Override
@@ -219,13 +224,13 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
                 });
             }
         } else if (i == R.id.rl_wechact) {//选择微信支付
-            changePayType(PayType.WECHAT);
+            changePayType(0);
             payPresent.setPayType(0);
         } else if (i == R.id.rl_ali) {//选择支付宝
-            changePayType(PayType.ALI);
+            changePayType(3);
             payPresent.setPayType(3);
         } else if (i == R.id.rl_union) {//选择银联
-            changePayType(PayType.UNIONPAY);
+            changePayType(1);
             payPresent.setPayType(1);
         } else if (i == R.id.rl_yue) {//余额支付
             payPresent.onChoiceYuePay();
@@ -241,11 +246,12 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
     }
 
     //更改支付方式
-    private void changePayType(PayType payType) {
-        cbWechat.setImageResource(payType == PayType.WECHAT ? R.mipmap.icon_xz_36 : R.mipmap.icon_wxz_36);
-        cbAli.setImageResource(payType == PayType.ALI ? R.mipmap.icon_xz_36 : R.mipmap.icon_wxz_36);
-        cbUnion.setImageResource(payType == PayType.UNIONPAY ? R.mipmap.icon_xz_36 : R.mipmap.icon_wxz_36);
-        cbYue.setImageResource(payType == PayType.OTHER ? R.mipmap.icon_xz_36 : R.mipmap.icon_wxz_36);
+    private void changePayType(int payType) {
+        JLog.i(payType + ">>>>");
+        cbWechat.setImageResource(payType == 0 ? R.mipmap.icon_xz_36 : R.mipmap.icon_wxz_36);
+        cbAli.setImageResource(payType == 3 ? R.mipmap.icon_xz_36 : R.mipmap.icon_wxz_36);
+        cbUnion.setImageResource(payType == 1 ? R.mipmap.icon_xz_36 : R.mipmap.icon_wxz_36);
+        cbYue.setImageResource(payType == 4 ? R.mipmap.icon_xz_36 : R.mipmap.icon_wxz_36);
     }
 
     @Override
@@ -256,6 +262,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
 
     @Override
     public void noticeClick(BuyInsuranceDialog buyInsuranceDialog, boolean checked, int i) {
+        buyInsuranceDialog.dismiss();
         H5Config h5Config;
         if (i == 0) {
             h5Config = new H5Config(getString(R.string.order_insruance_police), Param.insurance_polic, true);
@@ -463,6 +470,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
         //如果余额不充足，并且当前选中的是余额就选中微信
         if (!isEnough && payType == 4) {
             rlWechact.performClick();
+            JLog.i("-------------------");
         }
 
     }
@@ -480,7 +488,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
      */
     @Override
     public void onSelectYuePay() {
-        changePayType(PayType.OTHER);
+        changePayType(4);
         payPresent.setPayType(4);
     }
 
@@ -491,10 +499,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
      */
     @Override
     public void showPasswordDialog(double money) {
-        PayPasswordKeyBord payPasswordKeyBord = new PayPasswordKeyBord(this);
-        payPasswordKeyBord.setProgressListener(this);
-        payPasswordKeyBord.sePaytListener(this);
-        payPasswordKeyBord.setPayDes("付款金额");
+
         payPasswordKeyBord.setPayCount(ConvertUtils.changeFloat(money, 2));
         payPasswordKeyBord.show();
 
@@ -524,6 +529,11 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
                 })
                 .creatDialog(new CenterAlertDialog(mContext))
                 .show();
+    }
+
+    @Override
+    public void changePayWayToBanlace(boolean hasEnoughBalance, int payType) {
+        onSelectYuePay();
     }
 
 

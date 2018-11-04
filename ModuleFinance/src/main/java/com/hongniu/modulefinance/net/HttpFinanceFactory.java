@@ -135,7 +135,7 @@ public class HttpFinanceFactory {
     }
 
     /**
-     * 牛币待入账，已入账查询
+     * 牛贝待入账，已入账查询
      * @param currentPage
      * @param type
      */
@@ -154,7 +154,7 @@ public class HttpFinanceFactory {
 
     }
  /**
-     * 牛币待入账，已入账查询
+     * 牛贝待入账，已入账查询
   * @param currentPage
   */
     public static Observable<CommonBean<PageBean<FinanceQueryCarDetailBean>>> queryCarOrderDetails(int currentPage, final String carNumber) {

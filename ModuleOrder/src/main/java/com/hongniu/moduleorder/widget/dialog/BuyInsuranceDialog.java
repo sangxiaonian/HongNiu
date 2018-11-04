@@ -1,5 +1,6 @@
 package com.hongniu.moduleorder.widget.dialog;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -30,6 +31,7 @@ import android.widget.TextView;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
+import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.PointLengthFilter;
 import com.sang.common.utils.ToastUtils;
 
@@ -92,7 +94,17 @@ public class BuyInsuranceDialog extends Dialog implements TextWatcher, DialogInt
         initView(context);
     }
 
+    @Override
+    public void show() {
+        super.show();
+        et_price.post(new Runnable() {
+            @Override
+            public void run() {
+                DeviceUtils.openSoft(et_price);
 
+            }
+        });
+    }
 
     private void initView(Context context) {
         View inflate = LayoutInflater.from(context).inflate(R.layout.order_buy_insurance, null);
@@ -165,7 +177,6 @@ public class BuyInsuranceDialog extends Dialog implements TextWatcher, DialogInt
             public void onClick(View widget) {
                 if (listener != null) {
                     listener.noticeClick(BuyInsuranceDialog.this, checkbox.isChecked(),0);
-//                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("保险条款");
                 }
             }
             //去除连接下划线
@@ -266,6 +277,19 @@ public class BuyInsuranceDialog extends Dialog implements TextWatcher, DialogInt
             disposable.dispose();
         }
         handler.removeMessages(0);
+        et_price.post(new Runnable() {
+            @Override
+            public void run() {
+                DeviceUtils.hideSoft(et_price);
+            }
+        });
+    }
+
+    @Override
+    public void dismiss() {
+        super.dismiss();
+
+
     }
 
     @Override

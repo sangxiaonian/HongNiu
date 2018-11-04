@@ -16,7 +16,7 @@ import com.hongniu.modulefinance.R;
 import com.hongniu.baselibrary.entity.WalletDetail;
 
 /**
- * 牛币账户
+ * 牛贝账户
  */
 @Route(path = ArouterParamsFinance.activity_finance_niu)
 public class FinanceNiuActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {

@@ -29,7 +29,7 @@ public class WalletPresenter implements FinanceWalletControl.IWalletPresent {
     }
 
     /**
-     * 获取到牛币数据
+     * 获取到牛贝数据
      *
      * @param listener
      */

@@ -29,11 +29,11 @@ public class ArouterParamsFinance {
      */
     public final static String fragment_finance_wallet = "/finance/fragment_finance_wallet";
     /**
-     * 牛币已入账、待入账
+     * 牛贝已入账、待入账
      */
     public final static String fragment_finance_niu = "/finance/fragment_finance_niu";
     /**
-     * 牛币账户
+     * 牛贝账户
      */
     public final static String activity_finance_niu = "/finance/activity_finance_niu";
 

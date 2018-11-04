@@ -21,7 +21,7 @@ public class FinanceWalletControl {
         void getBalanceData(TaskControl.OnTaskListener listener);
 
         /**
-         * 获取到牛币数据
+         * 获取到牛贝数据
          * @param listener
          */
         void getNiuData(TaskControl.OnTaskListener listener);

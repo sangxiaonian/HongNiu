@@ -51,7 +51,7 @@ public class FinanceIncomeFragment extends BaseFragment implements OnHideChangeL
     @Override
     public void onFragmentShow(boolean hide, int total, float money) {
         if (!hide) {
-            tv_order_count.setText("共支出" + total + "笔，合计");
+            tv_order_count.setText("共收入" + total + "笔，合计");
             tv_order_money.setText("￥" + money);
         }
     }

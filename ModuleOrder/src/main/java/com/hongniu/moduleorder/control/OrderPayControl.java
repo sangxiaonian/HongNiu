@@ -112,6 +112,13 @@ public class OrderPayControl {
          * 没置过支付密码
          */
         void hasNoSetPassword();
+
+        /**
+         * 有充足的余额的情况，查询完成之后直接选择余额支付
+         * @param hasEnoughBalance 是否余额充足
+         * @param payType  当前选中的方法
+         */
+        void changePayWayToBanlace(boolean hasEnoughBalance, int payType);
     }
 
     public interface IOrderPayPresent {

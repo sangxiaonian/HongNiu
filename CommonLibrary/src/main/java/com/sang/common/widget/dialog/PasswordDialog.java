@@ -79,6 +79,15 @@ public class PasswordDialog implements DialogControl.IDialog, View.OnClickListen
             }
         });
 
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface d) {
+                vercationview.closeSoft();
+                dialog.onBackPressed();
+
+            }
+        });
+
     }
 
     @Override

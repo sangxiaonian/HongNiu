@@ -308,9 +308,11 @@ public class VericationView extends LinearLayout implements TextWatcher, View.On
             @Override
             public void run() {
                 DeviceUtils.hideSoft(findFocus());
+//                DeviceUtils.hideSoft(getChildAt(0));
             }
         });
     }
+
 
 
     public interface OnCompleteListener {

@@ -67,7 +67,7 @@
     <string name="order_pay_wechat">微信支付</string>
     <string name="order_pay_wechat_discribe">微信安全支付</string>
     <string name="order_pay_ali">支付宝</string>
-    <string name="order_pay_ali_discribe">不可使用花呗</string>
+    <string name="order_pay_ali_discribe">支付宝安全支付</string>
     <string name="order_pay_union">银联支付</string>
     <string name="order_pay_union_discribe">中国银联在线支付服务</string>
 
@@ -102,10 +102,10 @@
     <!--我的钱包-->
     <string name="wallet_title">我的钱包</string>
     <string name="wallet_balance_of_account">账户余额(元)</string>
-    <string name="wallet_niu_of_account_des">牛币总额</string>
-    <string name="wallet_niu_title">牛币账户</string>
+    <string name="wallet_niu_of_account_des">牛贝总额</string>
+    <string name="wallet_niu_title">牛贝账户</string>
     <string name="wallet_niu_of_account">%1$s 个</string>
-    <string name="wallet_niu_unentry_count">您有 %1$s 个牛币待入账</string>
+    <string name="wallet_niu_unentry_count">您有 %1$s 个牛贝待入账</string>
 
     <string name="wallet_balance_account">账户余额</string>
     <string name="wallet_balance_wait_entry">您有 %1$s 元入账后可提现</string>
@@ -116,7 +116,7 @@
     <string name="wallet_balance_withdrawal_title">账户提现</string>
     <string name="wallet_balance_account_num">账户余额￥ %1$s</string>
     <string name="wallet_balance_wait_enty">( 您有 %1$s 元待入账金额 )</string>
-    <string name="wallet_balance_niu_unentry_count"> %1$s 个牛币待入账</string>
+    <string name="wallet_balance_niu_unentry_count"> %1$s 个牛贝待入账</string>
     <string name="wallet_balance_withDrawal_ali">支付宝收款</string>
     <string name="wallet_balance_withDrawal_weiChat">微信收款</string>
     <string name="wallet_balance_withdrawal_card_num">尾号 %1$s 储蓄卡</string>

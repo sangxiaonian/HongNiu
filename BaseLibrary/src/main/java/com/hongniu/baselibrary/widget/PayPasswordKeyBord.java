@@ -1,5 +1,6 @@
 package com.hongniu.baselibrary.widget;
 
+import android.app.Activity;
 import android.content.Context;
 
 import com.hongniu.baselibrary.base.NetObserver;
@@ -7,6 +8,7 @@ import com.hongniu.baselibrary.entity.QueryPayPassword;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.Utils;
 import com.sang.common.net.listener.TaskControl;
+import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.dialog.LoadDialog;
 import com.sang.common.widget.dialog.PasswordDialog;
@@ -20,6 +22,7 @@ import io.reactivex.disposables.Disposable;
  */
 public class PayPasswordKeyBord implements PasswordDialog.OnPasswordDialogListener, TaskControl.OnTaskListener {
 
+    private   Activity activty;
     PasswordDialog passwordDialog;
 
     protected Disposable disposable;
@@ -27,7 +30,8 @@ public class PayPasswordKeyBord implements PasswordDialog.OnPasswordDialogListen
     PayKeyBordListener payListener;
     TaskControl.OnTaskListener taskListener;
 
-    public PayPasswordKeyBord(Context context) {
+    public PayPasswordKeyBord(Activity context) {
+        this.activty=context;
         passwordDialog = new PasswordDialog(context);
         passwordDialog.setListener(this);
         if (context instanceof TaskControl.OnTaskListener) {
@@ -93,6 +97,7 @@ public class PayPasswordKeyBord implements PasswordDialog.OnPasswordDialogListen
         } else {
             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("取消支付");
         }
+
     }
 
     /**
