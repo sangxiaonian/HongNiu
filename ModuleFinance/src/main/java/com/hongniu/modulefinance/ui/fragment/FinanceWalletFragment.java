@@ -95,6 +95,8 @@ public class FinanceWalletFragment extends RefrushFragmet<BalanceOfAccountBean> 
                         });
 
 
+            }else if (balanceOfAccountBean.getIsMe()==3){//提现完成
+                ToastUtils.getInstance().show("提现已到账");
             }else {
                 ToastUtils.getInstance().show("此为好友订单不能查看明细信息！");
 

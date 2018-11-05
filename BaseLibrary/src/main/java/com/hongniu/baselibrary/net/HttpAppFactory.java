@@ -139,6 +139,7 @@ public class HttpAppFactory {
 
     /**
      * 上传多张图片
+     *
      * @param type
      * @param paths
      * @return
@@ -155,14 +156,15 @@ public class HttpAppFactory {
 
         return AppClient.getInstance()
                 .getService()
-                .uploadFilesWithParts( builder.build())
+                .uploadFilesWithParts(builder.build())
                 .compose(RxUtils.<CommonBean<List<UpImgData>>>getSchedulersObservableTransformer())
                 ;
     }
 
     /**
-     * 查询订单数据
-     *  @param orderID
+     * 查询订单详情数据
+     *
+     * @param orderID
      * @param ordernumber
      * @param flowid
      */
@@ -174,6 +176,28 @@ public class HttpAppFactory {
         return AppClient.getInstance()
                 .getService()
                 .queryOrderDetail(bean)
+                .map(new Function<CommonBean<OrderDetailBean>, CommonBean<OrderDetailBean>>() {
+                    @Override
+                    public CommonBean<OrderDetailBean> apply(CommonBean<OrderDetailBean> orderDetailBeanCommonBean) throws Exception {
+                        //查询订单详情时候，使用的数据类型不同于订单列表
+//                     订单列表数据   角色类似 1车主 2司机 3 货主
+//                     订单详情数据   1 货主 2车主 3司机
+                        if (orderDetailBeanCommonBean.getCode() == 200 && orderDetailBeanCommonBean.getData() != null) {
+                            switch (orderDetailBeanCommonBean.getData().getRoleType()) {
+                                case 1:
+                                    orderDetailBeanCommonBean.getData().setRoleType(3);
+                                    break;
+                                case 2:
+                                    orderDetailBeanCommonBean.getData().setRoleType(1);
+                                    break;
+                                case 3:
+                                    orderDetailBeanCommonBean.getData().setRoleType(2);
+                                    break;
+                            }
+                        }
+                        return orderDetailBeanCommonBean;
+                    }
+                })
                 .compose(RxUtils.<CommonBean<OrderDetailBean>>getSchedulersObservableTransformer());
 
     }
