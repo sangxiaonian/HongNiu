@@ -473,7 +473,7 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
         }
         payClient = new PayClient(client);
         //此处用来区分正式和测试环境，设置debug为true的时候使用测试环境，默认为正式环境
-//        payClient.setDebug(Param.isDebug);
+        payClient.setDebug(Param.isDebug);
         payClient.pay(this, data);
     }
 
