@@ -392,15 +392,7 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
                                     .subscribe(new NetObserver<String>(taskListener) {
                                         @Override
                                         public void doOnSuccess(String data) {
-                                            RoleTypeBean bean = new RoleTypeBean();
-                                            bean.setRoleId(2);
-                                            bean.setCarId(orderBean.getCarId());
-                                            bean.setOrderId(orderBean.getId());
-                                            bean.setStartLatitude(orderBean.getStartLatitude());
-                                            bean.setStartLongitude(orderBean.getStartLongitude());
-                                            bean.setDestinationLatitude(orderBean.getDestinationLatitude());
-                                            bean.setDestinationLongitude(orderBean.getDestinationLongitude());
-                                            EventBus.getDefault().post(bean);
+
                                         }
 
                                         @Override
