@@ -24,6 +24,7 @@ import com.hongniu.baselibrary.widget.order.helper.OrderItemHelper;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
+import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.CenteredImageSpan;
 import com.sang.thirdlibrary.map.utils.MapConverUtils;
@@ -136,10 +137,13 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
         if (hideInsurance||!data.isInsurance()){
             tv_instances.setVisibility(GONE);
         }else {
-            String s = TextUtils.isEmpty(CommonOrderUtils.getPayWay(data.getPolicyPayWay())) ? "" : ("(" + CommonOrderUtils.getPayWay(data.getPolicyPayWay()) + ")");
-            String plicy = "保费：" + data.getPolicyMoney() + "元" + s;
-            setInsruancePrice((data.isInsurance() && data.getPolicyMoney() != null) ? plicy : "");
+            tv_instances.setVisibility(VISIBLE);
+
         }
+
+        String s = TextUtils.isEmpty(CommonOrderUtils.getPayWay(data.getPolicyPayWay())) ? "" : ("(" + CommonOrderUtils.getPayWay(data.getPolicyPayWay()) + ")");
+        String plicy = "保费：" + data.getPolicyMoney() + "元" + s;
+        setInsruancePrice((data.isInsurance() && data.getPolicyMoney() != null) ? plicy : "");
         setOrderState(data.getOrderState());
 
         if (data.getOrderState() == OrderDetailItemControl.OrderState.IN_TRANSIT) {//正在运输中

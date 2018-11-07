@@ -10,7 +10,7 @@
         android:id="@+id/tv1"
         android:layout_width="wrap_content"
         android:textColor="@color/color_title_dark"
-        android:text="选择到账银行卡"
+        android:text="选择收款方式"
         android:textSize="19sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

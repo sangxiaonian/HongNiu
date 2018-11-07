@@ -731,9 +731,13 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         itemCargoSize.setTextCenter(paramBean.getGoodVolume());
         itemCargoWeight.setTextCenter(paramBean.getGoodWeight());
         itemPrice.setTextCenter(paramBean.getMoney());
+
+        show=false;
         itemCarNum.setTextCenter(paramBean.getCarNum());
         itemCarPhone.setTextCenter(paramBean.getOwnerMobile());
         itemCarName.setTextCenter(paramBean.getOwnerName());
+
+        show=false;
         itemDriverName.setTextCenter(paramBean.getDriverName());
         itemDriverPhone.setTextCenter(paramBean.getDriverMobile());
 

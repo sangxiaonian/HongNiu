@@ -242,16 +242,21 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
             etBalance.setSelection(etBalance.getText().toString().length());
 
         } else if (i == R.id.con_pay_way) {//选择支付方式
-            HttpAppFactory.queryMyCards()
-                    .subscribe(new NetObserver<List<PayInforBeans>>(this) {
-                        @Override
-                        public void doOnSuccess(List<PayInforBeans> data) {
-                            accountDialog.setData(data);
-                            accountDialog.show();
 
-                        }
-                    })
-            ;
+            if (payInfo != null) {
+                HttpAppFactory.queryMyCards()
+                        .subscribe(new NetObserver<List<PayInforBeans>>(this) {
+                            @Override
+                            public void doOnSuccess(List<PayInforBeans> data) {
+                                accountDialog.setData(data);
+                                accountDialog.show();
+
+                            }
+                        })
+                ;
+            } else {
+                creatAccountDialog.show();
+            }
 
 
         }
@@ -365,9 +370,11 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
 
 
     }
+
     private CenterAlertBuilder creatDialog(String title, String content, String btleft, String btRight) {
-        return Utils.creatDialog(mContext,title,content,btleft,btRight);
+        return Utils.creatDialog(mContext, title, content, btleft, btRight);
     }
+
     @Override
     public void onAddUnipay(DialogControl.IDialog dialog) {
         dialog.dismiss();
