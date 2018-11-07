@@ -1,24 +1,14 @@
 package com.hongniu.moduleorder.ui.fragment;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.amap.api.maps.model.LatLng;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
-import com.hongniu.baselibrary.config.Param;
-import com.hongniu.baselibrary.entity.CommonBean;
-import com.hongniu.baselibrary.entity.OrderDetailBean;
-import com.hongniu.baselibrary.entity.PageBean;
-import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.moduleorder.R;
-import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.control.SwitchStateListener;
-import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.widget.OrderMainPop;
 import com.sang.common.recycleview.holder.PeakHolder;
 import com.sang.common.utils.DeviceUtils;
@@ -26,18 +16,11 @@ import com.sang.common.widget.SwitchTextLayout;
 import com.sang.common.widget.popu.BasePopu;
 import com.sang.common.widget.popu.inter.OnPopuDismissListener;
 
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import io.reactivex.Observable;
-
 import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CARGO_OWNER;
-import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CAR_OWNER;
-import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.DRIVER;
 
 /**
  * 订单列表Fragment
@@ -87,7 +70,6 @@ public class OrderMainFragmet extends OrderFragmet implements SwitchStateListene
         view.setLayoutParams(params);
         adapter.addFoot(new PeakHolder(view));
     }
-
 
 
     @Override
@@ -141,14 +123,11 @@ public class OrderMainFragmet extends OrderFragmet implements SwitchStateListene
             rightSelection = position;
             switchRight.setTitle(states.get(position));
             queryBean.setQueryStatus(null);
-            queryBean.setHasFreight(null);
             if (position == 0) {//全部状态
                 queryBean.setQueryStatus(null);
             } else if (position == 1 && roleState == CARGO_OWNER) {//待支付状态
-                queryBean.setQueryStatus(null);
-                queryBean.setHasFreight(false);
+                queryBean.setQueryStatus("0");
             } else {
-                queryBean.setHasFreight(true);
                 if (roleState == CARGO_OWNER) {
                     queryBean.setQueryStatus((position) + "");
                 } else {

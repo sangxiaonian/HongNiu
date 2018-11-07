@@ -70,7 +70,12 @@ public class ConvertUtils {
      */
     public static String formatTime(Date date, String format) {
 
-        return new SimpleDateFormat(format).format(date.getTime());
+        try {
+            return new SimpleDateFormat(format).format(date.getTime());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return date.toString();
+        }
     }
 
     /**

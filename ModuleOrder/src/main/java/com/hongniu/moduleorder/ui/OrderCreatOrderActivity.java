@@ -702,7 +702,16 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         paramBean.setDestinationLatitude(orderDetailBean.getDestinationLatitude()+"");
         paramBean.setDestinationLongitude(orderDetailBean.getDestinationLongitude()+"");
         paramBean.setDestinationInfo(orderDetailBean.getDestinationInfo());
-        paramBean.setDeliveryDate(orderDetailBean.getDeliveryDate());
+
+        String timeDes = orderDetailBean.getDeliveryDate();
+        try {
+            timeDes = ConvertUtils.formatString(orderDetailBean.getDeliveryDate(),"yyyy-MM-dd HH:mm:ss","yyyy-MM-dd");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        paramBean.setDeliveryDate(timeDes);
         paramBean.setGoodName(orderDetailBean.getGoodName());
         paramBean.setGoodVolume(orderDetailBean.getGoodVolume());
         paramBean.setGoodWeight(orderDetailBean.getGoodWeight());

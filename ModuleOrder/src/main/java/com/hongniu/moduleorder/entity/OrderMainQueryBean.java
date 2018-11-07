@@ -17,10 +17,7 @@ public class OrderMainQueryBean {
      * false	string	订单状态(2待发货，3配送中，4已到达,5已收货)
      */
     private String queryStatus;
-    /**
-     * false	string	是否付运费(1是，0否)
-     */
-    private Boolean hasFreight;
+
     /**
      * false	string	我的身份（3-货主/1-车主/2-司机）
      */
@@ -89,14 +86,6 @@ public class OrderMainQueryBean {
 
     public void setQueryStatus(String queryStatus) {
         this.queryStatus = queryStatus;
-    }
-
-    public Boolean getHasFreight() {
-        return hasFreight;
-    }
-
-    public void setHasFreight(Boolean hasFreight) {
-        this.hasFreight = hasFreight;
     }
 
     public int getUserType() {

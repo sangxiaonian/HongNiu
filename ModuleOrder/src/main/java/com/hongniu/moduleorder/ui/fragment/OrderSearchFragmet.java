@@ -152,14 +152,11 @@ public class OrderSearchFragmet extends OrderFragmet implements SwitchStateListe
         rightSelection = position;
         switchRight.setTitle(states.get(position));
         queryBean.setQueryStatus(null);
-        queryBean.setHasFreight(null);
         if (position == 0) {//全部状态
             queryBean.setQueryStatus(null);
         } else if (position == 1 && roleState == CARGO_OWNER) {//待支付状态
-            queryBean.setQueryStatus(null);
-            queryBean.setHasFreight(false);
+            queryBean.setQueryStatus("0");
         } else {
-            queryBean.setHasFreight(true);
             if (roleState == CARGO_OWNER) {
                 queryBean.setQueryStatus((position) + "");
             } else {

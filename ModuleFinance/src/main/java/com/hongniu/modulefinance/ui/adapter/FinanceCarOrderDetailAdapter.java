@@ -11,6 +11,7 @@ import com.hongniu.modulefinance.control.OnItemClickListener;
 import com.hongniu.modulefinance.entity.FinanceQueryCarDetailBean;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
+import com.sang.common.utils.ConvertUtils;
 
 import java.util.List;
 
@@ -44,16 +45,17 @@ public class FinanceCarOrderDetailAdapter extends XAdapter<FinanceQueryCarDetail
                     TextView time = itemView.findViewById(R.id.tv_time);
                     TextView state= itemView.findViewById(R.id.tv_state);
                     if (data.getBean()!=null) {
+
+                        String timeDes = ConvertUtils.formatString(data.getBean().getDeliveryDate(),"yyyy-MM-dd HH:mm:ss","yyyy-MM-dd");
+
                         tvOrder.setText("订单号：" + data.getBean().getOrderNum());
-                        time.setText("发车时间：" + data.getBean().getDeliveryDate());
+                        time.setText("发车时间：" + timeDes);
                         state.setText(CommonOrderUtils.getOrderStateDes(data.getBean().getOrderState()));
                     }else {
                         tvOrder.setText("订单号：" );
                         time.setText("发车时间：" );
                         state.setText("");
-
                     }
-
                     itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

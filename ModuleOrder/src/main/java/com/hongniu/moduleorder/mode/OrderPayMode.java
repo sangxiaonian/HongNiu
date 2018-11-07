@@ -110,7 +110,6 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
     @Override
     public void savePayType(int payType) {
         this.payType = payType;
-        isOnLine = true;
     }
 
     /**
