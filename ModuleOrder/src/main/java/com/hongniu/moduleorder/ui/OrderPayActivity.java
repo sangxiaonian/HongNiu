@@ -412,7 +412,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
      */
     @Override
     public void jumpToPay(PayBean data, int payType) {
-        WaitePayActivity.startPay(this, payType, data, true);
+        WaitePayActivity.startPay(this, payType, data, Param.isDebug);
     }
 
     /**
