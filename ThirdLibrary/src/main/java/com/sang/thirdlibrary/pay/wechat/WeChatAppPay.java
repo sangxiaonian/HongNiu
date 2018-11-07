@@ -3,6 +3,7 @@ package com.sang.thirdlibrary.pay.wechat;
 import android.app.Activity;
 import android.content.Context;
 
+import com.sang.common.utils.CommonUtils;
 import com.sang.thirdlibrary.pay.PayConfig;
 import com.sang.thirdlibrary.pay.control.PayControl;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
@@ -60,7 +61,6 @@ public class WeChatAppPay implements PayControl.IPayClient {
         //sign
         request.sign = sign;
         api.sendReq(request);
-
     }
 
 

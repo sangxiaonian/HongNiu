@@ -569,10 +569,11 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         if (TextUtils.isEmpty(itemCarNum.getTextCenter())) {
             showAleart(itemCarNum.getTextCenterHide());
             return false;
-        } else if (!CommonUtils.carNumMatches(itemCarNum.getTextCenter())) {
-            showAleart(getString(R.string.carnum_error));
-            return false;
         }
+//        else if (!CommonUtils.carNumMatches(itemCarNum.getTextCenter())) {
+//            showAleart(getString(R.string.carnum_error));
+//            return false;
+//        }
         ;
         if (TextUtils.isEmpty(itemCarPhone.getTextCenter())) {
             showAleart(itemCarPhone.getTextCenterHide());

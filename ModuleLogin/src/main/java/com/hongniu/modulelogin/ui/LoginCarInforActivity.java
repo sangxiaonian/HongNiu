@@ -229,10 +229,11 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
         if (TextUtils.isEmpty(itemCarNum.getTextCenter())) {
             showAleart(itemCarNum.getTextCenterHide());
             return false;
-        } else if (!CommonUtils.carNumMatches(itemCarNum.getTextCenter())) {
-            showAleart(getString(R.string.login_car_error_carnum));
-            return false;
         }
+//        else if (!CommonUtils.carNumMatches(itemCarNum.getTextCenter())) {
+//            showAleart(getString(R.string.login_car_error_carnum));
+//            return false;
+//        }
         if (TextUtils.isEmpty(itemCarOwner.getTextCenter())) {
             showAleart(itemCarOwner.getTextCenterHide());
             return false;
