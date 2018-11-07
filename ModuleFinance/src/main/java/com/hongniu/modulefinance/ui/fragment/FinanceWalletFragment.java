@@ -51,8 +51,16 @@ public class FinanceWalletFragment extends RefrushFragmet<BalanceOfAccountBean> 
     @Override
     protected void initData() {
         super.initData();
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         queryData(true);
     }
+
+
 
     @Override
     public void setArguments(@Nullable Bundle args) {

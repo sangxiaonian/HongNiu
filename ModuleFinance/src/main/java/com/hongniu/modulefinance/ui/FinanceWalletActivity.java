@@ -88,10 +88,12 @@ public class FinanceWalletActivity extends BaseActivity implements FinanceWallet
         tvNiuBalanceOfAccount.setText(getNew("0"));
         tvNiuBalanceOfAccount.setText(getNew("0"));
         tvNiuBalanceOfUnentry.setText(String.format(getString(R.string.wallet_balance_niu_unentry_count), "0"));
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
         upInfor();
-
-
     }
 
     private void upInfor(){
