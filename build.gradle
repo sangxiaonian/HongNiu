@@ -7,7 +7,7 @@ ext {
     targetSdkVersion = 28
     versionCode = 7
     versionName = "1.1.0"
-//    buildToolsVersion = "1.0"
+
     Arouter_Complier = "1.1.4"
     androidSupportVersion = "27.1.1"
 
