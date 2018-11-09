@@ -8,38 +8,40 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.TextureView;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.poisearch.PoiSearch;
+import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.base.RefrushActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
+import com.hongniu.baselibrary.widget.XRefreshLayout;
 import com.hongniu.moduleorder.R;
+import com.hongniu.moduleorder.control.OnItemClickListener;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
+import com.hongniu.moduleorder.ui.adapter.MapSearchAdapter;
 import com.sang.common.event.BusFactory;
 import com.sang.common.recycleview.adapter.XAdapter;
-import com.sang.common.recycleview.holder.BaseHolder;
+import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.DeviceUtils;
 
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
 
-public class OrderMapSearchActivity extends RefrushActivity<PoiItem> {
+public class OrderMapSearchActivity extends RefrushActivity<PoiItem> implements OnItemClickListener<PoiItem> {
     private EditText etSearch;
-    private Handler handler=new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            if (!TextUtils.isEmpty(etSearch.getText().toString().trim())){
+            if (!TextUtils.isEmpty(etSearch.getText().toString().trim())) {
                 queryData(true);
 
             }
@@ -52,7 +54,7 @@ public class OrderMapSearchActivity extends RefrushActivity<PoiItem> {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_map_search);
         setToolbarTitle("");
-        isFirst=false;
+        isFirst = false;
         initView();
         initData();
         initListener();
@@ -73,8 +75,14 @@ public class OrderMapSearchActivity extends RefrushActivity<PoiItem> {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    queryData(true,true);
-                    DeviceUtils.hideSoft(etSearch);
+                    String trim = etSearch.getText().toString().trim();
+                    if (!CommonUtils.isEmptyCollection(datas)&&!TextUtils.isEmpty(trim)){
+                        OrderEvent.SearchPioItem searchPioItem = new OrderEvent.SearchPioItem(datas.get(0));
+                        searchPioItem.key= trim;
+                        BusFactory.getBus().post(searchPioItem);
+                        DeviceUtils.hideSoft(etSearch);
+                        onBackPressed();
+                    }
                 }
                 return true;
             }
@@ -93,7 +101,7 @@ public class OrderMapSearchActivity extends RefrushActivity<PoiItem> {
             @Override
             public void afterTextChanged(Editable s) {
                 handler.removeMessages(0);
-                handler.sendEmptyMessageDelayed(0,200);
+                handler.sendEmptyMessageDelayed(0, 200);
             }
         });
     }
@@ -108,39 +116,71 @@ public class OrderMapSearchActivity extends RefrushActivity<PoiItem> {
         query.setPageNum(currentPage);//设置查询页码
         query.setCityLimit(true);
         query.requireSubPois(true);
-
-
         PoiSearch poiSearch = new PoiSearch(mContext, query);
-
         return HttpOrderFactory.searchPio(poiSearch);
     }
 
+    protected void queryData(final boolean isClear) {
+        if (isClear) {
+            refresh.loadmoreFinished(true);
+            currentPage = 1;
+        }
+        if (TextUtils.isEmpty(etSearch.getText().toString().trim())) {
+            refresh.finishRefresh(500);
+            return;
+        }
+        getListDatas()
+                .subscribe(new NetObserver<PageBean<PoiItem>>(this) {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        if (isFirst) {
+                            isFirst = false;
+                            super.onSubscribe(d);
+                        } else {
+                            disposable = d;
+                        }
+                    }
+
+                    @Override
+                    public void doOnSuccess(PageBean<PoiItem> data) {
+                        if (isClear && data != null && !CommonUtils.isEmptyCollection(data.getList())) {
+                            datas.clear();
+                        }
+                        if (data != null && !CommonUtils.isEmptyCollection(data.getList())) {
+                            currentPage++;
+                            datas.addAll(data.getList());
+                            if (data.getList().size() < Param.PAGE_SIZE) {
+                                showNoMore();
+                            }
+                        } else {
+                            showNoMore();
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+    }
+
+
     @Override
     protected XAdapter<PoiItem> getAdapter(List<PoiItem> datas) {
-        return new XAdapter<PoiItem>(mContext, datas) {
-            @Override
-            public BaseHolder<PoiItem> initHolder(ViewGroup parent, int viewType) {
-                return new BaseHolder<PoiItem>(context, parent, R.layout.map_select_item) {
-                    @Override
-                    public void initView(View itemView, final int position, final PoiItem data) {
-                        super.initView(itemView, position, data);
-                        TextView tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
-                        TextView tvDes = (TextView) itemView.findViewById(R.id.tv_des);
-                        final ImageView img = itemView.findViewById(R.id.img);
-                        img.setVisibility(View.GONE);
-                        tvDes.setText(data.getSnippet());
-                        tvTitle.setText(data.getTitle());
-                        itemView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                img.setVisibility(View.VISIBLE);
-                                BusFactory.getBus().post(new OrderEvent.SearchPioItem(data));
-                                onBackPressed();
-                            }
-                        });
-                    }
-                };
-            }
-        };
+
+        return new MapSearchAdapter(mContext, datas).setClickListener(this);
+
+    }
+
+    /**
+     * 条目被点击
+     *
+     * @param position
+     * @param poiItem
+     */
+    @Override
+    public void onItemClick(int position, PoiItem poiItem) {
+        OrderEvent.SearchPioItem searchPioItem = new OrderEvent.SearchPioItem(datas.get(0));
+        searchPioItem.key= poiItem.getTitle();
+        BusFactory.getBus().post(searchPioItem);
+        DeviceUtils.hideSoft(etSearch);
+        onBackPressed();
+
     }
 }

@@ -5,7 +5,8 @@ package com.hongniu.baselibrary.config;
  * 努力，为梦长留
  */
 public class Param {
-    public static final boolean isDebug = true;
+    public static final boolean isDebug = false;
+
 
 
     public static final String weChatAppid = "wxa9d4be10effd4626";
@@ -15,23 +16,28 @@ public class Param {
      * 泓牛协议
      */
     public static String hongniu_agreement;
+    public static String festivity_invity_notify;
     //保险条款
     public static String insurance_polic;
     //投保须知
     public static String insurance_notify;
+    /**
+     * 最大图片数
+     */
+    public static int IMAGECOUNT=10;
 
     static {
         if (isDebug) {
-//            url = "http://47.104.130.110:8080/";
+//            url = "http://47.104.130.110:80/";
             url = "http://test.wxshare.hongniudai.cn/";
 //            url = "http://b09daa47.ngrok.io/";
         } else {
             url = "https://api.hongniudai.cn/";
-
         }
         hongniu_agreement = "https://api.hongniudai.cn/" + "static/html/service.html";
         insurance_notify = "https://api.hongniudai.cn/" + "static/html/notice.html";
         insurance_polic = "https://api.hongniudai.cn/" + "static/html/insurance_2009.html";
+        festivity_invity_notify = url + "static/index.html#/invite_rule";
     }
 
 
@@ -43,6 +49,10 @@ public class Param {
      * 确认到达时候，距离目的地的最小距离 单位 千米
      */
     public static final int ENTRY_MIN = 5000;
+    //回单
+    public static final int REEIVE = 2;
+    //货单
+    public static final int GOODS= 1;
 
 
     //    AppKey: c33fbf23b76246bf8ee4a3d00b621e03
@@ -53,6 +63,8 @@ public class Param {
     public static final String AppSecret = "a7735d245d4241ff9f94-a3ecf7b5fedc";
 
     public static final String TRAN = "tran";
+    public static final String TITLE = "TITLE";
+    public static final String VERTYPE = "VERTYPE";//验证码使用类型
 
 
     /**
@@ -69,6 +81,8 @@ public class Param {
     public static final String LOGIN_ONFOR = "LOGIN_ONFOR";
     //个人信息
     public static final String PERSON_ONFOR = "PERSON_ONFOR";
+    //是否有设置过密码
+    public static final String HASPAYPASSWORD = "HASPAYPASSWORD";
     /**
      * 退出登录
      */

@@ -6,9 +6,11 @@ import com.hongniu.baselibrary.entity.LoginBean;
 import com.hongniu.baselibrary.entity.LoginPersonInfor;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
+import com.hongniu.baselibrary.entity.QueryPayPassword;
 import com.hongniu.modulelogin.entity.LoginCarInforBean;
 import com.hongniu.modulelogin.entity.LoginSMSParams;
-import com.hongniu.modulelogin.entity.PayInforBeans;
+import com.hongniu.baselibrary.entity.PayInforBeans;
+import com.hongniu.modulelogin.entity.SetPayPassWord;
 
 import java.util.List;
 
@@ -22,11 +24,12 @@ import retrofit2.http.POST;
  */
 public interface LoginService {
 
-    @POST("hongniu/api/login/getcheckcode")
-    Observable<CommonBean<String>> getSmsCode(@Body LoginSMSParams params);
 
     @POST("hongniu/api/login/login")
     Observable<CommonBean<LoginBean>> loginBySms(@Body LoginSMSParams params);
+
+    @POST("hongniu/api/login/ckeckcode")
+    Observable<CommonBean<String>> ckeckcode(@Body LoginSMSParams params);
 
     /**
      * 获取个人信息
@@ -97,6 +100,15 @@ public interface LoginService {
      */
     @POST("hongniu/api/refund/add")
     Observable<CommonBean<String>> addBlankCard(@Body PayInforBeans beans);
+
+    /**
+     * 设置/更新支付密码
+     *
+     * @return
+     * @param beans
+     */
+    @POST("hongniu//api/account/updatepass")
+    Observable<CommonBean<String>> setPayPassword(@Body SetPayPassWord beans);
 
 
 }

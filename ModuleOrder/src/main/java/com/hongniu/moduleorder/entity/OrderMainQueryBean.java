@@ -17,10 +17,7 @@ public class OrderMainQueryBean {
      * false	string	订单状态(2待发货，3配送中，4已到达,5已收货)
      */
     private String queryStatus;
-    /**
-     * false	string	是否付运费(1是，0否)
-     */
-    private Boolean hasFreight;
+
     /**
      * false	string	我的身份（3-货主/1-车主/2-司机）
      */
@@ -29,6 +26,43 @@ public class OrderMainQueryBean {
      * false	string	发车日期(today-今天 tomorrow-明天 thisweek-本周 nextweek-下周)
      */
     private String deliveryDateType;
+
+    /**
+     * 搜索内容
+     */
+    private String searchText;
+    /**
+     * 起始发车日期
+     */
+    private String deliveryDateStart;
+    /**
+     * 结束发车日期
+     */
+    private String deliveryDateEnd;
+
+    public String getSearchText() {
+        return searchText;
+    }
+
+    public void setSearchText(String searchText) {
+        this.searchText = searchText;
+    }
+
+    public String getDeliveryDateStart() {
+        return deliveryDateStart;
+    }
+
+    public void setDeliveryDateStart(String deliveryDateStart) {
+        this.deliveryDateStart = deliveryDateStart;
+    }
+
+    public String getDeliveryDateEnd() {
+        return deliveryDateEnd;
+    }
+
+    public void setDeliveryDateEnd(String deliveryDateEnd) {
+        this.deliveryDateEnd = deliveryDateEnd;
+    }
 
     public int getPageSize() {
         return pageSize;
@@ -52,14 +86,6 @@ public class OrderMainQueryBean {
 
     public void setQueryStatus(String queryStatus) {
         this.queryStatus = queryStatus;
-    }
-
-    public Boolean getHasFreight() {
-        return hasFreight;
-    }
-
-    public void setHasFreight(Boolean hasFreight) {
-        this.hasFreight = hasFreight;
     }
 
     public int getUserType() {

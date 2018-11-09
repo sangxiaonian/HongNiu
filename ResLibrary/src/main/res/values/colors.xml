@@ -10,6 +10,8 @@
 
     <!--App中主要的亮色调-->
     <color name="color_light">#F06F28</color>
+    <color name="color_light_light">#FBE0D0</color>
+
     <color name="color_bg">#ffffff</color>
     <color name="color_white">#ffffff</color>
     <color name="color_bg_dark">#f7f7f7</color>
@@ -32,6 +34,7 @@
     <!--订单列表中文字主要颜色-->
     <color name="color_order_color">#6a6a6a</color>
     <color name="color_order_color_6d6d6d">#6d6d6d</color>
+    <color name="color_order_color_80ffffff">#80FFFFFF</color>
 
     <color name="color_tv_bg">#797C8B</color>
     <color name="tool_right">#FF3A30</color>

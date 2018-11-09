@@ -2,23 +2,34 @@ package com.sang.common.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+
+import com.sang.common.R;
 
 /**
  * 作者： ${PING} on 2018/9/5.
  */
-public class XWebView extends WebView {
+public class XWebView extends LinearLayout {
+
+    private ProgressBar mProgressBar;
+    private WebView webView;
+
+    OnReceivedTitleListener onReceivedTitleListener;
 
     public XWebView(Context context) {
-        this(context,null,0);
+        this(context, null, 0);
     }
 
 
     public XWebView(Context context, AttributeSet attrs) {
-        this(context, attrs,0);
+        this(context, attrs, 0);
     }
 
 
@@ -28,8 +39,24 @@ public class XWebView extends WebView {
     }
 
     private void initView(Context context) {
+        setOrientation(VERTICAL);
+
+        mProgressBar = (ProgressBar) LayoutInflater.from(getContext()).inflate(
+                R.layout.progress_horizontal, null);
+        mProgressBar.setMax(100);
+        mProgressBar.setProgress(0);
+        try {
+            addView(mProgressBar, LayoutParams.MATCH_PARENT,
+                    (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX,
+                            5, getResources().getDisplayMetrics()));
+        } catch (Exception ex) {
+        }
+
+        webView = new WebView(context);
+        addView(webView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+
         //声明WebSettings子类
-        WebSettings webSettings = getSettings();
+        WebSettings webSettings = webView.getSettings();
 
 //如果访问的页面中要与Javascript交互，则webview必须设置支持Javascript
         webSettings.setJavaScriptEnabled(true);
@@ -52,20 +79,35 @@ public class XWebView extends WebView {
         webSettings.setDefaultTextEncodingName("utf-8");//设置编码格式
 
 
-        setWebViewClient(new WebViewClient() {
+        webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 return true;
             }
         });
-         setWebChromeClient(new WebChromeClient() {
+        webView.setWebChromeClient(new WebChromeClient() {
 
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
-                if (newProgress < 100) {
-                    String progress = newProgress + "%";
-                } else {
+                if (newProgress==100){
+                    if (mProgressBar.getVisibility()!=GONE) {
+                        mProgressBar.setVisibility(GONE);
+                    }
+                }else {
+                    if (mProgressBar.getVisibility()!=VISIBLE) {
+                        mProgressBar.setVisibility(VISIBLE);
+                    }
+                }
+                mProgressBar.setProgress(newProgress);
+
+            }
+
+            @Override
+            public void onReceivedTitle(WebView view, String title) {
+                super.onReceivedTitle(view, title);
+                if (onReceivedTitleListener!=null){
+                    onReceivedTitleListener.onReceivedTitle(view,title);
                 }
             }
 
@@ -73,13 +115,28 @@ public class XWebView extends WebView {
 
         });
 
-        setWebChromeClient(new WebChromeClient() {
-
-            @Override
-            public void onReceivedTitle(WebView view, String title) {
-//                titleview.setText(title);
-            }
-        });
-
     }
+
+    public void loadUrl(String url) {
+        webView.loadUrl(url);
+    }
+
+    public void setOnReceivedTitleListener(OnReceivedTitleListener onReceivedTitleListener) {
+        this.onReceivedTitleListener=onReceivedTitleListener;
+    }
+
+    public boolean canGoBack() {
+        return webView.canGoBack();
+    }
+
+    public void goBack() {
+        webView.goBack();
+    }
+
+    public interface OnReceivedTitleListener {
+        void onReceivedTitle(WebView view, String title) ;
+    }
+
+
+
 }

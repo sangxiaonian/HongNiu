@@ -2,8 +2,6 @@ package com.hongniu.moduleorder;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -17,6 +15,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
+import com.hongniu.baselibrary.arouter.ArouterParamFestivity;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
@@ -25,12 +24,14 @@ import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CloseActivityEvent;
+import com.hongniu.baselibrary.entity.QueryPayPassword;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.dialog.UpDialog;
+import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.control.OrderMainControl;
 import com.hongniu.moduleorder.control.SwitchStateListener;
@@ -56,14 +57,14 @@ import com.sang.common.widget.popu.inter.OnPopuDismissListener;
 import com.sang.thirdlibrary.map.LoactionUtils;
 import com.sang.thirdlibrary.map.utils.MapConverUtils;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CARGO_OWNER;
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CAR_OWNER;
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.DRIVER;
 
 /**
  * 订单中心主页
@@ -97,6 +98,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
 
     private TextView tvName, tvPhone;
     private LoactionUpUtils upLoactionUtils;//上传位置信息
+    private OrderDetailItemControl.RoleState roleState = CARGO_OWNER;
 
 
     @Override
@@ -104,6 +106,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_main);
         setToolbarTitle("");
+
         present = new OrderMainPresenter(this);
         initView();
         initData();
@@ -111,32 +114,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
         loaction = LoactionUtils.getInstance();
         loaction.init(this);
         loaction.setListener(this);
-
-        HttpAppFactory.getRoleType()
-
-                .subscribe(new NetObserver<RoleTypeBean>(null) {
-
-                    @Override
-                    public void doOnSuccess(RoleTypeBean data) {
-                        EventBus.getDefault().postSticky(data);
-                    }
-                    @Override
-                    public void onError(Throwable e) {
-                        super.onError(e);
-                        EventBus.getDefault().postSticky(new RoleTypeBean());
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        super.onComplete();
-                    }
-                });
-
-
-
-
     }
-
 
 
     @Override
@@ -186,6 +164,16 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
         ;
         guideTitle.setNextGuide(guideFinance);
 
+        findViewById(R.id.img_search).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArouterUtils.getInstance()
+                        .builder(ArouterParamOrder.activity_order_search)
+                        .withSerializable(Param.TRAN, roleState)
+                        .navigation(mContext);
+
+            }
+        });
 
     }
 
@@ -221,10 +209,12 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     @Override
     protected void initData() {
         super.initData();
-        if (Utils.checkInfor()) {
-            tvName.setText(Utils.getPersonInfor().getContact() == null ? "待完善" : Utils.getPersonInfor().getContact());
+        if (Utils.getLoginInfor() != null) {
+            if (Utils.checkInfor()) {
+                tvName.setText(Utils.getPersonInfor().getContact() == null ? "待完善" : Utils.getPersonInfor().getContact());
+            }
+            tvPhone.setText(Utils.getLoginInfor().getMobile() == null ? "" : Utils.getLoginInfor().getMobile());
         }
-        tvPhone.setText(Utils.getLoginInfor().getMobile() == null ? "" : Utils.getLoginInfor().getMobile());
         switchTitle.post(new Runnable() {
             @Override
             public void run() {
@@ -234,9 +224,8 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
 
         //检查版本更新
         checkVersion();
-
-
     }
+
 
     /**
      * 检查版本号，确定是否需要更新
@@ -249,17 +238,13 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                     @Override
                     public void doOnSuccess(VersionBean data) {
                         try {
-                            try {
-                                if (data != null && !TextUtils.isEmpty(data.getVersionCode())) {
-                                    String versionName = DeviceUtils.getVersionName(mContext);
-                                    String current = versionName.replace(".","").replace("-debug","");
-                                    String needUpdata = data.getVersionCode().replace(".","");
-                                    if (Integer.parseInt(current)<Integer.parseInt(needUpdata)){
-                                        showUpAleart(data.getVersionName());
-                                    }
+                            if (data != null && !TextUtils.isEmpty(data.getVersionCode())) {
+                                String versionName = DeviceUtils.getVersionName(mContext);
+                                String current = versionName.replace(".", "").replace("-debug", "");
+                                String needUpdata = data.getVersionCode().replace(".", "");
+                                if (Integer.parseInt(current) < Integer.parseInt(needUpdata)) {
+                                    showUpAleart(data.getVersionName());
                                 }
-                            } catch (Exception e) {
-                                e.printStackTrace();
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -293,6 +278,8 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
 
         titlePop.setListener(this);
         titlePop.setOnDismissListener(this);
+
+
     }
 
 
@@ -300,13 +287,20 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     protected void onStart() {
         super.onStart();
         BusFactory.getBus().post(new CloseActivityEvent());
+        HttpAppFactory.queryPayPassword()
+                .subscribe(new NetObserver<QueryPayPassword>(this) {
+                    @Override
+                    public void doOnSuccess(QueryPayPassword data) {
+                        Utils.setPassword(data.isSetPassWord());
+                    }
+                });
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (loaction!=null){
+        if (loaction != null) {
             loaction.showFront(false);
         }
     }
@@ -315,8 +309,6 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     protected void onStop() {
         super.onStop();
     }
-
-
 
 
     @Override
@@ -361,13 +353,13 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                 PermissionUtils.applyMap(this, new PermissionUtils.onApplyPermission() {
                     @Override
                     public void hasPermission(List<String> granted, boolean isAll) {
-                        if (TextUtils.isEmpty(event.cardID)){
+                        if (TextUtils.isEmpty(event.cardID)) {
                             loaction.setInterval(1000);
-                        }else {
+                        } else {
                             loaction.startLoaction();
                         }
                         //首次创建位置信息收集数据
-                        if (upLoactionUtils == null) {
+                        if (upLoactionUtils == null || TextUtils.isEmpty(upLoactionUtils.getCarID())) {
                             if (!DeviceUtils.isOpenGps(mContext)) {
                                 showAleart("为了更准确的记录您的轨迹信息，请打开GPS");
                             }
@@ -385,6 +377,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                             JLog.i("更新位置信息收集器");
                         }
                     }
+
                     @Override
                     public void noPermission(List<String> denied, boolean quick) {
                     }
@@ -396,6 +389,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                 if (loaction != null) {
                     loaction.stopLoaction();
                 }
+                JLog.i("停止定位");
 
             }
         }
@@ -406,14 +400,11 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onInBackgrond(final Event.OnBackground event) {
         if (event != null) {
-            if (loaction!=null){
+            if (loaction != null) {
                 loaction.showFront(DeviceUtils.isBackGround(mContext));
             }
         }
     }
-
-
-
 
 
     @Override
@@ -478,6 +469,19 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
      * @param position
      */
     private void changeStaff(int position) {
+        switch (position) {
+            case 3:
+                this.roleState = CARGO_OWNER;
+                break;
+            case 1:
+                this.roleState = CAR_OWNER;
+                break;
+            case 2:
+                this.roleState = DRIVER;
+                break;
+        }
+
+
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         if (currentFragmeng != null) {
             fragmentTransaction.hide(currentFragmeng);
@@ -487,7 +491,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
             if (carOwnerFragmeng == null) {
                 carOwnerFragmeng = (Fragment) ArouterUtils.getInstance().builder(ArouterParamOrder.fragment_order_main).navigation(this);
                 Bundle bundle = new Bundle();
-                bundle.putInt(Param.TRAN, 1);
+                bundle.putSerializable(Param.TRAN, roleState);
                 carOwnerFragmeng.setArguments(bundle);
                 fragmentTransaction.add(R.id.content, carOwnerFragmeng);
             } else {
@@ -500,7 +504,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
             if (driverFragmeng == null) {
                 driverFragmeng = (Fragment) ArouterUtils.getInstance().builder(ArouterParamOrder.fragment_order_main).navigation(this);
                 Bundle bundle = new Bundle();
-                bundle.putInt(Param.TRAN, 2);
+                bundle.putSerializable(Param.TRAN, roleState);
                 driverFragmeng.setArguments(bundle);
                 fragmentTransaction.add(R.id.content, driverFragmeng);
             } else {
@@ -512,7 +516,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
             if (cargoFragment == null) {
                 cargoFragment = (Fragment) ArouterUtils.getInstance().builder(ArouterParamOrder.fragment_order_main).navigation(this);
                 Bundle bundle = new Bundle();
-                bundle.putInt(Param.TRAN, 0);
+                bundle.putSerializable(Param.TRAN, roleState);
                 cargoFragment.setArguments(bundle);
                 fragmentTransaction.add(R.id.content, cargoFragment);
             } else {
@@ -568,7 +572,8 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
         int i = v.getId();
         if (i == R.id.src_finance) {
 
-            ArouterUtils.getInstance().builder(ArouterParamsFinance.activity_finance_activity).navigation(mContext);
+//            ArouterUtils.getInstance().builder(ArouterParamsFinance.activity_finance_activity).navigation(mContext);
+            ArouterUtils.getInstance().builder(ArouterParamsFinance.activity_finance_wallet).navigation(mContext);
         } else if (i == R.id.src_me) {
             drawerLayout.openDrawer(Gravity.START);
         } else if (i == R.id.ll_order) {
@@ -636,7 +641,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
 
         } else if (i == R.id.ll_pay_method) {
             drawerLayout.closeDrawer(Gravity.START);
-            ArouterUtils.getInstance().builder(ArouterParamLogin.activity_pay_ways).navigation(mContext);
+            ArouterUtils.getInstance().builder(ArouterParamFestivity.activity_festivity_home).navigation(mContext);
 
         }
     }

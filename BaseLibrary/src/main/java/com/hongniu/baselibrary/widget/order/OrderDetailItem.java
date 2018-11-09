@@ -9,37 +9,48 @@ import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.hongniu.baselibrary.R;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.widget.OrderProgress;
+import com.hongniu.baselibrary.widget.order.helper.ButtonInforBean;
 import com.hongniu.baselibrary.widget.order.helper.OrderItemHelper;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
+import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.CenteredImageSpan;
 import com.sang.thirdlibrary.map.utils.MapConverUtils;
 
+import java.util.List;
+
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_BUY_INSURANCE;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CANCLE;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHANGE;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHANGE_RECEIPT;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_GOODS;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_INSURANCE;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_PATH;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_RECEIPT;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_ROUT;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_ENTRY_ARRIVE;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_ENTRY_ORDER;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_PAY;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_START_CAR;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_UP_RECEIPT;
 
 /**
  * 作者： ${PING} on 2018/8/7.
  * 订单详情
  */
-public class OrderDetailItem extends FrameLayout {
+public class OrderDetailItem extends FrameLayout implements View.OnClickListener {
 
     private TextView tvIdentity;
     private TextView tv_order;
@@ -48,10 +59,9 @@ public class OrderDetailItem extends FrameLayout {
     private TextView tv_start_loaction;
     private TextView tv_end_loaction;
     private TextView tv_price;
-    private TextView bt_left;
-    private TextView bt_right;
+    private TextView tv_instances;
     private TextView tv_order_detail;
-    private View llBottom;
+    private ViewGroup llBottom;
     private View lineBottom;
 
     //当前角色 货主、车主、司机
@@ -89,8 +99,7 @@ public class OrderDetailItem extends FrameLayout {
         tv_start_loaction = itemView.findViewById(R.id.tv_start_loaction);//发车地点
         tv_end_loaction = itemView.findViewById(R.id.tv_end_loaction);//到达地点
         tv_price = itemView.findViewById(R.id.tv_price);//运费
-        bt_left = itemView.findViewById(R.id.bt_left);//左侧按钮
-        bt_right = itemView.findViewById(R.id.bt_right);//右侧按钮
+        tv_instances = itemView.findViewById(R.id.tv_instances);//保费
         tv_order_detail = itemView.findViewById(R.id.tv_order_detail);//右侧按钮
         llBottom = itemView.findViewById(R.id.ll_bottom);//右侧按钮
         lineBottom = itemView.findViewById(R.id.line_bottom);//右侧按钮
@@ -114,16 +123,27 @@ public class OrderDetailItem extends FrameLayout {
             setTiem(ConvertUtils.formatString(data.getDeliveryDate(), "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd"));
         }
 
+        //对于司机，隐藏保费
+        hideInsurance(roleState == OrderDetailItemControl.RoleState.DRIVER);
 
         String money = data.getMoney();
         if (!TextUtils.isEmpty(money)) {
-            String s = TextUtils.isEmpty(data.getPayWayDes()) ? "" : ("(" + data.getPayWayDes() + ")");
+            String s = TextUtils.isEmpty(CommonOrderUtils.getPayWay(data.getPayWay())) ? "" : ("(" + CommonOrderUtils.getPayWay(data.getPayWay()) + ")");
             setPrice("运费：￥" + money + s);
-
         } else {
             setPrice("");
         }
 
+        if (hideInsurance||!data.isInsurance()){
+            tv_instances.setVisibility(GONE);
+        }else {
+            tv_instances.setVisibility(VISIBLE);
+
+        }
+
+        String s = TextUtils.isEmpty(CommonOrderUtils.getPayWay(data.getPolicyPayWay())) ? "" : ("(" + CommonOrderUtils.getPayWay(data.getPolicyPayWay()) + ")");
+        String plicy = "保费：" + data.getPolicyMoney() + "元" + s;
+        setInsruancePrice((data.isInsurance() && data.getPolicyMoney() != null) ? plicy : "");
         setOrderState(data.getOrderState());
 
         if (data.getOrderState() == OrderDetailItemControl.OrderState.IN_TRANSIT) {//正在运输中
@@ -157,59 +177,57 @@ public class OrderDetailItem extends FrameLayout {
 
                     setContent(data.getDepartNum(), data.getCarNum(), "货主：", data.getUserName(), data.getUserMobile()
                             , data.getGoodName(), "车主：", data.getOwnerName(), data.getOwnerMobile()
-                            , data.isInsurance(), data.getPolicyMoney()
+
                     );
                     break;
                 case CAR_OWNER:
                     setContent(data.getDepartNum(), data.getCarNum(), "货主：", data.getUserName(), data.getUserMobile()
                             , data.getGoodName(), "司机：", data.getDriverName(), data.getDriverMobile()
-                            , data.isInsurance(), data.getPolicyMoney()
                     );
                     break;
                 case CARGO_OWNER:
                     setContent(data.getDepartNum(), data.getCarNum(), "车主：", data.getOwnerName(), data.getOwnerMobile()
                             , data.getGoodName(), "司机：", data.getDriverName(), data.getDriverMobile()
-                            , data.isInsurance(), data.getPolicyMoney()
                     );
                     break;
                 default:
                     setContent(data.getDepartNum(), data.getCarNum(), "车主：", data.getOwnerName(), data.getOwnerMobile()
                             , data.getGoodName(), "司机：", data.getDriverName(), data.getDriverMobile()
-                            , data.isInsurance(), data.getPolicyMoney()
                     );
                     break;
             }
         } else {
             setContent(data.getDepartNum(), data.getCarNum(), "车主：", data.getOwnerName(), data.getOwnerMobile()
                     , data.getGoodName(), "司机：", data.getDriverName(), data.getDriverMobile()
-                    , data.isInsurance(), data.getPolicyMoney()
             );
         }
 
-        buildButton(data.isInsurance());
+        buildButton(data.isInsurance(), data.isHasGoodsImage(), data.isHasReceiptImage());
 
-        //对于司机，不显示运费
-        if (roleState == OrderDetailItemControl.RoleState.DRIVER) {
-            setPrice("");
-            hideBottom(bt_left.getVisibility() != VISIBLE && bt_right.getVisibility() != VISIBLE);
-
+        //司机隐藏价格,保险控件
+        if (tv_price.getVisibility() != GONE) {
+            tv_price.setVisibility(roleState == OrderDetailItemControl.RoleState.DRIVER ? GONE : VISIBLE);
+            tv_instances.setVisibility(roleState == OrderDetailItemControl.RoleState.DRIVER ? GONE : VISIBLE);
         }
 
+
+    }
+
+    /**
+     * 设置保费
+     */
+    private void setInsruancePrice(String insruancePrice) {
+        tv_instances.setText(insruancePrice == null ? "" :  insruancePrice );
 
     }
 
 
     private boolean hideButton;
 
+
     public void hideButton(boolean hideButton) {
         this.hideButton = hideButton;
-        if (hideButton) {
-            bt_left.setVisibility(GONE);
-            bt_right.setVisibility(GONE);
-
-            return;
-        }
-
+        buildButton(false, false, false);
     }
 
     /**
@@ -297,31 +315,29 @@ public class OrderDetailItem extends FrameLayout {
      */
     public void setContent(String startNum, String carNum, String roleTop, String carOwnerName,
                            final String carOwnerPhone, String cargo, String roleBottom,
-                           String driverName, final String driverPhone, boolean hasInsurance, String insuranceMoney) {
+                           String driverName, final String driverPhone) {
         tv_order_detail.setMovementMethod(LinkMovementMethod.getInstance());
         tv_order_detail.setText(getContent(startNum, carNum, roleTop, carOwnerName, carOwnerPhone, cargo
-                , roleBottom, driverName, driverPhone, hasInsurance, insuranceMoney
+                , roleBottom, driverName, driverPhone
         ));
     }
 
     /**
      * 获取中间内容
      *
-     * @param startNum       发车编号
-     * @param carNum         车牌号
-     * @param roleTop        第一个角色名字
-     * @param carOwnerName   车主姓名
-     * @param carOwnerPhone  车主电话
-     * @param cargo          货物
-     * @param roleBottom     下边角色
-     * @param driverName     司机姓名
-     * @param driverPhone    司机电话
-     * @param hasInsurance   是否支付保费
-     * @param insuranceMoney 保费金额
+     * @param startNum      发车编号
+     * @param carNum        车牌号
+     * @param roleTop       第一个角色名字
+     * @param carOwnerName  车主姓名
+     * @param carOwnerPhone 车主电话
+     * @param cargo         货物
+     * @param roleBottom    下边角色
+     * @param driverName    司机姓名
+     * @param driverPhone   司机电话
      */
     private SpannableStringBuilder getContent(String startNum, String carNum, String roleTop, String carOwnerName,
                                               final String carOwnerPhone, String cargo, String roleBottom,
-                                              String driverName, final String driverPhone, boolean hasInsurance, String insuranceMoney) {
+                                              String driverName, final String driverPhone) {
 
 
         int firstPoint = -1;
@@ -345,15 +361,10 @@ public class OrderDetailItem extends FrameLayout {
             firstPoint = builder.toString().length();
         }
 
-        //如果设置隐藏保费，直接隐藏
-        if (hideInsurance) {
-            hasInsurance = false;
-        }
-
         builder.append("\n")
                 .append("货物：")
                 .append(cargo == null ? "" : cargo)
-                .append(hasInsurance ? ("（已支付" + insuranceMoney + "元保险费）") : "")
+//                .append(hasInsurance ? ("（已支付" + insuranceMoney + "元保险费）") : "")
                 .append("\n")
                 .append(roleBottom)
                 .append(driverName == null ? "" : driverName).append(" ")
@@ -400,37 +411,31 @@ public class OrderDetailItem extends FrameLayout {
     }
 
 
-    public void buildButton(boolean b) {
-
+    /**
+     * @param b               是否购买保险
+     * @param hasGoodsImage   是否有回单，是否有货单
+     * @param hasReceiptImage
+     */
+    public void buildButton(boolean b, boolean hasGoodsImage, boolean hasReceiptImage) {
+        llBottom.removeAllViews();
         if (hideButton) {
-            bt_left.setVisibility(GONE);
-            bt_right.setVisibility(GONE);
-
+            llBottom.setVisibility(GONE);
+            lineBottom.setVisibility(GONE);
             return;
         }
-
-        final OrderDetailItemControl.IOrderItemHelper helper = new OrderItemHelper(orderState, roleState, b);
-        bt_left.setVisibility(helper.getLeftVisibility());
-        bt_right.setVisibility(helper.getRightVisibility());
-
-        if (bt_right.getVisibility() == VISIBLE) {
-            bt_right.setText(helper.getBtRightInfor());
-            bt_right.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    clickEvent(helper.getBtRightInfor());
-                }
-            });
+        final OrderDetailItemControl.IOrderItemHelper helper = new OrderItemHelper(orderState, roleState);
+        helper.setInsurance(b)
+                .setHasGoodsImage(hasGoodsImage)
+                .setHasReceiptImage(hasReceiptImage)
+        ;
+        List<ButtonInforBean> infors = helper.getButtonInfors();
+        for (ButtonInforBean infor : infors) {
+            TextView button = creatButton(infor);
+            llBottom.addView(button);
+            button.setOnClickListener(this);
         }
-        if (bt_left.getVisibility() == VISIBLE) {
-            bt_left.setText(helper.getBtLeftInfor());
-            bt_left.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    clickEvent(helper.getBtLeftInfor());
-                }
-            });
-        }
+        llBottom.setVisibility(llBottom.getChildCount() == 0 ? GONE : VISIBLE);
+        lineBottom.setVisibility(llBottom.getChildCount() == 0 ? GONE : VISIBLE);
     }
 
     public void setOnButtonClickListener(OrderDetailItemControl.OnOrderDetailBtClickListener listener) {
@@ -502,7 +507,41 @@ public class OrderDetailItem extends FrameLayout {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("确认到达");
                 }
                 break;
-
+            case ORDER_CHECK_RECEIPT://    = "查看回单";
+                if (listener != null) {
+                    listener.onCheckReceipt(orderBean);
+                } else {
+                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("查看回单");
+                }
+                break;
+            case ORDER_UP_RECEIPT://    = "上传回单";
+                if (listener != null) {
+                    listener.onUpReceipt(orderBean);
+                } else {
+                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("上传回单");
+                }
+                break;
+            case ORDER_CHANGE_RECEIPT://    = "修改回单";
+                if (listener != null) {
+                    listener.onChangeReceipt(orderBean);
+                } else {
+                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("修改回单");
+                }
+                break;
+            case ORDER_CHANGE://修改订单
+                if (listener != null) {
+                    listener.onChangeOrder(orderBean);
+                } else {
+                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("修改订单");
+                }
+                break;
+            case ORDER_CHECK_GOODS://查看货单
+                if (listener != null) {
+                    listener.onCheckGoods(orderBean);
+                } else {
+                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("查看货单");
+                }
+                break;
         }
     }
 
@@ -513,8 +552,11 @@ public class OrderDetailItem extends FrameLayout {
      * @param b
      */
     public void hideBottom(boolean b) {
-        llBottom.setVisibility(b ? GONE : VISIBLE);
-        lineBottom.setVisibility(b ? GONE : VISIBLE);
+
+        tv_price.setVisibility(b ? GONE : VISIBLE);
+        tv_instances.setVisibility(b ? GONE : VISIBLE);
+        hideButton(b);
+
     }
 
     /**
@@ -524,5 +566,29 @@ public class OrderDetailItem extends FrameLayout {
      */
     public void hideInsurance(boolean hideInsurance) {
         this.hideInsurance = hideInsurance;
+    }
+
+
+    public TextView creatButton(ButtonInforBean infor) {
+        TextView button = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.order_item_text, llBottom, false);
+        button.setTextColor(infor.getType() == 1 ? getResources().getColor(R.color.white) : getResources().getColor(R.color.color_title_dark));
+        button.setBackgroundResource(infor.getType() == 1 ? R.drawable.shape_2_f06f28 : R.drawable.shape_2_stoke_dddddd);
+        button.setGravity(Gravity.CENTER);
+
+        button.setTextSize(13);
+        button.setText(infor.getText() == null ? "" : infor.getText());
+        return button;
+    }
+
+    /**
+     * Called when a view has been clicked.
+     *
+     * @param v The view that was clicked.
+     */
+    @Override
+    public void onClick(View v) {
+        if (v instanceof TextView) {
+            clickEvent(((TextView) v).getText().toString().trim());
+        }
     }
 }

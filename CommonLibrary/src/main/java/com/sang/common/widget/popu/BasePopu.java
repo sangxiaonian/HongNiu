@@ -15,7 +15,7 @@ import com.sang.common.widget.popu.inter.OnPopuDismissListener;
 public class BasePopu {
 
     protected PopupWindow pop;
-    OnPopuDismissListener dismissListener;
+    protected OnPopuDismissListener dismissListener;
     protected View tragetView;
 
     public BasePopu(Context context) {
@@ -32,8 +32,8 @@ public class BasePopu {
         pop.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-                if (dismissListener!=null){
-                    dismissListener.onPopuDismsss(BasePopu.this,tragetView);
+                if (dismissListener != null) {
+                    dismissListener.onPopuDismsss(BasePopu.this, tragetView);
                 }
             }
         });

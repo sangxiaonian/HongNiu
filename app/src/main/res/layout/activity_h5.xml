@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.H5Activity">
+    <include layout="@layout/toolbar"/>
     <com.sang.common.widget.XWebView
         android:layout_width="match_parent"
         android:id="@+id/webview"

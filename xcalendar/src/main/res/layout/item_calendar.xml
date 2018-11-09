@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="236dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
+        android:textColor="#333333"
+        android:textSize="15sp"
+        android:text="2018年10月"
+        android:layout_marginLeft="15dp"
+        android:layout_height="wrap_content" />
+
+
+    <com.sangxiaonian.xcalendar.calendar.SequenceCalendarView
+        android:id="@+id/calendar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

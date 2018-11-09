@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -23,6 +24,7 @@ import com.hongniu.baselibrary.base.RefrushActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
+import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
@@ -30,6 +32,7 @@ import com.sang.common.event.BusFactory;
 import com.sang.common.event.IBus;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
+import com.sang.common.recycleview.holder.PeakHolder;
 import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 import com.sang.thirdlibrary.map.MapUtils;
@@ -58,6 +61,7 @@ public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implement
     private Marker marker;
     MapUtils mapUtils;
     private PoiItem searchKey;
+    private PeakHolder header;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +106,14 @@ public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implement
             marker = aMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.end))));
             etSearch.setText("在哪里收货");
         }
-
+        header = new PeakHolder(mContext, rv, R.layout.order_item_loaction_head) {
+            @Override
+            public void initView(int position) {
+                super.initView(position);
+                TextView tvTitle = itemView.findViewById(R.id.tv_title);
+                tvTitle.setText(String.format(getString(R.string.map_search_aleart), key));
+            }
+        };
     }
 
     @Override
@@ -137,13 +148,22 @@ public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implement
                         TextView tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
                         TextView tvDes = (TextView) itemView.findViewById(R.id.tv_des);
                         ImageView img = itemView.findViewById(R.id.img);
+
+                        String placeInfor=Utils.dealPioPlace(data);
+
+
                         if (selectPositio == position) {
                             img.setVisibility(View.VISIBLE);
+                            if (etSearch!=null&&!TextUtils.isEmpty(placeInfor)){
+//                                etSearch.setText(placeInfor);
+                            }
+
                         } else {
                             img.setVisibility(View.GONE);
                         }
 
-                        tvDes.setText(data.getSnippet());
+
+                        tvDes.setText(placeInfor);
                         tvTitle.setText(data.getTitle());
                         itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -178,6 +198,7 @@ public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implement
                 if (selectPositio >= 0 && datas.size() > selectPositio) {
                     IBus.IEvent event;
                     PoiItem poiItem = datas.get(selectPositio);
+
                     if (start) {
                         event = new OrderEvent.StartLoactionEvent(poiItem);
                     } else {
@@ -259,15 +280,21 @@ public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implement
     protected boolean getUseEventBus() {
         return true;
     }
-
+    String key;
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(final OrderEvent.SearchPioItem event) {
+    public void onMessageEvent(  OrderEvent.SearchPioItem event) {
         if (event != null) {
             this.searchKey = event.t;
             upData=false;
             searchBound=null;
             selectPositio = 0;
             mapUtils.moveTo(searchKey.getLatLonPoint().getLatitude(),searchKey.getLatLonPoint().getLongitude());
+            key =event.key;
+            if (TextUtils.isEmpty(key)){
+                adapter.removeHeard(header);
+            }else  {
+                adapter.addHeard(header);
+            }
             queryData(true, true);
         }
     }

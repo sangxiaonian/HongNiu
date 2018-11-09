@@ -1,5 +1,7 @@
 package com.hongniu.moduleorder.net;
 
+import android.text.TextUtils;
+
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
@@ -10,6 +12,9 @@ import com.hongniu.baselibrary.entity.OrderCreatBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.OrderIdBean;
 import com.hongniu.baselibrary.entity.PageBean;
+import com.hongniu.baselibrary.entity.UpImgData;
+import com.hongniu.baselibrary.entity.UpReceiverBean;
+import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.moduleorder.entity.LocationBean;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
@@ -17,19 +22,26 @@ import com.hongniu.moduleorder.entity.OrderCreatParamBean;
 import com.hongniu.moduleorder.entity.OrderDriverPhoneBean;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
 import com.hongniu.moduleorder.entity.OrderParamBean;
+import com.hongniu.moduleorder.entity.OrderSearchBean;
 import com.hongniu.moduleorder.entity.PathBean;
 import com.hongniu.moduleorder.entity.QueryInsurancePriceBean;
+import com.hongniu.moduleorder.entity.QueryReceiveBean;
 import com.hongniu.moduleorder.entity.VersionBean;
 import com.sang.common.net.error.NetException;
 import com.sang.common.net.rx.RxUtils;
+import com.sang.common.utils.CommonUtils;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.functions.Function;
-import io.reactivex.functions.Predicate;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 /**
  * 作者： ${PING} on 2018/8/15.
@@ -52,11 +64,44 @@ public class HttpOrderFactory {
     /**
      * 创建订单
      *
+     * @param list 货单图片
      * @param bean
      */
-    public static Observable<CommonBean<OrderDetailBean>> creatOrder(OrderCreatParamBean bean) {
+    public static Observable<CommonBean<OrderDetailBean>> creatOrder(List<String> list, final OrderCreatParamBean bean) {
+        bean.setGoodsImages(list);
+        return OrderClient.getInstance()
+                .getService()
+                .creatOrder(bean)
+                .compose(RxUtils.<CommonBean<OrderDetailBean>>getSchedulersObservableTransformer());
 
-        return OrderClient.getInstance().getService().creatOrder(bean).compose(RxUtils.<CommonBean<OrderDetailBean>>getSchedulersObservableTransformer());
+
+    }
+
+    /**
+     * 修改订单
+     *
+     * @param list 货单图片
+     * @param bean
+     */
+    public static Observable<CommonBean<OrderDetailBean>> changeOrder(List<String> list, final OrderCreatParamBean bean) {
+        bean.setGoodsImages(list);
+
+        return OrderClient.getInstance()
+                .getService()
+                .changeOrder(bean)
+                .compose(RxUtils.<CommonBean<OrderDetailBean>>getSchedulersObservableTransformer());
+
+    }
+
+
+    /**
+     * 查询订单数据
+     *
+     * @param orderID
+     */
+    public static Observable<CommonBean<OrderDetailBean>> queryOrderDetail(String orderID) {
+
+        return HttpAppFactory.queryOrderDetail(orderID,null,null);
 
     }
 
@@ -129,33 +174,39 @@ public class HttpOrderFactory {
      * hasFreight   true	boolean	是否付运费，true=是
      * hasPolicy    true	boolean	是否买保险，true=是
      * onlinePay    true	boolean	是否线上支付,false=线下支付
-     * payType      true	    int 	支付方式 0微信支付 1银联支付 2线下支付
+     * payType      true	    int 	支付方式 0微信支付 1银联支付 2线下支付 3 支付宝
      */
     public static Observable<CommonBean<PayBean>> payOrderOffLine(OrderParamBean bean) {
         //支付方式
         int payType = bean.getPayType();
-        if (payType == 1) {
+        if (payType == 1) {//银联支付
             return OrderClient.getInstance()
                     .getService()
-                    .payUnionOffLine(bean)
-                    .filter(new Predicate<CommonBean<PayBean>>() {
-                        @Override
-                        public boolean test(CommonBean<PayBean> payBeanCommonBean) throws Exception {
-                            PayBean data = payBeanCommonBean.getData();
-                            if (data !=null&&"00".equals(data.getCode())){
-                                return true;
-                            }else {
-                                throw new NetException(500,data.getMsg());
-                            }
-                        }
-                    })
+                    .payUnion(bean)
                     .compose(RxUtils.<CommonBean<PayBean>>getSchedulersObservableTransformer());
 
-        } else {
+        } else if (payType == 0) {//微信付款
+            return OrderClient.getInstance()
+                    .getService()
+                    .payWeChat(bean)
+                    .compose(RxUtils.<CommonBean<PayBean>>getSchedulersObservableTransformer());
+        } else if (payType == 3) {//支付宝
+            return OrderClient.getInstance()
+                    .getService()
+                    .payAli(bean)
+                    .compose(RxUtils.<CommonBean<PayBean>>getSchedulersObservableTransformer());
+        } else if (payType == 2) {//线下支付
             return OrderClient.getInstance()
                     .getService()
                     .payOrderOffLine(bean)
                     .compose(RxUtils.<CommonBean<PayBean>>getSchedulersObservableTransformer());
+        } else if (payType == 4) {//余额支付
+            return OrderClient.getInstance()
+                    .getService()
+                    .payBalance(bean)
+                    .compose(RxUtils.<CommonBean<PayBean>>getSchedulersObservableTransformer());
+        } else {
+            return null;
         }
 
 
@@ -276,8 +327,6 @@ public class HttpOrderFactory {
      * @param poiSearch
      */
     public static Observable<CommonBean<PageBean<PoiItem>>> searchPio(PoiSearch poiSearch) {
-
-
         return Observable.just(poiSearch)
                 .map(new Function<PoiSearch, PoiResult>() {
 
@@ -309,4 +358,183 @@ public class HttpOrderFactory {
 
 
     }
+
+    /**
+     * 搜索订单
+     *
+     * @return
+     */
+    public static Observable<CommonBean<PageBean<OrderSearchBean>>> searchOrder() {
+
+        return OrderClient.getInstance()
+                .getService()
+                .querySearchHistory()
+                .map(new Function<CommonBean<List<OrderSearchBean>>, CommonBean<PageBean<OrderSearchBean>>>() {
+                    @Override
+                    public CommonBean<PageBean<OrderSearchBean>> apply(CommonBean<List<OrderSearchBean>> listCommonBean) throws Exception {
+                        CommonBean<PageBean<OrderSearchBean>> bean = new CommonBean<>();
+                        bean.setCode(listCommonBean.getCode());
+                        bean.setMsg(listCommonBean.getMsg());
+                        PageBean<OrderSearchBean> pageBean = new PageBean<>();
+                        pageBean.setList(listCommonBean.getData());
+                        bean.setData(pageBean);
+                        return bean;
+                    }
+                })
+                .compose(RxUtils.<CommonBean<PageBean<OrderSearchBean>>>getSchedulersObservableTransformer());
+
+
+    }
+
+    /**
+     * 上传图片
+     *
+     * @return
+     */
+    public static Observable<List<String>> upImageUrlToString(final int type, final List<UpImgData> paths) {
+
+        return upImageUrl(type, paths)
+                .map(new Function<List<UpImgData>, List<String>>() {
+                    @Override
+                    public List<String> apply(List<UpImgData> upImgData) throws Exception {
+                        List<String> list = new ArrayList<>();
+                        if (!CommonUtils.isEmptyCollection(upImgData)) {
+                            for (UpImgData upImgDatum : upImgData) {
+                                if (!TextUtils.isEmpty(upImgDatum.getPath())) {
+                                    list.add(upImgDatum.getPath());
+                                }
+                            }
+                        }
+                        return list;
+                    }
+                })
+                ;
+
+    }
+
+
+    /**
+     * 上传图片
+     *
+     * @return
+     */
+    public static Observable<List<UpImgData>> upImageUrl(final int type, final List<UpImgData> paths) {
+        if (CommonUtils.isEmptyCollection(paths)) {
+            List<UpImgData> imgData = new ArrayList<>();
+            return Observable.just(imgData);
+        } else {
+            return Observable.just(paths)
+                    .map(new Function<List<UpImgData>, List<Observable<CommonBean<UpImgData>>>>() {
+                        @Override
+                        public List<Observable<CommonBean<UpImgData>>> apply(List<UpImgData> strings) throws Exception {
+                            List<Observable<CommonBean<UpImgData>>> commonBeans = new ArrayList<>();
+                            for (UpImgData imgData : strings) {
+                                if (TextUtils.isEmpty(imgData.getAbsolutePath()) || imgData.getAbsolutePath().startsWith("http")) {
+                                    CommonBean<UpImgData> bean = new CommonBean<>();
+                                    bean.setCode(200);
+                                    bean.setData(imgData);
+                                    commonBeans.add(Observable.just(bean));
+                                } else {
+                                    File file = new File(imgData.getAbsolutePath());
+                                    RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/from-imgData"), file);
+                                    MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+                                    commonBeans.add(OrderClient.getInstance()
+                                            .getService()
+                                            .uploadMultipleTypeFile(type, body));
+                                }
+                            }
+                            return commonBeans;
+                        }
+                    })
+
+                    .flatMap(new Function<List<Observable<CommonBean<UpImgData>>>, ObservableSource<List<CommonBean<UpImgData>>>>() {
+
+                        @Override
+                        public ObservableSource<List<CommonBean<UpImgData>>> apply(List<Observable<CommonBean<UpImgData>>> observables) throws Exception {
+                            return Observable
+                                    .zip(observables, new Function<Object[], List<CommonBean<UpImgData>>>() {
+                                        @Override
+                                        public List<CommonBean<UpImgData>> apply(Object[] objects) throws Exception {
+                                            List<CommonBean<UpImgData>> list = new ArrayList<>();
+                                            for (Object object : objects) {
+                                                list.add((CommonBean<UpImgData>) object);
+                                            }
+                                            return list;
+                                        }
+                                    });
+                        }
+                    })
+                    .map(new Function<List<CommonBean<UpImgData>>, List<UpImgData>>() {
+                        @Override
+                        public List<UpImgData> apply(List<CommonBean<UpImgData>> commonBeans) throws Exception {
+                            List<UpImgData> list = new ArrayList<>();
+                            for (CommonBean<UpImgData> commonBean : commonBeans) {
+                                list.add(commonBean.getData());
+                            }
+                            return list;
+                        }
+                    })
+                    ;
+        }
+
+    }
+
+
+    /**
+     * 上传回单
+     *
+     * @return
+     */
+    public static Observable<CommonBean<String>> upReceive(final String orderID, final String remark, final List<String> paths) {
+        UpReceiverBean receiver = new UpReceiverBean();
+        receiver.setOrderId(orderID);
+        receiver.setRemark(remark);
+        receiver.setImageUrls(paths);
+        return OrderClient.getInstance().getService().upReceiver(receiver)
+                .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
+    }
+
+    /**
+     * 查看回单
+     *
+     * @return
+     */
+    public static Observable<CommonBean<QueryReceiveBean>> queryReceiptInfo(final String orderID) {
+        UpReceiverBean receiver = new UpReceiverBean();
+        receiver.setOrderId(orderID);
+        return OrderClient.getInstance().getService().queryReceiptInfo(receiver)
+                .compose(RxUtils.<CommonBean<QueryReceiveBean>>getSchedulersObservableTransformer());
+
+
+    }/**
+     * 查看货单
+     *
+     * @return
+     */
+    public static Observable<CommonBean<List<UpImgData>>> queryCargoInfo(final String orderID) {
+        UpReceiverBean receiver = new UpReceiverBean();
+        receiver.setOrderId(orderID);
+        return OrderClient.getInstance().getService().queryCargotInfo(receiver)
+                .compose(RxUtils.<CommonBean<List<UpImgData>>>getSchedulersObservableTransformer())
+                ;
+
+
+    }
+
+
+    /**
+     * 删除指定回单 （接口已经废弃，暂时无需调用）
+     *
+     * @param orderID
+     * @param imgID
+     */
+    public static Observable<CommonBean<String>> deletedReceiveImage(String orderID, String imgID) {
+        UpReceiverBean receiver = new UpReceiverBean();
+        receiver.setOrderId(orderID);
+        receiver.setImageId(imgID);
+        return OrderClient.getInstance().getService().deleteReceiptImage(receiver)
+                .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
+    }
+
+
 }

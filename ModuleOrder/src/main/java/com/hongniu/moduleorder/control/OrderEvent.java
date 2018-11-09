@@ -4,6 +4,7 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.services.core.PoiItem;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
+import com.hongniu.moduleorder.entity.QueryReceiveBean;
 import com.sang.common.event.IBus;
 
 /**
@@ -26,12 +27,36 @@ public class OrderEvent {
             this.t = t;
         }
     }
-  public static class SearchPioItem implements IBus.IEvent {
+
+    public static class SearchPioItem implements IBus.IEvent {
         public PoiItem t;
+        public String key;
 
         public SearchPioItem(PoiItem t) {
             this.t = t;
         }
+    }
+
+    /**
+     * 删除指定位置图片
+     */
+    public static class DeletedPic implements IBus.IEvent {
+        private int position;
+        private String path;
+
+        public int getPosition() {
+            return position;
+        }
+
+        public String getPath() {
+            return path;
+        }
+
+        public DeletedPic(int position, String path) {
+            this.position = position;
+            this.path = path;
+        }
+
     }
 
     /**
@@ -44,8 +69,6 @@ public class OrderEvent {
             this.roleState = roleState;
         }
     }
-
-
 
 
     /**
@@ -104,4 +127,31 @@ public class OrderEvent {
     }
 
 
+    /**
+     * 修改回单
+     */
+    public static class UpReceiver implements IBus.IEvent {
+
+        public QueryReceiveBean bean;
+
+        public UpReceiver(QueryReceiveBean bean) {
+            this.bean = bean;
+        }
+    }
+
+    /**
+     * 修改订单信息
+     */
+    public static class ChangeOrder implements IBus.IEvent {
+
+        public OrderDetailBean bean;
+        public String orderID;
+        public ChangeOrder(OrderDetailBean bean) {
+            this.bean = bean;
+        }
+
+        public ChangeOrder(String orderID) {
+            this.orderID = orderID;
+        }
+    }
 }

@@ -78,7 +78,7 @@ public class ToastSuccess implements IToast {
 
     @Override
     public void show() {
-        toast.show();
+       show("操作成功");
     }
 
     @Override

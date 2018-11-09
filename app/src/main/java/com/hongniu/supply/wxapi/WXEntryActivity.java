@@ -3,13 +3,16 @@ package com.hongniu.supply.wxapi;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.supply.R;
+import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.JLog;
+import com.sang.common.utils.ToastUtils;
 import com.sang.thirdlibrary.pay.PayConfig;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
@@ -18,6 +21,8 @@ import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
+import org.greenrobot.eventbus.EventBus;
 
 public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler {
 
@@ -55,13 +60,33 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler 
         if (resp.getType() == ConstantsAPI.COMMAND_LAUNCH_WX_MINIPROGRAM) {
             WXLaunchMiniProgram.Resp launchMiniProResp = (WXLaunchMiniProgram.Resp) resp;
             String extraData = launchMiniProResp.extMsg; // 对应JsApi navigateBackApplication中的extraData字段数据
-            JLog.i(extraData);
-            ArouterUtils.getInstance().builder(ArouterParamLogin.activity_pay_ways)
-                    .withString(Param.TRAN, extraData)
-                    .navigation(this);
             finish();
+            EventBus.getDefault().postSticky(extraData);
+        }else if (resp.getType() == ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX){
+            String result = "";
+            switch (resp.errCode) {
+                case BaseResp.ErrCode.ERR_OK:
+                    result = "分享成功";
+                    break;
+                case BaseResp.ErrCode.ERR_USER_CANCEL:
+                    result = "分享取消";
+                    break;
+                case BaseResp.ErrCode.ERR_AUTH_DENIED:
+                    result = "分享失败";
+                    break;
+                default:
+                    result = "出现异常";
+                    break;
+            }
+            ToastUtils.getInstance().show(result);
+            DeviceUtils.moveToFront(mContext);
+            finish();
+
         }
+
     }
+
+
 
 
 }

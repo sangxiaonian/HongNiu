@@ -29,7 +29,10 @@
     <dimen name="text_login_btn">18sp</dimen>
     <dimen name="text_login_et">18sp</dimen>
     <dimen name="text_min_11sp">11sp</dimen>
+    <dimen name="text_min_12sp">12sp</dimen>
     <dimen name="text_small">13sp</dimen>
     <dimen name="text_small_14">14sp</dimen>
+    <dimen name="text_small_15">15sp</dimen>
+    <dimen name="text_small_16">16sp</dimen>
 
 </resources>

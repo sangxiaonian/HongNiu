@@ -8,6 +8,9 @@
 
     <string name="splash_title">更快 更好 更懂你</string>
     <string name="phone_error">请输入正确手机号码</string>
+    <string name="money_symbol">￥</string>
+    <string name="money_symbol_des">￥%1$s </string>
+    <string name="account">账号 %1$s </string>
 
     <!--Login-->
     <string name="login_title">欢迎登录泓牛</string>
@@ -46,6 +49,7 @@
     <string name="order_main_start_time">发车时间</string>
     <string name="order_main_no_order">暂无订单</string>
     <string name="order_main_map_no_location">抱歉，没有搜索到结果，请换个关键词试试</string>
+    <string name="map_search_aleart">搜索“%1$s”结果如下，请选择或手动移动地图到您想要的位置</string>
 
     <!--订单支付-->
     <string name="order_pay">支付订单</string>
@@ -55,7 +59,7 @@
     <string name="order_pay_insurance_detail">牛人保，运货更安心</string>
     <string name="order_pay_insurance_notice_bt">同意以上，开始投保</string>
     <string name="order_pay_bus_insurance">购买保险</string>
-    <string name="order_pay_pay_ways">运费支付渠道</string>
+    <string name="order_pay_pay_ways">运费支付渠道(代收款)</string>
     <string name="order_pay_online">线上支付</string>
     <string name="order_pay_offline">线下支付</string>
     <string name="order_pay_charge">运费金额</string>
@@ -63,7 +67,7 @@
     <string name="order_pay_wechat">微信支付</string>
     <string name="order_pay_wechat_discribe">微信安全支付</string>
     <string name="order_pay_ali">支付宝</string>
-    <string name="order_pay_ali_discribe">不可使用花呗</string>
+    <string name="order_pay_ali_discribe">支付宝安全支付</string>
     <string name="order_pay_union">银联支付</string>
     <string name="order_pay_union_discribe">中国银联在线支付服务</string>
 
@@ -95,5 +99,39 @@
     <string name="carnum_error">车牌号错误</string>
     <string name="order_map_search_error">抱歉，没有搜索到结果，请换个关键词试试</string>
 
+    <!--我的钱包-->
+    <string name="wallet_title">我的钱包</string>
+    <string name="wallet_balance_of_account">账户余额(元)</string>
+    <string name="wallet_niu_of_account_des">牛贝总额</string>
+    <string name="wallet_niu_title">牛贝账户</string>
+    <string name="wallet_niu_of_account">%1$s 个</string>
+    <string name="wallet_niu_unentry_count">您有 %1$s 个牛贝待入账</string>
+
+    <string name="wallet_balance_account">账户余额</string>
+    <string name="wallet_balance_wait_entry">您有 %1$s 元入账后可提现</string>
+    <string name="wallet_balance_can_withdrawal_des">可提现余额</string>
+    <string name="wallet_withdrawal">提现</string>
+    <string name="wallet_balance_withdrawal">提现金额</string>
+    <string name="wallet_balance_withdrawal_all">全部提现</string>
+    <string name="wallet_balance_withdrawal_title">账户提现</string>
+    <string name="wallet_balance_account_num">账户余额￥ %1$s</string>
+    <string name="wallet_balance_wait_enty">( 您有 %1$s 元待入账金额 )</string>
+    <string name="wallet_balance_niu_unentry_count"> %1$s 个牛贝待入账</string>
+    <string name="wallet_balance_withDrawal_ali">支付宝收款</string>
+    <string name="wallet_balance_withDrawal_weiChat">微信收款</string>
+    <string name="wallet_balance_withdrawal_card_num">尾号 %1$s 储蓄卡</string>
+
+
+
+    <string name="order_search_des">发车编号、车牌号、货物、订单号</string>
+    <string name="order_up_receipt">上传回单</string>
+    <string name="hongniu_agreement">泓牛供应链软件许可及服务协议</string>
+    <string name="username_infor">用户名：%1$s</string>
+    <string name="phone_infor">手机号：</string>
+    <string name="order_change">修改订单</string>
+    <string name="order_entry_change">确定修改订单</string>
+    <string name="finance_niu_creat_car_time">创建车辆时间：%1$s</string>
+    <string name="car_num">车牌号码：%1$s</string>
+    <string name="finance_add_new_pay_way">添加新的收款方式提现</string>
 
 </resources>

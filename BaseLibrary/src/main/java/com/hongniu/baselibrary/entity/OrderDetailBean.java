@@ -2,8 +2,11 @@ package com.hongniu.baselibrary.entity;
 
 import android.text.TextUtils;
 
+import com.google.gson.annotations.SerializedName;
 import com.hongniu.baselibrary.widget.order.CommonOrderUtils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
+
+import java.util.List;
 
 /**
  * 作者： ${PING} on 2018/8/7.
@@ -150,6 +153,20 @@ public class OrderDetailBean {
      */
     private boolean insurance;
 
+    /**
+     * 保费的支付方式
+     */
+    private String policyPayWay;
+
+    /**
+     * 是否有货单
+     */
+    private boolean hasGoodsImage;
+    /**
+     * 是否有回单
+     */
+    private boolean hasReceiptImage;
+
 
     /**
      * true string 发车编号
@@ -168,25 +185,10 @@ public class OrderDetailBean {
     private double longitude;
 
     /**
-     * false	string	支付方式(0微信,1银联,2线下支付)
+     * false	string	支付方式(0微信,1银联,2线下支付 3 支付宝 4余额支付
      */
     protected String payWay;
 
-    public String getUserMobile() {
-        return userMobile;
-    }
-
-    public void setUserMobile(String userMobile) {
-        this.userMobile = userMobile;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
 
     /**
      * false	string	保单号
@@ -213,7 +215,22 @@ public class OrderDetailBean {
     /**
      * 角色类似 1车主 2司机 3 货主
      */
+    @SerializedName(value = "roleType", alternate = {"role"})
     private int roleType;
+
+    /**
+     * 货单信息
+     */
+    private List<UpImgData> goodsImages;
+
+
+    public List<UpImgData> getGoodsImages() {
+        return goodsImages;
+    }
+
+    public void setGoodsImages(List<UpImgData> goodsImages) {
+        this.goodsImages = goodsImages;
+    }
 
     public int getRoleType() {
         return roleType;
@@ -292,22 +309,54 @@ public class OrderDetailBean {
         return payWay;
     }
 
+    public String getUserMobile() {
+        return userMobile;
+    }
+
+    public void setUserMobile(String userMobile) {
+        this.userMobile = userMobile;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public boolean isHasGoodsImage() {
+        return hasGoodsImage;
+    }
+
+    public void setHasGoodsImage(boolean hasGoodsImage) {
+        this.hasGoodsImage = hasGoodsImage;
+    }
+
+    public boolean isHasReceiptImage() {
+        return hasReceiptImage;
+    }
+
+    public void setHasReceiptImage(boolean hasReceiptImage) {
+        this.hasReceiptImage = hasReceiptImage;
+    }
+
     //获取支付方式的描述
     public String getPayWayDes() {
-        if (TextUtils.isEmpty(payWay)) {
-            return "";
-        } else if (payWay.equals("0")) {
-            return "微信";
-        } else if (payWay.equals("1")) {
-            return "银联";
-        } else if (payWay.equals("2")) {
-            return "线下支付";
-        } else {
-            return "";
-        }
+
+      return   CommonOrderUtils.getPayWay(payWay);
+
+
 
     }
 
+    public String getPolicyPayWay() {
+        return policyPayWay;
+    }
+
+    public void setPolicyPayWay(String policyPayWay) {
+        this.policyPayWay = policyPayWay;
+    }
 
     public void setPayWay(String payWay) {
         this.payWay = payWay;

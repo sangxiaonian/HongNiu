@@ -17,39 +17,39 @@
         android:gravity="center">
 
         <TextView
-            android:transitionName="search"
-            android:clickable="true"
-            android:imeOptions="actionSearch"
             android:id="@+id/et_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape_2_gray"
-            android:textColor="#c8c8c8"
-            android:singleLine="true"
-            android:padding="5dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:textColorHint="#c8c8c8"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/shape_2_gray"
+            android:clickable="true"
+            android:imeOptions="actionSearch"
+            android:padding="5dp"
+            android:singleLine="true"
             android:text="在哪收货"
-            android:textSize="13sp" />
+            android:textColor="#c8c8c8"
+            android:textColorHint="#c8c8c8"
+            android:textSize="13sp"
+            android:transitionName="search" />
     </LinearLayout>
 
 
-<!--
-    <FrameLayout
-        android:id="@+id/content"
-        android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="0dp"/>
--->
+    <!--
+        <FrameLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="0dp"/>
+    -->
 
     <com.amap.api.maps.MapView
         android:id="@+id/map"
         android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="0dp"/>
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
     <com.hongniu.baselibrary.widget.XRefreshLayout
         android:id="@+id/refresh"
@@ -57,17 +57,17 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
+
         <com.sang.common.recycleview.RecycleViewSupportEmpty
             android:id="@+id/rv"
-            android:overScrollMode="never"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:overScrollMode="never"
             app:empty_img="@mipmap/icon_zwcl_240"
             app:empty_title="@string/order_map_search_error" />
 
+
     </com.hongniu.baselibrary.widget.XRefreshLayout>
-
-
 
 
 </LinearLayout>

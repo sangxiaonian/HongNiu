@@ -3,9 +3,11 @@ package com.sang.thirdlibrary.pay.wechat;
 import android.app.Activity;
 import android.content.Context;
 
+import com.sang.common.utils.CommonUtils;
 import com.sang.thirdlibrary.pay.PayConfig;
 import com.sang.thirdlibrary.pay.control.PayControl;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
+import com.sang.thirdlibrary.pay.unionpay.UnionPayClient;
 import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -19,8 +21,9 @@ public class WeChatAppPay implements PayControl.IPayClient {
     private boolean isDebug;
 
     @Override
-    public void setDebug(boolean isDebug) {
+    public PayControl.IPayClient setDebug(boolean isDebug) {
         this.isDebug=isDebug;
+        return this;
     }
 
     @Override
@@ -58,7 +61,6 @@ public class WeChatAppPay implements PayControl.IPayClient {
         //sign
         request.sign = sign;
         api.sendReq(request);
-
     }
 
 
@@ -69,7 +71,7 @@ public class WeChatAppPay implements PayControl.IPayClient {
         IWXAPI api = WXAPIFactory.createWXAPI(context, PayConfig.weChatAppid);// 填对应开发平台移动应用AppId
         WXLaunchMiniProgram.Req req = new WXLaunchMiniProgram.Req();
         req.userName = "gh_736800cd3405"; // 填小程序原始id（官方实例请填写自己的小程序id）
-        req.path = "pages/authorize/authorize"; //拉起小程序页面的可带参路径，不填默认拉起小程序首页
+        req.path = "pages/authorize/authorize?from=app"; //拉起小程序页面的可带参路径，不填默认拉起小程序首页
 
         if (isDebug) {
             req.miniprogramType = WXLaunchMiniProgram.Req.MINIPROGRAM_TYPE_PREVIEW;// 可选打开 体验版

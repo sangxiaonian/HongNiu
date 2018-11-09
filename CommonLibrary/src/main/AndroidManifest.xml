@@ -3,4 +3,9 @@
 
     <uses-permission android:name="android.permission.REORDER_TASKS" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <application>
+  <!--      <meta-data
+            android:name="com.sang.common.imgload.loader.glide.UnSafeOkHttpGlideModule"
+            android:value="GlideModule"/>-->
+    </application>
 </manifest>

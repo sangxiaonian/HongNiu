@@ -1,21 +1,26 @@
 package com.hongniu.moduleorder.entity;
 
+import java.util.List;
+
 /**
  * 作者： ${PING} on 2018/8/15.
  */
 public class OrderCreatParamBean {
+
+    protected String id;
+
     /**
      * true	string	发车编号
      */
-    protected String  departNum	          ;
+    protected String departNum;
     /**
      * true	string	开始地点x坐标
      */
-    protected double startLatitude;
+    protected String startLatitude;
     /**
      * true	string	开始地点y坐标
      */
-    protected double startLongitude;
+    protected String startLongitude;
     /**
      * true	string	开始地点描述
      */
@@ -23,15 +28,15 @@ public class OrderCreatParamBean {
     /**
      * true	string	目的地x坐标
      */
-    protected double destinationLatitude;
+    protected String destinationLatitude;
     /**
      * true	string	目的地y坐标
      */
-    protected double destinationLongitude;
+    protected String destinationLongitude;
     /**
      * true	string	目的地描述
      */
-    protected String  destinationInfo	  ;
+    protected String destinationInfo;
     /**
      * true	string	发货日期（字符串，格式YYYY-MM-dd）
      */
@@ -39,7 +44,7 @@ public class OrderCreatParamBean {
     /**
      * true	string	货物名称
      */
-    protected String  goodName	          ;
+    protected String goodName;
     /**
      * true	string	货物体积 (方)
      */
@@ -51,7 +56,7 @@ public class OrderCreatParamBean {
     /**
      * true	string	配送金额
      */
-    protected String  money             ;
+    protected String money;
     /**
      * true	string	车牌号
      */
@@ -59,7 +64,7 @@ public class OrderCreatParamBean {
     /**
      * false	string	车辆类型
      */
-    protected String  carInfo	          ;
+    protected String carInfo;
     /**
      * true	string	车主姓名
      */
@@ -79,7 +84,24 @@ public class OrderCreatParamBean {
     /**
      * false	string	支付方式(0微信,1银联,2线下支付)
      */
-    protected String  payWay	          ;
+    protected String payWay;
+    private List<String> goodsImageUrls;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public List<String> getGoodsImages() {
+        return goodsImageUrls;
+    }
+
+    public void setGoodsImages(List<String> goodsImages) {
+        this.goodsImageUrls = goodsImages;
+    }
 
     public String getDepartNum() {
         return departNum;
@@ -89,19 +111,19 @@ public class OrderCreatParamBean {
         this.departNum = departNum;
     }
 
-    public double getStartLatitude() {
+    public String getStartLatitude() {
         return startLatitude;
     }
 
-    public void setStartLatitude(double startLatitude) {
+    public void setStartLatitude(String startLatitude) {
         this.startLatitude = startLatitude;
     }
 
-    public double getStartLongitude() {
+    public String getStartLongitude() {
         return startLongitude;
     }
 
-    public void setStartLongitude(double startLongitude) {
+    public void setStartLongitude(String startLongitude) {
         this.startLongitude = startLongitude;
     }
 
@@ -113,18 +135,19 @@ public class OrderCreatParamBean {
         this.startPlaceInfo = startPlaceInfo;
     }
 
-    public double getDestinationLatitude() {
+    public String getDestinationLatitude() {
         return destinationLatitude;
     }
-    public void setDestinationLatitude(double destinationLatitude) {
+
+    public void setDestinationLatitude(String destinationLatitude) {
         this.destinationLatitude = destinationLatitude;
     }
 
-    public double getDestinationLongitude() {
+    public String getDestinationLongitude() {
         return destinationLongitude;
     }
 
-    public void setDestinationLongitude(double destinationLongitude) {
+    public void setDestinationLongitude(String destinationLongitude) {
         this.destinationLongitude = destinationLongitude;
     }
 

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_bg_dark"
+    android:orientation="vertical"
+    tools:context=".ui.LoginForgetPassActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <com.sang.common.widget.ItemView
+        android:id="@+id/item_phone"
+        style="@style/itemview"
+        android:layout_marginTop="@dimen/app_gap"
+        app:editable="false"
+        app:colorRight="@color/color_content_light"
+        app:colorLeft="@color/color_content_light"
+        app:textleft="手机号码" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <com.sang.common.widget.ItemView
+            android:id="@+id/item_sms"
+            style="@style/itemview"
+            app:showline="false"
+            app:centerType="number"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            app:textcenterhide="请输入短信验证码"
+            app:textleft="验证码" />
+
+        <TextView
+            android:id="@+id/bt_sms"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingRight="@dimen/app_gap"
+            android:background="@color/white"
+            android:gravity="center"
+
+            android:text="获取验证码"
+            android:textSize="15sp"
+            android:textColor="@drawable/selector_color_6d6d6d_light" />
+
+
+    </LinearLayout>
+
+
+    <com.sang.common.widget.ItemView
+        android:id="@+id/item_pass"
+        style="@style/itemview"
+        app:centerLength="6"
+        app:centerType="password"
+        android:layout_marginTop="@dimen/app_gap"
+        app:textcenterhide="请输入六位支付密码"
+        app:textleft="新密码" />
+
+    <com.sang.common.widget.ItemView
+        android:id="@+id/item_entry_pass"
+        style="@style/itemview"
+        app:showline="false"
+        app:centerLength="6"
+        app:centerType="password"
+        app:textcenterhide="请再次输入六位支付密码"
+        app:textleft="确认新密码" />
+
+
+    <Button
+        style="@style/bt_sum"
+        android:id="@+id/bt_sum"
+        android:layout_marginTop="30dp"
+        android:text="@string/finish" />
+
+
+</LinearLayout>

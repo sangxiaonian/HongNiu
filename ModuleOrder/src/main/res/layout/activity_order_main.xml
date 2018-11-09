@@ -33,6 +33,14 @@
                     app:openColor="@color/color_title_dark"
                     app:openIcon="@drawable/icon_arrow_down_333"
                     app:title="@string/order_main_title" />
+                <ImageView
+                    android:id="@+id/img_search"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/app_gap"
+                    app:srcCompat="@drawable/icon_search_333333" />
             </RelativeLayout>
 
             <FrameLayout
@@ -50,144 +58,156 @@
                 android:layout_marginTop="10dp"
                 android:gravity="center_vertical">
 
+            <ImageView
+                android:id="@+id/src_finance"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="22dp"
+                android:layout_marginRight="22dp"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/icon_finance_90" />
+
+            <LinearLayout
+                android:id="@+id/ll_order"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_weight="1"
+                android:background="@drawable/bt_radius_2_333_999"
+                android:gravity="center">
+
                 <ImageView
-                    android:id="@+id/src_finance"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:layout_marginLeft="22dp"
-                    android:layout_marginRight="22dp"
-                    android:scaleType="fitCenter"
-                    android:src="@mipmap/icon_finance_90" />
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:src="@mipmap/icon_addorder_24" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:text="@string/order_main_creat_order"
+                    android:textColor="#fff"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/src_me"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="22dp"
+                android:layout_marginRight="22dp"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/icon_me_90" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_left"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/color_white"
+        android:orientation="vertical"
+        android:paddingLeft="30dp">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:textColor="@color/color_title_dark"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/tv_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="55dp"
+            android:text="15515555555"
+
+            android:textColor="@color/color_order_color"
+            android:textSize="13sp" />
+
+
+        <ScrollView
+            android:layout_width="250dp"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:id="@+id/ll_order"
-                    android:layout_width="0dp"
-                    android:layout_height="45dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/bt_radius_2_333_999"
-                    android:gravity="center">
+                    android:id="@+id/ll_pay_method"
+                    style="@style/draw_item">
 
                     <ImageView
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
-                        android:src="@mipmap/icon_addorder_24" />
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/icon_yqyl_32" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="3dp"
-                        android:text="@string/order_main_creat_order"
-                        android:textColor="#fff"
+                        android:layout_marginLeft="@dimen/app_gap"
+                        android:text="邀请有礼"
+                        android:textColor="@color/color_title_dark"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="领取佣金"
+                        android:paddingLeft="@dimen/app_item_gap"
+                        android:paddingRight="@dimen/app_item_gap"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:layout_marginLeft="@dimen/app_model_gap"
+                        android:textSize="@dimen/text_min_11sp"
+                        android:background="@drawable/shape_2_f04428"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_person_infor"
+                    style="@style/draw_item">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/icon_me_grzl_32" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/app_gap"
+                        android:text="个人资料"
+                        android:textColor="@color/color_title_dark"
                         android:textSize="15sp" />
                 </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/src_me"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:layout_marginLeft="22dp"
-                    android:layout_marginRight="22dp"
-                    android:scaleType="fitCenter"
-                    android:src="@mipmap/icon_me_90" />
-
-            </LinearLayout>
-        </RelativeLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_left"
-            android:layout_gravity="start"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/color_white"
-            android:orientation="vertical"
-            android:paddingLeft="30dp">
-
-            <TextView
-                android:layout_marginTop="80dp"
-                android:id="@+id/tv_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:textColor="@color/color_title_dark"
-                android:textSize="24sp" />
-
-            <TextView
-                android:id="@+id/tv_phone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="55dp"
-                android:text="15515555555"
-
-                android:textColor="@color/color_order_color"
-                android:textSize="13sp" />
-
-
-            <ScrollView
-                android:layout_width="250dp"
-                android:layout_height="0dp"
-                android:layout_weight="1">
-
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:id="@+id/ll_my_car"
+                    style="@style/draw_item">
 
-                    <LinearLayout
-                        android:id="@+id/ll_pay_method"
-                        style="@style/draw_item">
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/icon_me_wdcl_32" />
 
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:scaleType="fitCenter"
-                            android:src="@mipmap/icon_me_skfs_32" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/app_gap"
-                            android:text="收款方式"
-                            android:textColor="@color/color_title_dark"
-                            android:textSize="15sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/ll_person_infor"
-                        style="@style/draw_item">
-
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:scaleType="fitCenter"
-                            android:src="@mipmap/icon_me_grzl_32" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/app_gap"
-                            android:text="个人资料"
-                            android:textColor="@color/color_title_dark"
-                            android:textSize="15sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/ll_my_car"
-                        style="@style/draw_item">
-
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:scaleType="fitCenter"
-                            android:src="@mipmap/icon_me_wdcl_32" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/app_gap"
-                            android:text="我的车辆"
-                            android:textColor="@color/color_title_dark"
-                            android:textSize="15sp" />
-                    </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/app_gap"
+                        android:text="我的车辆"
+                        android:textColor="@color/color_title_dark"
+                        android:textSize="15sp" />
+                </LinearLayout>
 
                     <View
                         android:layout_marginTop="10dp"
@@ -196,68 +216,68 @@
                         android:layout_height="0.5dp"
                         android:background="@color/color_line" />
 
-                    <LinearLayout
-                        android:id="@+id/ll_about_us"
-                        style="@style/draw_item">
+                <LinearLayout
+                    android:id="@+id/ll_about_us"
+                    style="@style/draw_item">
 
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:scaleType="fitCenter"
-                            android:src="@mipmap/icon_me_gywm_32" />
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/icon_me_gywm_32" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/app_gap"
-                            android:text="关于我们"
-                            android:textColor="@color/color_title_dark"
-                            android:textSize="15sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/ll_contact_service"
-                        style="@style/draw_item">
-
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:scaleType="fitCenter"
-                            android:src="@mipmap/icon_me_kfdh_32" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/app_gap"
-                            android:text="联系客服"
-                            android:textColor="@color/color_title_dark"
-                            android:textSize="15sp" />
-                    </LinearLayout>
-
-
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/app_gap"
+                        android:text="关于我们"
+                        android:textColor="@color/color_title_dark"
+                        android:textSize="15sp" />
                 </LinearLayout>
-            </ScrollView>
 
-            <LinearLayout
-                android:id="@+id/ll_login_out"
+                <LinearLayout
+                    android:id="@+id/ll_contact_service"
+                    style="@style/draw_item">
 
-                style="@style/draw_item"
-                android:layout_marginBottom="40dp">
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/icon_me_kfdh_32" />
 
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:scaleType="fitCenter"
-                    android:src="@mipmap/icon_me_tcdl_32" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/app_gap"
+                        android:text="联系客服"
+                        android:textColor="@color/color_title_dark"
+                        android:textSize="15sp" />
+                </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/app_gap"
-                    android:text="退出账号"
-                    android:textColor="@color/color_title_dark"
-                    android:textSize="15sp" />
+
             </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/ll_login_out"
+
+            style="@style/draw_item"
+            android:layout_marginBottom="40dp">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/icon_me_tcdl_32" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/app_gap"
+                android:text="退出账号"
+                android:textColor="@color/color_title_dark"
+                android:textSize="15sp" />
+        </LinearLayout>
 
 
         </LinearLayout>

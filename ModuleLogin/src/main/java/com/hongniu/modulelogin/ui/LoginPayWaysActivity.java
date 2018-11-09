@@ -6,10 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.transition.ChangeBounds;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -22,21 +18,16 @@ import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
-import com.hongniu.baselibrary.entity.PageBean;
+import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.widget.dialog.PayWaysDialog;
 import com.hongniu.modulelogin.R;
-import com.hongniu.modulelogin.entity.PayInforBeans;
+import com.hongniu.baselibrary.entity.PayInforBeans;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.sang.common.imgload.ImageLoader;
 import com.sang.common.net.error.NetException;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.recycleview.holder.PeakHolder;
-import com.sang.common.recycleview.touchhelper.DragSortHelper;
-import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.JLog;
-import com.sang.common.utils.ToastUtils;
-import com.sang.common.widget.CenteredImageSpan;
 import com.sang.common.widget.dialog.inter.DialogControl;
 import com.sang.thirdlibrary.pay.wechat.WeChatAppPay;
 
@@ -48,7 +39,11 @@ import io.reactivex.ObservableSource;
 import io.reactivex.functions.Function;
 
 /**
- * 我的收款方式
+ *@data  2018/10/25
+ *@Author PING
+ *@Description 我的收款方式
+ *
+ *
  */
 @Route(path = ArouterParamLogin.activity_pay_ways)
 public class LoginPayWaysActivity extends BaseActivity implements DialogControl.OnEntryClickListener<String> {
@@ -73,7 +68,6 @@ public class LoginPayWaysActivity extends BaseActivity implements DialogControl.
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        JLog.i("--------------------------");
         upData();
     }
 
@@ -107,7 +101,7 @@ public class LoginPayWaysActivity extends BaseActivity implements DialogControl.
                     public void initView(View rootView, int position, final PayInforBeans data) {
                         super.initView(rootView, position, data);
 
-                        rootView.setBackgroundResource(data.getPayWays() == 1
+                        rootView.setBackgroundResource(data.getType() == 1
                                 ? R.drawable.shape_4_gradient_45b649_6fcc3c : R.drawable.shape_4_gradient_fe5163_fe8a71);
                         //微信背景
                         ImageView bgIcon = itemView.findViewById(R.id.img_icon_big);
@@ -120,11 +114,11 @@ public class LoginPayWaysActivity extends BaseActivity implements DialogControl.
                         TextView tvNum = itemView.findViewById(R.id.tv_num);
 
 
-                        bgIcon.setVisibility(data.getPayWays() == 1 ? View.VISIBLE : View.GONE);
+                        bgIcon.setVisibility(data.getType() == 1 ? View.VISIBLE : View.GONE);
                         imgDefault.setVisibility(data.getIsDefault() == 1 ? View.VISIBLE : View.GONE);
-                        ImageLoader.getLoader().load(mContext, icon, data.getPayWays() == 1 ? R.mipmap.icon_skfs_wechat_40 : R.mipmap.icon_yl_40);
+                        ImageLoader.getLoader().load(mContext, icon, data.getType() == 1 ? R.mipmap.icon_skfs_wechat_40 : R.mipmap.icon_yl_40);
                         tvTitle.setText(data.getBankName() == null ? "" : data.getBankName());
-                        if (data.getPayWays() == 0) {//银联卡号
+                        if (data.getType() == 0) {//银联卡号
                             if (data.getCardNo() != null) {
                                 if (data.getCardNo().length() >= 4) {
                                     tvNum.setText(data.getCardNo().substring(data.getCardNo().length() - 4));
@@ -198,7 +192,7 @@ public class LoginPayWaysActivity extends BaseActivity implements DialogControl.
                     @Override
                     public ObservableSource<CommonBean<List<PayInforBeans>>> apply(CommonBean<String> stringCommonBean) throws Exception {
 
-                        return HttpLoginFactory.queryMyPayInforList();
+                        return HttpAppFactory.queryMyCards();
                     }
                 })
                 .subscribe(new NetObserver<List<PayInforBeans>>(this) {
@@ -217,7 +211,7 @@ public class LoginPayWaysActivity extends BaseActivity implements DialogControl.
 
     //更新数据，用于绑定微信和添加银行卡信息之后
     private void upData() {
-        HttpLoginFactory.queryMyPayInforList()
+        HttpAppFactory.queryMyCards()
                 .subscribe(new NetObserver<List<PayInforBeans>>(this) {
                     @Override
                     public void doOnSuccess(List<PayInforBeans> data) {

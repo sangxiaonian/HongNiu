@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -72,7 +73,9 @@ public class RecycleViewSupportEmpty extends RecyclerView {
                 if (emptyView==null&&emptyHolder!=null) {
                     emptyHolder.setEmptyInfor(ImgSrc, msg);
                     if (!adapter.getHeads().contains(emptyHolder) && adapter.getItemCount() - adapter.getHeads().size() - adapter.getFoots().size() == 0) {
-                        adapter.addHeard(0, emptyHolder);
+                        if (ImgSrc!=0&&!TextUtils.isEmpty(msg)) {
+                            adapter.addHeard(0, emptyHolder);
+                        }
                     } else if (adapter.getHeads().contains(emptyHolder)){
                         if (adapter.getItemCount() - adapter.getHeads().size() - adapter.getFoots().size() != 0) {
                             adapter.removeHeard(emptyHolder);

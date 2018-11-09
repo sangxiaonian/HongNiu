@@ -17,8 +17,9 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application>
         <activity
@@ -27,9 +28,11 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.OrderCreatOrderActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.OrderPayActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.OrderInsuranceActivity"
@@ -45,12 +48,13 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.OrderMapSearchActivity"
-            android:screenOrientation="portrait"
-           />
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.OrderSearchHistoryActivity"
+            android:screenOrientation="portrait" />
 
-
-        <!--前台服务，最大限度的保活-->
-        <service android:name=".service.KeepAliveService"/>
+        <!-- 前台服务，最大限度的保活 -->
+        <service android:name=".service.KeepAliveService" />
 
         <!-- 高德地图 -->
         <activity
@@ -60,6 +64,11 @@
 
         <service android:name="com.amap.api.location.APSService" />
 
+        <activity android:name=".ui.OrderScanReceiptActivity" />
+        <activity android:name=".ui.OrderUpReceiptActivity" />
+        <activity android:name=".ui.OrderSearchResultActivity" />
+        <activity android:name=".ui.WaitePayActivity" />
+        <activity android:name=".ui.OrderQueryInsuranceActivity"></activity>
     </application>
 
 </manifest>

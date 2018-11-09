@@ -1,46 +1,39 @@
 package com.hongniu.baselibrary.widget.order;
 
 import com.hongniu.baselibrary.entity.OrderDetailBean;
+import com.hongniu.baselibrary.widget.order.helper.ButtonInforBean;
+
+import java.util.List;
 
 /**
  * 作者： ${PING} on 2018/8/7.
- *        -1 已退款 0 待支付 1订单已支付（暂时无效） 2待发车 3运输中 4已到达 5已收货 20 已取消
-
+ * -1 已退款 0 待支付 1订单已支付（暂时无效） 2待发车 3运输中 4已到达 5已收货 20 已取消
  */
 public class OrderDetailItemControl {
 
 
-
-
-
     /*********************不同订单状态的文案***************************/
-    public static final String  STATUS_DES_REFUND="已退款";//已退款
-    public static final String  STATUS_DES_WAITE_PAY="待支付";//待支付
-    public static final String  STATUS_DES_HAS_PAY="订单已支付";//订单已支付（暂时不使用）
-    public static final String  STATUS_DES_WAITE_START="待发车";//待发车
-    public static final String  STATUS_DES_IN_TRANSIT="运输中";//运输中
-    public static final String  STATUS_DES_HAS_ARRIVED="已到达";//已到达
-    public static final String  STATUS_DES_RECEIPT="已收货";//已收货
-    public static final String  STATUS_DES_HAS_CANCLE="已取消";//已取消
+    public static final String STATUS_DES_REFUND = "已退款";//已退款
+    public static final String STATUS_DES_WAITE_PAY = "待支付";//待支付
+    public static final String STATUS_DES_HAS_PAY = "订单已支付";//订单已支付（暂时不使用）
+    public static final String STATUS_DES_WAITE_START = "待发车";//待发车
+    public static final String STATUS_DES_IN_TRANSIT = "运输中";//运输中
+    public static final String STATUS_DES_HAS_ARRIVED = "已到达";//已到达
+    public static final String STATUS_DES_RECEIPT = "已收货";//已收货
+    public static final String STATUS_DES_HAS_CANCLE = "已取消";//已取消
 
-    public static final String  STATUS_DES_UNKNOW="无效状态";//已取消
-
-
-
+    public static final String STATUS_DES_UNKNOW = "无效状态";//已取消
 
 
     /***************************不同的订单状态*******************************************/
-    public static final int  STATUS_REFUND=-1;//已退款
-    public static final int  STATUS_WAITE_PAY=0;//待支付
-    public static final int  STATUS_HAS_PAY=1;//订单已支付（暂时不使用）
-    public static final int  STATUS_WAITE_START=2;//待发车
-    public static final int  STATUS_IN_TRANSIT=3;//运输中
-    public static final int  STATUS_HAS_ARRIVED=4;//已到达
-    public static final int  STATUS_RECEIPT=5;//已收货
-    public static final int  STATUS_HAS_CANCLE=20;//已取消
-
-
-
+    public static final int STATUS_REFUND = -1;//已退款
+    public static final int STATUS_WAITE_PAY = 0;//待支付
+    public static final int STATUS_HAS_PAY = 1;//订单已支付（暂时不使用）
+    public static final int STATUS_WAITE_START = 2;//待发车
+    public static final int STATUS_IN_TRANSIT = 3;//运输中
+    public static final int STATUS_HAS_ARRIVED = 4;//已到达
+    public static final int STATUS_RECEIPT = 5;//已收货
+    public static final int STATUS_HAS_CANCLE = 20;//已取消
 
 
     /**
@@ -67,13 +60,7 @@ public class OrderDetailItemControl {
         CAR_OWNER,//车主
         CARGO_OWNER,//货主
         DRIVER;//司机
-
     }
-
-
-
-
-
 
 
 
@@ -84,23 +71,30 @@ public class OrderDetailItemControl {
      */
     public interface IOrderItemHelper {
 
-
-        int getLeftVisibility();
-
-        int getRightVisibility();
-
-
         /**
-         * 获取左侧按钮信息
-         */
-        String getBtLeftInfor();
-
-        /**
-         * 获取右侧
+         * 是否购买保险
          *
+         * @param insurance true 已经购买
          * @return
          */
-        String getBtRightInfor();
+        IOrderItemHelper setInsurance(boolean insurance);
+
+        /**
+         * 是否存在货单
+         *
+         * @param hasGoodsImage true 存在
+         * @return
+         */
+        IOrderItemHelper setHasGoodsImage(boolean hasGoodsImage);
+
+        /**
+         * 是否购存在回单
+         *
+         * @param hasReceiptImage true 存在
+         * @return
+         */
+        IOrderItemHelper setHasReceiptImage(boolean hasReceiptImage);
+
 
         /**
          * 获取订单当前状态
@@ -109,6 +103,10 @@ public class OrderDetailItemControl {
          */
         String getOrderState();
 
+        /**
+         * 获取要显示的按钮类型
+         */
+        List<ButtonInforBean> getButtonInfors();
 
     }
 
@@ -182,6 +180,42 @@ public class OrderDetailItemControl {
          * @param orderBean
          */
         void onEntryArrive(OrderDetailBean orderBean);
+
+        /**
+         * ORDER_CHECK_RECEIPT        ="查看回单";
+         *
+         * @param orderBean
+         */
+        void onCheckReceipt(OrderDetailBean orderBean);
+
+
+        /**
+         * ORDER_UP_RECEIPT        ="上传回单";
+         *
+         * @param orderBean
+         */
+        void onUpReceipt(OrderDetailBean orderBean);
+
+        /**
+         * ORDER_CHANGE_RECEIPT        ="修改回单";
+         *
+         * @param orderBean
+         */
+        void onChangeReceipt(OrderDetailBean orderBean);
+
+        /**
+         * ORDER_CHANGE        ="修改订单";
+         *
+         * @param orderBean
+         */
+        void onChangeOrder(OrderDetailBean orderBean);
+
+        /**
+         * ORDER_CHECK_GOODS        ="查看货单";
+         *
+         * @param orderBean
+         */
+        void onCheckGoods(OrderDetailBean orderBean);
 
 
     }

@@ -51,7 +51,9 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter implements IXA
     }
 
     public void removeHeard(int index) {
-        heads.remove(index);
+        if (heads.size()>index) {
+            heads.remove(index);
+        }
     }
 
     public void addFoot(PeakHolder heardHolder) {
@@ -67,7 +69,9 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter implements IXA
     }
 
     public void removeFoot(int index) {
-        foots.remove(index);
+        if (foots.size()>index) {
+            foots.remove(index);
+        }
     }
 
     public void removeFoot(PeakHolder heardHolder) {

@@ -3,6 +3,8 @@ package com.sang.common.imgload.control;
 import android.content.Context;
 import android.widget.ImageView;
 
+import com.sang.common.imgload.loader.GlideLoader;
+
 
 /**
  * 作者： ${桑小年} on 2018/7/28.
@@ -30,6 +32,20 @@ public class ImageLoaderControl {
          * @param img       所要加载的图片
          */
         void loadHeaed(Context context, ImageView imageView, Object img);
+
+        /**
+         * 设置全局占位图 ，优先级低
+         *
+         * @param imgID
+         */
+        void globalPlaceholder(int imgID);
+
+        /**
+         * 设置全局加载错误时候的图片 ，优先级低
+         *
+         * @param imgID
+         */
+        void globalErrorImg(int imgID);
 
         /**
          * 设置占位图
@@ -62,7 +78,7 @@ public class ImageLoaderControl {
         /**
          * 当前加载跳过缓存
          */
-        void skipMemoryCache();
+        IImageLoader skipMemoryCache();
 
 
     }

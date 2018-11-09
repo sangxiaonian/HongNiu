@@ -32,6 +32,7 @@ public class ToastUtils implements IToast {
         toastSuccess = new ToastSuccess(context);
         toastCenter = new ToastCenter(context);
         toastNormal = new ToastNormal(context);
+        toast = toastNormal;
     }
 
 
@@ -59,7 +60,6 @@ public class ToastUtils implements IToast {
     }
 
     private ToastUtils() {
-        toast=toastNormal;
     }
 
 
@@ -91,26 +91,31 @@ public class ToastUtils implements IToast {
     @Override
     public void show(String msg) {
         toast.show(msg);
+        makeToast(ToastType.NORMAL);
     }
 
     @Override
     public void show(int msg) {
         toast.show(msg);
+        makeToast(ToastType.NORMAL);
     }
 
     @Override
     public void show() {
         toast.show();
+        makeToast(ToastType.NORMAL);
     }
 
     @Override
     public void show(Context context, int msg) {
         toast.show(context, msg);
+        makeToast(ToastType.NORMAL);
     }
 
     @Override
     public void show(Context context, String msg) {
         toast.show(context, msg);
+        makeToast(ToastType.NORMAL);
     }
 
 

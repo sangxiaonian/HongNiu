@@ -1,7 +1,6 @@
 package com.sang.common.widget;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -18,7 +17,6 @@ import android.widget.LinearLayout;
 
 import com.sang.common.R;
 import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.JLog;
 
 /**
  * 作者： ${PING} on 2018/1/12.
@@ -32,6 +30,9 @@ public class VericationView extends LinearLayout implements TextWatcher, View.On
     private int childWidth, childHeight;
     private int childLayout;
     private OnCompleteListener listener;
+    private int type;
+
+    private OnContentChangeListener onChangeListener;
 
     public VericationView(Context context) {
         super(context);
@@ -52,7 +53,7 @@ public class VericationView extends LinearLayout implements TextWatcher, View.On
         mEditCount = 6;
         float scale = context.getResources().getDisplayMetrics().density;
         childGap = (int) (10f * scale + 0.5f);
-        childLayout= R.layout.verication_default_item;
+        childLayout = R.layout.verication_default_item;
 
         post(new Runnable() {
             @Override
@@ -60,7 +61,7 @@ public class VericationView extends LinearLayout implements TextWatcher, View.On
                 for (int i = 0; i < mEditCount; i++) {
                     EditText editext = getEditext(childWidth, childHeight);
                     addView(editext);
-                    if (i==0){
+                    if (i == 0) {
                         editext.setFocusable(true);
                         editext.setFocusableInTouchMode(true);
                         editext.requestFocus();
@@ -81,15 +82,39 @@ public class VericationView extends LinearLayout implements TextWatcher, View.On
         requestLayout();
     }
 
+    public void setOnChangeListener(OnContentChangeListener onChangeListener) {
+        this.onChangeListener = onChangeListener;
+    }
+
+    /**
+     * 设置验证码是否加密
+     *
+     * @param type 0 明文数字，1 密码数字
+     */
+    public void setType(int type) {
+        this.type = type;
+        for (int i = 0; i < getChildCount(); i++) {
+            View childAt = getChildAt(i);
+            if (childAt instanceof EditText) {
+                if (type == 1) {
+                    ((EditText) childAt).setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+                } else {
+                    ((EditText) childAt).setInputType(InputType.TYPE_CLASS_NUMBER);
+
+                }
+            }
+        }
+    }
+
+
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
 
-        int mWidth = (int) ((getMeasuredWidth() - getPaddingLeft() - getPaddingRight() - childGap * (mEditCount - 1)) / (mEditCount* 1.0f));
+        int mWidth = (int) ((getMeasuredWidth() - getPaddingLeft() - getPaddingRight() - childGap * (mEditCount - 1)) / (mEditCount * 1.0f));
         int mHeight = getMeasuredHeight() - getPaddingTop() - getPaddingBottom();
         childHeight = mHeight;
         childWidth = mWidth;
-
 
 
     }
@@ -117,11 +142,15 @@ public class VericationView extends LinearLayout implements TextWatcher, View.On
         editText.setMaxLines(1);
         editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(1)});
         editText.setSingleLine(true);
-        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        if (type == 1) {
+            editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+        } else {
+            editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+        }
         editText.setLongClickable(false);
         editText.addTextChangedListener(this);
         editText.setOnFocusChangeListener(this);
-
         editText.setOnKeyListener(this);
 
 
@@ -159,7 +188,7 @@ public class VericationView extends LinearLayout implements TextWatcher, View.On
         if (s.length() > 0) {
             changeFouce();
             checkAndCommit();
-        }else {
+        } else {
             backFocus();
         }
     }
@@ -176,14 +205,31 @@ public class VericationView extends LinearLayout implements TextWatcher, View.On
             } else {
                 stringBuilder.append(content);
             }
-
         }
+
+        if (onChangeListener != null) {
+            onChangeListener.onContentChange(mEditCount,stringBuilder.toString());
+        }
+
         if (full) {
             if (listener != null) {
                 listener.onComplete(stringBuilder.toString());
             }
 
         }
+    }
+
+    public String getContent() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (int i = 0; i < mEditCount; i++) {
+            EditText editText = (EditText) getChildAt(i);
+            String content = editText.getText().toString();
+
+            stringBuilder.append(content);
+
+        }
+        return stringBuilder.toString();
     }
 
 
@@ -210,8 +256,6 @@ public class VericationView extends LinearLayout implements TextWatcher, View.On
     }
 
 
-
-
     private void backFocus() {
         int count = getChildCount();
         EditText editText;
@@ -228,15 +272,59 @@ public class VericationView extends LinearLayout implements TextWatcher, View.On
     @Override
     public boolean onKey(View v, int keyCode, KeyEvent event) {
 
-        if(keyCode == KeyEvent.KEYCODE_DEL) {
+        if (keyCode == KeyEvent.KEYCODE_DEL) {
             backFocus();
         }
 
         return false;
     }
 
+    public void clear() {
+        for (int i = 0; i < getChildCount(); i++) {
+            View view = getChildAt(i);
+            if (view instanceof EditText) {
+                ((EditText) view).setText("");
+            }
+        }
+        if (getChildAt(0) != null) {
+            getChildAt(0).requestFocus();
+        }
+    }
+
+    public void openSoft() {
+        post(new Runnable() {
+            @Override
+            public void run() {
+                if (getChildAt(0) != null) {
+                    DeviceUtils.openSoft(getChildAt(0));
+                }
+            }
+        });
+    }
+
+    public void closeSoft() {
+
+        post(new Runnable() {
+            @Override
+            public void run() {
+                DeviceUtils.hideSoft(findFocus());
+//                DeviceUtils.hideSoft(getChildAt(0));
+            }
+        });
+    }
+
+
 
     public interface OnCompleteListener {
         void onComplete(String content);
+    }
+
+    public interface OnContentChangeListener {
+        /**
+         * 验证码输入框内容变化监听
+         * @param mEditCount 验证码总共位数
+         * @param content    已输入的内容
+         */
+        void onContentChange(int mEditCount, String content);
     }
 }

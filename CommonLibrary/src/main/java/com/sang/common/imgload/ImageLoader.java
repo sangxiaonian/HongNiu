@@ -63,6 +63,26 @@ public class ImageLoader implements ImageLoaderControl.IImageLoader {
      * @param imgID
      */
     @Override
+    public void globalPlaceholder(int imgID) {
+        realLoader.globalPlaceholder(imgID);
+    }
+
+    /**
+     * 设置加载错误时候的图片
+     *
+     * @param imgID
+     */
+    @Override
+    public void globalErrorImg(int imgID) {
+        realLoader.globalErrorImg(imgID);
+    }
+
+    /**
+     * 设置占位图
+     *
+     * @param imgID
+     */
+    @Override
     public void placeholder(int imgID) {
         realLoader.placeholder(imgID);
     }
@@ -101,7 +121,8 @@ public class ImageLoader implements ImageLoaderControl.IImageLoader {
      * 跳过缓存
      */
     @Override
-    public void skipMemoryCache() {
+    public ImageLoaderControl.IImageLoader skipMemoryCache() {
         realLoader.skipMemoryCache();
+        return this;
     }
 }

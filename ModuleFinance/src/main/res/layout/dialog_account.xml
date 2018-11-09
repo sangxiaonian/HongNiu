@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/app_gap">
+
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="wrap_content"
+        android:textColor="@color/color_title_dark"
+        android:text="选择收款方式"
+        android:textSize="19sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/img_cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv1"
+        app:layout_constraintBottom_toBottomOf="@id/tv1"
+        android:layout_width="14dp"
+        android:src="@mipmap/icon_close_gary_28"
+        android:layout_height="14dp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="0dp"
+        android:id="@+id/rv"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/ll_add"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv1"
+        android:layout_height="0dp"/>
+
+    
+    <LinearLayout
+        android:id="@+id/ll_add"
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rv"
+        android:layout_height="60dp">
+        <ImageView
+            app:srcCompat="@drawable/icon_add_333"
+            android:layout_width="18dp"
+            android:scaleType="centerCrop"
+            android:layout_height="18dp" />
+
+        <TextView
+            android:layout_marginLeft="@dimen/app_item_gap"
+            android:layout_width="wrap_content"
+            android:text="使用新的收款方式提现"
+            android:textSize="@dimen/text_small_14"
+            android:textColor="@color/color_title_dark"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>

@@ -11,7 +11,6 @@ import com.hongniu.modulefinance.R;
 import com.hongniu.modulefinance.entity.FinanceOrderBean;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
-import com.sang.common.utils.ConvertUtils;
 import com.sang.common.widget.dialog.builder.BottomAlertBuilder;
 
 import java.util.List;
@@ -35,7 +34,7 @@ public class FinanceOrderAdapter extends XAdapter<OrderDetailBean> {
             @Override
             public void initView(View itemView, final int position, final OrderDetailBean data) {
                 super.initView(itemView, position, data);
-                TextView tvOrder = itemView.findViewById(R.id.tv_order);
+                TextView tvOrder = itemView.findViewById(R.id.tv_title);
                 TextView tvCarNum = itemView.findViewById(R.id.tv_car_num);
                 TextView tvTime = itemView.findViewById(R.id.tv_time);
                 TextView tvPrice = itemView.findViewById(R.id.tv_price);
@@ -65,6 +64,7 @@ public class FinanceOrderAdapter extends XAdapter<OrderDetailBean> {
                     public void onClick(View v) {
                         OrderDetailDialog orderDetailDialog = new OrderDetailDialog(context);
                         orderDetailDialog.setOrdetail(data);
+                        orderDetailDialog.hideBottom();
                         new BottomAlertBuilder()
                                 .creatDialog(orderDetailDialog)
                                 .show();

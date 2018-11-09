@@ -10,15 +10,18 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/BaseLibrary" />
             <option value="$PROJECT_DIR$/CommonLibrary" />
+            <option value="$PROJECT_DIR$/ModuleFestivity" />
             <option value="$PROJECT_DIR$/ModuleFinance" />
             <option value="$PROJECT_DIR$/ModuleLogin" />
             <option value="$PROJECT_DIR$/ModuleOrder" />
-            <option value="$PROJECT_DIR$/ModulePersonalCenter" />
             <option value="$PROJECT_DIR$/ResLibrary" />
             <option value="$PROJECT_DIR$/ThirdLibrary" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/pickerview" />
+            <option value="$PROJECT_DIR$/picture_library" />
+            <option value="$PROJECT_DIR$/ucrop" />
             <option value="$PROJECT_DIR$/wheelview" />
+            <option value="$PROJECT_DIR$/xcalendar" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

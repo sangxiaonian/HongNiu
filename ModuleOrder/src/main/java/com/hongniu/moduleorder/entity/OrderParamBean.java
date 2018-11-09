@@ -5,13 +5,13 @@ package com.hongniu.moduleorder.entity;
  * 努力，为梦长留
  * 订单相关操作参数
  */
-public class OrderParamBean {
+public class OrderParamBean  {
     /**
      * true	string	订单ID
      */
     private String id;
     /**
-     * 支付方式 0微信支付 1银联支付 2线下支付
+     * 支付方式 0微信支付 1银联支付 2线下支付 3支付宝 4余额
      */
     private int payType=-1;
 
@@ -35,6 +35,16 @@ public class OrderParamBean {
      * true	boolean	是否线上支付,false=线下支付
      */
     private boolean onlinePay;
+    private String payPassword;
+
+
+    public String getPayPassword() {
+        return payPassword;
+    }
+
+    public void setPayPassword(String payPassword) {
+        this.payPassword = payPassword;
+    }
 
     public String getOrderId() {
         return id

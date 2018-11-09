@@ -26,7 +26,8 @@ public class UnionPayClient implements PayControl.IPayClient {
     }
 
     @Override
-    public void setDebug(boolean isDebug) {
+    public PayControl.IPayClient setDebug(boolean isDebug) {
         this.isDebug = isDebug;
+        return this;
     }
 }

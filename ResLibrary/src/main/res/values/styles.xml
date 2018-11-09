@@ -44,7 +44,8 @@
 
     <style name="itemview">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">45dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">45dp</item>
         <item name="android:paddingLeft">@dimen/app_gap</item>
         <item name="android:paddingRight">@dimen/app_gap</item>
         <item name="android:background">@color/color_bg</item>
@@ -56,4 +57,29 @@
         <item name="android:layout_marginRight">5dp</item>
         <item name="android:background">@drawable/shape_circle_ffffff</item>
     </style>
+
+
+
+    <!--RadioGroup-->
+    <style name="RadioGroup">
+        <item name="android:background">@color/color_white</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingLeft">@dimen/app_gap</item>
+        <item name="android:paddingRight">@dimen/app_gap</item>
+    </style>
+
+    <style name="RadioButton">
+        <item name="android:background">@drawable/select_line_eee_ddd</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:button">@null</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@drawable/selector_color_999_333</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+
 </resources>

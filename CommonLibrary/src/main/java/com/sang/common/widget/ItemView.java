@@ -3,6 +3,7 @@ package com.sang.common.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,12 +11,9 @@ import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.method.DigitsKeyListener;
-import android.text.method.PasswordTransformationMethod;
-import android.text.method.TextKeyListener;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -53,7 +51,10 @@ public class ItemView extends FrameLayout {
     private int srcRight = -1;
     private boolean srcshow;
     private int colorRight;
+    private int colorLeft;
     private boolean isSingleLine = true;
+    private int colorCenter;
+    private int colorCenterHide;
 
     public ItemView(@NonNull Context context) {
         this(context, null, 0);
@@ -86,7 +87,10 @@ public class ItemView extends FrameLayout {
             maxLength = ta.getInt(R.styleable.ItemView_centerLength, -1);
             centerType = ta.getInt(R.styleable.ItemView_centerType, 0);
             srcRight = ta.getInt(R.styleable.ItemView_srcRight, -1);
-            colorRight = ta.getInt(R.styleable.ItemView_colorRight, 0);
+            colorRight = ta.getColor(R.styleable.ItemView_colorRight,  Color.parseColor("#333333"));
+            colorCenter = ta.getColor(R.styleable.ItemView_colorCenter, Color.parseColor("#333333"));
+            colorCenterHide = ta.getColor(R.styleable.ItemView_colorCenterHide, Color.parseColor("#c8c8c8"));
+            colorLeft = ta.getColor(R.styleable.ItemView_colorLeft,  Color.parseColor("#333333"));
             srcshow = ta.getBoolean(R.styleable.ItemView_srcshow, false);
             isSingleLine = ta.getBoolean(R.styleable.ItemView_isSingleLine, true);
             ta.recycle();
@@ -104,25 +108,54 @@ public class ItemView extends FrameLayout {
         setTextRight(textRight);
         setTextCenterHide(textCenterHide);
         setTextCenter(textCenter);
-        setEditable(editable);
+
         setSrcRight(srcRight);
         setSrcshow(srcshow);
         setColorRight(colorRight);
+        setColorLeft(colorLeft);
+        setColorCenter(colorCenter);
+        setColorCenterHide(colorCenterHide);
+
+
         setIsSingleLine(isSingleLine);
         setCenter(maxLength, centerType);
+        setEditable(editable);
+
 
     }
 
     public void setIsSingleLine(boolean isSingleLine) {
         this.isSingleLine = isSingleLine;
-        etCenter.setMaxLines(isSingleLine ? 1 : Integer.MAX_VALUE);
         etCenter.setSingleLine(isSingleLine);
+//        etCenter.setMaxLines(isSingleLine ? 1 : Integer.MAX_VALUE);
+//        etCenter.setMaxLines(Integer.MAX_VALUE);
     }
 
     private void setColorRight(int colorRight) {
         this.colorRight = colorRight;
         if (colorRight != 0) {
             tvRight.setTextColor(colorRight);
+        }
+    }
+
+    private void setColorLeft(int colorRight) {
+        this.colorRight = colorRight;
+        if (colorRight != 0) {
+            tvRight.setTextColor(colorRight);
+        }
+    }
+
+    private void setColorCenter(int colorCenter) {
+        this.colorCenter = colorCenter;
+        if (colorCenter != 0) {
+            etCenter.setTextColor(colorCenter);
+        }
+    }
+
+    private void setColorCenterHide(int colorCenterHide) {
+        this.colorCenterHide = colorCenterHide;
+        if (colorCenterHide != 0) {
+            etCenter.setHintTextColor(colorCenterHide);
         }
     }
 
@@ -144,23 +177,29 @@ public class ItemView extends FrameLayout {
     private void setCenter(int maxLength, int centerType) {
         if (centerType == 1) {//手机号
             etCenter.setInputType(InputType.TYPE_CLASS_PHONE);
-            etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength<0?11:maxLength)});
+            etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength < 0 ? 11 : maxLength)});
             etCenter.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
         } else if (centerType == 2) {//身份证号
-            etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength<0?18:maxLength)});
+
+            etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength < 0 ? 18 : maxLength)});
             etCenter.setKeyListener(DigitsKeyListener.getInstance("xX0123456789"));
         } else if (centerType == 3) {//数字
             etCenter.setFilters(new InputFilter[]{new PointLengthFilter()});
-            etCenter.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
+            etCenter.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
 //            etCenter.setKeyListener(DigitsKeyListener.getInstance("0123456789."));
+        } else if (centerType == 4) {//密码
+            JLog.i(textLeft+">>>>>");
+            etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength < 0 ? Integer.MAX_VALUE : maxLength), new SpaceFilter()});
+            etCenter.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
         } else {
-            etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength<0?Integer.MAX_VALUE:maxLength),new SpaceFilter()});
 
+            etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength < 0 ? Integer.MAX_VALUE : maxLength), new SpaceFilter()});
         }
     }
 
 
     public void setEditable(boolean editable) {
+
         this.editable = editable;
         if (editable) {
             viewFound.setVisibility(GONE);
@@ -175,7 +214,9 @@ public class ItemView extends FrameLayout {
             });
         } else {
             viewFound.setVisibility(VISIBLE);
-            etCenter.setInputType(InputType.TYPE_NULL);
+            etCenter.clearFocus();
+            etCenter.setFocusableInTouchMode(false);
+            etCenter.setFocusable(false);
             viewFound.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -185,6 +226,21 @@ public class ItemView extends FrameLayout {
                 }
             });
         }
+
+        if (!isEnabled()) {
+            viewFound.setVisibility(VISIBLE);
+            viewFound.setOnClickListener(null);
+            etCenter.setTextColor(colorCenterHide);
+            tvLeft.setTextColor(colorCenterHide);
+            tvRight.setTextColor(colorCenterHide);
+            return;
+        }else {
+            etCenter.setTextColor(colorCenter);
+            tvLeft.setTextColor(colorLeft);
+            tvRight.setTextColor(colorRight);
+        }
+
+
     }
 
     public void setSrcshow(boolean srcshow) {
@@ -228,9 +284,7 @@ public class ItemView extends FrameLayout {
         return textLeft = tvLeft.getText().toString().trim();
     }
 
-    public void setSingleLine(boolean sing) {
-        etCenter.setSingleLine(showLine);
-    }
+
 
     public String getTextCenter() {
         return textCenter = etCenter.getText().toString().trim();
@@ -251,4 +305,13 @@ public class ItemView extends FrameLayout {
     public String getTextCenterHide() {
         return textCenterHide = etCenter.getHint().toString().trim();
     }
+
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        setEditable(editable);
+    }
+
+
 }

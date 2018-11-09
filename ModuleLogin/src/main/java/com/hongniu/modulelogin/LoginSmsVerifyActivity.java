@@ -21,6 +21,8 @@ import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.sang.common.net.error.NetException;
+import com.sang.common.utils.JLog;
+import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.VericationView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -30,6 +32,10 @@ import io.reactivex.ObservableSource;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Function;
 
+/**
+ * 输入验证码页面
+ * 此页面目前有两种作用 由参数type决定， 传入 key Param.VERTYPE value int类型 0 登录 1设置密码
+ */
 @Route(path = ArouterParamLogin.activity_sms_verify)
 public class LoginSmsVerifyActivity extends BaseActivity implements VericationView.OnCompleteListener {
 
@@ -102,7 +108,7 @@ public class LoginSmsVerifyActivity extends BaseActivity implements VericationVi
         btGetNewVeri.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                HttpLoginFactory.getSmsCode(phone)
+                HttpAppFactory.getSmsCode(phone)
                         .subscribe(new NetObserver<String>(LoginSmsVerifyActivity.this) {
                             @Override
                             public void doOnSuccess(String data) {
@@ -129,56 +135,56 @@ public class LoginSmsVerifyActivity extends BaseActivity implements VericationVi
     @Override
     public void onComplete(String content) {
 
-        HttpLoginFactory
-                .loginBySms(phone, content)
-                .map(new Function<CommonBean<LoginBean>, CommonBean<LoginBean>>() {
-                    @Override
-                    public CommonBean<LoginBean> apply(CommonBean<LoginBean> loginBeanCommonBean) throws Exception {
-                        if (loginBeanCommonBean.getCode() == 200) {
+            HttpLoginFactory
+                    .loginBySms(phone, content)
+                    .map(new Function<CommonBean<LoginBean>, CommonBean<LoginBean>>() {
+                        @Override
+                        public CommonBean<LoginBean> apply(CommonBean<LoginBean> loginBeanCommonBean) throws Exception {
+                            if (loginBeanCommonBean.getCode() == 200) {
 
-                            Utils.saveLoginInfor(loginBeanCommonBean.getData());
-                            return loginBeanCommonBean;
-                        } else {
-                            throw new NetException(loginBeanCommonBean.getCode(), loginBeanCommonBean.getMsg());
+                                Utils.saveLoginInfor(loginBeanCommonBean.getData());
+                                return loginBeanCommonBean;
+                            } else {
+                                throw new NetException(loginBeanCommonBean.getCode(), loginBeanCommonBean.getMsg());
+                            }
                         }
-                    }
-                })
+                    })
 
-                .flatMap(new Function<CommonBean<LoginBean>, Observable<CommonBean<String>>>() {
-                    @Override
-                    public Observable<CommonBean<String>> apply(CommonBean<LoginBean> loginBeanCommonBean) throws Exception {
-                        return Observable.zip(
-                                HttpAppFactory.getRoleType()
-                                , HttpLoginFactory.getPersonInfor()
-                                , new BiFunction<CommonBean<RoleTypeBean>, CommonBean<LoginPersonInfor>, CommonBean<String>>() {
-                                    @Override
-                                    public CommonBean<String> apply(CommonBean<RoleTypeBean> roleTypeBeanCommonBean, CommonBean<LoginPersonInfor> loginPersonInforCommonBean) throws Exception {
+                    .flatMap(new Function<CommonBean<LoginBean>, Observable<CommonBean<String>>>() {
+                        @Override
+                        public Observable<CommonBean<String>> apply(CommonBean<LoginBean> loginBeanCommonBean) throws Exception {
+                            return Observable.zip(
+                                    HttpAppFactory.getRoleType()
+                                    , HttpLoginFactory.getPersonInfor()
+                                    , new BiFunction<CommonBean<RoleTypeBean>, CommonBean<LoginPersonInfor>, CommonBean<String>>() {
+                                        @Override
+                                        public CommonBean<String> apply(CommonBean<RoleTypeBean> roleTypeBeanCommonBean, CommonBean<LoginPersonInfor> loginPersonInforCommonBean) throws Exception {
 
-                                        if (roleTypeBeanCommonBean.getCode() == 200) {
-                                            EventBus.getDefault().postSticky(roleTypeBeanCommonBean.getData());
-                                        } else {
-                                            throw new NetException(roleTypeBeanCommonBean.getCode(), roleTypeBeanCommonBean.getMsg());
+                                            if (roleTypeBeanCommonBean.getCode() == 200) {
+                                                EventBus.getDefault().postSticky(roleTypeBeanCommonBean.getData());
+                                            } else {
+                                                throw new NetException(roleTypeBeanCommonBean.getCode(), roleTypeBeanCommonBean.getMsg());
+                                            }
+                                            if (loginPersonInforCommonBean.getCode() == 200) {
+                                                Utils.savePersonInfor(loginPersonInforCommonBean.getData());
+                                            } else {
+                                                throw new NetException(loginPersonInforCommonBean.getCode(), loginPersonInforCommonBean.getMsg());
+                                            }
+
+                                            return new CommonBean<String>();
                                         }
-                                        if (loginPersonInforCommonBean.getCode() == 200) {
-                                            Utils.savePersonInfor(loginPersonInforCommonBean.getData());
-                                        } else {
-                                            throw new NetException(loginPersonInforCommonBean.getCode(), loginPersonInforCommonBean.getMsg());
-                                        }
-
-                                        return new CommonBean<String>();
                                     }
-                                }
 
-                        );
-                    }
-                })
-                .subscribe(new NetObserver<String>(this) {
-                    @Override
-                    public void doOnSuccess(String data) {
-                        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_main).navigation(mContext);
+                            );
+                        }
+                    })
+                    .subscribe(new NetObserver<String>(this) {
+                        @Override
+                        public void doOnSuccess(String data) {
+                            ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_main).navigation(mContext);
 
-                    }
-                });
+                        }
+                    });
 
 
     }

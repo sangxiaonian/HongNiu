@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="xiaonian.sang.com.festivitymodule">
+
+    <application>
+        <activity android:name=".invite.ui.FestivityInviteActivity" />
+        <activity android:name=".invite.ui.FestivityInviteDetailActivity" />
+        <activity android:name=".invite.ui.FestivityBrokerageActivity"></activity>
+    </application>
+
+</manifest>

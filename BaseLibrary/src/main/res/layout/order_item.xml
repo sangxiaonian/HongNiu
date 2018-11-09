@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="@dimen/app_gap"
     android:background="@color/color_bg"
+    android:paddingBottom="@dimen/app_gap"
     android:paddingTop="@dimen/app_gap">
 
 
@@ -27,11 +27,11 @@
         android:paddingRight="2dp"
         android:textColor="@color/color_white"
         android:textSize="@dimen/text_min_11sp"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_order"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_car_num"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/tv_order" />
+        app:layout_constraintTop_toTopOf="@+id/tv_car_num" />
 
     <TextView
         android:id="@+id/tv_car_num"
@@ -52,7 +52,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="825456185asdfasasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfdfasdfasdfasdfasdfasdfasdfasdf61"
         android:textColor="@color/color_title_dark"
         android:textSize="@dimen/text_small_14"
         app:layout_constraintEnd_toStartOf="@+id/tv_state"
@@ -64,11 +63,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/app_gap"
-        android:textSize="@dimen/text_small_14"
         android:textColor="@color/color_order_color"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_order"
+        android:textSize="@dimen/text_small_14"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_car_num"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_order" />
+        app:layout_constraintTop_toTopOf="@+id/tv_car_num" />
 
     <TextView
         android:id="@+id/line_top"
@@ -78,7 +77,7 @@
         android:background="@color/color_line_eeeeee"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_order" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_car_num" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -150,60 +149,54 @@
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="@+id/tv_start_loaction" />
 
+
+    <TextView
+        android:id="@+id/tv_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/app_gap"
+        android:layout_marginTop="14dp"
+        android:textColor="@color/color_title_dark"
+        android:textSize="13sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_end_loaction" />
+
+    <TextView
+        android:id="@+id/tv_instances"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/app_gap"
+        android:layout_marginTop="14dp"
+        android:textColor="@color/color_title_dark"
+        android:textSize="13sp"
+        app:layout_constraintStart_toEndOf="@id/tv_price"
+        app:layout_constraintTop_toBottomOf="@+id/tv_end_loaction" />
+
+
     <View
         android:id="@+id/line_bottom"
         android:layout_width="0dp"
         android:layout_height="@dimen/line_height"
-        android:layout_marginTop="@dimen/app_gap"
+        android:layout_marginTop="@dimen/app_model_gap"
         android:background="@color/color_line_eeeeee"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_end_loaction" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_price" />
 
     <LinearLayout
         android:id="@+id/ll_bottom"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:gravity="center"
+        android:gravity="center_vertical|right"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/app_gap"
         android:paddingRight="@dimen/app_gap"
+        android:weightSum="4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/line_bottom">
 
-
-
-        <TextView
-            android:id="@+id/tv_price"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@color/color_title_dark"
-            android:textSize="13sp" />
-
-
-        <TextView
-            android:id="@+id/bt_left"
-            android:layout_width="72dp"
-            android:layout_height="27dp"
-            android:background="@drawable/shape_2_stoke_dddddd"
-            android:gravity="center"
-            android:text="取消订单"
-            android:textSize="13sp" />
-
-
-        <TextView
-            android:id="@+id/bt_right"
-            android:layout_width="72dp"
-            android:layout_height="27dp"
-            android:layout_marginLeft="@dimen/app_gap"
-            android:background="@drawable/shape_2_f06f28"
-            android:gravity="center"
-            android:text="继续付款"
-            android:textColor="@color/color_white"
-            android:textSize="13sp" />
 
 
     </LinearLayout>

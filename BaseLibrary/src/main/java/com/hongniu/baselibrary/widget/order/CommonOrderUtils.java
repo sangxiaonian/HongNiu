@@ -1,6 +1,8 @@
 package com.hongniu.baselibrary.widget.order;
 
 
+import android.text.TextUtils;
+
 /**
  * 作者： ${PING} on 2018/8/2.
  */
@@ -15,6 +17,12 @@ public class CommonOrderUtils {
     public static final String ORDER_START_CAR = "开始发车";
     public static final String ORDER_CHECK_ROUT = "查看路线";
     public static final String ORDER_ENTRY_ARRIVE = "确认到达";
+
+    public static final String ORDER_CHANGE = "修改订单";
+    public static final String ORDER_CHECK_GOODS = "查看货单";
+    public static final String ORDER_CHECK_RECEIPT = "查看回单";
+    public static final String ORDER_UP_RECEIPT = "上传回单";
+    public static final String ORDER_CHANGE_RECEIPT = "修改回单";
 
 
     /*********************不同订单状态的文案***************************/
@@ -84,6 +92,7 @@ public class CommonOrderUtils {
 
     /**
      * 根据订单状态获取到订单相应的 状态信息
+     *
      * @param state
      * @return
      */
@@ -170,6 +179,40 @@ public class CommonOrderUtils {
                 break;
         }
         return role;
+    }
+
+
+
+    /**
+     * 判断是否是线上支付
+     * @param payType
+     * @return true 线上支付
+     */
+    public static boolean isPayOnLine(String payType){
+        return !TextUtils.isEmpty(payType)&&!TextUtils.equals("2",payType);
+    }
+
+    /**
+     * 根据支付方式获取对应的转换
+     * @param payWay
+     * @return
+     */
+    public static String getPayWay(String payWay){
+        if (TextUtils.isEmpty(payWay)) {
+            return "";
+        } else if (payWay.equals("0")) {
+            return "微信";
+        } else if (payWay.equals("1")) {
+            return "银联";
+        } else if (payWay.equals("2")) {
+            return "线下支付";
+        } else if (payWay.equals("3")) {
+            return "支付宝";
+        } else if (payWay.equals("4")) {
+            return "余额";
+        } else {
+            return "";
+        }
     }
 
 

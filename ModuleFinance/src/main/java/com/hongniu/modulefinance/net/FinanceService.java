@@ -3,9 +3,15 @@ package com.hongniu.modulefinance.net;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
-import com.hongniu.modulefinance.entity.FinanceOrderBean;
+import com.hongniu.modulefinance.entity.AccountFloowParamBean;
+import com.hongniu.modulefinance.entity.BalanceOfAccountBean;
+import com.hongniu.modulefinance.entity.BalanceWithDrawBean;
+import com.hongniu.modulefinance.entity.CareNumPageBean;
+import com.hongniu.modulefinance.entity.FinanceQueryCarDetailMap;
+import com.hongniu.modulefinance.entity.NiuOfAccountBean;
 import com.hongniu.modulefinance.entity.QueryExpendBean;
 import com.hongniu.modulefinance.entity.QueryExpendResultBean;
+import com.hongniu.baselibrary.entity.WalletDetail;
 
 import java.util.List;
 
@@ -57,19 +63,52 @@ public interface FinanceService {
     @POST("hongniu/api/finance/search")
     Observable<CommonBean<PageBean<OrderDetailBean>>> queryFinance(@Body QueryExpendBean infor);
 
-   /**
-     * 财务搜索
-     * year		int	年份
-     * month	false	int	月份，从1开始，1代表1月，2代表2月以此类推。
-     * carNo	false	String	车牌号
-     * financeType	true	int	财务类型，0支出和收入；1支出；2收入
-     * pageNum	false	int	页面索引
-     * pageSize	false	int	页面记录条数
+
+
+    /**
+     * 查询钱包账户流水
+     *
+     * @param bean
+     * @return
+     */
+    @POST("hongniu/api/account/accountflows")
+    Observable<CommonBean<PageBean<BalanceOfAccountBean>>> queryAccountFllows(@Body AccountFloowParamBean bean);
+
+    /**
+     * 查询牛贝账户流水
+     *
+     * @param bean
+     * @return
+     */
+    @POST("hongniu/api/account/accountintegralflows")
+    Observable<CommonBean<PageBean<NiuOfAccountBean>>> queryNiuAccountFllows(@Body AccountFloowParamBean bean);
+
+    /**
+     * 查询车辆订单明细
+     *
+     * @param bean
+     * @return
+     */
+    @POST("hongniu//api/account/cardetails")
+    Observable<CommonBean<FinanceQueryCarDetailMap>> queryCarOrderDetails(@Body CareNumPageBean bean);
+
+    /**
+     * 获取我的支付方式
      *
      * @return
      */
-    @POST("hongniu/api/finance/search")
-    Observable<CommonBean<PageBean<FinanceOrderBean>>> queryFinance1(@Body QueryExpendBean infor);
+    @POST("hongniu/api/refund/queryMyCards")
+    Observable<CommonBean<WalletDetail>> queryMyCards();
+
+
+    /**
+     * 提现
+     *
+     * @param bean
+     * @return
+     */
+    @POST("hongniu//api/account/withdraw")
+    Observable<CommonBean<String>> withdraw(@Body BalanceWithDrawBean bean);
 
 
 }

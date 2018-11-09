@@ -6,22 +6,29 @@ import com.hongniu.baselibrary.entity.OrderCreatBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.OrderIdBean;
 import com.hongniu.baselibrary.entity.PageBean;
+import com.hongniu.baselibrary.entity.UpImgData;
+import com.hongniu.baselibrary.entity.UpReceiverBean;
 import com.hongniu.moduleorder.entity.LocationBean;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
 import com.hongniu.moduleorder.entity.OrderCreatParamBean;
 import com.hongniu.moduleorder.entity.OrderDriverPhoneBean;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
 import com.hongniu.moduleorder.entity.OrderParamBean;
+import com.hongniu.moduleorder.entity.OrderSearchBean;
 import com.hongniu.moduleorder.entity.PathBean;
 import com.hongniu.moduleorder.entity.QueryInsurancePriceBean;
+import com.hongniu.moduleorder.entity.QueryReceiveBean;
 import com.hongniu.moduleorder.entity.VersionBean;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
 
 import java.util.List;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
 import retrofit2.http.Body;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 /**
  * 作者： ${PING} on 2018/8/15.
@@ -45,6 +52,15 @@ public interface OrderService {
      */
     @POST("hongniu/api/order/add")
     Observable<CommonBean<OrderDetailBean>> creatOrder(@Body OrderCreatParamBean infor);
+
+    /**
+     * 修改订单
+     *
+     * @return
+     */
+    @POST("hongniu//api/order/updateOrder")
+    Observable<CommonBean<OrderDetailBean>> changeOrder(@Body OrderCreatParamBean infor);
+
 
     /**
      * 获取车牌号联想
@@ -108,6 +124,20 @@ public interface OrderService {
     Observable<CommonBean<OrderDetailBean>> cancleOrder(@Body OrderIdBean infor);
 
     /**
+     * 微信支付
+     * orderNum     true	string	订单号
+     * openid       true	string	微信用户openid
+     * hasFreight   true	boolean	是否付运费，true=是
+     * hasPolicy    true	boolean	是否买保险，true=是
+     * onlinePay    true	boolean	是否线上支付,false=线下支付
+     *
+     * @param infor 订单ID
+     * @return
+     */
+    @POST("hongniu/wx/jsApiPay")
+    Observable<CommonBean<PayBean>> payWeChat(@Body OrderParamBean infor);
+
+    /**
      * 线下支付订单
      * orderNum     true	string	订单号
      * openid       true	string	微信用户openid
@@ -133,7 +163,35 @@ public interface OrderService {
      * @return
      */
     @POST("hongniu/api/unionpay/unionpaytn")
-    Observable<CommonBean<PayBean>> payUnionOffLine(@Body OrderParamBean infor);
+    Observable<CommonBean<PayBean>> payUnion(@Body OrderParamBean infor);
+
+    /**
+     * 支付宝支付
+     * orderNum     true	string	订单号
+     * openid       true	string	微信用户openid
+     * hasFreight   true	boolean	是否付运费，true=是
+     * hasPolicy    true	boolean	是否买保险，true=是
+     * onlinePay    true	boolean	是否线上支付,false=线下支付
+     *
+     * @param infor 订单ID
+     * @return
+     */
+    @POST("hongniu/api/alipay/getorderinfo")
+    Observable<CommonBean<PayBean>> payAli(@Body OrderParamBean infor);
+
+    /**
+     * 余额支付
+     * orderNum     true	string	订单号
+     * openid       true	string	微信用户openid
+     * hasFreight   true	boolean	是否付运费，true=是
+     * hasPolicy    true	boolean	是否买保险，true=是
+     * onlinePay    true	boolean	是否线上支付,false=线下支付
+     *
+     * @param infor 订单ID
+     * @return
+     */
+    @POST("hongniu/api/account/accountpay")
+    Observable<CommonBean<PayBean>> payBalance(@Body OrderParamBean infor);
 
     /**
      * 创建保单
@@ -184,6 +242,44 @@ public interface OrderService {
      */
     @POST("hongniu/api/position/list")
     Observable<CommonBean<PathBean>> getPath(@Body OrderIdBean infor);
+
+    /**
+     * 查询订单历史搜索记录
+     */
+    @POST("hongniu/api/user/querySearchHistory")
+    Observable<CommonBean<List<OrderSearchBean>>> querySearchHistory();
+
+    /**
+     * 上传图片
+     */
+    @Multipart
+    @POST("hongniu/api/file/upload")
+    Observable<CommonBean<UpImgData>> uploadMultipleTypeFile(@Part("classify") int type,
+                                                             @Part MultipartBody.Part image);
+
+    /**
+     * 上传回单
+     */
+    @POST("hongniu/api/order/saveReceiptInfo")
+    Observable<CommonBean<String>> upReceiver(@Body UpReceiverBean infor);
+
+    /**
+     * 查看回单信息
+     */
+    @POST("hongniu/api/order/queryReceiptInfo")
+    Observable<CommonBean<QueryReceiveBean>> queryReceiptInfo(@Body UpReceiverBean infor);
+
+    /**
+     * 查看货单信息
+     */
+    @POST("hongniu/api/order/queryGoodsImages")
+    Observable<CommonBean<List<UpImgData>>> queryCargotInfo(@Body UpReceiverBean infor);
+
+    /**
+     * 删除指定回单ID
+     */
+    @POST("hongniu/api/order/deleteReceiptImage")
+    Observable<CommonBean<String>> deleteReceiptImage(@Body UpReceiverBean infor);
 
 
 }

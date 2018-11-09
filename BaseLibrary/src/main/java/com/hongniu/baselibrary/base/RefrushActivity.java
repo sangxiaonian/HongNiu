@@ -1,13 +1,8 @@
 package com.hongniu.baselibrary.base;
 
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.hongniu.baselibrary.R;
 import com.hongniu.baselibrary.config.Param;
@@ -15,7 +10,6 @@ import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.widget.XRefreshLayout;
 import com.sang.common.recycleview.adapter.XAdapter;
-import com.sang.common.utils.JLog;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -43,6 +37,9 @@ public abstract class RefrushActivity<T> extends BaseActivity implements OnRefre
         super.setContentView(layoutResID);
         refresh = findViewById(R.id.refresh);
         rv = findViewById(R.id.rv);
+        LinearLayoutManager manager = new LinearLayoutManager(mContext);
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        rv.setLayoutManager(manager);
         if (refresh != null) {
             refresh.setOnRefreshListener(this);
             refresh.setOnLoadMoreListener(this);
@@ -53,9 +50,7 @@ public abstract class RefrushActivity<T> extends BaseActivity implements OnRefre
     @Override
     protected void initData() {
         super.initData();
-        LinearLayoutManager manager = new LinearLayoutManager(mContext);
-        manager.setOrientation(LinearLayoutManager.VERTICAL);
-        rv.setLayoutManager(manager);
+
         rv.setAdapter(adapter = getAdapter(datas));
 
     }
@@ -63,7 +58,7 @@ public abstract class RefrushActivity<T> extends BaseActivity implements OnRefre
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
 
-        queryData(true,false);
+        queryData(true, false);
     }
 
     @Override
@@ -72,9 +67,9 @@ public abstract class RefrushActivity<T> extends BaseActivity implements OnRefre
 
     }
 
-    protected void queryData(final boolean isClear,boolean showLoad) {
-        isFirst=showLoad;
-         queryData(isClear);
+    protected void queryData(final boolean isClear, boolean showLoad) {
+        isFirst = showLoad;
+        queryData(isClear);
     }
 
     protected void queryData(final boolean isClear) {
@@ -84,6 +79,16 @@ public abstract class RefrushActivity<T> extends BaseActivity implements OnRefre
         }
         getListDatas()
                 .subscribe(new NetObserver<PageBean<T>>(this) {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        if (isFirst) {
+                            isFirst = false;
+                            super.onSubscribe(d);
+                        }else {
+                            disposable=d;
+                        }
+                    }
+
                     @Override
                     public void doOnSuccess(PageBean<T> data) {
                         if (isClear) {
@@ -112,10 +117,8 @@ public abstract class RefrushActivity<T> extends BaseActivity implements OnRefre
     @Override
     public void onTaskStart(Disposable d) {
         disposable = d;
-        if (isFirst) {
-            isFirst = false;
-            super.onTaskStart(d);
-        }
+        super.onTaskStart(d);
+
     }
 
     @Override
@@ -131,6 +134,7 @@ public abstract class RefrushActivity<T> extends BaseActivity implements OnRefre
         refresh.finishLoadMore();
         refresh.finishRefresh();
     }
+
     /**
      * 显示没有更多数据了
      */

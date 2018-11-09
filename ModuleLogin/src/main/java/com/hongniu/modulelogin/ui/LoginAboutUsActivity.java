@@ -10,9 +10,9 @@ import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.entity.H5Config;
 import com.hongniu.modulelogin.R;
 import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.JLog;
 import com.sang.common.widget.ItemView;
 
 @Route(path = ArouterParamLogin.activity_about_us)
@@ -44,7 +44,7 @@ public class LoginAboutUsActivity extends BaseActivity implements View.OnClickLi
     protected void initData() {
         super.initData();
         try {
-            itemAobutHongNiu.setTextRight(DeviceUtils.getVersionName(mContext)+(Param.isDebug?"debug":""));
+            itemAobutHongNiu.setTextRight(DeviceUtils.getVersionName(mContext));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -68,7 +68,8 @@ public class LoginAboutUsActivity extends BaseActivity implements View.OnClickLi
 
         if (v.getId() == R.id.item_about_hongniu) {
         } else if (v.getId() == R.id.item_terms_of_service) {
-            ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5).withString(Param.TRAN, Param.hongniu_agreement).navigation(mContext);
+            H5Config h5Config = new H5Config(getString(R.string.hongniu_agreement), Param.hongniu_agreement, true);
+            ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5).withSerializable(Param.TRAN, h5Config).navigation(mContext);
 
         }
 

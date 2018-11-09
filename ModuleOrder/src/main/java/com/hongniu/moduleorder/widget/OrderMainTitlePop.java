@@ -60,7 +60,7 @@ public class OrderMainTitlePop extends BasePopu implements View.OnClickListener 
         int i = v.getId();
         if (i == R.id.ll_left) {
             if (listener != null) {
-                listener.onMainClick(this,0);
+                listener.onMainClick(this,3);
             }
 
         } else if (i == R.id.ll_center) {

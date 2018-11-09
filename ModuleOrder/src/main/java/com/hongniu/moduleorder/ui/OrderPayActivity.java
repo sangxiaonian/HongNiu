@@ -1,11 +1,10 @@
 package com.hongniu.moduleorder.ui;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Spannable;
 import android.text.SpannableStringBuilder;
-import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -20,17 +19,17 @@ import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
-import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CreatInsuranceBean;
-import com.hongniu.baselibrary.event.Event;
+import com.hongniu.baselibrary.entity.H5Config;
 import com.hongniu.baselibrary.utils.Utils;
+import com.hongniu.baselibrary.widget.PayPasswordKeyBord;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
-import com.hongniu.moduleorder.entity.OrderParamBean;
-import com.hongniu.moduleorder.net.HttpOrderFactory;
+import com.hongniu.moduleorder.control.OrderPayControl;
+import com.hongniu.moduleorder.present.OrderPayPresenter;
+import com.hongniu.moduleorder.widget.PayAleartPop;
 import com.hongniu.moduleorder.widget.dialog.BuyInsuranceDialog;
-import com.hongniu.moduleorder.widget.dialog.InsuranceNoticeDialog;
 import com.sang.common.event.BusFactory;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.JLog;
@@ -38,17 +37,10 @@ import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
-import com.sang.thirdlibrary.pay.PayClient;
-import com.sang.thirdlibrary.pay.PayConfig;
-import com.sang.thirdlibrary.pay.control.PayControl;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
-import com.sang.thirdlibrary.pay.unionpay.UnionPayClient;
-import com.sang.thirdlibrary.pay.wechat.WeChatAppPay;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import java.text.DecimalFormat;
 
 /**
  * 订单支付界面
@@ -64,7 +56,7 @@ import java.text.DecimalFormat;
  * 不购买保险，则直接显示完成订单
  */
 @Route(path = ArouterParamOrder.activity_order_pay)
-public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener, BuyInsuranceDialog.OnBuyInsuranceClickListener, DialogControl.OnButtonBottomClickListener {
+public class OrderPayActivity extends BaseActivity implements OrderPayControl.IOrderPayView, RadioGroup.OnCheckedChangeListener, View.OnClickListener, BuyInsuranceDialog.OnBuyInsuranceClickListener, PayPasswordKeyBord.PayKeyBordListener {
 
     private TextView tvOrder;//订单号
     private ViewGroup btBuy;//购买保险
@@ -74,10 +66,15 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
     private RadioButton rbOffline;//线下支付
     private ViewGroup rlWechact;//微信支付
     private ImageView cbWechat;//选择是否微信支付
+    private View imgDai;//代收款提示
     private ViewGroup rlAli;//支付宝
+
     private ImageView cbAli;//选择是否支付宝支付
     private ViewGroup rlUnion;//银联支付
     private ImageView cbUnion;//选择是银联支付
+
+    private ViewGroup rlYue;//余额支付
+    private ImageView cbYue;//选择余额支付
 
 
     private Button btPay;//支付订单
@@ -94,22 +91,12 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
     private TextView tv_des;//订单描述
 
 
-    private boolean onLine = true;
-    private boolean buyInsurance;//是否购买保险
-    private float insurancePrice;//保费
-    private float cargoPrice;//货物金额
-    private float tranPrice;//运费
-
-
     private BuyInsuranceDialog buyInsuranceDialog;
-    private InsuranceNoticeDialog noticeDialog;
 
-    //是否为单独的购买保险界面
-    private boolean isInsurance;
-    private String orderID = "";//订单号
-    private String orderNum = "";//订单号
-    private int payType = -1;
-    private PayClient payClient;
+
+    private OrderPayControl.IOrderPayPresent payPresent;
+    private PayAleartPop aleartPop;
+    private PayPasswordKeyBord payPasswordKeyBord;
 
 
     @Override
@@ -121,7 +108,8 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
         initData();
         initListener();
         //默认选中微信支付
-        rlWechact.performClick();
+        payPresent = new OrderPayPresenter(this, this);
+        onSelectYuePay();
     }
 
     @Override
@@ -148,20 +136,29 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
         cbAli = findViewById(R.id.ali_box);
         rlUnion = findViewById(R.id.rl_union);
         cbUnion = findViewById(R.id.union_box);
+        rlYue = findViewById(R.id.rl_yue);
+        cbYue = findViewById(R.id.cb_yue);
         payOnline = findViewById(R.id.pay_online);
+        imgDai = findViewById(R.id.img_dai);
 
         buyInsuranceDialog = new BuyInsuranceDialog(mContext);
+        aleartPop = new PayAleartPop(this);
 
-        noticeDialog = new InsuranceNoticeDialog(mContext);
+        payPasswordKeyBord = new PayPasswordKeyBord(this);
+        payPasswordKeyBord.setProgressListener(this);
+        payPasswordKeyBord.sePaytListener(this);
+        payPasswordKeyBord.setPayDes("付款金额");
     }
 
     @Override
     protected void initData() {
         super.initData();
-        rlAli.setVisibility(View.GONE);
-        tvOrder.setText("订单号" + orderNum);
-        tvPrice.setText("￥" + tranPrice);
-        buyInsuranceDialog.setOrderID(orderID);
+        tvOrder.setText("订单号");
+        tvPrice.setText("￥" + 0);
+        //默认情况下显示购买保险的条目
+        conInsurance.setVisibility(View.GONE);
+        btBuy.setVisibility(View.VISIBLE);
+
     }
 
     @Override
@@ -174,119 +171,10 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
     public void onMessageEvent(OrderEvent.PayOrder event) {
         if (event != null) {
             //此处判断是否是购买保险
-            isInsurance = event.insurance;
-            tranPrice = event.money;
-            orderID = event.orderID;
-            orderNum = event.orderNum;
-
-            if (isInsurance) {//如果是购买保险
-                switchPayLine(false);
-                tv_des.setText(R.string.order_pay_insruance_buy_des);
-                setToolbarDarkTitle(getString(R.string.order_pay_insruance_pay));
-                rl_tran.setVisibility(View.GONE);
-            } else {
-                setToolbarDarkTitle(getString(R.string.order_pay));
-                tv_des.setText(R.string.order_pay_success_driver_start);
-                rl_tran.setVisibility(View.VISIBLE);
-                switchPayLine(true);
-            }
-            switchToBuyInsurance(true);
+            payPresent.saveTranDate(event.insurance, event.money, event.orderID, event.orderNum, this);
             rbOnline.performClick();
-            initData();
-
         }
         BusFactory.getBus().removeStickyEvent(event);
-    }
-
-    /**
-     * 线上支付时候，支付保险和运费
-     * 线下支付则不需要支付运费，如果选择保险，则需要支付保险，否则不需要
-     */
-    private void setTvPayAll() {
-        float price;
-
-        if (onLine) {
-            price = tranPrice + insurancePrice;
-        } else {
-            price = insurancePrice;
-        }
-        DecimalFormat df2 = new DecimalFormat("0.00");
-        String tranPrice = "￥" + ConvertUtils.changeFloat(price, 2);
-
-
-        SpannableStringBuilder builder = new SpannableStringBuilder();
-        builder.append(tranPrice);
-        if (!isInsurance && onLine && buyInsurance) {
-            builder.append("（含保费" + ConvertUtils.changeFloat(insurancePrice, 2) + "元）");
-        }
-        ForegroundColorSpan span = new ForegroundColorSpan(getResources().getColor(R.color.color_light));
-        builder.setSpan(span, 0, tranPrice.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        tvPayAll.setText(builder);
-        switchPay();
-    }
-
-    /**
-     * 线上支付时候，支付保险和运费，显示支付订单
-     * 线下支付则不需要支付运费，直接显示 完成订单
-     * ，如果选择保险，则需要支付保险 支付订单
-     */
-    public void switchPay() {
-        if (onLine) {
-            btPay.setText("支付订单");
-        } else {
-            if (buyInsurance) {//如果线下支付，购买保险
-                btPay.setText("支付订单");
-            } else {
-                btPay.setText("完成订单");
-            }
-        }
-    }
-
-    /**
-     * 切换到卖保险条目
-     *
-     * @param buy true 没有购买保险
-     */
-    private void switchToBuyInsurance(boolean buy) {
-
-        buyInsurance = !buy;
-        if (buy) {
-            conInsurance.setVisibility(View.GONE);
-            btBuy.setVisibility(View.VISIBLE);
-            insurancePrice = 0;
-            cargoPrice = 0;
-        } else {
-            conInsurance.setVisibility(View.VISIBLE);
-            btBuy.setVisibility(View.GONE);
-            tv_cargo_price.setText("货物金额" + cargoPrice + "元");
-            tv_insurance_price.setText("￥" + insurancePrice + "元");
-        }
-        setTvPayAll();
-        switchPayLine(onLine);
-
-
-    }
-
-
-    /**
-     * 切换线上线下支付方式
-     *
-     * @param line true 线上支付
-     */
-    public void switchPayLine(boolean line) {
-        if (line) {
-            onLine = true;
-            payOnline.setVisibility(View.VISIBLE);
-        } else {
-            onLine = false;
-            if (buyInsurance) {//如果此时购买保险，则显示购买方式
-                payOnline.setVisibility(View.VISIBLE);
-            } else {
-                payOnline.setVisibility(View.GONE);
-            }
-        }
-        setTvPayAll();
-
     }
 
 
@@ -299,23 +187,20 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
         rg.setOnCheckedChangeListener(this);
         bt_cancle_insurance.setOnClickListener(this);
         tv_change_cargo_price.setOnClickListener(this);
-        noticeDialog.setOnBottomClickListener(this);
         buyInsuranceDialog.setListener(this);
         rlAli.setOnClickListener(this);
         rlUnion.setOnClickListener(this);
-
+        rlYue.setOnClickListener(this);
+        imgDai.setOnClickListener(this);
     }
 
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         if (checkedId == R.id.rb_online) {//线上支付
-
-            switchPayLine(true);
-
+            payPresent.onLineClick();
         } else if (checkedId == R.id.rb_offline) {//线下支付
-
-            switchPayLine(false);
+            payPresent.onOffLineClick();
         }
     }
 
@@ -328,7 +213,6 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.con_buy) {//购买保险
-
             if (Utils.checkInfor()) {
                 buyInsuranceDialog.show();
             } else {
@@ -339,193 +223,54 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
                     }
                 });
             }
-
-
         } else if (i == R.id.rl_wechact) {//选择微信支付
             changePayType(0);
+            payPresent.setPayType(0);
         } else if (i == R.id.rl_ali) {//选择支付宝
-            //支付宝暂未接入，无效的支付方式
-            changePayType(-1);
-
+            changePayType(3);
+            payPresent.setPayType(3);
         } else if (i == R.id.rl_union) {//选择银联
             changePayType(1);
-
+            payPresent.setPayType(1);
+        } else if (i == R.id.rl_yue) {//余额支付
+            payPresent.onChoiceYuePay();
         } else if (i == R.id.bt_pay) {//支付订单
-
-            //如果是正式环境，保费不能低于5元
-//            if (!Param.isDebug && insurancePrice > 0 && insurancePrice < 5) {
-//                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("保费不能低于5元");
-//                return;
-//            }
-
-            if (!isInsurance) {//订单支付界面
-                if (onLine) {//线上支付
-
-                    if (checkPayType()) {
-                        OrderParamBean bean;
-                        if (buyInsurance) {//购买保险
-                            bean = creatBuyParams(true, true, true);
-                        } else {//不购买保险
-                            bean = creatBuyParams(true, true, false);
-                        }
-                        HttpOrderFactory.payOrderOffLine(bean)
-                                .subscribe(new NetObserver<PayBean>(this) {
-                                    @Override
-                                    public void doOnSuccess(PayBean data) {
-                                        startWeChatPay(data, buyInsurance);
-                                    }
-                                });
-                    } else {
-                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("请选择支付方式");
-
-                    }
-
-                } else {//线下支付
-                    if (buyInsurance) {//购买保险
-                        if (checkPayType()) {
-                            HttpOrderFactory.payOrderOffLine(creatBuyParams(false, true, true))
-                                    .subscribe(new NetObserver<PayBean>(this) {
-                                        @Override
-                                        public void doOnSuccess(PayBean data) {
-                                            startWeChatPay(data, true);
-
-                                        }
-                                    });
-
-                        } else {
-                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("请选择支付方式");
-                        }
-
-                    } else {//不购买保险
-                        HttpOrderFactory.payOrderOffLine(creatBuyParams(false, true, false))
-                                .subscribe(new NetObserver<PayBean>(this) {
-                                    @Override
-                                    public void doOnSuccess(PayBean data) {
-                                        finish();
-                                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
-                                    }
-                                });
-                    }
-                }
-            } else {//保险购买界面
-                if (checkPayType()) {
-                    //单独购买保险
-                    if (cargoPrice > 0) {
-                        buyInsurance = true;
-                        HttpOrderFactory.payOrderOffLine(creatBuyParams(true, false, true))
-                                .subscribe(new NetObserver<PayBean>(this) {
-                                    @Override
-                                    public void doOnSuccess(PayBean data) {
-                                        startWeChatPay(data, true);
-                                    }
-                                });
-                    } else {
-                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("请设置保险金额");
-                    }
-                } else {
-                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("请选择支付方式");
-
-                }
-
-            }
-
+            payPresent.pay(this);
         } else if (i == R.id.bt_cancle_insurance) {//取消保险
-            switchToBuyInsurance(true);
-
+            payPresent.clearInsurance();
         } else if (i == R.id.tv_change_cargo_price) {//修改保险金额
             buyInsuranceDialog.show();
+        } else if (i == R.id.img_dai) {
+            aleartPop.show(v);
         }
-    }
-
-    //检测支付方式
-    private boolean checkPayType() {
-        return payType != -1;
     }
 
     //更改支付方式
     private void changePayType(int payType) {
-        this.payType = payType;
+        JLog.i(payType + ">>>>");
         cbWechat.setImageResource(payType == 0 ? R.mipmap.icon_xz_36 : R.mipmap.icon_wxz_36);
-        cbAli.setImageResource(payType == 1 ? R.mipmap.icon_xz_36 : R.mipmap.icon_wxz_36);
+        cbAli.setImageResource(payType == 3 ? R.mipmap.icon_xz_36 : R.mipmap.icon_wxz_36);
         cbUnion.setImageResource(payType == 1 ? R.mipmap.icon_xz_36 : R.mipmap.icon_wxz_36);
+        cbYue.setImageResource(payType == 4 ? R.mipmap.icon_xz_36 : R.mipmap.icon_wxz_36);
     }
-
-    /**
-     * 吊起微信支付
-     *
-     * @param data
-     * @param isCreatInsurance
-     */
-    private void startWeChatPay(PayBean data, boolean isCreatInsurance) {
-        PayControl.IPayClient client = null;
-        if (payType == 0) {
-            CreatInsuranceBean creatInsuranceBean = new CreatInsuranceBean();
-            creatInsuranceBean.setGoodsValue(cargoPrice + "");
-            creatInsuranceBean.setOrderNum(orderNum);
-            Event.CraetInsurance insurance = new Event.CraetInsurance(creatInsuranceBean);
-            insurance.isCreatInsurance = isCreatInsurance;
-            BusFactory.getBus().postSticky(insurance);
-            client = new WeChatAppPay();
-        } else if (payType == 1) {
-            client = new UnionPayClient();
-        } else {
-            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("无效支付方式");
-        }
-        payClient = new PayClient(client);
-        //此处用来区分正式和测试环境，设置debug为true的时候使用测试环境，默认为正式环境
-        payClient.setDebug(Param.isDebug);
-        payClient.pay(this, data);
-    }
-
-
-    /**
-     * 创建订单数据
-     *
-     * @param onLine     是否是线上
-     * @param hasFrenght 是否支付运费
-     * @param policy     是否购买保险
-     * @return
-     */
-    private OrderParamBean creatBuyParams(boolean onLine, boolean hasFrenght, boolean policy) {
-        OrderParamBean bean = new OrderParamBean();
-        bean.setOrderNum(orderNum);
-        bean.setHasFreight(hasFrenght);
-        bean.setHasPolicy(policy);
-        bean.setAppid(PayConfig.weChatAppid);
-        bean.setOnlinePay(onLine);
-        //线上支付或者购买保险的时候使用选中的支付方式，线下支付一律为2
-        bean.setPayType((onLine || policy) ? payType : 2);
-        return bean;
-
-    }
-
 
     @Override
     public void entryClick(Dialog dialog, boolean checked, String cargoPrice) {
-        try {
-            this.cargoPrice = Float.parseFloat(cargoPrice);
-            HttpOrderFactory.queryInstancePrice(cargoPrice, orderID)
-                    .subscribe(new NetObserver<String>(this) {
-                        @Override
-                        public void doOnSuccess(String data) {
-                            insurancePrice = Float.parseFloat(data);
-                            switchToBuyInsurance(false);
-                        }
-                    });
-            ;
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
+        payPresent.saveCargoInfor(cargoPrice, this);
         dialog.dismiss();
     }
 
     @Override
     public void noticeClick(BuyInsuranceDialog buyInsuranceDialog, boolean checked, int i) {
+        buyInsuranceDialog.dismiss();
+        H5Config h5Config;
         if (i == 0) {
-            ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5).withString(Param.TRAN, Param.insurance_polic).navigation(mContext);
+            h5Config = new H5Config(getString(R.string.order_insruance_police), Param.insurance_polic, true);
         } else {
-            ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5).withString(Param.TRAN, Param.insurance_notify).navigation(mContext);
+            h5Config = new H5Config(getString(R.string.order_insruance_notify), Param.insurance_notify, true);
         }
+        ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5).withSerializable(Param.TRAN, h5Config).navigation(this);
+
     }
 
 
@@ -544,51 +289,292 @@ public class OrderPayActivity extends BaseActivity implements RadioGroup.OnCheck
     }
 
     private CenterAlertBuilder creatDialog(String title, String content, String btleft, String btRight) {
-        return new CenterAlertBuilder()
-                .setDialogTitle(title)
-                .setDialogContent(content)
-                .setBtLeft(btleft)
-                .setBtRight(btRight)
-                .setBtLeftColor(getResources().getColor(R.color.color_title_dark))
-                .setBtRightColor(getResources().getColor(R.color.color_white))
-                .setBtRightBgRes(R.drawable.shape_f06f28);
+        return Utils.creatDialog(mContext,title,content,btleft,btRight);
     }
-
-    @Override
-    public void onBottomClick(View view, DialogControl.IBottomDialog dialog) {
-        noticeDialog.dismiss();
-        buyInsuranceDialog.setReadInsurance(true);
-        buyInsuranceDialog.show();
-    }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        String msg = "";
-        String str = data.getExtras().getString("pay_result");
-        if (str.equalsIgnoreCase("success")) {
 
-            msg = "支付成功！";
-            if (buyInsurance) {
+        if (resultCode == Activity.RESULT_OK) {
+            int payResult = data.getIntExtra("payResult", 0);
+            String msg = "";
 
-                CreatInsuranceBean creatInsuranceBean = new CreatInsuranceBean();
-                creatInsuranceBean.setGoodsValue(cargoPrice + "");
-                creatInsuranceBean.setOrderNum(orderNum);
+            switch (payResult) {
+                case 1000://成功
+                    msg = "支付成功！";
+                    payPresent.paySucccessed();
 
-                ArouterUtils.getInstance().builder(ArouterParamOrder.activity_insurance_creat)
-                        .withParcelable(Param.TRAN, creatInsuranceBean)
-                        .navigation(this);
-            } else {
-                ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_main)
-                        .navigation(this);
+                    break;
+                case 2000://失败
+                    msg = "支付失败！";
+
+                    break;
+                case 3000://取消
+                    msg = "取消支付";
+
+                    break;
+
             }
-        } else if (str.equalsIgnoreCase("fail")) {
-            msg = "支付失败！";
-        } else if (str.equalsIgnoreCase("cancel")) {
-            msg = "取消支付";
-        }
-        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show(msg);
+            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show(msg);
 
+        }
+
+
+    }
+
+
+    /**
+     * 根据传入的数值初始化界面数据
+     *
+     * @param money    订单金额
+     * @param orderID  订单id
+     * @param orderNum 订单号
+     */
+    @Override
+    public void setTranDate(float money, String orderID, String orderNum) {
+        tvOrder.setText("订单号" + orderNum);
+        tvPrice.setText("￥" + money);
+        buyInsuranceDialog.setOrderID(orderID);
+    }
+
+    /**
+     * 如果是单独购买保险功能，显示购买保险界面
+     */
+    @Override
+    public void showBuyInsurance() {
+        tv_des.setText(R.string.order_pay_insruance_buy_des);
+        setToolbarDarkTitle(getString(R.string.order_pay_insruance_pay));
+        rl_tran.setVisibility(View.GONE);
+
+    }
+
+    /**
+     * 如果是支付订单界面，显示支付订单界面
+     */
+    @Override
+    public void showPayOrder() {
+        setToolbarDarkTitle(getString(R.string.order_pay));
+        tv_des.setText(R.string.order_pay_success_driver_start);
+        rl_tran.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * 显示选择购买保险后货物价格和保费信息
+     *
+     * @param cargoPrice
+     * @param data
+     */
+    @Override
+    public void showCargoInfor(String cargoPrice, String data) {
+        conInsurance.setVisibility(View.VISIBLE);
+        btBuy.setVisibility(View.GONE);
+        tv_cargo_price.setText(cargoPrice);
+        tv_insurance_price.setText(data);
+    }
+
+    /**
+     * 显示不购买保险时候的界面
+     */
+    @Override
+    public void showNoInsurance() {
+        conInsurance.setVisibility(View.GONE);
+        btBuy.setVisibility(View.VISIBLE);
+        tv_cargo_price.setText("￥0.00");
+        tv_insurance_price.setText("￥0.00");
+    }
+
+    /**
+     * 选择是否是线上支付方式
+     *
+     * @param onLinePay true 线上支付
+     */
+    @Override
+    public void showOnLinePays(boolean onLinePay) {
+        payOnline.setVisibility(onLinePay ? View.VISIBLE : View.GONE);
+    }
+
+    /**
+     * 显示金额
+     *
+     * @param builder
+     */
+    @Override
+    public void showPayCount(SpannableStringBuilder builder) {
+        tvPayAll.setText(builder);
+    }
+
+    /**
+     * 开始支付并调往支付界面
+     *
+     * @param data
+     * @param payType
+     */
+    @Override
+    public void jumpToPay(PayBean data, int payType) {
+        WaitePayActivity.startPay(this, payType, data, Param.isDebug);
+    }
+
+    /**
+     * 线下支付，且无保险，直接回到主界面
+     */
+    @Override
+    public void jumpToMain() {
+        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_main)
+                .navigation(this);
+        finish();
+    }
+
+    /**
+     * 支付完成，开始购买保险
+     *
+     * @param price
+     * @param orderNum
+     * @param orderID
+     */
+    @Override
+    public void jumpToInsurance(String price, String orderNum, String orderID) {
+        CreatInsuranceBean creatInsuranceBean = new CreatInsuranceBean();
+        creatInsuranceBean.setGoodsValue(price);
+        creatInsuranceBean.setOrderNum(orderNum);
+        creatInsuranceBean.setOrderID(orderID);
+        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_query_insurance)
+                .withParcelable(Param.TRAN, creatInsuranceBean)
+                .navigation(this);
+        finish();
+    }
+
+    /**
+     * 单独购买保险却尚未选择保险
+     */
+    @Override
+    public void noChoiceInsurance() {
+        ToastUtils.getInstance().show("请选择投保金额");
+    }
+
+    /**
+     * 是否默认选中微信
+     *
+     * @param isEnough
+     * @param payType
+     */
+    @Override
+    public void isHasEnoughBalance(boolean isEnough, int payType) {
+        //如果余额不充足，并且当前选中的是余额就选中微信
+        if (!isEnough && payType == 4) {
+            rlWechact.performClick();
+            JLog.i("-------------------");
+        }
+
+    }
+
+    /**
+     * 选中余额支付，但是余额不足
+     */
+    @Override
+    public void showNoEnoughBalance() {
+        ToastUtils.getInstance().show("余额不足");
+    }
+
+    /**
+     * 选中余额支付
+     */
+    @Override
+    public void onSelectYuePay() {
+        changePayType(4);
+        payPresent.setPayType(4);
+    }
+
+    /**
+     * 显示支付密码键盘
+     *
+     * @param money
+     */
+    @Override
+    public void showPasswordDialog(double money) {
+
+        payPasswordKeyBord.setPayCount(ConvertUtils.changeFloat(money, 2));
+        payPasswordKeyBord.show();
+
+    }
+
+    /**
+     * 没置过支付密码
+     */
+    @Override
+    public void hasNoSetPassword() {
+        creatDialog("使用余额支付前，必须设置泓牛支付密码", null, "取消", "去设置")
+                .setLeftClickListener(new DialogControl.OnButtonLeftClickListener() {
+                    @Override
+                    public void onLeftClick(View view, DialogControl.ICenterDialog dialog) {
+                        dialog.dismiss();
+                    }
+                })
+                .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
+                    @Override
+                    public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
+                        dialog.dismiss();
+                        ArouterUtils.getInstance()
+                                .builder(ArouterParamLogin.activity_login_forget_pass)
+                                .withInt(Param.TRAN, 1)
+                                .navigation(mContext);
+                    }
+                })
+                .creatDialog(new CenterAlertDialog(mContext))
+                .show();
+    }
+
+    @Override
+    public void changePayWayToBanlace(boolean hasEnoughBalance, int payType) {
+        onSelectYuePay();
+    }
+
+
+    /**
+     * 取消支付
+     *
+     * @param dialog
+     */
+    @Override
+    public void onCancle(DialogControl.IDialog dialog) {
+        dialog.dismiss();
+    }
+
+    /**
+     * 密码输入完成
+     *
+     * @param dialog
+     * @param count    金额
+     * @param passWord 密码
+     */
+    @Override
+    public void onInputPassWordSuccess(DialogControl.IDialog dialog, String count, String passWord) {
+        dialog.dismiss();
+        payPresent.setPayPassoword(passWord, this);
+    }
+
+    /**
+     * 忘记密码
+     *
+     * @param dialog
+     */
+    @Override
+    public void onForgetPassowrd(DialogControl.IDialog dialog) {
+        ArouterUtils.getInstance()
+                .builder(ArouterParamLogin.activity_login_forget_pass)
+                .navigation(mContext);
+    }
+
+    /**
+     * 从未设置过密码
+     *
+     * @param dialog
+     */
+    @Override
+    public void hasNoPassword(DialogControl.IDialog dialog) {
+//        ArouterUtils.getInstance()
+//                .builder(ArouterParamLogin.activity_login_forget_pass)
+//                .withInt(Param.TRAN, 1)
+//                .navigation(mContext);
     }
 }

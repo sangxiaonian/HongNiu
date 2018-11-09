@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_white"
+    android:padding="@dimen/app_gap">
+
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="账户提现"
+        android:textColor="@color/color_title_dark"
+        android:textSize="19sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/img_cancel"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:src="@mipmap/icon_close_gary_28"
+        app:layout_constraintBottom_toBottomOf="@id/tv1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv1" />
+
+    <com.hongniu.baselibrary.widget.WithDrawProgress
+        android:id="@+id/progress"
+        android:layout_width="30dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginBottom="@dimen/app_gap"
+        app:layout_constraintTop_toBottomOf="@id/tv1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/line" />
+
+    <LinearLayout
+        android:id="@+id/ll_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/app_gap"
+        android:orientation="vertical"
+        app:layout_constraintStart_toEndOf="@id/progress"
+        app:layout_constraintTop_toTopOf="@id/progress">
+
+        <TextView
+            android:id="@+id/tv_start_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发起提现申请"
+            android:textColor="@color/color_content_light"
+            android:textSize="@dimen/text_small_15" />
+
+        <TextView
+            android:id="@+id/tv_start_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发起提现申请"
+            android:textColor="@color/color_content_light"
+            android:textSize="@dimen/text_min_12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/app_gap"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="@+id/progress"
+        app:layout_constraintStart_toEndOf="@id/progress"
+        app:layout_constraintBottom_toBottomOf="@id/progress">
+
+        <TextView
+            android:id="@+id/tv_center_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="提现审核中"
+            android:textColor="@color/color_content_light"
+            android:textSize="@dimen/text_small_15" />
+
+        <TextView
+            android:id="@+id/tv_center_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_content_light"
+            android:textSize="@dimen/text_min_12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:id="@+id/ll_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/app_gap"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@id/progress"
+        app:layout_constraintStart_toEndOf="@id/progress">
+
+        <TextView
+            android:id="@+id/tv_bottom_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发起提现申请"
+            android:textColor="@color/color_content_light"
+            android:textSize="@dimen/text_small_15" />
+
+        <TextView
+            android:id="@+id/tv_bottom_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_content_light"
+            android:textSize="@dimen/text_min_12sp" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/line_height"
+        android:layout_marginBottom="@dimen/app_gap"
+        android:background="@color/line_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tv_money_des" />
+
+    <TextView
+        android:id="@+id/tv_money_des"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/app_gap"
+        android:text="提现金额："
+        android:textColor="@color/color_content_light"
+        android:textSize="14sp"
+        android:layout_marginBottom="@dimen/app_model_gap"
+        app:layout_constraintStart_toStartOf="@id/progress"
+        app:layout_constraintBottom_toTopOf="@+id/tv_withdraw_des" />
+
+
+    <TextView
+        android:id="@+id/tv_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="￥0"
+        android:textColor="@color/color_title_dark"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/tv_money_des"
+        app:layout_constraintTop_toTopOf="@id/tv_money_des"
+        app:layout_constraintBottom_toBottomOf="@id/tv_money_des"
+          />
+
+    <TextView
+        android:id="@+id/tv_withdraw_des"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="提现方式："
+        android:textColor="@color/color_content_light"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@id/progress"
+        app:layout_constraintBottom_toBottomOf="parent"
+          />
+
+
+    <TextView
+        android:id="@+id/tv_withdraw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@color/color_title_dark"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/tv_withdraw_des"
+        app:layout_constraintTop_toTopOf="@id/tv_withdraw_des"
+        app:layout_constraintBottom_toBottomOf="@id/tv_withdraw_des"
+          />
+
+
+</android.support.constraint.ConstraintLayout>

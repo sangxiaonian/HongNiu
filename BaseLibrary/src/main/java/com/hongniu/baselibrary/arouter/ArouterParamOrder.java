@@ -25,6 +25,11 @@ public class ArouterParamOrder {
      */
     public static final String activity_insurance_creat = "/order/activity_insurance_creat";
     /**
+     * 保单生成查询
+     */
+    public static final String activity_order_query_insurance = "/order/activity_order_query_insurance";
+
+    /**
      * 保单生成结果
      */
     public static final String activity_insurance_creat_result = "/order/activity_insurance_creat_result";
@@ -40,9 +45,25 @@ public class ArouterParamOrder {
      * 地图查看轨迹
      */
     public static final String activity_order_map_path = "/order/activity_order_map_path";
- /**
+    /**
      * 地图查看轨迹
      */
     public static final String activity_map_check_path = "/order/activity_map_check_path";
+    /**
+     * 订单列表搜索页面
+     */
+    public static final String activity_order_search = "/order/activity_order_search";
+    /**
+     * 订单列表搜索页面
+     */
+    public static final String fragment_order_search = "/order/fragment_order_search";
+    /**
+     * 订单列表搜索结果页面
+     */
+    public static final String activity_order_search_result = "/order/activity_order_search_result";
+    /**
+     * 上传保单
+     */
+    public static final String activity_order_up_receipt = "/order/activity_order_up_receipt";
 
 }

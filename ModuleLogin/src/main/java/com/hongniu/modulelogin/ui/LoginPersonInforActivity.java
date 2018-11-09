@@ -79,9 +79,8 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
         super.initData();
 
         LoginPersonInfor personInfor = Utils.getPersonInfor();
-        if (personInfor == null) {
+        if (personInfor == null||Utils.checkInfor()) {
             HttpLoginFactory.getPersonInfor().subscribe(new NetObserver<LoginPersonInfor>(this) {
-
                 @Override
                 public void doOnSuccess(LoginPersonInfor data) {
                     initInfor(data);
@@ -194,17 +193,19 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
         if (TextUtils.isEmpty(itemIdcard.getTextCenter())) {
             showAleart(itemIdcard.getTextCenterHide());
             return false;
-        } else if (!CommonUtils.isIdCard(itemIdcard.getTextCenter())) {
-            showAleart(getString(R.string.login_person_idcard_error));
-            return false;
         }
+//        else if (!CommonUtils.isIdCard(itemIdcard.getTextCenter())) {
+//            showAleart(getString(R.string.login_person_idcard_error));
+//            return false;
+//        }
         if (TextUtils.isEmpty(itemEmail.getTextCenter())) {
             showAleart(itemEmail.getTextCenterHide());
             return false;
-        } else if (!CommonUtils.isEmail(itemEmail.getTextCenter())) {
-            showAleart(getString(R.string.login_person_email_error));
-            return false;
         }
+//        else if (!CommonUtils.isEmail(itemEmail.getTextCenter())) {
+//            showAleart(getString(R.string.login_person_email_error));
+//            return false;
+//        }
         if (TextUtils.isEmpty(itemAddress.getTextCenter())) {
             showAleart(itemAddress.getTextCenterHide());
             return false;

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_white">
+
+    <LinearLayout
+        android:id="@+id/ll_search"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        android:layout_marginLeft="@dimen/app_gap"
+        android:layout_marginRight="@dimen/app_gap"
+        android:layout_marginTop="@dimen/app_item_gap"
+        android:background="@drawable/shape_4_f3f3f3"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/app_item_gap"
+        android:paddingLeft="@dimen/app_model_gap"
+        android:paddingRight="@dimen/app_model_gap"
+        android:paddingTop="@dimen/app_item_gap"
+        app:layout_constraintBottom_toTopOf="@+id/line1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/bt_cancle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <com.sang.common.widget.SwitchTextLayout
+            android:id="@+id/switch_left"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:closeColor="@color/color_title_dark"
+            app:closeIcon="@drawable/icon_arrow_down_333"
+            app:openColor="@color/color_light"
+            app:openIcon="@drawable/icon_arrow_down_333"
+            app:title="货主"
+            app:titleSize="13sp" />
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginLeft="@dimen/app_gap"
+            app:srcCompat="@drawable/icon_search_c8c8c8" />
+
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:layout_weight="1"
+            android:background="@color/color_tran"
+            android:ellipsize="end"
+            android:hint="@string/order_search_des"
+            android:imeOptions="actionSearch"
+            android:singleLine="true"
+            android:textColor="@color/color_title_dark"
+            android:textColorHint="#c8c8c8"
+            android:textSize="13sp" />
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/bt_cancle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/app_gap"
+        android:text="@string/cancel"
+        android:textColor="@color/color_title_dark"
+        android:textSize="@dimen/text_small_16"
+        app:layout_constraintBottom_toBottomOf="@id/ll_search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ll_search"
+        app:layout_constraintTop_toTopOf="@id/ll_search" />
+
+    <View
+        android:id="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_height"
+        android:layout_marginTop="@dimen/app_item_gap"
+        android:background="@color/color_line"
+        app:layout_constraintTop_toBottomOf="@id/ll_search" />
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/app_gap"
+        android:layout_marginTop="@dimen/app_model_gap"
+        android:text="历史搜索"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/line1" />
+
+    <View
+        android:id="@+id/line2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_height"
+        android:layout_marginTop="@dimen/app_model_gap"
+        android:background="@color/color_line"
+        app:layout_constraintTop_toBottomOf="@id/tv" />
+
+    <com.hongniu.baselibrary.widget.XRefreshLayout
+        android:id="@+id/refresh"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line2">
+
+        <com.sang.common.recycleview.RecycleViewSupportEmpty
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            app:empty_img="@mipmap/icon_zwdd_260"
+            app:empty_title="@string/order_main_no_order" />
+    </com.hongniu.baselibrary.widget.XRefreshLayout>
+
+
+</android.support.constraint.ConstraintLayout>

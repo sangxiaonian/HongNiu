@@ -1,6 +1,5 @@
 package com.hongniu.modulelogin.net;
 
-import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CarTypeBean;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.LoginBean;
@@ -9,9 +8,9 @@ import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
 import com.hongniu.modulelogin.entity.LoginCarInforBean;
 import com.hongniu.modulelogin.entity.LoginSMSParams;
-import com.hongniu.modulelogin.entity.PayInforBeans;
+import com.hongniu.baselibrary.entity.PayInforBeans;
+import com.hongniu.modulelogin.entity.SetPayPassWord;
 import com.sang.common.net.rx.RxUtils;
-import com.sang.common.utils.ConvertUtils;
 
 import java.util.List;
 
@@ -26,20 +25,7 @@ import okhttp3.ResponseBody;
 public class HttpLoginFactory {
 
 
-    /**
-     * 登录时候获取验证码
-     *
-     * @param mobile 手机号
-     */
-    public static Observable<CommonBean<String>> getSmsCode(String mobile) {
-        LoginSMSParams params = new LoginSMSParams();
-        params.setMobile(mobile);
-        params.setCode(ConvertUtils.MD5(mobile, Param.key));
-        return LoginClient.getInstance().getLoginService()
-                .getSmsCode(params)
-                .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer())
-                ;
-    }
+
 
     /**
      * 使用验证码登录
@@ -54,6 +40,21 @@ public class HttpLoginFactory {
         return LoginClient.getInstance().getLoginService()
                 .loginBySms(params)
                 .compose(RxUtils.<CommonBean<LoginBean>>getSchedulersObservableTransformer())
+                ;
+    }
+   /**
+     * 使用验证码登录
+     *
+     * @param mobile 手机号
+     * @param code   验证码
+     */
+    public static Observable<CommonBean<String>> checkSms(String mobile, String code) {
+        LoginSMSParams params = new LoginSMSParams();
+        params.setMobile(mobile);
+        params.setCheckCode(code);
+        return LoginClient.getInstance().getLoginService()
+                .ckeckcode(params)
+                .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer())
                 ;
     }
 
@@ -134,17 +135,7 @@ public class HttpLoginFactory {
 
     }
 
-    /**
-     * 查询收款方式列表
-     */
-    public static Observable<CommonBean<List<PayInforBeans>>> queryMyPayInforList() {
 
-        PayInforBeans bean = new PayInforBeans();
-        return LoginClient.getInstance().getLoginService()
-                .queryMyPayInforList(bean)
-                .compose(RxUtils.<CommonBean<List<PayInforBeans>>>getSchedulersObservableTransformer());
-
-    }
   /**
      * 更改默认收款方式
    * @param id 付款方式ID
@@ -165,11 +156,21 @@ public class HttpLoginFactory {
      * 新增银行卡收款方式
      */
     public static Observable<CommonBean<String>> addBlankCard(PayInforBeans bean) {
-
+        bean.setType(1);
         return LoginClient.getInstance().getLoginService()
                 .addBlankCard(bean)
                 .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
 
     }
+
+
+
+    public static Observable<CommonBean<String>> upPassword(String passwordMd5, String smsCode) {
+        SetPayPassWord payPassword=new SetPayPassWord(passwordMd5,smsCode);
+       return LoginClient.getInstance().getLoginService()
+                .setPayPassword(payPassword)
+                .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
+    }
+
 
 }

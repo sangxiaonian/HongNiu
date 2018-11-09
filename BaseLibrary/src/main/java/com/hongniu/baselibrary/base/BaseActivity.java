@@ -53,7 +53,7 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
     protected View tool;
     private LoadDialog loading;
     protected Disposable disposable;
-    private CenterAlertDialog alertDialog;
+    protected CenterAlertDialog alertDialog;
 
 
     @Override
@@ -139,7 +139,7 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
 
     protected void setToolbarTitle(String title) {
         if (tvToolbarTitle != null) {
-            tvToolbarTitle.setText(title);
+            tvToolbarTitle.setText(title==null?"":title);
         }
         StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.color_bg), true);
     }
@@ -153,7 +153,11 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
             if (imgToolbarLeft != null) {
                 imgToolbarLeft.setImageResource(R.mipmap.icon_back_w_36);
             }
-            tvToolbarTitle.setText(title);
+            tvToolbarTitle.setText(title==null?"":title);
+        }
+
+        if (tvToolbarRight!=null){
+            tvToolbarRight.setTextColor(Color.WHITE);
         }
 
         StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.color_title_dark), false);
