@@ -11,10 +11,18 @@ public class QueryOrderStateBean implements Serializable{
      *  true	number	订单状态0待支付2支付成功待发车3运输中
       */
     private int orderState	   ;
+
+    /**
+     * 保单支付状态 0未支付 1 已经支付
+     */
+    private int payPolicyState	   ;
     /**
      * 	true	string	是否生成保单 true /false
       */
     private boolean havePolicy;
+
+
+
     /**
      *  fasle	string	保单号码
       */
@@ -65,7 +73,16 @@ public class QueryOrderStateBean implements Serializable{
         return policyUrl;
     }
 
+    public int getPayPolicyState() {
+        return payPolicyState;
+    }
+
+    public void setPayPolicyState(int payPolicyState) {
+        this.payPolicyState = payPolicyState;
+    }
+
     public void setPolicyUrl(String policyUrl) {
+
         this.policyUrl = policyUrl;
     }
 }

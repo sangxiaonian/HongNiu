@@ -406,13 +406,14 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
 
     /**
      * 开始支付并调往支付界面
-     *
      * @param data
      * @param payType
+     * @param buyInsurance
+     * @param orderId
      */
     @Override
-    public void jumpToPay(PayBean data, int payType) {
-        WaitePayActivity.startPay(this, payType, data, Param.isDebug);
+    public void jumpToPay(PayBean data, int payType, boolean buyInsurance, String orderId) {
+        WaitePayActivity.startPay(this, payType, data, orderId,buyInsurance, Param.isDebug);
     }
 
     /**
@@ -463,7 +464,6 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
         //如果余额不充足，并且当前选中的是余额就选中微信
         if (!isEnough && payType == 4) {
             rlWechact.performClick();
-            JLog.i("-------------------");
         }
 
     }

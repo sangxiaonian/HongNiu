@@ -185,7 +185,7 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
                         .subscribe(new NetObserver<PayBean>(listener) {
                             @Override
                             public void doOnSuccess(PayBean data) {
-                                view.jumpToPay(data, mode.getPayType());
+                                view.jumpToPay(data, mode.getPayType(),mode.isBuyInsurance(),mode.getOrderId());
                             }
                         });
             }
@@ -235,7 +235,7 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
                 .subscribe(new NetObserver<PayBean>(listener) {
                     @Override
                     public void doOnSuccess(PayBean data) {
-                        view.jumpToPay(data, mode.getPayType());
+                        view.jumpToPay(data, mode.getPayType(), mode.isBuyInsurance(), mode.getOrderId());
                     }
                 });
     }

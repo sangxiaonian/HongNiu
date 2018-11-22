@@ -65,7 +65,7 @@ public class OrderPayControl {
         /**
          * 开始支付并调往支付界面
          */
-        void jumpToPay(PayBean data, int payType);
+        void jumpToPay(PayBean data, int payType, boolean buyInsurance, String orderId);
 
         /**
          * 线下支付，且无

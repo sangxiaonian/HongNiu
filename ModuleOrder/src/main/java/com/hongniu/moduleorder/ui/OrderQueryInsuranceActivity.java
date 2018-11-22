@@ -70,7 +70,7 @@ public class OrderQueryInsuranceActivity extends BaseActivity {
 
     public void query() {
         HttpAppFactory.queryOrderState(insuranceBean.getOrderID())
-                .subscribe(new NetObserver<QueryOrderStateBean>(this) {
+                .subscribe(new NetObserver<QueryOrderStateBean>(null) {
                     @Override
                     public void doOnSuccess(QueryOrderStateBean data) {
                         if (data.isHavePolicy()) {
