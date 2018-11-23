@@ -66,7 +66,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 //                            .withParcelable(Param.TRAN,insuranceBean)
 //                            .navigation(this);
 //                }else {
-//                    ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_main)
+//                    ArouterUtils.getInstance().builder(ArouterParamsApp.activity_main)
 //                            .navigation(this);
 //                }
             } else if (resp.errCode == -2) {

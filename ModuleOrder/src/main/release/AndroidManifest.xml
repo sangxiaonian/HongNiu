@@ -22,10 +22,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application>
-        <activity
-            android:name=".OrderMainActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.OrderCreatOrderActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
@@ -53,8 +50,6 @@
             android:name=".ui.OrderSearchHistoryActivity"
             android:screenOrientation="portrait" />
 
-        <!-- 前台服务，最大限度的保活 -->
-        <service android:name=".service.KeepAliveService" />
 
         <!-- 高德地图 -->
         <activity

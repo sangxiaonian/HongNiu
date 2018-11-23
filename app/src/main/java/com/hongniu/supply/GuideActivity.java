@@ -197,7 +197,7 @@ public class GuideActivity extends BaseActivity {
 
     private void jumpNext() {
         if (Utils.isLogin()) {
-            ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_main).navigation(mContext);
+            ArouterUtils.getInstance().builder(ArouterParamsApp.activity_main).navigation(mContext);
         }else {
             ArouterUtils.getInstance().builder(ArouterParamLogin.activity_login).navigation(mContext);
         }

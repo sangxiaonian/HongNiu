@@ -50,5 +50,9 @@ public class ArouterParamLogin {
      * 修改支付密码界面
      */
     public static final String activity_login_forget_pass = "/login/activity_login_forget_pass";
+ /**
+     * 个人中心fragment
+     */
+    public static final String fragment_login_my = "/login/fragment_login_my";
 
 }

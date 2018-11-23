@@ -8,6 +8,7 @@ import com.amap.api.services.core.PoiItem;
 import com.google.gson.Gson;
 import com.hongniu.baselibrary.R;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
+import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.LoginBean;
@@ -38,7 +39,7 @@ public class Utils {
     public static void loginOut(Activity activity) {
         SharedPreferencesUtils.getInstance().remove(Param.LOGIN_ONFOR);
         SharedPreferencesUtils.getInstance().remove(Param.PERSON_ONFOR);
-        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_main).withString(Param.TRAN, Param.LOGIN_OUT).navigation(activity);
+        ArouterUtils.getInstance().builder(ArouterParamsApp.activity_main).withString(Param.TRAN, Param.LOGIN_OUT).navigation(activity);
     }
 
     /**

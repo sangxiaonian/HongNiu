@@ -421,7 +421,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
      */
     @Override
     public void jumpToMain() {
-        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_main)
+        ArouterUtils.getInstance().builder(ArouterParamsApp.activity_main)
                 .navigation(this);
         finish();
     }

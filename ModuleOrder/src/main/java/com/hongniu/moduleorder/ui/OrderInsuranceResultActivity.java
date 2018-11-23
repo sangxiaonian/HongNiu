@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bumptech.glide.Glide;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
+import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
@@ -95,7 +96,7 @@ public class OrderInsuranceResultActivity extends BaseActivity implements View.O
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.bt_finish) {
-            ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_main).navigation(mContext);
+            ArouterUtils.getInstance().builder(ArouterParamsApp.activity_main).navigation(mContext);
         } else if (i == R.id.bt_check) {
             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("查看保单");
             OrderUtils.scanPDf(this,insurance.getDownloadUrl());
@@ -104,6 +105,6 @@ public class OrderInsuranceResultActivity extends BaseActivity implements View.O
 
     @Override
     public void onBackPressed() {
-        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_main).navigation(mContext);
+        ArouterUtils.getInstance().builder(ArouterParamsApp.activity_main).navigation(mContext);
     }
 }

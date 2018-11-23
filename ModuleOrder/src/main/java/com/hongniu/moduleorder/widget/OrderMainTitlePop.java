@@ -14,6 +14,14 @@ import com.sang.common.widget.popu.BasePopu;
 public class OrderMainTitlePop extends BasePopu implements View.OnClickListener {
 
 
+    public interface OnBackClickListener{
+        void onBackPressed();
+    }
+    OnBackClickListener onBackClickListener;
+
+    public void setOnBackClickListener(OnBackClickListener onBackClickListener) {
+        this.onBackClickListener = onBackClickListener;
+    }
 
     public OrderMainTitlePop(Context context) {
         super(context);
@@ -31,6 +39,9 @@ public class OrderMainTitlePop extends BasePopu implements View.OnClickListener 
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode== KeyEvent.KEYCODE_BACK) {
                     dismiss();
+                    if (onBackClickListener!=null){
+                        onBackClickListener.onBackPressed();
+                    }
                     return true;
                 }
                 return false;

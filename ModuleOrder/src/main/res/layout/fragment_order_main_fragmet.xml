@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/color_bg_dark"
-    tools:context=".ui.fragment.OrderMainFragmet">
+    android:background="@color/color_bg_dark">
+
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:id="@+id/rl_title"
@@ -29,6 +26,7 @@
                 app:openColor="@color/color_title_dark"
                 app:openIcon="@drawable/icon_arrow_down_333"
                 app:title="@string/order_main_title" />
+
             <ImageView
                 android:id="@+id/img_search"
                 android:layout_width="18dp"
@@ -40,60 +38,14 @@
         </RelativeLayout>
 
         <FrameLayout
-            android:layout_below="@id/rl_title"
-            android:layout_width="match_parent"
             android:id="@+id/content"
-            android:layout_height="match_parent"/>
-
-
-        <LinearLayout
-            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:gravity="center_vertical">
+            android:layout_height="match_parent"
+            android:layout_below="@id/rl_title" />
 
-            <ImageView
-                android:id="@+id/src_finance"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_marginLeft="22dp"
-                android:layout_marginRight="22dp"
-                android:scaleType="fitCenter"
-                android:src="@mipmap/icon_finance_90" />
 
-            <LinearLayout
-                android:id="@+id/ll_order"
-                android:layout_width="0dp"
-                android:layout_height="45dp"
-                android:layout_weight="1"
-                android:background="@drawable/bt_radius_2_333_999"
-                android:gravity="center">
 
-                <ImageView
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
-                    android:src="@mipmap/icon_addorder_24" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:text="@string/order_main_creat_order"
-                    android:textColor="#fff"
-                    android:textSize="15sp" />
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/src_me"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_marginLeft="22dp"
-                android:layout_marginRight="22dp"
-                android:scaleType="fitCenter"
-                android:src="@mipmap/icon_me_90" />
-
-        </LinearLayout>
     </RelativeLayout>
-</LinearLayout>
+
+
+</FrameLayout>

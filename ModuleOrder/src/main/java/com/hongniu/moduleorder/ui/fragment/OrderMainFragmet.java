@@ -26,7 +26,6 @@ import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleSt
 /**
  * 订单列表Fragment
  */
-@Route(path = ArouterParamOrder.fragment_order_main)
 public class OrderMainFragmet extends OrderFragmet implements SwitchStateListener, SwitchTextLayout.OnSwitchListener, OrderMainPop.OnPopuClickListener, OnPopuDismissListener {
     private SwitchTextLayout switchLeft;
     private SwitchTextLayout switchRight;
@@ -82,6 +81,8 @@ public class OrderMainFragmet extends OrderFragmet implements SwitchStateListene
         orderMainPop.setListener(this);
 
     }
+
+
 
     @Override
     public void onOpen(SwitchTextLayout switchTextLayout, View view) {

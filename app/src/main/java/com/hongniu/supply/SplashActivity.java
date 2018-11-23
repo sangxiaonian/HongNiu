@@ -8,6 +8,7 @@ import android.os.SystemClock;
 
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
+import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
@@ -34,7 +35,7 @@ public class SplashActivity extends BaseActivity {
                     startActivity(new Intent(SplashActivity.this, GuideActivity.class));
                 } else {
                     if (Utils.isLogin()) {
-                        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_main).navigation(mContext);
+                        ArouterUtils.getInstance().builder(ArouterParamsApp.activity_main).navigation(mContext);
                     } else {
                         ArouterUtils.getInstance().builder(ArouterParamLogin.activity_login).navigation(mContext);
                     }

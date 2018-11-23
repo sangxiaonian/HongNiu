@@ -1,26 +1,22 @@
-package com.hongniu.moduleorder;
+package com.hongniu.moduleorder.ui.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
-import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
-import com.hongniu.baselibrary.arouter.ArouterParamFestivity;
-import com.hongniu.baselibrary.arouter.ArouterParamLogin;
+import com.githang.statusbar.StatusBarCompat;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
-import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.BaseFragment;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CloseActivityEvent;
@@ -30,28 +26,22 @@ import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.utils.Utils;
-import com.hongniu.baselibrary.widget.dialog.UpDialog;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
+import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.control.OrderMainControl;
 import com.hongniu.moduleorder.control.SwitchStateListener;
-import com.hongniu.moduleorder.entity.VersionBean;
-import com.hongniu.moduleorder.net.HttpOrderFactory;
-import com.hongniu.moduleorder.present.OrderMainPresenter;
+import com.hongniu.moduleorder.ui.fragment.OrderMainFragmet;
 import com.hongniu.moduleorder.utils.LoactionUpUtils;
 import com.hongniu.moduleorder.widget.OrderMainTitlePop;
 import com.sang.common.event.BusFactory;
-import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.JLog;
 import com.sang.common.widget.SwitchTextLayout;
-import com.sang.common.widget.dialog.BottomAlertDialog;
 import com.sang.common.widget.dialog.CenterAlertDialog;
-import com.sang.common.widget.dialog.builder.BottomAlertBuilder;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
-import com.sang.common.widget.guideview.BaseGuide;
 import com.sang.common.widget.popu.BasePopu;
 import com.sang.common.widget.popu.inter.OnPopuDismissListener;
 import com.sang.thirdlibrary.map.LoactionUtils;
@@ -69,236 +59,101 @@ import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleSt
 /**
  * 订单中心主页
  */
-@Route(path = ArouterParamOrder.activity_order_main)
-public class OrderMainActivity extends BaseActivity implements OrderMainControl.IOrderMainView, SwitchTextLayout.OnSwitchListener, OrderMainTitlePop.OnOrderMainClickListener, OnPopuDismissListener, View.OnClickListener, AMapLocationListener {
+//@Route(path = ArouterParamsApp.activity_main)
+@Route(path = ArouterParamOrder.fragment_order_main)
+public class OrderHomeFragment extends BaseFragment implements OrderMainControl.IOrderMainView, SwitchTextLayout.OnSwitchListener, OrderMainTitlePop.OnOrderMainClickListener, OnPopuDismissListener, View.OnClickListener, AMapLocationListener, OrderMainTitlePop.OnBackClickListener {
 
     private SwitchTextLayout switchTitle;
 
-    private DrawerLayout drawerLayout;
 
     private OrderMainTitlePop titlePop;
 
-    private LinearLayout llOrder;//我要下单
-    private LinearLayout llLoginOut;//退出登录
-    private LinearLayout llContactService;//联系客服
-    private LinearLayout llAboutUs;//关于我们
-    private LinearLayout llMyCar;//我的车辆
-    private LinearLayout llPersonInfor;//个人资料
-    private LinearLayout llPayMethod;//收款方式
-
-    private ImageView srcFinance;
-    private ImageView srcPersonCenter;
 
     private Fragment cargoFragment, carOwnerFragmeng, driverFragmeng, currentFragmeng;
     private SwitchStateListener switchStateListener;
-    private BaseGuide guideTitle;
 
-    private OrderMainControl.IOrderMainPresent present;
     private LoactionUtils loaction;
 
-    private TextView tvName, tvPhone;
     private LoactionUpUtils upLoactionUtils;//上传位置信息
     private OrderDetailItemControl.RoleState roleState = CARGO_OWNER;
+    private Context mContext;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_main);
-        setToolbarTitle("");
-
-        present = new OrderMainPresenter(this);
-        initView();
-        initData();
-        initListener();
-        loaction = LoactionUtils.getInstance();
-        loaction.init(this);
-        loaction.setListener(this);
-    }
-
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        String extra = intent.getStringExtra(Param.TRAN);
-        if (extra != null && extra.equals(Param.LOGIN_OUT)) {
-            ArouterUtils.getInstance().builder(ArouterParamLogin.activity_login).navigation(mContext);
-            finish();
-        }
-    }
-
-    @Override
-    protected void initView() {
-        super.initView();
-        titlePop = new OrderMainTitlePop(this);
-        switchTitle = findViewById(R.id.switch_title);
-        drawerLayout = findViewById(R.id.drawer);
-        srcFinance = findViewById(R.id.src_finance);
-        srcPersonCenter = findViewById(R.id.src_me);
-        llOrder = findViewById(R.id.ll_order);
-        llLoginOut = findViewById(R.id.ll_login_out);
-        llContactService = findViewById(R.id.ll_contact_service);
-        llAboutUs = findViewById(R.id.ll_about_us);
-        llMyCar = findViewById(R.id.ll_my_car);
-        llPersonInfor = findViewById(R.id.ll_person_infor);
-        llPayMethod = findViewById(R.id.ll_pay_method);
-
-        tvName = findViewById(R.id.tv_name);
-        tvPhone = findViewById(R.id.tv_phone);
-
-        guideTitle = new BaseGuide();
-        guideTitle.setMsg("这里可以切换角色哦")
-                .setView(switchTitle)
-                .setHighTargetGraphStyle(0)
-                .setActivity(this)
-                .setShowTop(false)
-                .setSharedPreferencesKey(Param.ORDER_MAIN_TITLE_GUIDE)
-        ;
-        BaseGuide guideFinance = new BaseGuide();
-        guideFinance.setMsg("支出&收入，一目了然")
-                .setView(srcFinance)
-                .setHighTargetGraphStyle(1)
-                .setActivity(this)
-                .setShowTop(true)
-                .setSharedPreferencesKey(Param.ORDER_MAIN_FINANCE_GUIDE)
-        ;
-        guideTitle.setNextGuide(guideFinance);
-
-        findViewById(R.id.img_search).setOnClickListener(new View.OnClickListener() {
+    protected View initView(LayoutInflater inflater) {
+        View inflate = inflater.inflate(R.layout.fragment_order_main_fragmet, null, false);
+        inflate.findViewById(R.id.img_search).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ArouterUtils.getInstance()
                         .builder(ArouterParamOrder.activity_order_search)
                         .withSerializable(Param.TRAN, roleState)
-                        .navigation(mContext);
+                        .navigation(getContext());
 
             }
         });
 
+        switchTitle = inflate.findViewById(R.id.switch_title);
+        titlePop = new OrderMainTitlePop(getContext());
+
+        return inflate;
+
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        loaction = LoactionUtils.getInstance();
+        loaction.init(getContext());
+        loaction.setListener(this);
+        StatusBarCompat.setStatusBarColor(getActivity(), getResources().getColor(R.color.white), true);
+
     }
 
 
-    /**
-     * 显示强制更新接口
-     */
-    public void showUpAleart(String msg) {
-        UpDialog alertDialog = new UpDialog(mContext);
+    protected void showAleart(String msg) {
+        CenterAlertDialog alertDialog = new CenterAlertDialog(getContext());
+
         new CenterAlertBuilder()
                 .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
                     @Override
                     public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
-                        CommonUtils.launchAppDetail(mContext);
+
+                        dialog.dismiss();
                     }
 
                 })
                 .hideBtLeft()
                 .hideContent()
-                .setCancelable(false)
-                .setCanceledOnTouchOutside(false)
                 .setDialogTitle(msg)
-                .setBtRight("立即更新")
                 .creatDialog(alertDialog)
                 .show();
     }
 
     @Override
-    protected void showAleart(String msg) {
-        super.showAleart(msg);
-    }
-
-    @Override
     protected void initData() {
         super.initData();
-        if (Utils.getLoginInfor() != null) {
-            if (Utils.checkInfor()) {
-                tvName.setText(Utils.getPersonInfor().getContact() == null ? "待完善" : Utils.getPersonInfor().getContact());
-            }
-            tvPhone.setText(Utils.getLoginInfor().getMobile() == null ? "" : Utils.getLoginInfor().getMobile());
-        }
-        switchTitle.post(new Runnable() {
-            @Override
-            public void run() {
-                guideTitle.showGuide();
-            }
-        });
 
-        //检查版本更新
-        checkVersion();
+
     }
 
-
-    /**
-     * 检查版本号，确定是否需要更新
-     */
-    private void checkVersion() {
-
-        HttpOrderFactory.checkVersion()
-
-                .subscribe(new NetObserver<VersionBean>(null) {
-                    @Override
-                    public void doOnSuccess(VersionBean data) {
-                        try {
-                            if (data != null && !TextUtils.isEmpty(data.getVersionCode())) {
-                                String versionName = DeviceUtils.getVersionName(mContext);
-                                String current = versionName.replace(".", "").replace("-debug", "");
-                                String needUpdata = data.getVersionCode().replace(".", "");
-                                if (Integer.parseInt(current) < Integer.parseInt(needUpdata)) {
-                                    showUpAleart(data.getVersionName());
-                                }
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-    }
 
     @Override
     protected void initListener() {
         super.initListener();
         switchTitle.setListener(this);
-        srcFinance.setOnClickListener(this);
-        srcPersonCenter.setOnClickListener(this);
-        llOrder.setClickable(true);
-        llLoginOut.setClickable(true);
-        llContactService.setClickable(true);
-        llAboutUs.setClickable(true);
-        llMyCar.setClickable(true);
-        llPersonInfor.setClickable(true);
-        llPayMethod.setClickable(true);
-
-
-        llOrder.setOnClickListener(this);
-        llLoginOut.setOnClickListener(this);
-        llContactService.setOnClickListener(this);
-        llAboutUs.setOnClickListener(this);
-        llMyCar.setOnClickListener(this);
-        llPersonInfor.setOnClickListener(this);
-        llPayMethod.setOnClickListener(this);
-
         titlePop.setListener(this);
         titlePop.setOnDismissListener(this);
-
-
-    }
-
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        BusFactory.getBus().post(new CloseActivityEvent());
-        HttpAppFactory.queryPayPassword()
-                .subscribe(new NetObserver<QueryPayPassword>(this) {
-                    @Override
-                    public void doOnSuccess(QueryPayPassword data) {
-                        Utils.setPassword(data.isSetPassWord());
-                    }
-                });
+        titlePop.setOnBackClickListener(this);
 
     }
 
+
+
+
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         if (loaction != null) {
             loaction.showFront(false);
@@ -306,7 +161,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
     }
 
     @Override
-    protected void onStop() {
+    public void onStop() {
         super.onStop();
     }
 
@@ -350,7 +205,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
         if (event != null) {
             //如果有正在运输中的订单，则此时获取到用户的位置信息
             if (event.start) {//开始记录数据
-                PermissionUtils.applyMap(this, new PermissionUtils.onApplyPermission() {
+                PermissionUtils.applyMap(getActivity(), new PermissionUtils.onApplyPermission() {
                     @Override
                     public void hasPermission(List<String> granted, boolean isAll) {
                         if (TextUtils.isEmpty(event.cardID)) {
@@ -360,7 +215,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                         }
                         //首次创建位置信息收集数据
                         if (upLoactionUtils == null || TextUtils.isEmpty(upLoactionUtils.getCarID())) {
-                            if (!DeviceUtils.isOpenGps(mContext)) {
+                            if (!DeviceUtils.isOpenGps(getContext())) {
                                 showAleart("为了更准确的记录您的轨迹信息，请打开GPS");
                             }
                             upLoactionUtils = new LoactionUpUtils();
@@ -369,7 +224,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
                             //更新位置信息收起器
                         } else if (!upLoactionUtils.getCarID().equals(event.cardID)) {
                             upLoactionUtils.onDestroy();
-                            if (!DeviceUtils.isOpenGps(mContext)) {
+                            if (!DeviceUtils.isOpenGps(getContext())) {
                                 showAleart("为了更准确的记录您的轨迹信息，请打开GPS");
                             }
                             upLoactionUtils = new LoactionUpUtils();
@@ -406,9 +261,14 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
         }
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
+    }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         if (upLoactionUtils != null) {
             upLoactionUtils.onDestroy();
         }
@@ -416,15 +276,6 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
         super.onDestroy();
 
 
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onUpPersonInfor(Event.UpPerson event) {
-        if (event != null) {
-            if (Utils.checkInfor()) {
-                tvName.setText(Utils.getPersonInfor().getContact());
-            }
-        }
     }
 
 
@@ -482,14 +333,14 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
         }
 
 
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
         if (currentFragmeng != null) {
             fragmentTransaction.hide(currentFragmeng);
         }
         if (position == 1) {
             switchTitle.setTitle("我是车主");
             if (carOwnerFragmeng == null) {
-                carOwnerFragmeng = (Fragment) ArouterUtils.getInstance().builder(ArouterParamOrder.fragment_order_main).navigation(this);
+                carOwnerFragmeng =  new OrderMainFragmet();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(Param.TRAN, roleState);
                 carOwnerFragmeng.setArguments(bundle);
@@ -502,7 +353,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
             switchTitle.setTitle("我是司机");
 
             if (driverFragmeng == null) {
-                driverFragmeng = (Fragment) ArouterUtils.getInstance().builder(ArouterParamOrder.fragment_order_main).navigation(this);
+                driverFragmeng = new OrderMainFragmet();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(Param.TRAN, roleState);
                 driverFragmeng.setArguments(bundle);
@@ -514,7 +365,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
         } else {
             switchTitle.setTitle("我是货主");
             if (cargoFragment == null) {
-                cargoFragment = (Fragment) ArouterUtils.getInstance().builder(ArouterParamOrder.fragment_order_main).navigation(this);
+                cargoFragment = new OrderMainFragmet();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(Param.TRAN, roleState);
                 cargoFragment.setArguments(bundle);
@@ -532,7 +383,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
         fragmentTransaction.commitAllowingStateLoss();
     }
 
-    @Override
+
     public void onBackPressed() {
         if (titlePop.isShow()) {
             titlePop.dismiss();
@@ -545,10 +396,6 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
         }
     }
 
-    @Override
-    protected boolean reciveClose() {
-        return false;
-    }
 
     /**
      * Popu dimiss 监听
@@ -569,81 +416,7 @@ public class OrderMainActivity extends BaseActivity implements OrderMainControl.
      */
     @Override
     public void onClick(View v) {
-        int i = v.getId();
-        if (i == R.id.src_finance) {
 
-//            ArouterUtils.getInstance().builder(ArouterParamsFinance.activity_finance_activity).navigation(mContext);
-            ArouterUtils.getInstance().builder(ArouterParamsFinance.activity_finance_wallet).navigation(mContext);
-        } else if (i == R.id.src_me) {
-            drawerLayout.openDrawer(Gravity.START);
-        } else if (i == R.id.ll_order) {
-            ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_create).navigation(mContext);
-        } else if (i == R.id.ll_login_out) {
-            drawerLayout.closeDrawer(Gravity.START);
-            new BottomAlertBuilder()
-                    .setDialogTitle(getString(R.string.login_out_entry))
-                    .setTopClickListener(new DialogControl.OnButtonTopClickListener() {
-                        @Override
-                        public void onTopClick(View view, DialogControl.IBottomDialog dialog) {
-                            dialog.dismiss();
-                            ArouterUtils.getInstance().builder(ArouterParamLogin.activity_login).navigation(mContext);
-                            finish();
-                        }
-
-                    })
-                    .setBottomClickListener(new DialogControl.OnButtonBottomClickListener() {
-                        @Override
-                        public void onBottomClick(View view, DialogControl.IBottomDialog dialog) {
-                            dialog.dismiss();
-
-                        }
-
-                    }).creatDialog(new BottomAlertDialog(mContext)).show();
-
-
-        } else if (i == R.id.ll_contact_service) {
-            drawerLayout.closeDrawer(Gravity.START);
-            new CenterAlertBuilder()
-                    .setDialogTitleSize(18)
-                    .setDialogContentSize(15)
-                    .setbtSize(18)
-                    .setDialogSize(DeviceUtils.dip2px(mContext, 300), DeviceUtils.dip2px(mContext, 135))
-                    .setDialogTitle(getString(R.string.login_contact_service))
-                    .setDialogContent(getString(R.string.login_contact_phone))
-                    .setLeftClickListener(new DialogControl.OnButtonLeftClickListener() {
-                        @Override
-                        public void onLeftClick(View view, DialogControl.ICenterDialog dialog) {
-                            dialog.dismiss();
-
-                        }
-
-
-                    })
-                    .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
-                        @Override
-                        public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
-                            dialog.dismiss();
-                            CommonUtils.toDial(mContext, getString(R.string.login_contact_phone));
-
-                        }
-                    }).creatDialog(new CenterAlertDialog(mContext)).show();
-
-        } else if (i == R.id.ll_about_us) {
-            drawerLayout.closeDrawer(Gravity.START);
-
-            ArouterUtils.getInstance().builder(ArouterParamLogin.activity_about_us).navigation(mContext);
-        } else if (i == R.id.ll_my_car) {
-            drawerLayout.closeDrawer(Gravity.START);
-            ArouterUtils.getInstance().builder(ArouterParamLogin.activity_car_list).navigation(mContext);
-        } else if (i == R.id.ll_person_infor) {
-            drawerLayout.closeDrawer(Gravity.START);
-            ArouterUtils.getInstance().builder(ArouterParamLogin.activity_person_infor).navigation(mContext);
-
-        } else if (i == R.id.ll_pay_method) {
-            drawerLayout.closeDrawer(Gravity.START);
-            ArouterUtils.getInstance().builder(ArouterParamFestivity.activity_festivity_home).navigation(mContext);
-
-        }
     }
 
     @Override
