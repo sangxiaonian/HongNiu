@@ -46,7 +46,7 @@ public class FinanceActivity extends BaseActivity implements RadioGroup.OnChecke
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finance);
-        setToolbarDarkTitle(getString(R.string.finance));
+        setToolbarRedTitle(getString(R.string.finance));
         initView();
         initData();
         initListener();

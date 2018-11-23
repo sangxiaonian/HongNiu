@@ -259,7 +259,7 @@
             </LinearLayout>
             <Button
                 android:id="@+id/bt_entry"
-                style="@style/bt_sum"
+                style="@style/bt_sum_red"
                 android:text="确定下单" />
         </LinearLayout>
 

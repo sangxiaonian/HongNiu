@@ -70,7 +70,7 @@
         android:layout_marginEnd="40dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="30dp"
-        android:background="@drawable/bt_radius_2_333_999"
+        android:background="@drawable/bt_radius_2_e83518_b2e83515"
         android:text="@string/login_get_sms"
         android:textColor="#fff"
         android:textSize="@dimen/text_login_btn"

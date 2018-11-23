@@ -155,7 +155,7 @@ public class OrderScanReceiptActivity extends BaseActivity implements ViewPager.
                 .setBtRight("取消订单")
                 .setBtLeftColor(getResources().getColor(R.color.color_title_dark))
                 .setBtRightColor(getResources().getColor(R.color.color_white))
-                .setBtRightBgRes(R.drawable.shape_f06f28);
+                .setBtRightBgRes(R.drawable.shape_e83e15);
     }
 
 

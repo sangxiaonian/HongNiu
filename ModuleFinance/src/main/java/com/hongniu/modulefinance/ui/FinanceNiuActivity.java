@@ -39,7 +39,7 @@ public class FinanceNiuActivity extends BaseActivity implements RadioGroup.OnChe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finance_niu);
-        setToolbarTitle(getString(R.string.wallet_niu_title));
+        setToolbarRedTitle(getString(R.string.wallet_niu_title));
         initView();
         initData();
         initListener();

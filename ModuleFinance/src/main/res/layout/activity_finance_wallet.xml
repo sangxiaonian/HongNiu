@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_bg_dark"
+    android:background="@color/color_bg"
     tools:context=".ui.FinanceWalletActivity">
 
     <include
@@ -19,7 +19,7 @@
         android:id="@+id/con_balance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_title_dark"
+        android:background="@color/color_new_light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tool">
@@ -32,7 +32,7 @@
             android:paddingLeft="26dp"
             android:paddingTop="@dimen/app_gap"
             android:text="@string/wallet_balance_of_account"
-            android:textColor="@color/color_order_color_6d6d6d"
+            android:textColor="#F9D5D0"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -54,7 +54,7 @@
             android:paddingBottom="18dp"
             android:paddingLeft="26dp"
             android:paddingTop="@dimen/app_item_gap"
-            android:textColor="@color/color_white"
+            android:textColor="#F9D5D0"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -64,7 +64,9 @@
             android:layout_width="@dimen/img_go_size"
             android:layout_height="@dimen/img_go_size"
             android:layout_marginRight="@dimen/app_gap"
-            android:src="@mipmap/icon_gary_arrowmore_20"
+            android:src="@mipmap/icon_back_w_36"
+            android:scaleType="fitCenter"
+            android:rotation="180"
             app:layout_constraintBottom_toBottomOf="@id/tv_balance_of_unentry"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_1" />
@@ -72,59 +74,14 @@
 
     </android.support.constraint.ConstraintLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_niu"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:background="@color/color_white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/app_gap"
-        android:paddingRight="@dimen/app_gap"
 
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/con_balance">
-
-        <ImageView
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:scaleType="centerInside"
-            android:src="@mipmap/icon_niubi_36" />
-
-        <TextView
-            android:id="@+id/tv_niu_balance_of_count"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/app_item_gap"
-            android:layout_marginRight="@dimen/app_item_gap"
-            android:layout_weight="1"
-            android:maxLines="1"
-            android:textColor="@color/color_title_dark"
-            android:textSize="@dimen/text_small" />
-
-        <TextView
-            android:id="@+id/tv_niu_balance_of_unentry"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:textColor="@color/color_content_light"
-            android:textSize="@dimen/text_small" />
-
-        <ImageView
-            android:layout_width="@dimen/img_go_size"
-            android:layout_height="@dimen/img_go_size"
-            android:layout_marginLeft="@dimen/app_model_gap"
-            android:src="@mipmap/icon_gary_arrowmore_20" />
-
-    </LinearLayout>
 
     <RadioGroup
         android:id="@+id/rg"
         style="@style/RadioGroup"
         android:layout_marginBottom="@dimen/app_gap"
         android:layout_marginTop="@dimen/app_model_gap"
-        app:layout_constraintTop_toBottomOf="@id/ll_niu">
+        app:layout_constraintTop_toBottomOf="@id/con_balance">
 
         <RadioButton
             android:id="@+id/rb_left"

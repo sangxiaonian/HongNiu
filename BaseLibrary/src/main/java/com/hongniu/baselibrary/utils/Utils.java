@@ -119,7 +119,7 @@ public class Utils {
                 .setBtRight(btRight)
                 .setBtLeftColor(context.getResources().getColor(R.color.color_title_dark))
                 .setBtRightColor(context.getResources().getColor(R.color.color_white))
-                .setBtRightBgRes(R.drawable.shape_f06f28);
+                .setBtRightBgRes(R.drawable.shape_e83e15);
     }
 
 

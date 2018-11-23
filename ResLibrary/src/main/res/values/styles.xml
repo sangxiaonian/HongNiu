@@ -42,6 +42,9 @@
         <item name="android:layout_marginTop">@dimen/app_gap</item>
         <item name="android:layout_marginBottom">@dimen/app_gap</item>
     </style>
+  <style name="bt_sum_red" parent="bt_sum">
+        <item name="android:background">@drawable/bt_radius_2_e83518_b2e83515</item>
+    </style>
 
     <style name="itemview">
         <item name="android:layout_width">match_parent</item>
@@ -78,7 +81,7 @@
         <item name="android:layout_weight">1</item>
         <item name="android:button">@null</item>
         <item name="android:gravity">center</item>
-        <item name="android:textColor">@drawable/selector_color_999_333</item>
+        <item name="android:textColor">@drawable/selector_color_999_e83515</item>
         <item name="android:textSize">14sp</item>
     </style>
 

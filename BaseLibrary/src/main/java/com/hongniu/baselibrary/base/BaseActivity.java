@@ -164,6 +164,26 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
 
 
     }
+    protected void setToolbarRedTitle(String title) {
+        if (tvToolbarTitle != null) {
+            if (tool != null) {
+                tool.setBackgroundColor(getResources().getColor(R.color.color_new_light));
+            }
+            tvToolbarTitle.setTextColor(Color.WHITE);
+            if (imgToolbarLeft != null) {
+                imgToolbarLeft.setImageResource(R.mipmap.icon_back_w_36);
+            }
+            tvToolbarTitle.setText(title==null?"":title);
+        }
+
+        if (tvToolbarRight!=null){
+            tvToolbarRight.setTextColor(Color.WHITE);
+        }
+
+        StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.color_new_light), false);
+
+
+    }
 
     protected void setToolBarLeftClick(final View.OnClickListener leftClick) {
         if (llToolbarLeft != null) {

@@ -37,9 +37,7 @@ public class FinanceWalletActivity extends BaseActivity implements FinanceWallet
     private TextView tvBalanceOfAccount;//账户余额
     private TextView tvBalanceOfUnentry;//待入账余额
     private ConstraintLayout conBalance;//余额部分按钮
-    private LinearLayout llNiu;//牛贝条目
-    private TextView tvNiuBalanceOfAccount;//牛贝余额
-    private TextView tvNiuBalanceOfUnentry;//牛贝待入账余额
+
     private RadioGroup rg;//牛贝待入账余额
     private RadioButton rbLeft;//余额明细
     private RadioButton rbRight;//待入账明细
@@ -54,7 +52,7 @@ public class FinanceWalletActivity extends BaseActivity implements FinanceWallet
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finance_wallet);
-        setToolbarDarkTitle(getString(R.string.wallet_title));
+        setToolbarRedTitle(getString(R.string.wallet_title));
         setToolbarSrcRight(getString(R.string.finance));
         present = new WalletPresenter(this);
         initView();
@@ -70,9 +68,7 @@ public class FinanceWalletActivity extends BaseActivity implements FinanceWallet
         tvBalanceOfAccount = findViewById(R.id.tv_balance_of_account);//账户余额
         tvBalanceOfUnentry = findViewById(R.id.tv_balance_of_unentry);//待入账余额
         conBalance = findViewById(R.id.con_balance);//余额部分按钮
-        llNiu = findViewById(R.id.ll_niu);//牛贝条目
-        tvNiuBalanceOfAccount = findViewById(R.id.tv_niu_balance_of_count);//牛贝余额
-        tvNiuBalanceOfUnentry = findViewById(R.id.tv_niu_balance_of_unentry);//牛贝待入账余额
+
         rg = findViewById(R.id.rg);
         rbRight = findViewById(R.id.rb_right);
         rbLeft = findViewById(R.id.rb_left);
@@ -83,9 +79,7 @@ public class FinanceWalletActivity extends BaseActivity implements FinanceWallet
         super.initData();
         tvBalanceOfAccount.setText(String.format(getString(R.string.money_symbol_des), "0"));
         tvBalanceOfUnentry.setText(String.format(getString(R.string.wallet_balance_wait_enty), "0"));
-        tvNiuBalanceOfAccount.setText(getNew("0"));
-        tvNiuBalanceOfAccount.setText(getNew("0"));
-        tvNiuBalanceOfUnentry.setText(String.format(getString(R.string.wallet_balance_niu_unentry_count), "0"));
+
     }
 
     @Override
@@ -103,24 +97,11 @@ public class FinanceWalletActivity extends BaseActivity implements FinanceWallet
                         walletDetail=data;
                         tvBalanceOfAccount.setText(String.format(getString(R.string.money_symbol_des), data.getAvailableBalance()));
                         tvBalanceOfUnentry.setText(String.format(getString(R.string.wallet_balance_wait_enty), data.getTobeCreditedBalance()));
-                        tvNiuBalanceOfAccount.setText(getNew(data.getAvailableIntegral()));
-                        tvNiuBalanceOfUnentry.setText(String.format(getString(R.string.wallet_balance_niu_unentry_count), data.getTobeCreditedIntegral()));
 
                     }
                 });
     }
 
-    private SpannableStringBuilder getNew(String count) {
-        SpannableStringBuilder builder = new SpannableStringBuilder();
-        builder.append("您有");
-        final int start = builder.length();
-        builder.append(count);
-        final int end = builder.length();
-        builder.append("个牛贝");
-        ForegroundColorSpan span = new ForegroundColorSpan(getResources().getColor(R.color.color_light));
-        builder.setSpan(span, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        return builder;
-    }
 
 
     @Override
@@ -134,7 +115,6 @@ public class FinanceWalletActivity extends BaseActivity implements FinanceWallet
         });
 
         conBalance.setOnClickListener(this);
-        llNiu.setOnClickListener(this);
         rg.setOnCheckedChangeListener(this);
     }
 
@@ -149,11 +129,6 @@ public class FinanceWalletActivity extends BaseActivity implements FinanceWallet
         if (i == R.id.con_balance) {
             ArouterUtils.getInstance()
                     .builder(ArouterParamsFinance.activity_finance_balance)
-                    .withParcelable(Param.TRAN,walletDetail)
-                    .navigation(this);
-        } else if (i == R.id.ll_niu) {
-            ArouterUtils.getInstance()
-                    .builder(ArouterParamsFinance.activity_finance_niu)
                     .withParcelable(Param.TRAN,walletDetail)
                     .navigation(this);
         }

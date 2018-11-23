@@ -880,13 +880,6 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     }
 
     private CenterAlertBuilder creatDialog(String title, String content, String btleft, String btRight) {
-        return new CenterAlertBuilder()
-                .setDialogTitle(title)
-                .setDialogContent(content)
-                .setBtLeft(btleft)
-                .setBtRight(btRight)
-                .setBtLeftColor(getResources().getColor(R.color.color_title_dark))
-                .setBtRightColor(getResources().getColor(R.color.color_white))
-                .setBtRightBgRes(R.drawable.shape_f06f28);
+           return Utils.creatDialog(mContext,title,content,btleft,btRight);
     }
 }

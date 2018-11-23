@@ -25,6 +25,7 @@ import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.entity.UpImgData;
 import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.utils.PermissionUtils;
+import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItem;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.moduleorder.R;
@@ -583,14 +584,8 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
 
     protected CenterAlertBuilder creatDialog(String title, String content, String btleft, String
             btRight) {
-        return new CenterAlertBuilder()
-                .setDialogTitle(title)
-                .setDialogContent(content)
-                .setBtLeft(btleft)
-                .setBtRight(btRight)
-                .setBtLeftColor(getResources().getColor(R.color.color_title_dark))
-                .setBtRightColor(getResources().getColor(R.color.color_white))
-                .setBtRightBgRes(R.drawable.shape_f06f28);
+       return Utils.creatDialog(getContext(),title,content,btleft,btRight);
+
     }
 
 

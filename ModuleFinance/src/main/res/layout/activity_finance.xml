@@ -13,7 +13,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="@color/color_title_dark"
+        android:background="@color/color_new_light"
         android:orientation="horizontal"
         android:paddingBottom="3dp"
         android:paddingLeft="25dp"
@@ -48,22 +48,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginRight="25dp"
-                android:background="@drawable/selector_bg_line_fff"
+                android:background="@drawable/selector_bg_f9d5d0_fff"
                 android:button="@null"
                 android:gravity="center"
                 android:text="支出"
-                android:textColor="@drawable/selector_color_6d6d6d_fff"
+                android:textColor="@drawable/selector_color_f9d5d0_fff"
                 android:textSize="15sp" />
 
             <RadioButton
                 android:id="@+id/rb_right"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:background="@drawable/selector_bg_line_fff"
                 android:button="@null"
                 android:gravity="center"
                 android:text="收入"
-                android:textColor="@drawable/selector_color_6d6d6d_fff"
+                android:background="@drawable/selector_bg_f9d5d0_fff"
+                android:textColor="@drawable/selector_color_f9d5d0_fff"
                 android:textSize="15sp" />
 
         </RadioGroup>
