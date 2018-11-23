@@ -125,6 +125,6 @@
         android:layout_marginLeft="0dp"
         android:layout_marginRight="0dp"
         android:text="提交"
-        style="@style/bt_sum"/>
+        style="@style/bt_sum_red"/>
 
 </LinearLayout>

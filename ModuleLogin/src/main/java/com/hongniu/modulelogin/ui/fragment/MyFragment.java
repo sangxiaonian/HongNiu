@@ -2,6 +2,7 @@ package com.hongniu.modulelogin.ui.fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -39,6 +40,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     private LinearLayout llPersonInfor;//个人资料
     private LinearLayout llWallet;//收款方式
     private LinearLayout llNiu;//收款方式
+    private ViewGroup card;//收款方式
     private TextView tvName, tvPhone;
 
     @Override
@@ -53,6 +55,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         llNiu = inflate.findViewById(R.id.ll_niu);
         tvName = inflate.findViewById(R.id.tv_name);
         tvPhone = inflate.findViewById(R.id.tv_phone);
+        card = inflate.findViewById(R.id.card);
 
 
         return inflate;
@@ -114,6 +117,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         llPersonInfor.setOnClickListener(this);
         llWallet.setOnClickListener(this);
         llNiu.setOnClickListener(this);
+        card.setOnClickListener(this);
     }
 
     /**
@@ -187,6 +191,11 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
             ArouterUtils.getInstance()
                     .builder(ArouterParamsFinance.activity_finance_niu)
+                    .navigation(getContext());
+        }else if (i == R.id.card) {
+
+            ArouterUtils.getInstance()
+                    .builder(ArouterParamFestivity.activity_festivity_home)
                     .navigation(getContext());
         }
     }

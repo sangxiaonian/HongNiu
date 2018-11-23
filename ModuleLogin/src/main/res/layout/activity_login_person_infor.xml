@@ -59,7 +59,7 @@
 
     <Button
 
-        style="@style/bt_sum"
+        style="@style/bt_sum_red"
         android:layout_marginTop="70dp"
         android:id="@+id/bt_save"
         android:text="@string/save" />

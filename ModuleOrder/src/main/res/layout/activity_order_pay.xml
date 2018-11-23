@@ -29,7 +29,7 @@
                     android:id="@+id/linearLayout"
                     android:layout_width="match_parent"
                     android:layout_height="130dp"
-                    android:background="@color/color_title_dark"
+                    android:background="@color/color_new_light"
                     android:orientation="vertical"
                     android:paddingLeft="25dp"
                     android:paddingTop="@dimen/app_gap"
@@ -636,7 +636,7 @@
             android:id="@+id/bt_pay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape_radius_2_f06f28"
+            android:background="@drawable/shape_radius_2_e83515"
             android:text="@string/order_pay_order_pay"
             android:textColor="@color/color_white" />
 

@@ -103,7 +103,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_pay);
-        setToolbarDarkTitle(getString(R.string.order_pay));
+        setToolbarRedTitle(getString(R.string.order_pay));
         initView();
         initData();
         initListener();
@@ -247,7 +247,6 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
 
     //更改支付方式
     private void changePayType(int payType) {
-        JLog.i(payType + ">>>>");
         cbWechat.setImageResource(payType == 0 ? R.mipmap.icon_xz_36 : R.mipmap.icon_wxz_36);
         cbAli.setImageResource(payType == 3 ? R.mipmap.icon_xz_36 : R.mipmap.icon_wxz_36);
         cbUnion.setImageResource(payType == 1 ? R.mipmap.icon_xz_36 : R.mipmap.icon_wxz_36);
