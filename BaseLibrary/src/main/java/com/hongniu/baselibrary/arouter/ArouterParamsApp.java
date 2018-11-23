@@ -21,9 +21,13 @@ public class ArouterParamsApp {
     public final static String activity_h5 = "/app/activity_h5";
 
     /**
-     * h5 加载页面
+     * 首页
      */
     public final static String activity_main = "/app/activity_main";
+    /**
+     * 首页Fragment
+     */
+    public final static String fragment_home_fragment = "/app/fragment_home_fragment";
 
 
 }

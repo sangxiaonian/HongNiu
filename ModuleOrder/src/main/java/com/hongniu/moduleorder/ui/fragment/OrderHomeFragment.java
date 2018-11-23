@@ -17,21 +17,15 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseFragment;
-import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
-import com.hongniu.baselibrary.entity.CloseActivityEvent;
-import com.hongniu.baselibrary.entity.QueryPayPassword;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.event.Event;
-import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.PermissionUtils;
-import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.control.OrderMainControl;
 import com.hongniu.moduleorder.control.SwitchStateListener;
-import com.hongniu.moduleorder.ui.fragment.OrderMainFragmet;
 import com.hongniu.moduleorder.utils.LoactionUpUtils;
 import com.hongniu.moduleorder.widget.OrderMainTitlePop;
 import com.sang.common.event.BusFactory;
@@ -103,11 +97,9 @@ public class OrderHomeFragment extends BaseFragment implements OrderMainControl.
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         loaction = LoactionUtils.getInstance();
         loaction.init(getContext());
         loaction.setListener(this);
-        StatusBarCompat.setStatusBarColor(getActivity(), getResources().getColor(R.color.white), true);
 
     }
 
@@ -134,10 +126,15 @@ public class OrderHomeFragment extends BaseFragment implements OrderMainControl.
     @Override
     protected void initData() {
         super.initData();
-
-
+        StatusBarCompat.setStatusBarColor(getActivity(), getResources().getColor(R.color.white), true);
     }
-
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            StatusBarCompat.setStatusBarColor(getActivity(), getResources().getColor(R.color.white), true);
+        }
+    }
 
     @Override
     protected void initListener() {
@@ -148,8 +145,6 @@ public class OrderHomeFragment extends BaseFragment implements OrderMainControl.
         titlePop.setOnBackClickListener(this);
 
     }
-
-
 
 
     @Override
@@ -340,7 +335,7 @@ public class OrderHomeFragment extends BaseFragment implements OrderMainControl.
         if (position == 1) {
             switchTitle.setTitle("我是车主");
             if (carOwnerFragmeng == null) {
-                carOwnerFragmeng =  new OrderMainFragmet();
+                carOwnerFragmeng = new OrderMainFragmet();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(Param.TRAN, roleState);
                 carOwnerFragmeng.setArguments(bundle);

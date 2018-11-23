@@ -67,6 +67,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         initData();
         initListener();
         tab1.performClick();
+
     }
 
     @Override
@@ -226,7 +227,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.tab1:
                 if (homeFragment == null) {
 
-                    homeFragment = (Fragment) ArouterUtils.getInstance().builder(ArouterParamOrder.fragment_order_main).navigation(mContext);
+                    homeFragment = (Fragment) ArouterUtils.getInstance().builder(ArouterParamsApp.fragment_home_fragment).navigation(mContext);
                     fragmentTransaction.add(R.id.content, homeFragment);
                 } else {
                     fragmentTransaction.show(homeFragment);

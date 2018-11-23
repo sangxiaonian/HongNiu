@@ -65,10 +65,7 @@ public class OrderMainFragmet extends OrderFragmet implements SwitchStateListene
         }
 
         times = Arrays.asList(getResources().getStringArray(R.array.order_main_time));
-        View view = new View(getContext());
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DeviceUtils.dip2px(getContext(), 75));
-        view.setLayoutParams(params);
-        adapter.addFoot(new PeakHolder(view));
+
     }
 
 

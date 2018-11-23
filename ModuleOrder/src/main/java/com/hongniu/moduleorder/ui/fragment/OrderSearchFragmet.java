@@ -74,10 +74,6 @@ public class OrderSearchFragmet extends OrderFragmet implements SwitchStateListe
             states.remove(1);
         }
 
-        View view = new View(getContext());
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DeviceUtils.dip2px(getContext(), 75));
-        view.setLayoutParams(params);
-        adapter.addFoot(new PeakHolder(view));
     }
 
 

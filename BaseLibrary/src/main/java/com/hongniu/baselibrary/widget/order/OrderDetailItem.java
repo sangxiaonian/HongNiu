@@ -24,7 +24,6 @@ import com.hongniu.baselibrary.widget.order.helper.OrderItemHelper;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.CenteredImageSpan;
 import com.sang.thirdlibrary.map.utils.MapConverUtils;
@@ -134,9 +133,9 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
             setPrice("");
         }
 
-        if (hideInsurance||!data.isInsurance()){
+        if (hideInsurance || !data.isInsurance()) {
             tv_instances.setVisibility(GONE);
-        }else {
+        } else {
             tv_instances.setVisibility(VISIBLE);
 
         }
@@ -217,7 +216,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
      * 设置保费
      */
     private void setInsruancePrice(String insruancePrice) {
-        tv_instances.setText(insruancePrice == null ? "" :  insruancePrice );
+        tv_instances.setText(insruancePrice == null ? "" : insruancePrice);
 
     }
 
@@ -335,9 +334,9 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
      * @param driverName    司机姓名
      * @param driverPhone   司机电话
      */
-    private SpannableStringBuilder getContent(String startNum, String carNum, String roleTop, String carOwnerName,
+    private SpannableStringBuilder getContent(String startNum, String carNum, String roleTop, final String carOwnerName,
                                               final String carOwnerPhone, String cargo, String roleBottom,
-                                              String driverName, final String driverPhone) {
+                                              final String driverName, final String driverPhone) {
 
 
         int firstPoint = -1;
@@ -357,7 +356,9 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
 
 
         if (!TextUtils.isEmpty(carOwnerPhone)) {//如果司机电话不为空，则拼接司机电话
-            builder.append(carOwnerPhone).append(" ").append(" ");
+            builder.append(carOwnerPhone)
+                    .append(" ").append(" ").append(" ")
+                    .append(" ").append(" ");
             firstPoint = builder.toString().length();
         }
 
@@ -371,6 +372,9 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                 .append(driverPhone == null ? "" : driverPhone)
                 .append(" ")
                 .append(" ")
+                .append(" ")
+                .append(" ")
+                .append(" ")
         ;
 
         if (!TextUtils.isEmpty(driverPhone)) {
@@ -378,36 +382,66 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
         }
 
         if (firstPoint > 0) {
-            final int size = DeviceUtils.dip2px(getContext(), 15);
-            CenteredImageSpan imageSpan = new CenteredImageSpan(getContext(), R.mipmap.icon_call_30);
-            imageSpan.setSpanSize(size, size);
-            builder.setSpan(imageSpan, firstPoint - 1, firstPoint, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
-            ClickableSpan carOwnerClick = new ClickableSpan() {
+            creatPhoneSpan(firstPoint - 3, builder, new ClickableSpan() {
                 @Override
                 public void onClick(View widget) {
                     CommonUtils.toDial(getContext(), carOwnerPhone);
                 }
-            };
-            builder.setSpan(carOwnerClick, firstPoint - 1, firstPoint, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+            });
+            creatChactSpan(firstPoint-1 , builder, new ClickableSpan() {
+                @Override
+                public void onClick(View widget) {
+                    ToastUtils.getInstance().show(carOwnerName+"聊天");
+                }
+            });
+//
+//            CenteredImageSpan imageSpan = creatPhoneSpan(firstPoint - 1, firstPoint, builder);
+//            builder.setSpan(imageSpan, firstPoint - 1, firstPoint, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+//            ClickableSpan carOwnerClick = new ClickableSpan() {
+//                @Override
+//                public void onClick(View widget) {
+//                    CommonUtils.toDial(getContext(), carOwnerPhone);
+//                }
+//            };
+//            builder.setSpan(carOwnerClick, firstPoint - 1, firstPoint, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
 
         }
+
         if (secondPoint > 0) {
-            final int size = DeviceUtils.dip2px(getContext(), 15);
-            CenteredImageSpan imageSpan2 = new CenteredImageSpan(getContext(), R.mipmap.icon_call_30);
-            imageSpan2.setSpanSize(size, size);
-            builder.setSpan(imageSpan2, secondPoint - 1, secondPoint, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
-            ClickableSpan driverClick = new ClickableSpan() {
+
+            creatPhoneSpan(secondPoint - 3, builder, new ClickableSpan() {
                 @Override
                 public void onClick(View widget) {
                     CommonUtils.toDial(getContext(), driverPhone);
                 }
-            };
-            builder.setSpan(driverClick, secondPoint - 1, secondPoint, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+            });
+            creatChactSpan(secondPoint - 1, builder, new ClickableSpan() {
+                @Override
+                public void onClick(View widget) {
+                    ToastUtils.getInstance().show(driverName+"聊天");
+                }
+            });
 
         }
 
         return builder;
 
+    }
+
+    private void creatPhoneSpan(int startPoint, SpannableStringBuilder builder, ClickableSpan clickableSpan) {
+        final int size = DeviceUtils.dip2px(getContext(), 15);
+        CenteredImageSpan imageSpan2 = new CenteredImageSpan(getContext(), R.mipmap.icon_call_30);
+        imageSpan2.setSpanSize(size, size);
+        builder.setSpan(imageSpan2, startPoint, startPoint + 1, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+        builder.setSpan(clickableSpan, startPoint, startPoint + 1, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+    }
+
+    private void creatChactSpan(int startPoint, SpannableStringBuilder builder, ClickableSpan clickableSpan) {
+        final int size = DeviceUtils.dip2px(getContext(), 15);
+        CenteredImageSpan imageSpan2 = new CenteredImageSpan(getContext(), R.mipmap.icon_maessage_30);
+        imageSpan2.setSpanSize(size, size);
+        builder.setSpan(imageSpan2, startPoint, startPoint + 1, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+        builder.setSpan(clickableSpan, startPoint, startPoint + 1, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
     }
 
 
@@ -572,9 +606,8 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
     public TextView creatButton(ButtonInforBean infor) {
         TextView button = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.order_item_text, llBottom, false);
         button.setTextColor(infor.getType() == 1 ? getResources().getColor(R.color.white) : getResources().getColor(R.color.color_title_dark));
-        button.setBackgroundResource(infor.getType() == 1 ? R.drawable.shape_2_f06f28 : R.drawable.shape_2_stoke_dddddd);
+        button.setBackgroundResource(infor.getType() == 1 ? R.drawable.shape_2_e83e15 : R.drawable.shape_2_stoke_dddddd);
         button.setGravity(Gravity.CENTER);
-
         button.setTextSize(13);
         button.setText(infor.getText() == null ? "" : infor.getText());
         return button;

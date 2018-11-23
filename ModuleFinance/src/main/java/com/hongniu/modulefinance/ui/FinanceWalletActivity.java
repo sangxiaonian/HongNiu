@@ -1,6 +1,5 @@
 package com.hongniu.modulefinance.ui;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
@@ -16,16 +15,15 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.entity.WalletDetail;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.modulefinance.R;
 import com.hongniu.modulefinance.control.FinanceWalletControl;
-import com.hongniu.baselibrary.entity.WalletDetail;
 import com.hongniu.modulefinance.net.HttpFinanceFactory;
 import com.hongniu.modulefinance.present.WalletPresenter;
 
