@@ -61,7 +61,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     @Override
     protected void initData() {
         super.initData();
-        StatusBarCompat.setStatusBarColor(getActivity(), getResources().getColor(R.color.color_new_light), false);
+        StatusBarCompat.setStatusBarColor(getActivity(), getResources().getColor(R.color.white), true);
 
         if (Utils.getLoginInfor() != null) {
             if (Utils.checkInfor()) {
@@ -78,7 +78,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
-            StatusBarCompat.setStatusBarColor(getActivity(), getResources().getColor(R.color.color_new_light), false);
+            StatusBarCompat.setStatusBarColor(getActivity(), getResources().getColor(R.color.white), true);
         }
     }
 

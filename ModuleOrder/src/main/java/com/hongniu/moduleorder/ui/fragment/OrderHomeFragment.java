@@ -55,7 +55,7 @@ import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleSt
  */
 //@Route(path = ArouterParamsApp.activity_main)
 @Route(path = ArouterParamOrder.fragment_order_main)
-public class OrderHomeFragment extends BaseFragment implements OrderMainControl.IOrderMainView, SwitchTextLayout.OnSwitchListener, OrderMainTitlePop.OnOrderMainClickListener, OnPopuDismissListener, View.OnClickListener, AMapLocationListener, OrderMainTitlePop.OnBackClickListener {
+public class OrderHomeFragment extends BaseFragment implements OrderMainControl.IOrderMainView, SwitchTextLayout.OnSwitchListener, OrderMainTitlePop.OnOrderMainClickListener, OnPopuDismissListener, View.OnClickListener, OrderMainTitlePop.OnBackClickListener {
 
     private SwitchTextLayout switchTitle;
 
@@ -66,9 +66,7 @@ public class OrderHomeFragment extends BaseFragment implements OrderMainControl.
     private Fragment cargoFragment, carOwnerFragmeng, driverFragmeng, currentFragmeng;
     private SwitchStateListener switchStateListener;
 
-    private LoactionUtils loaction;
 
-    private LoactionUpUtils upLoactionUtils;//上传位置信息
     private OrderDetailItemControl.RoleState roleState = CARGO_OWNER;
     private Context mContext;
 
@@ -97,9 +95,7 @@ public class OrderHomeFragment extends BaseFragment implements OrderMainControl.
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        loaction = LoactionUtils.getInstance();
-        loaction.init(getContext());
-        loaction.setListener(this);
+
 
     }
 
@@ -147,13 +143,6 @@ public class OrderHomeFragment extends BaseFragment implements OrderMainControl.
     }
 
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (loaction != null) {
-            loaction.showFront(false);
-        }
-    }
 
     @Override
     public void onStop() {
@@ -167,92 +156,13 @@ public class OrderHomeFragment extends BaseFragment implements OrderMainControl.
     }
 
 
+
     //进入首页时候，根据获取到的数据切换当前角色
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onMessageEvent(final RoleTypeBean event) {
         if (event != null) {
             changeStaff(event.getRoleId());//此处接收到用户类型
-            //如果有正在运输中的订单，则此时获取到用户的位置信息
-            if (event.getCarId() != null && event.getOrderId() != null) {
-                switchTitle.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        OrderEvent.UpLoactionEvent upLoactionEvent = new OrderEvent.UpLoactionEvent();
-                        upLoactionEvent.start = true;
-                        upLoactionEvent.orderID = event.getOrderId();
-                        upLoactionEvent.cardID = event.getCarId();
-                        upLoactionEvent.destinationLatitude = event.getDestinationLatitude();
-                        upLoactionEvent.destinationLongitude = event.getDestinationLongitude();
-                        BusFactory.getBus().post(upLoactionEvent);
-                        float v = MapConverUtils.caculeDis(event.getStartLatitude(), event.getStartLongitude(), event.getDestinationLatitude(), event.getDestinationLongitude());
-                        loaction.upInterval(v);
-                    }
-                }, 200);
 
-            }
-        }
-    }
-
-
-    //开始或停止记录用户位置信息
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onStartLoactionMessage(final OrderEvent.UpLoactionEvent event) {
-        if (event != null) {
-            //如果有正在运输中的订单，则此时获取到用户的位置信息
-            if (event.start) {//开始记录数据
-                PermissionUtils.applyMap(getActivity(), new PermissionUtils.onApplyPermission() {
-                    @Override
-                    public void hasPermission(List<String> granted, boolean isAll) {
-                        if (TextUtils.isEmpty(event.cardID)) {
-                            loaction.setInterval(1000);
-                        } else {
-                            loaction.startLoaction();
-                        }
-                        //首次创建位置信息收集数据
-                        if (upLoactionUtils == null || TextUtils.isEmpty(upLoactionUtils.getCarID())) {
-                            if (!DeviceUtils.isOpenGps(getContext())) {
-                                showAleart("为了更准确的记录您的轨迹信息，请打开GPS");
-                            }
-                            upLoactionUtils = new LoactionUpUtils();
-                            upLoactionUtils.setOrderInfor(event.orderID, event.cardID, event.destinationLatitude, event.destinationLongitude);
-                            JLog.i("创建位置信息收集器");
-                            //更新位置信息收起器
-                        } else if (!upLoactionUtils.getCarID().equals(event.cardID)) {
-                            upLoactionUtils.onDestroy();
-                            if (!DeviceUtils.isOpenGps(getContext())) {
-                                showAleart("为了更准确的记录您的轨迹信息，请打开GPS");
-                            }
-                            upLoactionUtils = new LoactionUpUtils();
-                            upLoactionUtils.setOrderInfor(event.orderID, event.cardID, event.destinationLatitude, event.destinationLongitude);
-                            JLog.i("更新位置信息收集器");
-                        }
-                    }
-
-                    @Override
-                    public void noPermission(List<String> denied, boolean quick) {
-                    }
-                });
-            } else {
-                if (upLoactionUtils != null) {
-                    upLoactionUtils.onDestroy();
-                }
-                if (loaction != null) {
-                    loaction.stopLoaction();
-                }
-                JLog.i("停止定位");
-
-            }
-        }
-    }
-
-
-    //App 进入后台时候
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onInBackgrond(final Event.OnBackground event) {
-        if (event != null) {
-            if (loaction != null) {
-                loaction.showFront(DeviceUtils.isBackGround(mContext));
-            }
         }
     }
 
@@ -262,16 +172,7 @@ public class OrderHomeFragment extends BaseFragment implements OrderMainControl.
         mContext = context;
     }
 
-    @Override
-    public void onDestroy() {
-        if (upLoactionUtils != null) {
-            upLoactionUtils.onDestroy();
-        }
-        loaction.onDestroy();
-        super.onDestroy();
 
-
-    }
 
 
     /**
@@ -428,42 +329,6 @@ public class OrderHomeFragment extends BaseFragment implements OrderMainControl.
         titlePop.dismiss();
     }
 
-
-    //定位成功，位置信息开始变化
-    @Override
-    public void onLocationChanged(AMapLocation aMapLocation) {
-        //可在其中解析amapLocation获取相应内容。
-        if (aMapLocation.getErrorCode() == 0) {//定位成功
-            JLog.v("测试后台打点：" + DeviceUtils.isOpenGps(mContext)
-                    + "\n Latitude：" + aMapLocation.getLatitude()
-                    + "\n Longitude：" + aMapLocation.getLongitude()
-                    + "\n" + ConvertUtils.formatTime(aMapLocation.getTime(), "yyyy-MM-dd HH:mm:ss")
-            );
-            //发送当前的定位数据
-            Event.UpLoaction upLoaction = new Event.UpLoaction(aMapLocation.getLatitude(), aMapLocation.getLongitude());
-            upLoaction.bearing = aMapLocation.getBearing();
-            upLoaction.movingTime = aMapLocation.getTime();
-            upLoaction.speed = aMapLocation.getSpeed();
-            BusFactory.getBus().postSticky(upLoaction);
-        } else {
-            //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
-        }
-    }
-
-
-    /**
-     * 位置信息变化
-     *
-     * @param event
-     */
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void upLoaction(Event.UpLoaction event) {
-        if (event != null) {
-            if (upLoactionUtils != null) {
-                upLoactionUtils.add(event.latitude, event.longitude, event.movingTime, event.speed, event.bearing);
-            }
-        }
-    }
 
 
 }

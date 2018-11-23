@@ -1,5 +1,6 @@
 package com.hongniu.supply.ui;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationListener;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
@@ -20,22 +23,39 @@ import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CloseActivityEvent;
 import com.hongniu.baselibrary.entity.QueryPayPassword;
+import com.hongniu.baselibrary.entity.RoleTypeBean;
+import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.net.HttpAppFactory;
+import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.dialog.UpDialog;
+import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.entity.VersionBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
+import com.hongniu.moduleorder.utils.LoactionUpUtils;
 import com.hongniu.supply.R;
 import com.sang.common.event.BusFactory;
 import com.sang.common.imgload.ImageLoader;
 import com.sang.common.utils.CommonUtils;
+import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.JLog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
+import com.sang.thirdlibrary.map.LoactionUtils;
+import com.sang.thirdlibrary.map.utils.MapConverUtils;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.List;
 
 @Route(path = ArouterParamsApp.activity_main)
-public class MainActivity extends BaseActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener ,AMapLocationListener {
+
+    private LoactionUtils loaction;
+
+    private LoactionUpUtils upLoactionUtils;//上传位置信息
 
     ViewGroup tab1;
     ViewGroup tab2;
@@ -66,6 +86,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         initView();
         initData();
         initListener();
+        loaction = LoactionUtils.getInstance();
+        loaction.init(mContext);
+        loaction.setListener(this);
         tab1.performClick();
 
     }
@@ -83,6 +106,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected boolean reciveClose() {
         return false;
+    }
+
+    @Override
+    protected boolean getUseEventBus() {
+        return true;
     }
 
     @Override
@@ -272,6 +300,149 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         fragmentTransaction.commitAllowingStateLoss();
 
 
+    }
+
+
+
+
+    //定位成功，位置信息开始变化
+    @Override
+    public void onLocationChanged(AMapLocation aMapLocation) {
+        //可在其中解析amapLocation获取相应内容。
+        if (aMapLocation.getErrorCode() == 0) {//定位成功
+            JLog.v("测试后台打点：" + DeviceUtils.isOpenGps(mContext)
+                    + "\n Latitude：" + aMapLocation.getLatitude()
+                    + "\n Longitude：" + aMapLocation.getLongitude()
+                    + "\n" + ConvertUtils.formatTime(aMapLocation.getTime(), "yyyy-MM-dd HH:mm:ss")
+            );
+            //发送当前的定位数据
+            Event.UpLoaction upLoaction = new Event.UpLoaction(aMapLocation.getLatitude(), aMapLocation.getLongitude());
+            upLoaction.bearing = aMapLocation.getBearing();
+            upLoaction.movingTime = aMapLocation.getTime();
+            upLoaction.speed = aMapLocation.getSpeed();
+            BusFactory.getBus().postSticky(upLoaction);
+        } else {
+            //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+        }
+    }
+
+
+    /**
+     * 位置信息变化
+     *
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void upLoaction(Event.UpLoaction event) {
+        if (event != null) {
+            if (upLoactionUtils != null) {
+                upLoactionUtils.add(event.latitude, event.longitude, event.movingTime, event.speed, event.bearing);
+            }
+        }
+    }
+    //App 进入后台时候
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onInBackgrond(final Event.OnBackground event) {
+        if (event != null) {
+            if (loaction != null) {
+                loaction.showFront(DeviceUtils.isBackGround(mContext));
+            }
+        }
+    }
+    @Override
+    public void onDestroy() {
+        if (upLoactionUtils != null) {
+            upLoactionUtils.onDestroy();
+        }
+        loaction.onDestroy();
+        super.onDestroy();
+
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (loaction != null) {
+            loaction.showFront(false);
+        }
+    }
+
+    //进入首页时候，根据获取到的数据切换当前角色
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(final RoleTypeBean event) {
+        if (event != null) {
+            //如果有正在运输中的订单，则此时获取到用户的位置信息
+            if (event.getCarId() != null && event.getOrderId() != null) {
+                tab1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        OrderEvent.UpLoactionEvent upLoactionEvent = new OrderEvent.UpLoactionEvent();
+                        upLoactionEvent.start = true;
+                        upLoactionEvent.orderID = event.getOrderId();
+                        upLoactionEvent.cardID = event.getCarId();
+                        upLoactionEvent.destinationLatitude = event.getDestinationLatitude();
+                        upLoactionEvent.destinationLongitude = event.getDestinationLongitude();
+                        BusFactory.getBus().post(upLoactionEvent);
+                        float v = MapConverUtils.caculeDis(event.getStartLatitude(), event.getStartLongitude(), event.getDestinationLatitude(), event.getDestinationLongitude());
+                        loaction.upInterval(v);
+                    }
+                }, 200);
+
+            }
+        }
+    }
+
+
+    //开始或停止记录用户位置信息
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onStartLoactionMessage(final OrderEvent.UpLoactionEvent event) {
+        if (event != null) {
+            //如果有正在运输中的订单，则此时获取到用户的位置信息
+            if (event.start) {//开始记录数据
+                PermissionUtils.applyMap((Activity) mContext, new PermissionUtils.onApplyPermission() {
+                    @Override
+                    public void hasPermission(List<String> granted, boolean isAll) {
+                        if (TextUtils.isEmpty(event.cardID)) {
+                            loaction.setInterval(1000);
+                        } else {
+                            loaction.startLoaction();
+                        }
+                        //首次创建位置信息收集数据
+                        if (upLoactionUtils == null || TextUtils.isEmpty(upLoactionUtils.getCarID())) {
+                            if (!DeviceUtils.isOpenGps(mContext)) {
+                                showAleart("为了更准确的记录您的轨迹信息，请打开GPS");
+                            }
+                            upLoactionUtils = new LoactionUpUtils();
+                            upLoactionUtils.setOrderInfor(event.orderID, event.cardID, event.destinationLatitude, event.destinationLongitude);
+                            JLog.i("创建位置信息收集器");
+                            //更新位置信息收起器
+                        } else if (!upLoactionUtils.getCarID().equals(event.cardID)) {
+                            upLoactionUtils.onDestroy();
+                            if (!DeviceUtils.isOpenGps(mContext)) {
+                                showAleart("为了更准确的记录您的轨迹信息，请打开GPS");
+                            }
+                            upLoactionUtils = new LoactionUpUtils();
+                            upLoactionUtils.setOrderInfor(event.orderID, event.cardID, event.destinationLatitude, event.destinationLongitude);
+                            JLog.i("更新位置信息收集器");
+                        }
+                    }
+
+                    @Override
+                    public void noPermission(List<String> denied, boolean quick) {
+                    }
+                });
+            } else {
+                if (upLoactionUtils != null) {
+                    upLoactionUtils.onDestroy();
+                }
+                if (loaction != null) {
+                    loaction.stopLoaction();
+                }
+                JLog.i("停止定位");
+
+            }
+        }
     }
 
 
