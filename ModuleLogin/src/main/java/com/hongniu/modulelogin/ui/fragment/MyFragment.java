@@ -6,10 +6,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.githang.statusbar.StatusBarCompat;
 import com.hongniu.baselibrary.arouter.ArouterParamFestivity;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
+import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseFragment;
+import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.modulelogin.R;
@@ -34,7 +37,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     private LinearLayout llAboutUs;//关于我们
     private LinearLayout llMyCar;//我的车辆
     private LinearLayout llPersonInfor;//个人资料
-    private LinearLayout llPayMethod;//收款方式
+    private LinearLayout llWallet;//收款方式
+    private LinearLayout llNiu;//收款方式
     private TextView tvName, tvPhone;
 
     @Override
@@ -45,7 +49,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         llAboutUs = inflate.findViewById(R.id.ll_about_us);
         llMyCar = inflate.findViewById(R.id.ll_my_car);
         llPersonInfor = inflate.findViewById(R.id.ll_person_infor);
-        llPayMethod = inflate.findViewById(R.id.ll_pay_method);
+        llWallet = inflate.findViewById(R.id.ll_wallet);
+        llNiu = inflate.findViewById(R.id.ll_niu);
         tvName = inflate.findViewById(R.id.tv_name);
         tvPhone = inflate.findViewById(R.id.tv_phone);
 
@@ -56,6 +61,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     @Override
     protected void initData() {
         super.initData();
+        StatusBarCompat.setStatusBarColor(getActivity(), getResources().getColor(R.color.color_new_light), false);
+
         if (Utils.getLoginInfor() != null) {
             if (Utils.checkInfor()) {
                 tvName.setText(Utils.getPersonInfor().getContact() == null ? "待完善" : Utils.getPersonInfor().getContact());
@@ -65,6 +72,16 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
 
     }
+
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            StatusBarCompat.setStatusBarColor(getActivity(), getResources().getColor(R.color.color_new_light), false);
+        }
+    }
+
 
     @Override
     protected boolean getUseEventBus() {
@@ -79,6 +96,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             }
         }
     }
+
     @Override
     protected void initListener() {
         super.initListener();
@@ -87,7 +105,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         llAboutUs.setClickable(true);
         llMyCar.setClickable(true);
         llPersonInfor.setClickable(true);
-        llPayMethod.setClickable(true);
 
 
         llLoginOut.setOnClickListener(this);
@@ -95,7 +112,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         llAboutUs.setOnClickListener(this);
         llMyCar.setOnClickListener(this);
         llPersonInfor.setOnClickListener(this);
-        llPayMethod.setOnClickListener(this);
+        llWallet.setOnClickListener(this);
+        llNiu.setOnClickListener(this);
     }
 
     /**
@@ -162,9 +180,14 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         } else if (i == R.id.ll_person_infor) {
             ArouterUtils.getInstance().builder(ArouterParamLogin.activity_person_infor).navigation(getContext());
 
-        } else if (i == R.id.ll_pay_method) {
-            ArouterUtils.getInstance().builder(ArouterParamFestivity.activity_festivity_home).navigation(getContext());
+        }  else if (i == R.id.ll_wallet) {
+            ArouterUtils.getInstance().builder(ArouterParamsFinance.activity_finance_wallet).navigation(getContext());
 
+        } else if (i == R.id.ll_niu) {
+
+            ArouterUtils.getInstance()
+                    .builder(ArouterParamsFinance.activity_finance_niu)
+                    .navigation(getContext());
         }
     }
 }

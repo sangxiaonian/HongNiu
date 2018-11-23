@@ -11,9 +11,12 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.modulefinance.R;
 import com.hongniu.baselibrary.entity.WalletDetail;
+import com.hongniu.modulefinance.net.HttpFinanceFactory;
 
 /**
  * 牛贝账户
@@ -57,8 +60,25 @@ public class FinanceNiuActivity extends BaseActivity implements RadioGroup.OnChe
     protected void initData() {
         super.initData();
         walletHomeDetail = getIntent().getParcelableExtra(Param.TRAN);
-        tvNiu.setText(String.format(getResources().getString(R.string.wallet_niu_of_account), walletHomeDetail == null ? "0" : walletHomeDetail.getAvailableIntegral()));
-        tvNiuUnEntry.setText(String.format(getResources().getString(R.string.wallet_niu_unentry_count), walletHomeDetail == null ? "0" : walletHomeDetail.getTobeCreditedIntegral()));
+
+        if (walletHomeDetail==null){
+            HttpFinanceFactory.queryAccountdetails()
+                    .subscribe(new NetObserver<WalletDetail>(this) {
+                        @Override
+                        public void doOnSuccess(WalletDetail data) {
+                            Utils.setPassword(data.isSetPassWord());
+                            walletHomeDetail=data;
+                            tvNiu.setText(String.format(getResources().getString(R.string.wallet_niu_of_account), walletHomeDetail == null ? "0" : walletHomeDetail.getAvailableIntegral()));
+                            tvNiuUnEntry.setText(String.format(getResources().getString(R.string.wallet_niu_unentry_count), walletHomeDetail == null ? "0" : walletHomeDetail.getTobeCreditedIntegral()));
+
+                        }
+                    });
+        }else {
+            tvNiu.setText(String.format(getResources().getString(R.string.wallet_niu_of_account), walletHomeDetail == null ? "0" : walletHomeDetail.getAvailableIntegral()));
+            tvNiuUnEntry.setText(String.format(getResources().getString(R.string.wallet_niu_unentry_count), walletHomeDetail == null ? "0" : walletHomeDetail.getTobeCreditedIntegral()));
+
+        }
+
     }
 
     @Override
