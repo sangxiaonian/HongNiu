@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
+import com.hongniu.baselibrary.base.BaseFragment;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.SwitchStateListener;
@@ -42,7 +43,7 @@ public class OrderMainFragmet extends OrderFragmet implements SwitchStateListene
 
     @Override
     protected View initView(LayoutInflater inflater) {
-        View inflate = inflater.inflate(R.layout.fragment_order_main_fragmet, null);
+        View inflate = inflater.inflate(R.layout.fragment_order_list_fragmet, null);
         switchLeft = inflate.findViewById(R.id.switch_left);
         switchRight = inflate.findViewById(R.id.switch_right);
 

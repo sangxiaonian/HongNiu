@@ -6,6 +6,8 @@
 
 
     <color name="color_tran">#00000000</color>
+    <color name="color_tabe_unselect">#A2A2A2</color>
+    <color name="color_tabe_select">#E83E15</color>
 
 
     <!--App中主要的亮色调-->
@@ -40,6 +42,8 @@
     <color name="tool_right">#FF3A30</color>
     <!--新手引导页下标颜色-->
     <color name="color_guide">#eaeaea</color>
+
+
 
 
 </resources>

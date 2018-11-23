@@ -20,10 +20,14 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ui.MainActivity"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".GuideActivity"
             android:screenOrientation="portrait" />
@@ -37,8 +41,12 @@
             android:exported="true"
             android:launchMode="singleTop"
             android:theme="@style/tranTheme" />
-        <activity android:name=".ui.PDFActivity" />
-        <activity android:name=".ui.H5Activity" />
+        <activity
+            android:name=".ui.PDFActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.H5Activity"
+            android:screenOrientation="portrait" />
 
     </application>
 

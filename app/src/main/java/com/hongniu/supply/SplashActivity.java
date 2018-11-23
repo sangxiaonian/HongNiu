@@ -15,13 +15,11 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.Utils;
-import com.sang.common.utils.JLog;
 import com.sang.common.utils.SharedPreferencesUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
 
 public class SplashActivity extends BaseActivity {
 
@@ -53,7 +51,7 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_splash);
         setToolbarTitle("");
         if (Utils.isLogin()) {
             HttpAppFactory.getRoleType()

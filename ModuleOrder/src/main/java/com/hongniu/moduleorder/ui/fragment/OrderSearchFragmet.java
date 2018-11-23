@@ -15,18 +15,15 @@ import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.SwitchStateListener;
-import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.widget.OrderMainPop;
 import com.hongniu.moduleorder.widget.OrderTimePop;
 import com.sang.common.recycleview.holder.PeakHolder;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.SwitchTextLayout;
 import com.sang.common.widget.popu.BasePopu;
 import com.sang.common.widget.popu.inter.OnPopuDismissListener;
 import com.sangxiaonian.xcalendar.entity.DateBean;
-import com.sangxiaonian.xcalendar.utils.CalendarUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -56,7 +53,7 @@ public class OrderSearchFragmet extends OrderFragmet implements SwitchStateListe
 
     @Override
     protected View initView(LayoutInflater inflater) {
-        View inflate = inflater.inflate(R.layout.fragment_order_main_fragmet, null);
+        View inflate = inflater.inflate(R.layout.fragment_order_list_fragmet, null);
         switchLeft = inflate.findViewById(R.id.switch_left);
         switchRight = inflate.findViewById(R.id.switch_right);
         return inflate;
