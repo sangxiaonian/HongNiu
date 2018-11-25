@@ -34,6 +34,15 @@ public class LoginBean {
     private String gender;//性别
     private String remarks;//备注
     private String rongToken;//备注
+    private String logoPath;//备注
+
+    public String getLogoPath() {
+        return logoPath;
+    }
+
+    public void setLogoPath(String logoPath) {
+        this.logoPath = logoPath;
+    }
 
     public String getRongToken() {
         return rongToken;

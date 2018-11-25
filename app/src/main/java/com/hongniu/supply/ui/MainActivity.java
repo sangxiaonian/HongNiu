@@ -2,6 +2,7 @@ package com.hongniu.supply.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -29,6 +30,7 @@ import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.dialog.UpDialog;
+import com.hongniu.baselibrary.widget.order.OrderDetailItem;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.entity.VersionBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
@@ -52,13 +54,14 @@ import java.util.List;
 import com.sang.thirdlibrary.chact.ChactHelper;
 
 import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.UserInfo;
 import rongyun.sang.com.chactmodule.ui.fragment.ChactListFragment;
 
 @Route(path = ArouterParamsApp.activity_main)
 public class MainActivity extends BaseActivity implements View.OnClickListener, AMapLocationListener {
 
     private LoactionUtils loaction;
-
     private LoactionUpUtils upLoactionUtils;//上传位置信息
 
     ViewGroup tab1;
@@ -143,7 +146,30 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         super.initData();
 
         //链接数据
-        ChactHelper.getHelper().connect(this, Utils.getLoginInfor().getRongToken());
+        ChactHelper.getHelper().connect(this, Utils.getLoginInfor().getRongToken(), new RongIMClient.ConnectCallback() {
+            @Override
+            public void onTokenIncorrect() {
+
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                String logoPath = Utils.getLoginInfor().getLogoPath();
+                Uri parse = null;
+                if (logoPath!=null){
+                    parse= Uri.parse(logoPath);
+                }
+
+                RongIM.getInstance().setCurrentUserInfo(new UserInfo(s,Utils.getLoginInfor().getContact(), parse));
+                RongIM.getInstance().setMessageAttachedUserInfo(true);
+
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+
+            }
+        });
         //检查版本更新
         checkVersion();
     }

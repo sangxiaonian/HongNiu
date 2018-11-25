@@ -49,7 +49,7 @@ public class ChactListFragment extends BaseFragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
-            StatusBarCompat.setStatusBarColor(getActivity(), getResources().getColor(R.color.color_new_light), false);
+            StatusBarCompat.setStatusBarColor(getActivity(), getResources().getColor(R.color.white), true);
         }
     }
 

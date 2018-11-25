@@ -26,6 +26,7 @@ import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.CenteredImageSpan;
+import com.sang.thirdlibrary.chact.ChactHelper;
 import com.sang.thirdlibrary.map.utils.MapConverUtils;
 
 import java.util.List;
@@ -174,30 +175,30 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
             switch (roleState) {
                 case DRIVER:
 
-                    setContent(data.getDepartNum(), data.getCarNum(), "货主：", data.getUserName(), data.getUserMobile()
-                            , data.getGoodName(), "车主：", data.getOwnerName(), data.getOwnerMobile()
+                    setContent(data.getDepartNum(), data.getCarNum(), "货主：", data.getUserName(), data.getUserMobile(), data.getUserId()
+                            , data.getGoodName(), "车主：", data.getOwnerName(), data.getOwnerMobile(), data.getOwnerId()
 
                     );
                     break;
                 case CAR_OWNER:
-                    setContent(data.getDepartNum(), data.getCarNum(), "货主：", data.getUserName(), data.getUserMobile()
-                            , data.getGoodName(), "司机：", data.getDriverName(), data.getDriverMobile()
+                    setContent(data.getDepartNum(), data.getCarNum(), "货主：", data.getUserName(), data.getUserMobile(), data.getUserId()
+                            , data.getGoodName(), "司机：", data.getDriverName(), data.getDriverMobile(), data.getDriverId()
                     );
                     break;
                 case CARGO_OWNER:
-                    setContent(data.getDepartNum(), data.getCarNum(), "车主：", data.getOwnerName(), data.getOwnerMobile()
-                            , data.getGoodName(), "司机：", data.getDriverName(), data.getDriverMobile()
+                    setContent(data.getDepartNum(), data.getCarNum(), "车主：", data.getOwnerName(), data.getOwnerMobile(), data.getOwnerId()
+                            , data.getGoodName(), "司机：", data.getDriverName(), data.getDriverMobile(), data.getDriverId()
                     );
                     break;
                 default:
-                    setContent(data.getDepartNum(), data.getCarNum(), "车主：", data.getOwnerName(), data.getOwnerMobile()
-                            , data.getGoodName(), "司机：", data.getDriverName(), data.getDriverMobile()
+                    setContent(data.getDepartNum(), data.getCarNum(), "车主：", data.getOwnerName(), data.getOwnerMobile(), data.getOwnerId()
+                            , data.getGoodName(), "司机：", data.getDriverName(), data.getDriverMobile(), data.getDriverId()
                     );
                     break;
             }
         } else {
-            setContent(data.getDepartNum(), data.getCarNum(), "车主：", data.getOwnerName(), data.getOwnerMobile()
-                    , data.getGoodName(), "司机：", data.getDriverName(), data.getDriverMobile()
+            setContent(data.getDepartNum(), data.getCarNum(), "车主：", data.getOwnerName(), data.getOwnerMobile(), data.getOwnerId()
+                    , data.getGoodName(), "司机：", data.getDriverName(), data.getDriverMobile(), data.getDriverId()
             );
         }
 
@@ -304,20 +305,22 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
     /**
      * 获取中间内容
      *
-     * @param startNum      发车变化
+     * @param startNum      发车时间
      * @param carNum        车牌号
      * @param carOwnerName  车主姓名
      * @param carOwnerPhone 车主电话
+     * @param ownerid       聊天Id
      * @param cargo         货物
      * @param driverName    司机姓名
      * @param driverPhone   司机电话
+     * @param driverid      聊天ID
      */
     public void setContent(String startNum, String carNum, String roleTop, String carOwnerName,
-                           final String carOwnerPhone, String cargo, String roleBottom,
-                           String driverName, final String driverPhone) {
+                           final String carOwnerPhone, String ownerid, String cargo, String roleBottom,
+                           String driverName, final String driverPhone, String driverid) {
         tv_order_detail.setMovementMethod(LinkMovementMethod.getInstance());
-        tv_order_detail.setText(getContent(startNum, carNum, roleTop, carOwnerName, carOwnerPhone, cargo
-                , roleBottom, driverName, driverPhone
+        tv_order_detail.setText(getContent(startNum, carNum, roleTop, carOwnerName, carOwnerPhone, ownerid, cargo
+                , roleBottom, driverName, driverPhone, driverid
         ));
     }
 
@@ -335,8 +338,8 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
      * @param driverPhone   司机电话
      */
     private SpannableStringBuilder getContent(String startNum, String carNum, String roleTop, final String carOwnerName,
-                                              final String carOwnerPhone, String cargo, String roleBottom,
-                                              final String driverName, final String driverPhone) {
+                                              final String carOwnerPhone, final String ownerid, String cargo, String roleBottom,
+                                              final String driverName, final String driverPhone, final String driverID) {
 
 
         int firstPoint = -1;
@@ -388,22 +391,13 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                     CommonUtils.toDial(getContext(), carOwnerPhone);
                 }
             });
-            creatChactSpan(firstPoint-1 , builder, new ClickableSpan() {
+            creatChactSpan(firstPoint - 1, builder, new ClickableSpan() {
                 @Override
                 public void onClick(View widget) {
-                    ToastUtils.getInstance().show(carOwnerName+"聊天");
+                    ChactHelper.getHelper().startPriver(getContext(), ownerid, carOwnerName);
+
                 }
             });
-//
-//            CenteredImageSpan imageSpan = creatPhoneSpan(firstPoint - 1, firstPoint, builder);
-//            builder.setSpan(imageSpan, firstPoint - 1, firstPoint, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
-//            ClickableSpan carOwnerClick = new ClickableSpan() {
-//                @Override
-//                public void onClick(View widget) {
-//                    CommonUtils.toDial(getContext(), carOwnerPhone);
-//                }
-//            };
-//            builder.setSpan(carOwnerClick, firstPoint - 1, firstPoint, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
 
         }
 
@@ -418,7 +412,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
             creatChactSpan(secondPoint - 1, builder, new ClickableSpan() {
                 @Override
                 public void onClick(View widget) {
-                    ToastUtils.getInstance().show(driverName+"聊天");
+                    ChactHelper.getHelper().startPriver(getContext(), driverID, driverName);
                 }
             });
 

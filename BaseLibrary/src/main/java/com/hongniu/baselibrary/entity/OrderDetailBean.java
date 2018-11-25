@@ -75,10 +75,7 @@ public class OrderDetailBean {
      */
     private String endTime;
 
-    /**
-     * true string 下单人id
-     */
-    private String userId;
+
     /**
      * 货主电话
      */
@@ -87,6 +84,13 @@ public class OrderDetailBean {
      * 货主姓名
      */
     private String userName;
+
+    /**
+     * 货主聊天ID
+     */
+    private String userId;
+
+
     /**
      * true string 车主的姓名(非下单人)
      */
@@ -97,8 +101,15 @@ public class OrderDetailBean {
      */
     private String ownerMobile;
 
+
     /**
-     * true string 司机的id
+     * 车主聊天ID
+     */
+    private String ownerId;
+
+
+    /**
+     * true string 司机的聊天id
      */
     private String driverId;
     /**
@@ -110,6 +121,8 @@ public class OrderDetailBean {
      * true string 司机的手机号
      */
     private String driverMobile;
+
+
 
     /**
      * true string 车辆id
@@ -223,6 +236,18 @@ public class OrderDetailBean {
      */
     private List<UpImgData> goodsImages;
 
+
+    public int getStatus() {
+        return status;
+    }
+
+    public String getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
+    }
 
     public List<UpImgData> getGoodsImages() {
         return goodsImages;
