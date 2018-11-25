@@ -162,7 +162,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
                 RongIM.getInstance().setCurrentUserInfo(new UserInfo(s,Utils.getLoginInfor().getContact(), parse));
                 RongIM.getInstance().setMessageAttachedUserInfo(true);
-
             }
 
             @Override
