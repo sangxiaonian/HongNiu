@@ -91,4 +91,6 @@ dependencies {
         implementation project(':BaseLibrary')
 
     }
+    implementation project(':ChactModule')
+
 }

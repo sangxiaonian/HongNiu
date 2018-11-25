@@ -41,7 +41,9 @@ dependencies {
     api files('libs/UPPayAssistEx.jar')
     api files('libs/alipaySdk-20180601.jar')
 
+    //融云聊天
     api project(':IMKit')
     api project(':CallKit')
     api project(':RCSticker')
+
 }

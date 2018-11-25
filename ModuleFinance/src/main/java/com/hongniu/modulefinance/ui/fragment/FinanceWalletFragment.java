@@ -15,7 +15,6 @@ import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.widget.order.OrderDetailDialog;
-import com.hongniu.baselibrary.widget.order.OrderDetailItem;
 import com.hongniu.modulefinance.R;
 import com.hongniu.modulefinance.control.OnItemClickListener;
 import com.hongniu.modulefinance.entity.BalanceOfAccountBean;
@@ -61,7 +60,6 @@ public class FinanceWalletFragment extends RefrushFragmet<BalanceOfAccountBean> 
     }
 
 
-
     @Override
     public void setArguments(@Nullable Bundle args) {
         super.setArguments(args);
@@ -82,16 +80,16 @@ public class FinanceWalletFragment extends RefrushFragmet<BalanceOfAccountBean> 
 
     @Override
     public void onItemClick(int position, BalanceOfAccountBean balanceOfAccountBean) {
-        if (balanceOfAccountBean.getFlowType()==1) {//订单
-            if (balanceOfAccountBean.getIsMe()==1){
+        if (balanceOfAccountBean.getFlowType() == 1) {//订单
+            if (balanceOfAccountBean.getIsMe() == 1) {
 //
 
-                HttpAppFactory.queryOrderDetail( null,balanceOfAccountBean.getOrdernumber(),balanceOfAccountBean.getId())
+                HttpAppFactory.queryOrderDetail(null, balanceOfAccountBean.getOrdernumber(), balanceOfAccountBean.getId())
                         .subscribe(new NetObserver<OrderDetailBean>(this) {
                             @Override
                             public void doOnSuccess(OrderDetailBean data) {
                                 OrderDetailDialog orderDetailDialog = new OrderDetailDialog(getContext());
-                                if (type==2){
+                                if (type == 2) {
                                     data.setRoleType(1);
                                 }
                                 orderDetailDialog.setOrdetail(data);
@@ -103,15 +101,15 @@ public class FinanceWalletFragment extends RefrushFragmet<BalanceOfAccountBean> 
                         });
 
 
-            }else if (balanceOfAccountBean.getIsMe()==3){//提现完成
+            } else if (balanceOfAccountBean.getIsMe() == 3) {//提现完成
                 ToastUtils.getInstance().show("提现已到账");
-            }else {
+            } else {
                 ToastUtils.getInstance().show("此为好友订单不能查看明细信息！");
 
             }
 
-        }else {//提现
-            WithDrawDialog dialog=new WithDrawDialog(getContext());
+        } else {//提现
+            WithDrawDialog dialog = new WithDrawDialog(getContext());
             dialog.setData(balanceOfAccountBean);
             dialog.show();
 //            ToastUtils.getInstance().show("提现");

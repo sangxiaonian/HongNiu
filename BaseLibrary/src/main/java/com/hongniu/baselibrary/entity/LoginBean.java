@@ -33,6 +33,15 @@ public class LoginBean {
     private String nickname;//昵称
     private String gender;//性别
     private String remarks;//备注
+    private String rongToken;//备注
+
+    public String getRongToken() {
+        return rongToken;
+    }
+
+    public void setRongToken(String rongToken) {
+        this.rongToken = rongToken;
+    }
 
     public String getId() {
         return id;

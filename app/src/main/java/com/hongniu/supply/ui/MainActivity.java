@@ -35,7 +35,6 @@ import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.utils.LoactionUpUtils;
 import com.hongniu.supply.R;
 import com.sang.common.event.BusFactory;
-import com.sang.common.imgload.ImageLoader;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
@@ -50,8 +49,13 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
+import com.sang.thirdlibrary.chact.ChactHelper;
+
+import io.rong.imkit.RongIM;
+import rongyun.sang.com.chactmodule.ui.fragment.ChactListFragment;
+
 @Route(path = ArouterParamsApp.activity_main)
-public class MainActivity extends BaseActivity implements View.OnClickListener ,AMapLocationListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener, AMapLocationListener {
 
     private LoactionUtils loaction;
 
@@ -138,6 +142,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener ,
     protected void initData() {
         super.initData();
 
+        //链接数据
+        ChactHelper.getHelper().connect(this, Utils.getLoginInfor().getRongToken());
         //检查版本更新
         checkVersion();
     }
@@ -181,6 +187,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener ,
                     }
                 });
     }
+
     /**
      * 显示强制更新接口
      */
@@ -239,7 +246,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener ,
     private void changeTabeState(int id) {
         tv1.setTextColor(getResources().getColor(id == R.id.tab1 ? R.color.color_tabe_select : R.color.color_tabe_unselect));
         tv2.setTextColor(getResources().getColor(id == R.id.tab2 ? R.color.color_tabe_select : R.color.color_tabe_unselect));
-        tv4.setTextColor(getResources().getColor(id == R.id.tab4  ? R.color.color_tabe_select : R.color.color_tabe_unselect));
+        tv4.setTextColor(getResources().getColor(id == R.id.tab4 ? R.color.color_tabe_select : R.color.color_tabe_unselect));
         tv5.setTextColor(getResources().getColor(id == R.id.tab5 ? R.color.color_tabe_select : R.color.color_tabe_unselect));
         img1.setImageResource(id == R.id.tab1 ? R.mipmap.icon_home_selected_46 : R.mipmap.icon_home_unselected_46);
         img2.setImageResource(id == R.id.tab2 ? R.mipmap.icon_gz_selected_46 : R.mipmap.icon_gz_unselected_46);
@@ -274,7 +281,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener ,
 
             case R.id.tab4:
                 if (messageFragment == null) {
-                    messageFragment = (Fragment) ArouterUtils.getInstance().builder(ArouterParamOrder.fragment_order_main).navigation(mContext);
+                    messageFragment = new ChactListFragment();
                     fragmentTransaction.add(R.id.content, messageFragment);
                 } else {
                     fragmentTransaction.show(messageFragment);
@@ -301,8 +308,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener ,
 
 
     }
-
-
 
 
     //定位成功，位置信息开始变化
@@ -340,6 +345,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener ,
             }
         }
     }
+
     //App 进入后台时候
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onInBackgrond(final Event.OnBackground event) {
@@ -349,6 +355,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener ,
             }
         }
     }
+
     @Override
     public void onDestroy() {
         if (upLoactionUtils != null) {

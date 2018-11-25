@@ -2,7 +2,6 @@ package com.sang.thirdlibrary.chact;
 
 import android.app.Application;
 import android.content.Context;
-import android.widget.Toast;
 
 import com.sang.common.utils.JLog;
 
@@ -30,16 +29,8 @@ public class ChactHelper {
     public void initHelper(Application application){
         RongIM.init(application);
     }
-    public void connect(Context context,String userID) {
-        String token;
-        if (userID.equals("10086")) {
-            token = "wVvjWfEjjJjCD0tTusYensZGBHlSaqrilpw3HKusJgniniWMnACbKA6f7NBDG0OC3aq9Zzriiq9N0h9KDiBREw==";
-        } else if (userID.equals("10010")) {
-            token = "Ici31AhJI6GWEI5Y0IWMMSQnPbxE0G8DcEDeVienvtLNT9cffugAkvaIa3zq4EEl2fB94z9HlUrTPWhJKEFcAQ==";
+    public void connect(Context context,String token) {
 
-        } else {
-            return;
-        }
 
 
         if (context.getApplicationInfo().packageName.equals(getCurProcessName(context.getApplicationContext()))) {
