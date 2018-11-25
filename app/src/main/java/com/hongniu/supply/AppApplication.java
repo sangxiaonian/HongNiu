@@ -4,6 +4,9 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.hongniu.baselibrary.base.BaseApplication;
 import com.hongniu.baselibrary.config.Param;
 import com.sang.common.utils.JLog;
+import com.sang.thirdlibrary.chact.ChactHelper;
+
+import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
 
 /**
  * 作者： ${PING} on 2018/10/8.
@@ -21,6 +24,9 @@ public class AppApplication extends BaseApplication {
 //        ARouter.openLog();
 //        ARouter.openDebug();
         ARouter.init(this); // 尽可能早，推荐在Application中初始化
-
+        if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
+            ChactHelper.getHelper().initHelper(this);
+            ChactHelper.getHelper().connect(this, "10086");
+        }
     }
 }

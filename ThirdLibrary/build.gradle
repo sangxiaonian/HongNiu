@@ -1,18 +1,17 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 27
-
-
-
+    compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
-        minSdkVersion 19
-        targetSdkVersion 27
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        ndk {
+            abiFilters "armeabi-v7a", "x86"
+        }
     }
 
     buildTypes {
@@ -41,4 +40,8 @@ dependencies {
     api files('libs/UPPayPluginExPro.jar')
     api files('libs/UPPayAssistEx.jar')
     api files('libs/alipaySdk-20180601.jar')
+
+    api project(':IMKit')
+    api project(':CallKit')
+    api project(':RCSticker')
 }

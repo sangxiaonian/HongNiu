@@ -9,11 +9,16 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/BaseLibrary" />
+            <option value="$PROJECT_DIR$/CallKit" />
+            <option value="$PROJECT_DIR$/CallLib" />
             <option value="$PROJECT_DIR$/CommonLibrary" />
+            <option value="$PROJECT_DIR$/IMKit" />
+            <option value="$PROJECT_DIR$/IMLib" />
             <option value="$PROJECT_DIR$/ModuleFestivity" />
             <option value="$PROJECT_DIR$/ModuleFinance" />
             <option value="$PROJECT_DIR$/ModuleLogin" />
             <option value="$PROJECT_DIR$/ModuleOrder" />
+            <option value="$PROJECT_DIR$/RCSticker" />
             <option value="$PROJECT_DIR$/ResLibrary" />
             <option value="$PROJECT_DIR$/ThirdLibrary" />
             <option value="$PROJECT_DIR$/app" />
