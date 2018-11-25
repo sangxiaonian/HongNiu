@@ -22,6 +22,9 @@ android {
                 arguments = [moduleName: project.getName()]
             }
         }
+        ndk {
+            abiFilters "armeabi-v7a", "x86"
+        }
 
     }
     //签名
