@@ -1,5 +1,6 @@
 package com.sang.thirdlibrary.chact;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 
@@ -20,6 +21,16 @@ import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
  * 努力，为梦长留
  */
 public class ChactHelper {
+
+    public void setUseInfor(Activity activity) {
+        RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
+            @Override
+            public UserInfo getUserInfo(String s) {
+                JLog.i(s+">>>>");
+                return new UserInfo(s,"测试使用",null);
+            }
+        }, false);
+    }
 
     private static class Inner{
         private static ChactHelper helper=new ChactHelper();

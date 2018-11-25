@@ -160,6 +160,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                     parse= Uri.parse(logoPath);
                 }
 
+                ChactHelper.getHelper().setUseInfor(MainActivity.this);
+
                 RongIM.getInstance().setCurrentUserInfo(new UserInfo(s,Utils.getLoginInfor().getContact(), parse));
                 RongIM.getInstance().setMessageAttachedUserInfo(true);
             }
