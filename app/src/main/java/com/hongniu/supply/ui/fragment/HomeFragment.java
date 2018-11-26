@@ -60,6 +60,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         super.onHiddenChanged(hidden);
         if (!hidden) {
             StatusBarCompat.setStatusBarColor(getActivity(), getResources().getColor(R.color.color_new_light), false);
+
         }
     }
 
