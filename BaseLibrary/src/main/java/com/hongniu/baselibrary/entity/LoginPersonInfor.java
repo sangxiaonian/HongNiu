@@ -64,8 +64,16 @@ public class LoginPersonInfor {
     private String nickname;
     private String gender;
     private String logoPath;
+    private String logo;
     private String remarks;
 
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
 
     public String getLogoPath() {
         return logoPath;

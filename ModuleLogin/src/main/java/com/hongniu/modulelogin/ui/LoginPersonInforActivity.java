@@ -194,7 +194,7 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
                             .flatMap(new Function<String, ObservableSource<CommonBean<String>>>() {
                                 @Override
                                 public ObservableSource<CommonBean<String>> apply(String s) throws Exception {
-                                    personInfor.setLogoPath(s);
+                                    personInfor.setLogo(s);
                                     return  HttpLoginFactory.changePersonInfor(personInfor);
                                 }
                             });
