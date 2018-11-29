@@ -38,6 +38,7 @@ import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.utils.LoactionUpUtils;
 import com.hongniu.supply.R;
 import com.sang.common.event.BusFactory;
+import com.sang.common.recycleview.holder.PeakHolder;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
@@ -80,6 +81,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     TextView tv3;
     TextView tv4;
     TextView tv5;
+    TextView tv_unread;
 
     ImageView img1;
     ImageView img2;
@@ -138,6 +140,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         tv3 = findViewById(R.id.tv3);
         tv4 = findViewById(R.id.tv4);
         tv5 = findViewById(R.id.tv5);
+        tv_unread = findViewById(R.id.tv_unread);
         img1 = findViewById(R.id.img1);
         img2 = findViewById(R.id.img2);
         img3 = findViewById(R.id.img3);
@@ -149,6 +152,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     protected void initData() {
         super.initData();
+        tv_unread.setVisibility(View.GONE);
 
         //链接数据
         ChactHelper.getHelper().connect(this, Utils.getLoginInfor().getRongToken(), new RongIMClient.ConnectCallback() {
@@ -388,6 +392,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 upLoactionUtils.add(event.latitude, event.longitude, event.movingTime, event.speed, event.bearing);
             }
         }
+    }
+    /**
+     * 位置信息变化
+     *
+     * @param event
+     */
+    @Subscribe(sticky = true,threadMode = ThreadMode.MAIN)
+    public void upLoaction(Integer event) {
+        if (event != null) {
+            String msg="";
+            if (event>99){
+                msg="99+";
+            }else if (event>0){
+                msg=event+"";
+            }
+            tv_unread.setVisibility(TextUtils.isEmpty(msg)?View.GONE:View.VISIBLE);
+            tv_unread.setText(msg);
+
+        }
+        BusFactory.getBus().removeStickyEvent(Integer.class);
     }
 
     //App 进入后台时候

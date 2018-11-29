@@ -2,8 +2,13 @@ package com.hongniu.supply;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.hongniu.baselibrary.base.BaseApplication;
+import com.hongniu.baselibrary.event.Event;
+import com.sang.common.event.BusFactory;
 import com.sang.common.utils.JLog;
 import com.sang.thirdlibrary.chact.ChactHelper;
+import com.sang.thirdlibrary.chact.control.ChactControl;
+
+import org.greenrobot.eventbus.EventBus;
 
 import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
 
@@ -24,7 +29,16 @@ public class AppApplication extends BaseApplication {
         ARouter.init(this); // 尽可能早，推荐在Application中初始化
 //        LitePal.initialize(this);
         if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
-            ChactHelper.getHelper().initHelper(this);
+            ChactHelper.getHelper()
+                    .initHelper(this)
+                    //未读消息监听
+                    .setUnReadCountListener(new ChactControl.OnReceiveUnReadCountListener() {
+                        @Override
+                        public void onReceiveUnRead(int count) {
+                            EventBus.getDefault().postSticky(count);
+                        }
+                    })
+            ;
         }
     }
 }

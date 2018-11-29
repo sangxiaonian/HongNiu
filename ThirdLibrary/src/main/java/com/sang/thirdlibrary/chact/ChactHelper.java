@@ -8,10 +8,13 @@ import android.util.LruCache;
 
 import com.sang.common.net.rx.BaseObserver;
 import com.sang.common.utils.JLog;
+import com.sang.thirdlibrary.chact.control.ChactControl;
 import com.sang.thirdlibrary.chact.control.OnGetUserInforListener;
 
 import io.rong.imkit.RongIM;
+import io.rong.imkit.manager.IUnReadMessageObserver;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
 
 import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
@@ -22,45 +25,9 @@ import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
  */
 public class ChactHelper {
 
-    private LruCache<String, UserInfor> cache = new LruCache<>(100);
     OnGetUserInforListener listener;
+    ChactControl.OnReceiveUnReadCountListener unReadCountListener;
 
-    public void put(String userId, UserInfor infor) {
-        cache.put(userId, infor);
-//        infor.updateAllAsync("userId = ?", userId);
-
-        final String name = TextUtils.isEmpty(infor.getContact()) ? infor.getMobile() : infor.getContact();
-        final Uri head = TextUtils.isEmpty(infor.getLogoPath()) ? null : Uri.parse(infor.getLogoPath());
-        RongIM.getInstance().refreshUserInfoCache(new UserInfo(userId, name, head));
-    }
-
-
-    public void setUseInfor(final OnGetUserInforListener listener) {
-        this.listener = listener;
-        RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
-            @Override
-            public UserInfo getUserInfo(final String s) {
-                if (listener != null) {
-                    listener.onGetUserInfor(s)
-                            .subscribe(new BaseObserver<UserInfor>(null) {
-                                @Override
-                                public void onNext(UserInfor infor) {
-                                    super.onNext(infor);
-                                     refreshUserInfoCache(s,infor);
-                                }
-                            });
-                }
-                return null;
-            }
-        }, true);
-    }
-
-
-    public void refreshUserInfoCache(String userID,UserInfor infor){
-        final String name = TextUtils.isEmpty(infor.getContact()) ? infor.getMobile() : infor.getContact();
-        final Uri head = TextUtils.isEmpty(infor.getLogoPath()) ? null : Uri.parse(infor.getLogoPath());
-        RongIM.getInstance().refreshUserInfoCache(new UserInfo(userID, name, head));
-    }
 
 
     private static class Inner {
@@ -76,8 +43,36 @@ public class ChactHelper {
      *
      * @param application
      */
-    public void initHelper(Application application) {
+    public ChactHelper initHelper(Application application) {
         RongIM.init(application);
+
+        RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
+            @Override
+            public UserInfo getUserInfo(final String s) {
+                if (listener != null) {
+                    listener.onGetUserInfor(s)
+                            .subscribe(new BaseObserver<UserInfor>(null) {
+                                @Override
+                                public void onNext(UserInfor infor) {
+                                    super.onNext(infor);
+                                    refreshUserInfoCache(s, infor);
+                                }
+                            });
+                }
+                return null;
+            }
+        }, true);
+
+
+        RongIM.getInstance().addUnReadMessageCountChangedObserver(new IUnReadMessageObserver() {
+            @Override
+            public void onCountChanged(int i) {
+                if (unReadCountListener!=null){
+                    unReadCountListener.onReceiveUnRead(i);
+                }
+            }
+        }, Conversation.ConversationType.PRIVATE);
+        return this;
     }
 
     /**
@@ -138,4 +133,62 @@ public class ChactHelper {
         RongIM.getInstance().startPrivateChat(context, userID, title);
 
     }
+
+    /**
+     *     设置获取用户信息
+     */
+    public ChactHelper setUseInfor(final OnGetUserInforListener listener) {
+        this.listener = listener;
+        return this;
+//        RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
+//            @Override
+//            public UserInfo getUserInfo(final String s) {
+//                if (listener != null) {
+//                    listener.onGetUserInfor(s)
+//                            .subscribe(new BaseObserver<UserInfor>(null) {
+//                                @Override
+//                                public void onNext(UserInfor infor) {
+//                                    super.onNext(infor);
+//                                    refreshUserInfoCache(s, infor);
+//                                }
+//                            });
+//                }
+//                return null;
+//            }
+//        }, true);
+    }
+
+
+    public ChactHelper setUnReadCountListener(ChactControl.OnReceiveUnReadCountListener unReadCountListener) {
+        this.unReadCountListener = unReadCountListener;
+        return this;
+    }
+
+    /**
+     * 刷新用户头像信息
+     *
+     * @param userID
+     * @param infor
+     */
+    public void refreshUserInfoCache(String userID, UserInfor infor) {
+        final String name = TextUtils.isEmpty(infor.getContact()) ? infor.getMobile() : infor.getContact();
+        final Uri head = TextUtils.isEmpty(infor.getLogoPath()) ? null : Uri.parse(infor.getLogoPath());
+        RongIM.getInstance().refreshUserInfoCache(new UserInfo(userID, name, head));
+    }
+
+
+
+
+    public void put(String userId, UserInfor infor) {
+        cache.put(userId, infor);
+//        infor.updateAllAsync("userId = ?", userId);
+
+        final String name = TextUtils.isEmpty(infor.getContact()) ? infor.getMobile() : infor.getContact();
+        final Uri head = TextUtils.isEmpty(infor.getLogoPath()) ? null : Uri.parse(infor.getLogoPath());
+        RongIM.getInstance().refreshUserInfoCache(new UserInfo(userId, name, head));
+    }
+
+    private LruCache<String, UserInfor> cache = new LruCache<>(100);
+
+
 }

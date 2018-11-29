@@ -810,6 +810,7 @@ drawable shape_4_gradient_fe5163_fe8a71
 drawable shape_4_stoke
 drawable shape_4_stoke_f06f28
 drawable shape_5_b2000000
+drawable shape_9_ec4b39
 drawable shape_circle_9bffffff_margin_10
 drawable shape_circle_ffffff
 drawable shape_e83e15

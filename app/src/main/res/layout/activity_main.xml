@@ -118,9 +118,12 @@
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:paddingTop="22dp">
+            >
+
+
 
             <ImageView
+                android:layout_marginTop="22dp"
                 android:id="@+id/img4"
                 android:layout_width="23dp"
                 android:layout_height="23dp"
@@ -140,6 +143,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/img4" />
 
+            <TextView
+                android:id="@+id/tv_unread"
+                android:gravity="center"
+                app:layout_constraintStart_toEndOf="@id/img4"
+                app:layout_constraintEnd_toEndOf="@id/img4"
+                app:layout_constraintBottom_toTopOf="@id/img4"
+                app:layout_constraintTop_toTopOf="@id/img4"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_small"
+                android:layout_width="wrap_content"
+                android:minWidth="18dp"
+                android:background="@drawable/shape_9_ec4b39"
+                android:layout_height="18dp" />
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
