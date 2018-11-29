@@ -1,10 +1,12 @@
 package com.hongniu.modulelogin.ui;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
@@ -12,22 +14,40 @@ import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
+import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.LoginPersonInfor;
+import com.hongniu.baselibrary.entity.UpImgData;
 import com.hongniu.baselibrary.event.Event;
+import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.PickerDialogUtils;
+import com.hongniu.baselibrary.utils.PictureSelectorUtils;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.modulelogin.LoginUtils;
 import com.hongniu.modulelogin.R;
 import com.hongniu.modulelogin.entity.Citys;
 import com.hongniu.modulelogin.entity.NewAreaBean;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.sang.common.event.BusFactory;
+import com.sang.common.imgload.ImageLoader;
+import com.sang.common.net.error.NetException;
 import com.sang.common.net.rx.BaseObserver;
 import com.sang.common.net.rx.RxUtils;
+import com.sang.common.recycleview.holder.PeakHolder;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.ItemView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.functions.BiFunction;
+import io.reactivex.functions.Function;
 
 /**
  * 个人资料
@@ -40,10 +60,12 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
     private ItemView itemEmail;
     private ItemView itemAddress;
     private ItemView itemAddressDetail;
+    private ImageView imageHead;
     private Button btSave;
     public LoginPersonInfor personInfor;
     private OptionsPickerView pickDialog;
     public Citys areabean;//所有的区域选择
+    private String headPath;
 
 
     @Override
@@ -67,6 +89,7 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
         itemAddress = findViewById(R.id.item_address);
         itemAddressDetail = findViewById(R.id.item_address_detail);
         btSave = findViewById(R.id.bt_save);
+        imageHead = findViewById(R.id.img_head);
         pickDialog = PickerDialogUtils.creatPickerDialog(mContext, this)
                 .setTitleText("选择地区")
                 .setSubmitColor(Color.parseColor("#48BAF3"))
@@ -94,7 +117,7 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
 
     private void initInfor(LoginPersonInfor data) {
         if (data != null) {
-            LoginPersonInforActivity.this.personInfor = data;
+             personInfor = data;
             itemName.setTextCenter(data.getContact() == null ? "" : data.getContact());
             itemIdcard.setTextCenter(data.getIdnumber() == null ? "" : data.getIdnumber());
             itemEmail.setTextCenter(data.getEmail() == null ? "" : data.getEmail());
@@ -104,8 +127,9 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
             buffer.append(data.getDistrict() == null ? "" : data.getDistrict());
             itemAddress.setTextCenter(buffer.toString());
             itemAddressDetail.setTextCenter(data.getAddress() == null ? "" : data.getAddress());
+            ImageLoader.getLoader().load(mContext,imageHead,data.getLogoPath());
         } else {
-            LoginPersonInforActivity.this.personInfor = new LoginPersonInfor();
+           personInfor = new LoginPersonInfor();
         }
     }
 
@@ -114,16 +138,70 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
         super.initListener();
         btSave.setOnClickListener(this);
         itemAddress.setOnClickListener(this);
+        imageHead.setOnClickListener(this);
     }
 
 
     @Override
     public void onClick(View v) {
         int i = v.getId();
+        DeviceUtils.hideSoft(getCurrentFocus());
         if (i == R.id.bt_save) {
             if (check()) {
                 getValues();
-                HttpLoginFactory.changePersonInfor(personInfor)
+                Observable<CommonBean<String>> observable;
+                if (headPath!=null){
+
+                    final List<String> list=new ArrayList<>();
+                    list.add(headPath);
+
+
+                    observable=   Observable.just(headPath)
+                            .map(new Function<String, List<String>>() {
+                                @Override
+                                public List<String> apply(String s) throws Exception {
+                                    List<String> list=new ArrayList<>();
+                                    list.add(s);
+                                    return list;
+                                }
+                            })
+                            .flatMap(new Function<List<String>, ObservableSource<String>>() {
+                                @Override
+                                public ObservableSource<String> apply(List<String> strings) throws Exception {
+                                    return HttpAppFactory.upImage(4,strings)
+                                            .map(new Function<CommonBean<List<UpImgData>>, CommonBean<List<UpImgData>>>() {
+                                                @Override
+                                                public CommonBean<List<UpImgData>> apply(CommonBean<List<UpImgData>> listCommonBean) throws Exception {
+                                                    if (listCommonBean.getCode()!=200){
+                                                        throw new NetException(listCommonBean.getCode(),listCommonBean.getMsg());
+                                                    }
+                                                    return listCommonBean;
+                                                }
+                                            })
+                                            .map(new Function<CommonBean<List<UpImgData>>, String>() {
+                                                @Override
+                                                public String apply(CommonBean<List<UpImgData>> listCommonBean) throws Exception {
+                                                    if (CommonUtils.isEmptyCollection(listCommonBean.getData())){
+                                                        return "";
+                                                    }else {
+                                                       return listCommonBean.getData().get(0).getPath();
+                                                    }
+                                                }
+                                            })
+                                            ;
+                                }
+                            })
+                            .flatMap(new Function<String, ObservableSource<CommonBean<String>>>() {
+                                @Override
+                                public ObservableSource<CommonBean<String>> apply(String s) throws Exception {
+                                    personInfor.setLogoPath(s);
+                                    return  HttpLoginFactory.changePersonInfor(personInfor);
+                                }
+                            });
+                }else {
+                      observable = HttpLoginFactory.changePersonInfor(personInfor);
+                }
+                observable
                         .subscribe(new NetObserver<String>(this) {
                             @Override
                             public void doOnSuccess(String data) {
@@ -137,9 +215,6 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
             }
 
         } else if (i == R.id.item_address) {
-            DeviceUtils.hideSoft(getCurrentFocus());
-
-
             if (areabean == null) {
                 LoginUtils.getNewAreas(mContext)
                         .compose(RxUtils.<Citys>getSchedulersObservableTransformer())
@@ -153,23 +228,14 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
 
 
                         });
-//                LoginUtils.getAreas(mContext)
-//                        .compose(RxUtils.<AreaBeans>getSchedulersObservableTransformer())
-//                        .subscribe(new BaseObserver<AreaBeans>(this) {
-//
-//                            @Override
-//                            public void onNext(AreaBeans result) {
-//                                super.onNext(result);
-//                                areabean = result;
-//                                pickDialog.setPicker(areabean.getProvinces(), areabean.getCityBean(), areabean.getDistrict());
-//                                pickDialog.show();
-//                            }
-//                        });
+
             } else {
                 pickDialog.show();
             }
 
 
+        }else  if (i==R.id.img_head){
+            PictureSelectorUtils.showHeadPicture(this );
         }
     }
 
@@ -253,4 +319,32 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
 
         }
     }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case PictureConfig.CHOOSE_REQUEST:
+                    // 图片、视频、音频选择结果回调
+                    List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
+                    if (!CommonUtils.isEmptyCollection(selectList)){
+                        LocalMedia media = selectList.get(0);
+                        if (media.isCut()){
+                            headPath=media.getCutPath();
+                            ImageLoader.getLoader().skipMemoryCache().loadHeaed(mContext,imageHead,media.getCutPath());
+                        }
+                    }
+                    // 例如 LocalMedia 里面返回三种path
+                    // 1.media.getPath(); 为原图path
+                    // 2.media.getCutPath();为裁剪后path，需判断media.isCut();是否为true  注意：音视频除外
+                    // 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true  注意：音视频除外
+                    // 如果裁剪并压缩了，以取压缩路径为准，因为是先裁剪后压缩的
+
+                    break;
+            }
+        }
+    }
+
 }

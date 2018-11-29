@@ -2,12 +2,14 @@ package com.hongniu.baselibrary.net;
 
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.LoginPersonInfor;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.OrderIdBean;
 import com.hongniu.baselibrary.entity.PayInforBeans;
 import com.hongniu.baselibrary.entity.QueryOrderParamBean;
 import com.hongniu.baselibrary.entity.QueryOrderStateBean;
 import com.hongniu.baselibrary.entity.QueryPayPassword;
+import com.hongniu.baselibrary.entity.QueryRongParams;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.entity.SMSParams;
 import com.hongniu.baselibrary.entity.UpImgData;
@@ -15,6 +17,7 @@ import com.hongniu.baselibrary.entity.WalletDetail;
 import com.hongniu.baselibrary.utils.Utils;
 import com.sang.common.net.rx.RxUtils;
 import com.sang.common.utils.ConvertUtils;
+import com.sang.thirdlibrary.chact.UserInfor;
 
 import java.io.File;
 import java.util.List;
@@ -200,6 +203,20 @@ public class HttpAppFactory {
                 })
                 .compose(RxUtils.<CommonBean<OrderDetailBean>>getSchedulersObservableTransformer());
 
+    }
+
+    /**
+     * 根据userID查询用户数据
+     */
+    public static Observable<CommonBean<UserInfor>> queryRongInfor(String userId) {
+
+        QueryRongParams bean = new QueryRongParams();
+        bean.setUserId(userId);
+        return AppClient.getInstance()
+                .getService()
+                .queryRongInfor(bean)
+                .compose(RxUtils.<CommonBean<UserInfor>>getSchedulersObservableTransformer())
+                ;
     }
 
 }

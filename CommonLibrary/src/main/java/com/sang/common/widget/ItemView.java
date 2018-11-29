@@ -55,6 +55,8 @@ public class ItemView extends FrameLayout {
     private boolean isSingleLine = true;
     private int colorCenter;
     private int colorCenterHide;
+    private int srcLeftShow;//是否显示左侧必填数据
+    private ImageView imgLeft;
 
     public ItemView(@NonNull Context context) {
         this(context, null, 0);
@@ -87,11 +89,12 @@ public class ItemView extends FrameLayout {
             maxLength = ta.getInt(R.styleable.ItemView_centerLength, -1);
             centerType = ta.getInt(R.styleable.ItemView_centerType, 0);
             srcRight = ta.getInt(R.styleable.ItemView_srcRight, -1);
-            colorRight = ta.getColor(R.styleable.ItemView_colorRight,  Color.parseColor("#333333"));
+            colorRight = ta.getColor(R.styleable.ItemView_colorRight, Color.parseColor("#333333"));
             colorCenter = ta.getColor(R.styleable.ItemView_colorCenter, Color.parseColor("#333333"));
             colorCenterHide = ta.getColor(R.styleable.ItemView_colorCenterHide, Color.parseColor("#c8c8c8"));
-            colorLeft = ta.getColor(R.styleable.ItemView_colorLeft,  Color.parseColor("#333333"));
+            colorLeft = ta.getColor(R.styleable.ItemView_colorLeft, Color.parseColor("#333333"));
             srcshow = ta.getBoolean(R.styleable.ItemView_srcshow, false);
+            srcLeftShow = ta.getInt(R.styleable.ItemView_srcLeftshow, 0);
             isSingleLine = ta.getBoolean(R.styleable.ItemView_isSingleLine, true);
             ta.recycle();
         }
@@ -102,6 +105,7 @@ public class ItemView extends FrameLayout {
         etCenter = inflate.findViewById(R.id.et_center);
         tvRight = inflate.findViewById(R.id.tv_right);
         imgGo = inflate.findViewById(R.id.img_go);
+        imgLeft = inflate.findViewById(R.id.img_left);
         viewFound = inflate.findViewById(R.id.bg);
 
         setTextLeft(textLeft);
@@ -115,13 +119,28 @@ public class ItemView extends FrameLayout {
         setColorLeft(colorLeft);
         setColorCenter(colorCenter);
         setColorCenterHide(colorCenterHide);
-
+        setSRCLeftShow(srcLeftShow);
 
         setIsSingleLine(isSingleLine);
         setCenter(maxLength, centerType);
         setEditable(editable);
 
 
+    }
+
+    private void setSRCLeftShow(int srcLeftShow) {
+        this.srcLeftShow = srcLeftShow;
+        switch (srcLeftShow) {
+            case 0:
+                imgLeft.setVisibility(GONE);
+                break;
+            case 1:
+                imgLeft.setVisibility(INVISIBLE);
+                break;
+            case 2:
+                imgLeft.setVisibility(VISIBLE);
+                break;
+        }
     }
 
     public void setIsSingleLine(boolean isSingleLine) {
@@ -170,7 +189,7 @@ public class ItemView extends FrameLayout {
     protected void dispatchDraw(Canvas canvas) {
         super.dispatchDraw(canvas);
         if (showLine) {
-            canvas.drawLine(getPaddingLeft(), getMeasuredHeight() - mPaint.getStrokeWidth() / 2, getMeasuredWidth(), getMeasuredHeight() - mPaint.getStrokeWidth() / 2, mPaint);
+            canvas.drawLine(tvLeft.getLeft(), getMeasuredHeight() - mPaint.getStrokeWidth() / 2, getMeasuredWidth(), getMeasuredHeight() - mPaint.getStrokeWidth() / 2, mPaint);
         }
     }
 
@@ -188,7 +207,7 @@ public class ItemView extends FrameLayout {
             etCenter.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
 //            etCenter.setKeyListener(DigitsKeyListener.getInstance("0123456789."));
         } else if (centerType == 4) {//密码
-            JLog.i(textLeft+">>>>>");
+            JLog.i(textLeft + ">>>>>");
             etCenter.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength < 0 ? Integer.MAX_VALUE : maxLength), new SpaceFilter()});
             etCenter.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
         } else {
@@ -234,7 +253,7 @@ public class ItemView extends FrameLayout {
             tvLeft.setTextColor(colorCenterHide);
             tvRight.setTextColor(colorCenterHide);
             return;
-        }else {
+        } else {
             etCenter.setTextColor(colorCenter);
             tvLeft.setTextColor(colorLeft);
             tvRight.setTextColor(colorRight);
@@ -283,7 +302,6 @@ public class ItemView extends FrameLayout {
 
         return textLeft = tvLeft.getText().toString().trim();
     }
-
 
 
     public String getTextCenter() {

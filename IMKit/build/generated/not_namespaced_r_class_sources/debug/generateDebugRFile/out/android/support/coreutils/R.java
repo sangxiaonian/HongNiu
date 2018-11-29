@@ -87,23 +87,23 @@ public final class R {
         public static int blocking = 0x7f0c0022;
         public static int chronometer = 0x7f0c002e;
         public static int forever = 0x7f0c0042;
-        public static int icon = 0x7f0c0047;
-        public static int icon_group = 0x7f0c0048;
-        public static int info = 0x7f0c0053;
-        public static int italic = 0x7f0c0056;
-        public static int line1 = 0x7f0c0062;
-        public static int line3 = 0x7f0c0063;
-        public static int normal = 0x7f0c0070;
-        public static int notification_background = 0x7f0c0071;
-        public static int notification_main_column = 0x7f0c0072;
-        public static int notification_main_column_container = 0x7f0c0073;
-        public static int right_icon = 0x7f0c016e;
-        public static int right_side = 0x7f0c016f;
-        public static int tag_transition_group = 0x7f0c0193;
-        public static int text = 0x7f0c0194;
-        public static int text2 = 0x7f0c0195;
-        public static int time = 0x7f0c0198;
-        public static int title = 0x7f0c0199;
+        public static int icon = 0x7f0c0048;
+        public static int icon_group = 0x7f0c0049;
+        public static int info = 0x7f0c0055;
+        public static int italic = 0x7f0c0058;
+        public static int line1 = 0x7f0c0064;
+        public static int line3 = 0x7f0c0065;
+        public static int normal = 0x7f0c0072;
+        public static int notification_background = 0x7f0c0073;
+        public static int notification_main_column = 0x7f0c0074;
+        public static int notification_main_column_container = 0x7f0c0075;
+        public static int right_icon = 0x7f0c0170;
+        public static int right_side = 0x7f0c0171;
+        public static int tag_transition_group = 0x7f0c0196;
+        public static int text = 0x7f0c0197;
+        public static int text2 = 0x7f0c0198;
+        public static int time = 0x7f0c019b;
+        public static int title = 0x7f0c019c;
     }
     public static final class integer {
         private integer() {}

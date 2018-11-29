@@ -29,7 +29,7 @@ public final class R {
         public static int layout_dodgeInsetEdges = 0x7f0400e8;
         public static int layout_insetEdge = 0x7f0400f1;
         public static int layout_keyline = 0x7f0400f2;
-        public static int statusBarBackground = 0x7f04013f;
+        public static int statusBarBackground = 0x7f040140;
     }
     public static final class bool {
         private bool() {}
@@ -104,30 +104,30 @@ public final class R {
         public static int end = 0x7f0c0040;
         public static int end_padder = 0x7f0c0041;
         public static int forever = 0x7f0c004a;
-        public static int icon = 0x7f0c004f;
-        public static int icon_group = 0x7f0c0050;
-        public static int info = 0x7f0c005d;
-        public static int italic = 0x7f0c0060;
-        public static int left = 0x7f0c0073;
-        public static int line1 = 0x7f0c0075;
-        public static int line3 = 0x7f0c0076;
-        public static int media_actions = 0x7f0c007e;
-        public static int none = 0x7f0c0084;
-        public static int normal = 0x7f0c0085;
-        public static int notification_background = 0x7f0c0086;
-        public static int notification_main_column = 0x7f0c0087;
-        public static int notification_main_column_container = 0x7f0c0088;
-        public static int right = 0x7f0c01b9;
-        public static int right_icon = 0x7f0c01ba;
-        public static int right_side = 0x7f0c01bb;
-        public static int start = 0x7f0c01dc;
-        public static int status_bar_latest_event_content = 0x7f0c01dd;
-        public static int tag_transition_group = 0x7f0c01e1;
-        public static int text = 0x7f0c01e2;
-        public static int text2 = 0x7f0c01e3;
-        public static int time = 0x7f0c01e6;
-        public static int title = 0x7f0c01e7;
-        public static int top = 0x7f0c01f2;
+        public static int icon = 0x7f0c0050;
+        public static int icon_group = 0x7f0c0051;
+        public static int info = 0x7f0c005f;
+        public static int italic = 0x7f0c0062;
+        public static int left = 0x7f0c0075;
+        public static int line1 = 0x7f0c0077;
+        public static int line3 = 0x7f0c0078;
+        public static int media_actions = 0x7f0c0080;
+        public static int none = 0x7f0c0086;
+        public static int normal = 0x7f0c0087;
+        public static int notification_background = 0x7f0c0088;
+        public static int notification_main_column = 0x7f0c0089;
+        public static int notification_main_column_container = 0x7f0c008a;
+        public static int right = 0x7f0c01bb;
+        public static int right_icon = 0x7f0c01bc;
+        public static int right_side = 0x7f0c01bd;
+        public static int start = 0x7f0c01df;
+        public static int status_bar_latest_event_content = 0x7f0c01e0;
+        public static int tag_transition_group = 0x7f0c01e4;
+        public static int text = 0x7f0c01e5;
+        public static int text2 = 0x7f0c01e6;
+        public static int time = 0x7f0c01e9;
+        public static int title = 0x7f0c01ea;
+        public static int top = 0x7f0c01f5;
     }
     public static final class integer {
         private integer() {}
@@ -179,7 +179,7 @@ public final class R {
     public static final class styleable {
         private styleable() {}
 
-        public static int[] CoordinatorLayout = { 0x7f0400b9, 0x7f04013f };
+        public static int[] CoordinatorLayout = { 0x7f0400b9, 0x7f040140 };
         public static int CoordinatorLayout_keylines = 0;
         public static int CoordinatorLayout_statusBarBackground = 1;
         public static int[] CoordinatorLayout_Layout = { 0x10100b3, 0x7f0400bc, 0x7f0400bd, 0x7f0400be, 0x7f0400e8, 0x7f0400f1, 0x7f0400f2 };

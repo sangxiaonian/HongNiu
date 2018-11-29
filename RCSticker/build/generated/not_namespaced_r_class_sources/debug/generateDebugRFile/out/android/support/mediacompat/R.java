@@ -93,25 +93,25 @@ public final class R {
         public static int chronometer = 0x7f0c002f;
         public static int end_padder = 0x7f0c003f;
         public static int forever = 0x7f0c0048;
-        public static int icon = 0x7f0c004f;
-        public static int icon_group = 0x7f0c0050;
-        public static int info = 0x7f0c005c;
-        public static int italic = 0x7f0c005f;
-        public static int line1 = 0x7f0c006c;
-        public static int line3 = 0x7f0c006d;
-        public static int media_actions = 0x7f0c0074;
-        public static int normal = 0x7f0c007b;
-        public static int notification_background = 0x7f0c007c;
-        public static int notification_main_column = 0x7f0c007d;
-        public static int notification_main_column_container = 0x7f0c007e;
-        public static int right_icon = 0x7f0c017a;
-        public static int right_side = 0x7f0c017b;
-        public static int status_bar_latest_event_content = 0x7f0c019b;
-        public static int tag_transition_group = 0x7f0c01a0;
-        public static int text = 0x7f0c01a1;
-        public static int text2 = 0x7f0c01a2;
-        public static int time = 0x7f0c01a5;
-        public static int title = 0x7f0c01a6;
+        public static int icon = 0x7f0c0050;
+        public static int icon_group = 0x7f0c0051;
+        public static int info = 0x7f0c005e;
+        public static int italic = 0x7f0c0061;
+        public static int line1 = 0x7f0c006e;
+        public static int line3 = 0x7f0c006f;
+        public static int media_actions = 0x7f0c0076;
+        public static int normal = 0x7f0c007d;
+        public static int notification_background = 0x7f0c007e;
+        public static int notification_main_column = 0x7f0c007f;
+        public static int notification_main_column_container = 0x7f0c0080;
+        public static int right_icon = 0x7f0c017c;
+        public static int right_side = 0x7f0c017d;
+        public static int status_bar_latest_event_content = 0x7f0c019e;
+        public static int tag_transition_group = 0x7f0c01a3;
+        public static int text = 0x7f0c01a4;
+        public static int text2 = 0x7f0c01a5;
+        public static int time = 0x7f0c01a8;
+        public static int title = 0x7f0c01a9;
     }
     public static final class integer {
         private integer() {}

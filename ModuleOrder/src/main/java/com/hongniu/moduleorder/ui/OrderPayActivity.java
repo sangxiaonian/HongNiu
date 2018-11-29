@@ -343,7 +343,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
     @Override
     public void showBuyInsurance() {
         tv_des.setText(R.string.order_pay_insruance_buy_des);
-        setToolbarDarkTitle(getString(R.string.order_pay_insruance_pay));
+        setToolbarRedTitle(getString(R.string.order_pay_insruance_pay));
         rl_tran.setVisibility(View.GONE);
 
     }
@@ -353,7 +353,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
      */
     @Override
     public void showPayOrder() {
-        setToolbarDarkTitle(getString(R.string.order_pay));
+        setToolbarRedTitle(getString(R.string.order_pay));
         tv_des.setText(R.string.order_pay_success_driver_start);
         rl_tran.setVisibility(View.VISIBLE);
     }

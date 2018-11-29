@@ -37,8 +37,8 @@ public final class R {
         public static int layout_keyline = 0x7f0400f2;
         public static int reverseLayout = 0x7f040122;
         public static int spanCount = 0x7f040134;
-        public static int stackFromEnd = 0x7f04013d;
-        public static int statusBarBackground = 0x7f04013f;
+        public static int stackFromEnd = 0x7f04013e;
+        public static int statusBarBackground = 0x7f040140;
     }
     public static final class bool {
         private bool() {}
@@ -113,29 +113,29 @@ public final class R {
         public static int chronometer = 0x7f0c0034;
         public static int end = 0x7f0c0040;
         public static int forever = 0x7f0c004a;
-        public static int icon = 0x7f0c004f;
-        public static int icon_group = 0x7f0c0050;
-        public static int info = 0x7f0c005d;
-        public static int italic = 0x7f0c0060;
-        public static int item_touch_helper_previous_elevation = 0x7f0c0061;
-        public static int left = 0x7f0c0073;
-        public static int line1 = 0x7f0c0075;
-        public static int line3 = 0x7f0c0076;
-        public static int none = 0x7f0c0084;
-        public static int normal = 0x7f0c0085;
-        public static int notification_background = 0x7f0c0086;
-        public static int notification_main_column = 0x7f0c0087;
-        public static int notification_main_column_container = 0x7f0c0088;
-        public static int right = 0x7f0c01b9;
-        public static int right_icon = 0x7f0c01ba;
-        public static int right_side = 0x7f0c01bb;
-        public static int start = 0x7f0c01dc;
-        public static int tag_transition_group = 0x7f0c01e1;
-        public static int text = 0x7f0c01e2;
-        public static int text2 = 0x7f0c01e3;
-        public static int time = 0x7f0c01e6;
-        public static int title = 0x7f0c01e7;
-        public static int top = 0x7f0c01f2;
+        public static int icon = 0x7f0c0050;
+        public static int icon_group = 0x7f0c0051;
+        public static int info = 0x7f0c005f;
+        public static int italic = 0x7f0c0062;
+        public static int item_touch_helper_previous_elevation = 0x7f0c0063;
+        public static int left = 0x7f0c0075;
+        public static int line1 = 0x7f0c0077;
+        public static int line3 = 0x7f0c0078;
+        public static int none = 0x7f0c0086;
+        public static int normal = 0x7f0c0087;
+        public static int notification_background = 0x7f0c0088;
+        public static int notification_main_column = 0x7f0c0089;
+        public static int notification_main_column_container = 0x7f0c008a;
+        public static int right = 0x7f0c01bb;
+        public static int right_icon = 0x7f0c01bc;
+        public static int right_side = 0x7f0c01bd;
+        public static int start = 0x7f0c01df;
+        public static int tag_transition_group = 0x7f0c01e4;
+        public static int text = 0x7f0c01e5;
+        public static int text2 = 0x7f0c01e6;
+        public static int time = 0x7f0c01e9;
+        public static int title = 0x7f0c01ea;
+        public static int top = 0x7f0c01f5;
     }
     public static final class integer {
         private integer() {}
@@ -172,7 +172,7 @@ public final class R {
     public static final class styleable {
         private styleable() {}
 
-        public static int[] CoordinatorLayout = { 0x7f0400b9, 0x7f04013f };
+        public static int[] CoordinatorLayout = { 0x7f0400b9, 0x7f040140 };
         public static int CoordinatorLayout_keylines = 0;
         public static int CoordinatorLayout_statusBarBackground = 1;
         public static int[] CoordinatorLayout_Layout = { 0x10100b3, 0x7f0400bc, 0x7f0400bd, 0x7f0400be, 0x7f0400e8, 0x7f0400f1, 0x7f0400f2 };
@@ -197,7 +197,7 @@ public final class R {
         public static int FontFamilyFont_font = 3;
         public static int FontFamilyFont_fontStyle = 4;
         public static int FontFamilyFont_fontWeight = 5;
-        public static int[] RecyclerView = { 0x10100f1, 0x10100c4, 0x7f04009a, 0x7f04009b, 0x7f04009c, 0x7f04009d, 0x7f04009e, 0x7f0400bb, 0x7f040122, 0x7f040134, 0x7f04013d };
+        public static int[] RecyclerView = { 0x10100f1, 0x10100c4, 0x7f04009a, 0x7f04009b, 0x7f04009c, 0x7f04009d, 0x7f04009e, 0x7f0400bb, 0x7f040122, 0x7f040134, 0x7f04013e };
         public static int RecyclerView_android_descendantFocusability = 0;
         public static int RecyclerView_android_orientation = 1;
         public static int RecyclerView_fastScrollEnabled = 2;

@@ -352,6 +352,7 @@ attr spinnerStyle
 attr splitTrack
 attr srcCompat
 attr srcLeft
+attr srcLeftshow
 attr srcRight
 attr srcshow
 attr stackFromEnd
@@ -1598,6 +1599,7 @@ id forever
 id func
 id gone
 id gridlist
+id hide
 id home
 id icon
 id icon_group
@@ -1609,6 +1611,7 @@ id img_cancel
 id img_course
 id img_empty
 id img_go
+id img_left
 id img_line
 id imgbtn_custom_nav_back
 id imgbtn_custom_nav_option
@@ -1989,6 +1992,7 @@ id selected
 id send
 id shape_id
 id shortcut
+id show
 id spacer
 id split_action_bar
 id spread
@@ -2295,6 +2299,7 @@ mipmap icon_arrow_down_black_14
 mipmap icon_arrow_up_black_14
 mipmap icon_back_36
 mipmap icon_back_w_36
+mipmap icon_bitian_16
 mipmap icon_bx_60
 mipmap icon_call_30
 mipmap icon_carmap_50
@@ -2304,6 +2309,7 @@ mipmap icon_cgts_260
 mipmap icon_close_gary_28
 mipmap icon_cw_240
 mipmap icon_cz_100
+mipmap icon_default_avatar_100
 mipmap icon_delimg_36
 mipmap icon_dqsk_68
 mipmap icon_etc_146
@@ -3372,6 +3378,7 @@ style callkit_voip_text_style_18spWhite
 style dialog_ani
 style draw_item
 style horizontal_light_thin_divider
+style itemmusetview
 style itemview
 style pop_ani
 style rc_ac_file_manager_image_style
@@ -3411,7 +3418,7 @@ styleable CoordinatorLayout_Layout android_layout_gravity layout_anchor layout_a
 styleable DrawerArrowToggle arrowHeadLength arrowShaftLength barLength color drawableSize gapBetweenBars spinBars thickness
 styleable FontFamily fontProviderAuthority fontProviderCerts fontProviderFetchStrategy fontProviderFetchTimeout fontProviderPackage fontProviderQuery
 styleable FontFamilyFont android_font android_fontStyle android_fontWeight font fontStyle fontWeight
-styleable ItemView centerLength centerType colorCenter colorCenterHide colorLeft colorRight editable isSingleLine showline srcLeft srcRight srcshow textcenter textcenterhide textleft textright
+styleable ItemView centerLength centerType colorCenter colorCenterHide colorLeft colorRight editable isSingleLine showline srcLeft srcLeftshow srcRight srcshow textcenter textcenterhide textleft textright
 styleable LinearConstraintLayout android_orientation
 styleable LinearLayoutCompat android_baselineAligned android_baselineAlignedChildIndex android_gravity android_orientation android_weightSum divider dividerPadding measureWithLargestChild showDividers
 styleable LinearLayoutCompat_Layout android_layout_gravity android_layout_height android_layout_weight android_layout_width

@@ -54,6 +54,10 @@
         <item name="android:paddingRight">@dimen/app_gap</item>
         <item name="android:background">@color/color_bg</item>
     </style>
+      <style name="itemmusetview" parent="itemview">
+        <item name="android:paddingLeft">5dp</item>
+        <item name="srcLeftshow">show</item>
+    </style>
 
     <style name="viewPoint">
         <item name="android:layout_width">8dp</item>

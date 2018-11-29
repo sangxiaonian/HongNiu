@@ -23,6 +23,7 @@ import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CloseActivityEvent;
+import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.QueryPayPassword;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.event.Event;
@@ -43,6 +44,8 @@ import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.JLog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
+import com.sang.thirdlibrary.chact.UserInfor;
+import com.sang.thirdlibrary.chact.control.OnGetUserInforListener;
 import com.sang.thirdlibrary.map.LoactionUtils;
 import com.sang.thirdlibrary.map.utils.MapConverUtils;
 
@@ -53,6 +56,8 @@ import java.util.List;
 
 import com.sang.thirdlibrary.chact.ChactHelper;
 
+import io.reactivex.Observable;
+import io.reactivex.functions.Function;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
@@ -153,16 +158,28 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             }
 
             @Override
-            public void onSuccess(String s) {
-                String logoPath = Utils.getLoginInfor().getLogoPath();
-                Uri parse = null;
-                if (logoPath!=null){
-                    parse= Uri.parse(logoPath);
-                }
+            public void onSuccess(final String s) {
+                HttpAppFactory.queryRongInfor(s)
+                        .subscribe(new NetObserver<UserInfor>(null) {
+                            @Override
+                            public void doOnSuccess(UserInfor data) {
 
-                ChactHelper.getHelper().setUseInfor(MainActivity.this);
-
-                RongIM.getInstance().setCurrentUserInfo(new UserInfo(s,Utils.getLoginInfor().getContact(), parse));
+                                ChactHelper.getHelper().refreshUserInfoCache(s, data);
+                            }
+                        });
+                ChactHelper.getHelper().setUseInfor(new OnGetUserInforListener() {
+                    @Override
+                    public Observable<UserInfor> onGetUserInfor(String usrID) {
+                        return HttpAppFactory.queryRongInfor(usrID)
+                                .map(new Function<CommonBean<UserInfor>, UserInfor>() {
+                                    @Override
+                                    public UserInfor apply(CommonBean<UserInfor> userInforCommonBean) throws Exception {
+                                        return userInforCommonBean.getData();
+                                    }
+                                })
+                                ;
+                    }
+                });
                 RongIM.getInstance().setMessageAttachedUserInfo(true);
             }
 

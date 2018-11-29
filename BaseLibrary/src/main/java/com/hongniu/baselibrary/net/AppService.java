@@ -2,16 +2,19 @@ package com.hongniu.baselibrary.net;
 
 import com.hongniu.baselibrary.entity.CarTypeBean;
 import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.LoginPersonInfor;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.OrderIdBean;
 import com.hongniu.baselibrary.entity.PayInforBeans;
 import com.hongniu.baselibrary.entity.QueryOrderParamBean;
 import com.hongniu.baselibrary.entity.QueryOrderStateBean;
 import com.hongniu.baselibrary.entity.QueryPayPassword;
+import com.hongniu.baselibrary.entity.QueryRongParams;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.entity.SMSParams;
 import com.hongniu.baselibrary.entity.UpImgData;
 import com.hongniu.baselibrary.entity.WalletDetail;
+import com.sang.thirdlibrary.chact.UserInfor;
 
 import java.util.List;
 
@@ -28,8 +31,12 @@ import retrofit2.http.Part;
  */
 public interface AppService {
 
-    @POST("hongniu//api/car/vehicletype")
-    Observable<CommonBean<List<CarTypeBean>>> getCarType();
+
+    /**
+     * 跟进userID 获取融云指定用户信息
+     */
+    @POST("hongniu/api/user/finduserinfo")
+    Observable<CommonBean<UserInfor>> queryRongInfor(@Body QueryRongParams params);
 
     /**
      * 查询订单状态

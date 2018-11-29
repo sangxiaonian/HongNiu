@@ -58,4 +58,7 @@ dependencies {
     api 'com.google.code.gson:gson:2.8.5'
     //https://github.com/barteksc/AndroidPdfViewer pdf
     api 'com.github.barteksc:android-pdf-viewer:2.8.2'
+
+    //数据库 https://github.com/LitePalFramework/LitePal
+//    api 'org.litepal.android:java:3.0.0'
 }

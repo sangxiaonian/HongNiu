@@ -1,18 +1,18 @@
 package com.sang.thirdlibrary.chact;
 
-import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.net.Uri;
+import android.text.TextUtils;
+import android.util.LruCache;
 
-import com.github.barteksc.pdfviewer.util.Util;
+import com.sang.common.net.rx.BaseObserver;
 import com.sang.common.utils.JLog;
+import com.sang.thirdlibrary.chact.control.OnGetUserInforListener;
 
-import io.rong.callkit.util.HeadsetInfo;
-import io.rong.imkit.MainActivity;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
-import io.rong.subscaleview.Utils;
 
 import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
 
@@ -22,30 +22,72 @@ import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
  */
 public class ChactHelper {
 
-    public void setUseInfor(Activity activity) {
+    private LruCache<String, UserInfor> cache = new LruCache<>(100);
+    OnGetUserInforListener listener;
+
+    public void put(String userId, UserInfor infor) {
+        cache.put(userId, infor);
+//        infor.updateAllAsync("userId = ?", userId);
+
+        final String name = TextUtils.isEmpty(infor.getContact()) ? infor.getMobile() : infor.getContact();
+        final Uri head = TextUtils.isEmpty(infor.getLogoPath()) ? null : Uri.parse(infor.getLogoPath());
+        RongIM.getInstance().refreshUserInfoCache(new UserInfo(userId, name, head));
+    }
+
+
+    public void setUseInfor(final OnGetUserInforListener listener) {
+        this.listener = listener;
         RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
             @Override
-            public UserInfo getUserInfo(String s) {
-                JLog.i(s+">>>>");
-                return new UserInfo(s,"测试使用",null);
+            public UserInfo getUserInfo(final String s) {
+                if (listener != null) {
+                    listener.onGetUserInfor(s)
+                            .subscribe(new BaseObserver<UserInfor>(null) {
+                                @Override
+                                public void onNext(UserInfor infor) {
+                                    super.onNext(infor);
+                                     refreshUserInfoCache(s,infor);
+                                }
+                            });
+                }
+                return null;
             }
-        }, false);
+        }, true);
     }
 
-    private static class Inner{
-        private static ChactHelper helper=new ChactHelper();
+
+    public void refreshUserInfoCache(String userID,UserInfor infor){
+        final String name = TextUtils.isEmpty(infor.getContact()) ? infor.getMobile() : infor.getContact();
+        final Uri head = TextUtils.isEmpty(infor.getLogoPath()) ? null : Uri.parse(infor.getLogoPath());
+        RongIM.getInstance().refreshUserInfoCache(new UserInfo(userID, name, head));
     }
 
-    public static ChactHelper getHelper(){
+
+    private static class Inner {
+        private static ChactHelper helper = new ChactHelper();
+    }
+
+    public static ChactHelper getHelper() {
         return Inner.helper;
     }
 
-    public void initHelper(Application application){
+    /**
+     * 初始化数据
+     *
+     * @param application
+     */
+    public void initHelper(Application application) {
         RongIM.init(application);
     }
 
-    public void connect(Context context,String token) {
-        connect(context,token,new RongIMClient.ConnectCallback() {
+    /**
+     * 连接融云服务器
+     *
+     * @param context
+     * @param token
+     */
+    public void connect(Context context, String token) {
+        connect(context, token, new RongIMClient.ConnectCallback() {
 
             /**
              * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
@@ -78,15 +120,22 @@ public class ChactHelper {
         });
     }
 
-    public void connect(Context context,String token,  RongIMClient.ConnectCallback callback) {
+    public void connect(Context context, String token, RongIMClient.ConnectCallback callback) {
         if (context.getApplicationInfo().packageName.equals(getCurProcessName(context.getApplicationContext()))) {
             JLog.e("开始连接服务器");
             RongIM.connect(token, callback);
         }
     }
 
-    public void startPriver(Context context,String userID,String title){
+    /**
+     * 开启器单聊
+     *
+     * @param context
+     * @param userID
+     * @param title
+     */
+    public void startPriver(Context context, String userID, String title) {
         RongIM.getInstance().startPrivateChat(context, userID, title);
-        JLog.i(userID+">>>"+title);
+
     }
 }

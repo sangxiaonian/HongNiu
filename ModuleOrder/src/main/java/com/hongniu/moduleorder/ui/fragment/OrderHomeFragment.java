@@ -95,7 +95,7 @@ public class OrderHomeFragment extends BaseFragment implements OrderMainControl.
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+        changeStaff(3);
 
     }
 

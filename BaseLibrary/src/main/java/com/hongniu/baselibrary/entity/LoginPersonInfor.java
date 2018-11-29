@@ -63,9 +63,17 @@ public class LoginPersonInfor {
 
     private String nickname;
     private String gender;
-    private String logo;
+    private String logoPath;
     private String remarks;
 
+
+    public String getLogoPath() {
+        return logoPath;
+    }
+
+    public void setLogoPath(String logoPath) {
+        this.logoPath = logoPath;
+    }
 
     public String getCompany() {
         return company;
@@ -193,14 +201,6 @@ public class LoginPersonInfor {
 
     public void setGender(String gender) {
         this.gender = gender;
-    }
-
-    public String getLogo() {
-        return logo;
-    }
-
-    public void setLogo(String logo) {
-        this.logo = logo;
     }
 
     public String getRemarks() {

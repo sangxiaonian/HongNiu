@@ -64,6 +64,11 @@
         <attr name="srcLeft" format="reference" />
         <attr name="srcRight" format="reference" />
         <attr name="srcshow" format="boolean" />
+        <attr name="srcLeftshow" format="enum" >
+            <enum name="show" value="2" />
+            <enum name="gone" value="0" />
+            <enum name="hide" value="1" />
+        </attr>
         <attr name="isSingleLine" format="boolean" />
         <attr name="colorRight" format="color" />
         <attr name="colorCenter" format="color" />
