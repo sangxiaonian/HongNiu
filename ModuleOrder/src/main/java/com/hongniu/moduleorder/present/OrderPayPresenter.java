@@ -304,8 +304,8 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
                 title=currentInsuranceUserInfor.getUsername()==null?"":currentInsuranceUserInfor.getUsername();
                 number=currentInsuranceUserInfor.getIdnumber()==null?"":currentInsuranceUserInfor.getIdnumber();
             }else if (insuredType==2){
-                title=currentInsuranceUserInfor.getCompanyName()==null?"":currentInsuranceUserInfor.getUsername();
-                number=currentInsuranceUserInfor.getCompanyCreditCode()==null?"":currentInsuranceUserInfor.getIdnumber();
+                title=currentInsuranceUserInfor.getCompanyName()==null?"":currentInsuranceUserInfor.getCompanyName();
+                number=currentInsuranceUserInfor.getCompanyCreditCode()==null?"":currentInsuranceUserInfor.getCompanyCreditCode();
 
             }
             view.showInsruanceUserInfor(title,number);
