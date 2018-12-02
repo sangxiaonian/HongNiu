@@ -2,6 +2,7 @@ package com.sang.common.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 
 import java.util.Set;
 
@@ -68,7 +69,11 @@ public class SharedPreferencesUtils {
      * @return 返回指定key值的配置，默认为 “” 空字符串，不会返回null
      */
     public String getString(String key) {
-        return preferences.getString(key, "");
+        String value = preferences.getString(key, "");
+        if (TextUtils.isEmpty(value)||value.equals("\"\"")||value.equals("null")){
+            return "";
+        }
+        return value;
     }
 
     /**

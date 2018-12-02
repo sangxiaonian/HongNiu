@@ -2,7 +2,12 @@ package com.hongniu.supply;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.hongniu.baselibrary.base.BaseApplication;
+import com.hongniu.baselibrary.base.NetObserver;
+import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.event.Event;
+import com.hongniu.baselibrary.utils.clickevent.ClickEventBean;
+import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
+import com.hongniu.supply.net.HttpMainFactory;
 import com.sang.common.event.BusFactory;
 import com.sang.common.utils.JLog;
 import com.sang.thirdlibrary.chact.ChactHelper;
@@ -40,5 +45,25 @@ public class AppApplication extends BaseApplication {
                     })
             ;
         }
+
+        initData();
+    }
+
+    private void initData() {
+        if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
+            ClickEventBean eventParams = ClickEventUtils.getInstance().getEventParams(this);
+            if (eventParams!=null) {
+                HttpMainFactory.upClickEvent(eventParams)
+                        .subscribe(new NetObserver<String>(null) {
+
+                            @Override
+                            public void doOnSuccess(String data) {
+                                JLog.d("clickEvent:  上传完成，清除已上传数据");
+                                ClickEventUtils.getInstance().clear();
+                            }
+                        });
+            }
+        }
+
     }
 }

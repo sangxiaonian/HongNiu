@@ -12,6 +12,8 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
+import com.hongniu.baselibrary.utils.clickevent.ClickEventParams;
+import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.SwitchStateListener;
@@ -167,6 +169,7 @@ public class OrderSearchFragmet extends OrderFragmet implements SwitchStateListe
             switchLeft.setSelect(true);
             switchRight.setSelect(false);
             switchRight.closeSwitch();
+            ClickEventUtils.getInstance().onClick(ClickEventParams.订单_发车时间);
 
             if (open) {
                 timePop.show(view);
@@ -176,6 +179,8 @@ public class OrderSearchFragmet extends OrderFragmet implements SwitchStateListe
             }
 
         } else if (view.getId() == R.id.switch_right) {
+            ClickEventUtils.getInstance().onClick(ClickEventParams.订单_全部状);
+
             switchRight.setSelect(true);
             switchLeft.setSelect(false);
             switchLeft.closeSwitch();

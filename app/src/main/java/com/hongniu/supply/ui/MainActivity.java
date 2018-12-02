@@ -30,6 +30,8 @@ import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.utils.Utils;
+import com.hongniu.baselibrary.utils.clickevent.ClickEventParams;
+import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
 import com.hongniu.baselibrary.widget.dialog.UpDialog;
 import com.hongniu.baselibrary.widget.order.OrderDetailItem;
 import com.hongniu.moduleorder.control.OrderEvent;
@@ -37,6 +39,8 @@ import com.hongniu.moduleorder.entity.VersionBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.utils.LoactionUpUtils;
 import com.hongniu.supply.R;
+import com.hongniu.supply.entity.HomeADBean;
+import com.hongniu.supply.net.HttpMainFactory;
 import com.sang.common.event.BusFactory;
 import com.sang.common.recycleview.holder.PeakHolder;
 import com.sang.common.utils.CommonUtils;
@@ -66,6 +70,8 @@ import rongyun.sang.com.chactmodule.ui.fragment.ChactListFragment;
 
 @Route(path = ArouterParamsApp.activity_main)
 public class MainActivity extends BaseActivity implements View.OnClickListener, AMapLocationListener {
+
+
 
     private LoactionUtils loaction;
     private LoactionUpUtils upLoactionUtils;//上传位置信息
@@ -104,6 +110,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         loaction.init(mContext);
         loaction.setListener(this);
         tab1.performClick();
+
+
+//        HttpMainFactory.queryClickEvent()
+//                .subscribe(new NetObserver<List<HomeADBean>>(null) {
+//                    @Override
+//                    public void doOnSuccess(List<HomeADBean> data) {
+//                    }
+//                });
 
     }
 
@@ -286,6 +300,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 changeTabeState(v.getId());
                 break;
             case R.id.tab3:
+                ClickEventUtils.getInstance().onClick(ClickEventParams.菜单栏_下单);
                 ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_create).navigation(this);
                 break;
         }
@@ -308,6 +323,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
         switch (id) {
             case R.id.tab1:
+
+                ClickEventUtils.getInstance().onClick(ClickEventParams.菜单栏_首页);
                 if (homeFragment == null) {
 
                     homeFragment = (Fragment) ArouterUtils.getInstance().builder(ArouterParamsApp.fragment_home_fragment).navigation(mContext);
@@ -318,6 +335,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 currentFragment = homeFragment;
                 break;
             case R.id.tab2:
+                ClickEventUtils.getInstance().onClick(ClickEventParams.菜单栏_订单);
                 if (orderFragment == null) {
                     orderFragment = (Fragment) ArouterUtils.getInstance().builder(ArouterParamOrder.fragment_order_main).navigation(mContext);
                     fragmentTransaction.add(R.id.content, orderFragment);
@@ -328,6 +346,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 break;
 
             case R.id.tab4:
+                ClickEventUtils.getInstance().onClick(ClickEventParams.菜单栏_聊天);
                 if (messageFragment == null) {
                     messageFragment = new ChactListFragment();
                     fragmentTransaction.add(R.id.content, messageFragment);
@@ -339,6 +358,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
                 break;
             case R.id.tab5:
+                ClickEventUtils.getInstance().onClick(ClickEventParams.菜单栏_我);
                 if (meFragment == null) {
                     meFragment = (Fragment) ArouterUtils.getInstance().builder(ArouterParamLogin.fragment_login_my).navigation(mContext);
                     fragmentTransaction.add(R.id.content, meFragment);

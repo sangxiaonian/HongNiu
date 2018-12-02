@@ -20,6 +20,8 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.H5Config;
 import com.hongniu.baselibrary.entity.WalletDetail;
+import com.hongniu.baselibrary.utils.clickevent.ClickEventParams;
+import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
 import com.hongniu.modulefinance.net.HttpFinanceFactory;
 import com.hongniu.supply.R;
 import com.hongniu.supply.entity.HomeADBean;
@@ -95,6 +97,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                         itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                ClickEventUtils.getInstance().onClick(ClickEventParams.首页_活动);
+
                                 H5Config h5Config = new H5Config(data.getTitle(), data.getLink(), true);
                                 ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5).withSerializable(Param.TRAN, h5Config).navigation(mContext);
 
@@ -184,9 +188,11 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
             case R.id.bt_wallet:
                 ArouterUtils.getInstance().builder(ArouterParamsFinance.activity_finance_wallet).navigation(getContext());
+                ClickEventUtils.getInstance().onClick(ClickEventParams.首页_我的钱包);
 
                 break;
             case R.id.ll_search:
+                ClickEventUtils.getInstance().onClick(ClickEventParams.首页_搜索);
                 ArouterUtils.getInstance()
                         .builder(ArouterParamOrder.activity_order_search)
                         .withSerializable(Param.TRAN, CARGO_OWNER)
@@ -194,6 +200,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 //                ToastUtils.getInstance().show("搜索");
                 break;
             case R.id.ll_cargo:
+                ClickEventUtils.getInstance().onClick(ClickEventParams.首页_货主);
 //                ToastUtils.getInstance().show("货主");
                 ArouterUtils.getInstance()
                         .builder(ArouterParamOrder.activity_order_order)
@@ -201,6 +208,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                         .navigation(getContext());
                 break;
             case R.id.ll_car:
+                ClickEventUtils.getInstance().onClick(ClickEventParams.首页_车主);
 //                ToastUtils.getInstance().show("车主");
                 ArouterUtils.getInstance()
                         .builder(ArouterParamOrder.activity_order_order)
@@ -208,6 +216,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                         .navigation(getContext());
                 break;
             case R.id.ll_driver:
+                ClickEventUtils.getInstance().onClick(ClickEventParams.首页_司机);
 //                ToastUtils.getInstance().show("司机");
                 ArouterUtils.getInstance()
                         .builder(ArouterParamOrder.activity_order_order)
@@ -215,10 +224,12 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                         .navigation(getContext());
                 break;
             case R.id.card_policy:
+                ClickEventUtils.getInstance().onClick(ClickEventParams.首页_牛人保);
                 ToastUtils.getInstance().show("保险");
                 break;
             case R.id.card_yongjin:
                 ArouterUtils.getInstance().builder(ArouterParamFestivity.activity_festivity_home).navigation(getContext());
+                ClickEventUtils.getInstance().onClick(ClickEventParams.首页_邀请好友);
 
                 break;
             case R.id.card_etc:

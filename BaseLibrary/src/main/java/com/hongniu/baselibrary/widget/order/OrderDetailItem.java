@@ -18,6 +18,8 @@ import android.widget.TextView;
 
 import com.hongniu.baselibrary.R;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
+import com.hongniu.baselibrary.utils.clickevent.ClickEventParams;
+import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
 import com.hongniu.baselibrary.widget.OrderProgress;
 import com.hongniu.baselibrary.widget.order.helper.ButtonInforBean;
 import com.hongniu.baselibrary.widget.order.helper.OrderItemHelper;
@@ -388,6 +390,21 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
             creatPhoneSpan(firstPoint - 3, builder, new ClickableSpan() {
                 @Override
                 public void onClick(View widget) {
+
+                    switch (roleState){
+                        case DRIVER:
+
+                            ClickEventUtils.getInstance().onClick(ClickEventParams.我是司机_拨打电话);
+                            break;
+                        case CAR_OWNER:
+                            ClickEventUtils.getInstance().onClick(ClickEventParams.我是车主_拨打电话);
+
+                            break;
+                        case CARGO_OWNER:
+                            ClickEventUtils.getInstance().onClick(ClickEventParams.我是货主_拨打电话);
+
+                            break;
+                    }
                     CommonUtils.toDial(getContext(), carOwnerPhone);
                 }
             });
@@ -395,7 +412,20 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                 @Override
                 public void onClick(View widget) {
                     ChactHelper.getHelper().startPriver(getContext(), ownerid, carOwnerName);
+                    switch (roleState){
+                        case DRIVER:
 
+                            ClickEventUtils.getInstance().onClick(ClickEventParams.我是司机_聊天);
+                            break;
+                        case CAR_OWNER:
+                            ClickEventUtils.getInstance().onClick(ClickEventParams.我是车主_聊天);
+
+                            break;
+                        case CARGO_OWNER:
+                            ClickEventUtils.getInstance().onClick(ClickEventParams.我是货主_聊天);
+
+                            break;
+                    }
                 }
             });
 
@@ -407,12 +437,40 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                 @Override
                 public void onClick(View widget) {
                     CommonUtils.toDial(getContext(), driverPhone);
+                    switch (roleState){
+                        case DRIVER:
+
+                            ClickEventUtils.getInstance().onClick(ClickEventParams.我是司机_拨打电话);
+                            break;
+                        case CAR_OWNER:
+                            ClickEventUtils.getInstance().onClick(ClickEventParams.我是车主_拨打电话);
+
+                            break;
+                        case CARGO_OWNER:
+                            ClickEventUtils.getInstance().onClick(ClickEventParams.我是货主_拨打电话);
+
+                            break;
+                    }
                 }
             });
             creatChactSpan(secondPoint - 1, builder, new ClickableSpan() {
                 @Override
                 public void onClick(View widget) {
                     ChactHelper.getHelper().startPriver(getContext(), driverID, driverName);
+                    switch (roleState){
+                        case DRIVER:
+
+                            ClickEventUtils.getInstance().onClick(ClickEventParams.我是司机_聊天);
+                            break;
+                        case CAR_OWNER:
+                            ClickEventUtils.getInstance().onClick(ClickEventParams.我是车主_聊天);
+
+                            break;
+                        case CARGO_OWNER:
+                            ClickEventUtils.getInstance().onClick(ClickEventParams.我是货主_聊天);
+
+                            break;
+                    }
                 }
             });
 
@@ -478,12 +536,39 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                 } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("取消订单");
                 }
+
+                switch (roleState){
+                    case DRIVER:
+
+                        break;
+                    case CAR_OWNER:
+
+                        break;
+                    case CARGO_OWNER:
+                        ClickEventUtils.getInstance().onClick(ClickEventParams.我是货主_取消订单);
+
+                        break;
+                }
+
+
                 break;
             case ORDER_PAY://    = "继续付款";
                 if (listener != null) {
                     listener.onOrderPay(orderBean);
                 } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("继续付款");
+                }
+                switch (roleState){
+                    case DRIVER:
+
+                        break;
+                    case CAR_OWNER:
+
+                        break;
+                    case CARGO_OWNER:
+                        ClickEventUtils.getInstance().onClick(ClickEventParams.我是货主_继续付款);
+
+                        break;
                 }
                 break;
             case ORDER_BUY_INSURANCE://    = "购买保险";
@@ -492,12 +577,37 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                 } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("购买保险");
                 }
+                switch (roleState){
+                    case DRIVER:
+
+                        break;
+                    case CAR_OWNER:
+                        ClickEventUtils.getInstance().onClick(ClickEventParams.我是车主_购买保险);
+
+                        break;
+                    case CARGO_OWNER:
+                        ClickEventUtils.getInstance().onClick(ClickEventParams.我是货主_购买保险);
+
+                        break;
+                }
                 break;
             case ORDER_CHECK_INSURANCE://    = "查看保单";
                 if (listener != null) {
                     listener.onCheckInsruance(orderBean);
                 } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("查看保单");
+                }
+                switch (roleState){
+                    case DRIVER:
+                        break;
+                    case CAR_OWNER:
+
+                        ClickEventUtils.getInstance().onClick(ClickEventParams.我是车主_查看保单);
+                        break;
+                    case CARGO_OWNER:
+                        ClickEventUtils.getInstance().onClick(ClickEventParams.我是货主_查看保单);
+
+                        break;
                 }
                 break;
             case ORDER_CHECK_PATH://    = "查看轨迹";
@@ -506,6 +616,20 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                 } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("查看轨迹");
                 }
+
+                switch (roleState){
+                    case DRIVER:
+                        break;
+                    case CAR_OWNER:
+
+                        ClickEventUtils.getInstance().onClick(ClickEventParams.我是车主_查看轨迹);
+                        break;
+                    case CARGO_OWNER:
+                        ClickEventUtils.getInstance().onClick(ClickEventParams.我是货主_查看轨迹);
+
+                        break;
+                }
+
                 break;
             case ORDER_ENTRY_ORDER://    = "确认收货";
                 if (listener != null) {
@@ -513,12 +637,39 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                 } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("确认收货");
                 }
+
+                switch (roleState){
+                    case DRIVER:
+                        break;
+                    case CAR_OWNER:
+
+                        break;
+                    case CARGO_OWNER:
+                        ClickEventUtils.getInstance().onClick(ClickEventParams.我是货主_确认收货);
+
+                        break;
+                }
+
                 break;
             case ORDER_START_CAR://    = "开始发车";
                 if (listener != null) {
                     listener.onStartCar(orderBean);
                 } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("开始发车");
+                }
+
+                switch (roleState){
+                    case DRIVER:
+                        ClickEventUtils.getInstance().onClick(ClickEventParams.我是司机_开始发车);
+
+                        break;
+                    case CAR_OWNER:
+
+                        break;
+                    case CARGO_OWNER:
+                        ClickEventUtils.getInstance().onClick(ClickEventParams.我是货主_开始发车);
+
+                        break;
                 }
                 break;
             case ORDER_CHECK_ROUT://    = "查看路线";
@@ -527,12 +678,35 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                 } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("查看路线");
                 }
+                switch (roleState){
+                    case DRIVER:
+                        ClickEventUtils.getInstance().onClick(ClickEventParams.我是司机_货车导航);
+
+                        break;
+                    case CAR_OWNER:
+
+                        break;
+                    case CARGO_OWNER:
+
+                        break;
+                }
                 break;
             case ORDER_ENTRY_ARRIVE://    = "确认到达";
                 if (listener != null) {
                     listener.onEntryArrive(orderBean);
                 } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("确认到达");
+                }
+                switch (roleState){
+                    case DRIVER:
+                        ClickEventUtils.getInstance().onClick(ClickEventParams.我是司机_确认到达);
+
+                        break;
+                    case CAR_OWNER:
+
+                        break;
+                    case CARGO_OWNER:
+                        break;
                 }
                 break;
             case ORDER_CHECK_RECEIPT://    = "查看回单";
@@ -541,12 +715,35 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                 } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("查看回单");
                 }
+                switch (roleState){
+                    case DRIVER:
+                        ClickEventUtils.getInstance().onClick(ClickEventParams.我是司机_查看回单);
+
+                        break;
+                    case CAR_OWNER:
+                        ClickEventUtils.getInstance().onClick(ClickEventParams.我是车主_查看回单);
+
+                        break;
+                    case CARGO_OWNER:
+                        ClickEventUtils.getInstance().onClick(ClickEventParams.我是货主_查看回单);
+                        break;
+                }
                 break;
             case ORDER_UP_RECEIPT://    = "上传回单";
                 if (listener != null) {
                     listener.onUpReceipt(orderBean);
                 } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("上传回单");
+                }
+                switch (roleState){
+                    case DRIVER:
+                        ClickEventUtils.getInstance().onClick(ClickEventParams.我是司机_上传回单);
+
+                        break;
+                    case CAR_OWNER:
+                        break;
+                    case CARGO_OWNER:
+                        break;
                 }
                 break;
             case ORDER_CHANGE_RECEIPT://    = "修改回单";
@@ -555,6 +752,16 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                 } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("修改回单");
                 }
+                switch (roleState){
+                    case DRIVER:
+                        ClickEventUtils.getInstance().onClick(ClickEventParams.我是司机_修改回单);
+
+                        break;
+                    case CAR_OWNER:
+                        break;
+                    case CARGO_OWNER:
+                        break;
+                }
                 break;
             case ORDER_CHANGE://修改订单
                 if (listener != null) {
@@ -562,12 +769,36 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                 } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("修改订单");
                 }
+                switch (roleState){
+                    case DRIVER:
+
+                        break;
+                    case CAR_OWNER:
+                        break;
+                    case CARGO_OWNER:
+                        ClickEventUtils.getInstance().onClick(ClickEventParams.我是货主_修改订单);
+
+                        break;
+                }
                 break;
             case ORDER_CHECK_GOODS://查看货单
                 if (listener != null) {
                     listener.onCheckGoods(orderBean);
                 } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("查看货单");
+                }
+                switch (roleState){
+                    case DRIVER:
+
+                        ClickEventUtils.getInstance().onClick(ClickEventParams.我是司机_查看货单);
+                        break;
+                    case CAR_OWNER:
+                        ClickEventUtils.getInstance().onClick(ClickEventParams.我是车主_查看货单);
+                        break;
+                    case CARGO_OWNER:
+                        ClickEventUtils.getInstance().onClick(ClickEventParams.我是货主_查看货单);
+
+                        break;
                 }
                 break;
         }

@@ -21,6 +21,8 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.utils.PermissionUtils;
+import com.hongniu.baselibrary.utils.clickevent.ClickEventParams;
+import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
@@ -84,6 +86,7 @@ public class OrderHomeFragment extends BaseFragment implements OrderMainControl.
                         .builder(ArouterParamOrder.activity_order_search)
                         .withSerializable(Param.TRAN, roleState)
                         .navigation(getContext());
+                ClickEventUtils.getInstance().onClick(ClickEventParams.订单_搜索);
 
             }
         });
@@ -99,14 +102,12 @@ public class OrderHomeFragment extends BaseFragment implements OrderMainControl.
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         changeStaff(type);
-        JLog.i("-------onActivityCreated----------");
     }
 
 
     @Override
     public void setArguments(@Nullable Bundle args) {
         super.setArguments(args);
-        JLog.i("----------setArguments-------");
           type =   args.getInt(Param.TRAN,3);
 
     }
@@ -228,6 +229,10 @@ public class OrderHomeFragment extends BaseFragment implements OrderMainControl.
      * @param position
      */
     private void changeStaff(int position) {
+
+        ClickEventUtils.getInstance().onClick(ClickEventParams.订单_切换角色);
+
+
         switch (position) {
             case 3:
                 this.roleState = CARGO_OWNER;

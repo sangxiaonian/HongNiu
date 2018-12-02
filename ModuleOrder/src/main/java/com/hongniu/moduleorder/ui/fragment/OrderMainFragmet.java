@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.base.BaseFragment;
+import com.hongniu.baselibrary.utils.clickevent.ClickEventParams;
+import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.SwitchStateListener;
@@ -142,6 +144,8 @@ public class OrderMainFragmet extends OrderFragmet implements SwitchStateListene
 
     private void changeState(View view, boolean open) {
         if (view.getId() == R.id.switch_left) {
+            ClickEventUtils.getInstance().onClick(ClickEventParams.订单_发车时间);
+
             switchLeft.setSelect(true);
             switchRight.setSelect(false);
             switchRight.closeSwitch();
@@ -155,6 +159,8 @@ public class OrderMainFragmet extends OrderFragmet implements SwitchStateListene
             }
 
         } else if (view.getId() == R.id.switch_right) {
+            ClickEventUtils.getInstance().onClick(ClickEventParams.订单_全部状);
+
             switchRight.setSelect(true);
             switchLeft.setSelect(false);
             switchLeft.closeSwitch();

@@ -16,6 +16,8 @@ import com.hongniu.baselibrary.base.BaseFragment;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.utils.Utils;
+import com.hongniu.baselibrary.utils.clickevent.ClickEventParams;
+import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
 import com.hongniu.modulelogin.R;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.DeviceUtils;
@@ -149,6 +151,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
                     }).creatDialog(new BottomAlertDialog(getContext())).show();
 
+            ClickEventUtils.getInstance().onClick(ClickEventParams.我的_退出账户);
 
         } else if (i == R.id.ll_contact_service) {
             new CenterAlertBuilder()
@@ -176,24 +179,30 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                         }
                     }).creatDialog(new CenterAlertDialog(getContext())).show();
 
+            ClickEventUtils.getInstance().onClick(ClickEventParams.我的_联系客服);
         } else if (i == R.id.ll_about_us) {
 
             ArouterUtils.getInstance().builder(ArouterParamLogin.activity_about_us).navigation(getContext());
+            ClickEventUtils.getInstance().onClick(ClickEventParams.我的_关于我们);
         } else if (i == R.id.ll_my_car) {
             ArouterUtils.getInstance().builder(ArouterParamLogin.activity_car_list).navigation(getContext());
+            ClickEventUtils.getInstance().onClick(ClickEventParams.我的_我的车辆);
         } else if (i == R.id.ll_person_infor) {
             ArouterUtils.getInstance().builder(ArouterParamLogin.activity_person_infor).navigation(getContext());
 
+            ClickEventUtils.getInstance().onClick(ClickEventParams.我的_我的资料);
         }  else if (i == R.id.ll_wallet) {
             ArouterUtils.getInstance().builder(ArouterParamsFinance.activity_finance_wallet).navigation(getContext());
+            ClickEventUtils.getInstance().onClick(ClickEventParams.我的_我的钱包);
 
         } else if (i == R.id.ll_niu) {
-
+            ClickEventUtils.getInstance().onClick(ClickEventParams.我的_我的牛贝);
             ArouterUtils.getInstance()
                     .builder(ArouterParamsFinance.activity_finance_niu)
                     .navigation(getContext());
         }else if (i == R.id.card) {
 
+            ClickEventUtils.getInstance().onClick(ClickEventParams.我的_邀请好友);
             ArouterUtils.getInstance()
                     .builder(ArouterParamFestivity.activity_festivity_home)
                     .navigation(getContext());
