@@ -18,7 +18,7 @@ public class HomeHeader extends PeakHolder implements View.OnClickListener {
 
     TextView tv_balance;
     Button bt_wallet;
-    ViewGroup ll_search;
+//    ViewGroup ll_search;
     ViewGroup ll_cargo;
     ViewGroup ll_car;
     ViewGroup ll_driver;
@@ -55,7 +55,7 @@ public class HomeHeader extends PeakHolder implements View.OnClickListener {
         super.initView(position);
         tv_balance = itemView.findViewById(R.id.tv_balance);
         bt_wallet = itemView.findViewById(R.id.bt_wallet);
-        ll_search = itemView.findViewById(R.id.ll_search);
+//        ll_search = itemView.findViewById(R.id.ll_search);
         ll_cargo = itemView.findViewById(R.id.ll_cargo);
         ll_car = itemView.findViewById(R.id.ll_car);
         ll_driver = itemView.findViewById(R.id.ll_driver);
@@ -66,7 +66,7 @@ public class HomeHeader extends PeakHolder implements View.OnClickListener {
         tv_balance.setText(walletInfor==null?"0.00":walletInfor);
 
         bt_wallet.setOnClickListener(this);
-        ll_search.setOnClickListener(this);
+//        ll_search.setOnClickListener(this);
         ll_cargo.setOnClickListener(this);
         ll_car.setOnClickListener(this);
         ll_driver.setOnClickListener(this);

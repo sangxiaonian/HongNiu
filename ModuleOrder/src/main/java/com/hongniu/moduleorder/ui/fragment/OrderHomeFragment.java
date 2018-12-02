@@ -46,6 +46,8 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
+import io.rong.eventbus.EventBus;
+
 import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CARGO_OWNER;
 import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CAR_OWNER;
 import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.DRIVER;
@@ -69,6 +71,7 @@ public class OrderHomeFragment extends BaseFragment implements OrderMainControl.
 
     private OrderDetailItemControl.RoleState roleState = CARGO_OWNER;
     private Context mContext;
+    private int type=3;
 
 
     @Override
@@ -95,10 +98,18 @@ public class OrderHomeFragment extends BaseFragment implements OrderMainControl.
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        changeStaff(3);
-
+        changeStaff(type);
+        JLog.i("-------onActivityCreated----------");
     }
 
+
+    @Override
+    public void setArguments(@Nullable Bundle args) {
+        super.setArguments(args);
+        JLog.i("----------setArguments-------");
+          type =   args.getInt(Param.TRAN,3);
+
+    }
 
     protected void showAleart(String msg) {
         CenterAlertDialog alertDialog = new CenterAlertDialog(getContext());
@@ -164,6 +175,7 @@ public class OrderHomeFragment extends BaseFragment implements OrderMainControl.
             changeStaff(event.getRoleId());//此处接收到用户类型
 
         }
+        BusFactory.getBus().removeStickyEvent(RoleTypeBean.class);
     }
 
     @Override

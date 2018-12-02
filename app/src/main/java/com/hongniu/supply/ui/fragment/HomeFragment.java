@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hongniu.baselibrary.arouter.ArouterParamFestivity;
+import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
@@ -39,6 +40,8 @@ import io.reactivex.Observable;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CARGO_OWNER;
+
 /**
  * 作者： ${PING} on 2018/11/23.
  */
@@ -50,13 +53,14 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     List<HomeADBean> ads;
     private HomeHeader homeHeader;
     private XAdapter<HomeADBean> adapter;
-
+    private View llSearch;
 
     @Override
     protected View initView(LayoutInflater inflater) {
 
         View inflate = inflater.inflate(R.layout.fragment_home_fragment, null);
         rv = inflate.findViewById(R.id.rv);
+        llSearch = inflate.findViewById(R.id.ll_search);
 
 
         return inflate;
@@ -166,6 +170,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         super.initListener();
 //        tv_balance.setOnClickListener(this);
         homeHeader.setOnClickListener(this);
+        llSearch.setOnClickListener(this);
     }
 
     /**
@@ -179,18 +184,35 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
             case R.id.bt_wallet:
                 ArouterUtils.getInstance().builder(ArouterParamsFinance.activity_finance_wallet).navigation(getContext());
+
                 break;
             case R.id.ll_search:
-                ToastUtils.getInstance().show("搜索");
+                ArouterUtils.getInstance()
+                        .builder(ArouterParamOrder.activity_order_search)
+                        .withSerializable(Param.TRAN, CARGO_OWNER)
+                        .navigation(getContext());
+//                ToastUtils.getInstance().show("搜索");
                 break;
             case R.id.ll_cargo:
-                ToastUtils.getInstance().show("货主");
+//                ToastUtils.getInstance().show("货主");
+                ArouterUtils.getInstance()
+                        .builder(ArouterParamOrder.activity_order_order)
+                        .withInt(Param.TRAN,3)
+                        .navigation(getContext());
                 break;
             case R.id.ll_car:
-                ToastUtils.getInstance().show("车主");
+//                ToastUtils.getInstance().show("车主");
+                ArouterUtils.getInstance()
+                        .builder(ArouterParamOrder.activity_order_order)
+                        .withInt(Param.TRAN,1)
+                        .navigation(getContext());
                 break;
             case R.id.ll_driver:
-                ToastUtils.getInstance().show("司机");
+//                ToastUtils.getInstance().show("司机");
+                ArouterUtils.getInstance()
+                        .builder(ArouterParamOrder.activity_order_order)
+                        .withInt(Param.TRAN,2)
+                        .navigation(getContext());
                 break;
             case R.id.card_policy:
                 ToastUtils.getInstance().show("保险");
