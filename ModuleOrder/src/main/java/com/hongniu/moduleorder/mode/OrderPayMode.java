@@ -6,11 +6,15 @@ import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.WalletDetail;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.moduleorder.control.OrderPayControl;
+import com.hongniu.moduleorder.entity.OrderInsuranceInforBean;
 import com.hongniu.moduleorder.entity.OrderParamBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
+import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.thirdlibrary.pay.PayConfig;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 
@@ -29,7 +33,8 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
     private int payType;//选择支付方式
     private boolean isOnLine;//true 线上支付，false 线下支付
     private WalletDetail wallletInfor;
-
+    private List<OrderInsuranceInforBean> insurancUserInfr;
+    OrderInsuranceInforBean currentInsurancInfor;//当前选中的保险人信息
     /**
      * 储存其他界面传入的参数
      *
@@ -244,6 +249,58 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
     @Override
     public boolean isHasEnoughBalance() {
         return wallletInfor!=null&&Float.parseFloat(wallletInfor.getAvailableBalance())>=getMoney();
+    }
+
+    @Override
+    public Observable<CommonBean<List<OrderInsuranceInforBean>>> queryInsuranceInfor() {
+
+       return HttpOrderFactory.querInsruancUserInfor();
+    }
+
+    /**
+     * 储存被保险人联系信息
+     *
+     * @param data
+     */
+    @Override
+    public void saveInsruancUserInfor(List<OrderInsuranceInforBean> data) {
+        this.insurancUserInfr=data;
+        //如果当前没有选中，就默认选中默认数据
+        if (!CommonUtils.isEmptyCollection(insurancUserInfr)&&currentInsurancInfor==null){
+
+            for (OrderInsuranceInforBean orderInsuranceInforBean : insurancUserInfr) {
+                if (orderInsuranceInforBean.isIsDefault()){
+                    currentInsurancInfor=orderInsuranceInforBean;
+                    break;
+                }
+            }
+            //如果没有默认数据，就选中第最后一个
+            if (currentInsurancInfor==null){
+                currentInsurancInfor=insurancUserInfr.get(insurancUserInfr.size()-1);
+            }
+        }else {
+            currentInsurancInfor=null;
+        }
+    }
+
+    /**
+     * 获取当前选中的被保险人信息数据
+     *
+     * @return
+     */
+    @Override
+    public OrderInsuranceInforBean getCurrentInsuranceUserInfor() {
+        return currentInsurancInfor;
+    }
+
+    /**
+     * 储存当前被选中的被保险人信息
+     *
+     * @param currentInsuranceUserInfor
+     */
+    @Override
+    public void saveSelectInsuranceInfor(OrderInsuranceInforBean currentInsuranceUserInfor) {
+        currentInsurancInfor=currentInsuranceUserInfor;
     }
 
     /**

@@ -8,6 +8,7 @@ import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
 import com.hongniu.baselibrary.entity.QueryPayPassword;
 import com.hongniu.modulelogin.entity.LoginCarInforBean;
+import com.hongniu.modulelogin.entity.LoginCreatInsuredBean;
 import com.hongniu.modulelogin.entity.LoginSMSParams;
 import com.hongniu.baselibrary.entity.PayInforBeans;
 import com.hongniu.modulelogin.entity.SetPayPassWord;
@@ -109,6 +110,14 @@ public interface LoginService {
      */
     @POST("hongniu//api/account/updatepass")
     Observable<CommonBean<String>> setPayPassword(@Body SetPayPassWord beans);
+/**
+     * 设置/更新支付密码
+     *
+     * @return
+     * @param beans
+     */
+    @POST("hongniu/api/userinsured/add")
+    Observable<CommonBean<String>> creatInsuredInfor(@Body LoginCreatInsuredBean beans);
 
 
 }

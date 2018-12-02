@@ -30,7 +30,8 @@ import com.hongniu.baselibrary.widget.PayPasswordKeyBord;
 import com.hongniu.modulefinance.R;
 import com.hongniu.modulefinance.entity.AppletInforBean;
 import com.hongniu.modulefinance.net.HttpFinanceFactory;
-import com.hongniu.modulefinance.widget.AccountDialog;
+import com.hongniu.baselibrary.widget.dialog.AccountDialog;
+import com.hongniu.modulefinance.widget.AccountWayDialog;
 import com.hongniu.modulefinance.widget.CreatAccountDialog;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.DeviceUtils;
@@ -50,7 +51,7 @@ import java.util.List;
  * 余额提现界面
  */
 @Route(path = ArouterParamsFinance.activity_finance_balance_with_drawal)
-public class FinanceBalanceWithDrawalActivity extends BaseActivity implements View.OnClickListener, TextWatcher, AccountDialog.OnDialogClickListener, CreatAccountDialog.OnAddNewPayWayListener, PayPasswordKeyBord.PayKeyBordListener {
+public class FinanceBalanceWithDrawalActivity extends BaseActivity implements View.OnClickListener, TextWatcher, AccountDialog.OnDialogClickListener<PayInforBeans>, CreatAccountDialog.OnAddNewPayWayListener, PayPasswordKeyBord.PayKeyBordListener {
 
     private ImageView imgPayIcon;
     private TextView tvPayWay;
@@ -61,7 +62,7 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
     private Button btSum;
     private ConstraintLayout conPay;
     private String withdrawal;//提现金额
-    AccountDialog accountDialog;
+    AccountWayDialog accountDialog;
     PayPasswordKeyBord passwordDialog;
     private CreatAccountDialog creatAccountDialog;
     private PayInforBeans payInfo;
@@ -88,7 +89,7 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
         etBalance = findViewById(R.id.et_balance);
         btSum = findViewById(R.id.bt_sum);
         conPay = findViewById(R.id.con_pay_way);
-        accountDialog = new AccountDialog(this);
+        accountDialog = new AccountWayDialog(this);
         passwordDialog = new PayPasswordKeyBord(this);
         passwordDialog.setPayDes("提现金额");
 
@@ -283,6 +284,8 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
         initPayWay(bean);
         dialog.dismiss();
     }
+
+
 
     @Override
     public void onAddClick(DialogControl.IDialog dialog) {

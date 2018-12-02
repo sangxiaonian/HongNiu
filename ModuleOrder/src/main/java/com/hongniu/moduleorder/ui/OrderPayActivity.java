@@ -24,15 +24,17 @@ import com.hongniu.baselibrary.entity.CreatInsuranceBean;
 import com.hongniu.baselibrary.entity.H5Config;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.PayPasswordKeyBord;
+import com.hongniu.baselibrary.widget.dialog.AccountDialog;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.control.OrderPayControl;
+import com.hongniu.moduleorder.entity.OrderInsuranceInforBean;
 import com.hongniu.moduleorder.present.OrderPayPresenter;
 import com.hongniu.moduleorder.widget.PayAleartPop;
 import com.hongniu.moduleorder.widget.dialog.BuyInsuranceDialog;
+import com.hongniu.moduleorder.widget.dialog.InsuranceDialog;
 import com.sang.common.event.BusFactory;
 import com.sang.common.utils.ConvertUtils;
-import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
@@ -41,6 +43,8 @@ import com.sang.thirdlibrary.pay.entiy.PayBean;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.List;
 
 /**
  * 订单支付界面
@@ -56,7 +60,7 @@ import org.greenrobot.eventbus.ThreadMode;
  * 不购买保险，则直接显示完成订单
  */
 @Route(path = ArouterParamOrder.activity_order_pay)
-public class OrderPayActivity extends BaseActivity implements OrderPayControl.IOrderPayView, RadioGroup.OnCheckedChangeListener, View.OnClickListener, BuyInsuranceDialog.OnBuyInsuranceClickListener, PayPasswordKeyBord.PayKeyBordListener {
+public class OrderPayActivity extends BaseActivity implements OrderPayControl.IOrderPayView, RadioGroup.OnCheckedChangeListener, View.OnClickListener, BuyInsuranceDialog.OnBuyInsuranceClickListener, PayPasswordKeyBord.PayKeyBordListener, AccountDialog.OnDialogClickListener<OrderInsuranceInforBean> {
 
     private TextView tvOrder;//订单号
     private ViewGroup btBuy;//购买保险
@@ -89,6 +93,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
     private TextView bt_cancle_insurance;//取消保险
     private TextView tv_change_cargo_price;//更改货物金额
     private TextView tv_des;//订单描述
+    private TextView tv_instances_per_infor;//被保险人信息
 
 
     private BuyInsuranceDialog buyInsuranceDialog;
@@ -97,7 +102,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
     private OrderPayControl.IOrderPayPresent payPresent;
     private PayAleartPop aleartPop;
     private PayPasswordKeyBord payPasswordKeyBord;
-
+    InsuranceDialog insuranceDialog;//被保险人选择信息diaolog
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,6 +145,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
         cbYue = findViewById(R.id.cb_yue);
         payOnline = findViewById(R.id.pay_online);
         imgDai = findViewById(R.id.img_dai);
+        tv_instances_per_infor = findViewById(R.id.tv_instances_per_infor);
 
         buyInsuranceDialog = new BuyInsuranceDialog(mContext);
         aleartPop = new PayAleartPop(this);
@@ -148,6 +154,10 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
         payPasswordKeyBord.setProgressListener(this);
         payPasswordKeyBord.sePaytListener(this);
         payPasswordKeyBord.setPayDes("付款金额");
+
+
+        insuranceDialog=new InsuranceDialog(mContext);
+
     }
 
     @Override
@@ -158,6 +168,8 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
         //默认情况下显示购买保险的条目
         conInsurance.setVisibility(View.GONE);
         btBuy.setVisibility(View.VISIBLE);
+
+        tv_instances_per_infor.setText(String.format(getString(R.string.order_pay_insurance_infor),"",""));
 
     }
 
@@ -192,6 +204,9 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
         rlUnion.setOnClickListener(this);
         rlYue.setOnClickListener(this);
         imgDai.setOnClickListener(this);
+        tv_instances_per_infor.setOnClickListener(this);
+
+        insuranceDialog.setListener(this);
     }
 
 
@@ -242,6 +257,8 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
             buyInsuranceDialog.show();
         } else if (i == R.id.img_dai) {
             aleartPop.show(v);
+        }else if (i == R.id.tv_instances_per_infor) {
+            payPresent.showInsurancDialog(this);
         }
     }
 
@@ -528,6 +545,28 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
         onSelectYuePay();
     }
 
+    /**
+     * 显示被保险人信息
+     *
+     * @param name   个人名称或者公司名称
+     * @param number 个人身份照明或者公司税号
+     */
+    @Override
+    public void showInsruanceUserInfor(String name, String number) {
+        tv_instances_per_infor.setText(String.format(getString(R.string.order_pay_insurance_infor),name,number));
+    }
+
+    /**
+     * 显示被保险人信息列表
+     *
+     * @param data
+     */
+    @Override
+    public void showInsruanceUserInforDialog(List<OrderInsuranceInforBean> data) {
+        insuranceDialog.setData(data);
+        insuranceDialog.show();
+    }
+
 
     /**
      * 取消支付
@@ -575,5 +614,17 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
 //                .builder(ArouterParamLogin.activity_login_forget_pass)
 //                .withInt(Param.TRAN, 1)
 //                .navigation(mContext);
+    }
+
+    @Override
+    public void onChoice(DialogControl.IDialog dialog, int position, OrderInsuranceInforBean bean) {
+        dialog.dismiss();
+        payPresent.onSelectInsurancUserInfro(position,bean);
+    }
+
+    @Override
+    public void onAddClick(DialogControl.IDialog dialog) {
+        dialog.dismiss();
+        ArouterUtils.getInstance().builder(ArouterParamLogin.activity_login_insured).navigation(mContext);
     }
 }

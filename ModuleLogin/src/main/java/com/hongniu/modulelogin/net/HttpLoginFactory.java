@@ -7,6 +7,7 @@ import com.hongniu.baselibrary.entity.LoginPersonInfor;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
 import com.hongniu.modulelogin.entity.LoginCarInforBean;
+import com.hongniu.modulelogin.entity.LoginCreatInsuredBean;
 import com.hongniu.modulelogin.entity.LoginSMSParams;
 import com.hongniu.baselibrary.entity.PayInforBeans;
 import com.hongniu.modulelogin.entity.SetPayPassWord;
@@ -164,11 +165,26 @@ public class HttpLoginFactory {
     }
 
 
-
+    /**
+     * 更新支付密码
+     * @param passwordMd5
+     * @param smsCode
+     * @return
+     */
     public static Observable<CommonBean<String>> upPassword(String passwordMd5, String smsCode) {
         SetPayPassWord payPassword=new SetPayPassWord(passwordMd5,smsCode);
        return LoginClient.getInstance().getLoginService()
                 .setPayPassword(payPassword)
+                .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
+    }
+
+
+    /**
+     * 创建被保险人信息
+     */
+    public static Observable<CommonBean<String>> creatInsuredInfor(LoginCreatInsuredBean bean) {
+       return LoginClient.getInstance().getLoginService()
+                .creatInsuredInfor(bean)
                 .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
     }
 

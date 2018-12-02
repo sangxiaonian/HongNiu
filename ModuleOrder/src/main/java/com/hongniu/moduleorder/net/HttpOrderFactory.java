@@ -20,6 +20,7 @@ import com.hongniu.moduleorder.entity.LocationBean;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
 import com.hongniu.moduleorder.entity.OrderCreatParamBean;
 import com.hongniu.moduleorder.entity.OrderDriverPhoneBean;
+import com.hongniu.moduleorder.entity.OrderInsuranceInforBean;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
 import com.hongniu.moduleorder.entity.OrderParamBean;
 import com.hongniu.moduleorder.entity.OrderSearchBean;
@@ -536,5 +537,14 @@ public class HttpOrderFactory {
                 .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
     }
 
+
+    /**
+     * 查询被保险人信息
+     */
+    public static Observable<CommonBean<List<OrderInsuranceInforBean>>> querInsruancUserInfor() {
+
+        return OrderClient.getInstance().getService().querInsruancUserInfor()
+                .compose(RxUtils.<CommonBean<List<OrderInsuranceInforBean>>>getSchedulersObservableTransformer());
+    }
 
 }

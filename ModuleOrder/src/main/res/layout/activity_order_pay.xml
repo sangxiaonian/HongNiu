@@ -16,10 +16,10 @@
         android:layout_weight="1">
 
         <LinearLayout
-            android:paddingBottom="@dimen/app_model_gap"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/app_model_gap">
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
@@ -54,7 +54,12 @@
                         android:textColor="@color/color_white"
                         android:textSize="12sp" />
                 </LinearLayout>
-
+                <android.support.constraint.Guideline
+                    android:id="@+id/guideline2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_begin="80dp" />
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -68,10 +73,9 @@
                     app:cardPreventCornerOverlap="false"
                     app:cardUseCompatPadding="true"
                     app:contentPadding="@dimen/app_gap"
-                    app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+                    app:layout_constraintTop_toBottomOf="@+id/guideline2">
 
                     <android.support.constraint.ConstraintLayout
                         android:id="@+id/con_buy"
@@ -202,7 +206,6 @@
                             android:text="@string/order_pay_insurance_detail"
                             android:textColor="@color/color_content_light"
                             android:textSize="12sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="@+id/tv_cargo_price"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/tv_cargo_price" />
@@ -232,9 +235,45 @@
                             app:layout_constraintBottom_toBottomOf="@+id/textView6"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/tv_cargo_price" />
+
+                        <View
+                            android:id="@+id/line"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/line_height"
+                            android:layout_marginTop="@dimen/app_gap"
+                            android:background="@color/line_color"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/textView6"
+                             />
+
+                        <TextView
+                            android:id="@+id/tv_instances_per_infor"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/app_gap"
+                            android:text="被保险人："
+                            android:textSize="@dimen/text_small_14"
+                            android:textColor="@color/color_title_dark"
+                            app:layout_constraintEnd_toStartOf="@+id/img_go"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/line" />
+
+                        <ImageView
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/tv_instances_per_infor"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_instances_per_infor"
+                            android:id="@+id/img_go"
+                            android:scaleType="centerCrop"
+                            app:srcCompat="@drawable/icon_go_999999"
+                            android:layout_width="10dp"
+                            android:layout_height="10dp" />
+
                     </android.support.constraint.ConstraintLayout>
 
                 </android.support.v7.widget.CardView>
+
+              
 
 
             </android.support.constraint.ConstraintLayout>
@@ -263,10 +302,10 @@
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:gravity="center_vertical"
                         android:layout_width="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -277,23 +316,24 @@
 
                         <FrameLayout
                             android:id="@+id/img_dai"
-                            android:gravity="center"
-                            android:layout_gravity="center_vertical"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center">
+
                             <ImageView
-                                android:src="@mipmap/icon_yw_20"
                                 android:layout_width="10dp"
+                                android:layout_height="10dp"
                                 android:layout_margin="@dimen/app_item_gap"
-                                android:layout_height="10dp" />
+                                android:src="@mipmap/icon_yw_20" />
                         </FrameLayout>
 
 
                         <TextView
-                            android:gravity="right"
-                            android:layout_weight="1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right"
                             android:text="@string/order_pay_charge"
                             android:textColor="@color/color_title_dark"
                             android:textSize="12sp" />
@@ -352,9 +392,10 @@
 
             <LinearLayout
                 android:id="@+id/pay_online"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -601,7 +642,6 @@
 
                 </com.sang.common.widget.CircularFramlayout>
             </LinearLayout>
-
 
 
         </LinearLayout>

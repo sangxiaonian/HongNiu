@@ -9,15 +9,6 @@
 
     <include layout="@layout/toolbar" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/app_item_gap"
-        android:layout_marginLeft="@dimen/app_gap"
-        android:layout_marginTop="@dimen/app_gap"
-        android:text="@string/login_person_improve_infor"
-        android:textColor="@color/color_content_light"
-        android:textSize="13sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -57,7 +48,7 @@
 
     <com.sang.common.widget.ItemView
         android:id="@+id/item_name"
-        style="@style/itemview"
+        style="@style/itemmusetview"
         app:textcenterhide="请输入您的姓名"
         app:textleft="姓名" />
 

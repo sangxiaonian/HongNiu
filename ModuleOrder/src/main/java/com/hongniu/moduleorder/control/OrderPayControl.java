@@ -4,8 +4,11 @@ import android.text.SpannableStringBuilder;
 
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.WalletDetail;
+import com.hongniu.moduleorder.entity.OrderInsuranceInforBean;
 import com.sang.common.net.listener.TaskControl;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 
@@ -119,6 +122,19 @@ public class OrderPayControl {
          * @param payType  当前选中的方法
          */
         void changePayWayToBanlace(boolean hasEnoughBalance, int payType);
+
+        /**
+         * 显示被保险人信息
+         * @param name   个人名称或者公司名称
+         * @param number 个人身份照明或者公司税号
+         */
+        void showInsruanceUserInfor(String name,String number);
+
+        /**
+         * 显示被保险人信息列表
+         * @param data
+         */
+        void showInsruanceUserInforDialog(List<OrderInsuranceInforBean> data);
     }
 
     public interface IOrderPayPresent {
@@ -192,6 +208,19 @@ public class OrderPayControl {
          * @param listener
          */
         void setPayPassoword(String passWord, TaskControl.OnTaskListener listener);
+
+        /**
+         * 显示被保险人信息
+         * @param listener
+         */
+        void showInsurancDialog(TaskControl.OnTaskListener listener);
+
+        /**
+         * 选中保险人信息
+         * @param position 位置
+         * @param bean     被选中的保险人信息
+         */
+        void onSelectInsurancUserInfro(int position, OrderInsuranceInforBean bean);
     }
 
     public interface IOrderPayMode {
@@ -308,6 +337,29 @@ public class OrderPayControl {
          * @return
          */
         boolean isHasEnoughBalance();
+
+        /**
+         * 查询被保险人信息
+         */
+        Observable<CommonBean<List<OrderInsuranceInforBean>>> queryInsuranceInfor();
+
+        /**
+         * 储存被保险人联系信息
+         * @param data
+         */
+        void saveInsruancUserInfor(List<OrderInsuranceInforBean> data);
+
+        /**
+         * 获取当前选中的被保险人信息数据
+         * @return
+         */
+        OrderInsuranceInforBean getCurrentInsuranceUserInfor();
+
+        /**
+         * 储存当前被选中的被保险人信息
+         * @param currentInsuranceUserInfor
+         */
+        void saveSelectInsuranceInfor(OrderInsuranceInforBean currentInsuranceUserInfor);
     }
 
 }

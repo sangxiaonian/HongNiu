@@ -19,6 +19,7 @@ anim activity_out_in
 anim activity_out_out
 anim lib_pophidden_anim
 anim lib_popshow_anim
+array insured_type
 array order_main_state
 array order_main_time
 array order_pay_way
@@ -880,6 +881,7 @@ drawable icon_arrow_down_d8d8d8
 drawable icon_arrow_down_f06f28
 drawable icon_arrow_down_fff
 drawable icon_camera_dddddd
+drawable icon_go_999999
 drawable icon_search_333333
 drawable icon_search_c8c8c8
 drawable icon_wxz_36
@@ -2081,6 +2083,7 @@ mipmap icon_home_selected_46
 mipmap icon_home_sj_56
 mipmap icon_home_unselected_46
 mipmap icon_hz_100
+mipmap icon_imageadd_116
 mipmap icon_maessage_30
 mipmap icon_me_90
 mipmap icon_me_grzl_32
@@ -2235,6 +2238,7 @@ string order_pay_chose_pay_ways
 string order_pay_insruance_buy_des
 string order_pay_insruance_pay
 string order_pay_insurance_detail
+string order_pay_insurance_infor
 string order_pay_insurance_name
 string order_pay_insurance_notice_bt
 string order_pay_offline

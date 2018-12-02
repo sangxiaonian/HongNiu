@@ -38,7 +38,7 @@
 
     <!--个人资料-->
     <string name="login_person">个人资料</string>
-    <string name="login_person_improve_infor">购买货物保险前，需完善个人信息</string>
+    <string name="login_person_improve_infor">购买货物保险前，需完善资料信息</string>
     <string name="login_pay_title">我的收款方式</string>
     <string name="login_pay_aleart">点击卡片可选择当前默认收款方式</string>
 
@@ -70,6 +70,7 @@
     <string name="order_pay_ali_discribe">支付宝安全支付</string>
     <string name="order_pay_union">银联支付</string>
     <string name="order_pay_union_discribe">中国银联在线支付服务</string>
+    <string name="order_pay_insurance_infor">被保险人：%1$s  %2$s</string>
 
 
     <string name="order_pay_all_price">支付总额</string>
@@ -120,7 +121,6 @@
     <string name="wallet_balance_withDrawal_ali">支付宝收款</string>
     <string name="wallet_balance_withDrawal_weiChat">微信收款</string>
     <string name="wallet_balance_withdrawal_card_num">尾号 %1$s 储蓄卡</string>
-
 
 
     <string name="order_search_des">发车编号、车牌号、货物、订单号</string>

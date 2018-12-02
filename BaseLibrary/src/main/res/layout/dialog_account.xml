@@ -7,7 +7,7 @@
     android:padding="@dimen/app_gap">
 
     <TextView
-        android:id="@+id/tv1"
+        android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:textColor="@color/color_title_dark"
         android:text="选择收款方式"
@@ -19,8 +19,8 @@
     <ImageView
         android:id="@+id/img_cancel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv1"
-        app:layout_constraintBottom_toBottomOf="@id/tv1"
+        app:layout_constraintTop_toTopOf="@id/tv_title"
+        app:layout_constraintBottom_toBottomOf="@id/tv_title"
         android:layout_width="14dp"
         android:src="@mipmap/icon_close_gary_28"
         android:layout_height="14dp" />
@@ -32,7 +32,7 @@
         app:layout_constraintBottom_toTopOf="@+id/ll_add"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv1"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
         android:layout_height="0dp"/>
 
     
@@ -52,6 +52,7 @@
             android:layout_height="18dp" />
 
         <TextView
+            android:id="@+id/tv_add"
             android:layout_marginLeft="@dimen/app_item_gap"
             android:layout_width="wrap_content"
             android:text="使用新的收款方式提现"

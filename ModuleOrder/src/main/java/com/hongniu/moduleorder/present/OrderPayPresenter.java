@@ -11,10 +11,13 @@ import com.hongniu.baselibrary.entity.WalletDetail;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderPayControl;
+import com.hongniu.moduleorder.entity.OrderInsuranceInforBean;
 import com.hongniu.moduleorder.mode.OrderPayMode;
 import com.sang.common.net.listener.TaskControl;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
+
+import java.util.List;
 
 /**
  * 作者： ${PING} on 2018/10/29.
@@ -31,7 +34,7 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
     }
 
     /**
-     * 储存其他界面传入的参数
+     * 储存其他界面传入的参数，同时做一些初始化的操作
      *
      * @param insurance 是否是购买保险界面
      * @param money     金额
@@ -40,7 +43,7 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
      * @param listener
      */
     @Override
-    public void saveTranDate(boolean insurance, final float money, String orderID, String orderNum, TaskControl.OnTaskListener listener) {
+    public void saveTranDate(final boolean insurance, final float money, String orderID, String orderNum, TaskControl.OnTaskListener listener) {
         mode.saveTranDate(insurance, money, orderID, orderNum);
         view.setTranDate(money, orderID, orderNum);
         if (insurance) {//如果是购买保险
@@ -49,6 +52,7 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
             view.showPayOrder();
         }
 
+        //查询账户余额信息
         mode.queryAccount()
                 .subscribe(new NetObserver<WalletDetail>(listener) {
                     @Override
@@ -63,6 +67,31 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
                 })
         ;
 
+        //查询被保险人信息
+        mode.queryInsuranceInfor()
+            .subscribe(new NetObserver<List<OrderInsuranceInforBean>>(null) {
+                @Override
+                public void doOnSuccess(List<OrderInsuranceInforBean> data) {
+                    mode.saveInsruancUserInfor(data);
+                    OrderInsuranceInforBean currentInsuranceUserInfor = mode.getCurrentInsuranceUserInfor();
+                    if (currentInsuranceUserInfor!=null){
+                        int insuredType = currentInsuranceUserInfor.getInsuredType();
+                        String title="";
+                        String number="";
+                        if (insuredType==1){
+                            title=currentInsuranceUserInfor.getUsername()==null?"":currentInsuranceUserInfor.getUsername();
+                            number=currentInsuranceUserInfor.getIdnumber()==null?"":currentInsuranceUserInfor.getIdnumber();
+                        }else if (insuredType==2){
+                            title=currentInsuranceUserInfor.getCompanyName()==null?"":currentInsuranceUserInfor.getUsername();
+                            number=currentInsuranceUserInfor.getCompanyCreditCode()==null?"":currentInsuranceUserInfor.getIdnumber();
+
+                        }
+                        view.showInsruanceUserInfor(title,number);
+
+                    }
+                }
+            });
+        ;
 
     }
 
@@ -238,5 +267,48 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
                         view.jumpToPay(data, mode.getPayType(), mode.isBuyInsurance(), mode.getOrderId());
                     }
                 });
+    }
+
+    /**
+     * 显示被保险人信息
+     * @param listener
+     */
+    @Override
+    public void showInsurancDialog(TaskControl.OnTaskListener listener) {
+        //查询被保险人信息
+        mode.queryInsuranceInfor()
+                .subscribe(new NetObserver<List<OrderInsuranceInforBean>>(listener) {
+                    @Override
+                    public void doOnSuccess(List<OrderInsuranceInforBean> data) {
+                        mode.saveInsruancUserInfor(data);
+                        view.showInsruanceUserInforDialog(data);
+                    }
+                });
+        ;
+    }
+
+    /**
+     * 选中保险人信息
+     *
+     * @param position 位置
+     * @param currentInsuranceUserInfor     被选中的保险人信息
+     */
+    @Override
+    public void onSelectInsurancUserInfro(int position, OrderInsuranceInforBean currentInsuranceUserInfor) {
+        mode.saveSelectInsuranceInfor(currentInsuranceUserInfor);
+        if (currentInsuranceUserInfor!=null){
+            int insuredType = currentInsuranceUserInfor.getInsuredType();
+            String title="";
+            String number="";
+            if (insuredType==1){
+                title=currentInsuranceUserInfor.getUsername()==null?"":currentInsuranceUserInfor.getUsername();
+                number=currentInsuranceUserInfor.getIdnumber()==null?"":currentInsuranceUserInfor.getIdnumber();
+            }else if (insuredType==2){
+                title=currentInsuranceUserInfor.getCompanyName()==null?"":currentInsuranceUserInfor.getUsername();
+                number=currentInsuranceUserInfor.getCompanyCreditCode()==null?"":currentInsuranceUserInfor.getIdnumber();
+
+            }
+            view.showInsruanceUserInfor(title,number);
+        }
     }
 }

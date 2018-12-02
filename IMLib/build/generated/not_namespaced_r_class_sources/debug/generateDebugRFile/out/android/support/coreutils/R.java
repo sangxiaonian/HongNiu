@@ -62,18 +62,18 @@ public final class R {
     public static final class drawable {
         private drawable() {}
 
-        public static int notification_action_background = 0x7f09006f;
-        public static int notification_bg = 0x7f090070;
-        public static int notification_bg_low = 0x7f090071;
-        public static int notification_bg_low_normal = 0x7f090072;
-        public static int notification_bg_low_pressed = 0x7f090073;
-        public static int notification_bg_normal = 0x7f090074;
-        public static int notification_bg_normal_pressed = 0x7f090075;
-        public static int notification_icon_background = 0x7f090076;
-        public static int notification_template_icon_bg = 0x7f090077;
-        public static int notification_template_icon_low_bg = 0x7f090078;
-        public static int notification_tile_bg = 0x7f090079;
-        public static int notify_panel_notification_icon_bg = 0x7f09007a;
+        public static int notification_action_background = 0x7f090070;
+        public static int notification_bg = 0x7f090071;
+        public static int notification_bg_low = 0x7f090072;
+        public static int notification_bg_low_normal = 0x7f090073;
+        public static int notification_bg_low_pressed = 0x7f090074;
+        public static int notification_bg_normal = 0x7f090075;
+        public static int notification_bg_normal_pressed = 0x7f090076;
+        public static int notification_icon_background = 0x7f090077;
+        public static int notification_template_icon_bg = 0x7f090078;
+        public static int notification_template_icon_low_bg = 0x7f090079;
+        public static int notification_tile_bg = 0x7f09007a;
+        public static int notify_panel_notification_icon_bg = 0x7f09007b;
     }
     public static final class id {
         private id() {}
@@ -123,7 +123,7 @@ public final class R {
     public static final class string {
         private string() {}
 
-        public static int status_bar_notification_info_overflow = 0x7f150082;
+        public static int status_bar_notification_info_overflow = 0x7f150083;
     }
     public static final class style {
         private style() {}

@@ -12,6 +12,7 @@ import com.hongniu.moduleorder.entity.LocationBean;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
 import com.hongniu.moduleorder.entity.OrderCreatParamBean;
 import com.hongniu.moduleorder.entity.OrderDriverPhoneBean;
+import com.hongniu.moduleorder.entity.OrderInsuranceInforBean;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
 import com.hongniu.moduleorder.entity.OrderParamBean;
 import com.hongniu.moduleorder.entity.OrderSearchBean;
@@ -280,6 +281,12 @@ public interface OrderService {
      */
     @POST("hongniu/api/order/deleteReceiptImage")
     Observable<CommonBean<String>> deleteReceiptImage(@Body UpReceiverBean infor);
+
+  /**
+     * 查询被保险人列表
+     */
+    @POST("hongniu/api/userinsured/list")
+    Observable<CommonBean<List<OrderInsuranceInforBean>>> querInsruancUserInfor( );
 
 
 }
