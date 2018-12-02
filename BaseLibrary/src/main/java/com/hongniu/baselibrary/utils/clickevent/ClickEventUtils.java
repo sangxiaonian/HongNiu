@@ -60,8 +60,6 @@ public class ClickEventUtils {
     public List<ItemClickEventBean> getClickEvent() {
         String string = SharedPreferencesUtils.getInstance().getString(TAG);
         List<ItemClickEventBean> stringList = null;
-        JLog.e("点击事件：" + string);
-
         if (!TextUtils.isEmpty(string)) {
             try {
                 stringList = new Gson().fromJson(string, new TypeToken<List<ItemClickEventBean>>() {
