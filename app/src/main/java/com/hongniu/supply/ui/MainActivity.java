@@ -30,6 +30,7 @@ import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.utils.Utils;
+import com.hongniu.baselibrary.utils.clickevent.ClickEventBean;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventParams;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
 import com.hongniu.baselibrary.widget.dialog.UpDialog;
@@ -198,6 +199,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                                 ;
                     }
                 });
+
                 RongIM.getInstance().setMessageAttachedUserInfo(true);
             }
 
@@ -441,6 +443,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             if (loaction != null) {
                 loaction.showFront(DeviceUtils.isBackGround(mContext));
             }
+        }
+
+        ClickEventBean eventParams = ClickEventUtils.getInstance().getEventParams(this);
+        if (eventParams!=null) {
+            HttpMainFactory.upClickEvent(eventParams)
+                    .subscribe(new NetObserver<String>(null) {
+
+                        @Override
+                        public void doOnSuccess(String data) {
+                            JLog.d("clickEvent:  上传完成，清除已上传数据");
+                            ClickEventUtils.getInstance().clear();
+                        }
+                    });
         }
     }
 

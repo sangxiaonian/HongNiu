@@ -140,22 +140,7 @@ public class ChactHelper {
     public ChactHelper setUseInfor(final OnGetUserInforListener listener) {
         this.listener = listener;
         return this;
-//        RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
-//            @Override
-//            public UserInfo getUserInfo(final String s) {
-//                if (listener != null) {
-//                    listener.onGetUserInfor(s)
-//                            .subscribe(new BaseObserver<UserInfor>(null) {
-//                                @Override
-//                                public void onNext(UserInfor infor) {
-//                                    super.onNext(infor);
-//                                    refreshUserInfoCache(s, infor);
-//                                }
-//                            });
-//                }
-//                return null;
-//            }
-//        }, true);
+
     }
 
 
@@ -171,7 +156,13 @@ public class ChactHelper {
      * @param infor
      */
     public void refreshUserInfoCache(String userID, UserInfor infor) {
-        final String name = TextUtils.isEmpty(infor.getContact()) ? infor.getMobile() : infor.getContact();
+        StringBuilder builder=new StringBuilder();
+        if (!TextUtils.isEmpty(infor.getContact())) {
+            builder.append(infor.getContact()).append("\t\t");
+
+        }
+        builder.append(infor.getMobile() );
+        final String name = builder.toString();
         final Uri head = TextUtils.isEmpty(infor.getLogoPath()) ? null : Uri.parse(infor.getLogoPath());
         RongIM.getInstance().refreshUserInfoCache(new UserInfo(userID, name, head));
     }
@@ -181,9 +172,16 @@ public class ChactHelper {
 
     public void put(String userId, UserInfor infor) {
         cache.put(userId, infor);
-//        infor.updateAllAsync("userId = ?", userId);
 
-        final String name = TextUtils.isEmpty(infor.getContact()) ? infor.getMobile() : infor.getContact();
+        StringBuilder builder=new StringBuilder();
+        if (!TextUtils.isEmpty(infor.getContact())) {
+            builder.append(infor.getContact()).append("\t\t");
+
+        }
+        builder.append(infor.getMobile() );
+
+
+        final String name = builder.toString();
         final Uri head = TextUtils.isEmpty(infor.getLogoPath()) ? null : Uri.parse(infor.getLogoPath());
         RongIM.getInstance().refreshUserInfoCache(new UserInfo(userId, name, head));
     }

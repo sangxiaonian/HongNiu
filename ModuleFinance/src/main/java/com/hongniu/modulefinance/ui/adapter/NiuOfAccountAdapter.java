@@ -1,8 +1,10 @@
 package com.hongniu.modulefinance.ui.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hongniu.baselibrary.widget.order.OrderDetailDialog;
@@ -11,7 +13,9 @@ import com.hongniu.modulefinance.control.OnItemClickListener;
 import com.hongniu.modulefinance.entity.NiuOfAccountBean;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
+import com.sang.common.utils.CommonUtils;
 import com.sang.common.widget.dialog.builder.BottomAlertBuilder;
+import com.sang.thirdlibrary.chact.ChactHelper;
 
 import java.util.List;
 
@@ -34,17 +38,37 @@ public class NiuOfAccountAdapter extends XAdapter<NiuOfAccountBean> {
             @Override
             public void initView(View itemView, final int position, final NiuOfAccountBean data) {
                 super.initView(itemView, position, data);
+                View ll_item = itemView.findViewById(R.id.ll_item);
                 TextView tvOrder = itemView.findViewById(R.id.tv_title);
                 TextView tvCarNum = itemView.findViewById(R.id.tv_car_num);
                 TextView tvTime = itemView.findViewById(R.id.tv_time);
                 TextView tvPrice = itemView.findViewById(R.id.tv_price);
+                ImageView imagePhone = itemView.findViewById(R.id.img_phone);
+                ImageView img_chact = itemView.findViewById(R.id.img_chact);
+
+
                 tvCarNum.setVisibility(View.GONE);
-                tvOrder.setText(String.format(mContext.getString(R.string.car_num),data.getCarNumber())  );
-                tvTime.setText(String.format(mContext.getString(R.string.finance_niu_creat_car_time),data.getCreateTime())  );
-                tvPrice.setText(data.getIntegral()+ "个");
+                tvOrder.setText(String.format(mContext.getString(R.string.friend_name), TextUtils.isEmpty(data.getContact())?"":data.getContact())  );
+                tvTime.setText(String.format(mContext.getString(R.string.finance_niu_phone_number),TextUtils.isEmpty(data.getMobile())?"":data.getMobile())  );
+                tvPrice.setText(TextUtils.isEmpty(data.getIntegralStr())?"":data.getIntegralStr() );
+
+                imagePhone.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CommonUtils.toDial(context, data.getMobile());
+                    }
+                });
+
+                img_chact.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ChactHelper.getHelper().startPriver(context, data.getId(), data.getContact());
+
+                    }
+                });
 
 
-                itemView.setOnClickListener(new View.OnClickListener() {
+                ll_item.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (itemClickListener!=null){

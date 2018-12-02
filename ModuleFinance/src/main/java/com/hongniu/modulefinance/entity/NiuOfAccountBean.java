@@ -8,46 +8,66 @@ public class NiuOfAccountBean {
 
 
     /**
-     * carNumber : 沪A99999
-     * createTime : 2018-09-25 21:30:00
-     * integral : 1
-     * relPayBillno : HN20180925212959725083
+     * contact : 周
+     * id : 4
+     * integralStr : +1个
+     * mobile : 17602153410
+     * name : 周
+     * rongToken : kilEjAWD08N6G3tvdnSAfSQnPbxE0G8DcEDeVienvtLNT9cffugAks/nvUDXLk8j3CQbra1YTx0vl/VehQF+sw==
      */
 
-    private String carNumber;
-    private String createTime;
-    private int integral;
-    private String relPayBillno;
+    private String contact;
+    private String id;
+    private String integralStr;
+    private String mobile;
+    private String name;
+    private String rongToken;
 
-    public String getCarNumber() {
-        return carNumber;
+    public String getContact() {
+        return contact;
     }
 
-    public void setCarNumber(String carNumber) {
-        this.carNumber = carNumber;
+    public void setContact(String contact) {
+        this.contact = contact;
     }
 
-    public String getCreateTime() {
-        return createTime;
+    public String getId() {
+        return id;
     }
 
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public int getIntegral() {
-        return integral;
+    public String getIntegralStr() {
+        return integralStr;
     }
 
-    public void setIntegral(int integral) {
-        this.integral = integral;
+    public void setIntegralStr(String integralStr) {
+        this.integralStr = integralStr;
     }
 
-    public String getRelPayBillno() {
-        return relPayBillno;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setRelPayBillno(String relPayBillno) {
-        this.relPayBillno = relPayBillno;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getRongToken() {
+        return rongToken;
+    }
+
+    public void setRongToken(String rongToken) {
+        this.rongToken = rongToken;
     }
 }

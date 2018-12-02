@@ -225,7 +225,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.card_policy:
                 ClickEventUtils.getInstance().onClick(ClickEventParams.首页_牛人保);
-                ToastUtils.getInstance().show("保险");
+//                ToastUtils.getInstance().show("保险");
+                H5Config h5Config = new H5Config("牛人保", "https://www.jianshu.com/p/886f7b7fca7d", true);
+                ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5).withSerializable(Param.TRAN, h5Config).navigation(getContext());
+
                 break;
             case R.id.card_yongjin:
                 ArouterUtils.getInstance().builder(ArouterParamFestivity.activity_festivity_home).navigation(getContext());

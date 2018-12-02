@@ -2222,7 +2222,6 @@ string account
 string added_stickers
 string app_name
 string cancel
-string car_num
 string car_title
 string carnum_error
 string deleted
@@ -2231,8 +2230,9 @@ string download_progress
 string download_sticker
 string finance
 string finance_add_new_pay_way
-string finance_niu_creat_car_time
+string finance_niu_phone_number
 string finish
+string friend_name
 string hongniu_agreement
 string login_add_car
 string login_add_car_modification
@@ -2644,9 +2644,12 @@ string rc_notice_network_unavailable
 string rc_notice_select_one_picture_at_last
 string rc_notice_tick
 string rc_notification_channel_name
+string rc_notification_contact
 string rc_notification_error_ssl_cert_invalid
+string rc_notification_msg
 string rc_notification_new_msg
 string rc_notification_new_plural_msg
+string rc_notification_send
 string rc_notification_ticker_text
 string rc_other_is_sharing_location
 string rc_others_are_sharing_location
