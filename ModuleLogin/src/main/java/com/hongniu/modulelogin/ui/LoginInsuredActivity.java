@@ -14,14 +14,12 @@ import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
+import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
-import com.hongniu.baselibrary.entity.LoginPersonInfor;
 import com.hongniu.baselibrary.entity.UpImgData;
-import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.PickerDialogUtils;
 import com.hongniu.baselibrary.utils.PictureSelectorUtils;
-import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.modulelogin.LoginUtils;
 import com.hongniu.modulelogin.R;
 import com.hongniu.modulelogin.entity.Citys;
@@ -31,7 +29,6 @@ import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.sang.common.event.BusFactory;
 import com.sang.common.imgload.ImageLoader;
 import com.sang.common.net.error.NetException;
 import com.sang.common.net.rx.BaseObserver;
@@ -133,7 +130,7 @@ public class LoginInsuredActivity extends BaseActivity implements View.OnClickLi
         if (i == R.id.bt_save) {
             if (check()) {
                 getValues();
-                Observable<CommonBean<String>> observable;
+                Observable<CommonBean<LoginCreatInsuredBean>> observable;
                 if (headPath != null && creatInsuredBean.getInsuredType() == 2) {
                     final List<String> list = new ArrayList<>();
                     list.add(headPath);
@@ -172,9 +169,9 @@ public class LoginInsuredActivity extends BaseActivity implements View.OnClickLi
                                             ;
                                 }
                             })
-                            .flatMap(new Function<String, ObservableSource<CommonBean<String>>>() {
+                            .flatMap(new Function<String, Observable<CommonBean<LoginCreatInsuredBean>>>() {
                                 @Override
-                                public ObservableSource<CommonBean<String>> apply(String s) throws Exception {
+                                public Observable<CommonBean<LoginCreatInsuredBean>> apply(String s) throws Exception {
                                     creatInsuredBean.setImageUrl(s);
                                     return HttpLoginFactory.creatInsuredInfor(creatInsuredBean);
                                 }
@@ -183,11 +180,14 @@ public class LoginInsuredActivity extends BaseActivity implements View.OnClickLi
                     observable = HttpLoginFactory.creatInsuredInfor(creatInsuredBean);
                 }
                 observable
-                        .subscribe(new NetObserver<String>(this) {
+                        .subscribe(new NetObserver<LoginCreatInsuredBean>(this) {
                             @Override
-                            public void doOnSuccess(String data) {
+                            public void doOnSuccess(LoginCreatInsuredBean data) {
 
                                 ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
+                                Intent intent=new Intent();
+                                intent.putExtra(Param.TRAN,data.getId());
+                                setResult(100,intent);
                                 finish();
                             }
                         });

@@ -222,6 +222,13 @@ public class OrderPayControl {
          * @param bean     被选中的保险人信息
          */
         void onSelectInsurancUserInfro(int position, OrderInsuranceInforBean bean);
+
+        /**
+         *  查询被保险人列表
+         * @param
+         * @param listenre
+         */
+        void queryInsurance(String id, TaskControl.OnTaskListener listenre);
     }
 
     public interface IOrderPayMode {

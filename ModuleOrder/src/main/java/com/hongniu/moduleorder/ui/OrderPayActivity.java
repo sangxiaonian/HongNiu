@@ -156,7 +156,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
         payPasswordKeyBord.setPayDes("付款金额");
 
 
-        insuranceDialog=new InsuranceDialog(mContext);
+        insuranceDialog = new InsuranceDialog(mContext);
 
     }
 
@@ -169,7 +169,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
         conInsurance.setVisibility(View.GONE);
         btBuy.setVisibility(View.VISIBLE);
 
-        tv_instances_per_infor.setText(String.format(getString(R.string.order_pay_insurance_infor),"",""));
+        tv_instances_per_infor.setText(String.format(getString(R.string.order_pay_insurance_infor), "", ""));
 
     }
 
@@ -257,7 +257,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
             buyInsuranceDialog.show();
         } else if (i == R.id.img_dai) {
             aleartPop.show(v);
-        }else if (i == R.id.tv_instances_per_infor) {
+        } else if (i == R.id.tv_instances_per_infor) {
             payPresent.showInsurancDialog(this);
         }
     }
@@ -305,14 +305,17 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
     }
 
     private CenterAlertBuilder creatDialog(String title, String content, String btleft, String btRight) {
-        return Utils.creatDialog(mContext,title,content,btleft,btRight);
+        return Utils.creatDialog(mContext, title, content, btleft, btRight);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == Activity.RESULT_OK) {
+        if (resultCode == 100&&requestCode==100) {
+            payPresent.queryInsurance(data.getStringExtra(Param.TRAN), this);
+
+        } else if (resultCode == Activity.RESULT_OK) {
             int payResult = data.getIntExtra("payResult", 0);
             String msg = "";
 
@@ -422,6 +425,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
 
     /**
      * 开始支付并调往支付界面
+     *
      * @param data
      * @param payType
      * @param buyInsurance
@@ -429,7 +433,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
      */
     @Override
     public void jumpToPay(PayBean data, int payType, boolean buyInsurance, String orderId) {
-        WaitePayActivity.startPay(this, payType, data, orderId,buyInsurance, Param.isDebug);
+        WaitePayActivity.startPay(this, payType, data, orderId, buyInsurance, Param.isDebug);
     }
 
     /**
@@ -463,6 +467,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
 
     /**
      * 单独购买保险却尚未选择保险
+     *
      * @param title
      */
     @Override
@@ -554,7 +559,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
      */
     @Override
     public void showInsruanceUserInfor(String name, String number) {
-        tv_instances_per_infor.setText(String.format(getString(R.string.order_pay_insurance_infor),name,number));
+        tv_instances_per_infor.setText(String.format(getString(R.string.order_pay_insurance_infor), name, number));
     }
 
     /**
@@ -620,12 +625,12 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
     @Override
     public void onChoice(DialogControl.IDialog dialog, int position, OrderInsuranceInforBean bean) {
         dialog.dismiss();
-        payPresent.onSelectInsurancUserInfro(position,bean);
+        payPresent.onSelectInsurancUserInfro(position, bean);
     }
 
     @Override
     public void onAddClick(DialogControl.IDialog dialog) {
         dialog.dismiss();
-        ArouterUtils.getInstance().builder(ArouterParamLogin.activity_login_insured).navigation(mContext);
+        ArouterUtils.getInstance().builder(ArouterParamLogin.activity_login_insured).navigation((Activity) mContext,100);
     }
 }

@@ -117,7 +117,7 @@ public interface LoginService {
      * @param beans
      */
     @POST("hongniu/api/userinsured/add")
-    Observable<CommonBean<String>> creatInsuredInfor(@Body LoginCreatInsuredBean beans);
+    Observable<CommonBean<LoginCreatInsuredBean>> creatInsuredInfor(@Body LoginCreatInsuredBean beans);
 
 
 }

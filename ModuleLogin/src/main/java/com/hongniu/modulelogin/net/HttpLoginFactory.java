@@ -182,10 +182,10 @@ public class HttpLoginFactory {
     /**
      * 创建被保险人信息
      */
-    public static Observable<CommonBean<String>> creatInsuredInfor(LoginCreatInsuredBean bean) {
+    public static Observable<CommonBean<LoginCreatInsuredBean>> creatInsuredInfor(LoginCreatInsuredBean bean) {
        return LoginClient.getInstance().getLoginService()
                 .creatInsuredInfor(bean)
-                .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
+                .compose(RxUtils.<CommonBean<LoginCreatInsuredBean>>getSchedulersObservableTransformer());
     }
 
 

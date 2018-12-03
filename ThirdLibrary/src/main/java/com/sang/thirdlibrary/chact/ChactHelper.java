@@ -130,7 +130,8 @@ public class ChactHelper {
      * @param title
      */
     public void startPriver(Context context, String userID, String title) {
-        RongIM.getInstance().startPrivateChat(context, userID, title);
+
+        RongIM.getInstance().startPrivateChat(context, userID, title==null?"聊天":title);
 
     }
 

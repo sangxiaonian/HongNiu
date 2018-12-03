@@ -47,8 +47,10 @@ public class NiuOfAccountAdapter extends XAdapter<NiuOfAccountBean> {
                 ImageView img_chact = itemView.findViewById(R.id.img_chact);
 
 
+                final String name = !TextUtils.isEmpty(data.getName()) ?   data.getName():(TextUtils.isEmpty(data.getContact())?"":data.getContact());
+
                 tvCarNum.setVisibility(View.GONE);
-                tvOrder.setText(String.format(mContext.getString(R.string.friend_name), TextUtils.isEmpty(data.getContact())?"":data.getContact())  );
+                tvOrder.setText(String.format(mContext.getString(R.string.friend_name), name)  );
                 tvTime.setText(String.format(mContext.getString(R.string.finance_niu_phone_number),TextUtils.isEmpty(data.getMobile())?"":data.getMobile())  );
                 tvPrice.setText(TextUtils.isEmpty(data.getIntegralStr())?"":data.getIntegralStr() );
 
@@ -62,7 +64,7 @@ public class NiuOfAccountAdapter extends XAdapter<NiuOfAccountBean> {
                 img_chact.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ChactHelper.getHelper().startPriver(context, data.getId(), data.getContact());
+                        ChactHelper.getHelper().startPriver(context, data.getId(), name);
 
                     }
                 });

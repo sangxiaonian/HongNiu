@@ -74,21 +74,7 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
                     public void doOnSuccess(List<OrderInsuranceInforBean> data) {
                         mode.saveInsruancUserInfor(data);
                         OrderInsuranceInforBean currentInsuranceUserInfor = mode.getCurrentInsuranceUserInfor();
-                        if (currentInsuranceUserInfor != null) {
-                            int insuredType = currentInsuranceUserInfor.getInsuredType();
-                            String title = "";
-                            String number = "";
-                            if (insuredType == 1) {
-                                title = currentInsuranceUserInfor.getUsername() == null ? "" : currentInsuranceUserInfor.getUsername();
-                                number = currentInsuranceUserInfor.getIdnumber() == null ? "" : currentInsuranceUserInfor.getIdnumber();
-                            } else if (insuredType == 2) {
-                                title = currentInsuranceUserInfor.getCompanyName() == null ? "" : currentInsuranceUserInfor.getUsername();
-                                number = currentInsuranceUserInfor.getCompanyCreditCode() == null ? "" : currentInsuranceUserInfor.getIdnumber();
-
-                            }
-                            view.showInsruanceUserInfor(title, number);
-
-                        }
+                        showInsurance(currentInsuranceUserInfor);
                     }
                 });
         ;
@@ -302,7 +288,37 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
      */
     @Override
     public void onSelectInsurancUserInfro(int position, OrderInsuranceInforBean currentInsuranceUserInfor) {
-        mode.saveSelectInsuranceInfor(currentInsuranceUserInfor);
+
+        showInsurance(currentInsuranceUserInfor);
+    }
+
+    /**
+     * 查询被保险人列表
+     *
+     * @param id
+     * @param listenre
+     */
+    @Override
+    public void queryInsurance(final String id, TaskControl.OnTaskListener listenre) {
+        mode.queryInsuranceInfor()
+                .subscribe(new NetObserver<List<OrderInsuranceInforBean>>(listenre) {
+                    @Override
+                    public void doOnSuccess(List<OrderInsuranceInforBean> data) {
+                        if (!TextUtils.isEmpty(id)){
+                            for (OrderInsuranceInforBean datum : data) {
+                                if (id.equals(datum.getId())) {
+                                    mode.saveInsruancUserInfor(data);
+                                    showInsurance(datum);
+                                }
+                            }
+                        }
+
+
+                    }
+                });
+    }
+
+    private void showInsurance(OrderInsuranceInforBean currentInsuranceUserInfor){
         if (currentInsuranceUserInfor != null) {
             int insuredType = currentInsuranceUserInfor.getInsuredType();
             String title = "";
@@ -311,11 +327,13 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
                 title = currentInsuranceUserInfor.getUsername() == null ? "" : currentInsuranceUserInfor.getUsername();
                 number = currentInsuranceUserInfor.getIdnumber() == null ? "" : currentInsuranceUserInfor.getIdnumber();
             } else if (insuredType == 2) {
-                title = currentInsuranceUserInfor.getCompanyName() == null ? "" : currentInsuranceUserInfor.getCompanyName();
-                number = currentInsuranceUserInfor.getCompanyCreditCode() == null ? "" : currentInsuranceUserInfor.getCompanyCreditCode();
+                title = currentInsuranceUserInfor.getCompanyName() == null ? "" : currentInsuranceUserInfor.getUsername();
+                number = currentInsuranceUserInfor.getCompanyCreditCode() == null ? "" : currentInsuranceUserInfor.getIdnumber();
 
             }
+            mode.saveSelectInsuranceInfor(currentInsuranceUserInfor);
             view.showInsruanceUserInfor(title, number);
+
         }
     }
 }

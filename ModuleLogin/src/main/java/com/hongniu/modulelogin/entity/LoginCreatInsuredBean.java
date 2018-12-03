@@ -7,6 +7,8 @@ package com.hongniu.modulelogin.entity;
  */
 public class LoginCreatInsuredBean {
 
+    private String id;
+
     /**
      *  true	string	个人姓名（身份为个人有此项）
       */
@@ -63,6 +65,15 @@ public class LoginCreatInsuredBean {
      *      true	int	投保人类型 1个人 2公司
       */
     private int insuredType	   ;
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getUsername() {
         return username;
