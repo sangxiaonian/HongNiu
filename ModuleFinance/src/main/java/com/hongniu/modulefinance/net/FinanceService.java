@@ -3,6 +3,7 @@ package com.hongniu.modulefinance.net;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
+import com.hongniu.baselibrary.entity.WalletDetail;
 import com.hongniu.modulefinance.entity.AccountFloowParamBean;
 import com.hongniu.modulefinance.entity.BalanceOfAccountBean;
 import com.hongniu.modulefinance.entity.BalanceWithDrawBean;
@@ -11,9 +12,9 @@ import com.hongniu.modulefinance.entity.FinanceQueryCarDetailMap;
 import com.hongniu.modulefinance.entity.NiuOfAccountBean;
 import com.hongniu.modulefinance.entity.QueryExpendBean;
 import com.hongniu.modulefinance.entity.QueryExpendResultBean;
-import com.hongniu.baselibrary.entity.WalletDetail;
 
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
@@ -64,7 +65,6 @@ public interface FinanceService {
     Observable<CommonBean<PageBean<OrderDetailBean>>> queryFinance(@Body QueryExpendBean infor);
 
 
-
     /**
      * 查询钱包账户流水
      *
@@ -89,8 +89,8 @@ public interface FinanceService {
      * @param bean
      * @return
      */
-    @POST("hongniu//api/account/cardetails")
-    Observable<CommonBean<FinanceQueryCarDetailMap>> queryCarOrderDetails(@Body CareNumPageBean bean);
+    @POST("hongniu/api/account/userOrderdetails")
+    Observable<CommonBean<List<FinanceQueryCarDetailMap>>> queryCarOrderDetails(@Body CareNumPageBean bean);
 
     /**
      * 获取我的支付方式

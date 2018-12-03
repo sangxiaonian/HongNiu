@@ -22,18 +22,21 @@ import java.util.List;
 import io.reactivex.Observable;
 
 /**
+ * 用户订单明细
  * 车辆订单明细页面
  */
 @Route(path = ArouterParamsFinance.activity_finance_car_order_detail)
 public class FinanceCarOrderDetailActivity extends RefrushActivity<FinanceQueryCarDetailBean> {
 
-    private String title;
+    private String title;//用户名称
+    private String id;//用户id
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finance_car_order_detail);
-        title = getIntent().getStringExtra(Param.TRAN);
+        id = getIntent().getStringExtra(Param.TRAN);
+        title = getIntent().getStringExtra(Param.TITLE);
         setToolbarTitle(title);
         initView();
         initData();
@@ -57,7 +60,7 @@ public class FinanceCarOrderDetailActivity extends RefrushActivity<FinanceQueryC
 
     @Override
     protected Observable<CommonBean<PageBean<FinanceQueryCarDetailBean>>> getListDatas() {
-        return HttpFinanceFactory.queryCarOrderDetails(currentPage, title);
+        return HttpFinanceFactory.queryCarOrderDetails(currentPage, id);
     }
 
     @Override

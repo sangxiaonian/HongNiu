@@ -7,11 +7,11 @@ import com.hongniu.baselibrary.entity.PagerParambean;
  * 努力，为梦长留
  */
 public class CareNumPageBean extends PagerParambean {
-    public String carNum;
+    public String userId;
 
-    public CareNumPageBean(int currentPage, String carNumber) {
+    public CareNumPageBean(int currentPage, String userId) {
         super(currentPage);
-        this.carNum = carNumber;
+        this.userId = userId;
     }
 
 

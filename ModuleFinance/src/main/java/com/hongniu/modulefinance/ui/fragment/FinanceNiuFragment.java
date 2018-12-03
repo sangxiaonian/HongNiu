@@ -2,6 +2,7 @@ package com.hongniu.modulefinance.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -68,6 +69,10 @@ public class FinanceNiuFragment extends RefrushFragmet<NiuOfAccountBean> impleme
 
     @Override
     public void onItemClick(int position, NiuOfAccountBean niuOfAccountBean) {
-        ArouterUtils.getInstance().builder(ArouterParamsFinance.activity_finance_car_order_detail).withString(Param.TRAN,niuOfAccountBean.getContact()).navigation(getContext());
+        ArouterUtils
+                .getInstance().builder(ArouterParamsFinance.activity_finance_car_order_detail)
+                .withString(Param.TRAN,  niuOfAccountBean.getId())
+                .withString(Param.TITLE, TextUtils.isEmpty(niuOfAccountBean.getContact())?niuOfAccountBean.getMobile():niuOfAccountBean.getContact())
+                .navigation(getContext());
     }
 }

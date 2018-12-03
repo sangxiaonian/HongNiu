@@ -1,6 +1,5 @@
 package com.hongniu.modulefinance.entity;
 
-import com.google.gson.annotations.SerializedName;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 
 import java.util.List;
@@ -13,13 +12,22 @@ import java.util.Map;
 public class FinanceQueryCarDetailMap {
 
 
-    private Map<String, List<OrderDetailBean>> carDetails;
+    private String dates;
+    private  List<OrderDetailBean> list;
 
-    public Map<String, List<OrderDetailBean>> getCarDetails() {
-        return carDetails;
+    public String getDates() {
+        return dates;
     }
 
-    public void setCarDetails(Map<String, List<OrderDetailBean>> carDetails) {
-        this.carDetails = carDetails;
+    public void setDates(String dates) {
+        this.dates = dates;
+    }
+
+    public List<OrderDetailBean> getList() {
+        return list;
+    }
+
+    public void setList(List<OrderDetailBean> list) {
+        this.list = list;
     }
 }

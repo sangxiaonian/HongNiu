@@ -157,16 +157,16 @@ public class HttpFinanceFactory {
      * 牛贝待入账，已入账查询
   * @param currentPage
   */
-    public static Observable<CommonBean<PageBean<FinanceQueryCarDetailBean>>> queryCarOrderDetails(int currentPage, final String carNumber) {
-        CareNumPageBean bean = new CareNumPageBean(currentPage,carNumber);
+    public static Observable<CommonBean<PageBean<FinanceQueryCarDetailBean>>> queryCarOrderDetails(int currentPage, final String userId) {
+        CareNumPageBean bean = new CareNumPageBean(currentPage,userId);
 
        return FinanceClient
                 .getInstance()
                 .getService()
                 .queryCarOrderDetails(bean)
-                .map(new Function<CommonBean<FinanceQueryCarDetailMap>, CommonBean<PageBean<FinanceQueryCarDetailBean>>>() {
+                .map(new Function<CommonBean<List<FinanceQueryCarDetailMap>>, CommonBean<PageBean<FinanceQueryCarDetailBean>>>() {
                     @Override
-                    public CommonBean<PageBean<FinanceQueryCarDetailBean>> apply(CommonBean<FinanceQueryCarDetailMap> financeQueryCarDetailCommonBean) throws Exception {
+                    public CommonBean<PageBean<FinanceQueryCarDetailBean>> apply(CommonBean<List<FinanceQueryCarDetailMap>> financeQueryCarDetailCommonBean) throws Exception {
 
                         CommonBean<PageBean<FinanceQueryCarDetailBean>> bean = new CommonBean<>();
                         bean.setMsg(financeQueryCarDetailCommonBean.getMsg());
@@ -174,17 +174,18 @@ public class HttpFinanceFactory {
                         PageBean<FinanceQueryCarDetailBean> pageBean=new PageBean<>();
                         pageBean.setList(new ArrayList<FinanceQueryCarDetailBean>());
                         bean.setData(pageBean);
-                        FinanceQueryCarDetailMap data = financeQueryCarDetailCommonBean.getData();
-                        if (data!=null&&data.getCarDetails()!=null){
-                            Map<String, List<OrderDetailBean>> carDetails = data.getCarDetails();
-                            Set<String> strings =carDetails.keySet();
-                            for (String string : strings) {
-                                pageBean.getList().add(new FinanceQueryCarDetailBean(1,string,null));
-                                List<OrderDetailBean> beans = carDetails.get(string);
-                                for (OrderDetailBean orderDetailBean : beans) {
-                                    pageBean.getList().add(new FinanceQueryCarDetailBean(0,string,orderDetailBean));
+                        List<FinanceQueryCarDetailMap> data = financeQueryCarDetailCommonBean.getData();
+                        if (data!=null ){
+
+                            for (FinanceQueryCarDetailMap datum : data) {
+                                pageBean.getList().add(new FinanceQueryCarDetailBean(1,datum.getDates(),null));
+                                if (datum.getList()!=null) {
+                                    for (OrderDetailBean orderDetailBean : datum.getList()) {
+                                        pageBean.getList().add(new FinanceQueryCarDetailBean(0,datum.getDates(),orderDetailBean));
+                                    }
                                 }
                             }
+//
                         }
                         return bean;
                     }
