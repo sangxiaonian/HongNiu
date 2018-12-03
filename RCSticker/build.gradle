@@ -1,13 +1,13 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion '28.0.2'
 
 
+    compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 27
+
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 2018112221
         versionName "2.9.8 Dev"
 
@@ -30,9 +30,9 @@ android {
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
-    api 'com.android.support:appcompat-v7:26.0.0'
+    api project(':CommonLibrary')
     api project(':IMKit')
-    api 'com.google.code.gson:gson:2.2.4'
+
 }
 
 //生成 jar 名字

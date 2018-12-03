@@ -1277,11 +1277,8 @@ string rc_init_failed
 string rc_location_sharing_ended
 string rc_media_message_default_save_path
 string rc_notification_channel_name
-string rc_notification_contact
-string rc_notification_msg
 string rc_notification_new_msg
 string rc_notification_new_plural_msg
-string rc_notification_send
 string rc_notification_ticker_text
 string rc_quit_custom_service
 string save
