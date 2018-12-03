@@ -40,6 +40,11 @@ public class Param {
         festivity_invity_notify = url + "static/index.html#/invite_rule";
     }
 
+    /**
+     * 牛人保
+     */
+    public static final String NIURENBAO ="https://api.hongniudai.cn/static/html/policyintroduction.html";
+
 
     /**
      * 分页查找每页数据数量

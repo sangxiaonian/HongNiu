@@ -345,7 +345,9 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
 
 
         int firstPoint = -1;
+        int firstChat = -1;
         int secondPoint = -1;
+        int secondChat = -1;
 
         SpannableStringBuilder builder = new SpannableStringBuilder();
         builder
@@ -359,12 +361,16 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                 .append(" ")
         ;
 
+        final String gap = "\t\t\t\t";
 
         if (!TextUtils.isEmpty(carOwnerPhone)) {//如果司机电话不为空，则拼接司机电话
             builder.append(carOwnerPhone)
-                    .append(" ").append(" ").append(" ")
-                    .append(" ").append(" ");
+                    .append(gap)
+            ;
             firstPoint = builder.toString().length();
+            builder.append(gap)
+            ;
+            firstChat = builder.toString().length();
         }
 
         builder.append("\n")
@@ -375,23 +381,22 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                 .append(roleBottom)
                 .append(driverName == null ? "" : driverName).append(" ")
                 .append(driverPhone == null ? "" : driverPhone)
-                .append(" ")
-                .append(" ")
-                .append(" ")
-                .append(" ")
-                .append(" ")
+
         ;
 
         if (!TextUtils.isEmpty(driverPhone)) {
+            builder.append(gap);
             secondPoint = builder.toString().length();
+            builder.append(gap);
+            secondChat = builder.toString().length();
         }
 
         if (firstPoint > 0) {
-            creatPhoneSpan(firstPoint - 3, builder, new ClickableSpan() {
+            creatPhoneSpan(firstPoint - 1, builder, new ClickableSpan() {
                 @Override
                 public void onClick(View widget) {
 
-                    switch (roleState){
+                    switch (roleState) {
                         case DRIVER:
 
                             ClickEventUtils.getInstance().onClick(ClickEventParams.我是司机_拨打电话);
@@ -408,11 +413,11 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                     CommonUtils.toDial(getContext(), carOwnerPhone);
                 }
             });
-            creatChactSpan(firstPoint - 1, builder, new ClickableSpan() {
+            creatChactSpan(firstChat - 1, builder, new ClickableSpan() {
                 @Override
                 public void onClick(View widget) {
                     ChactHelper.getHelper().startPriver(getContext(), ownerid, carOwnerName);
-                    switch (roleState){
+                    switch (roleState) {
                         case DRIVER:
 
                             ClickEventUtils.getInstance().onClick(ClickEventParams.我是司机_聊天);
@@ -433,11 +438,11 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
 
         if (secondPoint > 0) {
 
-            creatPhoneSpan(secondPoint - 3, builder, new ClickableSpan() {
+            creatPhoneSpan(secondPoint -1, builder, new ClickableSpan() {
                 @Override
                 public void onClick(View widget) {
                     CommonUtils.toDial(getContext(), driverPhone);
-                    switch (roleState){
+                    switch (roleState) {
                         case DRIVER:
 
                             ClickEventUtils.getInstance().onClick(ClickEventParams.我是司机_拨打电话);
@@ -453,11 +458,11 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                     }
                 }
             });
-            creatChactSpan(secondPoint - 1, builder, new ClickableSpan() {
+            creatChactSpan(secondChat - 1, builder, new ClickableSpan() {
                 @Override
                 public void onClick(View widget) {
                     ChactHelper.getHelper().startPriver(getContext(), driverID, driverName);
-                    switch (roleState){
+                    switch (roleState) {
                         case DRIVER:
 
                             ClickEventUtils.getInstance().onClick(ClickEventParams.我是司机_聊天);
@@ -537,7 +542,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("取消订单");
                 }
 
-                switch (roleState){
+                switch (roleState) {
                     case DRIVER:
 
                         break;
@@ -558,7 +563,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                 } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("继续付款");
                 }
-                switch (roleState){
+                switch (roleState) {
                     case DRIVER:
 
                         break;
@@ -577,7 +582,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                 } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("购买保险");
                 }
-                switch (roleState){
+                switch (roleState) {
                     case DRIVER:
 
                         break;
@@ -597,7 +602,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                 } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("查看保单");
                 }
-                switch (roleState){
+                switch (roleState) {
                     case DRIVER:
                         break;
                     case CAR_OWNER:
@@ -617,7 +622,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("查看轨迹");
                 }
 
-                switch (roleState){
+                switch (roleState) {
                     case DRIVER:
                         break;
                     case CAR_OWNER:
@@ -638,7 +643,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("确认收货");
                 }
 
-                switch (roleState){
+                switch (roleState) {
                     case DRIVER:
                         break;
                     case CAR_OWNER:
@@ -658,7 +663,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("开始发车");
                 }
 
-                switch (roleState){
+                switch (roleState) {
                     case DRIVER:
                         ClickEventUtils.getInstance().onClick(ClickEventParams.我是司机_开始发车);
 
@@ -678,7 +683,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                 } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("查看路线");
                 }
-                switch (roleState){
+                switch (roleState) {
                     case DRIVER:
                         ClickEventUtils.getInstance().onClick(ClickEventParams.我是司机_货车导航);
 
@@ -697,7 +702,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                 } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("确认到达");
                 }
-                switch (roleState){
+                switch (roleState) {
                     case DRIVER:
                         ClickEventUtils.getInstance().onClick(ClickEventParams.我是司机_确认到达);
 
@@ -715,7 +720,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                 } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("查看回单");
                 }
-                switch (roleState){
+                switch (roleState) {
                     case DRIVER:
                         ClickEventUtils.getInstance().onClick(ClickEventParams.我是司机_查看回单);
 
@@ -735,7 +740,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                 } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("上传回单");
                 }
-                switch (roleState){
+                switch (roleState) {
                     case DRIVER:
                         ClickEventUtils.getInstance().onClick(ClickEventParams.我是司机_上传回单);
 
@@ -752,7 +757,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                 } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("修改回单");
                 }
-                switch (roleState){
+                switch (roleState) {
                     case DRIVER:
                         ClickEventUtils.getInstance().onClick(ClickEventParams.我是司机_修改回单);
 
@@ -769,7 +774,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                 } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("修改订单");
                 }
-                switch (roleState){
+                switch (roleState) {
                     case DRIVER:
 
                         break;
@@ -787,7 +792,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                 } else {
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("查看货单");
                 }
-                switch (roleState){
+                switch (roleState) {
                     case DRIVER:
 
                         ClickEventUtils.getInstance().onClick(ClickEventParams.我是司机_查看货单);

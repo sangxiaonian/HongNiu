@@ -2,6 +2,7 @@ package com.hongniu.supply.ui;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -29,6 +30,12 @@ public class H5Activity extends BaseActivity implements XWebView.OnReceivedTitle
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_h5);
         setToolbarTitle("");
+        setToolBarLeftClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         initView();
         initData();
     }
