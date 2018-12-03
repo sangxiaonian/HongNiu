@@ -37,6 +37,18 @@ public class OrderParamBean  {
     private boolean onlinePay;
     private String payPassword;
 
+    /**
+     * 被保险人ID
+     */
+    private String insuranceUserId;
+
+    public String getInsuranceUserId() {
+        return insuranceUserId;
+    }
+
+    public void setInsuranceUserId(String insuranceUserId) {
+        this.insuranceUserId = insuranceUserId;
+    }
 
     public String getPayPassword() {
         return payPassword;

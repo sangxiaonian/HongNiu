@@ -463,10 +463,11 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
 
     /**
      * 单独购买保险却尚未选择保险
+     * @param title
      */
     @Override
-    public void noChoiceInsurance() {
-        ToastUtils.getInstance().show("请选择投保金额");
+    public void noChoiceInsurance(String title) {
+        ToastUtils.getInstance().show(title);
     }
 
     /**

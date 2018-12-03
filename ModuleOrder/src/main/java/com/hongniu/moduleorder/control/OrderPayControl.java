@@ -85,8 +85,9 @@ public class OrderPayControl {
 
         /**
          * 单独购买保险却尚未选择保险
+         * @param title
          */
-        void noChoiceInsurance();
+        void noChoiceInsurance(String title);
 
         /**
          * 是否默认选中微信，余额是否充足

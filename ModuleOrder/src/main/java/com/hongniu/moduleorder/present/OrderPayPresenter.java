@@ -59,7 +59,7 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
                     public void doOnSuccess(WalletDetail data) {
                         mode.setAccountInfor(data);
                         //有充足的余额的情况，查询完成之后直接选择余额支付
-                        if (mode.isHasEnoughBalance()){
+                        if (mode.isHasEnoughBalance()) {
                             view.changePayWayToBanlace(mode.isHasEnoughBalance(), mode.getPayType());
                         }
 
@@ -69,28 +69,28 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
 
         //查询被保险人信息
         mode.queryInsuranceInfor()
-            .subscribe(new NetObserver<List<OrderInsuranceInforBean>>(null) {
-                @Override
-                public void doOnSuccess(List<OrderInsuranceInforBean> data) {
-                    mode.saveInsruancUserInfor(data);
-                    OrderInsuranceInforBean currentInsuranceUserInfor = mode.getCurrentInsuranceUserInfor();
-                    if (currentInsuranceUserInfor!=null){
-                        int insuredType = currentInsuranceUserInfor.getInsuredType();
-                        String title="";
-                        String number="";
-                        if (insuredType==1){
-                            title=currentInsuranceUserInfor.getUsername()==null?"":currentInsuranceUserInfor.getUsername();
-                            number=currentInsuranceUserInfor.getIdnumber()==null?"":currentInsuranceUserInfor.getIdnumber();
-                        }else if (insuredType==2){
-                            title=currentInsuranceUserInfor.getCompanyName()==null?"":currentInsuranceUserInfor.getUsername();
-                            number=currentInsuranceUserInfor.getCompanyCreditCode()==null?"":currentInsuranceUserInfor.getIdnumber();
+                .subscribe(new NetObserver<List<OrderInsuranceInforBean>>(null) {
+                    @Override
+                    public void doOnSuccess(List<OrderInsuranceInforBean> data) {
+                        mode.saveInsruancUserInfor(data);
+                        OrderInsuranceInforBean currentInsuranceUserInfor = mode.getCurrentInsuranceUserInfor();
+                        if (currentInsuranceUserInfor != null) {
+                            int insuredType = currentInsuranceUserInfor.getInsuredType();
+                            String title = "";
+                            String number = "";
+                            if (insuredType == 1) {
+                                title = currentInsuranceUserInfor.getUsername() == null ? "" : currentInsuranceUserInfor.getUsername();
+                                number = currentInsuranceUserInfor.getIdnumber() == null ? "" : currentInsuranceUserInfor.getIdnumber();
+                            } else if (insuredType == 2) {
+                                title = currentInsuranceUserInfor.getCompanyName() == null ? "" : currentInsuranceUserInfor.getUsername();
+                                number = currentInsuranceUserInfor.getCompanyCreditCode() == null ? "" : currentInsuranceUserInfor.getIdnumber();
+
+                            }
+                            view.showInsruanceUserInfor(title, number);
 
                         }
-                        view.showInsruanceUserInfor(title,number);
-
                     }
-                }
-            });
+                });
         ;
 
     }
@@ -200,8 +200,14 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
      */
     @Override
     public void pay(TaskControl.OnTaskListener listener) {
-        if (mode.isInsurance() && !mode.isBuyInsurance()) {
-            view.noChoiceInsurance();
+
+        //单独购买保险界面，却没有购买保险，
+        if ((mode.isInsurance() && !mode.isBuyInsurance())) {
+            view.noChoiceInsurance("请选择投保金额");
+
+//            或者购买保险却没有选择被保险人信息
+        } else if (mode.isBuyInsurance()&&mode.getCurrentInsuranceUserInfor()==null) {
+            view.noChoiceInsurance("请选择被保险人信息");
         } else {
             if (mode.getPayType() == 4) {//余额支付
                 if (Utils.querySetPassword()) {//设置过支付密码
@@ -214,7 +220,7 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
                         .subscribe(new NetObserver<PayBean>(listener) {
                             @Override
                             public void doOnSuccess(PayBean data) {
-                                view.jumpToPay(data, mode.getPayType(),mode.isBuyInsurance(),mode.getOrderId());
+                                view.jumpToPay(data, mode.getPayType(), mode.isBuyInsurance(), mode.getOrderId());
                             }
                         });
             }
@@ -232,7 +238,7 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
     public void paySucccessed() {
         if (mode.isBuyInsurance()) {
             //调往保险购买界面
-            view.jumpToInsurance(mode.getCargoPrice(), mode.getOrderNum(),mode.getOrderId());
+            view.jumpToInsurance(mode.getCargoPrice(), mode.getOrderNum(), mode.getOrderId());
 
         } else {
             view.jumpToMain();
@@ -271,6 +277,7 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
 
     /**
      * 显示被保险人信息
+     *
      * @param listener
      */
     @Override
@@ -290,25 +297,25 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
     /**
      * 选中保险人信息
      *
-     * @param position 位置
-     * @param currentInsuranceUserInfor     被选中的保险人信息
+     * @param position                  位置
+     * @param currentInsuranceUserInfor 被选中的保险人信息
      */
     @Override
     public void onSelectInsurancUserInfro(int position, OrderInsuranceInforBean currentInsuranceUserInfor) {
         mode.saveSelectInsuranceInfor(currentInsuranceUserInfor);
-        if (currentInsuranceUserInfor!=null){
+        if (currentInsuranceUserInfor != null) {
             int insuredType = currentInsuranceUserInfor.getInsuredType();
-            String title="";
-            String number="";
-            if (insuredType==1){
-                title=currentInsuranceUserInfor.getUsername()==null?"":currentInsuranceUserInfor.getUsername();
-                number=currentInsuranceUserInfor.getIdnumber()==null?"":currentInsuranceUserInfor.getIdnumber();
-            }else if (insuredType==2){
-                title=currentInsuranceUserInfor.getCompanyName()==null?"":currentInsuranceUserInfor.getCompanyName();
-                number=currentInsuranceUserInfor.getCompanyCreditCode()==null?"":currentInsuranceUserInfor.getCompanyCreditCode();
+            String title = "";
+            String number = "";
+            if (insuredType == 1) {
+                title = currentInsuranceUserInfor.getUsername() == null ? "" : currentInsuranceUserInfor.getUsername();
+                number = currentInsuranceUserInfor.getIdnumber() == null ? "" : currentInsuranceUserInfor.getIdnumber();
+            } else if (insuredType == 2) {
+                title = currentInsuranceUserInfor.getCompanyName() == null ? "" : currentInsuranceUserInfor.getCompanyName();
+                number = currentInsuranceUserInfor.getCompanyCreditCode() == null ? "" : currentInsuranceUserInfor.getCompanyCreditCode();
 
             }
-            view.showInsruanceUserInfor(title,number);
+            view.showInsruanceUserInfor(title, number);
         }
     }
 }

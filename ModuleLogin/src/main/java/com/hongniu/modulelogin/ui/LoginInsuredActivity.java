@@ -149,7 +149,7 @@ public class LoginInsuredActivity extends BaseActivity implements View.OnClickLi
                             .flatMap(new Function<List<String>, ObservableSource<String>>() {
                                 @Override
                                 public ObservableSource<String> apply(List<String> strings) throws Exception {
-                                    return HttpAppFactory.upImage(4, strings)
+                                    return HttpAppFactory.upImage(7, strings)
                                             .map(new Function<CommonBean<List<UpImgData>>, CommonBean<List<UpImgData>>>() {
                                                 @Override
                                                 public CommonBean<List<UpImgData>> apply(CommonBean<List<UpImgData>> listCommonBean) throws Exception {

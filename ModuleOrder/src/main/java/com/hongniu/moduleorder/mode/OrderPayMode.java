@@ -324,6 +324,12 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
         //线上支付或者购买保险的时候使用选中的支付方式，线下支付一律为2
 //        0微信支付1银联支付2线下支付3支付宝支付
         bean.setPayType((onLine || policy) ? payType : 2);
+
+        if (buyInsurance&&currentInsurancInfor!=null){
+            bean.setInsuranceUserId(currentInsurancInfor.getId());
+        }
+
+
         return bean;
 
     }
