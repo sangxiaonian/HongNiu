@@ -8,6 +8,7 @@ import android.util.LruCache;
 
 import com.sang.common.net.rx.BaseObserver;
 import com.sang.common.utils.JLog;
+import com.sang.common.utils.ToastUtils;
 import com.sang.thirdlibrary.chact.control.ChactControl;
 import com.sang.thirdlibrary.chact.control.OnGetUserInforListener;
 
@@ -151,8 +152,8 @@ public class ChactHelper {
                         callback.onError(errorCode);
                     }
 
-                    if (errorCode.getValue()!=31010){//不是异地登录
-                        connect(context,token,callback);
+                    if (errorCode.getValue()==31010){//不是异地登录
+                        ToastUtils.getInstance().show("异地登录");
                     }
                     JLog.e("初始错误----------");
                     JLog.e("初始错误" + errorCode.getValue());
