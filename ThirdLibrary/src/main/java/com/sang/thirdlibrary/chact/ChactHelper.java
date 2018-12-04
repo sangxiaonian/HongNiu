@@ -115,10 +115,49 @@ public class ChactHelper {
         });
     }
 
-    public void connect(Context context, String token, RongIMClient.ConnectCallback callback) {
+    public void connect(final Context context, final String token, final RongIMClient.ConnectCallback callback) {
         if (context.getApplicationInfo().packageName.equals(getCurProcessName(context.getApplicationContext()))) {
             JLog.e("开始连接服务器");
-            RongIM.connect(token, callback);
+            connect(context, token, new RongIMClient.ConnectCallback() {
+
+                /**
+                 * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
+                 *                  2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
+                 */
+                @Override
+                public void onTokenIncorrect() {
+                    JLog.e("初始化失败");
+                    if (callback!=null){
+                        callback.onTokenIncorrect();
+                    }
+                }
+
+                /**
+                 * 连接融云成功
+                 * @param userid 当前 token 对应的用户 id
+                 */
+                @Override
+                public void onSuccess(String userid) {
+                    JLog.e("初始化成功" + userid);
+                }
+
+                /**
+                 * 连接融云失败
+                 * @param errorCode 错误码，可到官网 查看错误码对应的注释
+                 */
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+                    if (callback!=null){
+                        callback.onError(errorCode);
+                    }
+
+                    if (errorCode.getValue()!=31010){//不是异地登录
+                        connect(context,token,callback);
+                    }
+                    JLog.e("初始错误----------");
+                    JLog.e("初始错误" + errorCode.getValue());
+                }
+            });
         }
     }
 
