@@ -119,7 +119,7 @@ public class ChactHelper {
     public void connect(final Context context, final String token, final RongIMClient.ConnectCallback callback) {
         if (context.getApplicationInfo().packageName.equals(getCurProcessName(context.getApplicationContext()))) {
             JLog.e("开始连接服务器");
-            connect(context, token, new RongIMClient.ConnectCallback() {
+            RongIM.connect(token, new RongIMClient.ConnectCallback() {
 
                 /**
                  * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
