@@ -46,6 +46,7 @@ import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_ENTRY_
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_ENTRY_ORDER;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_PAY;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_START_CAR;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_TRUCK_GUIDE;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_UP_RECEIPT;
 
 /**
@@ -802,6 +803,27 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                         break;
                     case CARGO_OWNER:
                         ClickEventUtils.getInstance().onClick(ClickEventParams.我是货主_查看货单);
+
+                        break;
+                }
+                break;
+
+
+            case ORDER_TRUCK_GUIDE://    = "货车导航";
+                if (listener != null) {
+                    listener.onTruchGuid(orderBean);
+                } else {
+                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("货车导航");
+                }
+                switch (roleState) {
+                    case DRIVER:
+                        ClickEventUtils.getInstance().onClick(ClickEventParams.我是司机_货车导航);
+
+                        break;
+                    case CAR_OWNER:
+
+                        break;
+                    case CARGO_OWNER:
 
                         break;
                 }

@@ -3,8 +3,10 @@ package com.hongniu.baselibrary.widget.order.helper;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.widget.order.CommonOrderUtils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
+import com.sang.common.utils.SharedPreferencesUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,7 @@ import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_ROUT;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_ENTRY_ARRIVE;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_START_CAR;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_TRUCK_GUIDE;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_UP_RECEIPT;
 
 
@@ -55,7 +58,15 @@ public class DriveOwnerOrder extends OwnerOrder implements OrderDetailItemContro
                 if (hasGoodsImage) {//如果存在货单
                     buttonInfors.add(  new ButtonInforBean(ORDER_CHECK_GOODS));//查看货单
                 }
-                buttonInfors.add(  new ButtonInforBean(ORDER_CHECK_ROUT));//查看路线
+
+                if (SharedPreferencesUtils.getInstance().getBoolean(Param.CANTRUCK)){
+                    buttonInfors.add(  new ButtonInforBean(ORDER_TRUCK_GUIDE));//货车导航
+                }else {
+                    buttonInfors.add(  new ButtonInforBean(ORDER_CHECK_ROUT));//查看路线
+                }
+
+
+
                 buttonInfors.add(new ButtonInforBean(1, ORDER_ENTRY_ARRIVE));//确认到达
                 break;
             case HAS_ARRIVED://已到达

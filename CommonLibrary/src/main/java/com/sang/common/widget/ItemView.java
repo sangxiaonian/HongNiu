@@ -57,6 +57,7 @@ public class ItemView extends FrameLayout {
     private int colorCenterHide;
     private int srcLeftShow;//是否显示左侧必填数据
     private ImageView imgLeft;
+    private View inflate;
 
     public ItemView(@NonNull Context context) {
         this(context, null, 0);
@@ -99,7 +100,7 @@ public class ItemView extends FrameLayout {
             ta.recycle();
         }
 
-        View inflate = LayoutInflater.from(context).inflate(R.layout.common_item, this, false);
+        inflate = LayoutInflater.from(context).inflate(R.layout.common_item, this, false);
         addView(inflate);
         tvLeft = inflate.findViewById(R.id.tv_left);
         etCenter = inflate.findViewById(R.id.et_center);
@@ -234,8 +235,6 @@ public class ItemView extends FrameLayout {
         } else {
             viewFound.setVisibility(VISIBLE);
             etCenter.clearFocus();
-            etCenter.setFocusableInTouchMode(false);
-            etCenter.setFocusable(false);
             viewFound.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -245,6 +244,12 @@ public class ItemView extends FrameLayout {
                 }
             });
         }
+
+        etCenter.setFocusableInTouchMode(editable);
+        etCenter.setFocusable(editable);
+        inflate.setFocusableInTouchMode(!editable);
+        inflate.setFocusable(!editable);
+
 
         if (!isEnabled()) {
             viewFound.setVisibility(VISIBLE);

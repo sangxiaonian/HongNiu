@@ -26,6 +26,11 @@ public class Param {
      */
     public static int IMAGECOUNT=10;
 
+    /**
+     * 是否可以货车导航
+     */
+    public static final String CANTRUCK="CANTRUCK";
+
     static {
         if (isDebug) {
 //            url = "http://47.104.130.110:80/";

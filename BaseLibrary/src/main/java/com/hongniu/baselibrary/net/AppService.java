@@ -12,6 +12,7 @@ import com.hongniu.baselibrary.entity.QueryPayPassword;
 import com.hongniu.baselibrary.entity.QueryRongParams;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.entity.SMSParams;
+import com.hongniu.baselibrary.entity.TruckGudieSwitchBean;
 import com.hongniu.baselibrary.entity.UpImgData;
 import com.hongniu.baselibrary.entity.WalletDetail;
 import com.sang.thirdlibrary.chact.UserInfor;
@@ -114,6 +115,12 @@ public interface AppService {
     @POST("hongniu/api/file/uploadFiles")
     Observable<CommonBean<List<UpImgData>>> uploadFilesWithParts(@Body MultipartBody multipartBody);
 
+    /**
+     * 查询是否开启货车导航
+     * @return
+     */
+    @POST("hongniu/api/car/navigationSwitch")
+    Observable<CommonBean<TruckGudieSwitchBean>> queryTruckGuide();
 
 }
 

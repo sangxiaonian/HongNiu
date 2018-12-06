@@ -157,6 +157,10 @@ public class OrderMapCheckPathActivity extends BaseActivity {
         mapView.getMap().addPolyline(lineOption);
     }
 
+    /**
+     * 携带轨迹纠偏
+     * @param bean
+     */
     private void drawPathWithTrace(final OrderDetailBean bean) {
 
         HttpOrderFactory.getPath(bean.getId())

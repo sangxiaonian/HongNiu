@@ -26,6 +26,7 @@ import com.hongniu.baselibrary.entity.CloseActivityEvent;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.QueryPayPassword;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
+import com.hongniu.baselibrary.entity.TruckGudieSwitchBean;
 import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.PermissionUtils;
@@ -48,6 +49,7 @@ import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.JLog;
+import com.sang.common.utils.SharedPreferencesUtils;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
 import com.sang.thirdlibrary.chact.UserInfor;
@@ -224,6 +226,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                         Utils.setPassword(data.isSetPassWord());
                     }
                 });
+
+        //查询是否开启货车导航
+        HttpAppFactory.queryTruckGuide()
+            .subscribe(new NetObserver<TruckGudieSwitchBean>(null) {
+                @Override
+                public void doOnSuccess(TruckGudieSwitchBean data) {
+                    SharedPreferencesUtils.getInstance().putBoolean(Param.CANTRUCK,data.isState());
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    super.onError(e);
+                    SharedPreferencesUtils.getInstance().putBoolean(Param.CANTRUCK,false);
+
+                }
+            });
+        ;
     }
 
     /**

@@ -36,6 +36,93 @@ public class LoginCarInforBean {
     private String id;
     private String cartypename;
 
+
+    /**
+     * true	string	1:微型货车; 2:轻型货车; 3:中型货车; 4:重型货车'
+      */
+    private String vehicleSize	;
+    /**
+     * true	string	货车的总重 ,单位：吨。
+      */
+    private String vehicleLoad	;
+    /**
+     * true	string	货车的载重 ,单位：吨。
+      */
+    private String vehicleWeight	;
+    /**
+     * true	string	货车的最大长度, 单位：米。
+      */
+    private String vehicleLength	;
+    /**
+     * true	string	货车的最大宽度,单位：米。
+      */
+    private String vehicleWidth	;
+    /**
+     * true	string	货车的高度，单位：米。
+      */
+    private String vehicleHeight	;
+    /**
+     * true	string	货车的轴数
+      */
+    private String vehicleAxis	;
+
+
+    public String getVehicleSize() {
+        return vehicleSize;
+    }
+
+    public void setVehicleSize(String vehicleSize) {
+        this.vehicleSize = vehicleSize;
+    }
+
+    public String getVehicleLoad() {
+        return vehicleLoad;
+    }
+
+    public void setVehicleLoad(String vehicleLoad) {
+        this.vehicleLoad = vehicleLoad;
+    }
+
+    public String getVehicleWeight() {
+        return vehicleWeight;
+    }
+
+    public void setVehicleWeight(String vehicleWeight) {
+        this.vehicleWeight = vehicleWeight;
+    }
+
+    public String getVehicleLength() {
+        return vehicleLength;
+    }
+
+    public void setVehicleLength(String vehicleLength) {
+        this.vehicleLength = vehicleLength;
+    }
+
+    public String getVehicleWidth() {
+        return vehicleWidth;
+    }
+
+    public void setVehicleWidth(String vehicleWidth) {
+        this.vehicleWidth = vehicleWidth;
+    }
+
+    public String getVehicleHeight() {
+        return vehicleHeight;
+    }
+
+    public void setVehicleHeight(String vehicleHeight) {
+        this.vehicleHeight = vehicleHeight;
+    }
+
+    public String getVehicleAxis() {
+        return vehicleAxis;
+    }
+
+    public void setVehicleAxis(String vehicleAxis) {
+        this.vehicleAxis = vehicleAxis;
+    }
+
     public String getId() {
         return id;
     }

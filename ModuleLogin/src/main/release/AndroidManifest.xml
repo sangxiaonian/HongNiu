@@ -34,7 +34,8 @@
             android:name=".ui.LoginPasswordActivity"
             android:windowSoftInputMode="stateVisible" />
         <activity android:name=".ui.LoginForgetPassActivity" />
-        <activity android:name=".ui.LoginInsuredActivity"></activity>
+        <activity android:name=".ui.LoginInsuredActivity" />
+        <activity android:name=".ui.LoginTruckInforActivity"></activity>
     </application>
 
 </manifest>

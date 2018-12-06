@@ -173,6 +173,12 @@ public class OrderDetailItemControl {
          * @param orderBean
          */
         void onCheckRout(OrderDetailBean orderBean);
+   /**
+         * ORDER_CHECK_ROUT          ="货车导航";
+         *
+         * @param orderBean
+         */
+        void onTruchGuid(OrderDetailBean orderBean);
 
         /**
          * ORDER_ENTRY_ARRIVE        ="确认到达";

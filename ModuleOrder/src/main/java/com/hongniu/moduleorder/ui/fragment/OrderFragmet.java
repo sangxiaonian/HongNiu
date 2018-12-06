@@ -13,6 +13,7 @@ import com.amap.api.navi.AmapNaviParams;
 import com.amap.api.navi.AmapNaviType;
 import com.amap.api.navi.model.AMapCarInfo;
 import com.google.gson.Gson;
+import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.NetObserver;
@@ -421,25 +422,17 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
         PermissionUtils.applyMap(getActivity(), new PermissionUtils.onApplyPermission() {
             @Override
             public void hasPermission(List<String> granted, boolean isAll) {
-                //查看路线，发送一个开始发车的广播
+
+                //查看路线
                 Poi start = new Poi(orderBean.getStartPlaceInfo(), new LatLng(orderBean.getStartLatitude(), orderBean.getStartLongitude()), "");
                 Poi end = new Poi(orderBean.getDestinationInfo(), new LatLng(orderBean.getDestinationLatitude(), orderBean.getDestinationLongitude()), "");
-
-                AMapCarInfo aMapCarInfo = new AMapCarInfo();
-                aMapCarInfo.setCarType("1");//设置车辆类型，0小车，1货车
-                aMapCarInfo.setCarNumber(orderBean.getCarNum());//设置车辆的车牌号码. 如:京DFZ239,京ABZ239
-                aMapCarInfo.setRestriction(true);//设置是否躲避车辆限行。
-
-                AmapNaviParams naviParams = new AmapNaviParams(start, null, end, AmapNaviType.DRIVER);
-                naviParams.setCarInfo(aMapCarInfo);
-                naviParams.setUseInnerVoice(true);
-
-                //回调
+                AmapNaviParams amapNaviParams = new AmapNaviParams(start, null, end, AmapNaviType.DRIVER);
+                amapNaviParams.setUseInnerVoice(true);
                 LoactionCollectionUtils loactionCollectionUtils = new LoactionCollectionUtils();
                 loactionCollectionUtils.setOrderInfor(orderBean);
-
                 AmapNaviPage.getInstance().showRouteActivity(getContext().getApplicationContext(),
-                        naviParams, loactionCollectionUtils);
+                        amapNaviParams, loactionCollectionUtils);
+
 
 
             }
@@ -450,6 +443,24 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
 
             }
         });
+
+    }
+
+    /**
+     * ORDER_CHECK_ROUT          ="货车导航";
+     *
+     * @param orderBean
+     */
+    @Override
+    public void onTruchGuid(OrderDetailBean orderBean) {
+        Poi start = new Poi(orderBean.getStartPlaceInfo(), new LatLng(orderBean.getStartLatitude(), orderBean.getStartLongitude()), "");
+        Poi end = new Poi(orderBean.getDestinationInfo(), new LatLng(orderBean.getDestinationLatitude(), orderBean.getDestinationLongitude()), "");
+
+        ArouterUtils.getInstance().builder(ArouterParamLogin.activity_login_truck_infor)
+                    .withString(Param.TRAN,orderBean.getCarNum())
+                .withParcelable("start",start)
+                .withParcelable("end",end)
+                    .navigation(getContext());
 
     }
 
@@ -597,7 +608,7 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
 
     protected CenterAlertBuilder creatDialog(String title, String content, String btleft, String
             btRight) {
-       return Utils.creatDialog(getContext(),title,content,btleft,btRight);
+        return Utils.creatDialog(getContext(), title, content, btleft, btRight);
 
     }
 

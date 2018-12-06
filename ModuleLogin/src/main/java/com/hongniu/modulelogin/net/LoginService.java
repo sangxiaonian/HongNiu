@@ -79,6 +79,28 @@ public interface LoginService {
     Observable<CommonBean<PageBean<LoginCarInforBean>>> getCarList(@Body PagerParambean parambean);
 
     /**
+     * 根据车牌号查询车辆详情信息
+     *
+     * @return
+     */
+    @POST("hongniu/api/car/querynumber")
+    Observable<CommonBean<List<LoginCarInforBean>>> queyCarDetailInfor(@Body LoginCarInforBean parambean);
+  /**
+     * 获取货车导航车辆类型
+     *
+     * @return
+     */
+    @POST("hongniu/api/car/vehicletype")
+    Observable<CommonBean<List<CarTypeBean>>> queyTruckTypes( );
+ /**
+     * 修改货车导航信息
+     *
+     * @return
+     */
+    @POST("hongniu/api/car/updatenavigationcar")
+    Observable<CommonBean<String>> upTruckInfor( @Body LoginCarInforBean bean);
+
+    /**
      * 获取我的付款方式
      *
      * @return

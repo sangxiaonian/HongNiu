@@ -2,7 +2,6 @@ package com.hongniu.baselibrary.net;
 
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
-import com.hongniu.baselibrary.entity.LoginPersonInfor;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.OrderIdBean;
 import com.hongniu.baselibrary.entity.PayInforBeans;
@@ -12,6 +11,7 @@ import com.hongniu.baselibrary.entity.QueryPayPassword;
 import com.hongniu.baselibrary.entity.QueryRongParams;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.entity.SMSParams;
+import com.hongniu.baselibrary.entity.TruckGudieSwitchBean;
 import com.hongniu.baselibrary.entity.UpImgData;
 import com.hongniu.baselibrary.entity.WalletDetail;
 import com.hongniu.baselibrary.utils.Utils;
@@ -219,4 +219,14 @@ public class HttpAppFactory {
                 ;
     }
 
+    /**
+     * 查询车辆导航信息是否开启
+     */
+    public static Observable<CommonBean<TruckGudieSwitchBean>> queryTruckGuide() {
+        return AppClient.getInstance()
+                .getService()
+                .queryTruckGuide()
+                .compose(RxUtils.<CommonBean<TruckGudieSwitchBean>>getSchedulersObservableTransformer())
+                ;
+    }
 }
