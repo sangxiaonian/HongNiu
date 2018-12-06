@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_white"
+    android:paddingLeft="@dimen/app_gap"
+    android:paddingRight="@dimen/app_gap"
+    android:paddingTop="@dimen/app_model_gap">
+
+
+    <TextView
+        android:id="@+id/tv_pay_way"
+        android:layout_width="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/line"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/app_model_gap"
+        android:text="@string/finish"
+        android:textColor="@color/color_title_dark"
+        android:textSize="@dimen/text_small_14"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_pay_account"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/app_model_gap"
+        android:layout_marginTop="@dimen/app_item_gap"
+        android:text="@string/cancel"
+        android:textColor="@color/color_content_light"
+        android:textSize="@dimen/text_min_12sp"
+        app:layout_constraintStart_toStartOf="@id/tv_pay_way"
+        app:layout_constraintTop_toBottomOf="@id/tv_pay_way" />
+
+
+    <TextView
+        android:id="@+id/tv_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="编辑"
+        android:paddingLeft="@dimen/app_gap"
+        android:textColor="@color/color_content_light"
+        android:textSize="@dimen/text_min_12sp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_pay_account"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_pay_way" />
+
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="@dimen/line_height"
+        android:layout_height="0dp"
+        android:background="@color/line_color"
+        app:layout_constraintBottom_toBottomOf="@id/tv_pay_account"
+        app:layout_constraintEnd_toStartOf="@id/tv_edit"
+        app:layout_constraintTop_toTopOf="@id/tv_pay_way" />
+
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="@dimen/line_height"
+        android:layout_marginTop="@dimen/app_model_gap"
+        android:background="@color/color_line"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_pay_account" />
+</android.support.constraint.ConstraintLayout>

@@ -1,11 +1,14 @@
-package com.hongniu.moduleorder.entity;
+package com.hongniu.baselibrary.entity;
+
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * 作者： ${桑小年} on 2018/12/1.
  * 努力，为梦长留
  * 被保险人信息
  */
-public class OrderInsuranceInforBean {
+public class OrderInsuranceInforBean implements Parcelable{
 
 
     /**
@@ -57,6 +60,44 @@ public class OrderInsuranceInforBean {
     private boolean isMe;
     private String createTime;
     private String updateTime;
+
+    protected OrderInsuranceInforBean(Parcel in) {
+        id = in.readString();
+        username = in.readString();
+        idnumber = in.readString();
+        email = in.readString();
+        provinceId = in.readString();
+        province = in.readString();
+        cityId = in.readString();
+        city = in.readString();
+        districtId = in.readString();
+        district = in.readString();
+        address = in.readString();
+        companyName = in.readString();
+        companyCreditCode = in.readString();
+        companyOrganization = in.readString();
+        imageUrl = in.readString();
+        absoluteImageUrl = in.readString();
+        cardType = in.readString();
+        insuredType = in.readInt();
+        isDefault = in.readByte() != 0;
+        isDel = in.readByte() != 0;
+        isMe = in.readByte() != 0;
+        createTime = in.readString();
+        updateTime = in.readString();
+    }
+
+    public static final Creator<OrderInsuranceInforBean> CREATOR = new Creator<OrderInsuranceInforBean>() {
+        @Override
+        public OrderInsuranceInforBean createFromParcel(Parcel in) {
+            return new OrderInsuranceInforBean(in);
+        }
+
+        @Override
+        public OrderInsuranceInforBean[] newArray(int size) {
+            return new OrderInsuranceInforBean[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -265,5 +306,54 @@ public class OrderInsuranceInforBean {
 
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
+    }
+
+    /**
+     * Describe the kinds of special objects contained in this Parcelable
+     * instance's marshaled representation. For example, if the object will
+     * include a file descriptor in the output of {@link #writeToParcel(Parcel, int)},
+     * the return value of this method must include the
+     * {@link #CONTENTS_FILE_DESCRIPTOR} bit.
+     *
+     * @return a bitmask indicating the set of special object types marshaled
+     * by this Parcelable object instance.
+     */
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    /**
+     * Flatten this object in to a Parcel.
+     *
+     * @param dest  The Parcel in which the object should be written.
+     * @param flags Additional flags about how the object should be written.
+     *              May be 0 or {@link #PARCELABLE_WRITE_RETURN_VALUE}.
+     */
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(username);
+        dest.writeString(idnumber);
+        dest.writeString(email);
+        dest.writeString(provinceId);
+        dest.writeString(province);
+        dest.writeString(cityId);
+        dest.writeString(city);
+        dest.writeString(districtId);
+        dest.writeString(district);
+        dest.writeString(address);
+        dest.writeString(companyName);
+        dest.writeString(companyCreditCode);
+        dest.writeString(companyOrganization);
+        dest.writeString(imageUrl);
+        dest.writeString(absoluteImageUrl);
+        dest.writeString(cardType);
+        dest.writeInt(insuredType);
+        dest.writeByte((byte) (isDefault ? 1 : 0));
+        dest.writeByte((byte) (isDel ? 1 : 0));
+        dest.writeByte((byte) (isMe ? 1 : 0));
+        dest.writeString(createTime);
+        dest.writeString(updateTime);
     }
 }

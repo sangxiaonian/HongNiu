@@ -105,19 +105,39 @@ public interface LoginService {
     /**
      * 设置/更新支付密码
      *
-     * @return
      * @param beans
+     * @return
      */
     @POST("hongniu//api/account/updatepass")
     Observable<CommonBean<String>> setPayPassword(@Body SetPayPassWord beans);
-/**
-     * 设置/更新支付密码
+
+    /**
+     * 新增被保险人信息
      *
-     * @return
      * @param beans
+     * @return
      */
     @POST("hongniu/api/userinsured/add")
     Observable<CommonBean<LoginCreatInsuredBean>> creatInsuredInfor(@Body LoginCreatInsuredBean beans);
+
+
+    /**
+     * 修改被保险人信息
+     *
+     * @param beans
+     * @return
+     */
+    @POST("hongniu/api/userinsured/update")
+    Observable<CommonBean<LoginCreatInsuredBean>> upInsuredInfor(@Body LoginCreatInsuredBean beans);
+
+    /**
+     * 删除被保险人信息
+     *
+     * @param beans
+     * @return
+     */
+    @POST("hongniu/api/userinsured/delete")
+    Observable<CommonBean<String>> deletedInsuredInfor(@Body LoginCreatInsuredBean beans);
 
 
 }

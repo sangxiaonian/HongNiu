@@ -26,15 +26,17 @@ import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.PayPasswordKeyBord;
 import com.hongniu.baselibrary.widget.dialog.AccountDialog;
 import com.hongniu.moduleorder.R;
+import com.hongniu.moduleorder.control.OnItemClickListener;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.control.OrderPayControl;
-import com.hongniu.moduleorder.entity.OrderInsuranceInforBean;
+import com.hongniu.baselibrary.entity.OrderInsuranceInforBean;
 import com.hongniu.moduleorder.present.OrderPayPresenter;
 import com.hongniu.moduleorder.widget.PayAleartPop;
 import com.hongniu.moduleorder.widget.dialog.BuyInsuranceDialog;
 import com.hongniu.moduleorder.widget.dialog.InsuranceDialog;
 import com.sang.common.event.BusFactory;
 import com.sang.common.utils.ConvertUtils;
+import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
@@ -60,7 +62,7 @@ import java.util.List;
  * 不购买保险，则直接显示完成订单
  */
 @Route(path = ArouterParamOrder.activity_order_pay)
-public class OrderPayActivity extends BaseActivity implements OrderPayControl.IOrderPayView, RadioGroup.OnCheckedChangeListener, View.OnClickListener, BuyInsuranceDialog.OnBuyInsuranceClickListener, PayPasswordKeyBord.PayKeyBordListener, AccountDialog.OnDialogClickListener<OrderInsuranceInforBean> {
+public class OrderPayActivity extends BaseActivity implements OrderPayControl.IOrderPayView, RadioGroup.OnCheckedChangeListener, View.OnClickListener, BuyInsuranceDialog.OnBuyInsuranceClickListener, PayPasswordKeyBord.PayKeyBordListener, AccountDialog.OnDialogClickListener<OrderInsuranceInforBean>,OnItemClickListener<OrderInsuranceInforBean> {
 
     private TextView tvOrder;//订单号
     private ViewGroup btBuy;//购买保险
@@ -207,6 +209,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
         tv_instances_per_infor.setOnClickListener(this);
 
         insuranceDialog.setListener(this);
+        insuranceDialog.setItemClickListener(this);
     }
 
 
@@ -312,8 +315,14 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == 100&&requestCode==100) {
-            payPresent.queryInsurance(data.getStringExtra(Param.TRAN), this);
+        if (requestCode==100) {
+            if (resultCode == 100) {//新增修改
+                JLog.i("修改");
+                payPresent.queryInsurance(data.getStringExtra(Param.TRAN), this);
+            }else if (resultCode == 101){//删除
+                JLog.i("删除");
+                payPresent.deletedInsurance(data.getStringExtra(Param.TRAN), this);
+            }
 
         } else if (resultCode == Activity.RESULT_OK) {
             int payResult = data.getIntExtra("payResult", 0);
@@ -631,6 +640,26 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
     @Override
     public void onAddClick(DialogControl.IDialog dialog) {
         dialog.dismiss();
-        ArouterUtils.getInstance().builder(ArouterParamLogin.activity_login_insured).navigation((Activity) mContext,100);
+        ArouterUtils.getInstance()
+                .builder(ArouterParamLogin.activity_login_insured)
+                .withInt(Param.TYPE,0)
+                .navigation((Activity) mContext,100);
+    }
+
+    /**
+     * 选择被保险人编辑按钮被点击，此时编辑被保险人数据
+     *
+     * @param position
+     * @param orderInsuranceInforBean
+     */
+    @Override
+    public void onItemClick(int position, OrderInsuranceInforBean orderInsuranceInforBean) {
+        insuranceDialog.dismiss();
+        ArouterUtils.getInstance()
+                .builder(ArouterParamLogin.activity_login_insured)
+                .withInt(Param.TYPE,1)
+                .withParcelable(Param.TRAN,orderInsuranceInforBean)
+                .navigation((Activity) mContext,100);
+
     }
 }

@@ -11,8 +11,9 @@ import com.hongniu.baselibrary.entity.WalletDetail;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderPayControl;
-import com.hongniu.moduleorder.entity.OrderInsuranceInforBean;
+import com.hongniu.baselibrary.entity.OrderInsuranceInforBean;
 import com.hongniu.moduleorder.mode.OrderPayMode;
+import com.hongniu.moduleorder.ui.OrderPayActivity;
 import com.sang.common.net.listener.TaskControl;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
@@ -314,6 +315,28 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
                         }
 
 
+                    }
+                });
+    }
+
+    /**
+     * 删除指定的被保险人
+     *
+     * @param id
+     * @param listenre
+     */
+    @Override
+    public void deletedInsurance(final String id, TaskControl.OnTaskListener listenre) {
+        mode.queryInsuranceInfor()
+                .subscribe(new NetObserver<List<OrderInsuranceInforBean>>(listenre) {
+                    @Override
+                    public void doOnSuccess(List<OrderInsuranceInforBean> data) {
+                        OrderInsuranceInforBean currentInsuranceUserInfor = mode.getCurrentInsuranceUserInfor();
+                        if (currentInsuranceUserInfor !=null&&currentInsuranceUserInfor.getId().equalsIgnoreCase(id)){
+                            mode.saveSelectInsuranceInfor(data.get(0));
+                        }
+                        mode.saveInsruancUserInfor(data);
+                        showInsurance(mode.getCurrentInsuranceUserInfor());
                     }
                 });
     }

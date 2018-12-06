@@ -4,7 +4,8 @@ import android.text.SpannableStringBuilder;
 
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.WalletDetail;
-import com.hongniu.moduleorder.entity.OrderInsuranceInforBean;
+import com.hongniu.baselibrary.entity.OrderInsuranceInforBean;
+import com.hongniu.moduleorder.ui.OrderPayActivity;
 import com.sang.common.net.listener.TaskControl;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
 
@@ -229,6 +230,13 @@ public class OrderPayControl {
          * @param listenre
          */
         void queryInsurance(String id, TaskControl.OnTaskListener listenre);
+
+        /**
+         * 删除指定的被保险人
+         * @param id
+         * @param listenre
+         */
+        void deletedInsurance(String id, TaskControl.OnTaskListener listenre);
     }
 
     public interface IOrderPayMode {

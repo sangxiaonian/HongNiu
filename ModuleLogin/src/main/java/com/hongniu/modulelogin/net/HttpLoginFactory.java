@@ -26,8 +26,6 @@ import okhttp3.ResponseBody;
 public class HttpLoginFactory {
 
 
-
-
     /**
      * 使用验证码登录
      *
@@ -43,7 +41,8 @@ public class HttpLoginFactory {
                 .compose(RxUtils.<CommonBean<LoginBean>>getSchedulersObservableTransformer())
                 ;
     }
-   /**
+
+    /**
      * 使用验证码登录
      *
      * @param mobile 手机号
@@ -137,11 +136,12 @@ public class HttpLoginFactory {
     }
 
 
-  /**
+    /**
      * 更改默认收款方式
-   * @param id 付款方式ID
-   * @param isDefault  1 默认 0 非默认
-   */
+     *
+     * @param id        付款方式ID
+     * @param isDefault 1 默认 0 非默认
+     */
     public static Observable<CommonBean<String>> changeDefaultPayWay(String id, int isDefault) {
 
         PayInforBeans bean = new PayInforBeans();
@@ -167,13 +167,14 @@ public class HttpLoginFactory {
 
     /**
      * 更新支付密码
+     *
      * @param passwordMd5
      * @param smsCode
      * @return
      */
     public static Observable<CommonBean<String>> upPassword(String passwordMd5, String smsCode) {
-        SetPayPassWord payPassword=new SetPayPassWord(passwordMd5,smsCode);
-       return LoginClient.getInstance().getLoginService()
+        SetPayPassWord payPassword = new SetPayPassWord(passwordMd5, smsCode);
+        return LoginClient.getInstance().getLoginService()
                 .setPayPassword(payPassword)
                 .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
     }
@@ -183,9 +184,27 @@ public class HttpLoginFactory {
      * 创建被保险人信息
      */
     public static Observable<CommonBean<LoginCreatInsuredBean>> creatInsuredInfor(LoginCreatInsuredBean bean) {
-       return LoginClient.getInstance().getLoginService()
+        return LoginClient.getInstance().getLoginService()
                 .creatInsuredInfor(bean)
                 .compose(RxUtils.<CommonBean<LoginCreatInsuredBean>>getSchedulersObservableTransformer());
+    }
+
+    /**
+     * 修改被保险人信息
+     */
+    public static Observable<CommonBean<LoginCreatInsuredBean>> upInsuredInfor(LoginCreatInsuredBean bean) {
+        return LoginClient.getInstance().getLoginService()
+                .upInsuredInfor(bean)
+                .compose(RxUtils.<CommonBean<LoginCreatInsuredBean>>getSchedulersObservableTransformer());
+    } /**
+     * 修改被保险人信息
+     */
+    public static Observable<CommonBean<String>> deletedInsuredInfor(String id) {
+        LoginCreatInsuredBean bean =new LoginCreatInsuredBean();
+        bean.setId(id);
+        return LoginClient.getInstance().getLoginService()
+                .deletedInsuredInfor(bean)
+                .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
     }
 
 

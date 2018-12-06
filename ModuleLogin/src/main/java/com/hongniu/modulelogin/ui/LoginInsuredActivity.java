@@ -16,6 +16,7 @@ import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.OrderInsuranceInforBean;
 import com.hongniu.baselibrary.entity.UpImgData;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.PickerDialogUtils;
@@ -48,6 +49,8 @@ import io.reactivex.functions.Function;
 
 /**
  * 新增投保人信息
+ * 此页面有新增修改两种类型 参数type决定 0 新增，1修改
+ * 修改页面时候需要传入投保人信息参数
  */
 @Route(path = ArouterParamLogin.activity_login_insured)
 public class LoginInsuredActivity extends BaseActivity implements View.OnClickListener, OnOptionsSelectListener {
@@ -69,6 +72,8 @@ public class LoginInsuredActivity extends BaseActivity implements View.OnClickLi
     private String headPath;
 
     private List<String> types;
+    private int type;//当前页面功能类型 0 新增 1编辑
+    OrderInsuranceInforBean insuranceInforBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +83,7 @@ public class LoginInsuredActivity extends BaseActivity implements View.OnClickLi
         initView();
         initData();
         initListener();
-        changeType(0);
+        changeType((insuranceInforBean == null||insuranceInforBean.getInsuredType()<=0) ? 0 : insuranceInforBean.getInsuredType()-1);
     }
 
     @Override
@@ -109,6 +114,65 @@ public class LoginInsuredActivity extends BaseActivity implements View.OnClickLi
         super.initData();
         types = Arrays.asList(getResources().getStringArray(R.array.insured_type));
         typeDialog.setPicker(types);
+        type = getIntent().getIntExtra(Param.TYPE, 0);
+        if (type == 1) {
+
+            insuranceInforBean = getIntent().getParcelableExtra(Param.TRAN);
+            //此处为修改房源，对房源数据进行赋值
+            creatInsuredBean.setId(insuranceInforBean.getId());
+            creatInsuredBean.setUsername(insuranceInforBean.getUsername());
+            creatInsuredBean.setIdnumber(insuranceInforBean.getIdnumber());
+            creatInsuredBean.setCompanyName(insuranceInforBean.getCompanyName());
+            creatInsuredBean.setCompanyCreditCode(insuranceInforBean.getCompanyCreditCode());
+            creatInsuredBean.setImageUrl(insuranceInforBean.getImageUrl());
+            creatInsuredBean.setEmail(insuranceInforBean.getEmail());
+            creatInsuredBean.setProvinceId(insuranceInforBean.getProvinceId());
+            creatInsuredBean.setProvince(insuranceInforBean.getProvince());
+            creatInsuredBean.setCityId(insuranceInforBean.getCityId());
+            creatInsuredBean.setCity(insuranceInforBean.getCity());
+            creatInsuredBean.setDistrictId(insuranceInforBean.getDistrictId());
+            creatInsuredBean.setDistrict(insuranceInforBean.getDistrict());
+            creatInsuredBean.setDistrict(insuranceInforBean.getDistrict());
+            creatInsuredBean.setAddress(insuranceInforBean.getAddress());
+            creatInsuredBean.setInsuredType(insuranceInforBean.getInsuredType());
+
+            itemType.setEnabled(false);
+            try {
+                itemType.setTextCenter(types.get(insuranceInforBean.getInsuredType()-1));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            StringBuilder buffer=new StringBuilder();
+            buffer.append(creatInsuredBean.getProvince() == null ? "" : creatInsuredBean.getProvince())
+                    .append(creatInsuredBean.getCity() == null ? "" : creatInsuredBean.getCity())
+                    .append(creatInsuredBean.getDistrict() == null ? "" : creatInsuredBean.getDistrict());
+
+            itemAddress.setTextCenter(buffer.toString());
+            itemAddressDetail.setTextCenter(creatInsuredBean.getAddress());
+            itemEmail.setTextCenter(creatInsuredBean.getEmail());
+            itemIdcard.setTextCenter(insuranceInforBean.getInsuredType()==2?insuranceInforBean.getCompanyCreditCode():insuranceInforBean.getIdnumber());
+            itemName.setTextCenter(insuranceInforBean.getInsuredType()==2?insuranceInforBean.getCompanyName():insuranceInforBean.getUsername());
+
+            if (creatInsuredBean.getInsuredType()==2){
+                ImageLoader.getLoader().load(mContext,image,insuranceInforBean.getAbsoluteImageUrl());
+
+            }
+            setToolbarSrcRight("删除");
+            tvToolbarRight.setTextColor(getResources().getColor(R.color.tool_right));
+            setToolbarRightClick(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    HttpLoginFactory.deletedInsuredInfor(insuranceInforBean.getId())
+                            .subscribe(new NetObserver<String>(LoginInsuredActivity.this) {
+                                @Override
+                                public void doOnSuccess(String data) {
+                                    finishSuccess(null);
+                                }
+                            });
+                }
+            });
+
+        }
 
     }
 
@@ -173,22 +237,28 @@ public class LoginInsuredActivity extends BaseActivity implements View.OnClickLi
                                 @Override
                                 public Observable<CommonBean<LoginCreatInsuredBean>> apply(String s) throws Exception {
                                     creatInsuredBean.setImageUrl(s);
-                                    return HttpLoginFactory.creatInsuredInfor(creatInsuredBean);
+                                    if (type==0) {
+                                        return HttpLoginFactory.creatInsuredInfor(creatInsuredBean);
+                                    }else {
+                                        return HttpLoginFactory.upInsuredInfor(creatInsuredBean);
+
+                                    }
                                 }
                             });
                 } else {
-                    observable = HttpLoginFactory.creatInsuredInfor(creatInsuredBean);
+                    if (type==0) {
+                        observable = HttpLoginFactory.creatInsuredInfor(creatInsuredBean);
+                    }else {
+                        observable =HttpLoginFactory.upInsuredInfor(creatInsuredBean);
+
+                    }
                 }
                 observable
                         .subscribe(new NetObserver<LoginCreatInsuredBean>(this) {
                             @Override
                             public void doOnSuccess(LoginCreatInsuredBean data) {
 
-                                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
-                                Intent intent=new Intent();
-                                intent.putExtra(Param.TRAN,data.getId());
-                                setResult(100,intent);
-                                finish();
+                                finishSuccess(data);
                             }
                         });
             }
@@ -218,6 +288,19 @@ public class LoginInsuredActivity extends BaseActivity implements View.OnClickLi
         } else if (i == R.id.item_type) {//选择身份
             typeDialog.show(v);
         }
+    }
+
+    private void finishSuccess(LoginCreatInsuredBean data) {
+        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
+        Intent intent = new Intent();
+        if (data!=null) {
+            intent.putExtra(Param.TRAN, data.getId());
+            setResult(100, intent);
+        }else {
+            intent.putExtra(Param.TRAN, "");
+            setResult(101, intent);
+        }
+        finish();
     }
 
     private void getValues() {
@@ -306,7 +389,9 @@ public class LoginInsuredActivity extends BaseActivity implements View.OnClickLi
      */
     private void changeType(int options1) {
         itemType.setTextCenter(types.get(options1));
+
         creatInsuredBean.setInsuredType(options1 + 1);
+
         itemName.setTextLeft(options1 == 0 ? "姓名" : "企业名称");
         itemName.setTextCenterHide(options1 == 0 ? "请输入您的姓名" : "请输入企业名称");
 
