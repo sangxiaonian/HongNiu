@@ -15,6 +15,7 @@ import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.H5Config;
 import com.hongniu.supply.R;
+import com.sang.common.utils.JLog;
 import com.sang.common.widget.XWebView;
 
 import java.io.Serializable;
@@ -38,6 +39,7 @@ public class H5Activity extends BaseActivity implements XWebView.OnReceivedTitle
         });
         initView();
         initData();
+        initListener();
     }
 
     @Override
@@ -45,6 +47,12 @@ public class H5Activity extends BaseActivity implements XWebView.OnReceivedTitle
         super.initView();
         webView = findViewById(R.id.webview);
 
+    }
+
+    @Override
+    protected void initListener() {
+        super.initListener();
+        webView.setOnReceivedTitleListener(this);
     }
 
     @Override
@@ -76,9 +84,9 @@ public class H5Activity extends BaseActivity implements XWebView.OnReceivedTitle
     public void onReceivedTitle(WebView view, String title) {
         if (h5Config.changeTitle|| TextUtils.isEmpty(h5Config.title)){
             if (h5Config.isDarkTitle){
-                setToolbarDarkTitle(h5Config.title);
+                setToolbarDarkTitle(title);
             }else {
-                setToolbarTitle(h5Config.title);
+                setToolbarTitle(title);
             }
         }
     }
