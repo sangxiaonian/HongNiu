@@ -169,21 +169,7 @@
                     app:textcenterhide="请输入货物名称"
                     app:textleft="货物名称" />
 
-                <com.sang.common.widget.ItemView
-                    android:id="@+id/item_cargo_size"
-                    style="@style/itemview"
-                    app:centerType="number"
-                    app:textcenterhide="请输入货物体积"
-                    app:textleft="货物体积"
-                    app:textright="方" />
 
-                <com.sang.common.widget.ItemView
-                    android:id="@+id/item_cargo_weight"
-                    style="@style/itemview"
-                    app:centerType="number"
-                    app:textcenterhide="请输入货物重量"
-                    app:textleft="货物重量"
-                    app:textright="吨" />
 
                 <android.support.v7.widget.RecyclerView
                     android:layout_width="match_parent"

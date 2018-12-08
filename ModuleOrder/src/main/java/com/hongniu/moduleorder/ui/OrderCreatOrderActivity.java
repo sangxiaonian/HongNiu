@@ -95,8 +95,6 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     private ItemView itemEndLocation;       //收货地点
     private ItemView itemStartCarNum;       //发车编号
     private ItemView itemCargoName;          //货物名称
-    private ItemView itemCargoSize;         //货物面积
-    private ItemView itemCargoWeight;         //货物重量
     private ItemView itemPrice;                 //运费
     private ItemView itemCarNum;         //车牌号
     private ItemView itemCarPhone;         //车主手机号
@@ -137,8 +135,6 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         itemEndLocation = findViewById(R.id.item_end_loaction);
         itemStartCarNum = findViewById(R.id.item_start_car_num);
         itemCargoName = findViewById(R.id.item_cargo_name);
-        itemCargoSize = findViewById(R.id.item_cargo_size);
-        itemCargoWeight = findViewById(R.id.item_cargo_weight);
         itemPrice = findViewById(R.id.item_price);
         itemCarNum = findViewById(R.id.item_car_num);
         itemCarPhone = findViewById(R.id.item_car_phone);
@@ -406,8 +402,6 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     private void getValue() {
         paramBean.setDepartNum(itemStartCarNum.getTextCenter());
         paramBean.setGoodName(itemCargoName.getTextCenter());
-        paramBean.setGoodVolume(itemCargoSize.getTextCenter());
-        paramBean.setGoodWeight(itemCargoWeight.getTextCenter());
         paramBean.setMoney(itemPrice.getTextCenter());
         paramBean.setCarNum(itemCarNum.getTextCenter());
         paramBean.setOwnerMobile(itemCarPhone.getTextCenter());
@@ -435,12 +429,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
                 paramBean.setGoodName(null);
 
             }
-            if (!itemCargoSize.isEnabled()) {//货物体积
-                paramBean.setGoodVolume(null);
-            }
-            if (!itemCargoWeight.isEnabled()) {//货物重量
-                paramBean.setGoodWeight(null);
-            }
+
             if (!itemPrice.isEnabled()) {//运费
                 paramBean.setMoney(null);
             }
@@ -550,15 +539,8 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
             return false;
         }
         ;
-        if (TextUtils.isEmpty(itemCargoSize.getTextCenter())) {
-            showAleart(itemCargoSize.getTextCenterHide());
-            return false;
-        }
-        ;
-        if (TextUtils.isEmpty(itemCargoWeight.getTextCenter())) {
-            showAleart(itemCargoWeight.getTextCenterHide());
-            return false;
-        }
+
+
         ;
         if (TextUtils.isEmpty(itemPrice.getTextCenter())) {
             showAleart(itemPrice.getTextCenterHide());
@@ -729,8 +711,6 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         itemEndLocation.setTextCenter(paramBean.getDestinationInfo());
         itemStartCarNum.setTextCenter(paramBean.getDepartNum());
         itemCargoName.setTextCenter(paramBean.getGoodName());
-        itemCargoSize.setTextCenter(paramBean.getGoodVolume());
-        itemCargoWeight.setTextCenter(paramBean.getGoodWeight());
         itemPrice.setTextCenter(paramBean.getMoney());
 
         show=false;
@@ -770,8 +750,6 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
                         itemEndLocation.setEnabled(false);
                         itemStartCarNum.setEnabled(false);
                         itemCargoName.setEnabled(false);
-                        itemCargoSize.setEnabled(false);
-                        itemCargoWeight.setEnabled(false);
                         itemPrice.setEnabled(false);
                         itemCarNum.setEnabled(false);
                         itemCarPhone.setEnabled(false);
@@ -783,8 +761,6 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
                         itemEndLocation.setEnabled(false);
                         itemStartCarNum.setEnabled(false);
                         itemCargoName.setEnabled(false);
-                        itemCargoSize.setEnabled(false);
-                        itemCargoWeight.setEnabled(false);
                         itemCarNum.setEnabled(false);
                         itemCarPhone.setEnabled(false);
                         itemCarName.setEnabled(false);
@@ -817,8 +793,6 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
                 itemEndLocation.setEnabled(false);
                 itemStartCarNum.setEnabled(false);
                 itemCargoName.setEnabled(false);
-                itemCargoSize.setEnabled(false);
-                itemCargoWeight.setEnabled(false);
                 itemPrice.setEnabled(false);
                 itemCarNum.setEnabled(false);
                 itemCarPhone.setEnabled(false);
