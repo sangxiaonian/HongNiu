@@ -28,7 +28,7 @@ public class ChactHelper {
 
     OnGetUserInforListener listener;
     ChactControl.OnReceiveUnReadCountListener unReadCountListener;
-
+    private String ownerID;
 
 
     private static class Inner {
@@ -118,6 +118,7 @@ public class ChactHelper {
 
     public void connect(final Context context, final String token, final RongIMClient.ConnectCallback callback) {
         if (context.getApplicationInfo().packageName.equals(getCurProcessName(context.getApplicationContext()))) {
+            ownerID=null;
             JLog.e("开始连接服务器");
             RongIM.connect(token, new RongIMClient.ConnectCallback() {
 
@@ -139,6 +140,7 @@ public class ChactHelper {
                  */
                 @Override
                 public void onSuccess(String userid) {
+                    ownerID=userid;
                     JLog.e("初始化成功" + userid);
                 }
 
@@ -170,9 +172,11 @@ public class ChactHelper {
      * @param title
      */
     public void startPriver(Context context, String userID, String title) {
-
-
-        RongIM.getInstance().startPrivateChat(context, userID, title==null?"聊天":title);
+        if (userID!=null&&userID.equals(ownerID)){
+            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("您不能和自己对话");
+        }else {
+            RongIM.getInstance().startPrivateChat(context, userID, title == null ? "聊天" : title);
+        }
 
     }
 

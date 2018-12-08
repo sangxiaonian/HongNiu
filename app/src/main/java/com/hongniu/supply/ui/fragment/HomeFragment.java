@@ -2,6 +2,7 @@ package com.hongniu.supply.ui.fragment;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,6 +94,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                         tvTitle.setText(data.getTitle()==null?"":data.getTitle());
                         tvContent.setText(data.getSubtitle()==null?"":data.getSubtitle());
 
+                        tvTitle.setVisibility(TextUtils.isEmpty(tvTitle.getText().toString().trim())?View.GONE:View.VISIBLE);
+                        tvContent.setVisibility(TextUtils.isEmpty(tvContent.getText().toString().trim())?View.GONE:View.VISIBLE);
 
                         itemView.setOnClickListener(new View.OnClickListener() {
                             @Override

@@ -104,7 +104,6 @@
             android:id="@+id/card_balance"
             style="@style/home_card"
             android:layout_height="115dp"
-            app:contentPadding="@dimen/app_gap"
 
             app:layout_constraintBottom_toBottomOf="@id/view_top_bg"
             app:layout_constraintEnd_toEndOf="parent"
@@ -114,8 +113,18 @@
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:paddingLeft="@dimen/app_gap"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintVertical_chainStyle="packed">
+
+                <ImageView
+                    android:layout_width="200dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+
+                    android:src="@mipmap/bg_wdqb"
+                    android:layout_height="0dp" />
 
                 <android.support.constraint.Guideline
                     android:id="@+id/guideline2"
@@ -150,6 +159,7 @@
                     android:layout_height="35sp"
                     android:background="@drawable/bt_radius_2_333_999"
                     android:text="@string/wallet_title"
+                    android:layout_marginRight="@dimen/app_gap"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_small_14"
                     app:layout_constraintBottom_toBottomOf="@id/tv_balance"
