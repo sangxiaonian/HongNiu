@@ -440,12 +440,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
     }
     /**
-     * 位置信息变化
+     * 未读信息
      *
      * @param event
      */
     @Subscribe(sticky = true,threadMode = ThreadMode.MAIN)
-    public void upLoaction(Integer event) {
+    public void unReaderMessage(Integer event) {
         if (event != null) {
             String msg="";
             if (event>99){

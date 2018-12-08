@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.H5Activity">
+    <include layout="@layout/toolbar"/>
+    <com.sang.common.widget.XWebView
+        android:layout_width="match_parent"
+        android:id="@+id/webview"
+        android:layout_weight="1"
+        android:layout_height="0dp"/>
+<Button
+    android:text="立即购买保险"
+    android:id="@+id/bt_sum"
+    style="@style/bt_sum_red"/>
+</LinearLayout>

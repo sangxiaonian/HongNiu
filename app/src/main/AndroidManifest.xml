@@ -23,12 +23,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.MainActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".GuideActivity"
             android:screenOrientation="portrait" />
@@ -48,7 +46,7 @@
         <activity
             android:name=".ui.H5Activity"
             android:screenOrientation="portrait" />
-
+        <activity android:name=".ui.NiuInsuranceH5Activity"></activity>
     </application>
 
 </manifest>
