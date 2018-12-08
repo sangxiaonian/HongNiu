@@ -149,7 +149,7 @@
                     android:layout_width="95dp"
                     android:layout_height="35sp"
                     android:background="@drawable/bt_radius_2_333_999"
-                    android:text="我的钱包"
+                    android:text="@string/wallet_title"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_small_14"
                     app:layout_constraintBottom_toBottomOf="@id/tv_balance"

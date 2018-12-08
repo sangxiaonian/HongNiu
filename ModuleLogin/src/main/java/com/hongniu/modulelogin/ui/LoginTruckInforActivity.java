@@ -98,7 +98,7 @@ public class LoginTruckInforActivity extends BaseActivity implements View.OnClic
     @Override
     protected void initData() {
         super.initData();
-        setToolbarTitle("货车导航车辆添加");
+        setToolbarTitle("货车导航信息确认");
 
         carNumber = getIntent().getStringExtra(Param.TRAN);
         start = getIntent().getParcelableExtra("start");

@@ -35,7 +35,7 @@ public class FestivityInviteDetailActivity extends RefrushActivity<InviteDetailB
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_festivity_invite_detail);
-        setToolbarTitle("邀请成功明细");
+        setToolbarTitle("成功邀请明细");
         initData();
         queryData(true);
     }
@@ -57,33 +57,12 @@ public class FestivityInviteDetailActivity extends RefrushActivity<InviteDetailB
                         super.initView(itemView, position, data);
                         TextView tvName = itemView.findViewById(R.id.tv_name);
                         TextView tvPhone = itemView.findViewById(R.id.tv_phone);
-                        StringBuffer name = new StringBuffer();
-                        if (!TextUtils.isEmpty(data.getContact())) {
 
-                            if (CommonUtils.isPhone(data.getContact())){
-                                name.append(data.contact).replace(3, 7, "****");
-                            }else {
-                                name.append(data.getContact());
-                                if (name.length() <= 2) {
-                                    name.replace(0, 1, "*");
-                                } else {
-                                    String re = "";
-                                    for (int i = 1; i < name.length() - 1; i++) {
-                                        re += "*";
-                                    }
-                                    name.replace(1, name.length() - 1, re);
-                                }
-                            }
-                        }
-                        tvName.setText(String.format(getString(R.string.username_infor), name));
+
+                        tvName.setText(String.format(getString(R.string.username_infor), data.getContact()));
                         String format;
                         if (data.getMobile() != null) {
-                            if (data.getMobile().length() >= 11) {
-                                format = String.format(getString(R.string.username_infor), new StringBuffer(data.mobile).replace(3, 7, "****"));
-                            } else {
-                                format = String.format(getString(R.string.username_infor), data.mobile);
-
-                            }
+                            format = String.format(getString(R.string.username_infor), data.mobile);
                         } else {
                             format = String.format(getString(R.string.username_infor), "");
                         }

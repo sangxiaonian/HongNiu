@@ -171,6 +171,7 @@ public class ChactHelper {
      */
     public void startPriver(Context context, String userID, String title) {
 
+
         RongIM.getInstance().startPrivateChat(context, userID, title==null?"聊天":title);
 
     }

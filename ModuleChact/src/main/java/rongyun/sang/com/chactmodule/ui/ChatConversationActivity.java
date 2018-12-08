@@ -36,8 +36,16 @@ public class ChatConversationActivity extends BaseActivity {
                     .subscribe(new NetObserver<UserInfor>(null) {
                         @Override
                         public void doOnSuccess(UserInfor data) {
+
                             ChactHelper.getHelper().refreshUserInfoCache(userId, data);
-                            setToolbarTitle(data.getContact());
+                            StringBuilder builder=new StringBuilder();
+                            if (!TextUtils.isEmpty(data.getContact())) {
+                                builder.append(data.getContact()).append("\t\t");
+
+                            }
+                            builder.append(data.getMobile() );
+                            final String name = builder.toString();
+                            setToolbarTitle(name);
                         }
                     });
         }
