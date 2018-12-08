@@ -487,7 +487,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
     }
 
     private void creatPhoneSpan(int startPoint, SpannableStringBuilder builder, ClickableSpan clickableSpan) {
-        final int size = DeviceUtils.dip2px(getContext(), 15);
+        final int size = DeviceUtils.dip2px(getContext(), 18);
         CenteredImageSpan imageSpan2 = new CenteredImageSpan(getContext(), R.mipmap.icon_call_30);
         imageSpan2.setSpanSize(size, size);
         builder.setSpan(imageSpan2, startPoint, startPoint + 1, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
@@ -495,7 +495,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
     }
 
     private void creatChactSpan(int startPoint, SpannableStringBuilder builder, ClickableSpan clickableSpan) {
-        final int size = DeviceUtils.dip2px(getContext(), 15);
+        final int size = DeviceUtils.dip2px(getContext(), 18);
         CenteredImageSpan imageSpan2 = new CenteredImageSpan(getContext(), R.mipmap.icon_maessage_30);
         imageSpan2.setSpanSize(size, size);
         builder.setSpan(imageSpan2, startPoint, startPoint + 1, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);

@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Poi;
 import com.amap.api.navi.AmapNaviPage;
 import com.amap.api.navi.AmapNaviParams;
@@ -15,24 +14,22 @@ import com.amap.api.navi.AmapNaviType;
 import com.amap.api.navi.model.AMapCarInfo;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.google.gson.Gson;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
-import com.hongniu.baselibrary.entity.CarTypeBean;
-import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.TruckGudieSwitchBean;
 import com.hongniu.baselibrary.utils.PickerDialogUtils;
 import com.hongniu.modulelogin.R;
 import com.hongniu.modulelogin.entity.LoginCarInforBean;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.DeviceUtils;
+import com.sang.common.utils.SharedPreferencesUtils;
 import com.sang.common.widget.ItemView;
 
 import java.util.List;
-
-import io.reactivex.Observable;
-import io.reactivex.functions.BiFunction;
 
 
 /**
@@ -55,8 +52,10 @@ public class LoginTruckInforActivity extends BaseActivity implements View.OnClic
     private Button bt;
     private String carNumber;
 
-    public List<CarTypeBean> carTypes;//车辆类型
-    private OptionsPickerView<CarTypeBean> typeDialog;
+    public List<TruckGudieSwitchBean.DataInfor> carTypes;//车辆类型
+    private OptionsPickerView<TruckGudieSwitchBean.DataInfor> typeDialog;
+    public List<TruckGudieSwitchBean.DataInfor> carAxles;//车辆类型
+    private OptionsPickerView<TruckGudieSwitchBean.DataInfor> axelsDialog;
 
     Poi start;
     Poi end;
@@ -90,6 +89,10 @@ public class LoginTruckInforActivity extends BaseActivity implements View.OnClic
                 .setTitleText("请选择被车辆类型")
                 .setSubmitColor(Color.parseColor("#48BAF3"))
                 .build();
+        axelsDialog = PickerDialogUtils.creatPickerDialog(mContext, this)
+                .setTitleText("请选择被车辆轴数")
+                .setSubmitColor(Color.parseColor("#48BAF3"))
+                .build();
     }
 
     @Override
@@ -98,48 +101,54 @@ public class LoginTruckInforActivity extends BaseActivity implements View.OnClic
         setToolbarTitle("货车导航车辆添加");
 
         carNumber = getIntent().getStringExtra(Param.TRAN);
-        start=getIntent().getParcelableExtra("start");
-        end=getIntent().getParcelableExtra("end");
+        start = getIntent().getParcelableExtra("start");
+        end = getIntent().getParcelableExtra("end");
 
         itemCarNumber.setTextCenter(carNumber);
         itemCarNumber.setEnabled(false);
 
 
+        Gson gson = new Gson();
+        String json = SharedPreferencesUtils.getInstance().getString(Param.CANTRUCKINFOR);
+        TruckGudieSwitchBean bean = gson.fromJson(json, TruckGudieSwitchBean.class);
 
+        carTypes = bean.getVehicleSize();
+        typeDialog.setPicker(carTypes);
 
-        Observable.zip(HttpLoginFactory.queyTruckTypes(), HttpLoginFactory.queyCarDetailInfor(carNumber), new BiFunction<CommonBean<List<CarTypeBean>>, CommonBean<LoginCarInforBean>, CommonBean<LoginCarInforBean>>() {
-            @Override
-            public CommonBean<LoginCarInforBean> apply(CommonBean<List<CarTypeBean>> listCommonBean, CommonBean<LoginCarInforBean> loginCarInforBeanCommonBean) throws Exception {
-                carTypes=listCommonBean.getData();
-                typeDialog.setPicker(carTypes);
-                return loginCarInforBeanCommonBean;
-            }
-        })
-        .subscribe(new NetObserver<LoginCarInforBean>(this) {
-            @Override
-            public void doOnSuccess(LoginCarInforBean data) {
-                itemCarNumber.setTextCenter(data.getCarNumber());
+        carAxles=bean.getAxis();
+        axelsDialog.setPicker(carAxles);
 
-                if (!CommonUtils.isEmptyCollection(carTypes)){
-                    for (CarTypeBean carType : carTypes) {
-                        if (carType.getId().equalsIgnoreCase(data.getVehicleSize())){
-                            itemCarType.setTextCenter(carType.getCarType());
-                            break;
+        HttpLoginFactory.queyCarDetailInfor(carNumber)
+                .subscribe(new NetObserver<LoginCarInforBean>(this) {
+                    @Override
+                    public void doOnSuccess(LoginCarInforBean data) {
+                        itemCarNumber.setTextCenter(data.getCarNumber());
+
+                        if (!CommonUtils.isEmptyCollection(carTypes)) {
+                            for (TruckGudieSwitchBean.DataInfor carType : carTypes) {
+                                if (carType.getType().equalsIgnoreCase(data.getVehicleSize())) {
+                                    itemCarType.setTextCenter(carType.getName());
+                                    break;
+                                }
+                            }
+                        }  if (!CommonUtils.isEmptyCollection(carAxles)) {
+                            for (TruckGudieSwitchBean.DataInfor carType : carAxles) {
+                                if (carType.getType().equalsIgnoreCase(data.getVehicleSize())) {
+                                    itemCarAxle.setTextCenter(carType.getName());
+                                    break;
+                                }
+                            }
                         }
+
+                        itemCarWeightCount.setTextCenter(data.getVehicleLoad());
+                        itemCarWeight.setTextCenter(data.getVehicleWeight());
+                        itemCarLength.setTextCenter(data.getVehicleLength());
+                        itemCarWidth.setTextCenter(data.getVehicleWidth());
+                        itemCarHeight.setTextCenter(data.getVehicleHeight());
+                        itemCarWeightCount.getEtCenter().requestFocus();
                     }
-                }
-
-                itemCarWeightCount.setTextCenter(data.getVehicleLoad());
-                itemCarWeight.setTextCenter(data.getVehicleWeight());
-                itemCarLength.setTextCenter(data.getVehicleLength());
-                itemCarWidth.setTextCenter(data.getVehicleWidth());
-                itemCarHeight.setTextCenter(data.getVehicleHeight());
-                itemCarAxle.setTextCenter(data.getVehicleAxis());
-                itemCarWeightCount.getEtCenter().requestFocus();
-            }
-        })
+                })
         ;
-
 
 
     }
@@ -149,6 +158,8 @@ public class LoginTruckInforActivity extends BaseActivity implements View.OnClic
         super.initListener();
         bt.setOnClickListener(this);
         itemCarType.setOnClickListener(this);
+        itemCarAxle.setOnClickListener(this);
+
     }
 
     /**
@@ -160,69 +171,65 @@ public class LoginTruckInforActivity extends BaseActivity implements View.OnClic
     public void onClick(View v) {
         if (v.getId() == R.id.bt_save) {
 
-            if (check()){
+            if (check()) {
                 final LoginCarInforBean vaule = getVaule();
                 HttpLoginFactory.upTruckInfor(vaule)
-                    .subscribe(new NetObserver<String>(this) {
-                        @Override
-                        public void doOnSuccess(String data) {
+                        .subscribe(new NetObserver<String>(this) {
+                            @Override
+                            public void doOnSuccess(String data) {
 
-                            AMapCarInfo aMapCarInfo = new AMapCarInfo();
-                            aMapCarInfo.setCarType(vaule.getCarType());//设置车辆类型，0小车，1货车
-                            aMapCarInfo.setCarNumber(vaule.getCarNumber());//设置车辆的车牌号码. 如:京DFZ239,京ABZ239
+                                AMapCarInfo aMapCarInfo = new AMapCarInfo();
+                                aMapCarInfo.setCarType(vaule.getCarType());//设置车辆类型，0小车，1货车
+                                aMapCarInfo.setCarNumber(vaule.getCarNumber());//设置车辆的车牌号码. 如:京DFZ239,京ABZ239
 //                            aMapCarInfo.setVehicleSize("4");// * 设置货车的等级
-                            aMapCarInfo.setVehicleLoad(vaule.getVehicleWeight());//设置货车的载重，单位：吨。
-                            aMapCarInfo.setVehicleWeight(vaule.getVehicleLoad());//设置货车的自重
-                            aMapCarInfo.setVehicleLength(vaule.getVehicleLength());//  * 设置货车的最大长度，单位：米。
-                            aMapCarInfo.setVehicleWidth(vaule.getVehicleWidth());//设置货车的最大宽度，单位：米。 如:1.8，1.5等等。
-                            aMapCarInfo.setVehicleHeight(vaule.getVehicleHeight());//设置货车的高度，单位：米。
-                            aMapCarInfo.setVehicleAxis(vaule.getVehicleAxis());//设置货车的轴数
-                            aMapCarInfo.setVehicleLoadSwitch(true);//设置车辆的载重是否参与算路
-                            aMapCarInfo.setRestriction(true);//设置是否躲避车辆限行。
+                                aMapCarInfo.setVehicleLoad(vaule.getVehicleWeight());//设置货车的载重，单位：吨。
+                                aMapCarInfo.setVehicleWeight(vaule.getVehicleLoad());//设置货车的自重
+                                aMapCarInfo.setVehicleLength(vaule.getVehicleLength());//  * 设置货车的最大长度，单位：米。
+                                aMapCarInfo.setVehicleWidth(vaule.getVehicleWidth());//设置货车的最大宽度，单位：米。 如:1.8，1.5等等。
+                                aMapCarInfo.setVehicleHeight(vaule.getVehicleHeight());//设置货车的高度，单位：米。
+                                aMapCarInfo.setVehicleAxis(vaule.getVehicleAxis());//设置货车的轴数
+                                aMapCarInfo.setVehicleLoadSwitch(true);//设置车辆的载重是否参与算路
+                                aMapCarInfo.setRestriction(true);//设置是否躲避车辆限行。
 
-                            AmapNaviParams naviParams = new AmapNaviParams(start, null, end, AmapNaviType.DRIVER);
-                            naviParams.setCarInfo(aMapCarInfo);
+                                AmapNaviParams naviParams = new AmapNaviParams(start, null, end, AmapNaviType.DRIVER);
+                                naviParams.setCarInfo(aMapCarInfo);
 
-                            AmapNaviPage.getInstance().showRouteActivity(getApplicationContext(), naviParams, null);
-                            finish();
+                                AmapNaviPage.getInstance().showRouteActivity(getApplicationContext(), naviParams, null);
+                                finish();
 
 
-                        }
-                    })
+                            }
+                        })
                 ;
-
 
 
             }
 
         } else if (v.getId() == R.id.item_car_type) {
             DeviceUtils.closeSoft(this);
-            if (CommonUtils.isEmptyCollection(carTypes)) {
-                HttpLoginFactory.queyTruckTypes( )
-                        .subscribe(new NetObserver<List<CarTypeBean>>(this) {
+            typeDialog.show(v);
 
-                            @Override
-                            public void doOnSuccess(List<CarTypeBean> data) {
-                                carTypes=data;
-                                typeDialog.setPicker(carTypes);
-                                typeDialog.show();
-                            }
-                        });
-            }else {
-                typeDialog.show();
-            }
-
+        }else if (v.getId()==R.id.item_car_axle_count){
+            DeviceUtils.closeSoft(this);
+            axelsDialog.show(v);
         }
     }
 
 
-    private LoginCarInforBean getVaule(){
-        LoginCarInforBean bean=new LoginCarInforBean();
+    private LoginCarInforBean getVaule() {
+        LoginCarInforBean bean = new LoginCarInforBean();
         bean.setCarNumber(itemCarNumber.getTextCenter());
-        if (!CommonUtils.isEmptyCollection(carTypes)){
-            for (CarTypeBean carType : carTypes) {
-                if (carType.getCarType().equalsIgnoreCase(itemCarType.getTextCenter())){
-                    bean.setVehicleSize(carType.getId());
+        if (!CommonUtils.isEmptyCollection(carTypes)) {
+            for (TruckGudieSwitchBean.DataInfor carType : carTypes) {
+                if (carType.getName().equalsIgnoreCase(itemCarType.getTextCenter())) {
+                    bean.setVehicleSize(carType.getType());
+                    break;
+                }
+            }
+        }  if (!CommonUtils.isEmptyCollection(carAxles)) {
+            for (TruckGudieSwitchBean.DataInfor carType : carAxles) {
+                if (carType.getName().equalsIgnoreCase(itemCarAxle.getTextCenter())) {
+                    bean.setVehicleAxis(carType.getType());
                     break;
                 }
             }
@@ -232,14 +239,8 @@ public class LoginTruckInforActivity extends BaseActivity implements View.OnClic
         bean.setVehicleLength(itemCarLength.getTextCenter());
         bean.setVehicleWidth(itemCarWidth.getTextCenter());
         bean.setVehicleHeight(itemCarHeight.getTextCenter());
-        bean.setVehicleAxis(itemCarAxle.getTextCenter());
         return bean;
     }
-
-
-
-
-
 
 
     public boolean check() {
@@ -268,7 +269,8 @@ public class LoginTruckInforActivity extends BaseActivity implements View.OnClic
         if (TextUtils.isEmpty(itemCarWidth.getTextCenter())) {
             showAleart(itemCarWidth.getTextCenterHide());
             return false;
-        }    if (TextUtils.isEmpty(itemCarHeight.getTextCenter())) {
+        }
+        if (TextUtils.isEmpty(itemCarHeight.getTextCenter())) {
             showAleart(itemCarHeight.getTextCenterHide());
             return false;
         }
@@ -284,7 +286,11 @@ public class LoginTruckInforActivity extends BaseActivity implements View.OnClic
 
     @Override
     public void onOptionsSelect(int options1, int options2, int options3, View v) {
-        itemCarType.setTextCenter(carTypes.get(options1).getCarType());
-        itemCarWeightCount.getEtCenter().requestFocus();
+
+        if (v.getId()==R.id.item_car_axle_count){
+            itemCarAxle.setTextCenter(carAxles.get(options1).getName());
+        }else if (v.getId()==R.id.item_car_type){
+            itemCarType.setTextCenter(carTypes.get(options1).getName());
+        }
     }
 }

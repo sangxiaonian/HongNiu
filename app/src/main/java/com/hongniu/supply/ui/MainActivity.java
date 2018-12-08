@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
+import com.google.gson.Gson;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
@@ -212,6 +213,25 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         });
         //检查版本更新
         checkVersion();
+
+        //查询是否开启货车导航
+        HttpAppFactory.queryTruckGuide()
+                .subscribe(new NetObserver<TruckGudieSwitchBean>(null) {
+                    @Override
+                    public void doOnSuccess(TruckGudieSwitchBean data) {
+                        SharedPreferencesUtils.getInstance().putBoolean(Param.CANTRUCK,data.isState());
+                        SharedPreferencesUtils.getInstance().putString(Param.CANTRUCKINFOR,new Gson().toJson(data));
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        SharedPreferencesUtils.getInstance().putBoolean(Param.CANTRUCK,false);
+
+                    }
+                });
+        ;
     }
 
 
@@ -227,22 +247,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                     }
                 });
 
-        //查询是否开启货车导航
-        HttpAppFactory.queryTruckGuide()
-            .subscribe(new NetObserver<TruckGudieSwitchBean>(null) {
-                @Override
-                public void doOnSuccess(TruckGudieSwitchBean data) {
-                    SharedPreferencesUtils.getInstance().putBoolean(Param.CANTRUCK,data.isState());
-                }
 
-                @Override
-                public void onError(Throwable e) {
-                    super.onError(e);
-                    SharedPreferencesUtils.getInstance().putBoolean(Param.CANTRUCK,false);
-
-                }
-            });
-        ;
     }
 
     /**

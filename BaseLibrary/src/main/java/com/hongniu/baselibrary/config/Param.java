@@ -30,6 +30,7 @@ public class Param {
      * 是否可以货车导航
      */
     public static final String CANTRUCK="CANTRUCK";
+    public static final String CANTRUCKINFOR="CANTRUCKINFOR";
 
     static {
         if (isDebug) {
@@ -49,6 +50,11 @@ public class Param {
      * 牛人保
      */
     public static final String NIURENBAO ="https://api.hongniudai.cn/static/html/policyintroduction.html";
+
+   /**
+     * 牛贝规则
+     */
+    public static final String NIUBEI ="https://api.hongniudai.cn/static/cow_rule.html";
 
 
     /**

@@ -3,16 +3,19 @@ package com.hongniu.modulefinance.ui;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.entity.H5Config;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.modulefinance.R;
 import com.hongniu.baselibrary.entity.WalletDetail;
@@ -40,6 +43,7 @@ public class FinanceNiuActivity extends BaseActivity implements RadioGroup.OnChe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finance_niu);
         setToolbarRedTitle(getString(R.string.wallet_niu_title));
+        setToolbarSrcRight("规则");
         initView();
         initData();
         initListener();
@@ -60,6 +64,14 @@ public class FinanceNiuActivity extends BaseActivity implements RadioGroup.OnChe
     protected void initData() {
         super.initData();
         walletHomeDetail = getIntent().getParcelableExtra(Param.TRAN);
+        setToolbarRightClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                H5Config h5Config = new H5Config("规则", Param.NIUBEI, true);
+                ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5).withSerializable(Param.TRAN, h5Config).navigation(mContext);
+
+            }
+        });
 
         if (walletHomeDetail==null){
             HttpFinanceFactory.queryAccountdetails()

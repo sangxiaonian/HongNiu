@@ -74,8 +74,10 @@
             <com.sang.common.widget.ItemView
                 android:id="@+id/item_car_axle_count"
                 style="@style/itemmusetview"
+                app:srcLeftshow="show"
+                app:srcshow="true"
+                app:editable="false"
                 app:textcenterhide="请输入轴数"
-                app:centerType="number"
                 app:textleft="轴数" />
 
             <TextView
