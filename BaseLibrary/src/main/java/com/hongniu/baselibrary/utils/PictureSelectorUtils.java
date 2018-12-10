@@ -149,7 +149,7 @@ public class PictureSelectorUtils {
                 .isGif(false)// 是否显示gif图片 true or false
 //                .compressSavePath(getPath())//压缩图片保存地址
                 .freeStyleCropEnabled(true)// 裁剪框是否可拖拽 true or false
-                .circleDimmedLayer(true)// 是否圆形裁剪 true or false
+                .circleDimmedLayer(false)// 是否圆形裁剪 true or false
                 .showCropFrame(false)// 是否显示裁剪矩形边框 圆形裁剪时建议设为false   true or false
                 .showCropGrid(false)// 是否显示裁剪矩形网格 圆形裁剪时建议设为false    true or false
 //                .openClickSound()// 是否开启点击声音 true or false

@@ -93,4 +93,5 @@ dependencies {
     }
     implementation project(':ModuleChact')
 
+    compile project(path: ':xcalendar')
 }
