@@ -6,7 +6,9 @@ import android.text.TextUtils;
 
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
+import com.hongniu.baselibrary.entity.LoginBean;
 import com.hongniu.baselibrary.net.HttpAppFactory;
+import com.hongniu.baselibrary.utils.Utils;
 import com.sang.common.utils.JLog;
 import com.sang.thirdlibrary.chact.ChactHelper;
 import com.sang.thirdlibrary.chact.UserInfor;
@@ -48,6 +50,21 @@ public class ChatConversationActivity extends BaseActivity {
                             setToolbarTitle(name);
                         }
                     });
+
         }
+
+        //更改自己的用户名信息
+        LoginBean loginInfor = Utils.getLoginInfor();
+        if (loginInfor!=null&&loginInfor.getId()!=null) {
+            final String id = loginInfor.getId();
+            HttpAppFactory.queryRongInfor(loginInfor.getId())
+                    .subscribe(new NetObserver<UserInfor>(null) {
+                        @Override
+                        public void doOnSuccess(UserInfor data) {
+                            ChactHelper.getHelper().refreshUserInfoCache(id, data);
+                        }
+                    });
+        }
+
     }
 }

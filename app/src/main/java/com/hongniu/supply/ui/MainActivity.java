@@ -192,6 +192,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 ChactHelper.getHelper().setUseInfor(new OnGetUserInforListener() {
                     @Override
                     public Observable<UserInfor> onGetUserInfor(String usrID) {
+                        if (s.equals(usrID)){
+                            JLog.e("------这是自己头像信息-----");
+                        }else {
+                            JLog.i("-------获取-------" + usrID);
+                        }
+
+
                         return HttpAppFactory.queryRongInfor(usrID)
                                 .map(new Function<CommonBean<UserInfor>, UserInfor>() {
                                     @Override
