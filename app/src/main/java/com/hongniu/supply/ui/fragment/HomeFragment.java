@@ -239,7 +239,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
                 break;
             case R.id.card_etc:
-                ToastUtils.getInstance().show("近期上线");
+                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("功能暂未开放，敬请期待");
                 break;
         }
     }
