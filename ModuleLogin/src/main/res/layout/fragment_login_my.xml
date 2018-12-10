@@ -110,162 +110,157 @@
 
 
             <LinearLayout
-                android:id="@+id/ll_wallet"
-                style="@style/draw_item">
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:scaleType="fitCenter"
-                    android:src="@mipmap/icon_me_wdqd_32" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/app_gap"
-                    android:text="@string/wallet_title"
-                    android:textColor="@color/color_title_dark"
-                    android:textSize="15sp" />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_niu"
-                style="@style/draw_item">
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:scaleType="fitCenter"
-                    android:src="@mipmap/icon_niubi_32" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/app_gap"
-                    android:text="我的牛贝"
-                    android:textColor="@color/color_title_dark"
-                    android:textSize="15sp" />
-
-
-            </LinearLayout>
-
-            <View
+                android:orientation="vertical"
+                android:showDividers="middle"
+                android:divider="@drawable/shape_line"
+                android:dividerPadding="@dimen/app_gap"
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/color_line" />
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:id="@+id/ll_wallet"
+                    style="@style/draw_item">
 
-            <LinearLayout
-                android:id="@+id/ll_person_infor"
-                style="@style/draw_item">
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/icon_me_wdqd_32" />
 
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:scaleType="fitCenter"
-                    android:src="@mipmap/icon_me_grzl_32" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/app_gap"
+                        android:text="@string/wallet_title"
+                        android:textColor="@color/color_title_dark"
+                        android:textSize="15sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/app_gap"
-                    android:text="我的资料"
-                    android:textColor="@color/color_title_dark"
-                    android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_niu"
+                    style="@style/draw_item">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/icon_niubi_32" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/app_gap"
+                        android:text="我的牛贝"
+                        android:textColor="@color/color_title_dark"
+                        android:textSize="15sp" />
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/ll_person_infor"
+                    style="@style/draw_item">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/icon_me_grzl_32" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/app_gap"
+                        android:text="我的资料"
+                        android:textColor="@color/color_title_dark"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_my_car"
+                    style="@style/draw_item">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/icon_me_wdcl_32" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/app_gap"
+                        android:text="我的车辆"
+                        android:textColor="@color/color_title_dark"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/ll_about_us"
+                    style="@style/draw_item">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/icon_me_gywm_32" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/app_gap"
+                        android:text="关于我们"
+                        android:textColor="@color/color_title_dark"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:id="@+id/ll_contact_service"
+                    style="@style/draw_item">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/icon_me_kfdh_32" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/app_gap"
+                        android:text="联系客服"
+                        android:textColor="@color/color_title_dark"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_login_out"
+
+                    style="@style/draw_item"
+                    android:layout_marginBottom="40dp">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/icon_me_tcdl_32" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/app_gap"
+                        android:text="退出账号"
+                        android:textColor="@color/color_title_dark"
+                        android:textSize="15sp" />
+                </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/ll_my_car"
-                style="@style/draw_item">
 
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:scaleType="fitCenter"
-                    android:src="@mipmap/icon_me_wdcl_32" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/app_gap"
-                    android:text="我的车辆"
-                    android:textColor="@color/color_title_dark"
-                    android:textSize="15sp" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/ll_about_us"
-                style="@style/draw_item">
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:scaleType="fitCenter"
-                    android:src="@mipmap/icon_me_gywm_32" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/app_gap"
-                    android:text="关于我们"
-                    android:textColor="@color/color_title_dark"
-                    android:textSize="15sp" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/color_line" />
-
-            <LinearLayout
-                android:id="@+id/ll_contact_service"
-                style="@style/draw_item">
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:scaleType="fitCenter"
-                    android:src="@mipmap/icon_me_kfdh_32" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/app_gap"
-                    android:text="联系客服"
-                    android:textColor="@color/color_title_dark"
-                    android:textSize="15sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_login_out"
-
-                style="@style/draw_item"
-                android:layout_marginBottom="40dp">
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:scaleType="fitCenter"
-                    android:src="@mipmap/icon_me_tcdl_32" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/app_gap"
-                    android:text="退出账号"
-                    android:textColor="@color/color_title_dark"
-                    android:textSize="15sp" />
-            </LinearLayout>
         </LinearLayout>
 
 

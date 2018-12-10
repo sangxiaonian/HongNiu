@@ -32,7 +32,7 @@
                 app:srcLeftshow="show"
                 app:srcshow="true"
                 app:editable="false"
-                app:textcenterhide="请选择货车类型"
+                app:textcenterhide="请输入货车类型"
                 app:textleft="货车类型" />
 
             <com.sang.common.widget.ItemView

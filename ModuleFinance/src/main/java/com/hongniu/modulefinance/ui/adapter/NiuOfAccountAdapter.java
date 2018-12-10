@@ -34,7 +34,7 @@ public class NiuOfAccountAdapter extends XAdapter<NiuOfAccountBean> {
 
     @Override
     public BaseHolder<NiuOfAccountBean> initHolder(ViewGroup parent, int viewType) {
-        return new BaseHolder<NiuOfAccountBean>(context, parent, R.layout.finance_item_finance) {
+        return new BaseHolder<NiuOfAccountBean>(context, parent, R.layout.finance_item_niu_finance) {
             @Override
             public void initView(View itemView, final int position, final NiuOfAccountBean data) {
                 super.initView(itemView, position, data);

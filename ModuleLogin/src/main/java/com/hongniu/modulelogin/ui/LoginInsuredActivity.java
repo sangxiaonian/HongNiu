@@ -153,7 +153,7 @@ public class LoginInsuredActivity extends BaseActivity implements View.OnClickLi
             itemIdcard.setTextCenter(insuranceInforBean.getInsuredType()==2?insuranceInforBean.getCompanyCreditCode():insuranceInforBean.getIdnumber());
             itemName.setTextCenter(insuranceInforBean.getInsuredType()==2?insuranceInforBean.getCompanyName():insuranceInforBean.getUsername());
 
-            if (creatInsuredBean.getInsuredType()==2){
+            if (creatInsuredBean.getInsuredType()==2&&!TextUtils.isEmpty(insuranceInforBean.getAbsoluteImageUrl())){
                 ImageLoader.getLoader().load(mContext,image,insuranceInforBean.getAbsoluteImageUrl());
 
             }
@@ -396,7 +396,7 @@ public class LoginInsuredActivity extends BaseActivity implements View.OnClickLi
         itemName.setTextCenterHide(options1 == 0 ? "请输入您的姓名" : "请输入企业名称");
 
         itemIdcard.setTextLeft(options1 == 0 ? "身份证号" : "企业编码");
-        itemIdcard.setTextCenterHide(options1 == 0 ? "请输入您的身份证号" : "请输入统一社会信任码或者税号");
+        itemIdcard.setTextCenterHide(options1 == 0 ? "请输入您的身份证号" : "请输入统一社会信用代码或税号");
 
         llImg.setVisibility(options1 == 0 ? View.GONE : View.VISIBLE);
     }

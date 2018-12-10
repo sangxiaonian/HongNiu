@@ -74,7 +74,8 @@ public class OrderHomeFragment extends BaseFragment implements OrderMainControl.
     private OrderDetailItemControl.RoleState roleState = CARGO_OWNER;
     private Context mContext;
     private int type=3;
-
+    private View back;
+    private boolean showBack;
 
     @Override
     protected View initView(LayoutInflater inflater) {
@@ -92,8 +93,9 @@ public class OrderHomeFragment extends BaseFragment implements OrderMainControl.
         });
 
         switchTitle = inflate.findViewById(R.id.switch_title);
+        back = inflate.findViewById(R.id.toolbar_left);
         titlePop = new OrderMainTitlePop(getContext());
-
+        back.setVisibility(showBack?View.VISIBLE:View.GONE);
         return inflate;
 
     }
@@ -102,13 +104,22 @@ public class OrderHomeFragment extends BaseFragment implements OrderMainControl.
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         changeStaff(type);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
     }
+
 
 
     @Override
     public void setArguments(@Nullable Bundle args) {
         super.setArguments(args);
           type =   args.getInt(Param.TRAN,3);
+          showBack =   args.getBoolean(Param.TYPE,false);
+
 
     }
 

@@ -62,9 +62,9 @@ public class FestivityInviteDetailActivity extends RefrushActivity<InviteDetailB
                         tvName.setText(String.format(getString(R.string.username_infor), data.getContact()));
                         String format;
                         if (data.getMobile() != null) {
-                            format = String.format(getString(R.string.username_infor), data.mobile);
+                            format = String.format(getString(R.string.finance_niu_phone_number), data.mobile);
                         } else {
-                            format = String.format(getString(R.string.username_infor), "");
+                            format = String.format(getString(R.string.finance_niu_phone_number), "");
                         }
                         tvPhone.setText(format);
                     }

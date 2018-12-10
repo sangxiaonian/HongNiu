@@ -25,6 +25,7 @@ public class OrderOrderActivity extends BaseActivity {
         int intExtra = getIntent().getIntExtra(Param.TRAN,3);
         Bundle bundle=new Bundle();
         bundle.putInt(Param.TRAN,intExtra);
+        bundle.putBoolean(Param.TYPE,true);
         fragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content, fragment)

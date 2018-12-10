@@ -29,7 +29,7 @@ public class FinanceBalanceActivity extends BaseActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finance_balance);
-        setToolbarTitle(getString(R.string.wallet_title));
+        setToolbarTitle("账户余额");
         initView();
         initData();
         initListener();

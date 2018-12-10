@@ -855,19 +855,20 @@ public final class R {
         public static int shape_e83e15 = 0x7f0901ef;
         public static int shape_f06f28 = 0x7f0901f0;
         public static int shape_left_25_fff = 0x7f0901f1;
-        public static int shape_radius_2_333 = 0x7f0901f2;
-        public static int shape_radius_2_999 = 0x7f0901f3;
-        public static int shape_radius_2_b2e83515 = 0x7f0901f4;
-        public static int shape_radius_2_e83515 = 0x7f0901f5;
-        public static int shape_radius_2_eaeaea = 0x7f0901f6;
-        public static int shape_radius_2_f06f28 = 0x7f0901f7;
-        public static int shape_radius_2_tran = 0x7f0901f8;
-        public static int shape_rb_enable = 0x7f0901f9;
-        public static int shape_rb_unenable = 0x7f0901fa;
-        public static int shape_stoke_xu_dddddd = 0x7f0901fb;
-        public static int shape_trigon_b2000000 = 0x7f0901fc;
-        public static int tooltip_frame_dark = 0x7f0901fd;
-        public static int tooltip_frame_light = 0x7f0901fe;
+        public static int shape_line = 0x7f0901f2;
+        public static int shape_radius_2_333 = 0x7f0901f3;
+        public static int shape_radius_2_999 = 0x7f0901f4;
+        public static int shape_radius_2_b2e83515 = 0x7f0901f5;
+        public static int shape_radius_2_e83515 = 0x7f0901f6;
+        public static int shape_radius_2_eaeaea = 0x7f0901f7;
+        public static int shape_radius_2_f06f28 = 0x7f0901f8;
+        public static int shape_radius_2_tran = 0x7f0901f9;
+        public static int shape_rb_enable = 0x7f0901fa;
+        public static int shape_rb_unenable = 0x7f0901fb;
+        public static int shape_stoke_xu_dddddd = 0x7f0901fc;
+        public static int shape_trigon_b2000000 = 0x7f0901fd;
+        public static int tooltip_frame_dark = 0x7f0901fe;
+        public static int tooltip_frame_light = 0x7f0901ff;
     }
     public static final class id {
         private id() {}

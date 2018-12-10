@@ -27,7 +27,7 @@
    <!--被保险人身份-->
   <string-array name="insured_type">
         <item>个人</item>
-        <item>公司</item>
+        <item>企业</item>
 
     </string-array>
 
