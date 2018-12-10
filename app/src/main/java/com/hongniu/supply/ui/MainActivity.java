@@ -257,6 +257,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     }
 
+
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(Intent.ACTION_MAIN);
+        i.addCategory(Intent.CATEGORY_HOME);
+        startActivity(i);
+
+    }
+
     /**
      * 检查版本号，确定是否需要更新
      */
