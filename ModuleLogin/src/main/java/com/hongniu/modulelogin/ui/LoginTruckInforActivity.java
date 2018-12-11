@@ -115,7 +115,7 @@ public class LoginTruckInforActivity extends BaseActivity implements View.OnClic
         carTypes = bean.getVehicleSize();
         typeDialog.setPicker(carTypes);
 
-        carAxles=bean.getAxis();
+        carAxles = bean.getAxis();
         axelsDialog.setPicker(carAxles);
 
         HttpLoginFactory.queyCarDetailInfor(carNumber)
@@ -131,9 +131,10 @@ public class LoginTruckInforActivity extends BaseActivity implements View.OnClic
                                     break;
                                 }
                             }
-                        }  if (!CommonUtils.isEmptyCollection(carAxles)) {
+                        }
+                        if (!CommonUtils.isEmptyCollection(carAxles)) {
                             for (TruckGudieSwitchBean.DataInfor carType : carAxles) {
-                                if (carType.getType().equalsIgnoreCase(data.getVehicleSize())) {
+                                if (carType.getType().equalsIgnoreCase(data.getVehicleAxis())) {
                                     itemCarAxle.setTextCenter(carType.getName());
                                     break;
                                 }
@@ -209,7 +210,7 @@ public class LoginTruckInforActivity extends BaseActivity implements View.OnClic
             DeviceUtils.closeSoft(this);
             typeDialog.show(v);
 
-        }else if (v.getId()==R.id.item_car_axle_count){
+        } else if (v.getId() == R.id.item_car_axle_count) {
             DeviceUtils.closeSoft(this);
             axelsDialog.show(v);
         }
@@ -226,7 +227,8 @@ public class LoginTruckInforActivity extends BaseActivity implements View.OnClic
                     break;
                 }
             }
-        }  if (!CommonUtils.isEmptyCollection(carAxles)) {
+        }
+        if (!CommonUtils.isEmptyCollection(carAxles)) {
             for (TruckGudieSwitchBean.DataInfor carType : carAxles) {
                 if (carType.getName().equalsIgnoreCase(itemCarAxle.getTextCenter())) {
                     bean.setVehicleAxis(carType.getType());
@@ -245,37 +247,67 @@ public class LoginTruckInforActivity extends BaseActivity implements View.OnClic
 
     public boolean check() {
         if (TextUtils.isEmpty(itemCarNumber.getTextCenter())) {
-            showAleart(itemCarNumber.getTextCenterHide());
+            showAleart("请输入车牌号");
             return false;
         }
         if (TextUtils.isEmpty(itemCarType.getTextCenter())) {
-            showAleart(itemCarType.getTextCenterHide());
+            showAleart("请选择车辆类型");
             return false;
         }
 
         if (TextUtils.isEmpty(itemCarWeightCount.getTextCenter())) {
-            showAleart(itemCarWeightCount.getTextCenterHide());
+            showAleart("请输入总重量");
             return false;
+        } else {
+            String center = itemCarWeightCount.getTextCenter();
+            if (Float.parseFloat(center) > 100) {
+                showAleart(itemCarWeightCount.getTextLeft() + "超限，请检查");
+                return false;
+            }
         }
 
         if (TextUtils.isEmpty(itemCarWeight.getTextCenter())) {
-            showAleart(itemCarWeight.getTextCenterHide());
+            showAleart("请输入车辆核定载重");
             return false;
+        }else {
+            String center = itemCarWeight.getTextCenter();
+            if (Float.parseFloat(center) > 100) {
+                showAleart(itemCarWeight.getTextLeft() + "超限，请检查");
+                return false;
+            }
         }
         if (TextUtils.isEmpty(itemCarLength.getTextCenter())) {
-            showAleart(itemCarLength.getTextCenterHide());
+            showAleart("请输入车长");
             return false;
+        }else {
+            String center = itemCarLength.getTextCenter();
+            if (Float.parseFloat(center) > 25) {
+                showAleart(itemCarLength.getTextLeft() + "超限，请检查");
+                return false;
+            }
         }
         if (TextUtils.isEmpty(itemCarWidth.getTextCenter())) {
-            showAleart(itemCarWidth.getTextCenterHide());
+            showAleart("请输入车宽");
             return false;
+        }else {
+            String center = itemCarWidth.getTextCenter();
+            if (Float.parseFloat(center) > 5) {
+                showAleart(itemCarWidth.getTextLeft() + "超限，请检查");
+                return false;
+            }
         }
         if (TextUtils.isEmpty(itemCarHeight.getTextCenter())) {
-            showAleart(itemCarHeight.getTextCenterHide());
+            showAleart("请输入车高");
             return false;
+        }else {
+            String center = itemCarHeight.getTextCenter();
+            if (Float.parseFloat(center) > 10) {
+                showAleart(itemCarHeight.getTextLeft() + "超限，请检查");
+                return false;
+            }
         }
         if (TextUtils.isEmpty(itemCarAxle.getTextCenter())) {
-            showAleart(itemCarAxle.getTextCenterHide());
+            showAleart("请输入轴数");
             return false;
         }
 
@@ -287,9 +319,9 @@ public class LoginTruckInforActivity extends BaseActivity implements View.OnClic
     @Override
     public void onOptionsSelect(int options1, int options2, int options3, View v) {
 
-        if (v.getId()==R.id.item_car_axle_count){
+        if (v.getId() == R.id.item_car_axle_count) {
             itemCarAxle.setTextCenter(carAxles.get(options1).getName());
-        }else if (v.getId()==R.id.item_car_type){
+        } else if (v.getId() == R.id.item_car_type) {
             itemCarType.setTextCenter(carTypes.get(options1).getName());
         }
     }

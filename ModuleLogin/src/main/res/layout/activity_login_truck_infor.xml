@@ -32,41 +32,41 @@
                 app:srcLeftshow="show"
                 app:srcshow="true"
                 app:editable="false"
-                app:textcenterhide="请输入货车类型"
+                app:textcenterhide="点击选择货车类型"
                 app:textleft="货车类型" />
 
             <com.sang.common.widget.ItemView
                 android:id="@+id/item_car_count_weight"
                 style="@style/itemmusetview"
-                app:textcenterhide="请输入车辆总重量"
+                app:textcenterhide="0~100吨"
                 app:centerType="number"
                 app:textleft="总重量" />
 
             <com.sang.common.widget.ItemView
                 android:id="@+id/item_car_weight"
                 style="@style/itemmusetview"
-                app:textcenterhide="请输入车辆核定载重"
+                app:textcenterhide="0~100吨"
                 app:centerType="number"
                 app:textleft="核定载重" />
 
             <com.sang.common.widget.ItemView
                 android:id="@+id/item_car_length"
                 style="@style/itemmusetview"
-                app:textcenterhide="请输入车长"
+                app:textcenterhide="0~25米"
                 app:centerType="number"
                 app:textleft="车长" />
 
             <com.sang.common.widget.ItemView
                 android:id="@+id/item_car_width"
                 style="@style/itemmusetview"
-                app:textcenterhide="请输入车宽"
+                app:textcenterhide="0~5米"
                 app:centerType="number"
                 app:textleft="车宽" />
 
             <com.sang.common.widget.ItemView
                 android:id="@+id/item_car_height"
                 style="@style/itemmusetview"
-                app:textcenterhide="请输入车高"
+                app:textcenterhide="0~10米"
                 app:centerType="number"
                 app:textleft="车高" />
 
@@ -77,7 +77,7 @@
                 app:srcLeftshow="show"
                 app:srcshow="true"
                 app:editable="false"
-                app:textcenterhide="请输入轴数"
+                app:textcenterhide="计算过路费及限重"
                 app:textleft="轴数" />
 
             <TextView
