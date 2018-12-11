@@ -122,6 +122,8 @@
         android:lineSpacingMultiplier="1.25"
         android:textColor="@color/color_order_color"
         android:textSize="@dimen/text_small_14"
+        android:paddingBottom="3dp"
+        android:paddingTop="3dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tv_start_loaction"
         app:layout_constraintTop_toBottomOf="@+id/tv_start_loaction" />
