@@ -66,6 +66,7 @@ import java.util.List;
 import com.sang.thirdlibrary.chact.ChactHelper;
 
 import io.reactivex.Observable;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Function;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
@@ -468,6 +469,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         BusFactory.getBus().removeStickyEvent(Integer.class);
     }
 
+    private boolean canUp=true;
     //App 进入后台时候
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onInBackgrond(final Event.OnBackground event) {
@@ -478,8 +480,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
 
         ClickEventBean eventParams = ClickEventUtils.getInstance().getEventParams(this);
-        if (eventParams!=null) {
+        if (canUp&&eventParams!=null&&DeviceUtils.isBackGround(mContext)) {
+            canUp=false;
             HttpMainFactory.upClickEvent(eventParams)
+                    .doFinally(new Action() {
+                        @Override
+                        public void run() throws Exception {
+                            canUp=true;
+                        }
+                    })
                     .subscribe(new NetObserver<String>(null) {
 
                         @Override

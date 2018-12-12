@@ -37,12 +37,16 @@ public class BaseObserver<T> implements Observer<T> {
     @Override
     public void onError(Throwable e) {
         e.printStackTrace();
-        CrashHelper.getInstance().saveCrashInfor(e);
         if (listener != null) {
             if (e instanceof NetException) {
                 listener.onTaskFail(e,((NetException) e).getErrorCode(), ((NetException) e).getErrorMSg());
+                if (!"401".equalsIgnoreCase(((NetException) e).getErrorCode())){
+                    CrashHelper.getInstance().saveCrashInfor(e);
+                }
             }else {
                 listener.onTaskFail(e,e.getLocalizedMessage(), e.getMessage());
+                CrashHelper.getInstance().saveCrashInfor(e);
+
             }
         }
     }

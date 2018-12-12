@@ -10,10 +10,12 @@
 
     <application>
 
-        <!-- imlib config begin -->
+        <!-- imlib config begin x18ywvqfxbxhc  -->
+        <!--正式 x18ywvqfxbxhc-->
+        <!--测试 e0x9wycfe4enq-->
         <meta-data
             android:name="RONG_CLOUD_APP_KEY"
-            android:value="e0x9wycfe4enq" />
+            android:value="x18ywvqfxbxhc" />
 
         <service
             android:name="io.rong.imlib.ipc.RongService"
