@@ -46,6 +46,7 @@ public class ClickEventParams {
     public static final String 我是司机_确认到达 = "role_driver_confirmarrival";
 
     public static final String 我是司机_货车导航 = "role_driver_trucknavigation";
+    public static final String 我是司机_查看路线 = "role_driver_viewtrack";
 
     public static final String 我是司机_开始发车 = "role_driver_startdeparture";
 

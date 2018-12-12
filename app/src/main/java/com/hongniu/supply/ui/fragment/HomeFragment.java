@@ -37,7 +37,6 @@ import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.ColorImageView;
 import com.sang.common.widget.DrawableCircle;
@@ -46,8 +45,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
-import io.rong.imageloader.core.display.CircleBitmapDisplayer;
 
 import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CARGO_OWNER;
 
@@ -87,23 +86,19 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     protected void initData() {
         super.initData();
         currentColor = getResources().getColor(R.color.color_new_light);
-        drawable=new DrawableCircle();
+        drawable = new DrawableCircle();
         drawable.setColor(Color.parseColor("#ea492c"))
-                .setRadius(DeviceUtils.dip2px(getContext(),2))
+                .setRadius(DeviceUtils.dip2px(getContext(), 2))
                 .flush();
         llSearch.post(new Runnable() {
             @Override
             public void run() {
-                drawable.setSize(llSearch.getWidth(),llSearch.getHeight())
+                drawable.setSize(llSearch.getWidth(), llSearch.getHeight())
                         .flush();
                 llSearch.setBackground(drawable);
 
             }
         });
-
-
-
-
 
 
         setToolBarColor(currentColor);
@@ -148,16 +143,41 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         adapter.addHeard(homeHeader);
         rv.setAdapter(adapter);
 
+
+    }
+
+    private void upData() {
         Observable.concat(HttpMainFactory
                         .queryActivity()
 
                         .map(new Function<CommonBean<List<HomeADBean>>, CommonBean<List<HomeADBean>>>() {
                             @Override
                             public CommonBean<List<HomeADBean>> apply(CommonBean<List<HomeADBean>> listCommonBean) throws Exception {
-                                if (!CommonUtils.isEmptyCollection(listCommonBean.getData())) {
-                                    ads.addAll(listCommonBean.getData());
+                                List<HomeADBean> data = listCommonBean.getData();
+                                boolean change = false;
+                                if (data!=null) {
+                                    if (ads.size() != data.size()) {
+                                        ads.clear();
+                                        ads.addAll(data);
+                                        change=true;
+                                    } else {
+                                        for (int i = 0; i < data.size(); i++) {
+                                            if (!data.get(i).equals(ads.get(i))) {
+                                                change=true;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    if (change){
+                                        ads.clear();
+                                        ads.addAll(data);
+                                        adapter.notifyDataSetChanged();
+                                    }
+                                }else {
+                                    ads.clear();
                                     adapter.notifyDataSetChanged();
                                 }
+
 
                                 return listCommonBean;
                             }
@@ -169,7 +189,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                             public CommonBean<WalletDetail> apply(CommonBean<WalletDetail> walletDetailCommonBean) throws Exception {
                                 if (walletDetailCommonBean.getCode() == 200) {
                                     homeHeader.setWalletInfor(walletDetailCommonBean.getData().getAvailableBalance());
-                                    adapter.notifyDataSetChanged();
                                 }
                                 return walletDetailCommonBean;
                             }
@@ -191,7 +210,24 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
 
                     }
                 });
+    }
 
+    private boolean isFirst;
+
+    @Override
+    public void onTaskStart(Disposable d) {
+        if (!isFirst) {
+            isFirst = true;
+            super.onTaskStart(d);
+        }
+
+    }
+
+    @Override
+    public void onTaskFail(Throwable e, String code, String msg) {
+        if (!isFirst) {
+            super.onTaskFail(e, code, msg);
+        }
 
     }
 
@@ -200,9 +236,17 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         super.onHiddenChanged(hidden);
         if (!hidden) {
             setToolBarColor(currentColor);
+            upData();
+
         }
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        upData();
+
+    }
 
     @Override
     protected void initListener() {
@@ -287,8 +331,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
      */
     @Override
     public void onScrollDisChange(float disX, float percentX, float dixY, float percentY) {
-        if (percentY>1){
-            percentY=1;
+        if (percentY > 1) {
+            percentY = 1;
         }
         if (percentY >= 0 && percentY <= 1) {
             currentColor = ConvertUtils.evaluateColor(percentY, getResources().getColor(R.color.color_new_light), Color.WHITE);
@@ -307,7 +351,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     }
 
     private void setToolBarColor(int color) {
-        StatusBarCompat.setStatusBarColor(getActivity(), color, false);
+        StatusBarCompat.setStatusBarColor(getActivity(), color, true);
 
     }
 

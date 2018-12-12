@@ -93,5 +93,8 @@ public class HomeHeader extends PeakHolder implements View.OnClickListener {
 
     public void setWalletInfor(String walletInfor) {
         this.walletInfor = walletInfor;
+        if (tv_balance!=null) {
+            tv_balance.setText(walletInfor == null ? "0.00" : walletInfor);
+        }
     }
 }

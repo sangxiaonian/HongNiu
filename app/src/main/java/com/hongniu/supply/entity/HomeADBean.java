@@ -1,5 +1,7 @@
 package com.hongniu.supply.entity;
 
+import android.text.TextUtils;
+
 /**
  * 作者： ${PING} on 2018/11/29.
  */
@@ -48,5 +50,16 @@ public class HomeADBean {
 
     public void setPicture(String picture) {
         this.picture = picture;
+    }
+
+
+    public boolean equals(HomeADBean obj) {
+        return this==obj||
+                (!TextUtils.isEmpty(subtitle)&&subtitle.equals(obj.getSubtitle())
+                    &&!TextUtils.isEmpty(link)&&subtitle.equals(obj.getLink())
+                    &&!TextUtils.isEmpty(picture)&&subtitle.equals(obj.getPicture())
+                    &&!TextUtils.isEmpty(title)&&subtitle.equals(obj.getTitle()))
+
+                ;
     }
 }

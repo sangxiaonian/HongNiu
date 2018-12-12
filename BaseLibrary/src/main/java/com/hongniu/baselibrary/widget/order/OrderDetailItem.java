@@ -686,7 +686,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                 }
                 switch (roleState) {
                     case DRIVER:
-                        ClickEventUtils.getInstance().onClick(ClickEventParams.我是司机_货车导航);
+                        ClickEventUtils.getInstance().onClick(ClickEventParams.我是司机_查看路线);
 
                         break;
                     case CAR_OWNER:

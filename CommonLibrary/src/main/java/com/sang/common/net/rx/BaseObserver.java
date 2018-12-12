@@ -3,6 +3,7 @@ package com.sang.common.net.rx;
 
 import com.sang.common.net.error.NetException;
 import com.sang.common.net.listener.TaskControl;
+import com.sang.common.utils.errorcrushhelper.CrashHelper;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -36,6 +37,7 @@ public class BaseObserver<T> implements Observer<T> {
     @Override
     public void onError(Throwable e) {
         e.printStackTrace();
+        CrashHelper.getInstance().saveCrashInfor(e);
         if (listener != null) {
             if (e instanceof NetException) {
                 listener.onTaskFail(e,((NetException) e).getErrorCode(), ((NetException) e).getErrorMSg());

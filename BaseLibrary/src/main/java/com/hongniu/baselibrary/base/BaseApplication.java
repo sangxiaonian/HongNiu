@@ -7,6 +7,7 @@ import com.hongniu.baselibrary.config.Param;
 import com.sang.common.imgload.ImageLoader;
 import com.sang.common.utils.SharedPreferencesUtils;
 import com.sang.common.utils.ToastUtils;
+import com.sang.common.utils.errorcrushhelper.CrashHelper;
 import com.sang.thirdlibrary.bug.BugClient;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -29,6 +30,9 @@ public class BaseApplication extends MultiDexApplication {
         ToastUtils.getInstance().init(this);
         SharedPreferencesUtils.getInstance().initSharePreference(this);
         ImageLoader.getLoader().globalErrorImg(R.mipmap.placeholder);
-        ImageLoader.getLoader().globalPlaceholder(R.mipmap.placeholder);
+//        ImageLoader.getLoader().globalPlaceholder(R.mipmap.placeholder);
+
+        //
+
     }
 }
