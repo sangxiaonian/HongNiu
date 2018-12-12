@@ -307,6 +307,9 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
                     .creatDialog(new CenterAlertDialog(mContext))
                     .show();
         } else {
+            if (msg!=null&&msg.equalsIgnoreCase("timeout")) {
+                msg="网络异常，请稍后再试";
+            }
             showAleart(msg);
         }
     }
