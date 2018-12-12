@@ -287,7 +287,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
      */
     @Override
     public void onScrollDisChange(float disX, float percentX, float dixY, float percentY) {
-        JLog.i(dixY + ">>" + percentY);
         if (percentY>1){
             percentY=1;
         }

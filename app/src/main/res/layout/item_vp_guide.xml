@@ -34,7 +34,7 @@
 
     <Button
         android:id="@+id/button"
-        style="@style/bt_sum"
+        style="@style/bt_sum_red"
         android:text="立即体验"
         android:layout_width="150dp"
         app:layout_constraintBottom_toBottomOf="parent"
