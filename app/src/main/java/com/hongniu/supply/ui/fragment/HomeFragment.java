@@ -154,31 +154,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                             @Override
                             public CommonBean<List<HomeADBean>> apply(CommonBean<List<HomeADBean>> listCommonBean) throws Exception {
                                 List<HomeADBean> data = listCommonBean.getData();
-                                boolean change = false;
-                                if (data!=null) {
-                                    if (ads.size() != data.size()) {
-                                        ads.clear();
-                                        ads.addAll(data);
-                                        change=true;
-                                    } else {
-                                        for (int i = 0; i < data.size(); i++) {
-                                            if (!data.get(i).equals(ads.get(i))) {
-                                                change=true;
-                                                break;
-                                            }
-                                        }
-                                    }
-                                    if (change){
-                                        ads.clear();
-                                        ads.addAll(data);
-                                        adapter.notifyDataSetChanged();
-                                    }
-                                }else {
-                                    ads.clear();
-                                    adapter.notifyDataSetChanged();
-                                }
-
-
+                                ads.clear();
+                                ads.addAll(data);
+                                adapter.notifyDataSetChanged();
                                 return listCommonBean;
                             }
                         })
