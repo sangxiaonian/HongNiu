@@ -64,6 +64,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.List;
 
 import com.sang.thirdlibrary.chact.ChactHelper;
+import com.xiaomi.mipush.sdk.MiPushClient;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.Action;
@@ -71,6 +72,8 @@ import io.reactivex.functions.Function;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
+import io.rong.push.RongPushClient;
+import io.rong.push.common.RongException;
 import rongyun.sang.com.chactmodule.ui.fragment.ChactListFragment;
 
 @Route(path = ArouterParamsApp.activity_main)
@@ -205,7 +208,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
             @Override
             public void onSuccess(final String s) {
-                HttpAppFactory.queryRongInfor(s)
+                 HttpAppFactory.queryRongInfor(s)
                         .subscribe(new NetObserver<UserInfor>(null) {
                             @Override
                             public void doOnSuccess(UserInfor data) {
@@ -324,8 +327,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             @Override
             public void onClick(View v) {
                 //断开连接
-                ChactHelper.getHelper().disConnect();
+//                ChactHelper.getHelper().disConnect();
                 isConnect = false;
+                try {
+                    RongPushClient.checkManifest(mContext);
+                } catch (RongException e) {
+                    e.printStackTrace();
+                }
+                String regId = MiPushClient.getRegId(mContext);
+                JLog.i(regId+">>");
             }
         });
 

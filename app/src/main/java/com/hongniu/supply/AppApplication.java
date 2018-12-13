@@ -1,5 +1,7 @@
 package com.hongniu.supply;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.text.TextUtils;
 
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -19,6 +21,9 @@ import com.sang.common.utils.JLog;
 import com.sang.common.utils.errorcrushhelper.CrashHelper;
 import com.sang.thirdlibrary.chact.ChactHelper;
 import com.sang.thirdlibrary.chact.control.ChactControl;
+import com.xiaomi.channel.commonutils.logger.LoggerInterface;
+import com.xiaomi.mipush.sdk.Logger;
+import com.xiaomi.mipush.sdk.MiPushClient;
 
 import org.greenrobot.eventbus.EventBus;
 import org.reactivestreams.Subscriber;
@@ -32,6 +37,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
+import io.rong.push.RongPushClient;
 
 import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
 
@@ -51,25 +57,49 @@ public class AppApplication extends BaseApplication {
         }
 
         ARouter.init(this); // 尽可能早，推荐在Application中初始化
-
+//        XMPush();
         CrashHelper.getInstance()
-                .init(this)
-                ;
-
-
-            ChactHelper.getHelper()
-                    .initHelper(this)
-                    //未读消息监听
-                    .setUnReadCountListener(new ChactControl.OnReceiveUnReadCountListener() {
-                        @Override
-                        public void onReceiveUnRead(int count) {
-                            EventBus.getDefault().postSticky(count);
-                        }
-                    })
-            ;
+                .init(this);
+        ChactHelper.getHelper()
+                .initHelper(this)
+                //未读消息监听
+                .setUnReadCountListener(new ChactControl.OnReceiveUnReadCountListener() {
+                    @Override
+                    public void onReceiveUnRead(int count) {
+                        EventBus.getDefault().postSticky(count);
+                    }
+                })
+        ;
 
         initData();
     }
+
+    private void XMPush() {
+//        RongPushClient.registerMiPush(application, "2882303761517871354", "5731787151354");
+        if (getApplicationInfo().packageName.equals(getCurProcessName(this))) {
+            MiPushClient.registerPush(this, "2882303761517871354", "5731787151354");
+            LoggerInterface newLogger = new LoggerInterface() {
+                @Override
+                public void setTag(String tag) {
+                    // ignore
+                }
+
+                @Override
+                public void log(String content, Throwable t) {
+                    JLog.d(content);
+                    t.printStackTrace();
+                }
+
+                @Override
+                public void log(String content) {
+                    JLog.d(content);
+                }
+            };
+            Logger.setLogger(this, newLogger);
+        }
+
+    }
+
 
     //上传异常情况
     private void initData() {
@@ -85,16 +115,16 @@ public class AppApplication extends BaseApplication {
     /**
      * 上传Api异常
      */
-    private void upApiError(){
+    private void upApiError() {
         File[] logInforFiles = CrashHelper.getInstance().getLogInforFiles();
-        if (logInforFiles!=null&&logInforFiles.length>0){
+        if (logInforFiles != null && logInforFiles.length > 0) {
             Flowable.fromArray(logInforFiles)
                     .map(new Function<File, String>() {
                         @Override
                         public String apply(File file) throws Exception {
                             String s = CrashHelper.getInstance().readFile(file);
                             //读取完成之后，直接删除文件
-                            JLog.i("读取文件完成："+file.getAbsolutePath());
+                            JLog.i("读取文件完成：" + file.getAbsolutePath());
                             file.delete();
                             return s;
                         }
@@ -111,7 +141,7 @@ public class AppApplication extends BaseApplication {
                         @Override
                         public void onSubscribe(Subscription s) {
                             s.request(5);
-                            subscription=s;
+                            subscription = s;
                         }
 
                         @Override
@@ -129,7 +159,7 @@ public class AppApplication extends BaseApplication {
                                     .subscribe(new NetObserver<String>(null) {
                                         @Override
                                         public void onError(Throwable e) {
-                                            if (subscription!=null){
+                                            if (subscription != null) {
                                                 subscription.request(1);
                                             }
 
@@ -137,7 +167,7 @@ public class AppApplication extends BaseApplication {
 
                                         @Override
                                         public void doOnSuccess(String data) {
-                                            if (subscription!=null){
+                                            if (subscription != null) {
                                                 subscription.request(1);
                                             }
                                         }
@@ -164,7 +194,7 @@ public class AppApplication extends BaseApplication {
      */
     private void upClickEvent() {
         ClickEventBean eventParams = ClickEventUtils.getInstance().getEventParams(this);
-        if (eventParams!=null) {
+        if (eventParams != null) {
             HttpMainFactory.upClickEvent(eventParams)
                     .subscribe(new NetObserver<String>(null) {
 

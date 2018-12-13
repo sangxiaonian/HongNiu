@@ -3,10 +3,12 @@ package com.sang.thirdlibrary.chact;
 import android.app.Application;
 import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.LruCache;
 
 import com.sang.common.net.rx.BaseObserver;
+import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 import com.sang.thirdlibrary.chact.control.ChactControl;
@@ -46,14 +48,19 @@ public class ChactHelper {
      * @param application
      */
     public ChactHelper initHelper(Application application) {
-        //华为配置
-        RongPushClient.registerHWPush(application);
-        //小米推送配置
-//        RongPushClient.registerMiPush(application, "2882303761517871354", "5731787151354");
+        String deviceBrand = DeviceUtils.getDeviceBrand();
+        JLog.i(deviceBrand);
+        if (deviceBrand.equalsIgnoreCase("Xiaomi")){
+            //小米推送配置
+            JLog.i("小米推送");
+            RongPushClient.registerMiPush(application, "2882303761517871354", "5731787151354");
+        }else if (deviceBrand.equalsIgnoreCase("huawei")){
+            JLog.i("华为推送");
+            //华为配置
+            RongPushClient.registerHWPush(application);
+        }
         if (application.getApplicationInfo().packageName.equals(getCurProcessName(application))) {
-
             RongIM.init(application);
-
             RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
                 @Override
                 public UserInfo getUserInfo(final String s) {
@@ -126,7 +133,7 @@ public class ChactHelper {
 
     public void connect(final Context context, final String token, final RongIMClient.ConnectCallback callback) {
         if (context.getApplicationInfo().packageName.equals(getCurProcessName(context.getApplicationContext()))) {
-            ownerID=null;
+            ownerID = null;
             JLog.e("开始连接服务器");
             RongIM.connect(token, new RongIMClient.ConnectCallback() {
 
@@ -137,7 +144,7 @@ public class ChactHelper {
                 @Override
                 public void onTokenIncorrect() {
                     JLog.e("初始化失败");
-                    if (callback!=null){
+                    if (callback != null) {
                         callback.onTokenIncorrect();
                     }
                 }
@@ -148,7 +155,7 @@ public class ChactHelper {
                  */
                 @Override
                 public void onSuccess(String userid) {
-                    ownerID=userid;
+                    ownerID = userid;
                     JLog.e("初始化成功" + userid);
                 }
 
@@ -158,11 +165,11 @@ public class ChactHelper {
                  */
                 @Override
                 public void onError(RongIMClient.ErrorCode errorCode) {
-                    if (callback!=null){
+                    if (callback != null) {
                         callback.onError(errorCode);
                     }
 
-                    if (errorCode.getValue()==31010){//不是异地登录
+                    if (errorCode.getValue() == 31010) {//不是异地登录
                         ToastUtils.getInstance().show("异地登录");
                     }
                     JLog.e("初始错误----------");
@@ -172,9 +179,10 @@ public class ChactHelper {
         }
     }
 
-    public void disConnect(){
+    public void disConnect() {
         RongIM.getInstance().disconnect();
     }
+
     /**
      * 开启器单聊
      *
@@ -183,16 +191,16 @@ public class ChactHelper {
      * @param title
      */
     public void startPriver(Context context, String userID, String title) {
-        if (userID!=null&&userID.equals(ownerID)){
+        if (userID != null && userID.equals(ownerID)) {
             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("您不能和自己对话");
-        }else {
+        } else {
             RongIM.getInstance().startPrivateChat(context, userID, title == null ? "聊天" : title);
         }
 
     }
 
     /**
-     *     设置获取用户信息
+     * 设置获取用户信息
      */
     public ChactHelper setUseInfor(final OnGetUserInforListener listener) {
         this.listener = listener;
@@ -213,29 +221,27 @@ public class ChactHelper {
      * @param infor
      */
     public void refreshUserInfoCache(String userID, UserInfor infor) {
-        StringBuilder builder=new StringBuilder();
+        StringBuilder builder = new StringBuilder();
         if (!TextUtils.isEmpty(infor.getContact())) {
             builder.append(infor.getContact()).append("\t\t");
 
         }
-        builder.append(infor.getMobile() );
+        builder.append(infor.getMobile());
         final String name = builder.toString();
         final Uri head = TextUtils.isEmpty(infor.getLogoPath()) ? null : Uri.parse(infor.getLogoPath());
         RongIM.getInstance().refreshUserInfoCache(new UserInfo(userID, name, head));
     }
 
 
-
-
     public void put(String userId, UserInfor infor) {
         cache.put(userId, infor);
 
-        StringBuilder builder=new StringBuilder();
+        StringBuilder builder = new StringBuilder();
         if (!TextUtils.isEmpty(infor.getContact())) {
             builder.append(infor.getContact()).append("\t\t");
 
         }
-        builder.append(infor.getMobile() );
+        builder.append(infor.getMobile());
 
 
         final String name = builder.toString();

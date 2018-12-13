@@ -54,15 +54,10 @@
         <activity android:name=".ui.NiuInsuranceH5Activity"></activity>
 
 
-
-
-
         <!-- 小米 配置开始 < -->
         <service android:name="com.xiaomi.push.service.XMPushService" android:enabled="true" />
         <service android:name="com.xiaomi.mipush.sdk.PushMessageHandler" android:enabled="true" android:exported="true" />
         <service android:name="com.xiaomi.mipush.sdk.MessageHandleService" android:enabled="true" />
-        <!--注：此service必须在2.2.5版本以后（包括2.2.5版本）加入-->
-
         <service
             android:name="com.xiaomi.push.service.XMJobService"
             android:enabled="true"
@@ -105,7 +100,7 @@
             android:excludeFromRecents="true"
             android:exported="false"
             android:hardwareAccelerated="true"
-            android:theme="@android:style/Theme.Translucent" >
+            android:theme="@android:style/Theme.Translucent">
             <meta-data
                 android:name="hwc-theme"
                 android:value="androidhwext:style/Theme.Emui.Translucent" />
@@ -118,7 +113,7 @@
             android:excludeFromRecents="true"
             android:exported="false"
             android:hardwareAccelerated="true"
-            android:theme="@android:style/Theme.Translucent" >
+            android:theme="@android:style/Theme.Translucent">
             <meta-data
                 android:name="hwc-theme"
                 android:value="androidhwext:style/Theme.Emui.Translucent" />
@@ -128,9 +123,9 @@
             android:name="com.huawei.hms.update.provider.UpdateProvider"
             android:authorities="com.hongniu.supply.hms.update.provider"
             android:exported="false"
-            android:grantUriPermissions="true"/>
+            android:grantUriPermissions="true" />
         <!-- 第三方相关 :接收Push消息（注册、Push消息、Push连接状态）广播 -->
-        <receiver android:name="io.rong.push.platform.HMSReceiver" >
+        <receiver android:name="io.rong.push.platform.HMSReceiver">
             <intent-filter>
                 <!-- 必须,用于接收token -->
                 <action android:name="com.huawei.android.push.intent.REGISTRATION" />
@@ -142,7 +137,7 @@
                 <action android:name="com.huawei.intent.action.PUSH_STATE" />
             </intent-filter>
         </receiver>
-        <receiver android:name="com.huawei.hms.support.api.push.PushEventReceiver" >
+        <receiver android:name="com.huawei.hms.support.api.push.PushEventReceiver">
             <intent-filter>
 
                 <!-- 接收通道发来的通知栏消息，兼容老版本Push -->
@@ -153,8 +148,8 @@
 
 
         <receiver
-            android:exported="true"
-            android:name=".utils.DemoNotificationReceiver">
+            android:name=".utils.DemoNotificationReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="io.rong.push.intent.MESSAGE_ARRIVED" />
                 <action android:name="io.rong.push.intent.MI_MESSAGE_ARRIVED" />
