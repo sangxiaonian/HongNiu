@@ -57,7 +57,6 @@ public class AppApplication extends BaseApplication {
                 ;
 
 
-        if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
             ChactHelper.getHelper()
                     .initHelper(this)
                     //未读消息监听
@@ -68,7 +67,6 @@ public class AppApplication extends BaseApplication {
                         }
                     })
             ;
-        }
 
         initData();
     }

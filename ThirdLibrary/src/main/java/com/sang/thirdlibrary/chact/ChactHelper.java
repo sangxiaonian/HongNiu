@@ -17,6 +17,7 @@ import io.rong.imkit.manager.IUnReadMessageObserver;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
+import io.rong.push.RongPushClient;
 
 import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
 
@@ -45,34 +46,41 @@ public class ChactHelper {
      * @param application
      */
     public ChactHelper initHelper(Application application) {
-        RongIM.init(application);
+        //华为配置
+        RongPushClient.registerHWPush(application);
+        //小米推送配置
+        RongPushClient.registerMiPush(application, "2882303761517871354", "5731787151354");
+        if (application.getApplicationInfo().packageName.equals(getCurProcessName(application))) {
 
-        RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
-            @Override
-            public UserInfo getUserInfo(final String s) {
-                if (listener != null) {
-                    listener.onGetUserInfor(s)
-                            .subscribe(new BaseObserver<UserInfor>(null) {
-                                @Override
-                                public void onNext(UserInfor infor) {
-                                    super.onNext(infor);
-                                    refreshUserInfoCache(s, infor);
-                                }
-                            });
+            RongIM.init(application);
+
+            RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
+                @Override
+                public UserInfo getUserInfo(final String s) {
+                    if (listener != null) {
+                        listener.onGetUserInfor(s)
+                                .subscribe(new BaseObserver<UserInfor>(null) {
+                                    @Override
+                                    public void onNext(UserInfor infor) {
+                                        super.onNext(infor);
+                                        refreshUserInfoCache(s, infor);
+                                    }
+                                });
+                    }
+                    return null;
                 }
-                return null;
-            }
-        }, true);
+            }, true);
 
 
-        RongIM.getInstance().addUnReadMessageCountChangedObserver(new IUnReadMessageObserver() {
-            @Override
-            public void onCountChanged(int i) {
-                if (unReadCountListener!=null){
-                    unReadCountListener.onReceiveUnRead(i);
+            RongIM.getInstance().addUnReadMessageCountChangedObserver(new IUnReadMessageObserver() {
+                @Override
+                public void onCountChanged(int i) {
+                    if (unReadCountListener != null) {
+                        unReadCountListener.onReceiveUnRead(i);
+                    }
                 }
-            }
-        }, Conversation.ConversationType.PRIVATE);
+            }, Conversation.ConversationType.PRIVATE);
+        }
         return this;
     }
 

@@ -153,10 +153,12 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                         .map(new Function<CommonBean<List<HomeADBean>>, CommonBean<List<HomeADBean>>>() {
                             @Override
                             public CommonBean<List<HomeADBean>> apply(CommonBean<List<HomeADBean>> listCommonBean) throws Exception {
-                                List<HomeADBean> data = listCommonBean.getData();
-                                ads.clear();
-                                ads.addAll(data);
-                                adapter.notifyDataSetChanged();
+                                if (listCommonBean.getCode()==200) {
+                                    List<HomeADBean> data = listCommonBean.getData();
+                                    ads.clear();
+                                    ads.addAll(data);
+                                    adapter.notifyDataSetChanged();
+                                }
                                 return listCommonBean;
                             }
                         })
@@ -172,10 +174,11 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                             }
                         })
         )
-                .subscribe(new BaseObserver(this) {
+                .subscribe(new BaseObserver(isFirst?this:null) {
                     @Override
                     public void onNext(Object result) {
                         super.onNext(result);
+
                         if (result instanceof CommonBean) {
                             CommonBean bean = (CommonBean) result;
                             if (bean.getCode() != 200) {
@@ -190,22 +193,18 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                 });
     }
 
-    private boolean isFirst;
+    private boolean isFirst=true;
 
     @Override
     public void onTaskStart(Disposable d) {
-        if (!isFirst) {
-            isFirst = true;
+            isFirst = false;
             super.onTaskStart(d);
-        }
 
     }
 
     @Override
     public void onTaskFail(Throwable e, String code, String msg) {
-        if (!isFirst) {
             super.onTaskFail(e, code, msg);
-        }
 
     }
 

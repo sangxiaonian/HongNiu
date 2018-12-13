@@ -3,8 +3,11 @@ package com.sang.common.utils;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Parcelable;
+import android.text.Html;
+import android.text.Spanned;
 import android.text.TextUtils;
 
 import java.util.Collection;
@@ -133,5 +136,30 @@ public class CommonUtils {
         return datas==null||datas.isEmpty();
     }
 
+
+    /**
+     * 获取图片标签
+     */
+    public static Spanned getImageSpan(final Context context, int resId, final int width , final int height){
+        Spanned hotSpan = Html.fromHtml("<img src='" + resId + "'/> ", new Html.ImageGetter() {
+            @Override
+            public Drawable getDrawable(String source) {
+                if(!TextUtils.isEmpty(source)) {
+                    int id = Integer.parseInt(source);
+                    //根据id从资源文件中获取图片对象
+                    Drawable d = context.getResources().getDrawable(id);
+                    if (d != null) {
+                        d.setBounds(0, 0,width>0?width: d.getIntrinsicWidth(), height>0?height:d.getIntrinsicHeight());
+                    }
+                    return d;
+                }
+                return null;
+            }
+        },null);
+        /*SpannableStringBuilder hotSpan = new SpannableStringBuilder("  ");
+        VerticalImageSpan imageSpan = new VerticalImageSpan(context, resId);
+        hotSpan.setSpan(imageSpan, 0, 1, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE);*/
+        return hotSpan;
+    }
 
 }

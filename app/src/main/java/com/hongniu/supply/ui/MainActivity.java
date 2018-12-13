@@ -116,14 +116,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         loaction.setListener(this);
         tab1.performClick();
 
-
-//        HttpMainFactory.queryClickEvent()
-//                .subscribe(new NetObserver<List<HomeADBean>>(null) {
-//                    @Override
-//                    public void doOnSuccess(List<HomeADBean> data) {
-//                    }
-//                });
-
     }
 
     @Override

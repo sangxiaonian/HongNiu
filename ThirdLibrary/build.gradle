@@ -45,4 +45,6 @@ dependencies {
     api project(':CallKit')
     api project(':RCSticker')
     api files('libs/AMap_Channel_Location_V1.4.0_20160708.jar')
+    api files('libs/MiPush_SDK_Client_3_6_12.jar')
+    api 'com.huawei.android.hms:push:2.6.1.301'
 }

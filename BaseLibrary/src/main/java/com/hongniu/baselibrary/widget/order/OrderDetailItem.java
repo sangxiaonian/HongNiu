@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
@@ -488,7 +489,13 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
 
     private void creatPhoneSpan(int startPoint, SpannableStringBuilder builder, ClickableSpan clickableSpan) {
         final int size = DeviceUtils.dip2px(getContext(), 18);
+//        String substring = builder.toString().substring(startPoint, startPoint + 1);
+//        int i = substring.indexOf("\n");
+//        if (i>0){
+//            startPoint-=1;
+//        }
         CenteredImageSpan imageSpan2 = new CenteredImageSpan(getContext(), R.mipmap.icon_call_30);
+//        Spanned imageSpan2= CommonUtils.getImageSpan(getContext(),R.mipmap.icon_call_30,size,size);
         imageSpan2.setSpanSize(size, size);
         builder.setSpan(imageSpan2, startPoint, startPoint + 1, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
         builder.setSpan(clickableSpan, startPoint, startPoint + 1, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
@@ -500,6 +507,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
         imageSpan2.setSpanSize(size, size);
         builder.setSpan(imageSpan2, startPoint, startPoint + 1, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
         builder.setSpan(clickableSpan, startPoint, startPoint + 1, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+
     }
 
 
