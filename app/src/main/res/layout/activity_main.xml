@@ -190,4 +190,15 @@
         </android.support.constraint.ConstraintLayout>
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/demo"
+        android:layout_width="wrap_content"
+        android:padding="@dimen/app_gap"
+        android:background="@color/color_line"
+        android:text="DEOM"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="80dp"
+        android:layout_marginRight="20dp"
+        android:layout_height="wrap_content" />
 </RelativeLayout>

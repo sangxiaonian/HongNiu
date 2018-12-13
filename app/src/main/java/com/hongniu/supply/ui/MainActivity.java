@@ -76,7 +76,7 @@ import rongyun.sang.com.chactmodule.ui.fragment.ChactListFragment;
 @Route(path = ArouterParamsApp.activity_main)
 public class MainActivity extends BaseActivity implements View.OnClickListener, AMapLocationListener {
 
-
+    private TextView demo;
 
     private LoactionUtils loaction;
     private LoactionUpUtils upLoactionUtils;//上传位置信息
@@ -114,6 +114,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         loaction = LoactionUtils.getInstance();
         loaction.init(mContext);
         loaction.setListener(this);
+        tab4.performClick();
         tab1.performClick();
 
     }
@@ -157,6 +158,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         img3 = findViewById(R.id.img3);
         img4 = findViewById(R.id.img4);
         img5 = findViewById(R.id.img5);
+        demo = findViewById(R.id.demo);
 
     }
 
@@ -164,8 +166,37 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     protected void initData() {
         super.initData();
         tv_unread.setVisibility(View.GONE);
-
+//        messageFragment = new ChactListFragment();
+//        getSupportFragmentManager()
+//                .beginTransaction()
+//                .add(R.id.content, messageFragment)
+//                .commit();
         //链接数据
+        connectRong();
+        //检查版本更新
+        checkVersion();
+
+        //查询是否开启货车导航
+        HttpAppFactory.queryTruckGuide()
+                .subscribe(new NetObserver<TruckGudieSwitchBean>(null) {
+                    @Override
+                    public void doOnSuccess(TruckGudieSwitchBean data) {
+                        SharedPreferencesUtils.getInstance().putBoolean(Param.CANTRUCK, data.isState());
+                        SharedPreferencesUtils.getInstance().putString(Param.CANTRUCKINFOR, new Gson().toJson(data));
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        SharedPreferencesUtils.getInstance().putBoolean(Param.CANTRUCK, false);
+
+                    }
+                });
+        ;
+    }
+
+    //连接融云服务器
+    private void connectRong() {
         ChactHelper.getHelper().connect(this, Utils.getLoginInfor().getRongToken(), new RongIMClient.ConnectCallback() {
             @Override
             public void onTokenIncorrect() {
@@ -204,29 +235,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
             }
         });
-        //检查版本更新
-        checkVersion();
 
-        //查询是否开启货车导航
-        HttpAppFactory.queryTruckGuide()
-                .subscribe(new NetObserver<TruckGudieSwitchBean>(null) {
-                    @Override
-                    public void doOnSuccess(TruckGudieSwitchBean data) {
-                        SharedPreferencesUtils.getInstance().putBoolean(Param.CANTRUCK,data.isState());
-                        SharedPreferencesUtils.getInstance().putString(Param.CANTRUCKINFOR,new Gson().toJson(data));
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        super.onError(e);
-                        SharedPreferencesUtils.getInstance().putBoolean(Param.CANTRUCK,false);
-
-                    }
-                });
-        ;
     }
-
 
     @Override
     protected void onStart() {
@@ -300,6 +310,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 .show();
     }
 
+    boolean isConnect;
+
     @Override
     protected void initListener() {
         super.initListener();
@@ -308,7 +320,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         tab3.setOnClickListener(this);
         tab4.setOnClickListener(this);
         tab5.setOnClickListener(this);
-
+        demo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //断开连接
+                ChactHelper.getHelper().disConnect();
+                isConnect = false;
+            }
+        });
 
     }
 
@@ -320,6 +339,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+
             case R.id.tab1:
             case R.id.tab2:
             case R.id.tab4:
@@ -440,28 +460,30 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             }
         }
     }
+
     /**
      * 未读信息
      *
      * @param event
      */
-    @Subscribe(sticky = true,threadMode = ThreadMode.MAIN)
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void unReaderMessage(Integer event) {
         if (event != null) {
-            String msg="";
-            if (event>99){
-                msg="99+";
-            }else if (event>0){
-                msg=event+"";
+            String msg = "";
+            if (event > 99) {
+                msg = "99+";
+            } else if (event > 0) {
+                msg = event + "";
             }
-            tv_unread.setVisibility(TextUtils.isEmpty(msg)?View.GONE:View.VISIBLE);
+            tv_unread.setVisibility(TextUtils.isEmpty(msg) ? View.GONE : View.VISIBLE);
             tv_unread.setText(msg);
 
         }
         BusFactory.getBus().removeStickyEvent(Integer.class);
     }
 
-    private boolean canUp=true;
+    private boolean canUp = true;
+
     //App 进入后台时候
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onInBackgrond(final Event.OnBackground event) {
@@ -472,13 +494,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
 
         ClickEventBean eventParams = ClickEventUtils.getInstance().getEventParams(this);
-        if (canUp&&eventParams!=null&&DeviceUtils.isBackGround(mContext)) {
-            canUp=false;
+        if (canUp && eventParams != null && DeviceUtils.isBackGround(mContext)) {
+            canUp = false;
             HttpMainFactory.upClickEvent(eventParams)
                     .doFinally(new Action() {
                         @Override
                         public void run() throws Exception {
-                            canUp=true;
+                            canUp = true;
                         }
                     })
                     .subscribe(new NetObserver<String>(null) {

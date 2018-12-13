@@ -49,7 +49,7 @@ public class ChactHelper {
         //华为配置
         RongPushClient.registerHWPush(application);
         //小米推送配置
-        RongPushClient.registerMiPush(application, "2882303761517871354", "5731787151354");
+//        RongPushClient.registerMiPush(application, "2882303761517871354", "5731787151354");
         if (application.getApplicationInfo().packageName.equals(getCurProcessName(application))) {
 
             RongIM.init(application);
@@ -172,6 +172,9 @@ public class ChactHelper {
         }
     }
 
+    public void disConnect(){
+        RongIM.getInstance().disconnect();
+    }
     /**
      * 开启器单聊
      *
