@@ -49,6 +49,7 @@ public class AppApplication extends BaseApplication {
 
     @Override
     public void onCreate() {
+        JLog.e("启动：-------------------------");
         super.onCreate();
         if (BuildConfig.DEBUG) {           // 这两行必须写在init之前，否则这些配置在init过程中将无效
             ARouter.openLog();     // 打印日志
@@ -76,6 +77,7 @@ public class AppApplication extends BaseApplication {
 
     private void XMPush() {
 //        RongPushClient.registerMiPush(application, "2882303761517871354", "5731787151354");
+        JLog.i("注册小米");
         if (getApplicationInfo().packageName.equals(getCurProcessName(this))) {
             MiPushClient.registerPush(this, "2882303761517871354", "5731787151354");
             LoggerInterface newLogger = new LoggerInterface() {

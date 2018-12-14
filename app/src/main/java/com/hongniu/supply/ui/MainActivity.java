@@ -67,6 +67,8 @@ import com.sang.thirdlibrary.chact.ChactHelper;
 import com.xiaomi.mipush.sdk.MiPushClient;
 
 import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Function;
 import io.rong.imkit.RongIM;
@@ -270,6 +272,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
      */
     private void checkVersion() {
 
+
         HttpOrderFactory.checkVersion()
                 .subscribe(new NetObserver<VersionBean>(null) {
                     @Override
@@ -313,7 +316,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 .show();
     }
 
-    boolean isConnect;
 
     @Override
     protected void initListener() {
@@ -328,14 +330,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             public void onClick(View v) {
                 //断开连接
 //                ChactHelper.getHelper().disConnect();
-                isConnect = false;
+
                 try {
                     RongPushClient.checkManifest(mContext);
                 } catch (RongException e) {
                     e.printStackTrace();
                 }
                 String regId = MiPushClient.getRegId(mContext);
-                JLog.i(regId+">>");
+                JLog.i(regId+">>获取");
             }
         });
 

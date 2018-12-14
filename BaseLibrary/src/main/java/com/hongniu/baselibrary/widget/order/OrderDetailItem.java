@@ -1,6 +1,7 @@
 package com.hongniu.baselibrary.widget.order;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.Spannable;
@@ -9,6 +10,7 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -27,6 +29,7 @@ import com.hongniu.baselibrary.widget.order.helper.OrderItemHelper;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
+import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.CenteredImageSpan;
 import com.sang.thirdlibrary.chact.ChactHelper;
@@ -112,6 +115,11 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
         addView(itemView);
     }
 
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        JLog.i("----------onSizeChanged---------"+w);
+    }
 
     public void setInfor(OrderDetailBean data) {
         this.orderBean = data;
@@ -319,13 +327,14 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
      * @param driverPhone   司机电话
      * @param driverid      聊天ID
      */
-    public void setContent(String startNum, String carNum, String roleTop, String carOwnerName,
-                           final String carOwnerPhone, String ownerid, String cargo, String roleBottom,
-                           String driverName, final String driverPhone, String driverid) {
+    public void setContent(final String startNum, final String carNum, final String roleTop, final String carOwnerName,
+                           final String carOwnerPhone, final String ownerid, final String cargo, final String roleBottom,
+                           final String driverName, final String driverPhone, final String driverid) {
         tv_order_detail.setMovementMethod(LinkMovementMethod.getInstance());
         tv_order_detail.setText(getContent(startNum, carNum, roleTop, carOwnerName, carOwnerPhone, ownerid, cargo
                 , roleBottom, driverName, driverPhone, driverid
         ));
+
     }
 
     /**
@@ -363,16 +372,22 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                 .append(" ")
         ;
 
-        final String gap = "\t\t\t\t";
+//        final String gap = "\t\t\t\t";
+        final String gap = "正正";
+//        final String gap = "　　　　";
 
         if (!TextUtils.isEmpty(carOwnerPhone)) {//如果司机电话不为空，则拼接司机电话
             builder.append(carOwnerPhone)
-                    .append(gap)
             ;
+            int start = builder.toString().length();
+            builder.append(gap);
             firstPoint = builder.toString().length();
             builder.append(gap)
             ;
             firstChat = builder.toString().length();
+            ForegroundColorSpan span=new ForegroundColorSpan(Color.TRANSPARENT);
+            builder.setSpan(span,start,firstChat,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
         }
 
         builder.append("\n")
@@ -387,10 +402,15 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
         ;
 
         if (!TextUtils.isEmpty(driverPhone)) {
+            int start = builder.toString().length();
             builder.append(gap);
             secondPoint = builder.toString().length();
             builder.append(gap);
             secondChat = builder.toString().length();
+
+            ForegroundColorSpan span=new ForegroundColorSpan(Color.TRANSPARENT);
+            builder.setSpan(span,start,secondChat,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
         }
 
         if (firstPoint > 0) {
@@ -439,27 +459,6 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
         }
 
         if (secondPoint > 0) {
-
-            creatPhoneSpan(secondPoint -1, builder, new ClickableSpan() {
-                @Override
-                public void onClick(View widget) {
-                    CommonUtils.toDial(getContext(), driverPhone);
-                    switch (roleState) {
-                        case DRIVER:
-
-                            ClickEventUtils.getInstance().onClick(ClickEventParams.我是司机_拨打电话);
-                            break;
-                        case CAR_OWNER:
-                            ClickEventUtils.getInstance().onClick(ClickEventParams.我是车主_拨打电话);
-
-                            break;
-                        case CARGO_OWNER:
-                            ClickEventUtils.getInstance().onClick(ClickEventParams.我是货主_拨打电话);
-
-                            break;
-                    }
-                }
-            });
             creatChactSpan(secondChat - 1, builder, new ClickableSpan() {
                 @Override
                 public void onClick(View widget) {
@@ -480,6 +479,27 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                     }
                 }
             });
+            creatPhoneSpan(secondPoint -1, builder, new ClickableSpan() {
+                @Override
+                public void onClick(View widget) {
+                    CommonUtils.toDial(getContext(), driverPhone);
+                    switch (roleState) {
+                        case DRIVER:
+
+                            ClickEventUtils.getInstance().onClick(ClickEventParams.我是司机_拨打电话);
+                            break;
+                        case CAR_OWNER:
+                            ClickEventUtils.getInstance().onClick(ClickEventParams.我是车主_拨打电话);
+
+                            break;
+                        case CARGO_OWNER:
+                            ClickEventUtils.getInstance().onClick(ClickEventParams.我是货主_拨打电话);
+
+                            break;
+                    }
+                }
+            });
+
 
         }
 
@@ -489,14 +509,9 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
 
     private void creatPhoneSpan(int startPoint, SpannableStringBuilder builder, ClickableSpan clickableSpan) {
         final int size = DeviceUtils.dip2px(getContext(), 18);
-//        String substring = builder.toString().substring(startPoint, startPoint + 1);
-//        int i = substring.indexOf("\n");
-//        if (i>0){
-//            startPoint-=1;
-//        }
         CenteredImageSpan imageSpan2 = new CenteredImageSpan(getContext(), R.mipmap.icon_call_30);
-//        Spanned imageSpan2= CommonUtils.getImageSpan(getContext(),R.mipmap.icon_call_30,size,size);
         imageSpan2.setSpanSize(size, size);
+//        Spanned imageSpan2= CommonUtils.getImageSpan(getContext(),R.mipmap.icon_call_30,size,size);
         builder.setSpan(imageSpan2, startPoint, startPoint + 1, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
         builder.setSpan(clickableSpan, startPoint, startPoint + 1, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
     }
@@ -507,7 +522,6 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
         imageSpan2.setSpanSize(size, size);
         builder.setSpan(imageSpan2, startPoint, startPoint + 1, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
         builder.setSpan(clickableSpan, startPoint, startPoint + 1, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
-
     }
 
 

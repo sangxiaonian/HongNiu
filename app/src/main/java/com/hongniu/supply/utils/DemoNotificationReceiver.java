@@ -16,6 +16,7 @@ public class DemoNotificationReceiver extends PushMessageReceiver {
     @Override
     public boolean onNotificationMessageClicked(Context context, PushNotificationMessage message) {
         JLog.i("被点击了");
+
         return false;
     }
 
