@@ -105,7 +105,8 @@
         <!--华为离线推送开始-->
         <meta-data
             android:name="com.huawei.hms.client.appid"
-            android:value="100431637" />
+            android:value="${HUAWEI_KEY}" />
+
         <!-- BridgeActivity定义了HMS-SDK中一些跳转所需要的透明页面-->
         <activity
             android:name="com.huawei.hms.activity.BridgeActivity"

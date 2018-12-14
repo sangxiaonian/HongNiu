@@ -48,9 +48,9 @@ ADDED from E:\Workspaces\hongniu_android\IMLib\AndroidManifest.xml:9:5-79
 application
 ADDED from E:\Workspaces\hongniu_android\IMLib\AndroidManifest.xml:11:5-76:19
 meta-data#RONG_CLOUD_APP_KEY
-ADDED from E:\Workspaces\hongniu_android\IMLib\AndroidManifest.xml:16:9-18:45
+ADDED from E:\Workspaces\hongniu_android\IMLib\AndroidManifest.xml:16:9-18:53
 	android:value
-		ADDED from E:\Workspaces\hongniu_android\IMLib\AndroidManifest.xml:18:13-42
+		ADDED from E:\Workspaces\hongniu_android\IMLib\AndroidManifest.xml:18:13-50
 	android:name
 		ADDED from E:\Workspaces\hongniu_android\IMLib\AndroidManifest.xml:17:13-46
 service#io.rong.imlib.ipc.RongService

@@ -1,11 +1,13 @@
 package com.hongniu.baselibrary.config;
 
+import com.hongniu.baselibrary.BuildConfig;
+
 /**
  * 作者： ${桑小年} on 2018/7/31.
  * 努力，为梦长留
  */
 public class Param {
-    public static final boolean isDebug = true;
+    public static final boolean isDebug = BuildConfig.debugMode;
 
 
 

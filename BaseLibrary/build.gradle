@@ -22,6 +22,18 @@ android {
         }
     }
 
+    buildTypes {
+
+        debug {
+            // 为版本名添加后缀
+            buildConfigField "boolean", "debugMode", "true"
+
+        }
+        release {
+            buildConfigField "boolean", "debugMode", "false"
+          }
+    }
+
 }
 
 dependencies {

@@ -176,6 +176,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 //                .beginTransaction()
 //                .add(R.id.content, messageFragment)
 //                .commit();
+        demo.setVisibility(Param.isDebug?View.VISIBLE:View.GONE);
         //链接数据
         connectRong();
         //检查版本更新
