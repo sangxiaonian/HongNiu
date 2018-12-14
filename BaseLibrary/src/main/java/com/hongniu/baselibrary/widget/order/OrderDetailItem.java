@@ -29,7 +29,6 @@ import com.hongniu.baselibrary.widget.order.helper.OrderItemHelper;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.CenteredImageSpan;
 import com.sang.thirdlibrary.chact.ChactHelper;
@@ -82,7 +81,9 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
      * true 隐藏保费信息，false显示保费信息 默认为false
      */
     private boolean hideInsurance;
+    int spanSize ;
 
+      String gap = "正正";
 
     public OrderDetailItem(@NonNull Context context) {
         this(context, null, 0);
@@ -98,6 +99,10 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
     }
 
     private void initView(Context context) {
+
+        spanSize= DeviceUtils.dip2px(getContext(), 18);
+        gap = "正正正";
+
         View itemView = LayoutInflater.from(context).inflate(R.layout.order_item, this, false);
         tvIdentity = itemView.findViewById(R.id.tv_identity);//身份角色
         tv_order = itemView.findViewById(R.id.tv_order);//订单号
@@ -115,11 +120,6 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
         addView(itemView);
     }
 
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
-        JLog.i("----------onSizeChanged---------"+w);
-    }
 
     public void setInfor(OrderDetailBean data) {
         this.orderBean = data;
@@ -372,10 +372,6 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                 .append(" ")
         ;
 
-//        final String gap = "\t\t\t\t";
-        final String gap = "正正";
-//        final String gap = "　　　　";
-
         if (!TextUtils.isEmpty(carOwnerPhone)) {//如果司机电话不为空，则拼接司机电话
             builder.append(carOwnerPhone)
             ;
@@ -385,8 +381,8 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
             builder.append(gap)
             ;
             firstChat = builder.toString().length();
-            ForegroundColorSpan span=new ForegroundColorSpan(Color.TRANSPARENT);
-            builder.setSpan(span,start,firstChat,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            ForegroundColorSpan span = new ForegroundColorSpan(Color.TRANSPARENT);
+            builder.setSpan(span, start, firstChat, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         }
 
@@ -408,8 +404,8 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
             builder.append(gap);
             secondChat = builder.toString().length();
 
-            ForegroundColorSpan span=new ForegroundColorSpan(Color.TRANSPARENT);
-            builder.setSpan(span,start,secondChat,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            ForegroundColorSpan span = new ForegroundColorSpan(Color.TRANSPARENT);
+            builder.setSpan(span, start, secondChat, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         }
 
@@ -479,7 +475,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                     }
                 }
             });
-            creatPhoneSpan(secondPoint -1, builder, new ClickableSpan() {
+            creatPhoneSpan(secondPoint - 1, builder, new ClickableSpan() {
                 @Override
                 public void onClick(View widget) {
                     CommonUtils.toDial(getContext(), driverPhone);
@@ -508,18 +504,15 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
     }
 
     private void creatPhoneSpan(int startPoint, SpannableStringBuilder builder, ClickableSpan clickableSpan) {
-        final int size = DeviceUtils.dip2px(getContext(), 18);
         CenteredImageSpan imageSpan2 = new CenteredImageSpan(getContext(), R.mipmap.icon_call_30);
-        imageSpan2.setSpanSize(size, size);
-//        Spanned imageSpan2= CommonUtils.getImageSpan(getContext(),R.mipmap.icon_call_30,size,size);
+        imageSpan2.setSpanSize(spanSize, spanSize);
         builder.setSpan(imageSpan2, startPoint, startPoint + 1, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
         builder.setSpan(clickableSpan, startPoint, startPoint + 1, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
     }
 
     private void creatChactSpan(int startPoint, SpannableStringBuilder builder, ClickableSpan clickableSpan) {
-        final int size = DeviceUtils.dip2px(getContext(), 18);
         CenteredImageSpan imageSpan2 = new CenteredImageSpan(getContext(), R.mipmap.icon_maessage_30);
-        imageSpan2.setSpanSize(size, size);
+        imageSpan2.setSpanSize(spanSize, spanSize);
         builder.setSpan(imageSpan2, startPoint, startPoint + 1, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
         builder.setSpan(clickableSpan, startPoint, startPoint + 1, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
     }

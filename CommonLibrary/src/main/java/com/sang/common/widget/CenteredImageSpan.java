@@ -36,7 +36,6 @@ public class CenteredImageSpan extends ImageSpan {
         Drawable b = getDrawable();
 
             b.setBounds(0, 0, width, height);
-            JLog.i("x:"+x+"\nstart"+start);
 
         Paint.FontMetricsInt fm = paint.getFontMetricsInt();
         int transY = (y + fm.descent + y + fm.ascent) / 2
