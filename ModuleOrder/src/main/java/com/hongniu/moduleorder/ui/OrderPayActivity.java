@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -395,10 +396,21 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
      */
     @Override
     public void showCargoInfor(String cargoPrice, String data) {
-        conInsurance.setVisibility(View.VISIBLE);
-        btBuy.setVisibility(View.GONE);
-        tv_cargo_price.setText(cargoPrice);
-        tv_insurance_price.setText(data);
+
+        try {
+            float v = Float.parseFloat(data.substring(1));
+            if (v>0) {
+                conInsurance.setVisibility(View.VISIBLE);
+                btBuy.setVisibility(View.GONE);
+                tv_cargo_price.setText(cargoPrice);
+                tv_insurance_price.setText(data);
+            }else {
+                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("保险金额不能为0");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     /**
