@@ -293,7 +293,11 @@ public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implement
             if (TextUtils.isEmpty(key)){
                 adapter.removeHeard(header);
             }else  {
-                adapter.addHeard(header);
+                if (adapter.getHeads().contains(header)){
+                    adapter.notifyDataSetChanged();
+                }else {
+                    adapter.addHeard(header);
+                }
             }
             queryData(true, true);
         }

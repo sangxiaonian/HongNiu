@@ -140,7 +140,8 @@ public class OrderMapCheckPathActivity extends BaseActivity {
     }
 
     private void drawPath(final OrderDetailBean bean) {
-        drawPathWithTrace(bean);
+//        drawPathWithTrace(bean);
+        drawPathWithNoTrace(bean);
     }
 
 
