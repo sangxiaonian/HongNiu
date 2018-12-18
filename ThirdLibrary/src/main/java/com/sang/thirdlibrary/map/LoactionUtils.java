@@ -7,6 +7,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.util.Log;
 
@@ -212,7 +213,8 @@ public class LoactionUtils {
             builder = new Notification.Builder(context.getApplicationContext());
         }
         builder.setDefaults(Notification.DEFAULT_ALL)
-                .setSmallIcon(R.mipmap.app_logo)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher))
                 .setContentTitle(context.getString(R.string.app_name))
                 .setContentText(loactionError == null ? "" : loactionError)
                 .setWhen(System.currentTimeMillis())

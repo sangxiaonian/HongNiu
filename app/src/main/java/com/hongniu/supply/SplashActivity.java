@@ -7,7 +7,6 @@ import android.os.Message;
 import android.os.SystemClock;
 
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
-import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
@@ -40,7 +39,7 @@ public class SplashActivity extends BaseActivity {
                         ArouterUtils.getInstance().builder(ArouterParamLogin.activity_login).navigation(mContext);
                     }
                 }
-              sendEmptyMessageDelayed(1,500);
+                sendEmptyMessageDelayed(1, 500);
             } else {
                 finish();
             }
@@ -53,6 +52,15 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        if (getIntent() != null) {
+            if ((getIntent().getFlags() & Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT) != 0) {
+                finish();
+                return;
+            }
+        }
+
+
         setToolbarTitle("");
         if (Utils.isLogin()) {
             HttpAppFactory.getRoleType()
@@ -107,7 +115,7 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
 
-        if (handler!=null) {
+        if (handler != null) {
             handler.removeMessages(0);
             handler.removeMessages(1);
             handler = null;

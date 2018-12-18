@@ -172,7 +172,7 @@ public class FestivityInviteActivity extends BaseActivity implements View.OnClic
     @Override
     public void shareSession(DialogControl.IDialog dialog) {
         dialog.dismiss();
-        new ShareClient(1).shareUrl(mContext, invitedInfor.getInvitedUrl(), invitedInfor.getTitle(), invitedInfor.getSubtitle(), BitmapFactory.decodeResource(getResources(), R.mipmap.app_logo));
+        new ShareClient(1).shareUrl(mContext, invitedInfor.getInvitedUrl(), invitedInfor.getTitle(), invitedInfor.getSubtitle(), BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
 
     }
 
@@ -184,7 +184,7 @@ public class FestivityInviteActivity extends BaseActivity implements View.OnClic
     @Override
     public void shareTimeLine(DialogControl.IDialog dialog) {
         dialog.dismiss();
-        new ShareClient(0).shareUrl(mContext, invitedInfor.getInvitedUrl(), invitedInfor.getTitle(), invitedInfor.getSubtitle(), BitmapFactory.decodeResource(getResources(), R.mipmap.app_logo));
+        new ShareClient(0).shareUrl(mContext, invitedInfor.getInvitedUrl(), invitedInfor.getTitle(), invitedInfor.getSubtitle(), BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
 
     }
 }
