@@ -3,6 +3,8 @@ package com.hongniu.supply.ui;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.SystemClock;
+import android.text.TextUtils;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.github.barteksc.pdfviewer.PDFView;
@@ -43,8 +45,11 @@ public class PDFActivity extends BaseActivity implements OnLoadCompleteListener,
     protected void initData() {
         super.initData();
         pdfUrl = getIntent().getStringExtra(Param.TRAN);
-        JLog.i(pdfUrl);
-        PermissionUtils.applyStorage(this, this);
+        if (!TextUtils.isEmpty(pdfUrl)) {
+            PermissionUtils.applyStorage(this, this);
+        }else {
+            showAleart("保单地址不存在，请返回重试");
+        }
     }
 
     /**
