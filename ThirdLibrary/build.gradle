@@ -43,7 +43,7 @@ dependencies {
     //融云聊天
     api project(':IMKit')
     api project(':CallKit')
-    api project(':RCSticker')
+//    api project(':RCSticker')
     api files('libs/AMap_Channel_Location_V1.4.0_20160708.jar')
     api 'com.huawei.android.hms:push:2.6.1.301'
     api files('libs/MiPush_SDK_Client_3_6_9.jar')
