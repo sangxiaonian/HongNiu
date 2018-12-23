@@ -26,6 +26,7 @@ import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.BottomAlertBuilder;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
+import com.sang.thirdlibrary.chact.ChactHelper;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -138,6 +139,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                         public void onTopClick(View view, DialogControl.IBottomDialog dialog) {
                             dialog.dismiss();
                             ArouterUtils.getInstance().builder(ArouterParamLogin.activity_login).navigation(getContext());
+                            //断开融云连接
+                            ChactHelper.getHelper().disConnect();
                             getActivity().finish();
                         }
 

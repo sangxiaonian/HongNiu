@@ -178,8 +178,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 //                .add(R.id.content, messageFragment)
 //                .commit();
         demo.setVisibility(Param.isDebug?View.VISIBLE:View.GONE);
-        //链接数据
-        connectRong();
+
         //检查版本更新
         checkVersion();
 
@@ -202,9 +201,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         ;
     }
 
+
+
     //连接融云服务器
     private void connectRong() {
-
         LoginBean infor = Utils.getLoginInfor();
         if (infor!=null) {
             ChactHelper.getHelper().connect(this, infor.getRongToken(), new RongIMClient.ConnectCallback() {
@@ -238,6 +238,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                     });
 
                     RongIM.getInstance().setMessageAttachedUserInfo(true);
+                    JLog.i("发送消息");
+                    BusFactory.getBus().post(new Event.UpChactFragment());
                 }
 
                 @Override
@@ -251,6 +253,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     protected void onStart() {
         super.onStart();
+        //链接数据
+        if (ChactHelper.getHelper().disConnectState()) {
+            connectRong();
+        }
         BusFactory.getBus().post(new CloseActivityEvent());
         HttpAppFactory.queryPayPassword()
                 .subscribe(new NetObserver<QueryPayPassword>(null) {
@@ -333,16 +339,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         demo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //断开连接
-//                ChactHelper.getHelper().disConnect();
-
+                boolean equals = RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.DISCONNECTED);
+//                断开连接
+                ChactHelper.getHelper().disConnect();
                 try {
                     RongPushClient.checkManifest(mContext);
                 } catch (RongException e) {
                     e.printStackTrace();
                 }
                 String regId = MiPushClient.getRegId(mContext);
-                JLog.i(regId+">>获取");
+                JLog.i(equals+">>>>"+regId+">>获取");
             }
         });
 

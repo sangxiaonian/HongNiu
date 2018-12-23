@@ -3,7 +3,6 @@ package com.sang.thirdlibrary.chact;
 import android.app.Application;
 import android.content.Context;
 import android.net.Uri;
-import android.os.Build;
 import android.text.TextUtils;
 import android.util.LruCache;
 
@@ -135,6 +134,8 @@ public class ChactHelper {
     }
 
     public void connect(final Context context, final String token, final RongIMClient.ConnectCallback callback) {
+
+
         if (context.getApplicationInfo().packageName.equals(getCurProcessName(context.getApplicationContext()))) {
             ownerID = null;
             JLog.e("开始连接服务器");
@@ -159,6 +160,9 @@ public class ChactHelper {
                 @Override
                 public void onSuccess(String userid) {
                     ownerID = userid;
+                    if (callback != null) {
+                        callback.onSuccess(userid);
+                    }
                     JLog.e("初始化成功" + userid);
                 }
 
@@ -183,8 +187,19 @@ public class ChactHelper {
     }
 
     public void disConnect() {
+        RongIM.getInstance().logout();
         RongIM.getInstance().disconnect();
     }
+
+
+    /**
+     * 判断当前是否处于断开连接状态
+     * @return true 断开连接
+     */
+    public boolean disConnectState(){
+        return RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.DISCONNECTED);
+    }
+
 
     /**
      * 开启器单聊

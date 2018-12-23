@@ -2098,10 +2098,10 @@ public final class R {
     public static final class mipmap {
         private mipmap() {}
 
-        public static int app_logo = 0x7f110001;
-        public static int app_update = 0x7f110002;
-        public static int bg_wdqb = 0x7f110003;
-        public static int end = 0x7f110004;
+        public static int app_update = 0x7f110001;
+        public static int bg_wdqb = 0x7f110002;
+        public static int end = 0x7f110003;
+        public static int ic_launcher = 0x7f110004;
         public static int icon_add_72 = 0x7f110005;
         public static int icon_add_721 = 0x7f110006;
         public static int icon_addorder_24 = 0x7f110007;

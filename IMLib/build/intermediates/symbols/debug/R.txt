@@ -1060,10 +1060,10 @@ int layout support_simple_spinner_dropdown_item 0x7f0f0039
 int layout switch_text_default_item 0x7f0f003a
 int layout toolbar 0x7f0f003b
 int layout verication_default_item 0x7f0f003c
-int mipmap app_logo 0x7f110001
-int mipmap app_update 0x7f110002
-int mipmap bg_wdqb 0x7f110003
-int mipmap end 0x7f110004
+int mipmap app_update 0x7f110001
+int mipmap bg_wdqb 0x7f110002
+int mipmap end 0x7f110003
+int mipmap ic_launcher 0x7f110004
 int mipmap icon_add_72 0x7f110005
 int mipmap icon_add_721 0x7f110006
 int mipmap icon_addorder_24 0x7f110007

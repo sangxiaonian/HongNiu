@@ -1053,10 +1053,10 @@ layout support_simple_spinner_dropdown_item
 layout switch_text_default_item
 layout toolbar
 layout verication_default_item
-mipmap app_logo
 mipmap app_update
 mipmap bg_wdqb
 mipmap end
+mipmap ic_launcher
 mipmap icon_add_72
 mipmap icon_add_721
 mipmap icon_addorder_24

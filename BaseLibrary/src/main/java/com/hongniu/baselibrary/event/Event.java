@@ -77,4 +77,13 @@ public class Event {
             this.roleState = roleState;
         }
     }
+
+    /**
+     * 更新聊天消息的fragment
+     */
+    public static class UpChactFragment implements IBus.IEvent {
+
+        public UpChactFragment( ) {
+        }
+    }
 }
