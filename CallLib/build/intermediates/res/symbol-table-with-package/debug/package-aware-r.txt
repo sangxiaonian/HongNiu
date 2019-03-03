@@ -756,6 +756,7 @@ drawable et_bg
 drawable et_cursor
 drawable ic_close_ffffff
 drawable ic_friend_circle
+drawable ic_icon_moremore_40
 drawable ic_wechat
 drawable icon_add_333
 drawable icon_add_6d6d6d
@@ -922,6 +923,7 @@ id phone
 id progress_circular
 id progress_horizontal
 id radio
+id refresh
 id right
 id right_icon
 id right_side

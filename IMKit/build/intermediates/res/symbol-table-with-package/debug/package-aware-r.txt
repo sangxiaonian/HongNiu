@@ -873,6 +873,7 @@ drawable et_bg
 drawable et_cursor
 drawable ic_close_ffffff
 drawable ic_friend_circle
+drawable ic_icon_moremore_40
 drawable ic_wechat
 drawable icon_add_333
 drawable icon_add_6d6d6d
@@ -1770,6 +1771,7 @@ id rc_wi_ad_tv_file_details
 id rc_wi_ad_tv_file_name
 id real_time_location_bar
 id real_time_location_text
+id refresh
 id refresh_loading_indicator
 id rel_group_intro
 id right

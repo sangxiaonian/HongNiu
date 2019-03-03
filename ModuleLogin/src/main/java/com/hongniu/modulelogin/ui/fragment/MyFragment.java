@@ -1,5 +1,6 @@
 package com.hongniu.modulelogin.ui.fragment;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseFragment;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.entity.LoginPersonInfor;
 import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventParams;
@@ -88,9 +90,11 @@ private ImageView imgHeard;
      */
     private void upPerson(){
             if (Utils.checkInfor()) {
-                tvName.setText(Utils.getPersonInfor().getContact() == null ? "待完善" : Utils.getPersonInfor().getContact());
-                tvPhone.setText(Utils.getPersonInfor().getMobile() == null ? "" : Utils.getLoginInfor().getMobile());
-                ImageLoader.getLoader().loadHeaed(getContext(),imgHeard,Utils.getPersonInfor().getLogoPath());
+                LoginPersonInfor personInfor = Utils.getPersonInfor();
+                String phone= TextUtils.isEmpty(personInfor.getCompany())?(TextUtils.isEmpty(personInfor.getMobile())?"": personInfor.getMobile()): personInfor.getCompany();
+                tvName.setText(personInfor.getContact() == null ? "待完善" : personInfor.getContact());
+                tvPhone.setText(phone);
+                ImageLoader.getLoader().loadHeaed(getContext(),imgHeard, personInfor.getLogoPath());
 
             }
      }

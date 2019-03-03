@@ -34,13 +34,14 @@ public abstract class ListBottomDialog<T> {
     protected OnBackClickListener backListener;
 
     protected DialogControl.OnEntryClickListener<T> entryClickListener;
+    protected View.OnClickListener bottomListener;
+
     /**
      * 设置数据
      */
     protected List<T> datas1;
     protected XAdapter<T> adapter;
     protected View targView;
-    protected View.OnClickListener bottomListener;
 
 
     public ListBottomDialog(Context context) {

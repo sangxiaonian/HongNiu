@@ -24,7 +24,7 @@ import com.hongniu.modulefinance.net.HttpFinanceFactory;
 /**
  * 牛贝账户
  */
-@Route(path = ArouterParamsFinance.activity_finance_niu)
+//@Route(path = ArouterParamsFinance.activity_finance_niu)
 public class FinanceNiuActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
 
     private TextView tvNiu;

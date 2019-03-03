@@ -68,6 +68,7 @@
             app:layout_constraintBottom_toBottomOf="@id/tv_niu_count" />
     </android.support.constraint.ConstraintLayout>
     <RadioGroup
+        android:orientation="horizontal"
         android:id="@+id/rg"
         style="@style/RadioGroup"
         android:layout_marginTop="@dimen/app_model_gap"

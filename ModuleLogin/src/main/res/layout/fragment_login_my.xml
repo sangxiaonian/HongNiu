@@ -98,14 +98,16 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="邀请好友 "
-                                android:textColor="@color/color_new_light"
+                                android:textColor="@color/color_title_dark"
+
                                 android:textSize="18sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/color_new_light"
+
                                 android:text="  赚取佣金"
-                                android:textColor="@color/color_title_dark"
                                 android:textSize="18sp" />
                         </LinearLayout>
 

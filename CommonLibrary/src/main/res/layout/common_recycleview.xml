@@ -3,9 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
+    <com.hongniu.baselibrary.widget.XRefreshLayout
+        android:id="@+id/refresh"
         android:layout_width="match_parent"
-        android:id="@+id/rv"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+
+        <com.sang.common.recycleview.RecycleViewSupportEmpty
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never" />
+    </com.hongniu.baselibrary.widget.XRefreshLayout>
 
 </FrameLayout>
