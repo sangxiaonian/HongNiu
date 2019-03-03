@@ -30,9 +30,9 @@ public class BaseApplication extends MultiDexApplication {
         ToastUtils.getInstance().init(this);
         SharedPreferencesUtils.getInstance().initSharePreference(this);
         ImageLoader.getLoader().globalErrorImg(R.mipmap.placeholder);
-//        ImageLoader.getLoader().globalPlaceholder(R.mipmap.placeholder);
-
-        //
+        ImageLoader.getLoader().globalPlaceholder(R.mipmap.placeholder);
+        ImageLoader.getLoader().headPlaceholder(R.mipmap.icon_default_avatar_100);
+        ImageLoader.getLoader().headErrorImg(R.mipmap.icon_default_avatar_100);
 
     }
 }

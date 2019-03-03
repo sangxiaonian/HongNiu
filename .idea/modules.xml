@@ -13,6 +13,7 @@
       <module fileurl="file://$PROJECT_DIR$/ModuleFinance/ModuleFinance.iml" filepath="$PROJECT_DIR$/ModuleFinance/ModuleFinance.iml" />
       <module fileurl="file://$PROJECT_DIR$/ModuleLogin/ModuleLogin.iml" filepath="$PROJECT_DIR$/ModuleLogin/ModuleLogin.iml" />
       <module fileurl="file://$PROJECT_DIR$/ModuleOrder/ModuleOrder.iml" filepath="$PROJECT_DIR$/ModuleOrder/ModuleOrder.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RCSticker/RCSticker.iml" filepath="$PROJECT_DIR$/RCSticker/RCSticker.iml" />
       <module fileurl="file://$PROJECT_DIR$/ResLibrary/ResLibrary.iml" filepath="$PROJECT_DIR$/ResLibrary/ResLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/ThirdLibrary/ThirdLibrary.iml" filepath="$PROJECT_DIR$/ThirdLibrary/ThirdLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />

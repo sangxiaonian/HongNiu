@@ -3,6 +3,7 @@ package com.hongniu.modulelogin.ui.fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventParams;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
 import com.hongniu.modulelogin.R;
+import com.sang.common.imgload.ImageLoader;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.widget.dialog.BottomAlertDialog;
@@ -33,6 +35,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * 作者： ${PING} on 2018/11/23.
+ * 个人中心
  */
 @Route(path = ArouterParamLogin.fragment_login_my)
 public class MyFragment extends BaseFragment implements View.OnClickListener {
@@ -45,7 +48,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     private LinearLayout llNiu;//收款方式
     private ViewGroup card;//收款方式
     private TextView tvName, tvPhone;
-
+private ImageView imgHeard;
     @Override
     protected View initView(LayoutInflater inflater) {
         View inflate = inflater.inflate(R.layout.fragment_login_my, null);
@@ -59,6 +62,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         tvName = inflate.findViewById(R.id.tv_name);
         tvPhone = inflate.findViewById(R.id.tv_phone);
         card = inflate.findViewById(R.id.card);
+        imgHeard = inflate.findViewById(R.id.img_heard);
 
 
         return inflate;
@@ -68,17 +72,33 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     protected void initData() {
         super.initData();
         StatusBarCompat.setStatusBarColor(getActivity(), getResources().getColor(R.color.white), true);
+        upPerson();
 
-        if (Utils.getLoginInfor() != null) {
-            if (Utils.checkInfor()) {
-                tvName.setText(Utils.getPersonInfor().getContact() == null ? "待完善" : Utils.getPersonInfor().getContact());
-            }
-            tvPhone.setText(Utils.getLoginInfor().getMobile() == null ? "" : Utils.getLoginInfor().getMobile());
-        }
 
 
     }
 
+
+    /**
+     *@data  2019/3/3
+     *@Author PING
+     *@Description 更新个人资料
+     *
+     *
+     */
+    private void upPerson(){
+            if (Utils.checkInfor()) {
+                tvName.setText(Utils.getPersonInfor().getContact() == null ? "待完善" : Utils.getPersonInfor().getContact());
+                tvPhone.setText(Utils.getPersonInfor().getMobile() == null ? "" : Utils.getLoginInfor().getMobile());
+                ImageLoader.getLoader().loadHeaed(getContext(),imgHeard,Utils.getPersonInfor().getLogoPath());
+
+            }
+     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
@@ -97,9 +117,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onUpPersonInfor(Event.UpPerson event) {
         if (event != null) {
-            if (Utils.checkInfor()) {
-                tvName.setText(Utils.getPersonInfor().getContact());
-            }
+            upPerson();
         }
     }
 

@@ -120,12 +120,7 @@ public class CircularImageView extends android.support.v7.widget.AppCompatImageV
      * @param radius
      */
     public void setRadius(int radius) {
-//        if (getWidth() > 0) {
-//            int maxRadio = Math.min(getWidth(), getHeight()) / 2 - borderWidth;
-//            if (radius > maxRadio) {
-//                radius = maxRadio;
-//            }
-//        }
+
         setRadius(radius, radius, radius, radius);
     }
 
@@ -186,25 +181,7 @@ public class CircularImageView extends android.support.v7.widget.AppCompatImageV
 
     @Override
     protected void onDraw(Canvas canvas) {
-//        setLayerType(LAYER_TYPE_HARDWARE, mPaint);
-//        canvas.save();
-//        super.onDraw(canvas);
-//        mPaint.setXfermode(xfermode);
-//
-//        mPaint.setStyle(Paint.Style.FILL);
-//        //更改path
-//        initRadios(getWidth(), getHeight(), borderPath, borderWidth / 2);
-//        canvas.drawPath(borderPath, mPaint);
-//        mPaint.setXfermode(null);
-//
-//        //是否绘制边框
-//        if (showBorder) {
-//            mPaint.setStrokeWidth(borderWidth);
-//            mPaint.setColor(borderColor);
-//            mPaint.setStyle(Paint.Style.STROKE);
-//            canvas.drawPath(borderPath, mPaint);
-//        }
-//        canvas.restore();
+
 
         final int layer = canvas.saveLayer(rectF, mPaint, Canvas.ALL_SAVE_FLAG);
         super.onDraw(canvas);
@@ -216,10 +193,9 @@ public class CircularImageView extends android.support.v7.widget.AppCompatImageV
         mPaint.setXfermode(null);
         bitmap.recycle();
 
-        if (true) {
+        if (showBorder) {
             mPaint.setStrokeWidth(borderWidth);
             mPaint.setColor(borderColor);
-            mPaint.setColor(Color.RED);
             mPaint.setStyle(Paint.Style.STROKE);
             canvas.drawPath(borderPath, mPaint);
         }
@@ -229,6 +205,7 @@ public class CircularImageView extends android.support.v7.widget.AppCompatImageV
     private Bitmap creatBitmap(Canvas cvns) {
         initRadios(cvns.getWidth(), cvns.getHeight(), borderPath, borderWidth / 2);
         mPaint.setStyle(Paint.Style.FILL);
+        mPaint.setColor(borderColor);
         Bitmap bitmap = Bitmap.createBitmap(cvns.getWidth(), cvns.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         canvas.drawPath(borderPath, mPaint);
