@@ -62,9 +62,9 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
     private Button btSum;
     private ConstraintLayout conPay;
     private String withdrawal;//提现金额
-    AccountWayDialog accountDialog;
-    PayPasswordKeyBord passwordDialog;
-    private CreatAccountDialog creatAccountDialog;
+//    AccountWayDialog accountDialog;
+//    private CreatAccountDialog creatAccountDialog;
+PayPasswordKeyBord passwordDialog;
     private PayInforBeans payInfo;
 
     @Override
@@ -89,11 +89,11 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
         etBalance = findViewById(R.id.et_balance);
         btSum = findViewById(R.id.bt_sum);
         conPay = findViewById(R.id.con_pay_way);
-        accountDialog = new AccountWayDialog(this);
         passwordDialog = new PayPasswordKeyBord(this);
         passwordDialog.setPayDes("提现金额");
 
-        creatAccountDialog = new CreatAccountDialog(mContext);
+//        accountDialog = new AccountWayDialog(this);
+//        creatAccountDialog = new CreatAccountDialog(mContext);
     }
 
 
@@ -168,10 +168,10 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
         tvWithdrawaleAll.setOnClickListener(this);
         etBalance.addTextChangedListener(this);
         conPay.setOnClickListener(this);
-        accountDialog.setListener(this);
         passwordDialog.sePaytListener(this);
         passwordDialog.setProgressListener(this);
-        creatAccountDialog.setListener(this);
+//        accountDialog.setListener(this);
+//        creatAccountDialog.setListener(this);
 
     }
 
@@ -244,20 +244,21 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
 
         } else if (i == R.id.con_pay_way) {//选择支付方式
 
-            if (payInfo != null) {
-                HttpAppFactory.queryMyCards()
-                        .subscribe(new NetObserver<List<PayInforBeans>>(this) {
-                            @Override
-                            public void doOnSuccess(List<PayInforBeans> data) {
-                                accountDialog.setData(data);
-                                accountDialog.show();
-
-                            }
-                        })
-                ;
-            } else {
-                creatAccountDialog.show();
-            }
+            //在第四期，屏蔽支付方式选择
+//            if (payInfo != null) {
+//                HttpAppFactory.queryMyCards()
+//                        .subscribe(new NetObserver<List<PayInforBeans>>(this) {
+//                            @Override
+//                            public void doOnSuccess(List<PayInforBeans> data) {
+//                                accountDialog.setData(data);
+//                                accountDialog.show();
+//
+//                            }
+//                        })
+//                ;
+//            } else {
+//                creatAccountDialog.show();
+//            }
 
 
         }
@@ -290,7 +291,7 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
     @Override
     public void onAddClick(DialogControl.IDialog dialog) {
         dialog.dismiss();
-        creatAccountDialog.show();
+//        creatAccountDialog.show();
 
     }
 

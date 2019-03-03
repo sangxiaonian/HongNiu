@@ -76,15 +76,7 @@
         </LinearLayout>
 
 
-        <ImageView
-            android:id="@+id/img_go"
-            android:layout_width="@dimen/img_go_size"
-            android:layout_height="@dimen/img_go_size"
-            android:layout_marginRight="@dimen/app_gap"
-            android:src="@mipmap/icon_gary_arrowmore_20"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+
     </android.support.constraint.ConstraintLayout>
 
 
@@ -104,6 +96,8 @@
         app:layout_constraintTop_toBottomOf="@id/con_pay_way">
 
         <TextView
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:id="@+id/tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -170,7 +164,9 @@
 
     <Button
         android:id="@+id/bt_sum"
-        style="@style/bt_sum"
+        style="@style/bt_sum_red"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="@dimen/app_gap"
         android:enabled="false"
         android:text="立刻提现"
