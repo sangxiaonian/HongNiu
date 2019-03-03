@@ -148,6 +148,15 @@ public class FinanceMyNiuActivity extends RefrushActivity<NiuOfAccountBean> {
 
                             }
                         });
+                        itemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                ArouterUtils
+                                        .getInstance().builder(ArouterParamsFinance.activity_finance_niu_detail)
+                                        .withString(Param.TRAN,  data.getId())
+                                        .navigation(mContext);
+                            }
+                        });
                     }
                 };
             }

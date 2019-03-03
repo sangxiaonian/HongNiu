@@ -155,7 +155,7 @@ public final class R {
     public static final class string {
         private string() {}
 
-        public static int status_bar_notification_info_overflow = 0x7f150079;
+        public static int status_bar_notification_info_overflow = 0x7f15007b;
     }
     public static final class style {
         private style() {}

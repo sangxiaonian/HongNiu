@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_bg_dark"
-     >
+    >
 
     <include
         android:id="@+id/tool"
@@ -34,29 +34,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.5" />
-
-
-        <TextView
-            android:id="@+id/tv_1"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:text="@string/wallet_niu_of_account_des"
-            android:textColor="@color/red_bg_cotent"
-            android:textSize="13sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_niu_count"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/app_model_gap"
-            android:text="0"
-            android:textColor="@color/white"
-            android:textSize="45sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/tv_1"
-            app:layout_constraintTop_toBottomOf="@id/tv_1" />
 
         <TextView
             android:id="@+id/tv_2"

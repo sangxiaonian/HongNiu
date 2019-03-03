@@ -133,5 +133,7 @@
     <string name="finance_niu_phone_number">手机号：%1$s</string>
     <string name="friend_name">好友姓名：%1$s</string>
     <string name="finance_add_new_pay_way">添加新的收款方式提现</string>
+    <string name="finance_niu_earning">总收益(元)</string>
+    <string name="finance_niu_last_earning">昨日收益(元)</string>
 
 </resources>

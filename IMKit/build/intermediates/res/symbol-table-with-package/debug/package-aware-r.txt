@@ -2177,6 +2177,8 @@ string deleted
 string deleted_success
 string finance
 string finance_add_new_pay_way
+string finance_niu_earning
+string finance_niu_last_earning
 string finance_niu_phone_number
 string finish
 string friend_name

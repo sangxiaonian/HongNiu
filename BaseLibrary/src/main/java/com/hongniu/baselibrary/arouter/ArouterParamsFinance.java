@@ -52,5 +52,10 @@ public class ArouterParamsFinance {
      */
     public final static String activity_finance_balance_with_drawal = "/finance/activity_finance_balance_with_drawal";
 
+    /**
+     * 牛贝收益明细
+     */
+    public final static String activity_finance_niu_detail = "/finance/activity_finance_niu_detail";
+
 
 }
