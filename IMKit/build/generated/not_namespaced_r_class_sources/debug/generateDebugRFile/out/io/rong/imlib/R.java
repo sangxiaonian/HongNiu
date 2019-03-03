@@ -1364,8 +1364,9 @@ public final class R {
         public static int wallet_niu_of_account_des = 0x7f15022f;
         public static int wallet_niu_title = 0x7f150230;
         public static int wallet_niu_unentry_count = 0x7f150231;
-        public static int wallet_title = 0x7f150232;
-        public static int wallet_withdrawal = 0x7f150233;
+        public static int wallet_recharge = 0x7f150232;
+        public static int wallet_title = 0x7f150233;
+        public static int wallet_withdrawal = 0x7f150234;
     }
     public static final class style {
         private style() {}
@@ -1726,13 +1727,14 @@ public final class R {
         public static int activity_ani = 0x7f16016f;
         public static int bt_sum = 0x7f160170;
         public static int bt_sum_red = 0x7f160171;
-        public static int dialog_ani = 0x7f160172;
-        public static int draw_item = 0x7f160173;
-        public static int itemmusetview = 0x7f160175;
-        public static int itemview = 0x7f160176;
-        public static int pop_ani = 0x7f160177;
-        public static int tranTheme = 0x7f16017e;
-        public static int viewPoint = 0x7f160180;
+        public static int bt_sum_white = 0x7f160172;
+        public static int dialog_ani = 0x7f160173;
+        public static int draw_item = 0x7f160174;
+        public static int itemmusetview = 0x7f160176;
+        public static int itemview = 0x7f160177;
+        public static int pop_ani = 0x7f160178;
+        public static int tranTheme = 0x7f16017f;
+        public static int viewPoint = 0x7f160181;
     }
     public static final class styleable {
         private styleable() {}

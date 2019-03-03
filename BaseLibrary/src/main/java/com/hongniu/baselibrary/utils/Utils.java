@@ -1,6 +1,8 @@
 package com.hongniu.baselibrary.utils;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.text.TextUtils;
 
@@ -70,7 +72,7 @@ public class Utils {
                 || TextUtils.isEmpty(personInfor.getMobile())
                 || TextUtils.isEmpty(personInfor.getProvince())
                 || TextUtils.isEmpty(personInfor.getProvinceId())
-                ) {
+        ) {
             return false;
         } else {
             return true;
@@ -102,7 +104,7 @@ public class Utils {
         SharedPreferencesUtils.getInstance().putString(Param.PERSON_ONFOR, new Gson().toJson(data));
     }
 
-    public static boolean querySetPassword( ) {
+    public static boolean querySetPassword() {
         boolean aBoolean = SharedPreferencesUtils.getInstance().getBoolean(Param.HASPAYPASSWORD);
         return aBoolean;
     }
@@ -111,7 +113,7 @@ public class Utils {
         return SharedPreferencesUtils.getInstance().putBoolean(Param.HASPAYPASSWORD, has);
     }
 
-    public static CenterAlertBuilder creatDialog(Context context,String title, String content, String btleft, String btRight) {
+    public static CenterAlertBuilder creatDialog(Context context, String title, String content, String btleft, String btRight) {
         return new CenterAlertBuilder()
                 .setDialogTitle(title)
                 .setDialogContent(content)
@@ -125,19 +127,37 @@ public class Utils {
 
     /**
      * 对地址显示进行处理
+     *
      * @param data
      */
     public static String dealPioPlace(PoiItem data) {
-        String placeInfor="";
-        if (data!=null&&data.getProvinceName()!=null) {
-            if (data.getProvinceName().equals( data.getCityName())){
-                placeInfor = data.getProvinceName()   + data.getAdName()
+        String placeInfor = "";
+        if (data != null && data.getProvinceName() != null) {
+            if (data.getProvinceName().equals(data.getCityName())) {
+                placeInfor = data.getProvinceName() + data.getAdName()
                         + data.getSnippet();
-            }else {
+            } else {
                 placeInfor = data.getProvinceName() + data.getCityName() + data.getAdName()
                         + data.getSnippet();
             }
         }
         return placeInfor;
+    }
+
+    /**
+     * 复制内容到剪贴板
+     *
+     * @param mContext
+     * @param msg
+     */
+    public static void copyToPlate(Context mContext, String msg) {
+        if (mContext != null && !TextUtils.isEmpty(msg)) {
+            //获取剪贴板管理器：
+            ClipboardManager cm = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
+// 创建普通字符型ClipData
+            ClipData mClipData = ClipData.newPlainText("Label", msg);
+// 将ClipData内容放到系统剪贴板里。
+            cm.setPrimaryClip(mClipData);
+        }
     }
 }

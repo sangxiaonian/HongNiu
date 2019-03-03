@@ -51,11 +51,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_balance_des" />
-
     <Button
+        android:id="@+id/bt_recharge"
         style="@style/bt_sum_red"
-        android:id="@+id/bt_sum"
         android:layout_marginTop="125dp"
-        android:text="@string/wallet_withdrawal"
+        android:text="@string/wallet_recharge"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_balance" />
+    <Button
+        android:id="@+id/bt_sum"
+        style="@style/bt_sum_white"
+        android:layout_marginTop="10dp"
+        android:text="@string/wallet_withdrawal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bt_recharge" />
+
+
 </android.support.constraint.ConstraintLayout>

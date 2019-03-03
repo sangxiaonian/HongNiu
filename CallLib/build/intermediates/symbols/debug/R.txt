@@ -1288,8 +1288,9 @@ int string wallet_niu_of_account 0x7f15008b
 int string wallet_niu_of_account_des 0x7f15008c
 int string wallet_niu_title 0x7f15008d
 int string wallet_niu_unentry_count 0x7f15008e
-int string wallet_title 0x7f15008f
-int string wallet_withdrawal 0x7f150090
+int string wallet_recharge 0x7f15008f
+int string wallet_title 0x7f150090
+int string wallet_withdrawal 0x7f150091
 int style AlertDialog_AppCompat 0x7f160001
 int style AlertDialog_AppCompat_Light 0x7f160002
 int style Animation_AppCompat_Dialog 0x7f160003
@@ -1646,13 +1647,14 @@ int style Widget_Support_CoordinatorLayout 0x7f160161
 int style activity_ani 0x7f160162
 int style bt_sum 0x7f160163
 int style bt_sum_red 0x7f160164
-int style dialog_ani 0x7f160165
-int style draw_item 0x7f160166
-int style itemmusetview 0x7f160167
-int style itemview 0x7f160168
-int style pop_ani 0x7f160169
-int style tranTheme 0x7f16016a
-int style viewPoint 0x7f16016b
+int style bt_sum_white 0x7f160165
+int style dialog_ani 0x7f160166
+int style draw_item 0x7f160167
+int style itemmusetview 0x7f160168
+int style itemview 0x7f160169
+int style pop_ani 0x7f16016a
+int style tranTheme 0x7f16016b
+int style viewPoint 0x7f16016c
 int[] styleable ActionBar { 0x7f040032, 0x7f040033, 0x7f040034, 0x7f04006e, 0x7f04006f, 0x7f040070, 0x7f040071, 0x7f040072, 0x7f040073, 0x7f04007b, 0x7f04007f, 0x7f040080, 0x7f04008c, 0x7f0400a2, 0x7f0400a3, 0x7f0400a4, 0x7f0400a5, 0x7f0400a6, 0x7f0400ab, 0x7f0400af, 0x7f0400f6, 0x7f0400fd, 0x7f04010a, 0x7f04010d, 0x7f04010e, 0x7f04013a, 0x7f04013d, 0x7f04015c, 0x7f040166 }
 int styleable ActionBar_background 0
 int styleable ActionBar_backgroundSplit 1

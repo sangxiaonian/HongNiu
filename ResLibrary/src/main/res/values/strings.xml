@@ -112,6 +112,7 @@
     <string name="wallet_balance_wait_entry">您有 %1$s 元入账后可提现</string>
     <string name="wallet_balance_can_withdrawal_des">可提现余额</string>
     <string name="wallet_withdrawal">提现</string>
+    <string name="wallet_recharge">充值</string>
     <string name="wallet_balance_withdrawal">提现金额</string>
     <string name="wallet_balance_withdrawal_all">全部提现</string>
     <string name="wallet_balance_withdrawal_title">账户提现</string>

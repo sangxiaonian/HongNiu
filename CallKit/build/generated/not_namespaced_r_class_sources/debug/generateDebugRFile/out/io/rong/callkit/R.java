@@ -3071,8 +3071,9 @@ public final class R {
         public static int wallet_niu_of_account_des = 0x7f15026f;
         public static int wallet_niu_title = 0x7f150270;
         public static int wallet_niu_unentry_count = 0x7f150271;
-        public static int wallet_title = 0x7f150272;
-        public static int wallet_withdrawal = 0x7f150273;
+        public static int wallet_recharge = 0x7f150272;
+        public static int wallet_title = 0x7f150273;
+        public static int wallet_withdrawal = 0x7f150274;
     }
     public static final class style {
         private style() {}
@@ -3446,24 +3447,25 @@ public final class R {
         public static int activity_ani = 0x7f16016f;
         public static int bt_sum = 0x7f160170;
         public static int bt_sum_red = 0x7f160171;
-        public static int callkit_voip_imagebutton_65_centerCrop = 0x7f160172;
-        public static int callkit_voip_text_style_18spWhite = 0x7f160173;
-        public static int dialog_ani = 0x7f160174;
-        public static int draw_item = 0x7f160175;
-        public static int horizontal_light_thin_divider = 0x7f160176;
-        public static int itemmusetview = 0x7f160177;
-        public static int itemview = 0x7f160178;
-        public static int pop_ani = 0x7f160179;
-        public static int rc_ac_file_manager_image_style = 0x7f16017a;
-        public static int rc_ac_file_manager_line = 0x7f16017b;
-        public static int rc_ac_file_manager_style = 0x7f16017c;
-        public static int rc_ac_file_manager_title = 0x7f16017d;
-        public static int rc_cs_rating_bar = 0x7f16017e;
-        public static int rc_pb_file_download_progress = 0x7f16017f;
-        public static int rc_voip_text_style_style = 0x7f160180;
-        public static int tranTheme = 0x7f160181;
-        public static int vertical_light_thin_divider = 0x7f160182;
-        public static int viewPoint = 0x7f160183;
+        public static int bt_sum_white = 0x7f160172;
+        public static int callkit_voip_imagebutton_65_centerCrop = 0x7f160173;
+        public static int callkit_voip_text_style_18spWhite = 0x7f160174;
+        public static int dialog_ani = 0x7f160175;
+        public static int draw_item = 0x7f160176;
+        public static int horizontal_light_thin_divider = 0x7f160177;
+        public static int itemmusetview = 0x7f160178;
+        public static int itemview = 0x7f160179;
+        public static int pop_ani = 0x7f16017a;
+        public static int rc_ac_file_manager_image_style = 0x7f16017b;
+        public static int rc_ac_file_manager_line = 0x7f16017c;
+        public static int rc_ac_file_manager_style = 0x7f16017d;
+        public static int rc_ac_file_manager_title = 0x7f16017e;
+        public static int rc_cs_rating_bar = 0x7f16017f;
+        public static int rc_pb_file_download_progress = 0x7f160180;
+        public static int rc_voip_text_style_style = 0x7f160181;
+        public static int tranTheme = 0x7f160182;
+        public static int vertical_light_thin_divider = 0x7f160183;
+        public static int viewPoint = 0x7f160184;
     }
     public static final class styleable {
         private styleable() {}

@@ -43,10 +43,15 @@ public class ArouterParamLogin {
      */
     public static final String activity_pay_ways = "/login/activity_pay_ways";
     /**
-     * 绑定银行卡
+     * 添加收款方式
      */
     public static final String activity_login_add_blank_card = "/login/activity_login_add_blank_card";
-//    /**
+    /**
+     * 绑定银行卡
+     */
+    public static final String activity_login_bind_blank_card = "/login/activity_login_bind_blank_card";
+
+    //    /**
 //     * 设置支付密码界面
 //     */
 //    public static final String activity_login_password = "/login/activity_login_password";

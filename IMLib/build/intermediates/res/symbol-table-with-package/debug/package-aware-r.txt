@@ -1307,6 +1307,7 @@ string wallet_niu_of_account
 string wallet_niu_of_account_des
 string wallet_niu_title
 string wallet_niu_unentry_count
+string wallet_recharge
 string wallet_title
 string wallet_withdrawal
 style AlertDialog_AppCompat
@@ -1665,6 +1666,7 @@ style Widget_Support_CoordinatorLayout
 style activity_ani
 style bt_sum
 style bt_sum_red
+style bt_sum_white
 style dialog_ani
 style draw_item
 style itemmusetview

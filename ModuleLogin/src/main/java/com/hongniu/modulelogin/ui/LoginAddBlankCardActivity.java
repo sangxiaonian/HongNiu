@@ -17,7 +17,7 @@ import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.ItemView;
 
 /**
- * 绑定银行卡
+ * 添加收款方式
  */
 @Route(path = ArouterParamLogin.activity_login_add_blank_card)
 public class LoginAddBlankCardActivity extends BaseActivity implements View.OnClickListener {
