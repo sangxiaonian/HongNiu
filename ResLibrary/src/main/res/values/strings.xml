@@ -136,5 +136,6 @@
     <string name="finance_add_new_pay_way">添加新的收款方式提现</string>
     <string name="finance_niu_earning">总收益(元)</string>
     <string name="finance_niu_last_earning">昨日收益(元)</string>
+    <string name="pay_aleart">选择线上支付时，运费将由平台代收，货主确认收货后，该订单线上支付的运费，将自动转入该订单对应的车主余额账户，余额账户随时可以提现。</string>
 
 </resources>

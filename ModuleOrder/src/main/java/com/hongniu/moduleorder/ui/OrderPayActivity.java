@@ -71,6 +71,9 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
     private RadioGroup rg;//支付方式
     private RadioButton rbOnline;//线上支付
     private RadioButton rbOffline;//线下支付
+    private RadioGroup rg1;//余额支付方式
+    private RadioButton rbCompany;//企业支付
+    private RadioButton rbPerson;//个人支付
     private ViewGroup rlWechact;//微信支付
     private ImageView cbWechat;//选择是否微信支付
     private View imgDai;//代收款提示
@@ -123,6 +126,13 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
     @Override
     protected void initView() {
         super.initView();
+
+
+        rg1 = findViewById(R.id.rg1);
+        rbCompany = findViewById(R.id.rb_company);
+        rbPerson = findViewById(R.id.rb_person);
+
+
         tvOrder = findViewById(R.id.tv_order);
         btBuy = findViewById(R.id.con_buy);
         rg = findViewById(R.id.rg);
@@ -208,6 +218,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
         rlYue.setOnClickListener(this);
         imgDai.setOnClickListener(this);
         tv_instances_per_infor.setOnClickListener(this);
+        rg1.setOnCheckedChangeListener(this);
 
         insuranceDialog.setListener(this);
         insuranceDialog.setItemClickListener(this);
@@ -220,6 +231,13 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
             payPresent.onLineClick();
         } else if (checkedId == R.id.rb_offline) {//线下支付
             payPresent.onOffLineClick();
+        }else if (checkedId == R.id.rb_company){//企业账号
+            ToastUtils.getInstance().show("企业账号");
+            aleartPop.setContent("企业代收款相关提示");
+            aleartPop.show(findViewById(checkedId));
+        }else if ((checkedId == R.id.rb_person)){//个人账户
+            ToastUtils.getInstance().show("个人账户");
+
         }
     }
 
@@ -260,6 +278,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
         } else if (i == R.id.tv_change_cargo_price) {//修改保险金额
             buyInsuranceDialog.show();
         } else if (i == R.id.img_dai) {
+            aleartPop.setContent(getString(R.string.pay_aleart));
             aleartPop.show(v);
         } else if (i == R.id.tv_instances_per_infor) {
             payPresent.showInsurancDialog(this);

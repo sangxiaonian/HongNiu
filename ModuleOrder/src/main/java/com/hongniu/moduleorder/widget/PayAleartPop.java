@@ -28,6 +28,8 @@ import java.util.List;
  */
 public class PayAleartPop  {
     protected PopupWindow pop;
+    private TextView tvContent;
+    private View index;
 
 
     public PayAleartPop(Context context) {
@@ -38,6 +40,8 @@ public class PayAleartPop  {
 
     private void setContentView(Context context) {
         View inflate = LayoutInflater.from(context).inflate(R.layout.order_pay_aleart_pup, null);
+        tvContent = inflate.findViewById(R.id.tv_content);
+        index = inflate.findViewById(R.id.index);
         pop.setContentView(inflate);
         pop.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         pop.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -49,6 +53,9 @@ public class PayAleartPop  {
     }
 
 
+    public void setContent(String msg){
+        tvContent.setText(msg==null?"":msg);
+    }
 
     public void show(final View view) {
         if (!isShow()) {
