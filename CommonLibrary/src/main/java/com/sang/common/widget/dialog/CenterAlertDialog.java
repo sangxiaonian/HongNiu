@@ -14,6 +14,8 @@ import android.view.Window;
 import android.widget.TextView;
 
 import com.sang.common.R;
+import com.sang.common.utils.DeviceUtils;
+import com.sang.common.utils.JLog;
 import com.sang.common.widget.dialog.inter.DialogControl;
 
 /**
@@ -223,6 +225,20 @@ public class CenterAlertDialog implements View.OnClickListener, DialogControl.IC
     @Override
     public void show() {
         dialog.show();
+        if (tvContent.getVisibility()== View.VISIBLE) {
+            tvContent.post(new Runnable() {
+                @Override
+                public void run() {
+                    int lineCount = tvContent.getLineCount();
+                    if (lineCount>5){
+                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, DeviceUtils.dip2px(dialog.getContext(),200));
+                    }else {
+                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    }
+                    JLog.i(lineCount+">>>");
+                }
+            });
+        }
     }
 
     @Override

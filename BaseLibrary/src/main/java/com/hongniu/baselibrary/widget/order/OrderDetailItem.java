@@ -48,6 +48,7 @@ import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_ENTRY_ARRIVE;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_ENTRY_ORDER;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_PAY;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_PAY_REFUSE;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_START_CAR;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_TRUCK_GUIDE;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_UP_RECEIPT;
@@ -81,9 +82,9 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
      * true 隐藏保费信息，false显示保费信息 默认为false
      */
     private boolean hideInsurance;
-    int spanSize ;
+    int spanSize;
 
-      String gap = "正正";
+    String gap = "正正";
 
     public OrderDetailItem(@NonNull Context context) {
         this(context, null, 0);
@@ -100,7 +101,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
 
     private void initView(Context context) {
 
-        spanSize= DeviceUtils.dip2px(getContext(), 18);
+        spanSize = DeviceUtils.dip2px(getContext(), 18);
         gap = "正正正";
 
         View itemView = LayoutInflater.from(context).inflate(R.layout.order_item, this, false);
@@ -833,6 +834,25 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                 switch (roleState) {
                     case DRIVER:
                         ClickEventUtils.getInstance().onClick(ClickEventParams.我是司机_货车导航);
+
+                        break;
+                    case CAR_OWNER:
+
+                        break;
+                    case CARGO_OWNER:
+
+                        break;
+                }
+                break;
+            case ORDER_PAY_REFUSE://    = "被拒原因";
+                if (listener != null) {
+                    listener.onPayRefuse(orderBean);
+                } else {
+                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("被拒原因");
+                }
+                switch (roleState) {
+                    case DRIVER:
+//                        ClickEventUtils.getInstance().onClick(ClickEventParams.我是司机_货车导航);
 
                         break;
                     case CAR_OWNER:

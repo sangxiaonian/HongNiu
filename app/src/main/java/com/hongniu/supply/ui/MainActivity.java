@@ -52,6 +52,7 @@ import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.JLog;
 import com.sang.common.utils.SharedPreferencesUtils;
+import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
 import com.sang.thirdlibrary.chact.UserInfor;
@@ -339,16 +340,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         demo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean equals = RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.DISCONNECTED);
-//                断开连接
-                ChactHelper.getHelper().disConnect();
-                try {
-                    RongPushClient.checkManifest(mContext);
-                } catch (RongException e) {
-                    e.printStackTrace();
-                }
-                String regId = MiPushClient.getRegId(mContext);
-                JLog.i(equals+">>>>"+regId+">>获取");
+                new CenterAlertBuilder()
+                        .setDialogTitle("被拒原因")
+                        .setDialogContent("字被遮挡部分")
+                        .setBtLeft("知道了")
+                        .hideBtRight()
+                        .setBtLeftColor(mContext.getResources().getColor(com.hongniu.baselibrary.R.color.color_title_dark))
+                        .creatDialog(new CenterAlertDialog(mContext))
+                        .show();
             }
         });
 

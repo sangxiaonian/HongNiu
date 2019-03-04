@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:paddingLeft="@dimen/app_gap"
     android:paddingRight="@dimen/app_gap">
 
@@ -10,7 +10,7 @@
     <com.sang.common.widget.CircularFramlayout
         android:id="@+id/lLayout_bg"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         app:showBorder="false"
         app:viewradius="4dp">
@@ -23,7 +23,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
                 android:orientation="vertical"
@@ -40,22 +41,29 @@
                     android:textColor="#333333"
                     android:textSize="16sp" />
 
-                <TextView
-                    android:gravity="center"
-                    android:id="@+id/tv_content"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:layout_marginTop="10dp"
-                    android:textColor="#6d6d6d"
-                    android:textSize="13sp"
-                    android:visibility="visible" />
+                    android:layout_weight="1">
+                    <TextView
+                        android:gravity="center"
+                        android:id="@+id/tv_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#6d6d6d"
+                        android:textSize="13sp"
+                        android:visibility="visible" />
+                </ScrollView>
+
 
 
             </LinearLayout>
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
+                android:layout_height="1dp"
                 android:background="#dddddd" />
 
             <LinearLayout

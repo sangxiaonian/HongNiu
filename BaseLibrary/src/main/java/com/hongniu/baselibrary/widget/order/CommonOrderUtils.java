@@ -10,13 +10,14 @@ public class CommonOrderUtils {
     /***************************订单显示按钮的文案****************************/
     public static final String ORDER_CANCLE = "取消订单";
     public static final String ORDER_PAY = "继续付款";
+    public static final String ORDER_PAY_REFUSE = "被拒原因";
     public static final String ORDER_BUY_INSURANCE = "购买保险";
     public static final String ORDER_CHECK_INSURANCE = "查看保单";
     public static final String ORDER_CHECK_PATH = "查看轨迹";
     public static final String ORDER_ENTRY_ORDER = "确认收货";
     public static final String ORDER_START_CAR = "开始发车";
     public static final String ORDER_CHECK_ROUT = "查看路线";
-    public static final String ORDER_TRUCK_GUIDE= "货车导航";
+    public static final String ORDER_TRUCK_GUIDE = "货车导航";
     public static final String ORDER_ENTRY_ARRIVE = "确认到达";
 
     public static final String ORDER_CHANGE = "修改订单";
@@ -35,6 +36,8 @@ public class CommonOrderUtils {
     public static final String STATUS_DES_HAS_ARRIVED = "已到达";//已到达
     public static final String STATUS_DES_RECEIPT = "已收货";//已收货
     public static final String STATUS_DES_HAS_CANCLE = "已取消";//已取消
+    public static final String STATUS_DES_PAY_CHECK = "支付审核中";//支付审核中
+    public static final String STATUS_DES_PAY_REFUSE = "申请被拒";//企业支付申请被拒绝
 
     public static final String STATUS_DES_UNKNOW = "无效状态";//已取消
 
@@ -47,6 +50,8 @@ public class CommonOrderUtils {
     public static final int STATUS_IN_TRANSIT = 3;//运输中
     public static final int STATUS_HAS_ARRIVED = 4;//已到达
     public static final int STATUS_RECEIPT = 5;//已收货
+    public static final int STATUS_PAY_CHECK = 6;//支付审核中
+    public static final int STATUS_PAY_REFUSE = 7;//申请被拒
     public static final int STATUS_HAS_CANCLE = 20;//已取消
 
 
@@ -79,6 +84,12 @@ public class CommonOrderUtils {
                 break;
             case STATUS_RECEIPT://  =5;//已收货
                 statu = OrderDetailItemControl.OrderState.RECEIPT;
+                break;
+            case STATUS_PAY_CHECK://  =6;//支付审核中
+                statu = OrderDetailItemControl.OrderState.PAY_CHECK;
+                break;
+            case STATUS_PAY_REFUSE://  =7;//支付申请北拒绝
+                statu = OrderDetailItemControl.OrderState.PAY_REFUSE;
                 break;
             case STATUS_HAS_CANCLE://  =20;//已取消
                 statu = OrderDetailItemControl.OrderState.HAS_CANCLE;
@@ -125,6 +136,12 @@ public class CommonOrderUtils {
                 break;
             case RECEIPT://已收货
                 stateMsg = STATUS_DES_RECEIPT;
+                break;
+            case PAY_CHECK://企业支付申请中
+                stateMsg = STATUS_DES_PAY_CHECK;
+                break;
+            case PAY_REFUSE://企业支付申请被拒绝
+                stateMsg = STATUS_DES_PAY_REFUSE;
                 break;
             case HAS_CANCLE://已取消
                 stateMsg = STATUS_DES_HAS_CANCLE;
@@ -183,22 +200,23 @@ public class CommonOrderUtils {
     }
 
 
-
     /**
      * 判断是否是线上支付
+     *
      * @param payType
      * @return true 线上支付
      */
-    public static boolean isPayOnLine(String payType){
-        return !TextUtils.isEmpty(payType)&&!TextUtils.equals("2",payType);
+    public static boolean isPayOnLine(String payType) {
+        return !TextUtils.isEmpty(payType) && !TextUtils.equals("2", payType);
     }
 
     /**
      * 根据支付方式获取对应的转换
+     *
      * @param payWay
      * @return
      */
-    public static String getPayWay(String payWay){
+    public static String getPayWay(String payWay) {
         if (TextUtils.isEmpty(payWay)) {
             return "";
         } else if (payWay.equals("0")) {

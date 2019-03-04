@@ -1,5 +1,6 @@
 package com.hongniu.moduleorder.ui.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
@@ -434,7 +435,6 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
                         amapNaviParams, loactionCollectionUtils);
 
 
-
             }
 
 
@@ -457,10 +457,10 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
         Poi end = new Poi(orderBean.getDestinationInfo(), new LatLng(orderBean.getDestinationLatitude(), orderBean.getDestinationLongitude()), "");
 
         ArouterUtils.getInstance().builder(ArouterParamLogin.activity_login_truck_infor)
-                    .withString(Param.TRAN,orderBean.getCarNum())
-                .withParcelable("start",start)
-                .withParcelable("end",end)
-                    .navigation(getContext());
+                .withString(Param.TRAN, orderBean.getCarNum())
+                .withParcelable("start", start)
+                .withParcelable("end", end)
+                .navigation(getContext());
 
     }
 
@@ -604,6 +604,24 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
 
 
                 });
+    }
+
+    /**
+     * 被拒原因
+     *
+     * @param orderBean
+     */
+    @Override
+    public void onPayRefuse(OrderDetailBean orderBean) {
+        new CenterAlertBuilder()
+                .setDialogTitle("被拒原因")
+                .setDialogContent("这里是被拒绝的原因，文字可以换行，弹层高度根据内容高度改变，但最大高度可设定五行，超出之后，文字描述区域可上下拖动查看被拒绝原因，这里只是做一个示范，内容为居中对齐方式，超出五行的位置，文字被遮挡部分这里是被拒绝的原因，文字可以换行，弹层高度根据内容高度改变，但最大高度可设定五行，超出之后，文字描述区域可上下拖动查看被拒绝原因，这里只是做一个示范，内容为居中对齐方式，超出五行的位置，文字被遮挡部分这里是被拒绝的原因，文字可以换行，弹层高度根据内容高度改变，但最大高度可设定五行，超出之后，文字描述区域可上下拖动查看被拒绝原因，这里只是做一个示范，内容为居中对齐方式，超出五行的位置，文字被遮挡部分这里是被拒绝的原因，文字可以换行，弹层高度根据内容高度改变，但最大高度可设定五行，超出之后，文字描述区域可上下拖动查看被拒绝原因，这里只是做一个示范，内容为居中对齐方式，超出五行的位置，文字被遮挡部分这里是被拒绝的原因，文字可以换行，弹层高度根据内容高度改变，但最大高度可设定五行，超出之后，文字描述区域可上下拖动查看被拒绝原因，这里只是做一个示范，内容为居中对齐方式，超出五行的位置，文字被遮挡部分")
+                .setBtLeft("知道了")
+                .hideBtRight()
+                .setBtLeftColor(getContext().getResources().getColor(com.hongniu.baselibrary.R.color.color_title_dark))
+                .creatDialog(new CenterAlertDialog(getContext()))
+                .show();
+
     }
 
     protected CenterAlertBuilder creatDialog(String title, String content, String btleft, String

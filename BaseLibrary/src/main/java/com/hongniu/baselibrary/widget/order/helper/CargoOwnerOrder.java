@@ -14,6 +14,7 @@ import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_RECEIPT;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_ENTRY_ORDER;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_PAY;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_PAY_REFUSE;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_START_CAR;
 
 
@@ -95,6 +96,12 @@ public class CargoOwnerOrder extends OwnerOrder implements OrderDetailItemContro
                     buttonInfors.add(new ButtonInforBean(ORDER_CHECK_INSURANCE));//查看保单
                 }
                 break;
+            case PAY_REFUSE://企业支付申请被拒绝
+                buttonInfors.add(new ButtonInforBean(0, ORDER_CANCLE));//取消订单
+                buttonInfors.add(new ButtonInforBean(0, ORDER_CHANGE));//修改订单
+                buttonInfors.add(new ButtonInforBean(1, ORDER_PAY_REFUSE));//被拒原因
+                break;
+            case PAY_CHECK://支付申请中
             case REFUND://退款
             case UNKNOW://未知状态
                 break;

@@ -47,8 +47,10 @@ public class OrderDetailItemControl {
         IN_TRANSIT,//运输中
         HAS_ARRIVED,//已到达
         RECEIPT,//已收货
-        HAS_CANCLE,//已取消
+        PAY_CHECK,//企业支付，支付申请中
+        PAY_REFUSE,//企业支付，支付被拒绝
 
+        HAS_CANCLE,//已取消
         UNKNOW,//未知状态
 
     }
@@ -222,6 +224,13 @@ public class OrderDetailItemControl {
          * @param orderBean
          */
         void onCheckGoods(OrderDetailBean orderBean);
+
+        /**
+         * ORDER_CHECK_GOODS        ="被拒原因";
+         *
+         * @param orderBean
+         */
+        void onPayRefuse(OrderDetailBean orderBean);
 
 
     }
