@@ -2256,6 +2256,7 @@ string order_pay_wechat_discribe
 string order_pay_you_maybe_need
 string order_search_des
 string order_up_receipt
+string pay_aleart
 string phone_error
 string phone_infor
 string push_heartbeat_timer

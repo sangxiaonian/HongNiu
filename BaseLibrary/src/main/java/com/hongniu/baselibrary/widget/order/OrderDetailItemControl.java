@@ -3,6 +3,7 @@ package com.hongniu.baselibrary.widget.order;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.widget.order.helper.ButtonInforBean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,47 +13,40 @@ import java.util.List;
 public class OrderDetailItemControl {
 
 
-    /*********************不同订单状态的文案***************************/
-    public static final String STATUS_DES_REFUND = "已退款";//已退款
-    public static final String STATUS_DES_WAITE_PAY = "待支付";//待支付
-    public static final String STATUS_DES_HAS_PAY = "订单已支付";//订单已支付（暂时不使用）
-    public static final String STATUS_DES_WAITE_START = "待发车";//待发车
-    public static final String STATUS_DES_IN_TRANSIT = "运输中";//运输中
-    public static final String STATUS_DES_HAS_ARRIVED = "已到达";//已到达
-    public static final String STATUS_DES_RECEIPT = "已收货";//已收货
-    public static final String STATUS_DES_HAS_CANCLE = "已取消";//已取消
-
-    public static final String STATUS_DES_UNKNOW = "无效状态";//已取消
-
-
-    /***************************不同的订单状态*******************************************/
-    public static final int STATUS_REFUND = -1;//已退款
-    public static final int STATUS_WAITE_PAY = 0;//待支付
-    public static final int STATUS_HAS_PAY = 1;//订单已支付（暂时不使用）
-    public static final int STATUS_WAITE_START = 2;//待发车
-    public static final int STATUS_IN_TRANSIT = 3;//运输中
-    public static final int STATUS_HAS_ARRIVED = 4;//已到达
-    public static final int STATUS_RECEIPT = 5;//已收货
-    public static final int STATUS_HAS_CANCLE = 20;//已取消
-
-
     /**
      * 订单 当前所处的支付状态
      */
     public enum OrderState {
-        REFUND,//退款
-        WAITE_PAY,//待支付
-        HAS_PAY,//订单已支付
-        WAITE_START,//待发车
-        IN_TRANSIT,//运输中
-        HAS_ARRIVED,//已到达
-        RECEIPT,//已收货
-        PAY_CHECK,//企业支付，支付申请中
-        PAY_REFUSE,//企业支付，支付被拒绝
+        REFUND(-1,"已退款"),//退款
+        WAITE_PAY(0,"待支付"),//待支付
+        HAS_PAY(1,"订单已支付"),//订单已支付
+        WAITE_START(2,"待发车"),//待发车
+        IN_TRANSIT(3,"运输中"),//运输中
+        HAS_ARRIVED(4,"已到达"),//已到达
+        RECEIPT(5,"已收货"),//已收货
+        PAY_CHECK(6,"支付审核中"),//企业支付，支付申请中
+        PAY_REFUSE(7,"申请被拒"),//企业支付，支付被拒绝
 
-        HAS_CANCLE,//已取消
-        UNKNOW,//未知状态
+        HAS_CANCLE(20,"已取消"),//已取消
+        UNKNOW(999,"未知状态");//未知状态
 
+
+        private int state;
+        private String des;
+
+        OrderState(int state, String des) {
+            this.state = state;
+            this.des = des;
+
+        }
+
+        public int getState() {
+            return state;
+        }
+
+        public String getDes() {
+            return des;
+        }
     }
 
     /**
@@ -62,8 +56,11 @@ public class OrderDetailItemControl {
         CAR_OWNER,//车主
         CARGO_OWNER,//货主
         DRIVER;//司机
-    }
 
+        private int role;
+        private String roleName;
+
+    }
 
 
     /**
@@ -175,7 +172,8 @@ public class OrderDetailItemControl {
          * @param orderBean
          */
         void onCheckRout(OrderDetailBean orderBean);
-   /**
+
+        /**
          * ORDER_CHECK_ROUT          ="货车导航";
          *
          * @param orderBean

@@ -34,7 +34,7 @@ public class DriveOwnerOrder extends OwnerOrder implements OrderDetailItemContro
 
     @Override
     public String getOrderState() {
-        return CommonOrderUtils.getOrderStateDes(state);
+        return state==null?OrderDetailItemControl.OrderState.UNKNOW.getDes():state.getDes();
     }
 
     /**

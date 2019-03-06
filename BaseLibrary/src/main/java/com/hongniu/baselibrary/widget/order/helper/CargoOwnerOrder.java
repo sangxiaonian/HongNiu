@@ -32,7 +32,7 @@ public class CargoOwnerOrder extends OwnerOrder implements OrderDetailItemContro
 
     @Override
     public String getOrderState() {
-        return CommonOrderUtils.getOrderStateDes(state);
+        return state==null?OrderDetailItemControl.OrderState.UNKNOW.getDes():state.getDes();
     }
 
     /**
@@ -49,7 +49,6 @@ public class CargoOwnerOrder extends OwnerOrder implements OrderDetailItemContro
                 buttonInfors.add(new ButtonInforBean(1, ORDER_PAY));//继续支付
                 break;
             case WAITE_START://待发车
-
                 if (hasGoodsImage) {//如果存在货单
                     buttonInfors.add(new ButtonInforBean(ORDER_CHECK_GOODS));//查看货单
                 }

@@ -8,12 +8,7 @@ import com.hongniu.baselibrary.BuildConfig;
  */
 public class Param {
     public static final boolean isDebug = BuildConfig.debugMode;
-
-
-
-    public static final String weChatAppid = "wxa9d4be10effd4626";
     public static String url;
-
     /**
      * 泓牛协议
      */
@@ -23,6 +18,24 @@ public class Param {
     public static String insurance_polic;
     //投保须知
     public static String insurance_notify;
+    static {
+        if (isDebug) {
+//            url = "http://47.104.130.110:80/";
+//            url = "http://test.wxshare.hongniudai.cn/";
+            url = "http://47.104.130.110:8080/";
+        } else {
+            url = "https://api.hongniudai.cn/";
+        }
+        hongniu_agreement = "https://api.hongniudai.cn/" + "static/html/service.html";
+        insurance_notify = "https://api.hongniudai.cn/" + "static/html/notice.html";
+        insurance_polic = "https://api.hongniudai.cn/" + "static/html/insurance_2009.html";
+        festivity_invity_notify = url + "static/index.html#/invite_rule";
+    }
+
+
+    public static final String weChatAppid = "wxa9d4be10effd4626";
+
+
     /**
      * 最大图片数
      */
@@ -34,19 +47,6 @@ public class Param {
     public static final String CANTRUCK="CANTRUCK";
     public static final String CANTRUCKINFOR="CANTRUCKINFOR";
 
-    static {
-        if (isDebug) {
-//            url = "http://47.104.130.110:80/";
-            url = "http://test.wxshare.hongniudai.cn/";
-//            url = "http://b09daa47.ngrok.io/";
-        } else {
-            url = "https://api.hongniudai.cn/";
-        }
-        hongniu_agreement = "https://api.hongniudai.cn/" + "static/html/service.html";
-        insurance_notify = "https://api.hongniudai.cn/" + "static/html/notice.html";
-        insurance_polic = "https://api.hongniudai.cn/" + "static/html/insurance_2009.html";
-        festivity_invity_notify = url + "static/index.html#/invite_rule";
-    }
 
     /**
      * 牛人保

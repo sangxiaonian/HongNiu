@@ -312,6 +312,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
     public void setOrderState(OrderDetailItemControl.OrderState orderState) {
         this.orderState = orderState;
         tv_state.setText(CommonOrderUtils.getOrderStateDes(orderState));
+//        tv_state.setText(orderState.getDes());
     }
 
 

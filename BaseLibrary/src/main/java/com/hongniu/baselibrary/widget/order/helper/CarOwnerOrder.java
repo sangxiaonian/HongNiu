@@ -25,7 +25,7 @@ public class CarOwnerOrder extends OwnerOrder {
 
     @Override
     public String getOrderState() {
-        return CommonOrderUtils.getOrderStateDes(state);
+        return state==null?OrderDetailItemControl.OrderState.UNKNOW.getDes():state.getDes();
     }
 
     /**

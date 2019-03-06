@@ -38,6 +38,7 @@ import com.hongniu.baselibrary.utils.clickevent.ClickEventParams;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
 import com.hongniu.baselibrary.widget.dialog.UpDialog;
 import com.hongniu.baselibrary.widget.order.OrderDetailItem;
+import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.entity.VersionBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
@@ -340,14 +341,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         demo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new CenterAlertBuilder()
-                        .setDialogTitle("被拒原因")
-                        .setDialogContent("字被遮挡部分")
-                        .setBtLeft("知道了")
-                        .hideBtRight()
-                        .setBtLeftColor(mContext.getResources().getColor(com.hongniu.baselibrary.R.color.color_title_dark))
-                        .creatDialog(new CenterAlertDialog(mContext))
-                        .show();
+//                new CenterAlertBuilder()
+//                        .setDialogTitle("被拒原因")
+//                        .setDialogContent("字被遮挡部分")
+//                        .setBtLeft("知道了")
+//                        .hideBtRight()
+//                        .setBtLeftColor(mContext.getResources().getColor(com.hongniu.baselibrary.R.color.color_title_dark))
+//                        .creatDialog(new CenterAlertDialog(mContext))
+//                        .show();
+
+                OrderDetailItemControl.OrderState[] values = OrderDetailItemControl.OrderState.values();
+                for (OrderDetailItemControl.OrderState value : values) {
+                    JLog.i(value.getState()+">>>"+value.getDes());
+                }
             }
         });
 
