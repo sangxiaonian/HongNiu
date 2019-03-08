@@ -2238,6 +2238,7 @@ string order_pay_cancle_insurance
 string order_pay_change_cargo_price
 string order_pay_charge
 string order_pay_chose_pay_ways
+string order_pay_company_promiss_aleart
 string order_pay_insruance_buy_des
 string order_pay_insruance_pay
 string order_pay_insurance_detail

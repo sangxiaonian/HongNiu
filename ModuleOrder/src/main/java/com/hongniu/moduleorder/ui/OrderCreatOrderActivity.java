@@ -107,8 +107,10 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
 
     private RecyclerView rv;
     private CarNumPop<OrderCarNumbean> pop;
+    private CarNumPop<OrderDriverPhoneBean> popDriver;
     private OrderCreatParamBean paramBean = new OrderCreatParamBean();
     List<OrderCarNumbean> carNumbeans = new ArrayList<>();
+    List<OrderDriverPhoneBean> driverNumbeans = new ArrayList<>();
     PicAdapter adapter;
     List<LocalMedia> pics;
     //是否是修改订单
@@ -156,6 +158,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
 
 
         pop = new CarNumPop<OrderCarNumbean>(mContext);
+        popDriver = new CarNumPop<>(mContext);
 
     }
 
@@ -234,13 +237,14 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
             public void afterTextChanged(Editable s) {
                 handler.removeMessages(1);
                 handler.removeMessages(0);
-                if (CommonUtils.isPhone(itemDriverPhone.getTextCenter()) && show) {
+                if (!TextUtils.isEmpty(itemDriverPhone.getTextCenter()) && show) {
                     handler.sendEmptyMessageDelayed(1, 300);
                 }
                 show = true;
             }
         });
         pop.setListener(this);
+        popDriver.setListener(this);
 
     }
 
@@ -292,12 +296,11 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
                 .subscribe(new NetObserver<List<OrderDriverPhoneBean>>(null) {
                     @Override
                     public void doOnSuccess(List<OrderDriverPhoneBean> data) {
-                        if (data != null && !data.isEmpty()) {
-                            OrderDriverPhoneBean bean = data.get(0);
-                            show = false;
-                            itemDriverPhone.setTextCenter(bean.getMobile());
-                            itemDriverName.setTextCenter(bean.getContact());
-                        }
+                        driverNumbeans.clear();
+                        driverNumbeans.addAll(data);
+                        popDriver.upData(itemDriverPhone.getTextCenter(), driverNumbeans);
+                        popDriver.show(itemDriverPhone);
+
                     }
 
                     @Override
@@ -595,6 +598,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     @Override
     public void onItemClick(View tragetView, int position, Object data) {
         pop.dismiss();
+        popDriver.dismiss();
         show = false;
         if (tragetView != null) {
             if (tragetView.getId() == R.id.item_car_num && data instanceof OrderCarNumbean) {
