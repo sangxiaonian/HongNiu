@@ -49,7 +49,6 @@ public class FinanceBalanceActivity extends BaseActivity implements View.OnClick
         initView();
         initData();
         initListener();
-        queryCountInfor();
     }
 
     @Override
@@ -74,6 +73,13 @@ public class FinanceBalanceActivity extends BaseActivity implements View.OnClick
         super.initListener();
         btSum.setOnClickListener(this);
         btRecharge.setOnClickListener(this);
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        queryCountInfor();
 
     }
 
@@ -110,7 +116,6 @@ public class FinanceBalanceActivity extends BaseActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
-
         //实名认证并且绑定银行卡情况下，可以充值和体现
         if (countInfor != null && isVir) {
             if (v.getId() == R.id.bt_sum) {

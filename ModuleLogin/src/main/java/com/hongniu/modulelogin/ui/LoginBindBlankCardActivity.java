@@ -11,9 +11,12 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
+import com.hongniu.baselibrary.arouter.ArouterParamsApp;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
-import com.hongniu.baselibrary.entity.LoginBean;
+import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.entity.H5Config;
 import com.hongniu.baselibrary.entity.LoginPersonInfor;
 import com.hongniu.baselibrary.entity.QueryBlankInforsBean;
 import com.hongniu.baselibrary.utils.PickerDialogUtils;
@@ -24,6 +27,9 @@ import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.ItemView;
+import com.sang.common.widget.dialog.CenterAlertDialog;
+import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
+import com.sang.common.widget.dialog.inter.DialogControl;
 
 import java.util.List;
 
@@ -122,11 +128,39 @@ public class LoginBindBlankCardActivity extends BaseActivity implements View.OnC
                 params.setAccountName(itemName.getTextCenter());
                 params.setIdnumber(itemIDCard.getTextCenter());
                 params.setLinkAccountType("0");
-                HttpLoginFactory.bindBlanks(params).subscribe(new NetObserver<String>(this) {
+                HttpLoginFactory.bindBlanks(params)
+
+                        .subscribe(new NetObserver<String>(this) {
                     @Override
                     public void doOnSuccess(String data) {
-                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
-                        finish();
+                        if (tvHuaAleart.getVisibility()==View.VISIBLE) {
+                            CenterAlertBuilder builder = Utils.creatDialog(mContext, "签约提醒", "银行卡已绑定，因华夏银行要求，需完成签约后，方可进行充值及提现操作", "下次再看", "查看流程");
+                            builder
+                                    .setLeftClickListener(new DialogControl.OnButtonLeftClickListener() {
+                                        @Override
+                                        public void onLeftClick(View view, DialogControl.ICenterDialog dialog) {
+                                            dialog.dismiss();
+                                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
+                                            finish();
+                                        }
+                                    })
+                                    .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
+                                        @Override
+                                        public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
+                                            dialog.dismiss();
+                                            H5Config h5Config = new H5Config("签约流程", Param.hongniu_agreement, true);
+                                            ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5).withSerializable(Param.TRAN, h5Config).navigation(mContext);
+                                            finish();
+                                        }
+                                    })
+                                    .creatDialog(new CenterAlertDialog(mContext))
+                                    .show();
+                        }else {
+                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
+                            finish();
+
+                        }
+
                     }
                 });
             }
@@ -165,7 +199,9 @@ public class LoginBindBlankCardActivity extends BaseActivity implements View.OnC
 
     @Override
     public void onOptionsSelect(int options1, int options2, int options3, View v) {
-        itemBlank.setTextCenter(blanksInfors.get(options1).getName());
+        String name = blanksInfors.get(options1).getName();
+        itemBlank.setTextCenter(name);
         blankID = blanksInfors.get(options1).getId();
+        tvHuaAleart.setVisibility(!name.contains("华夏") ? View.VISIBLE : View.GONE);
     }
 }
