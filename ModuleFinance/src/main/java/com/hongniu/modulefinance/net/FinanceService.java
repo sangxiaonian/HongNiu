@@ -9,12 +9,12 @@ import com.hongniu.modulefinance.entity.BalanceOfAccountBean;
 import com.hongniu.modulefinance.entity.BalanceWithDrawBean;
 import com.hongniu.modulefinance.entity.CareNumPageBean;
 import com.hongniu.modulefinance.entity.FinanceQueryCarDetailMap;
+import com.hongniu.modulefinance.entity.FinanceQueryNiuDetailBean;
 import com.hongniu.modulefinance.entity.NiuOfAccountBean;
 import com.hongniu.modulefinance.entity.QueryExpendBean;
 import com.hongniu.modulefinance.entity.QueryExpendResultBean;
 
 import java.util.List;
-import java.util.Map;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
@@ -83,6 +83,14 @@ public interface FinanceService {
     @POST("hongniu/api/account/accountintegralflows")
     Observable<CommonBean<PageBean<NiuOfAccountBean>>> queryNiuAccountFllows(@Body AccountFloowParamBean bean);
 
+    /**
+     * 查询车辆订单明细
+     *
+     * @param bean
+     * @return
+     */
+    @POST("hongniu/api/account/userOrderdetails")
+    Observable<CommonBean<List<FinanceQueryNiuDetailBean>>> queryNiurDetails(@Body CareNumPageBean bean);
     /**
      * 查询车辆订单明细
      *

@@ -23,7 +23,7 @@ import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 /**
- * Created by danyic on 2017/9/7.
+ * Created by  on 2017/9/7.
  */
 
 public class RecycleFooter extends LinearLayout implements RefreshFooter {

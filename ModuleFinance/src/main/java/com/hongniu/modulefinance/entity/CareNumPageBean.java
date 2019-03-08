@@ -1,5 +1,6 @@
 package com.hongniu.modulefinance.entity;
 
+import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.PagerParambean;
 
 /**

@@ -12,11 +12,14 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
+import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.base.RefrushActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.H5Config;
 import com.hongniu.baselibrary.entity.PageBean;
+import com.hongniu.baselibrary.entity.WalletDetail;
+import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.BottomListDialog;
 import com.hongniu.modulefinance.R;
 import com.hongniu.modulefinance.entity.NiuOfAccountBean;
@@ -32,6 +35,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Function;
 
 /**
  * @data 2019/3/3
@@ -55,6 +61,11 @@ public class FinanceMyNiuActivity extends RefrushActivity<NiuOfAccountBean> {
         initData();
         initListener();
         queryData(true);
+
+
+
+
+
     }
 
     @Override
@@ -73,13 +84,29 @@ public class FinanceMyNiuActivity extends RefrushActivity<NiuOfAccountBean> {
     @Override
     protected void initData() {
         super.initData();
-        tvNiu.setText("10010.00");
-        tvEarning.setText("1738.00");
-        tvLastEarning.setText("89.00");
+        tvNiu.setText("0");
+        tvEarning.setText("0");
+        tvLastEarning.setText("0");
         List<String> list=new ArrayList<>();
         list.add("在线聊天");
         list.add("电话联系");
         bottomListDialog.setDatas(list);
+        HttpFinanceFactory.queryAccountdetails()
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        queryData(true);
+                    }
+                })
+                .subscribe(new NetObserver<WalletDetail>(this) {
+                    @Override
+                    public void doOnSuccess(WalletDetail data) {
+                        Utils.setPassword(data.isSetPassWord());
+                        tvNiu.setText(TextUtils.isEmpty(data.getTotalIntegral())?"0":data.getTotalIntegral());
+                        tvEarning.setText(TextUtils.isEmpty(data.getAvailableIntegral())?"0":data.getAvailableIntegral());
+                        tvLastEarning.setText(TextUtils.isEmpty(data.getLockIntegral())?"0":data.getLockIntegral());
+                    }
+                });
 
     }
 
@@ -118,17 +145,16 @@ public class FinanceMyNiuActivity extends RefrushActivity<NiuOfAccountBean> {
                         //更多
                         final ImageView imgMore = itemView.findViewById(R.id.img_more);
                         final String name = !TextUtils.isEmpty(data.getName()) ? data.getName() : (TextUtils.isEmpty(data.getContact()) ? "" : data.getContact());
-                        tvName.setText(name + "(+" + (ConvertUtils.getRandom(1, 10)) + "牛贝)");
+                        tvName.setText(name +(TextUtils.isEmpty( data.getIntegralStr())?"": data.getIntegralStr()));
 
-                        StringBuffer buffer = new StringBuffer();
-                        buffer.append("总收益")
-                                .append(ConvertUtils.getRandom(100, 900))
-                                .append("元")
-                                .append(" ")
-                                .append("昨日收益")
-                                .append(ConvertUtils.getRandom(0, 100))
-                                .append("元");
-                        tvEarning.setText(buffer.toString());
+                        String buffer = "总收益" +
+                                data.getTotalAmt() +
+                                "元" +
+                                " " +
+                                "昨日收益" +
+                                data.getYesterdayAmt() +
+                                "元";
+                        tvEarning.setText(buffer);
 
                         imgMore.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -153,7 +179,7 @@ public class FinanceMyNiuActivity extends RefrushActivity<NiuOfAccountBean> {
                             public void onClick(View v) {
                                 ArouterUtils
                                         .getInstance().builder(ArouterParamsFinance.activity_finance_niu_detail)
-                                        .withString(Param.TRAN,  data.getId())
+                                        .withParcelable(Param.TRAN,data)
                                         .navigation(mContext);
                             }
                         });

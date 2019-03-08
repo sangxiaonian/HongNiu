@@ -4,6 +4,7 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
+import com.hongniu.baselibrary.entity.WalletDetail;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.modulefinance.entity.AccountFloowParamBean;
 import com.hongniu.modulefinance.entity.BalanceOfAccountBean;
@@ -11,17 +12,15 @@ import com.hongniu.modulefinance.entity.BalanceWithDrawBean;
 import com.hongniu.modulefinance.entity.CareNumPageBean;
 import com.hongniu.modulefinance.entity.FinanceQueryCarDetailBean;
 import com.hongniu.modulefinance.entity.FinanceQueryCarDetailMap;
+import com.hongniu.modulefinance.entity.FinanceQueryNiuDetailBean;
 import com.hongniu.modulefinance.entity.NiuOfAccountBean;
 import com.hongniu.modulefinance.entity.QueryExpendBean;
 import com.hongniu.modulefinance.entity.QueryExpendResultBean;
-import com.hongniu.baselibrary.entity.WalletDetail;
 import com.sang.common.net.rx.RxUtils;
 import com.sang.common.utils.ConvertUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
@@ -102,13 +101,14 @@ public class HttpFinanceFactory {
 
     /**
      * 余额提现
-     * @param amount       提现金额
-     * @param payPassword  密码
-     * @param refundId     提现方式的ID
+     *
+     * @param amount      提现金额
+     * @param payPassword 密码
+     * @param refundId    提现方式的ID
      * @return
      */
-    public static Observable<CommonBean<String>> withdraw(String amount,String payPassword,String refundId) {
-        BalanceWithDrawBean bean=new BalanceWithDrawBean(amount,ConvertUtils.MD5(payPassword),refundId);
+    public static Observable<CommonBean<String>> withdraw(String amount, String payPassword, String refundId) {
+        BalanceWithDrawBean bean = new BalanceWithDrawBean(amount, ConvertUtils.MD5(payPassword), refundId);
         return FinanceClient.getInstance().getService().withdraw(bean)
                 .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer())
                 ;
@@ -136,31 +136,34 @@ public class HttpFinanceFactory {
 
     /**
      * 牛贝待入账，已入账查询
+     *
      * @param currentPage
      * @param type
      */
     public static Observable<CommonBean<PageBean<NiuOfAccountBean>>> gueryNiuList(int currentPage, final int type) {
         AccountFloowParamBean bean = new AccountFloowParamBean();
-        bean.setFlowtype(type);
+        bean.setFlowtype(1);
         bean.setPageNum(currentPage);
         bean.setPageSize(Param.PAGE_SIZE);
-       return FinanceClient
+        return FinanceClient
                 .getInstance()
                 .getService()
                 .queryNiuAccountFllows(bean)
-               .compose(RxUtils.<CommonBean<PageBean<NiuOfAccountBean>>>getSchedulersObservableTransformer())
-               ;
+                .compose(RxUtils.<CommonBean<PageBean<NiuOfAccountBean>>>getSchedulersObservableTransformer())
+                ;
 
 
     }
- /**
-     * 牛贝待入账，已入账查询
-  * @param currentPage
-  */
-    public static Observable<CommonBean<PageBean<FinanceQueryCarDetailBean>>> queryCarOrderDetails(int currentPage, final String userId) {
-        CareNumPageBean bean = new CareNumPageBean(currentPage,userId);
 
-       return FinanceClient
+    /**
+     * 牛贝待入账，已入账查询
+     *
+     * @param currentPage
+     */
+    public static Observable<CommonBean<PageBean<FinanceQueryCarDetailBean>>> queryCarOrderDetails(int currentPage, final String userId) {
+        CareNumPageBean bean = new CareNumPageBean(currentPage, userId);
+
+        return FinanceClient
                 .getInstance()
                 .getService()
                 .queryCarOrderDetails(bean)
@@ -171,17 +174,16 @@ public class HttpFinanceFactory {
                         CommonBean<PageBean<FinanceQueryCarDetailBean>> bean = new CommonBean<>();
                         bean.setMsg(financeQueryCarDetailCommonBean.getMsg());
                         bean.setCode(financeQueryCarDetailCommonBean.getCode());
-                        PageBean<FinanceQueryCarDetailBean> pageBean=new PageBean<>();
+                        PageBean<FinanceQueryCarDetailBean> pageBean = new PageBean<>();
                         pageBean.setList(new ArrayList<FinanceQueryCarDetailBean>());
                         bean.setData(pageBean);
                         List<FinanceQueryCarDetailMap> data = financeQueryCarDetailCommonBean.getData();
-                        if (data!=null ){
-
+                        if (data != null) {
                             for (FinanceQueryCarDetailMap datum : data) {
-                                pageBean.getList().add(new FinanceQueryCarDetailBean(1,datum.getDates(),null));
-                                if (datum.getList()!=null) {
+                                pageBean.getList().add(new FinanceQueryCarDetailBean(1, datum.getDates(), null));
+                                if (datum.getList() != null) {
                                     for (OrderDetailBean orderDetailBean : datum.getList()) {
-                                        pageBean.getList().add(new FinanceQueryCarDetailBean(0,datum.getDates(),orderDetailBean));
+                                        pageBean.getList().add(new FinanceQueryCarDetailBean(0, datum.getDates(), orderDetailBean));
                                     }
                                 }
                             }
@@ -190,15 +192,44 @@ public class HttpFinanceFactory {
                         return bean;
                     }
                 })
-               .compose(RxUtils.<CommonBean<PageBean<FinanceQueryCarDetailBean>>>getSchedulersObservableTransformer())
-               ;
+                .compose(RxUtils.<CommonBean<PageBean<FinanceQueryCarDetailBean>>>getSchedulersObservableTransformer())
+                ;
 
 
     }
 
+    /**
+     * 牛贝待入账，已入账查询
+     *
+     * @param currentPage
+     */
+    public static Observable<CommonBean<PageBean<FinanceQueryNiuDetailBean>>> queryNiuOrderDetails(int currentPage, final String userId) {
+        CareNumPageBean bean = new CareNumPageBean(currentPage, userId);
+
+        return FinanceClient
+                .getInstance()
+                .getService()
+                .queryNiurDetails(bean)
+                .map(new Function<CommonBean<List<FinanceQueryNiuDetailBean>>, CommonBean<PageBean<FinanceQueryNiuDetailBean>>>() {
+                    @Override
+                    public CommonBean<PageBean<FinanceQueryNiuDetailBean>> apply(CommonBean<List<FinanceQueryNiuDetailBean>> financeQueryCarDetailCommonBean) throws Exception {
+
+                        CommonBean<PageBean<FinanceQueryNiuDetailBean>> bean = new CommonBean<>();
+                        bean.setMsg(financeQueryCarDetailCommonBean.getMsg());
+                        bean.setCode(financeQueryCarDetailCommonBean.getCode());
+                        PageBean<FinanceQueryNiuDetailBean> pageBean = new PageBean<>();
+                        pageBean.setList(financeQueryCarDetailCommonBean.getData());
+                        bean.setData(pageBean);
+                        List<FinanceQueryNiuDetailBean> data = financeQueryCarDetailCommonBean.getData();
+
+                        return bean;
+                    }
+                })
+                .compose(RxUtils.<CommonBean<PageBean<FinanceQueryNiuDetailBean>>>getSchedulersObservableTransformer())
+                ;
 
 
-
+    }
 
 
 }
