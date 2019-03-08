@@ -118,20 +118,22 @@ public class FinanceBalanceActivity extends BaseActivity implements View.OnClick
                         .getInstance()
                         .builder(ArouterParamsFinance.activity_finance_balance_with_drawal)
                         .withString(Param.TRAN, walletDetail == null ? "0" : walletDetail.getAvailableBalance())
+                        .withString(Param.TYPE,   countInfor.getBankCardNum())
                         .navigation(this, 1);
             } else {
                 RechargeInforDialog inforDialog = new RechargeInforDialog(mContext);
+                inforDialog.setInfor(countInfor);
                 inforDialog.setClickListener(this);
                 inforDialog.show();
             }
         } else {
-//            if (!isVir) {
-//                //如果没有实名认证
-//                ArouterUtils
-//                        .getInstance()
-//                        .builder(ArouterParamLogin.activity_person_infor)
-//                        .navigation(this);
-//            } else
+            if (!isVir) {
+                //如果没有实名认证
+                ArouterUtils
+                        .getInstance()
+                        .builder(ArouterParamLogin.activity_person_infor)
+                        .navigation(this);
+            } else
                 if (countInfor == null) {
                 //如果没有绑定银行卡
                 ArouterUtils
@@ -153,6 +155,9 @@ public class FinanceBalanceActivity extends BaseActivity implements View.OnClick
 
     @Override
     public void onClickEntry(String msg) {
-        Utils.copyToPlate(mContext, msg);
+        if (countInfor != null){
+            Utils.copyToPlate(mContext, countInfor.getOthBankPayeeSubAcc());
+            ToastUtils.getInstance().show("复制账号成功");
+        }
     }
 }

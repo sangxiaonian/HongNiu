@@ -64,6 +64,7 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
                             view.changePayWayToBanlace(mode.isHasEnoughBalance(), mode.getPayType());
                         }
 
+
                     }
                 })
         ;

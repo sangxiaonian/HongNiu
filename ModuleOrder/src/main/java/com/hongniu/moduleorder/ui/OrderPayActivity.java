@@ -118,7 +118,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
         initView();
         initData();
         initListener();
-        //默认选中微信支付
+
         payPresent = new OrderPayPresenter(this, this);
         onSelectYuePay();
     }

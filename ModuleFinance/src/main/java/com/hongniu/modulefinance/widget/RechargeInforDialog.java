@@ -14,6 +14,7 @@ import android.view.Window;
 import android.widget.TextView;
 
 import com.hongniu.modulefinance.R;
+import com.hongniu.modulefinance.entity.QueryBindHuaInforsBean;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.widget.dialog.inter.DialogControl;
 
@@ -27,6 +28,13 @@ public class RechargeInforDialog implements DialogControl.IDialog, View.OnClickL
     private TextView tvInfor  ;//取消按钮
     private Dialog dialog;
     OnEntryClickListener clickListener;
+    private QueryBindHuaInforsBean countInfor;
+    private TextView tvTitle;
+
+    public void setInfor(QueryBindHuaInforsBean countInfor) {
+        this.countInfor=countInfor;
+    }
+
     public interface OnEntryClickListener{
         void onClickEntry(String msg);
     }
@@ -50,6 +58,7 @@ public class RechargeInforDialog implements DialogControl.IDialog, View.OnClickL
         imgCancel = inflate.findViewById(R.id.img_cancel);
 
         tvInfor = inflate.findViewById(R.id.tv_infor);
+        tvTitle = inflate.findViewById(R.id.tv_2);
         btSume = inflate.findViewById(R.id.bt_sum);
 
         imgCancel.setOnClickListener(this);
@@ -78,7 +87,21 @@ public class RechargeInforDialog implements DialogControl.IDialog, View.OnClickL
 
     @Override
     public void show() {
+
         dialog.show();
+        if (countInfor!=null) {
+            StringBuffer buffer=new StringBuffer();
+            buffer.append("户名：")
+                    .append(countInfor.getOthBankPayeeSubAccName())
+                    .append("\n")
+                    .append("账号：")
+                    .append(countInfor.getOthBankPayeeSubAcc())
+                    .append("\n")
+                    .append("支行：")
+                    .append(countInfor.getOthBankPayeeSubAccSetteName());
+            tvInfor.setText(buffer.toString());
+            tvTitle.setText("请采用你绑定的银行卡"+countInfor.getBankCardNum()+"，通过网银转账或汇款方式转入华夏银行监管账户，收款账户信息如下：");
+        }
     }
 
     @Override

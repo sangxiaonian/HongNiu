@@ -8,6 +8,7 @@ import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
 import com.hongniu.baselibrary.entity.QueryBlankInforsBean;
 import com.hongniu.baselibrary.entity.QueryPayPassword;
+import com.hongniu.modulelogin.entity.LoginBlindBlankParams;
 import com.hongniu.modulelogin.entity.LoginCarInforBean;
 import com.hongniu.modulelogin.entity.LoginCreatInsuredBean;
 import com.hongniu.modulelogin.entity.LoginSMSParams;
@@ -36,7 +37,15 @@ public interface LoginService {
      * @return
      */
     @POST("hongniu/api/refund/bankList")
-    Observable<CommonBean<List<QueryBlankInforsBean>>> queryBlanks( );
+    Observable<CommonBean<List<QueryBlankInforsBean>>> queryBlanks();
+
+    /**
+     * 绑定银行卡
+     *
+     * @return
+     */
+    @POST("hongniu/api/refund/add")
+    Observable<CommonBean<String>> bindBlank(@Body LoginBlindBlankParams params);
 
     @POST("hongniu/api/login/ckeckcode")
     Observable<CommonBean<String>> ckeckcode(@Body LoginSMSParams params);

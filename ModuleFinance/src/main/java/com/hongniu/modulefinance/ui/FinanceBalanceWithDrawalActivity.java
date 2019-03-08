@@ -21,11 +21,9 @@ import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
-import com.hongniu.baselibrary.entity.PayInforBeans;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.PayPasswordKeyBord;
 import com.hongniu.modulefinance.R;
-import com.hongniu.modulefinance.entity.QueryBindHuaInforsBean;
 import com.hongniu.modulefinance.net.HttpFinanceFactory;
 import com.sang.common.utils.PointLengthFilter;
 import com.sang.common.utils.ToastUtils;
@@ -49,12 +47,13 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
     private ConstraintLayout conPay;
     private String withdrawal;//提现金额
     PayPasswordKeyBord passwordDialog;
-    private PayInforBeans payInfo;
+    private String blankNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finance_balance_with_drawal);
+        blankNumber = getIntent().getStringExtra(Param.TYPE);
         setToolbarTitle(getString(R.string.wallet_balance_withdrawal_title));
         initView();
         initData();
@@ -88,33 +87,20 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
         withdrawal = TextUtils.isEmpty(withdrawal) ? "0" : withdrawal;
         tvWithDrawale.setText(String.format(getString(R.string.wallet_balance_account_num), withdrawal));
 
-        querPayWay();
-
-    }
-
-    private void querPayWay() {
-        HttpFinanceFactory.queryHuaCards()
-                .subscribe(new NetObserver<QueryBindHuaInforsBean>(this) {
-                    @Override
-                    public void doOnSuccess(QueryBindHuaInforsBean data) {
-
-                    }
-                })
-        ;
-
+        initPayWay(blankNumber);
     }
 
 
-    private void initPayWay(PayInforBeans def) {
-        if (def == null) {
+    private void initPayWay(String blankNumber) {
+        if (blankNumber == null) {
             return;
         }
-        this.payInfo = def;
+
         tvPayAccount.setVisibility(View.VISIBLE);
         imgPayIcon.setImageResource(R.mipmap.icon_ylzf_40);
-        tvPayWay.setText(def.getBankName() == null ? "" : def.getBankName());
-        if (def.getCardNo() != null && def.getCardNo().length() > 4) {
-            tvPayAccount.setText(String.format(getString(R.string.wallet_balance_withdrawal_card_num), def.getCardNo().substring(0, 4)));
+        tvPayWay.setText( "银联提现" );
+        if (blankNumber.length() > 4) {
+            tvPayAccount.setText(String.format(getString(R.string.wallet_balance_withdrawal_card_num), blankNumber.substring(0, 4)));
         } else {
             tvPayAccount.setText(String.format(getString(R.string.wallet_balance_withdrawal_card_num), ""));
         }
@@ -156,7 +142,7 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.bt_sum) {
-            if (payInfo != null) {
+            if (blankNumber != null) {
                 if (Utils.querySetPassword()) {
                     final String trim = etBalance.getText().toString().trim();
                     passwordDialog.setPayCount(trim);
@@ -217,7 +203,8 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
     public void onInputPassWordSuccess(DialogControl.IDialog dialog, String count, String
             passWord) {
         dialog.dismiss();
-        HttpFinanceFactory.withdraw(count, passWord, payInfo.getId())
+        //ID应该是服务器返回，不过此时由于只有银行卡，因此写死
+        HttpFinanceFactory.withdraw(count, passWord, "1")
                 .subscribe(new NetObserver<String>(this) {
                     @Override
                     public void doOnSuccess(String data) {

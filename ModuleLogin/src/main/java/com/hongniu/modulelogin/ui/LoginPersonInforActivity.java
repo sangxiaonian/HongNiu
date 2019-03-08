@@ -101,17 +101,14 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
     protected void initData() {
         super.initData();
 
-        LoginPersonInfor personInfor = Utils.getPersonInfor();
-        if (personInfor == null||Utils.checkInfor()) {
+
             HttpLoginFactory.getPersonInfor().subscribe(new NetObserver<LoginPersonInfor>(this) {
                 @Override
                 public void doOnSuccess(LoginPersonInfor data) {
                     initInfor(data);
                 }
             });
-        } else {
-            initInfor(personInfor);
-        }
+
 
     }
 

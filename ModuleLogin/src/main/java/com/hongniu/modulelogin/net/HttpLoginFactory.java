@@ -7,6 +7,7 @@ import com.hongniu.baselibrary.entity.LoginPersonInfor;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
 import com.hongniu.baselibrary.entity.QueryBlankInforsBean;
+import com.hongniu.modulelogin.entity.LoginBlindBlankParams;
 import com.hongniu.modulelogin.entity.LoginCarInforBean;
 import com.hongniu.modulelogin.entity.LoginCreatInsuredBean;
 import com.hongniu.modulelogin.entity.LoginSMSParams;
@@ -44,11 +45,28 @@ public class HttpLoginFactory {
                 .compose(RxUtils.<CommonBean<LoginBean>>getSchedulersObservableTransformer())
                 ;
     }
-  public static Observable<CommonBean<List<QueryBlankInforsBean>>> queryBlanks( ) {
+
+    /**
+     * 查询绑定银行卡时候，支持的银行列表
+     * @return
+     */
+    public static Observable<CommonBean<List<QueryBlankInforsBean>>> queryBlanks() {
 
         return LoginClient.getInstance().getLoginService()
-                .queryBlanks( )
+                .queryBlanks()
                 .compose(RxUtils.<CommonBean<List<QueryBlankInforsBean>>>getSchedulersObservableTransformer())
+                ;
+    }
+
+    /**
+     * 绑定银行卡
+     * @return
+     */
+    public static Observable<CommonBean<String>> bindBlanks(LoginBlindBlankParams params) {
+
+        return LoginClient.getInstance().getLoginService()
+                .bindBlank(params)
+                .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer())
                 ;
     }
 
@@ -146,7 +164,8 @@ public class HttpLoginFactory {
                 .compose(RxUtils.<CommonBean<List<CarTypeBean>>>getSchedulersObservableTransformer());
 
     }
-   /**
+
+    /**
      * 修改货车信息
      */
     public static Observable<CommonBean<String>> upTruckInfor(LoginCarInforBean bean) {
