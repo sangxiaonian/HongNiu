@@ -137,6 +137,18 @@ public class OrderPayControl {
          * @param data
          */
         void showInsruanceUserInforDialog(List<OrderInsuranceInforBean> data);
+
+        /**
+         * 是否有企业支付权限
+         * @param companyPayPermission true 有
+         */
+        void showCompanyInfor(boolean companyPayPermission);
+
+        /**
+         * 显示是否为申请支付
+         * @param showApplyCompanyPay true 是
+         */
+        void showHasCompanyApply(boolean showApplyCompanyPay);
     }
 
     public interface IOrderPayPresent {
@@ -237,6 +249,16 @@ public class OrderPayControl {
          * @param listenre
          */
         void deletedInsurance(String id, TaskControl.OnTaskListener listenre);
+
+        /**
+         * 选中个人支付
+         */
+        void onChoicePersonPay();
+
+        /**
+         * 选中企业支付
+         */
+        void onChoiceCompanyPay();
     }
 
     public interface IOrderPayMode {
@@ -376,6 +398,18 @@ public class OrderPayControl {
          * @param currentInsuranceUserInfor
          */
         void saveSelectInsuranceInfor(OrderInsuranceInforBean currentInsuranceUserInfor);
+
+        /**
+         * 储存当前支付类型
+         * @param roleType 1 企业支付 2个人支付
+         */
+        void savePayRole(int roleType);
+
+        /**
+         * 显示是否需要申请支付
+         * @return true 申请企业支付
+         */
+        boolean showApplyCompanyPay();
     }
 
 }

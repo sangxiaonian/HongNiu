@@ -126,13 +126,9 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
     @Override
     protected void initView() {
         super.initView();
-
-
         rg1 = findViewById(R.id.rg1);
         rbCompany = findViewById(R.id.rb_company);
         rbPerson = findViewById(R.id.rb_person);
-
-
         tvOrder = findViewById(R.id.tv_order);
         btBuy = findViewById(R.id.con_buy);
         rg = findViewById(R.id.rg);
@@ -232,12 +228,10 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
         } else if (checkedId == R.id.rb_offline) {//线下支付
             payPresent.onOffLineClick();
         }else if (checkedId == R.id.rb_company){//企业账号
-            ToastUtils.getInstance().show("企业账号");
-            aleartPop.setContent("企业代收款相关提示");
-            aleartPop.show(findViewById(checkedId));
-        }else if ((checkedId == R.id.rb_person)){//个人账户
-            ToastUtils.getInstance().show("个人账户");
 
+            payPresent.onChoiceCompanyPay();
+        }else if ((checkedId == R.id.rb_person)){//个人账户
+            payPresent.onChoicePersonPay();
         }
     }
 
@@ -526,6 +520,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
         //如果余额不充足，并且当前选中的是余额就选中微信
         if (!isEnough && payType == 4) {
             rlWechact.performClick();
+            showNoEnoughBalance();
         }
 
     }
@@ -611,6 +606,31 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
     public void showInsruanceUserInforDialog(List<OrderInsuranceInforBean> data) {
         insuranceDialog.setData(data);
         insuranceDialog.show();
+    }
+
+    /**
+     * 是否有企业支付权限
+     *
+     * @param companyPayPermission true 有
+     */
+    @Override
+    public void showCompanyInfor(boolean companyPayPermission) {
+        rg1.setVisibility(companyPayPermission?View.VISIBLE:View.GONE);
+    }
+
+    /**
+     * 显示是否为申请支付
+     *
+     * @param showApplyCompanyPay true 是
+     */
+    @Override
+    public void showHasCompanyApply(boolean showApplyCompanyPay) {
+        btPay.setText(showApplyCompanyPay?"申请支付":"支付订单");
+        //如果是申请支付，则给出提示
+        if (showApplyCompanyPay){
+            aleartPop.setContent(getString(R.string.order_pay_company_promiss_aleart));
+            aleartPop.show(findViewById(R.id.rb_company));
+        }
     }
 
 

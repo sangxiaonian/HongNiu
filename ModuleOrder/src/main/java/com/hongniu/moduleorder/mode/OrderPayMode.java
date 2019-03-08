@@ -35,6 +35,8 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
     private WalletDetail wallletInfor;
     private List<OrderInsuranceInforBean> insurancUserInfr;
     OrderInsuranceInforBean currentInsurancInfor;//当前选中的保险人信息
+    private int roleType;//1 企业支付 2个人支付
+
     /**
      * 储存其他界面传入的参数
      *
@@ -248,7 +250,13 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
      */
     @Override
     public boolean isHasEnoughBalance() {
-        return wallletInfor!=null&&Float.parseFloat(wallletInfor.getAvailableBalance())>=getMoney();
+        if (roleType==2){
+            return wallletInfor!=null&&Float.parseFloat(wallletInfor.getAvailableBalance())>=getMoney();
+        }else if (roleType==1){
+            return wallletInfor!=null&& wallletInfor.getCompanyAvailableBalance()>=getMoney();
+        }else {
+            return true;
+        }
     }
 
     @Override
@@ -301,6 +309,26 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
     @Override
     public void saveSelectInsuranceInfor(OrderInsuranceInforBean currentInsuranceUserInfor) {
         currentInsurancInfor=currentInsuranceUserInfor;
+    }
+
+    /**
+     * 储存当前支付类型
+     *
+     * @param roleType 1 企业支付 2个人支付
+     */
+    @Override
+    public void savePayRole(int roleType) {
+        this.roleType=roleType;
+    }
+
+    /**
+     * 显示是否需要申请支付，
+     *
+     * @return true 申请企业支付，余额支付并且是线下支付切没有权限的时候显示
+     */
+    @Override
+    public boolean showApplyCompanyPay() {
+        return roleType==1&&payType==4&&wallletInfor!=null&&wallletInfor.getType()==2;
     }
 
     /**

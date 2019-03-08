@@ -137,5 +137,6 @@
     <string name="finance_niu_earning">总收益(元)</string>
     <string name="finance_niu_last_earning">昨日收益(元)</string>
     <string name="pay_aleart">选择线上支付时，运费将由平台代收，货主确认收货后，该订单线上支付的运费，将自动转入该订单对应的车主余额账户，余额账户随时可以提现。</string>
+    <string name="order_pay_company_promiss_aleart">申请支付后，请联系管理员在后台系统完成审批，审批通过后才能完成保险购买或运费在线支付等业务。</string>
 
 </resources>

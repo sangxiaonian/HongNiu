@@ -59,6 +59,7 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
                     @Override
                     public void doOnSuccess(WalletDetail data) {
                         mode.setAccountInfor(data);
+                        view.showCompanyInfor(data.isCompanyPayPermission());
                         //有充足的余额的情况，查询完成之后直接选择余额支付
                         if (mode.isHasEnoughBalance()) {
                             view.changePayWayToBanlace(mode.isHasEnoughBalance(), mode.getPayType());
@@ -179,6 +180,8 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
     @Override
     public void setPayType(int payType) {
         mode.savePayType(payType);
+        //每次更改支付方式都需要判断一次
+        view.showHasCompanyApply(mode.showApplyCompanyPay());
     }
 
     /**
@@ -194,7 +197,7 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
             view.noChoiceInsurance("请选择投保金额");
 
 //            或者购买保险却没有选择被保险人信息
-        } else if (mode.isBuyInsurance()&&mode.getCurrentInsuranceUserInfor()==null) {
+        } else if (mode.isBuyInsurance() && mode.getCurrentInsuranceUserInfor() == null) {
             view.noChoiceInsurance("请选择被保险人信息");
         } else {
             if (mode.getPayType() == 4) {//余额支付
@@ -306,7 +309,7 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
                 .subscribe(new NetObserver<List<OrderInsuranceInforBean>>(listenre) {
                     @Override
                     public void doOnSuccess(List<OrderInsuranceInforBean> data) {
-                        if (!TextUtils.isEmpty(id)){
+                        if (!TextUtils.isEmpty(id)) {
                             for (OrderInsuranceInforBean datum : data) {
                                 if (id.equals(datum.getId())) {
                                     mode.saveInsruancUserInfor(data);
@@ -333,7 +336,7 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
                     @Override
                     public void doOnSuccess(List<OrderInsuranceInforBean> data) {
                         OrderInsuranceInforBean currentInsuranceUserInfor = mode.getCurrentInsuranceUserInfor();
-                        if (currentInsuranceUserInfor !=null&&currentInsuranceUserInfor.getId().equalsIgnoreCase(id)){
+                        if (currentInsuranceUserInfor != null && currentInsuranceUserInfor.getId().equalsIgnoreCase(id)) {
                             mode.saveSelectInsuranceInfor(data.get(0));
                         }
                         mode.saveInsruancUserInfor(data);
@@ -342,7 +345,31 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
                 });
     }
 
-    private void showInsurance(OrderInsuranceInforBean currentInsuranceUserInfor){
+    /**
+     * 选中个人支付
+     */
+    @Override
+    public void onChoicePersonPay() {
+        mode.savePayRole(2);
+        //判断是否需要切换支付方式
+        view.isHasEnoughBalance(mode.isHasEnoughBalance(), mode.getPayType());
+        if (mode.isHasEnoughBalance() && mode.getPayType() == 4) {
+            view.showHasCompanyApply(mode.showApplyCompanyPay());
+        }
+    }
+
+    /**
+     * 选中企业支付
+     */
+    @Override
+    public void onChoiceCompanyPay() {
+        mode.savePayRole(1);
+        view.isHasEnoughBalance(mode.isHasEnoughBalance(), mode.getPayType());
+        view.showHasCompanyApply(mode.showApplyCompanyPay());
+
+    }
+
+    private void showInsurance(OrderInsuranceInforBean currentInsuranceUserInfor) {
         if (currentInsuranceUserInfor != null) {
             int insuredType = currentInsuranceUserInfor.getInsuredType();
             String title = "";
