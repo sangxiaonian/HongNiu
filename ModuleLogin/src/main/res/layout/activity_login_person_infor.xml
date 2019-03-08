@@ -9,7 +9,19 @@
 
     <include layout="@layout/toolbar" />
 
-
+    <TextView
+        android:id="@+id/tv_balance_withdrawal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/app_item_gap"
+        android:background="@color/color_light_light"
+        android:paddingLeft="@dimen/app_gap"
+        android:paddingTop="7dp"
+        android:paddingRight="@dimen/app_gap"
+        android:paddingBottom="7dp"
+        android:text="已实名认证，姓名、身份证号、邮箱 不可修改"
+        android:textColor="@color/color_light"
+        android:textSize="@dimen/text_small" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

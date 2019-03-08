@@ -36,11 +36,12 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:scaleType="centerCrop"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/ll_pay"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/icon_add_333" />
+            app:srcCompat="@mipmap/icon_ylzf_40" />
 
         <LinearLayout
             android:id="@+id/ll_pay"

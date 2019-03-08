@@ -14,8 +14,10 @@ import com.hongniu.modulefinance.entity.FinanceQueryCarDetailBean;
 import com.hongniu.modulefinance.entity.FinanceQueryCarDetailMap;
 import com.hongniu.modulefinance.entity.FinanceQueryNiuDetailBean;
 import com.hongniu.modulefinance.entity.NiuOfAccountBean;
+import com.hongniu.modulefinance.entity.QueryBindHuaInforsBean;
 import com.hongniu.modulefinance.entity.QueryExpendBean;
 import com.hongniu.modulefinance.entity.QueryExpendResultBean;
+import com.hongniu.modulefinance.entity.QuerySubAccStateBean;
 import com.sang.common.net.rx.RxUtils;
 import com.sang.common.utils.ConvertUtils;
 
@@ -111,6 +113,24 @@ public class HttpFinanceFactory {
         BalanceWithDrawBean bean = new BalanceWithDrawBean(amount, ConvertUtils.MD5(payPassword), refundId);
         return FinanceClient.getInstance().getService().withdraw(bean)
                 .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer())
+                ;
+    }
+
+    /**
+     * 查询当前账户是否已经开通华夏银行账户
+     */
+    public static Observable<CommonBean<QuerySubAccStateBean>> querySubAcc() {
+        return FinanceClient.getInstance().getService().querySubAcc()
+                .compose(RxUtils.<CommonBean<QuerySubAccStateBean>>getSchedulersObservableTransformer())
+                ;
+    }
+
+    /**
+     * 查询用户充值账户信息
+     */
+    public static Observable<CommonBean<QueryBindHuaInforsBean>> queryHuaCards() {
+        return FinanceClient.getInstance().getService().queryHuaCards()
+                .compose(RxUtils.<CommonBean<QueryBindHuaInforsBean>>getSchedulersObservableTransformer())
                 ;
     }
 

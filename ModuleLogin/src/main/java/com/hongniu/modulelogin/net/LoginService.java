@@ -6,6 +6,7 @@ import com.hongniu.baselibrary.entity.LoginBean;
 import com.hongniu.baselibrary.entity.LoginPersonInfor;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
+import com.hongniu.baselibrary.entity.QueryBlankInforsBean;
 import com.hongniu.baselibrary.entity.QueryPayPassword;
 import com.hongniu.modulelogin.entity.LoginCarInforBean;
 import com.hongniu.modulelogin.entity.LoginCreatInsuredBean;
@@ -28,6 +29,14 @@ public interface LoginService {
 
     @POST("hongniu/api/login/login")
     Observable<CommonBean<LoginBean>> loginBySms(@Body LoginSMSParams params);
+
+    /**
+     * 查询绑定银行卡时候支持的银行卡列表
+     *
+     * @return
+     */
+    @POST("hongniu/api/refund/bankList")
+    Observable<CommonBean<List<QueryBlankInforsBean>>> queryBlanks( );
 
     @POST("hongniu/api/login/ckeckcode")
     Observable<CommonBean<String>> ckeckcode(@Body LoginSMSParams params);
@@ -85,20 +94,22 @@ public interface LoginService {
      */
     @POST("hongniu/api/car/querynumber")
     Observable<CommonBean<List<LoginCarInforBean>>> queyCarDetailInfor(@Body LoginCarInforBean parambean);
-  /**
+
+    /**
      * 获取货车导航车辆类型
      *
      * @return
      */
     @POST("hongniu/api/car/vehicletype")
-    Observable<CommonBean<List<CarTypeBean>>> queyTruckTypes( );
- /**
+    Observable<CommonBean<List<CarTypeBean>>> queyTruckTypes();
+
+    /**
      * 修改货车导航信息
      *
      * @return
      */
     @POST("hongniu/api/car/updatenavigationcar")
-    Observable<CommonBean<String>> upTruckInfor( @Body LoginCarInforBean bean);
+    Observable<CommonBean<String>> upTruckInfor(@Body LoginCarInforBean bean);
 
     /**
      * 获取我的付款方式

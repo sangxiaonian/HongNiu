@@ -1,16 +1,26 @@
 package com.hongniu.modulelogin.ui;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
+import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.NetObserver;
+import com.hongniu.baselibrary.entity.LoginBean;
+import com.hongniu.baselibrary.entity.QueryBlankInforsBean;
+import com.hongniu.baselibrary.utils.PickerDialogUtils;
 import com.hongniu.modulelogin.R;
+import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.ItemView;
+
+import java.util.List;
 
 /**
  * @data 2019/3/3
@@ -18,12 +28,17 @@ import com.sang.common.widget.ItemView;
  * @Description 绑定银行卡操作
  */
 @Route(path = ArouterParamLogin.activity_login_bind_blank_card)
-public class LoginBindBlankCardActivity extends BaseActivity implements View.OnClickListener {
+public class LoginBindBlankCardActivity extends BaseActivity implements View.OnClickListener, OnOptionsSelectListener {
     ItemView itemName;//姓名
     ItemView itemPhone;//手机号
     ItemView itemBlankCardNum;//银行卡号
     ItemView itemIDCard;//身份证号
     private Button btSum;
+    private ItemView itemBlank;
+    private List<QueryBlankInforsBean> blanksInfors;//银行卡信息
+    private OptionsPickerView<QueryBlankInforsBean> pickDialog;
+    private String blankID;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,29 +48,55 @@ public class LoginBindBlankCardActivity extends BaseActivity implements View.OnC
         initView();
         initData();
         initListener();
+        queryBlank();
     }
 
     @Override
     protected void initView() {
         super.initView();
         itemName = findViewById(R.id.item_name);//姓名
+        itemBlank = findViewById(R.id.item_blank);
+
         itemPhone = findViewById(R.id.item_phone);//手机号
         itemBlankCardNum = findViewById(R.id.item_blank_card_num);//银行卡号
         itemIDCard = findViewById(R.id.item_id_card_num);//身份证号
         btSum = findViewById(R.id.bt_sum);
+        pickDialog = PickerDialogUtils.creatPickerDialog(mContext, this)
+                .setTitleText("请选择银行")
+                .setSubmitColor(Color.parseColor("#48BAF3"))
+                .build();
+
     }
 
     @Override
     protected void initListener() {
         super.initListener();
         btSum.setOnClickListener(this);
+        itemBlank.setOnClickListener(this);
+    }
+
+    private void queryBlank(){
+        HttpLoginFactory.queryBlanks()
+                .subscribe(new NetObserver<List< QueryBlankInforsBean >>(this) {
+                    @Override
+                    public void doOnSuccess(List<QueryBlankInforsBean> data) {
+                             blanksInfors=data;
+                        pickDialog.setPicker(blanksInfors);
+                    }
+                });
     }
 
     @Override
     public void onClick(View v) {
-        if (v.getId()==R.id.bt_sum){
+        if (v.getId() == R.id.bt_sum) {
             if (check()) {
-                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).setText("操作成功");
+                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show("操作成功");
+            }
+        } else if (v.getId() == R.id.item_blank) {
+            if (blanksInfors!=null){
+                pickDialog.show();
+            }else {
+                queryBlank();
             }
         }
     }
@@ -77,6 +118,16 @@ public class LoginBindBlankCardActivity extends BaseActivity implements View.OnC
             showAleart(itemIDCard.getTextCenterHide());
             return false;
         }
+        if (TextUtils.isEmpty(itemBlank.getTextCenter())) {
+            showAleart(itemBlank.getTextCenterHide());
+            return false;
+        }
         return true;
+    }
+
+    @Override
+    public void onOptionsSelect(int options1, int options2, int options3, View v) {
+        itemBlank.setTextCenter(blanksInfors.get(options1).getName());
+        blankID=blanksInfors.get(options1).getId();
     }
 }

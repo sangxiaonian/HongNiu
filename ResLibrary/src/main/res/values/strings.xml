@@ -37,7 +37,7 @@
     <string name="login_person_email_error">请输入正确邮箱</string>
 
     <!--个人资料-->
-    <string name="login_person">个人资料</string>
+    <string name="login_person">实名认证</string>
     <string name="login_person_improve_infor">购买货物保险前，需完善资料信息</string>
     <string name="login_pay_title">我的收款方式</string>
     <string name="login_pay_aleart">点击卡片可选择当前默认收款方式</string>

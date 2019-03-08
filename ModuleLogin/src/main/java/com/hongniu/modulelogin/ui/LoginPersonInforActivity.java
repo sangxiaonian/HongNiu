@@ -128,6 +128,12 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
             itemAddress.setTextCenter(buffer.toString());
             itemAddressDetail.setTextCenter(data.getAddress() == null ? "" : data.getAddress());
             ImageLoader.getLoader().load(mContext,imageHead,data.getLogoPath());
+
+
+            itemName.setEnabled(false);
+            itemIdcard.setEnabled(false);
+            itemEmail.setEnabled(false);
+
         } else {
            personInfor = new LoginPersonInfor();
         }

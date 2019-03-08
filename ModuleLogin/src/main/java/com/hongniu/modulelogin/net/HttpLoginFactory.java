@@ -6,6 +6,7 @@ import com.hongniu.baselibrary.entity.LoginBean;
 import com.hongniu.baselibrary.entity.LoginPersonInfor;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
+import com.hongniu.baselibrary.entity.QueryBlankInforsBean;
 import com.hongniu.modulelogin.entity.LoginCarInforBean;
 import com.hongniu.modulelogin.entity.LoginCreatInsuredBean;
 import com.hongniu.modulelogin.entity.LoginSMSParams;
@@ -41,6 +42,13 @@ public class HttpLoginFactory {
         return LoginClient.getInstance().getLoginService()
                 .loginBySms(params)
                 .compose(RxUtils.<CommonBean<LoginBean>>getSchedulersObservableTransformer())
+                ;
+    }
+  public static Observable<CommonBean<List<QueryBlankInforsBean>>> queryBlanks( ) {
+
+        return LoginClient.getInstance().getLoginService()
+                .queryBlanks( )
+                .compose(RxUtils.<CommonBean<List<QueryBlankInforsBean>>>getSchedulersObservableTransformer())
                 ;
     }
 

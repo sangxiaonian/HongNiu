@@ -41,6 +41,15 @@
         app:textleft="手机号码" />
 
     <com.sang.common.widget.ItemView
+        android:id="@+id/item_id_card_num"
+        style="@style/itemview"
+        app:centerLength="18"
+        app:centerType="idcard"
+        app:showline="true"
+        app:textcenterhide="请输入身份证号"
+        app:textleft="身份证号" />
+
+    <com.sang.common.widget.ItemView
         android:id="@+id/item_blank_card_num"
         style="@style/itemview"
         app:centerLength="19"
@@ -50,17 +59,31 @@
         app:textleft="银行卡号" />
 
     <com.sang.common.widget.ItemView
-        android:id="@+id/item_id_card_num"
+        android:id="@+id/item_blank"
         style="@style/itemview"
-        app:centerLength="18"
-        app:centerType="idcard"
+        app:centerLength="19"
+        app:centerType="normal"
         app:showline="false"
-        app:textcenterhide="请输入身份证号"
-        app:textleft="身份证号" />
+        app:editable="false"
+        app:srcshow="true"
+        app:textcenterhide="请选择开户行"
+        app:textleft="开户行" />
+    <TextView
+        android:id="@+id/tv_hua_aleart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/app_item_gap"
+        android:paddingLeft="@dimen/app_gap"
+        android:paddingTop="7dp"
+        android:paddingRight="@dimen/app_gap"
+        android:paddingBottom="7dp"
+        android:text="如需绑定华夏银行卡，必须进行授权才能完成签约操作，请慎重选择。"
+        android:textColor="@color/color_content_light"
+        android:textSize="@dimen/text_small" />
 
     <Button
-        style="@style/bt_sum_red"
         android:id="@+id/bt_sum"
+        style="@style/bt_sum_red"
         android:layout_marginTop="30dp"
         android:text="@string/save" />
 

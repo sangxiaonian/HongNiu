@@ -3,6 +3,7 @@ package com.hongniu.modulefinance.net;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
+import com.hongniu.baselibrary.entity.PayInforBeans;
 import com.hongniu.baselibrary.entity.WalletDetail;
 import com.hongniu.modulefinance.entity.AccountFloowParamBean;
 import com.hongniu.modulefinance.entity.BalanceOfAccountBean;
@@ -11,8 +12,10 @@ import com.hongniu.modulefinance.entity.CareNumPageBean;
 import com.hongniu.modulefinance.entity.FinanceQueryCarDetailMap;
 import com.hongniu.modulefinance.entity.FinanceQueryNiuDetailBean;
 import com.hongniu.modulefinance.entity.NiuOfAccountBean;
+import com.hongniu.modulefinance.entity.QueryBindHuaInforsBean;
 import com.hongniu.modulefinance.entity.QueryExpendBean;
 import com.hongniu.modulefinance.entity.QueryExpendResultBean;
+import com.hongniu.modulefinance.entity.QuerySubAccStateBean;
 
 import java.util.List;
 
@@ -91,6 +94,7 @@ public interface FinanceService {
      */
     @POST("hongniu/api/account/userOrderdetails")
     Observable<CommonBean<List<FinanceQueryNiuDetailBean>>> queryNiurDetails(@Body CareNumPageBean bean);
+
     /**
      * 查询车辆订单明细
      *
@@ -117,6 +121,23 @@ public interface FinanceService {
      */
     @POST("hongniu//api/account/withdraw")
     Observable<CommonBean<String>> withdraw(@Body BalanceWithDrawBean bean);
+
+    /**
+     * 查询当前账户是否已经开通华夏银行账户
+     *
+     * @return
+     */
+    @POST("hongniu/api/hxbaccount/querySubAcc")
+    Observable<CommonBean<QuerySubAccStateBean>> querySubAcc();
+
+    /**
+     * 查询用户充值账户信息
+     *
+     * @return
+     */
+    @POST("hongniu/api/hxbaccount/rechargeInfo")
+    Observable<CommonBean<QueryBindHuaInforsBean>> queryHuaCards( );
+
 
 
 }
