@@ -203,6 +203,6 @@ public class LoginBindBlankCardActivity extends BaseActivity implements View.OnC
         String name = blanksInfors.get(options1).getName();
         itemBlank.setTextCenter(name);
         blankID = blanksInfors.get(options1).getId();
-        tvHuaAleart.setVisibility(!name.contains("华夏") ? View.VISIBLE : View.GONE);
+        tvHuaAleart.setVisibility(name.contains("华夏") ? View.VISIBLE : View.GONE);
     }
 }

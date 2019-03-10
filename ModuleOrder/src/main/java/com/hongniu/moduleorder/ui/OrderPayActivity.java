@@ -22,6 +22,7 @@ import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CreatInsuranceBean;
 import com.hongniu.baselibrary.entity.H5Config;
+import com.hongniu.baselibrary.entity.OrderInsuranceInforBean;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.PayPasswordKeyBord;
 import com.hongniu.baselibrary.widget.dialog.AccountDialog;
@@ -29,7 +30,6 @@ import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OnItemClickListener;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.control.OrderPayControl;
-import com.hongniu.baselibrary.entity.OrderInsuranceInforBean;
 import com.hongniu.moduleorder.present.OrderPayPresenter;
 import com.hongniu.moduleorder.widget.PayAleartPop;
 import com.hongniu.moduleorder.widget.dialog.BuyInsuranceDialog;
@@ -62,7 +62,7 @@ import java.util.List;
  * 不购买保险，则直接显示完成订单
  */
 @Route(path = ArouterParamOrder.activity_order_pay)
-public class OrderPayActivity extends BaseActivity implements OrderPayControl.IOrderPayView, RadioGroup.OnCheckedChangeListener, View.OnClickListener, BuyInsuranceDialog.OnBuyInsuranceClickListener, PayPasswordKeyBord.PayKeyBordListener, AccountDialog.OnDialogClickListener<OrderInsuranceInforBean>,OnItemClickListener<OrderInsuranceInforBean> {
+public class OrderPayActivity extends BaseActivity implements OrderPayControl.IOrderPayView, RadioGroup.OnCheckedChangeListener, View.OnClickListener, BuyInsuranceDialog.OnBuyInsuranceClickListener, PayPasswordKeyBord.PayKeyBordListener, AccountDialog.OnDialogClickListener<OrderInsuranceInforBean>, OnItemClickListener<OrderInsuranceInforBean> {
 
     private TextView tvOrder;//订单号
     private ViewGroup btBuy;//购买保险
@@ -228,10 +228,10 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
             payPresent.onLineClick();
         } else if (checkedId == R.id.rb_offline) {//线下支付
             payPresent.onOffLineClick();
-        }else if (checkedId == R.id.rb_company){//企业账号
+        } else if (checkedId == R.id.rb_company) {//企业账号
 
             payPresent.onChoiceCompanyPay();
-        }else if ((checkedId == R.id.rb_person)){//个人账户
+        } else if ((checkedId == R.id.rb_person)) {//个人账户
             payPresent.onChoicePersonPay();
         }
     }
@@ -326,11 +326,11 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode==100) {
+        if (requestCode == 100) {
             if (resultCode == 100) {//新增修改
                 JLog.i("修改");
                 payPresent.queryInsurance(data.getStringExtra(Param.TRAN), this);
-            }else if (resultCode == 101){//删除
+            } else if (resultCode == 101) {//删除
                 JLog.i("删除");
                 payPresent.deletedInsurance(data.getStringExtra(Param.TRAN), this);
             }
@@ -357,8 +357,8 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
             }
             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show(msg);
 
-        }else if (requestCode==1){
-                payPresent.queryWallInfor(this);
+        } else if (requestCode == 1) {
+            payPresent.queryWallInfor(this);
         }
 
 
@@ -411,15 +411,15 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
 
         try {
             float v = Float.parseFloat(data.substring(1));
-            if (v>0) {
+            if (v > 0) {
                 conInsurance.setVisibility(View.VISIBLE);
                 btBuy.setVisibility(View.GONE);
                 tv_cargo_price.setText(cargoPrice);
                 tv_insurance_price.setText(data);
-            }else {
+            } else {
                 ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("保险金额不能为0");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -466,7 +466,12 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
      */
     @Override
     public void jumpToPay(PayBean data, int payType, boolean buyInsurance, String orderId) {
-        WaitePayActivity.startPay(this, payType, data, orderId, buyInsurance, Param.isDebug);
+        //如果是申请支付，则直接跳转到支付完成
+        if (btPay.getText().toString().trim().equals("申请支付")) {
+            finish();
+        } else {
+            WaitePayActivity.startPay(this, payType, data, orderId, buyInsurance, Param.isDebug);
+        }
     }
 
     /**
@@ -614,7 +619,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
      */
     @Override
     public void showCompanyInfor(boolean companyPayPermission) {
-        rg1.setVisibility(companyPayPermission?View.VISIBLE:View.GONE);
+        rg1.setVisibility(companyPayPermission ? View.VISIBLE : View.GONE);
     }
 
     /**
@@ -624,9 +629,9 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
      */
     @Override
     public void showHasCompanyApply(boolean showApplyCompanyPay) {
-        btPay.setText(showApplyCompanyPay?"申请支付":"支付订单");
+        btPay.setText(showApplyCompanyPay ? "申请支付" : "支付订单");
         //如果是申请支付，则给出提示
-        if (showApplyCompanyPay){
+        if (showApplyCompanyPay) {
             aleartPop.setContent(getString(R.string.order_pay_company_promiss_aleart));
             aleartPop.show(findViewById(R.id.rb_company));
         }
@@ -642,7 +647,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
         showAleart(s, new DialogControl.OnButtonRightClickListener() {
             @Override
             public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
-                ArouterUtils.getInstance().builder(ArouterParamLogin.activity_person_infor).navigation(OrderPayActivity.this,1);
+                ArouterUtils.getInstance().builder(ArouterParamLogin.activity_person_infor).navigation(OrderPayActivity.this, 1);
             }
         });
     }
@@ -707,8 +712,8 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
         dialog.dismiss();
         ArouterUtils.getInstance()
                 .builder(ArouterParamLogin.activity_login_insured)
-                .withInt(Param.TYPE,0)
-                .navigation((Activity) mContext,100);
+                .withInt(Param.TYPE, 0)
+                .navigation((Activity) mContext, 100);
     }
 
     /**
@@ -722,9 +727,9 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
         insuranceDialog.dismiss();
         ArouterUtils.getInstance()
                 .builder(ArouterParamLogin.activity_login_insured)
-                .withInt(Param.TYPE,1)
-                .withParcelable(Param.TRAN,orderInsuranceInforBean)
-                .navigation((Activity) mContext,100);
+                .withInt(Param.TYPE, 1)
+                .withParcelable(Param.TRAN, orderInsuranceInforBean)
+                .navigation((Activity) mContext, 100);
 
     }
 }

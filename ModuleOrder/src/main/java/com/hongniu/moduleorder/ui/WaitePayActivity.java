@@ -89,31 +89,14 @@ public class WaitePayActivity extends BaseActivity {
                 break;
 
             case 2://线下支付
+            case 5://企业支付
             case 4://余额支付
-                img.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-//                        BusFactory.getBus().post(new PayResult(PayResult.SUCCESS));
-                    }
-                }, 500);
+
                 break;
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-//        String str = data.getExtras().getString("pay_result");
-//        if (str.equalsIgnoreCase("success")) {
-//            BusFactory.getBus().post(new PayResult(PayResult.SUCCESS));
-//        } else if (str.equalsIgnoreCase("fail")) {
-//            BusFactory.getBus().post(new PayResult(PayResult.FAIL));
-//
-//        } else if (str.equalsIgnoreCase("cancel")) {
-//            BusFactory.getBus().post(new PayResult(PayResult.CANCEL));
-//        }
 
-    }
     //此处为接收回调的结果,由于改为查询，因此此处仅仅接受支付失败或者取消的情况
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(PayResult event) {

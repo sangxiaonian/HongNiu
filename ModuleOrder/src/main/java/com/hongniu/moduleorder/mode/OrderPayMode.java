@@ -342,6 +342,16 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
     }
 
     /**
+     * 是否需要输入支付密码
+     *
+     * @return true 需要 目前仅有余额支付个人账户和企业支付有权限的时候需要显示
+     */
+    @Override
+    public boolean needPassword() {
+        return payType==4&&(roleType==2||(roleType==1&&wallletInfor!=null&&wallletInfor.getType()==3));
+    }
+
+    /**
      *
      * @param passWord   余额支付时候需要支付密码
      * @param onLine     线上线下支付方式
@@ -360,8 +370,12 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
         bean.setAppid(PayConfig.weChatAppid);
         bean.setOnlinePay(onLine);
         //线上支付或者购买保险的时候使用选中的支付方式，线下支付一律为2
-//        0微信支付1银联支付2线下支付3支付宝支付
-        bean.setPayType((onLine || policy) ? payType : 2);
+//        0微信支付1银联支付2线下支付3支付宝支付4余额支付 5 企业支付
+        if (payType==4&&roleType==1){
+            bean.setPayType(5);
+        }else {
+            bean.setPayType((onLine || policy) ? payType : 2);
+        }
 
         if (buyInsurance&&currentInsurancInfor!=null){
             bean.setInsuranceUserId(currentInsurancInfor.getId());

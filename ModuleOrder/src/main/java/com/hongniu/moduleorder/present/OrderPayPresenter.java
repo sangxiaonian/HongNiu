@@ -190,7 +190,7 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
             //如果是余额支付，切没有实名认证，则调往实名认证界面
             view.realNameAuthentication("使用余额支付前，请先进行实名认证");
         } else  {
-            if (mode.getPayType() == 4) {//余额支付
+            if ( mode.needPassword()) {//余额支付
                 if (Utils.querySetPassword()) {//设置过支付密码
                     view.showPasswordDialog(mode.getMoney());
                 } else {

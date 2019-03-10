@@ -427,6 +427,12 @@ public class OrderPayControl {
          * @return
          */
         boolean isRealNameAuthentication();
+
+        /**
+         * 是否需要输入支付密码
+         * @return true 需要 目前仅有余额支付个人账户和企业支付有权限的时候需要显示
+         */
+        boolean needPassword();
     }
 
 }
