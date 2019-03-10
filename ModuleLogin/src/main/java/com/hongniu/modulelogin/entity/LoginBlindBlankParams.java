@@ -18,6 +18,10 @@ public class LoginBlindBlankParams {
       */
     private String linkAccountType;
     /**
+     * 手机号
+     */
+    private String mobile;
+    /**
      * 开户名
       */
     private String accountName;
@@ -29,6 +33,14 @@ public class LoginBlindBlankParams {
      * 银行卡号
       */
     private String cardNo;
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
 
     public String getType() {
         return type;

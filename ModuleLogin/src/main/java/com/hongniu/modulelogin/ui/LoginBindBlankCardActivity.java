@@ -126,6 +126,7 @@ public class LoginBindBlankCardActivity extends BaseActivity implements View.OnC
                 params.setBankId(blankID);
                 params.setCardNo(itemBlankCardNum.getTextCenter());
                 params.setAccountName(itemName.getTextCenter());
+                params.setMobile(itemPhone.getTextCenter());
                 params.setIdnumber(itemIDCard.getTextCenter());
                 params.setLinkAccountType("0");
                 HttpLoginFactory.bindBlanks(params)

@@ -13,7 +13,6 @@ import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderPayControl;
 import com.hongniu.baselibrary.entity.OrderInsuranceInforBean;
 import com.hongniu.moduleorder.mode.OrderPayMode;
-import com.hongniu.moduleorder.ui.OrderPayActivity;
 import com.sang.common.net.listener.TaskControl;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
@@ -53,23 +52,9 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
             view.showPayOrder();
         }
 
-        //查询账户余额信息
-        mode.queryAccount()
-                .subscribe(new NetObserver<WalletDetail>(listener) {
-                    @Override
-                    public void doOnSuccess(WalletDetail data) {
-                        mode.setAccountInfor(data);
-                        view.showCompanyInfor(data.isCompanyPayPermission());
-                        //有充足的余额的情况，查询完成之后直接选择余额支付
-                        if (mode.isHasEnoughBalance()) {
-                            view.changePayWayToBanlace(mode.isHasEnoughBalance(), mode.getPayType());
-                        }
 
 
-                    }
-                })
-        ;
-
+      queryWallInfor(listener);
         //查询被保险人信息
         mode.queryInsuranceInfor()
                 .subscribe(new NetObserver<List<OrderInsuranceInforBean>>(null) {
@@ -83,6 +68,8 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
         ;
 
     }
+
+
 
     /**
      * 线上支付被点击
@@ -199,7 +186,10 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
 //            或者购买保险却没有选择被保险人信息
         } else if (mode.isBuyInsurance() && mode.getCurrentInsuranceUserInfor() == null) {
             view.noChoiceInsurance("请选择被保险人信息");
-        } else {
+        } else if (mode.isRealNameAuthentication()) {
+            //如果是余额支付，切没有实名认证，则调往实名认证界面
+            view.realNameAuthentication("使用余额支付前，请先进行实名认证");
+        } else  {
             if (mode.getPayType() == 4) {//余额支付
                 if (Utils.querySetPassword()) {//设置过支付密码
                     view.showPasswordDialog(mode.getMoney());
@@ -367,6 +357,30 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
         view.isHasEnoughBalance(mode.isHasEnoughBalance(), mode.getPayType());
         view.showHasCompanyApply(mode.showApplyCompanyPay());
 
+    }
+
+    /**
+     * 查询钱包信息
+     * @param listener
+     */
+    @Override
+    public void queryWallInfor(TaskControl.OnTaskListener listener) {
+        //查询账户余额信息
+        mode.queryAccount()
+                .subscribe(new NetObserver<WalletDetail>(listener) {
+                    @Override
+                    public void doOnSuccess(WalletDetail data) {
+                        mode.setAccountInfor(data);
+                        view.showCompanyInfor(data.isCompanyPayPermission());
+                        //有充足的余额的情况，查询完成之后直接选择余额支付
+                        if (mode.isHasEnoughBalance()) {
+                            view.changePayWayToBanlace(mode.isHasEnoughBalance(), mode.getPayType());
+                        }
+
+
+                    }
+                })
+        ;
     }
 
     private void showInsurance(OrderInsuranceInforBean currentInsuranceUserInfor) {

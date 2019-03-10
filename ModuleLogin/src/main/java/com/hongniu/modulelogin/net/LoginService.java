@@ -57,9 +57,9 @@ public interface LoginService {
     Observable<CommonBean<LoginPersonInfor>> getPersonInfor();
 
     /**
-     * 更改个人信息
+     * 更改个人信息,即为实名认证
      */
-    @POST("hongniu/api/user/updateuserinfo")
+    @POST("hongniu/api/hxbaccount/certification")
     Observable<CommonBean<String>> changePersonInfor(@Body LoginPersonInfor infor);
 
     /**

@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -167,6 +166,8 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
 
         insuranceDialog = new InsuranceDialog(mContext);
 
+        rbPerson.performClick();
+
     }
 
     @Override
@@ -247,12 +248,8 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
             if (Utils.checkInfor()) {
                 buyInsuranceDialog.show();
             } else {
-                showAleart("购买保险前，请先完善个人信息", new DialogControl.OnButtonRightClickListener() {
-                    @Override
-                    public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
-                        ArouterUtils.getInstance().builder(ArouterParamLogin.activity_person_infor).navigation(mContext);
-                    }
-                });
+                realNameAuthentication("购买保险前，请先完善个人信息");
+
             }
         } else if (i == R.id.rl_wechact) {//选择微信支付
             changePayType(0);
@@ -360,6 +357,8 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
             }
             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show(msg);
 
+        }else if (requestCode==1){
+                payPresent.queryWallInfor(this);
         }
 
 
@@ -631,6 +630,21 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
             aleartPop.setContent(getString(R.string.order_pay_company_promiss_aleart));
             aleartPop.show(findViewById(R.id.rb_company));
         }
+    }
+
+    /**
+     * 调往实名认证界面进行实名认证
+     *
+     * @param s
+     */
+    @Override
+    public void realNameAuthentication(String s) {
+        showAleart(s, new DialogControl.OnButtonRightClickListener() {
+            @Override
+            public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
+                ArouterUtils.getInstance().builder(ArouterParamLogin.activity_person_infor).navigation(OrderPayActivity.this,1);
+            }
+        });
     }
 
 

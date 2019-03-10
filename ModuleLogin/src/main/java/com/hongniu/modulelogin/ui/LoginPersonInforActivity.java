@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
@@ -55,6 +56,7 @@ import io.reactivex.functions.Function;
 @Route(path = ArouterParamLogin.activity_person_infor)
 public class LoginPersonInforActivity extends BaseActivity implements View.OnClickListener, OnOptionsSelectListener {
 
+    private TextView tvAleart;
     private ItemView itemName;
     private ItemView itemIdcard;
     private ItemView itemEmail;
@@ -83,6 +85,7 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
     @Override
     protected void initView() {
         super.initView();
+        tvAleart = findViewById(R.id.tv_aleart);
         itemName = findViewById(R.id.item_name);
         itemIdcard = findViewById(R.id.item_idcard);
         itemEmail = findViewById(R.id.item_email);
@@ -125,12 +128,15 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
             itemAddress.setTextCenter(buffer.toString());
             itemAddressDetail.setTextCenter(data.getAddress() == null ? "" : data.getAddress());
             ImageLoader.getLoader().load(mContext,imageHead,data.getLogoPath());
+            itemName.setEnabled(!data.getSubAccStatus());
+            itemIdcard.setEnabled(!data.getSubAccStatus());
+            itemEmail.setEnabled(!data.getSubAccStatus());
 
+            tvAleart.setVisibility(data.getSubAccStatus()?View.VISIBLE:View.GONE);
 
-            itemName.setEnabled(false);
-            itemIdcard.setEnabled(false);
-            itemEmail.setEnabled(false);
-
+            if (data.getSubAccStatus()){
+                itemAddressDetail.getEtCenter().requestFocus();
+            }
         } else {
            personInfor = new LoginPersonInfor();
         }
@@ -212,6 +218,7 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
                                 Utils.savePersonInfor(personInfor);
                                 ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
                                 BusFactory.getBus().post(new Event.UpPerson());
+                                setResult(2);
                                 finish();
                             }
                         });

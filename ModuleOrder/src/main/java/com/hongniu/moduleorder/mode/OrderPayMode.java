@@ -35,7 +35,7 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
     private WalletDetail wallletInfor;
     private List<OrderInsuranceInforBean> insurancUserInfr;
     OrderInsuranceInforBean currentInsurancInfor;//当前选中的保险人信息
-    private int roleType;//1 企业支付 2个人支付
+    private int roleType=2;//1 企业支付 2个人支付
 
     /**
      * 储存其他界面传入的参数
@@ -329,6 +329,16 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
     @Override
     public boolean showApplyCompanyPay() {
         return roleType==1&&payType==4&&wallletInfor!=null&&wallletInfor.getType()==2;
+    }
+
+    /**
+     * 是否需要进行实名认证
+     *
+     * @return
+     */
+    @Override
+    public boolean isRealNameAuthentication() {
+        return wallletInfor==null||!wallletInfor.isSubAccStatus();
     }
 
     /**

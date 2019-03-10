@@ -66,6 +66,15 @@ public class LoginPersonInfor {
     private String logoPath;
     private String logo;
     private String remarks;
+    private boolean subAccStatus;//开户状态
+
+    public boolean getSubAccStatus() {
+        return subAccStatus;
+    }
+
+    public void setSubAccStatus(boolean subAccStatus) {
+        this.subAccStatus = subAccStatus;
+    }
 
     public String getLogo() {
         return logo;

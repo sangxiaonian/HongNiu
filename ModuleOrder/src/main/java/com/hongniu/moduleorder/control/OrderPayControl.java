@@ -5,7 +5,6 @@ import android.text.SpannableStringBuilder;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.WalletDetail;
 import com.hongniu.baselibrary.entity.OrderInsuranceInforBean;
-import com.hongniu.moduleorder.ui.OrderPayActivity;
 import com.sang.common.net.listener.TaskControl;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
 
@@ -149,6 +148,12 @@ public class OrderPayControl {
          * @param showApplyCompanyPay true 是
          */
         void showHasCompanyApply(boolean showApplyCompanyPay);
+
+        /**
+         * 调往实名认证界面进行实名认证
+         * @param s
+         */
+        void realNameAuthentication(String s);
     }
 
     public interface IOrderPayPresent {
@@ -259,6 +264,12 @@ public class OrderPayControl {
          * 选中企业支付
          */
         void onChoiceCompanyPay();
+
+        /**
+         * 查询钱包信息
+         * @param listener
+         */
+        void queryWallInfor(TaskControl.OnTaskListener listener);
     }
 
     public interface IOrderPayMode {
@@ -410,6 +421,12 @@ public class OrderPayControl {
          * @return true 申请企业支付
          */
         boolean showApplyCompanyPay();
+
+        /**
+         * 是否需要进行实名认证
+         * @return
+         */
+        boolean isRealNameAuthentication();
     }
 
 }

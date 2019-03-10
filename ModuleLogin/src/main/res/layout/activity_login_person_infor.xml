@@ -10,7 +10,7 @@
     <include layout="@layout/toolbar" />
 
     <TextView
-        android:id="@+id/tv_balance_withdrawal"
+        android:id="@+id/tv_aleart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/app_item_gap"
