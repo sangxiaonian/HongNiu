@@ -123,7 +123,7 @@ public class HttpOrderFactory {
      */
     public static Observable<CommonBean<List<OrderDriverPhoneBean>>> getDriverPhone(String mobile) {
         OrderDriverPhoneBean bean = new OrderDriverPhoneBean();
-        bean.setDriverMobile(mobile);
+        bean.setDriverName(mobile);
         return OrderClient.getInstance().getService().getDriverPhone(bean).compose(RxUtils.<CommonBean<List<OrderDriverPhoneBean>>>getSchedulersObservableTransformer());
 
     }

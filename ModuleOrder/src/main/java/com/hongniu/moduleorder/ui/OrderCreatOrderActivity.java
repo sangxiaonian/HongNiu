@@ -221,7 +221,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
                 show = true;
             }
         });
-        itemDriverPhone.getEtCenter().addTextChangedListener(new TextWatcher() {
+        itemDriverName.getEtCenter().addTextChangedListener(new TextWatcher() {
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -237,7 +237,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
             public void afterTextChanged(Editable s) {
                 handler.removeMessages(1);
                 handler.removeMessages(0);
-                if (!TextUtils.isEmpty(itemDriverPhone.getTextCenter()) && show) {
+                if (!TextUtils.isEmpty(itemDriverName.getTextCenter()) && show) {
                     handler.sendEmptyMessageDelayed(1, 300);
                 }
                 show = true;
@@ -285,21 +285,21 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
      * 获取牌相关信息
      */
     private void getDriverInfor() {
-        String carNum = itemDriverPhone.getTextCenter();
+        String driverName = itemDriverName.getTextCenter();
         if (carDisposable != null) {
             carDisposable.dispose();
         }
-        if (TextUtils.isEmpty(carNum)) {
+        if (TextUtils.isEmpty(driverName)) {
             return;
         }
-        HttpOrderFactory.getDriverPhone(carNum)
+        HttpOrderFactory.getDriverPhone(driverName)
                 .subscribe(new NetObserver<List<OrderDriverPhoneBean>>(null) {
                     @Override
                     public void doOnSuccess(List<OrderDriverPhoneBean> data) {
                         driverNumbeans.clear();
                         driverNumbeans.addAll(data);
-                        popDriver.upData(itemDriverPhone.getTextCenter(), driverNumbeans);
-                        popDriver.show(itemDriverPhone);
+                        popDriver.upData(itemDriverName.getTextCenter(), driverNumbeans);
+                        popDriver.show(itemDriverName);
 
                     }
 
@@ -606,7 +606,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
                 itemCarNum.setTextCenter(bean.getCarNumber());
                 itemCarPhone.setTextCenter(bean.getContactMobile());
                 itemCarName.setTextCenter(bean.getContactName());
-            } else if (tragetView.getId() == R.id.item_driver_phone && data instanceof OrderDriverPhoneBean) {
+            } else if (tragetView.getId() == R.id.item_driver_name && data instanceof OrderDriverPhoneBean) {
                 OrderDriverPhoneBean bean = (OrderDriverPhoneBean) data;
                 itemDriverPhone.setTextCenter(bean.getMobile());
                 itemDriverName.setTextCenter(bean.getContact());

@@ -6,11 +6,20 @@ package com.hongniu.moduleorder.entity;
  */
 public class OrderDriverPhoneBean {
     private String driverMobile;
+    private String driverName;
     private String mobile;
     private String contact;
 
 
     public OrderDriverPhoneBean() {
+    }
+
+    public String getDriverName() {
+        return driverName;
+    }
+
+    public void setDriverName(String driverName) {
+        this.driverName = driverName;
     }
 
     public String getMobile() {

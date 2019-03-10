@@ -228,20 +228,21 @@
                 android:background="@color/color_white"
                 android:orientation="vertical">
 
-                <com.sang.common.widget.ItemView
-                    android:id="@+id/item_driver_phone"
-                    style="@style/itemview"
-                    app:centerType="phone"
-                    app:textcenterhide="请输入司机手机"
-                    app:textleft="司机手机" />
+
 
                 <com.sang.common.widget.ItemView
                     android:id="@+id/item_driver_name"
                     style="@style/itemview"
-                    app:showline="false"
+
                     app:textcenterhide="请输入司机姓名"
                     app:textleft="司机姓名" />
-
+                <com.sang.common.widget.ItemView
+                    android:id="@+id/item_driver_phone"
+                    style="@style/itemview"
+                    app:centerType="phone"
+                    app:showline="false"
+                    app:textcenterhide="请输入司机手机"
+                    app:textleft="司机手机" />
             </LinearLayout>
             <Button
                 android:id="@+id/bt_entry"
