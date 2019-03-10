@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.hongniu.baselibrary.R;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
+import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventParams;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
 import com.hongniu.baselibrary.widget.OrderProgress;
@@ -230,6 +231,10 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
      * 设置保费
      */
     private void setInsruancePrice(String insruancePrice) {
+        //屏蔽保费
+        if (!Utils.showInscance()){
+            insruancePrice="";
+        }
         tv_instances.setText(insruancePrice == null ? "" : insruancePrice);
 
     }
@@ -539,6 +544,16 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
         ;
         List<ButtonInforBean> infors = helper.getButtonInfors();
         for (ButtonInforBean infor : infors) {
+            //是否显示购买保险按钮
+            if (!Utils.showInscance()&&
+                    (ORDER_BUY_INSURANCE.equals(infor.getText())
+                            ||ORDER_CHECK_INSURANCE.equals(infor.getText())
+                    )
+            ){
+                //如果不显示保险信息，此处屏蔽
+                continue;
+            }
+
             TextView button = creatButton(infor);
             llBottom.addView(button);
             button.setOnClickListener(this);

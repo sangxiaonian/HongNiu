@@ -54,6 +54,7 @@ import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.JLog;
 import com.sang.common.utils.SharedPreferencesUtils;
+import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
@@ -343,8 +344,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         demo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                EventBus.getDefault().post("100.02");
+                SharedPreferencesUtils.getInstance().putBoolean(Param.SHOW_INSURANCE,!SharedPreferencesUtils.getInstance().getBoolean(Param.SHOW_INSURANCE));
+                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show(SharedPreferencesUtils.getInstance().getBoolean(Param.SHOW_INSURANCE)?"显示保险相关信息":"敏感信息已隐藏");
+                EventBus.getDefault().post("");
             }
         });
 

@@ -181,6 +181,12 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
 
         tv_instances_per_infor.setText(String.format(getString(R.string.order_pay_insurance_infor), "", ""));
 
+        //如果需要屏蔽保险信息
+        if (!Utils.showInscance()){
+            btBuy.setVisibility(View.GONE);
+            conInsurance.setVisibility(View.GONE);
+        }
+
     }
 
     @Override

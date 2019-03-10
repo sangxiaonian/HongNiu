@@ -110,5 +110,7 @@ public class Param {
      * 车辆类型
      */
     public static final String CAR_TYPE = "CAR_TYPE";
+    //是否显示保险相关信息
+    public static final String SHOW_INSURANCE = "SHOW_INSURANCE";
 
 }

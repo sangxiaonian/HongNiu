@@ -91,9 +91,11 @@ private ImageView imgHeard;
     private void upPerson(){
             if (Utils.checkInfor()) {
                 LoginPersonInfor personInfor = Utils.getPersonInfor();
-                String phone= TextUtils.isEmpty(personInfor.getCompany())?(TextUtils.isEmpty(personInfor.getMobile())?"": personInfor.getMobile()): personInfor.getCompany();
-                tvName.setText(personInfor.getContact() == null ? "待完善" : personInfor.getContact());
-                tvPhone.setText(phone);
+
+                String companyName = personInfor.getCompany() == null ? "" : personInfor.getCompany();
+                String name = personInfor.getContact() == null ? "待完善" : personInfor.getContact();
+                tvName.setText(TextUtils.isEmpty(companyName)?name:(companyName+"-"+name));
+                tvPhone.setText(TextUtils.isEmpty(personInfor.getMobile())?"": personInfor.getMobile());
                 ImageLoader.getLoader().loadHeaed(getContext(),imgHeard, personInfor.getLogoPath());
 
             }

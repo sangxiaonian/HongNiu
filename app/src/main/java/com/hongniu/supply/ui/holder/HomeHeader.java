@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.hongniu.baselibrary.entity.WalletDetail;
+import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.supply.R;
 import com.hongniu.supply.ui.fragment.HomeFragment;
 import com.sang.common.recycleview.holder.PeakHolder;
@@ -53,6 +54,7 @@ public class HomeHeader extends PeakHolder implements View.OnClickListener {
     @Override
     public void initView(int position) {
         super.initView(position);
+
         tv_balance = itemView.findViewById(R.id.tv_balance);
         bt_wallet = itemView.findViewById(R.id.bt_wallet);
 //        ll_search = itemView.findViewById(R.id.ll_search);
@@ -62,7 +64,6 @@ public class HomeHeader extends PeakHolder implements View.OnClickListener {
         card_policy = itemView.findViewById(R.id.card_policy);
         card_yongjin = itemView.findViewById(R.id.card_yongjin);
         card_etc = itemView.findViewById(R.id.card_etc);
-
         tv_balance.setText(walletInfor==null?"0.00":walletInfor);
 
         bt_wallet.setOnClickListener(this);
@@ -73,6 +74,9 @@ public class HomeHeader extends PeakHolder implements View.OnClickListener {
         card_policy.setOnClickListener(this);
         card_yongjin.setOnClickListener(this);
         card_etc.setOnClickListener(this);
+
+        card_policy.setVisibility(Utils.showInscance()?View.VISIBLE:View.GONE);
+
     }
 
     /**

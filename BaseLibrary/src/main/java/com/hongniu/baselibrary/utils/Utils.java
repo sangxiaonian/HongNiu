@@ -9,7 +9,6 @@ import android.text.TextUtils;
 import com.amap.api.services.core.PoiItem;
 import com.google.gson.Gson;
 import com.hongniu.baselibrary.R;
-import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.config.Param;
@@ -159,5 +158,14 @@ public class Utils {
 // 将ClipData内容放到系统剪贴板里。
             cm.setPrimaryClip(mClipData);
         }
+    }
+
+    /**
+     * 是否显示保险信息，默认情况下不显示
+     *
+     * @return
+     */
+    public static boolean showInscance() {
+        return getLoginInfor() != null && ! getLoginInfor().getIosaccount() ;
     }
 }

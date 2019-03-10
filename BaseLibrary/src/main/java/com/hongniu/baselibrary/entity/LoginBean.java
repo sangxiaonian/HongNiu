@@ -36,6 +36,16 @@ public class LoginBean {
     private String rongToken;//备注
     private String logoPath;//备注
 
+    private boolean iosaccount;// 显示全部信息，有的时候不显示，无显示
+
+    public boolean getIosaccount() {
+        return iosaccount;
+    }
+
+    public void setIosaccount(boolean iosaccount) {
+        this.iosaccount = iosaccount;
+    }
+
     public String getLogoPath() {
         return logoPath;
     }
