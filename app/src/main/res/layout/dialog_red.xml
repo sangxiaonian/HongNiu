@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/img_bg"
+        android:layout_width="343dp"
+        android:layout_height="290dp"
+        android:src="@mipmap/banner_home_redenvelopes"
+        app:layout_constraintDimensionRatio="h,343:290"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="0.00"
+        android:textColor="#E33817"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/bt_scan"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="38dp"
+        app:layout_constraintBottom_toBottomOf="@id/img_bg"
+        app:layout_constraintEnd_toEndOf="@id/img_bg"
+        app:layout_constraintStart_toStartOf="@id/img_bg" />
+
+    <ImageView
+        android:id="@+id/img_cancle"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="@dimen/rc_dimen_size_40"
+        android:src="@mipmap/img_cancle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/img_bg" />
+</android.support.constraint.ConstraintLayout>

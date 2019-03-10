@@ -1064,7 +1064,9 @@ layout switch_text_default_item
 layout toolbar
 layout verication_default_item
 mipmap app_update
+mipmap banner_home_redenvelopes
 mipmap bg_wdqb
+mipmap bg_winning
 mipmap end
 mipmap ic_launcher
 mipmap icon_add_72
@@ -1139,6 +1141,7 @@ mipmap icon_zfb_40
 mipmap icon_zwcl_240
 mipmap icon_zwdd_260
 mipmap img_bg_yqyl
+mipmap img_cancle
 mipmap img_logo_yqyl
 mipmap img_scbd_ct
 mipmap img_title

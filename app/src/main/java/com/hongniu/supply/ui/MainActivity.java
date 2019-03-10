@@ -46,6 +46,7 @@ import com.hongniu.moduleorder.utils.LoactionUpUtils;
 import com.hongniu.supply.R;
 import com.hongniu.supply.entity.HomeADBean;
 import com.hongniu.supply.net.HttpMainFactory;
+import com.hongniu.supply.utils.RedDialog;
 import com.sang.common.event.BusFactory;
 import com.sang.common.recycleview.holder.PeakHolder;
 import com.sang.common.utils.CommonUtils;
@@ -61,6 +62,7 @@ import com.sang.thirdlibrary.chact.control.OnGetUserInforListener;
 import com.sang.thirdlibrary.map.LoactionUtils;
 import com.sang.thirdlibrary.map.utils.MapConverUtils;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -341,19 +343,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         demo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                new CenterAlertBuilder()
-//                        .setDialogTitle("被拒原因")
-//                        .setDialogContent("字被遮挡部分")
-//                        .setBtLeft("知道了")
-//                        .hideBtRight()
-//                        .setBtLeftColor(mContext.getResources().getColor(com.hongniu.baselibrary.R.color.color_title_dark))
-//                        .creatDialog(new CenterAlertDialog(mContext))
-//                        .show();
 
-                OrderDetailItemControl.OrderState[] values = OrderDetailItemControl.OrderState.values();
-                for (OrderDetailItemControl.OrderState value : values) {
-                    JLog.i(value.getState()+">>>"+value.getDes());
-                }
+                EventBus.getDefault().post("100.02");
             }
         });
 
@@ -474,6 +465,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
     }
 
+
+    /**
+     * 位置信息变化
+     *
+     * @param count 红包金额
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void showRedDialog(String count) {
+        if (!TextUtils.isEmpty(count)) {
+            RedDialog redDialog=new RedDialog(mContext);
+            redDialog.setContent(count);
+            redDialog.show();
+        }
+    }
 
     /**
      * 位置信息变化

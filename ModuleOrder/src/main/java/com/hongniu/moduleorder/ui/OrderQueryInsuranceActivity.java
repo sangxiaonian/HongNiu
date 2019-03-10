@@ -3,6 +3,7 @@ package com.hongniu.moduleorder.ui;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -16,10 +17,13 @@ import com.hongniu.baselibrary.entity.CreatInsuranceBean;
 import com.hongniu.baselibrary.entity.QueryOrderStateBean;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.moduleorder.R;
+import com.sang.common.event.BusFactory;
 import com.sang.common.imgload.ImageLoader;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * @data 2018/10/29
@@ -77,6 +81,7 @@ public class OrderQueryInsuranceActivity extends BaseActivity {
                             ArouterUtils.getInstance().builder(ArouterParamOrder.activity_insurance_creat_result)
                                     .withSerializable(Param.TRAN, data)
                                     .navigation(mContext);
+                            EventBus.getDefault().post(TextUtils.isEmpty(data.getRedPacket())?"":data.getRedPacket());
                         } else {
                             if (count <= 0) {
                                 ArouterUtils.getInstance()

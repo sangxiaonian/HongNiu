@@ -36,6 +36,19 @@ public class QueryOrderStateBean implements Serializable{
       */
     private String policyUrl ;
 
+    /**
+     * 红包金额
+     */
+    private String redPacket ;
+
+
+    public String getRedPacket() {
+        return redPacket;
+    }
+
+    public void setRedPacket(String redPacket) {
+        this.redPacket = redPacket;
+    }
 
     public int getOrderState() {
         return orderState;
