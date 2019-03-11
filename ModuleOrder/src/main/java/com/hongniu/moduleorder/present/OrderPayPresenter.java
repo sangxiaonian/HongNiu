@@ -373,8 +373,8 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
                         mode.setAccountInfor(data);
                         view.showCompanyInfor(data.isCompanyPayPermission());
                         //有充足的余额的情况，查询完成之后直接选择余额支付
-                        if (mode.isHasEnoughBalance()) {
-                            view.changePayWayToBanlace(mode.isHasEnoughBalance(), mode.getPayType());
+                        if (mode.isInit()) {
+                            view.initPayWay();
                         }
 
 

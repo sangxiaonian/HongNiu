@@ -120,6 +120,8 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
 
         payPresent = new OrderPayPresenter(this, this);
         onSelectYuePay();
+//        ;
+
     }
 
     @Override
@@ -166,7 +168,6 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
 
         insuranceDialog = new InsuranceDialog(mContext);
 
-        rbPerson.performClick();
 
     }
 
@@ -591,9 +592,13 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
                 .show();
     }
 
+    /**
+     * 初始化完成之后进行选择
+     */
     @Override
-    public void changePayWayToBanlace(boolean hasEnoughBalance, int payType) {
+    public void initPayWay() {
         onSelectYuePay();
+        rbPerson.performClick();
     }
 
     /**

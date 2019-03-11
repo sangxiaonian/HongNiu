@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.sang.common.widget.CircularFramlayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="140dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:viewradius="5dp"
+    app:cardElevation="3dp"
+    app:cardCornerRadius="5dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardPreventCornerOverlap="false"
+    app:cardUseCompatPadding="true"
+
     android:layout_height="143dp">
     <android.support.v7.widget.RecyclerView
         android:layout_width="140dp"
@@ -10,4 +15,4 @@
         android:background="@color/color_white"
         android:layout_height="143dp"/>
 
-</com.sang.common.widget.CircularFramlayout>
+</android.support.v7.widget.CardView>

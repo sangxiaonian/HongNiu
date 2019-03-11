@@ -118,11 +118,9 @@ public class OrderPayControl {
         void hasNoSetPassword();
 
         /**
-         * 有充足的余额的情况，查询完成之后直接选择余额支付
-         * @param hasEnoughBalance 是否余额充足
-         * @param payType  当前选中的方法
+         * 初始化支付方式，有充足的余额的情况，查询完成之后直接选择余额支付，否则选择微信支付
          */
-        void changePayWayToBanlace(boolean hasEnoughBalance, int payType);
+        void initPayWay();
 
         /**
          * 显示被保险人信息
@@ -433,6 +431,12 @@ public class OrderPayControl {
          * @return true 需要 目前仅有余额支付个人账户和企业支付有权限的时候需要显示
          */
         boolean needPassword();
+
+        /**
+         * 是否需要进行数据的初始化
+         * @return true 需要
+         */
+        boolean isInit();
     }
 
 }
