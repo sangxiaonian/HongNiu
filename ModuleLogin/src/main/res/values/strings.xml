@@ -3,4 +3,5 @@
     <string name="login_about_us">关于我们</string>
     <string name="login_car_error_phone">请输入正确的车主手机号</string>
     <string name="login_password_error">密码错误</string>
+    <string name="login_unreal_name">因相关政策要求，余额支付、充值、提现等操作需实名认证，并且不支持线上修改，请谨慎操作！</string>
 </resources>

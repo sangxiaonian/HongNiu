@@ -131,9 +131,7 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
             itemName.setEnabled(!data.getSubAccStatus());
             itemIdcard.setEnabled(!data.getSubAccStatus());
             itemEmail.setEnabled(!data.getSubAccStatus());
-
-            tvAleart.setVisibility(data.getSubAccStatus()?View.VISIBLE:View.GONE);
-
+            tvAleart.setText(data.getSubAccStatus()?getString(R.string.login_real_name):getString(R.string.login_unreal_name));
             if (data.getSubAccStatus()){
                 itemAddressDetail.getEtCenter().requestFocus();
             }

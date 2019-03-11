@@ -206,6 +206,11 @@ public class HttpOrderFactory {
                     .getService()
                     .payBalance(bean)
                     .compose(RxUtils.<CommonBean<PayBean>>getSchedulersObservableTransformer());
+        }  else if (payType == 5) {//企业支付
+            return OrderClient.getInstance()
+                    .getService()
+                    .payBalance(bean)
+                    .compose(RxUtils.<CommonBean<PayBean>>getSchedulersObservableTransformer());
         } else {
             return null;
         }

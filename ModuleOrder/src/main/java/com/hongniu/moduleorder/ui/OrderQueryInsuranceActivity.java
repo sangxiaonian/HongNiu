@@ -81,7 +81,11 @@ public class OrderQueryInsuranceActivity extends BaseActivity {
                             ArouterUtils.getInstance().builder(ArouterParamOrder.activity_insurance_creat_result)
                                     .withSerializable(Param.TRAN, data)
                                     .navigation(mContext);
-                            EventBus.getDefault().post(TextUtils.isEmpty(data.getRedPacket())?"":data.getRedPacket());
+
+                            if (!TextUtils.isEmpty(data.getRedPacket())&&!TextUtils.equals("0.00",data.getRedPacket())){
+                                EventBus.getDefault().post( data.getRedPacket()+"元");
+                            }
+
                         } else {
                             if (count <= 0) {
                                 ArouterUtils.getInstance()

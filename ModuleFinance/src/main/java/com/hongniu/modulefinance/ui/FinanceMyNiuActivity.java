@@ -60,7 +60,6 @@ public class FinanceMyNiuActivity extends RefrushActivity<NiuOfAccountBean> {
         initView();
         initData();
         initListener();
-        queryData(true);
 
 
 

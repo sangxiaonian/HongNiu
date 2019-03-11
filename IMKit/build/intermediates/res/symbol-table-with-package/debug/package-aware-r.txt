@@ -2207,6 +2207,7 @@ string login_person
 string login_person_email_error
 string login_person_idcard_error
 string login_person_improve_infor
+string login_real_name
 string login_sms_reget_code
 string login_title
 string login_up_sms_veri
