@@ -163,7 +163,7 @@ public class Utils {
     /**
      * 是否显示保险信息，默认情况下不显示
      *
-     * @return
+     * @return true 显示
      */
     public static boolean showInscance() {
         return getLoginInfor() != null && ! getLoginInfor().getIosaccount() ;

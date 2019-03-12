@@ -127,10 +127,12 @@ public class FinanceWalletActivity extends BaseActivity implements FinanceWallet
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.con_balance) {
-            ArouterUtils.getInstance()
-                    .builder(ArouterParamsFinance.activity_finance_balance)
-                    .withParcelable(Param.TRAN,walletDetail)
-                    .navigation(this);
+            if (Utils.showInscance()) {
+                ArouterUtils.getInstance()
+                        .builder(ArouterParamsFinance.activity_finance_balance)
+                        .withParcelable(Param.TRAN, walletDetail)
+                        .navigation(this);
+            }
         }
     }
 

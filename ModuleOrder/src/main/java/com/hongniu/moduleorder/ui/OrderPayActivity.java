@@ -66,6 +66,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
 
     private TextView tvOrder;//订单号
     private ViewGroup btBuy;//购买保险
+    private ViewGroup card_insurance;//购买保险
     private TextView tvPrice;//运费总额
     private RadioGroup rg;//支付方式
     private RadioButton rbOnline;//线上支付
@@ -128,6 +129,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
     protected void initView() {
         super.initView();
         rg1 = findViewById(R.id.rg1);
+        card_insurance = findViewById(R.id.card_insurance);
         rbCompany = findViewById(R.id.rb_company);
         rbPerson = findViewById(R.id.rb_person);
         tvOrder = findViewById(R.id.tv_order);
@@ -186,6 +188,8 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
         if (!Utils.showInscance()){
             btBuy.setVisibility(View.GONE);
             conInsurance.setVisibility(View.GONE);
+            card_insurance.setVisibility(View.INVISIBLE);
+
         }
 
     }
