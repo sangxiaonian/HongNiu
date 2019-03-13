@@ -59,12 +59,17 @@ public class OrderMainFragmet extends OrderFragmet implements SwitchStateListene
         String[] stringArray = getResources().getStringArray(R.array.order_main_state);
         states = new ArrayList<>();
         for (String s : stringArray) {
+            if (roleState != CARGO_OWNER) {
+                if (s.equals("待支付")
+                        ||s.equals("支付审核中")
+                        ||s.equals("审核被拒")
+                ){
+                    continue;
+                }
+            }
             states.add(s);
         }
 
-        if (roleState != CARGO_OWNER) {
-            states.remove(1);
-        }
 
         times = Arrays.asList(getResources().getStringArray(R.array.order_main_time));
 

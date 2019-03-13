@@ -137,7 +137,7 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
                             float cargoPrices = Float.parseFloat(cargoPrice);
                             float insurancePrice = Float.parseFloat(data);
                             //显示保险金额和货物金额
-                            view.showCargoInfor("￥" + cargoPrices, "￥" + insurancePrice);
+                            view.showCargoInfor("货物金额" + cargoPrices+"元", "￥" + insurancePrice);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

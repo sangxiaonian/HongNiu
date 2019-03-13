@@ -15,6 +15,8 @@
         <item>运输中</item>
         <item>已到达</item>
         <item>已收货</item>
+        <item>支付审核中</item>
+        <item>审核被拒</item>
     </string-array>
 
     <!--绑定付款方式-->

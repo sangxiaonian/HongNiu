@@ -143,6 +143,6 @@ public class QueryBlankInforsBean {
 
     @Override
     public String toString() {
-        return name==null?"":name;
+        return description==null?"":description;
     }
 }

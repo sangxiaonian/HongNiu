@@ -198,7 +198,7 @@ public class OrderDetailBean {
     private double longitude;
 
     /**
-     * false	string	支付方式(0微信,1银联,2线下支付 3 支付宝 4余额支付
+     * false	string	支付方式(0微信,1银联,2线下支付 3 支付宝 4余额支付，5企业余额
      */
     protected String payWay;
 
@@ -235,7 +235,19 @@ public class OrderDetailBean {
      * 货单信息
      */
     private List<UpImgData> goodsImages;
+   /**
+     * 订单被拒原因
+     */
+    private String verifyFailCause;
 
+
+    public String getVerifyFailCause() {
+        return verifyFailCause;
+    }
+
+    public void setVerifyFailCause(String verifyFailCause) {
+        this.verifyFailCause = verifyFailCause;
+    }
 
     public int getStatus() {
         return status;

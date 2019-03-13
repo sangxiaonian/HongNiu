@@ -12,12 +12,14 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.hongniu.moduleorder.R;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
+import com.sang.common.utils.JLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,9 +44,11 @@ public class CarNumPop<T> {
         setContentView(context);
     }
 
+
     public interface onItemClickListener<T> {
         void onItemClick(View tragetView, int position, T data);
-        void onDissmiss( );
+
+        void onDissmiss();
     }
 
     onItemClickListener<T> listener;
@@ -64,24 +68,13 @@ public class CarNumPop<T> {
         pop.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-                if (listener!=null){
+                if (listener != null) {
                     listener.onDissmiss();
                 }
             }
         });
-//        pop.setAnimationStyle(R.style.pop_ani);
-        rv.post(new Runnable() {
-            @Override
-            public void run() {
-                if (tragetView != null) {
-                    pop.update((location[0] + tragetView.getWidth() / 2) - rv.getWidth() / 2, location[1] - rv.getHeight(), rv.getWidth(), rv.getHeight());
-                } else {
-                    pop.update((location[0]) - rv.getWidth() / 2, location[1] - rv.getHeight(), rv.getWidth(), rv.getHeight());
 
-                }
-            }
-        });
-        LinearLayoutManager manager = new LinearLayoutManager(context);
+        final LinearLayoutManager manager = new LinearLayoutManager(context);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         rv.setLayoutManager(manager);
         adapter = new XAdapter<T>(context, datas) {
@@ -92,10 +85,15 @@ public class CarNumPop<T> {
                     public void initView(View itemView, final int position, final T data) {
                         super.initView(itemView, position, data);
                         TextView tv = itemView.findViewById(R.id.tv);
-                        if (!TextUtils.isEmpty(mark) && data.toString().startsWith(mark)) {
+                        if (!TextUtils.isEmpty(mark) && data.toString().contains(mark)) {
+                            int start  ;
                             SpannableStringBuilder builder = new SpannableStringBuilder(data.toString());
-                            ForegroundColorSpan span = new ForegroundColorSpan(context.getResources().getColor(R.color.color_light));
-                            builder.setSpan(span, 0, mark.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            do {
+                                start = data.toString().indexOf(mark);
+                                ForegroundColorSpan span = new ForegroundColorSpan(context.getResources().getColor(R.color.color_light));
+                                builder.setSpan(span, start, start+mark.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                start += mark.length();
+                            } while (data.toString().indexOf(mark, start) > 0);
                             tv.setText(builder);
                         } else {
                             tv.setText(data.toString());
@@ -105,10 +103,11 @@ public class CarNumPop<T> {
                             @Override
                             public void onClick(View v) {
                                 if (listener != null) {
-                                    listener.onItemClick(tragetView,position, data);
+                                    listener.onItemClick(tragetView, position, data);
                                 }
                             }
                         });
+                        JLog.i("TextView:" + tv.getWidth());
 
                     }
                 };
@@ -128,7 +127,6 @@ public class CarNumPop<T> {
         }
         adapter.notifyDataSetChanged();
 
-
     }
 
 
@@ -139,6 +137,18 @@ public class CarNumPop<T> {
         }
         view.getLocationOnScreen(location);
         pop.showAtLocation(view, Gravity.NO_GRAVITY, (location[0] + view.getWidth() / 2) - rv.getWidth() / 2, location[1] - rv.getHeight());
+        rv.post(new Runnable() {
+            @Override
+            public void run() {
+                if (tragetView != null) {
+                    pop.update((location[0] + tragetView.getWidth() / 2) - rv.getWidth() / 2, location[1] - rv.getHeight(), -1, -1);
+                } else {
+                    pop.update((location[0]) - rv.getWidth() / 2, location[1] - rv.getHeight(), -1, -1);
+
+                }
+            }
+        });
+
     }
 
     public void dismiss() {

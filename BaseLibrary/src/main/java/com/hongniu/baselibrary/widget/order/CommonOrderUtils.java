@@ -139,6 +139,8 @@ public class CommonOrderUtils {
             return "支付宝";
         } else if (payWay.equals("4")) {
             return "余额";
+        } else  if (payWay.equals("5")) {
+            return "企业余额";
         } else {
             return "";
         }

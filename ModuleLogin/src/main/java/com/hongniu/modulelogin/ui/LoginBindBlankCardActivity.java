@@ -200,7 +200,7 @@ public class LoginBindBlankCardActivity extends BaseActivity implements View.OnC
 
     @Override
     public void onOptionsSelect(int options1, int options2, int options3, View v) {
-        String name = blanksInfors.get(options1).getName();
+        String name = blanksInfors.get(options1).getDescription();
         itemBlank.setTextCenter(name);
         blankID = blanksInfors.get(options1).getId();
         tvHuaAleart.setVisibility(name.contains("华夏") ? View.VISIBLE : View.GONE);

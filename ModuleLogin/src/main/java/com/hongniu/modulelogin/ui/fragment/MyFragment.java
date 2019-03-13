@@ -92,10 +92,12 @@ private ImageView imgHeard;
             if (Utils.checkInfor()) {
                 LoginPersonInfor personInfor = Utils.getPersonInfor();
 
+
                 String companyName = personInfor.getCompany() == null ? "" : personInfor.getCompany();
+                String phone = TextUtils.isEmpty(personInfor.getMobile())?"": personInfor.getMobile();
                 String name = personInfor.getContact() == null ? "待完善" : personInfor.getContact();
-                tvName.setText(TextUtils.isEmpty(companyName)?name:(companyName+"-"+name));
-                tvPhone.setText(TextUtils.isEmpty(personInfor.getMobile())?"": personInfor.getMobile());
+                tvName.setText( name );
+                tvPhone.setText(TextUtils.isEmpty(companyName)?phone: companyName);
                 ImageLoader.getLoader().loadHeaed(getContext(),imgHeard, personInfor.getLogoPath());
 
             }

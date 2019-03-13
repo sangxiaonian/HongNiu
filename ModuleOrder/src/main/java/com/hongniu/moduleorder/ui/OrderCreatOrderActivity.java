@@ -744,6 +744,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         switch (orderState) {
 
             case WAITE_PAY://待支付,所有选项都可以修改
+            case PAY_REFUSE://申请被拒绝,所有选项都可以修改
                 break;
             case WAITE_START://待发车 ，根据保险和支付方式分为4中情况
                 if (isInsurance) {//购买保险情况

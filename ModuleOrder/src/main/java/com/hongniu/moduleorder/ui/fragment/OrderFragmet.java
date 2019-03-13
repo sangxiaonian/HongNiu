@@ -615,7 +615,7 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
     public void onPayRefuse(OrderDetailBean orderBean) {
         new CenterAlertBuilder()
                 .setDialogTitle("被拒原因")
-                .setDialogContent("这里是被拒绝的原因，文字可以换行，弹层高度根据内容高度改变，但最大高度可设定五行，超出之后，文字描述区域可上下拖动查看被拒绝原因，这里只是做一个示范，内容为居中对齐方式，超出五行的位置，文字被遮挡部分这里是被拒绝的原因，文字可以换行，弹层高度根据内容高度改变，但最大高度可设定五行，超出之后，文字描述区域可上下拖动查看被拒绝原因，这里只是做一个示范，内容为居中对齐方式，超出五行的位置，文字被遮挡部分这里是被拒绝的原因，文字可以换行，弹层高度根据内容高度改变，但最大高度可设定五行，超出之后，文字描述区域可上下拖动查看被拒绝原因，这里只是做一个示范，内容为居中对齐方式，超出五行的位置，文字被遮挡部分这里是被拒绝的原因，文字可以换行，弹层高度根据内容高度改变，但最大高度可设定五行，超出之后，文字描述区域可上下拖动查看被拒绝原因，这里只是做一个示范，内容为居中对齐方式，超出五行的位置，文字被遮挡部分这里是被拒绝的原因，文字可以换行，弹层高度根据内容高度改变，但最大高度可设定五行，超出之后，文字描述区域可上下拖动查看被拒绝原因，这里只是做一个示范，内容为居中对齐方式，超出五行的位置，文字被遮挡部分")
+                .setDialogContent(orderBean!=null?orderBean.getVerifyFailCause():"")
                 .setBtLeft("知道了")
                 .hideBtRight()
                 .setBtLeftColor(getContext().getResources().getColor(com.hongniu.baselibrary.R.color.color_title_dark))

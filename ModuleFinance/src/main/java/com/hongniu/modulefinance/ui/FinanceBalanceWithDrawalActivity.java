@@ -21,15 +21,20 @@ import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.entity.PayInforBeans;
+import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.PayPasswordKeyBord;
 import com.hongniu.modulefinance.R;
 import com.hongniu.modulefinance.net.HttpFinanceFactory;
+import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.PointLengthFilter;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
+
+import java.util.List;
 
 /**
  * 余额提现界面
@@ -48,6 +53,7 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
     private String withdrawal;//提现金额
     PayPasswordKeyBord passwordDialog;
     private String blankNumber;
+    private String bankID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +124,17 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
         passwordDialog.sePaytListener(this);
         passwordDialog.setProgressListener(this);
 
+        HttpAppFactory.queryMyCards()
+                .subscribe(new NetObserver<List<PayInforBeans>>(this) {
+                    @Override
+                    public void doOnSuccess(List<PayInforBeans> data) {
+                        if (!CommonUtils.isEmptyCollection(data)) {
+                           bankID= data.get(0).getId();
 
+                        }
+                    }
+                })
+        ;
     }
 
     @Override
@@ -204,7 +220,7 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
             passWord) {
         dialog.dismiss();
         //ID应该是服务器返回，不过此时由于只有银行卡，因此写死
-        HttpFinanceFactory.withdraw(count, passWord, "1")
+        HttpFinanceFactory.withdraw(count, passWord, bankID)
                 .subscribe(new NetObserver<String>(this) {
                     @Override
                     public void doOnSuccess(String data) {
