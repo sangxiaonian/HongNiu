@@ -1,6 +1,7 @@
 package com.hongniu.modulefinance.ui;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.hongniu.modulefinance.entity.NiuOfAccountBean;
 import com.hongniu.modulefinance.net.HttpFinanceFactory;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
 
 import java.util.List;
 
@@ -51,7 +53,6 @@ public class FinanceNiuDetailActivity extends RefrushActivity<FinanceQueryNiuDet
         setToolbarRedTitle("牛贝收益明细");
         tvEarning = findViewById(R.id.tv_earning);
         tvLastEarning = findViewById(R.id.tv_last_earning);
-
 
     }
 
@@ -91,4 +92,11 @@ public class FinanceNiuDetailActivity extends RefrushActivity<FinanceQueryNiuDet
             }
         };
     }
+
+    @Override
+    public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+        showNoMore();
+
+    }
+
 }
