@@ -149,7 +149,7 @@ public class LoginBindBlankCardActivity extends BaseActivity implements View.OnC
                                         @Override
                                         public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
                                             dialog.dismiss();
-                                            H5Config h5Config = new H5Config("签约流程", Param.hongniu_agreement, true);
+                                            H5Config h5Config = new H5Config("签约流程", Param.HUAXIA, true);
                                             ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5).withSerializable(Param.TRAN, h5Config).navigation(mContext);
                                             finish();
                                         }

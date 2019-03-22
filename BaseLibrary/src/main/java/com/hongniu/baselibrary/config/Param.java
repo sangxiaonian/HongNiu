@@ -57,6 +57,10 @@ public class Param {
      * 牛贝规则
      */
     public static final String NIUBEI ="https://api.hongniudai.cn/static/cow_rule.html";
+    /**
+     * 华夏银行签约流程
+     */
+    public static final String HUAXIA ="https://api.hongniudai.cn/static/huaxia_process.html";
 
 
     /**
