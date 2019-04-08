@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamFestivity;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
+import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
@@ -85,7 +86,7 @@ public class FestivityInviteActivity extends BaseActivity implements View.OnClic
                     @Override
                     public void doOnSuccess(QueryInvitedInfo data) {
                         invitedInfor = data;
-                        tv_money.setText(ConvertUtils.changeFloat(data.getRebateTotalAmount(), 2));
+                        tv_money.setText(ConvertUtils.changeFloat(data.getRebateTotalAmount(), 2)+"个");
                         tv_invite_count.setText(getSpanner(data.getInvitedCount()));
                     }
                 });
@@ -115,7 +116,7 @@ public class FestivityInviteActivity extends BaseActivity implements View.OnClic
             ArouterUtils.getInstance().builder(ArouterParamFestivity.activity_festivity_invite_detail).navigation(this);
         } else if (v.getId() == R.id.tv_money) {
 //            ToastUtils.getInstance().show("佣金");
-            ArouterUtils.getInstance().builder(ArouterParamFestivity.activity_festivity_brokerage).navigation(this);
+            ArouterUtils.getInstance().builder(ArouterParamsFinance.activity_finance_niu).navigation(this);
 
         } else if (v.getId() == R.id.bt_share) {
 //            ToastUtils.getInstance().show("微信分享");

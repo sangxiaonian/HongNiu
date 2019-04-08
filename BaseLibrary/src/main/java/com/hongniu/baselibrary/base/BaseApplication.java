@@ -1,5 +1,6 @@
 package com.hongniu.baselibrary.base;
 
+import android.content.Context;
 import android.support.multidex.MultiDexApplication;
 
 import com.hongniu.baselibrary.R;
@@ -18,9 +19,11 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
  */
 public class BaseApplication extends MultiDexApplication {
 
+    private static Context context;
     @Override
     public void onCreate() {
         super.onCreate();
+        context=this;
         final IWXAPI msgApi = WXAPIFactory.createWXAPI(this, null);
 // 将该app注册到微信
         msgApi.registerApp(Param.weChatAppid);
@@ -34,5 +37,9 @@ public class BaseApplication extends MultiDexApplication {
         ImageLoader.getLoader().headPlaceholder(R.mipmap.icon_default_avatar_100);
         ImageLoader.getLoader().headErrorImg(R.mipmap.icon_default_avatar_100);
 
+    }
+
+    public static Context getContext(){
+        return context;
     }
 }

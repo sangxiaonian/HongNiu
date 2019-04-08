@@ -107,7 +107,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/color_new_light"
 
-                                android:text="  赚取佣金"
+                                android:text="  玩转牛贝"
                                 android:textSize="18sp" />
                         </LinearLayout>
 

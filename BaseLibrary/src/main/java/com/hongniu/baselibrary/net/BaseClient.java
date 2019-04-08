@@ -1,11 +1,13 @@
 package com.hongniu.baselibrary.net;
 
+import com.hongniu.baselibrary.base.BaseApplication;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.LoginBean;
 import com.hongniu.baselibrary.utils.Utils;
 import com.sang.common.net.HttpClient;
 import com.sang.common.net.OkHttp;
 import com.sang.common.utils.ConvertUtils;
+import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.JLog;
 
 import java.io.FileNotFoundException;
@@ -59,6 +61,7 @@ public class BaseClient {
                                 .addHeader("hn_sign", sign)
                                 .addHeader("codetype", "token")
                                 .addHeader("hn_app_key", Param.AppKey)
+                                .addHeader("appVersion", DeviceUtils.getVersionName(BaseApplication.getContext()))
                         ;
                         Request newRequest = requestBuilder.build();
                         return chain.proceed(newRequest);
