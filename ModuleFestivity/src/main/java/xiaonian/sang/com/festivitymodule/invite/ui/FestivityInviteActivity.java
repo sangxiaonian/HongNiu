@@ -86,7 +86,7 @@ public class FestivityInviteActivity extends BaseActivity implements View.OnClic
                     @Override
                     public void doOnSuccess(QueryInvitedInfo data) {
                         invitedInfor = data;
-                        tv_money.setText(ConvertUtils.changeFloat(data.getRebateTotalAmount(), 2)+"个");
+                        tv_money.setText(data.getRebateTotalAmount()+"个");
                         tv_invite_count.setText(getSpanner(data.getInvitedCount()));
                     }
                 });
