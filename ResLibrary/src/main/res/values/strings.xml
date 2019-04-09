@@ -104,7 +104,7 @@
     <string name="wallet_title">我的金库</string>
     <string name="wallet_balance_of_account">账户余额(元)</string>
     <string name="wallet_niu_of_account_des">我的牛贝(个)</string>
-    <string name="wallet_niu_title">牛贝账户</string>
+    <string name="wallet_niu_title">我的牛贝</string>
     <string name="wallet_niu_of_account">%1$s 个</string>
     <string name="wallet_niu_unentry_count">您有 %1$s 个休眠牛贝</string>
 
