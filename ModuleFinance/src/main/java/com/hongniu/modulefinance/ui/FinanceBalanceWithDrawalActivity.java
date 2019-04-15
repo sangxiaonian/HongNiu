@@ -106,7 +106,7 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
         imgPayIcon.setImageResource(R.mipmap.icon_ylzf_40);
         tvPayWay.setText( "银联提现" );
         if (blankNumber.length() > 4) {
-            tvPayAccount.setText(String.format(getString(R.string.wallet_balance_withdrawal_card_num), blankNumber.substring(0, 4)));
+            tvPayAccount.setText(String.format(getString(R.string.wallet_balance_withdrawal_card_num), blankNumber.substring(blankNumber.length()-4, blankNumber.length())));
         } else {
             tvPayAccount.setText(String.format(getString(R.string.wallet_balance_withdrawal_card_num), ""));
         }
