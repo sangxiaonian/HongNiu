@@ -252,4 +252,16 @@ public class HttpFinanceFactory {
     }
 
 
+    /**
+     * 解绑支付方式
+     * @param bankID 支付方式ID
+     */
+    public static Observable<CommonBean<Object>> deleadCard(String bankID) {
+       return FinanceClient
+                .getInstance()
+                .getService()
+                .deleadCard(bankID)
+                .compose(RxUtils.<CommonBean<Object>>getSchedulersObservableTransformer())
+                ;
+    }
 }

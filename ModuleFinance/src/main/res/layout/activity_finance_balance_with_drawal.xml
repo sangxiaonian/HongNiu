@@ -77,7 +77,14 @@
         </LinearLayout>
 
 
-
+<ImageView
+    android:layout_width="20dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    android:scaleType="centerCrop"
+    app:srcCompat="@drawable/icon_go_999999"
+    android:layout_height="20dp" />
     </android.support.constraint.ConstraintLayout>
 
 

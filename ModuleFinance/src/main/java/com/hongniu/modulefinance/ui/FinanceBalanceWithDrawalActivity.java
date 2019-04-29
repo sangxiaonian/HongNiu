@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
+import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
@@ -30,7 +31,9 @@ import com.hongniu.modulefinance.net.HttpFinanceFactory;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.PointLengthFilter;
 import com.sang.common.utils.ToastUtils;
+import com.sang.common.widget.dialog.BottomAlertDialog;
 import com.sang.common.widget.dialog.CenterAlertDialog;
+import com.sang.common.widget.dialog.builder.BottomAlertBuilder;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
 
@@ -104,13 +107,8 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
 
         tvPayAccount.setVisibility(View.VISIBLE);
         imgPayIcon.setImageResource(R.mipmap.icon_ylzf_40);
-        tvPayWay.setText( "银联提现" );
-        if (blankNumber.length() > 4) {
-            tvPayAccount.setText(String.format(getString(R.string.wallet_balance_withdrawal_card_num), blankNumber.substring(blankNumber.length()-4, blankNumber.length())));
-        } else {
-            tvPayAccount.setText(String.format(getString(R.string.wallet_balance_withdrawal_card_num), ""));
-        }
-
+        tvPayWay.setText("银联提现");
+        tvPayAccount.setText(blankNumber);
     }
 
 
@@ -129,8 +127,8 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
                     @Override
                     public void doOnSuccess(List<PayInforBeans> data) {
                         if (!CommonUtils.isEmptyCollection(data)) {
-                           bankID= data.get(0).getId();
-
+                            bankID = data.get(0).getId();
+                            tvPayAccount.setText(data.get(0).getCardNo() + "");
                         }
                     }
                 })
@@ -175,9 +173,36 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
             etBalance.setSelection(etBalance.getText().toString().length());
 
         } else if (i == R.id.con_pay_way) {//选择支付方式
+            new BottomAlertBuilder()
+                    .setDialogTitle("确认要解绑银行卡吗？")
+                    .setTopClickListener(new DialogControl.OnButtonTopClickListener() {
+                        @Override
+                        public void onTopClick(View view, DialogControl.IBottomDialog dialog) {
+                            dialog.dismiss();
+                            deletedCard();
+                        }
 
+                    })
+                    .setBottomClickListener(new DialogControl.OnButtonBottomClickListener() {
+                        @Override
+                        public void onBottomClick(View view, DialogControl.IBottomDialog dialog) {
+                            dialog.dismiss();
+                        }
+
+                    })
+                    .creatDialog(new BottomAlertDialog(mContext)).show();
 
         }
+    }
+
+    private void deletedCard() {
+        HttpFinanceFactory.deleadCard(bankID).subscribe(new NetObserver<Object>(this) {
+            @Override
+            public void doOnSuccess(Object data) {
+                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show("解绑成功");
+                ArouterUtils.getInstance().builder(ArouterParamsApp.activity_main).navigation(mContext);
+            }
+        });
     }
 
     @Override

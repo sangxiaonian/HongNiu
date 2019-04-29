@@ -111,6 +111,13 @@ public interface FinanceService {
      */
     @POST("hongniu/api/refund/queryMyCards")
     Observable<CommonBean<WalletDetail>> queryMyCards();
+   /**
+     * 解绑支付方式
+     *
+     * @return
+     */
+    @POST("hongniu/api/refund/remove")
+    Observable<CommonBean<Object>> deleadCard(String blankID);
 
 
     /**
