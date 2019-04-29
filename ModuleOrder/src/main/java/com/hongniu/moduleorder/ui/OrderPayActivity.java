@@ -293,6 +293,19 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
         cbAli.setImageResource(payType == 3 ? R.mipmap.icon_xz_36 : R.mipmap.icon_wxz_36);
         cbUnion.setImageResource(payType == 1 ? R.mipmap.icon_xz_36 : R.mipmap.icon_wxz_36);
         cbYue.setImageResource(payType == 4 ? R.mipmap.icon_xz_36 : R.mipmap.icon_wxz_36);
+        boolean yue = payType == 4;
+        rbPerson.setEnabled(yue);
+        rbPerson.setEnabled(yue);
+        rg1.setEnabled(yue);
+        if (!yue){
+            rg1.clearCheck();
+        }else {
+            rbPerson.performClick();
+        }
+        rbPerson.setEnabled(yue);
+        rbPerson.setEnabled(yue);
+        rg1.setEnabled(yue);
+
     }
 
     @Override
