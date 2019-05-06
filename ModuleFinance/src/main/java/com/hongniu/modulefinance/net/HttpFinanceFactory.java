@@ -9,6 +9,7 @@ import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.modulefinance.entity.AccountFloowParamBean;
 import com.hongniu.modulefinance.entity.BalanceOfAccountBean;
 import com.hongniu.modulefinance.entity.BalanceWithDrawBean;
+import com.hongniu.modulefinance.entity.BlankInfor;
 import com.hongniu.modulefinance.entity.CareNumPageBean;
 import com.hongniu.modulefinance.entity.FinanceQueryCarDetailBean;
 import com.hongniu.modulefinance.entity.FinanceQueryCarDetailMap;
@@ -257,10 +258,11 @@ public class HttpFinanceFactory {
      * @param bankID 支付方式ID
      */
     public static Observable<CommonBean<Object>> deleadCard(String bankID) {
+
        return FinanceClient
                 .getInstance()
                 .getService()
-                .deleadCard(bankID)
+                .deleadCard(new BlankInfor(bankID))
                 .compose(RxUtils.<CommonBean<Object>>getSchedulersObservableTransformer())
                 ;
     }

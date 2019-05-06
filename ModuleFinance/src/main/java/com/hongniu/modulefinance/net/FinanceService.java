@@ -8,6 +8,7 @@ import com.hongniu.baselibrary.entity.WalletDetail;
 import com.hongniu.modulefinance.entity.AccountFloowParamBean;
 import com.hongniu.modulefinance.entity.BalanceOfAccountBean;
 import com.hongniu.modulefinance.entity.BalanceWithDrawBean;
+import com.hongniu.modulefinance.entity.BlankInfor;
 import com.hongniu.modulefinance.entity.CareNumPageBean;
 import com.hongniu.modulefinance.entity.FinanceQueryCarDetailMap;
 import com.hongniu.modulefinance.entity.FinanceQueryNiuDetailBean;
@@ -117,7 +118,7 @@ public interface FinanceService {
      * @return
      */
     @POST("hongniu/api/refund/remove")
-    Observable<CommonBean<Object>> deleadCard(String blankID);
+    Observable<CommonBean<Object>> deleadCard(@Body BlankInfor blankID);
 
 
     /**
