@@ -43,12 +43,6 @@ public class HomeHeader extends PeakHolder implements View.OnClickListener {
     }
     public HomeHeader(Context context, ViewGroup parent ) {
         super(context, parent, R.layout.item_home_head);
-        
-        
-        
-        
-        
-        
     }
 
     @Override

@@ -27,7 +27,6 @@
             app:layout_constraintEnd_toStartOf="@id/ll_car"
             app:layout_constraintHorizontal_bias="0.36"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ll_search"
             app:layout_constraintVertical_bias="0.8">
 
             <ImageView
@@ -188,7 +187,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="26dp"
-                    android:text="牛人保"
+                    android:text="车货匹配"
                     android:textColor="@color/color_new_light"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toStartOf="@+id/tv2"
@@ -199,7 +198,7 @@
                     android:id="@+id/tv2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="在线购买货运险"
+                    android:text="在线发布货源信息"
                     android:textColor="@color/color_title_dark"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toStartOf="@+id/img_1"
@@ -211,7 +210,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="23dp"
-                    android:text="理赔快 覆盖全 更省心 更省钱"
+                    android:text="快速发布 及时沟通 在线下单"
                     android:textColor="@color/color_content_light"
                     android:textSize="@dimen/text_small"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -223,7 +222,7 @@
                     android:id="@+id/img_1"
                     android:layout_width="96dp"
                     android:layout_height="43dp"
-                    android:src="@mipmap/icon_nrb"
+                    android:src="@mipmap/icon_chpp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/tv2"

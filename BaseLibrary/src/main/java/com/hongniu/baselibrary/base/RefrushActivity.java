@@ -44,16 +44,11 @@ public abstract class RefrushActivity<T> extends BaseActivity implements OnRefre
             refresh.setOnRefreshListener(this);
             refresh.setOnLoadMoreListener(this);
         }
-
-    }
-
-    @Override
-    protected void initData() {
-        super.initData();
-
         rv.setAdapter(adapter = getAdapter(datas));
 
     }
+
+
 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {

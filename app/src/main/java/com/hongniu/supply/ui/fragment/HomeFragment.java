@@ -13,6 +13,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hongniu.baselibrary.arouter.ArouterParamFestivity;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
+import com.hongniu.baselibrary.arouter.ArouterParams;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
@@ -283,9 +284,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
             case R.id.card_policy:
                 ClickEventUtils.getInstance().onClick(ClickEventParams.首页_牛人保);
 //                ToastUtils.getInstance().show("保险");
-                H5Config h5Config = new H5Config("牛人保", Param.NIURENBAO, true);
-                ArouterUtils.getInstance().builder(ArouterParamsApp.activity_niu_insurance_h5).withSerializable(Param.TRAN, h5Config).navigation(getContext());
+//                H5Config h5Config = new H5Config("牛人保", Param.NIURENBAO, true);
+//                ArouterUtils.getInstance().builder(ArouterParamsApp.activity_niu_insurance_h5).withSerializable(Param.TRAN, h5Config).navigation(getContext());
 
+                ArouterUtils.getInstance().builder(ArouterParams.activity_match_car_good).navigation(getContext());
                 break;
             case R.id.card_yongjin:
                 ArouterUtils.getInstance().builder(ArouterParamFestivity.activity_festivity_home).navigation(getContext());
