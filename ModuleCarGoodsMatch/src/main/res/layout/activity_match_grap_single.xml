@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_bg_dark">
+
+    <include
+        android:id="@+id/tool"
+        layout="@layout/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+        <LinearLayout
+            android:id="@+id/ll_car"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/color_white"
+            android:gravity="center_vertical"
+            android:minHeight="60dp"
+            android:layout_marginTop="@dimen/app_model_gap"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/app_gap"
+            android:paddingTop="@dimen/app_model_gap"
+            android:paddingRight="@dimen/app_gap"
+            android:paddingBottom="@dimen/app_model_gap"
+            app:layout_constraintBottom_toTopOf="@+id/con_withdrawal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tool">
+
+            <TextView
+                android:id="@+id/tv_car_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="请选择车辆"
+                android:textColor="@color/color_title_dark"
+                android:textSize="@dimen/text_small_14" />
+
+            <TextView
+                android:id="@+id/tv_car_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/app_model_gap"
+                android:background="@drawable/shape_1_797c8b"
+                android:text="请选择车辆"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_min_11sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/icon_go_999999" />
+        </LinearLayout>
+
+
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/con_withdrawal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/app_model_gap"
+        android:background="@color/color_white"
+        android:paddingLeft="20dp"
+        android:paddingTop="25dp"
+        android:paddingRight="20dp"
+
+        android:paddingBottom="56dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_car">
+
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="请输入意向金"
+            android:textColor="@color/color_title_dark"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_des"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="金额不限，如抢单不成功，将退回意向金"
+            android:textColor="@color/color_content_light"
+            android:textSize="@dimen/text_min_11sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv" />
+
+        <TextView
+            android:id="@+id/tv_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/money_symbol"
+            android:textColor="@color/color_title_dark"
+            android:textSize="45sp"
+            app:layout_constraintBottom_toBottomOf="@+id/et_price"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_des" />
+
+        <EditText
+            android:id="@+id/et_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_model_gap"
+            android:background="@color/color_tran"
+            android:inputType="numberDecimal"
+            android:textColor="@color/color_title_dark"
+            android:textSize="45sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_unit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_unit"
+            app:layout_constraintTop_toBottomOf="@id/tv_des" />
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="@dimen/app_gap"
+            android:background="@color/color_line"
+            app:layout_constraintTop_toBottomOf="@id/et_price" />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+    <Button
+        android:id="@+id/bt_sum"
+        style="@style/bt_sum_red"
+        android:layout_marginTop="@dimen/app_gap"
+        android:text="支付抢单意向金"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/con_withdrawal" />
+
+</android.support.constraint.ConstraintLayout>

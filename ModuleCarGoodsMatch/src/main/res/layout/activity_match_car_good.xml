@@ -44,7 +44,8 @@
     <com.hongniu.baselibrary.widget.XRefreshLayout
         android:id="@+id/refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_weight="1"
+        android:layout_height="0dp">
 
         <com.sang.common.recycleview.RecycleViewSupportEmpty
             android:id="@+id/rv"
@@ -54,4 +55,19 @@
             app:empty_img="@mipmap/icon_zwdd_260"
             app:empty_title="@string/order_main_no_order" />
     </com.hongniu.baselibrary.widget.XRefreshLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <View
+            android:layout_width="match_parent"
+            android:background="@color/line_color"
+            android:layout_height="@dimen/line_height"/>
+        <Button
+            android:text="发布货源信息"
+            android:id="@+id/bt_save"
+            style="@style/bt_sum_red" />
+    </LinearLayout>
+
 </LinearLayout>

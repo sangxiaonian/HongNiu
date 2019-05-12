@@ -7,15 +7,18 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParams;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.RefrushActivity;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
+import com.hongniu.baselibrary.widget.order.OrderDetailItem;
 import com.hongniu.modulecargoodsmatch.R;
 import com.hongniu.modulecargoodsmatch.entity.GoodsOwnerInforBean;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.SwitchTextLayout;
+import com.sang.thirdlibrary.chact.ChactHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,12 +101,14 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> {
                             @Override
                             public void onClick(View v) {
                                 ToastUtils.getInstance().show("我要抢单");
+                                ArouterUtils.getInstance().builder(ArouterParams.activity_match_grap_single)
+                                        .navigation(mContext);
                             }
                         });
                         bt_contact.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                ToastUtils.getInstance().show("联系货主");
+                                ChactHelper.getHelper().startPriver(mContext, "10", "测试");
                             }
                         });
 
