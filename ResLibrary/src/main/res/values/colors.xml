@@ -29,6 +29,8 @@
     <!--主要标题颜色-->
     <color name="color_title_dark">#333333</color>
 
+    <color name="color_007aff">#007AFF</color>
+
     <!--标题浅色-->
     <color name="color_content_light">#999999</color>
     <color name="color_line">#dddddd</color>
