@@ -13,4 +13,13 @@ public class ArouterParams {
      * 车货匹配抢单
      */
     public final static String activity_match_grap_single="/ModuleCarGoodsMatch/activity_match_grap_single";
+
+    /**
+     * 我的车货匹配记录
+     */
+    public final static String activity_match_my_record="/ModuleCarGoodsMatch/activity_match_my_record";
+    /**
+     * 我参与和发布的车货匹配需求
+     */
+    public final static String fragment_match_my_record="/ModuleCarGoodsMatch/fragment_match_my_record";
 }

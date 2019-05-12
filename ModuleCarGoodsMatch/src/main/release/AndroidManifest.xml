@@ -3,7 +3,8 @@
     package="com.hongniu.modulecargoodsmatch">
 
     <application>
-        <activity android:name=".ui.activiry.MatchGrapSingleActivity"></activity>
+        <activity android:name=".ui.activiry.MatchMyRecordActivity"></activity>
+        <activity android:name=".ui.activiry.MatchGrapSingleActivity" />
         <activity android:name=".ui.activiry.MatchCarGoodActivity" />
     </application>
 

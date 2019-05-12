@@ -54,7 +54,8 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> {
         setToolbarRightClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtils.getInstance().show("我的记录");
+                ArouterUtils.getInstance().builder(ArouterParams.activity_match_my_record)
+                        .navigation(mContext);
             }
         });
         switchLeft = findViewById(R.id.switch_left);
@@ -89,26 +90,29 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> {
                         TextView tv_start_point = itemView.findViewById(R.id.tv_start_point);
                         TextView tv_end_point = itemView.findViewById(R.id.tv_end_point);
                         TextView tv_goods = itemView.findViewById(R.id.tv_goods);
-                        TextView bt_grabs = itemView.findViewById(R.id.bt_grabs);
-                        TextView bt_contact = itemView.findViewById(R.id.bt_contact);
+                        TextView bt_left = itemView.findViewById(R.id.bt_left);
+                        TextView bt_right = itemView.findViewById(R.id.bt_right);
 
+                        bt_left.setText("联系货主");
+                        bt_right.setText("我要抢单");
                         tvTitle.setText("罗超正在寻找小面包车");
                         tvTime.setText("需要发货时间：2019-07-10");
                         tv_start_point.setText("发货地：上海市普陀区中山北路208号");
                         tv_end_point.setText("收货地：上海市静安区广中路788号");
                         tv_goods.setText("货物名：医疗器材(2方、0.5吨)");
-                        bt_grabs.setOnClickListener(new View.OnClickListener() {
+                        bt_left.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                ChactHelper.getHelper().startPriver(mContext, "10", "测试");
+
+                            }
+                        });
+                        bt_right.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 ToastUtils.getInstance().show("我要抢单");
                                 ArouterUtils.getInstance().builder(ArouterParams.activity_match_grap_single)
                                         .navigation(mContext);
-                            }
-                        });
-                        bt_contact.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                ChactHelper.getHelper().startPriver(mContext, "10", "测试");
                             }
                         });
 

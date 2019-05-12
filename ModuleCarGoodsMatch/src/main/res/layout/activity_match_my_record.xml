@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.activiry.MatchMyRecordActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <RadioGroup
+        android:id="@+id/rg"
+        style="@style/RadioGroup"
+        android:paddingRight="0dp"
+        android:paddingLeft="0dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_left"
+            style="@style/RadioButton"
+            android:text="我的发布" />
+
+        <RadioButton
+            android:id="@+id/rb_right"
+            style="@style/RadioButton"
+            android:text="我的参与" />
+
+    </RadioGroup>
+
+    <FrameLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

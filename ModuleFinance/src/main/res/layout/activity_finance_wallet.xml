@@ -77,10 +77,13 @@
 
 
     <RadioGroup
+        android:orientation="horizontal"
         android:id="@+id/rg"
         style="@style/RadioGroup"
         android:layout_marginBottom="@dimen/app_gap"
         android:layout_marginTop="@dimen/app_model_gap"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/con_balance">
 
         <RadioButton
