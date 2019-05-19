@@ -167,7 +167,7 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
      */
     @Override
     public void onClick(View v) {
-        if (v.getId()==R.id.bt_save){
+        if (v.getId() == R.id.bt_save) {
             ArouterUtils.getInstance().builder(ArouterParams.activity_match_creat_order)
                     .navigation(mContext);
         }
@@ -182,6 +182,7 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
     public void onClose(SwitchTextLayout switchTextLayout, View view) {
         changeState(switchTextLayout, false);
     }
+
     private void changeState(View view, boolean open) {
         if (view.getId() == R.id.switch_left) {
             ClickEventUtils.getInstance().onClick(ClickEventParams.订单_发车时间);
