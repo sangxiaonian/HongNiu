@@ -25,5 +25,5 @@ public class ArouterParams {
     /**
      * 车货匹配创建订单
      */
-    public final static String activity_match_creat_order="/ModuleCarGoodsMatch/fragment_match_my_record";
+    public final static String activity_match_creat_order="/ModuleCarGoodsMatch/activity_match_creat_order";
 }

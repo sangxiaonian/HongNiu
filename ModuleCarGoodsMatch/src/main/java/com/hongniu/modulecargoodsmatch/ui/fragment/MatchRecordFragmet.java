@@ -2,7 +2,6 @@ package com.hongniu.modulecargoodsmatch.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,16 +9,18 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParams;
-import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.RefrushFragmet;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.utils.Utils;
+import com.hongniu.baselibrary.widget.dialog.ListDialog;
 import com.hongniu.modulecargoodsmatch.R;
 import com.hongniu.modulecargoodsmatch.entity.GoodsOwnerInforBean;
+import com.hongniu.modulecargoodsmatch.entity.MatchGrapSingleDetailBean;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
+import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
@@ -39,6 +40,9 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
 
 
     private int type;
+    private ListDialog<MatchGrapSingleDetailBean> dialog;
+    private ArrayList<MatchGrapSingleDetailBean> singleDetail;
+    private XAdapter<MatchGrapSingleDetailBean> listAdapter;
 
     @Override
     protected View initView(LayoutInflater inflater) {
@@ -49,6 +53,37 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         queryData(true);
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+        dialog=new ListDialog<>();
+        dialog.setAdapter(listAdapter = new XAdapter<MatchGrapSingleDetailBean>(getContext(), singleDetail = new ArrayList<>()) {
+
+
+            @Override
+            public BaseHolder<MatchGrapSingleDetailBean> initHolder(ViewGroup parent, int viewType) {
+                return new BaseHolder<MatchGrapSingleDetailBean>(getContext(), parent, R.layout.match_item_grap_single_detail) {
+                    @Override
+                    public void initView(View itemView, int position, MatchGrapSingleDetailBean data) {
+                        super.initView(itemView, position, data);
+                        TextView tvTitle = itemView.findViewById(R.id.tv_title);
+                        TextView tvCarInfor = itemView.findViewById(R.id.tv_car_infor);
+                        TextView bt = itemView.findViewById(R.id.bt);
+                        tvTitle.setText("大佬 已支付2000元意向金");
+                        tvCarInfor.setText("车辆信息：大货车");
+                        bt.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                ToastUtils.getInstance().show("我要下单");
+                            }
+                        });
+                    }
+                };
+            }
+        });
+
     }
 
     @Override
@@ -147,7 +182,15 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
                             public void onClick(View v) {
                                 if (type==0) {
                                     ToastUtils.getInstance().show("抢单明细");
-
+                                    int random = ConvertUtils.getRandom(2, 10);
+                                    singleDetail.clear();
+                                    dialog.setTitle("抢单明细");
+                                    dialog.setDescribe("共有 "+random+" 人支付抢单意向金，你可选择1人完成下单");
+                                    for (int i = 0; i <random ; i++) {
+                                        singleDetail.add(new MatchGrapSingleDetailBean());
+                                    }
+                                    listAdapter.notifyDataSetChanged();
+                                    dialog.show(getChildFragmentManager(),"");
                                 }else {
                                     ChactHelper.getHelper().startPriver(mContext, "10", "测试");
                                     ToastUtils.getInstance().show("联系货主");

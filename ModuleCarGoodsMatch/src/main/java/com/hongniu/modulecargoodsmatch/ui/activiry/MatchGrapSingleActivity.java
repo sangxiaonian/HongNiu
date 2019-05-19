@@ -57,7 +57,7 @@ public class MatchGrapSingleActivity extends BaseActivity implements View.OnClic
 
             @Override
             public BaseHolder<MatchCarInfor> initHolder(ViewGroup parent, int viewType) {
-                return new BaseHolder<MatchCarInfor>(mContext, parent, R.layout.match_item_grap_single) {
+                return new BaseHolder<MatchCarInfor>(mContext, parent, R.layout.match_item_grap_car_infor) {
                     @Override
                     public void initView(View itemView, int position, MatchCarInfor data) {
                         super.initView(itemView, position, data);
