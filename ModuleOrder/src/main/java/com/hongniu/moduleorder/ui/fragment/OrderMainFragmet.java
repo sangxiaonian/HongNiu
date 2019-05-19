@@ -2,19 +2,13 @@ package com.hongniu.moduleorder.ui.fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
-import com.alibaba.android.arouter.facade.annotation.Route;
-import com.hongniu.baselibrary.arouter.ArouterParamOrder;
-import com.hongniu.baselibrary.base.BaseFragment;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventParams;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.SwitchStateListener;
-import com.hongniu.moduleorder.widget.OrderMainPop;
-import com.sang.common.recycleview.holder.PeakHolder;
-import com.sang.common.utils.DeviceUtils;
+import com.sang.common.widget.popu.OrderMainPop;
 import com.sang.common.widget.SwitchTextLayout;
 import com.sang.common.widget.popu.BasePopu;
 import com.sang.common.widget.popu.inter.OnPopuDismissListener;

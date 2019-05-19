@@ -1,4 +1,4 @@
-package com.hongniu.moduleorder.widget;
+package com.sang.common.widget.popu;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,10 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.hongniu.moduleorder.R;
+import com.sang.common.R;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
-import com.sang.common.widget.popu.BasePopu;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -24,6 +24,7 @@ import com.hongniu.baselibrary.base.RefrushActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
+import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
@@ -200,9 +201,9 @@ public class OrderMapLocationActivity extends RefrushActivity<PoiItem> implement
                     PoiItem poiItem = datas.get(selectPositio);
 
                     if (start) {
-                        event = new OrderEvent.StartLoactionEvent(poiItem);
+                        event = new Event.StartLoactionEvent(poiItem);
                     } else {
-                        event = new OrderEvent.EndLoactionEvent(poiItem);
+                        event = new Event.EndLoactionEvent(poiItem);
 
                     }
                     BusFactory.getBus().post(event);

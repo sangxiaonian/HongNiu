@@ -470,7 +470,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onStartEvent(OrderEvent.StartLoactionEvent startLoactionEvent) {
+    public void onStartEvent(Event.StartLoactionEvent startLoactionEvent) {
         if (startLoactionEvent != null && startLoactionEvent.t != null) {
             String title= Utils.dealPioPlace(startLoactionEvent.t);
             itemStartLocation.setTextCenter(title);
@@ -482,7 +482,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEndEvent(OrderEvent.EndLoactionEvent endLoactionEvent) {
+    public void onEndEvent(Event.EndLoactionEvent endLoactionEvent) {
         if (endLoactionEvent != null && endLoactionEvent.t != null) {
             String title= Utils.dealPioPlace(endLoactionEvent.t);
             itemEndLocation.setTextCenter(title);

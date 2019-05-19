@@ -1,5 +1,6 @@
 package com.hongniu.baselibrary.event;
 
+import com.amap.api.services.core.PoiItem;
 import com.hongniu.baselibrary.entity.CreatInsuranceBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
@@ -11,6 +12,24 @@ import com.sang.common.event.IBus;
  * 对于模块间交互的事件
  */
 public class Event {
+
+    public static class StartLoactionEvent implements IBus.IEvent {
+        public PoiItem t;
+
+        public StartLoactionEvent(PoiItem t) {
+            this.t = t;
+        }
+    }
+
+    public static class EndLoactionEvent implements IBus.IEvent {
+        public PoiItem t;
+
+        public EndLoactionEvent(PoiItem t) {
+            this.t = t;
+        }
+    }
+
+
     /**
      * 创建保单
      */
