@@ -12,7 +12,9 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
@@ -74,6 +76,7 @@ import io.reactivex.disposables.Disposable;
  */
 @Route(path = ArouterParamOrder.activity_order_create)
 public class OrderCreatOrderActivity extends BaseActivity implements View.OnClickListener, OnTimeSelectListener, CarNumPop.onItemClickListener, OnItemDeletedClickListener<LocalMedia>, OnItemClickListener<LocalMedia>, UpLoadImageUtils.OnUpLoadListener {
+    private boolean select;//是否选中代收货款
 
 
     public Handler handler = new Handler() {
@@ -102,6 +105,11 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     private ItemView itemDriverName;         //司机姓名
     private ItemView itemDriverPhone;         //司机手机
     private TimePickerView timePickerView;
+    private ViewGroup rlDai;//代收货款
+    private ImageView imgCheck;//代收货款
+    private ItemView itemCargoPrice;//货款金额
+    private ItemView itemConsigneeName;//收貨人姓名
+    private ItemView itemConsigneePhone;//收货人手机
 
     private Button btSave;
 
@@ -144,8 +152,12 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         itemDriverName = findViewById(R.id.item_driver_name);
         itemDriverPhone = findViewById(R.id.item_driver_phone);
         btSave = findViewById(R.id.bt_entry);
-//        timePickerView = PickerDialogUtils.initTimePicker(mContext, this, new boolean[]{true, true, true, false, false, false});
         rv = findViewById(R.id.rv_pic);
+        rlDai = findViewById(R.id.rl_dai);
+        imgCheck = findViewById(R.id.img_check);
+        itemCargoPrice = findViewById(R.id.item_cargo_price);
+        itemConsigneeName = findViewById(R.id.item_consignee_name);
+        itemConsigneePhone = findViewById(R.id.item_consignee_phone);
 
         Calendar startDate = Calendar.getInstance();
 
@@ -188,6 +200,8 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
             }
         });
         rv.setAdapter(adapter);
+        //默认情况下，不选中代收货款信息
+        switchCargo(false);
     }
 
     @Override
@@ -198,6 +212,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         itemStartLocation.setOnClickListener(this);
         itemEndLocation.setOnClickListener(this);
         btSave.setOnClickListener(this);
+        rlDai.setOnClickListener(this);
         itemCarNum.getEtCenter().addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -361,8 +376,23 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
                 }
 
             }
+        }else if (id == R.id.rl_dai) {
+            switchCargo(!select);
         }
     }
+
+    /**
+     * 切换是否选中代收货款相关信息
+     * @param select
+     */
+    private void switchCargo(boolean select) {
+        this.select=select;
+        imgCheck.setImageResource(select?R.mipmap.icon_xz_36:R.mipmap.icon_wxz_36);
+        itemCargoPrice.setVisibility(select?View.VISIBLE:View.GONE);
+        itemConsigneeName.setVisibility(select?View.VISIBLE:View.GONE);
+        itemConsigneePhone.setVisibility(select?View.VISIBLE:View.GONE);
+    }
+
 
     /**
      * 向服务器提交数据

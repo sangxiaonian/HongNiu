@@ -23,10 +23,10 @@
             <com.sang.common.widget.CircularFramlayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/app_gap"
                 android:layout_marginLeft="@dimen/app_item_gap"
-                android:layout_marginRight="@dimen/app_item_gap"
                 android:layout_marginTop="@dimen/app_gap"
+                android:layout_marginRight="@dimen/app_item_gap"
+                android:layout_marginBottom="@dimen/app_gap"
 
                 app:viewradius="4dp">
 
@@ -98,9 +98,9 @@
                             style="@style/itemview"
                             android:paddingLeft="@dimen/app_item_gap"
                             app:editable="false"
+                            app:isSingleLine="false"
                             app:showline="false"
                             app:srcshow="false"
-                            app:isSingleLine="false"
                             app:textcenterhide="请选择发货地" />
 
                     </LinearLayout>
@@ -137,9 +137,9 @@
                             style="@style/itemview"
                             android:paddingLeft="@dimen/app_item_gap"
                             app:editable="false"
+                            app:isSingleLine="false"
                             app:showline="false"
                             app:srcshow="false"
-                            app:isSingleLine="false"
                             app:textcenterhide="请选择收货地" />
 
                     </LinearLayout>
@@ -170,13 +170,28 @@
                     app:textleft="货物名称" />
 
 
+                <com.sang.common.widget.ItemView
+                    android:id="@+id/item_size"
+                    style="@style/itemview"
+                    app:centerType="number"
+                    app:textcenterhide="请输入货物体积"
+                    app:textleft="货物体积"
+                    app:textright="方" />
+
+                <com.sang.common.widget.ItemView
+                    android:id="@+id/item_weight"
+                    style="@style/itemview"
+                    app:centerType="number"
+                    app:textcenterhide="请输入货物重量"
+                    app:textleft="货物重量"
+                    app:textright="吨" />
 
                 <android.support.v7.widget.RecyclerView
-                    android:layout_width="match_parent"
                     android:id="@+id/rv_pic"
-                    android:layout_margin="@dimen/app_gap"
-                    android:layout_height="wrap_content"/>
-                
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/app_gap" />
+
                 <com.sang.common.widget.ItemView
                     android:id="@+id/item_price"
                     style="@style/itemview"
@@ -229,13 +244,13 @@
                 android:orientation="vertical">
 
 
-
                 <com.sang.common.widget.ItemView
                     android:id="@+id/item_driver_name"
                     style="@style/itemview"
 
                     app:textcenterhide="请输入司机姓名"
                     app:textleft="司机姓名" />
+
                 <com.sang.common.widget.ItemView
                     android:id="@+id/item_driver_phone"
                     style="@style/itemview"
@@ -244,6 +259,83 @@
                     app:textcenterhide="请输入司机手机"
                     app:textleft="司机手机" />
             </LinearLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rl_dai"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/color_white"
+                android:paddingLeft="@dimen/app_gap"
+                android:paddingRight="@dimen/app_gap">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="代收货款"
+                        android:textColor="@color/color_title_dark"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="请提前告知收货人: 货物送达时，需通过平台支付货款"
+                        android:textColor="@color/color_content_light"
+                        android:textSize="11sp" />
+
+                </LinearLayout>
+
+
+                <ImageView
+                    android:id="@+id/img_check"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/icon_wxz_36" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_height"
+                android:background="@color/line_color" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/app_item_gap"
+                android:background="@color/color_white"
+                android:orientation="vertical">
+
+                <com.sang.common.widget.ItemView
+                    android:id="@+id/item_cargo_price"
+                    style="@style/itemview"
+                    app:centerType="number"
+                    app:textcenterhide="请输入货款金额"
+                    app:textleft="货款金额"
+                    app:textright="元" />
+
+                <com.sang.common.widget.ItemView
+                    android:id="@+id/item_consignee_name"
+                    style="@style/itemview"
+                    app:textcenterhide="请输入收货人姓名"
+                    app:textleft="收货人姓名" />
+
+                <com.sang.common.widget.ItemView
+                    android:id="@+id/item_consignee_phone"
+                    style="@style/itemview"
+                    app:centerType="phone"
+                    app:showline="false"
+                    app:textcenterhide="请输入收货人手机"
+                    app:textleft="收货人手机" />
+            </LinearLayout>
+
             <Button
                 android:id="@+id/bt_entry"
                 style="@style/bt_sum_red"
@@ -251,8 +343,6 @@
         </LinearLayout>
 
     </ScrollView>
-
-
 
 
 </LinearLayout>
