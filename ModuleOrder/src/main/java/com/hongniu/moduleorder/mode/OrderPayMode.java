@@ -31,11 +31,12 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
     private float cargoPrice;
     private boolean buyInsurance;//是否需要购买保险
     private int payType;//选择支付方式
-    private boolean isOnLine;//true 线上支付，false 线下支付
+//    private boolean isOnLine;//true 线上支付，false 线下支付
     private WalletDetail wallletInfor;
     private List<OrderInsuranceInforBean> insurancUserInfr;
     OrderInsuranceInforBean currentInsurancInfor;//当前选中的保险人信息
     private int roleType;//1 企业支付 2个人支付
+    private int payWay;//付款方式 0 现付（线上支付） 1回付 2到付（线下支付）
 
     /**
      * 储存其他界面传入的参数
@@ -130,14 +131,16 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
     }
 
     /**
-     * 储存是否是线上支付
+     * 设置支付方式
      *
-     * @param isOnLine
+     * @param payWay
      */
     @Override
-    public void saveOnLinePay(boolean isOnLine) {
-        this.isOnLine = isOnLine;
+    public void savePayWays(int payWay) {
+        this.payWay=payWay;
     }
+
+
 
     /**
      * 是否要显示支付方式
@@ -146,7 +149,7 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
      */
     @Override
     public boolean showPayWays() {
-        return insurance || buyInsurance || isOnLine;
+        return insurance || buyInsurance || payWay==0;
     }
 
     /**
@@ -161,7 +164,7 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
             return insurancePrice;
         }else {
             float tranFee=0;
-            if (isOnLine) {//线上支付
+            if (payWay==0) {//线上支付
                 tranFee=money;
             }
             return buyInsurance?(tranFee + insurancePrice):tranFee;
@@ -185,7 +188,7 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
      */
     @Override
     public boolean isShowPriceAboutInsurance() {
-        return !insurance && isOnLine && buyInsurance;
+        return !insurance && payWay==0 && buyInsurance;
     }
 
     /**
@@ -204,13 +207,13 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
      */
     @Override
     public Observable<CommonBean<PayBean>> getPayParams(String passWord) {
-        return HttpOrderFactory.payOrderOffLine(creatBuyParams(passWord,isOnLine, !insurance, buyInsurance));
+        return HttpOrderFactory.payOrderOffLine(creatBuyParams(passWord,payWay==0, !insurance, buyInsurance));
     }
 
     //获取支付方式
     @Override
     public int getPayType() {
-        return (isOnLine || buyInsurance) ? payType : 2;
+        return (payWay==0 || buyInsurance) ? payType : 2;
     }
 
 
@@ -359,6 +362,16 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
     @Override
     public boolean isInit() {
         return payType==0||roleType==0;
+    }
+
+    /**
+     * 获取选择的支付方式
+     *
+     * @return
+     */
+    @Override
+    public int getPayWays() {
+        return payWay;
     }
 
     /**

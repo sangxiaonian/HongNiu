@@ -152,6 +152,12 @@ public class OrderPayControl {
          * @param s
          */
         void realNameAuthentication(String s);
+
+        /**
+         * 切换支付方式，判断是否显示收货人信息
+         * @param payWays
+         */
+        void switChconsignee(int payWays);
     }
 
     public interface IOrderPayPresent {
@@ -166,16 +172,7 @@ public class OrderPayControl {
          */
         void saveTranDate(boolean insurance, float money, String orderID, String orderNum, TaskControl.OnTaskListener listener);
 
-        /**
-         * 线上支付被点击
-         */
-        void onLineClick();
 
-
-        /**
-         * 线下支付被点击，切换为线下支付
-         */
-        void onOffLineClick();
 
         /**
          * 切换线上线下支付
@@ -268,6 +265,12 @@ public class OrderPayControl {
          * @param listener
          */
         void queryWallInfor(TaskControl.OnTaskListener listener);
+
+        /**
+         * 设置支付方式
+         * @param payWay 付款方式 0 现付（线上支付） 1回付 2到付（线下支付）
+         */
+        void setPayWay(int payWay);
     }
 
     public interface IOrderPayMode {
@@ -324,13 +327,11 @@ public class OrderPayControl {
          * @param cargoPrice
          */
         Observable<CommonBean<String>> queryInstance(String cargoPrice);
-
         /**
-         * 储存是否是线上支付
-         *
-         * @param isOnLine
+         * 设置支付方式
+         * @param payWay
          */
-        void saveOnLinePay(boolean isOnLine);
+        void savePayWays(int payWay);
 
         /**
          * 是否要显示支付方式
@@ -437,6 +438,13 @@ public class OrderPayControl {
          * @return true 需要
          */
         boolean isInit();
+
+
+        /**
+         * 获取选择的支付方式
+         * @return
+         */
+        int getPayWays();
     }
 
 }

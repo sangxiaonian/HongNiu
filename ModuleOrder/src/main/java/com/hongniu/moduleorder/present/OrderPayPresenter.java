@@ -71,24 +71,7 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
 
 
 
-    /**
-     * 线上支付被点击
-     */
-    @Override
-    public void onLineClick() {
-        mode.saveOnLinePay(true);
-        switchOnlinePay();
-    }
 
-
-    /**
-     * 线下支付被点击，切换为线下支付
-     */
-    @Override
-    public void onOffLineClick() {
-        mode.saveOnLinePay(false);
-        switchOnlinePay();
-    }
 
     /**
      * 切换线上线下支付，同时会收到是否购买保险的影响，此处可以处理金额
@@ -381,6 +364,18 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
                     }
                 })
         ;
+    }
+
+    /**
+     * 设置支付方式
+     *
+     * @param payWay 付款方式 0 现付（线上支付） 1回付 2到付（线下支付）
+     */
+    @Override
+    public void setPayWay(int payWay) {
+        mode.savePayWays(payWay);
+        switchOnlinePay();
+        view.switChconsignee(mode.getPayWays());
     }
 
     private void showInsurance(OrderInsuranceInforBean currentInsuranceUserInfor) {

@@ -38,6 +38,7 @@ import com.sang.common.event.BusFactory;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
+import com.sang.common.widget.ItemView;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
@@ -101,6 +102,10 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
     private TextView tv_des;//订单描述
     private TextView tv_instances_per_infor;//被保险人信息
 
+    private ViewGroup llShow;//收货人信息
+    private ItemView item_consignee_name;//收货人姓名
+    private ItemView item_consignee_phone;//收货人手机
+
 
     private BuyInsuranceDialog buyInsuranceDialog;
 
@@ -128,6 +133,9 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
     @Override
     protected void initView() {
         super.initView();
+        item_consignee_phone = findViewById(R.id.item_consignee_phone);
+        item_consignee_name = findViewById(R.id.item_consignee_name);
+        llShow = findViewById(R.id.ll_show);
         rg1 = findViewById(R.id.rg1);
         card_insurance = findViewById(R.id.card_insurance);
         rbCompany = findViewById(R.id.rb_company);
@@ -235,12 +243,13 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
-        if (checkedId == R.id.rb_online) {//线上支付
-            payPresent.onLineClick();
-        } else if (checkedId == R.id.rb_offline) {//线下支付
-            payPresent.onOffLineClick();
-        } else if (checkedId == R.id.rb_company) {//企业账号
-
+        if (checkedId == R.id.rb_online) {//线上支付，现付
+            payPresent.setPayWay(0);
+        } else if (checkedId == R.id.rb_offline) {//线下支付，回付
+            payPresent.setPayWay(2);
+        } else if (checkedId == R.id.rb_dao) {//到付
+            payPresent.setPayWay(1);
+        }  else if (checkedId == R.id.rb_company) {//企业账号
             payPresent.onChoiceCompanyPay();
         } else if ((checkedId == R.id.rb_person)) {//个人账户
             payPresent.onChoicePersonPay();
@@ -294,8 +303,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
         cbUnion.setImageResource(payType == 1 ? R.mipmap.icon_xz_36 : R.mipmap.icon_wxz_36);
         cbYue.setImageResource(payType == 4 ? R.mipmap.icon_xz_36 : R.mipmap.icon_wxz_36);
         boolean yue = payType == 4;
-        rbPerson.setEnabled(yue);
-        rbPerson.setEnabled(yue);
+
         rg1.setEnabled(yue);
         if (!yue){
             rg1.clearCheck();
@@ -303,7 +311,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
             rbPerson.performClick();
         }
         rbPerson.setEnabled(yue);
-        rbPerson.setEnabled(yue);
+        rbCompany.setEnabled(yue);
         rg1.setEnabled(yue);
 
     }
@@ -678,6 +686,16 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
                 ArouterUtils.getInstance().builder(ArouterParamLogin.activity_person_infor).navigation(OrderPayActivity.this, 1);
             }
         });
+    }
+
+    /**
+     * 切换支付方式，判断是否显示收货人信息
+     *
+     * @param payWays
+     */
+    @Override
+    public void switChconsignee(int payWays) {
+        llShow.setVisibility(payWays==1?View.VISIBLE:View.GONE);
     }
 
 

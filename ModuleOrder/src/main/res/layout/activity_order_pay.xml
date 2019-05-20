@@ -360,30 +360,68 @@
                             android:id="@+id/rb_online"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="3dp"
+                            android:layout_marginRight="4dp"
                             android:layout_weight="1"
                             android:background="@drawable/rb_bg"
                             android:button="@null"
                             android:gravity="center"
-                            android:text="@string/order_pay_online"
+                            android:text="现付"
                             android:textColor="@drawable/rb_txt_color"
                             android:textSize="15sp" />
-
+                        <RadioButton
+                            android:id="@+id/rb_dao"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="2dp"
+                            android:layout_marginRight="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/rb_bg"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:text="到付"
+                            android:textColor="@drawable/rb_txt_color"
+                            android:textSize="15sp" />
                         <RadioButton
                             android:id="@+id/rb_offline"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_marginLeft="3dp"
+                            android:layout_marginLeft="4dp"
                             android:layout_weight="1"
                             android:background="@drawable/rb_bg"
                             android:button="@null"
                             android:gravity="center"
-                            android:text="@string/order_pay_offline"
+                            android:text="回付"
                             android:textColor="@drawable/rb_txt_color"
                             android:textSize="15sp" />
 
 
                     </RadioGroup>
+
+                    <LinearLayout
+                        android:id="@+id/ll_show"
+                        android:orientation="vertical"
+                        android:layout_marginTop="@dimen/app_item_gap"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <com.sang.common.widget.ItemView
+                            android:id="@+id/item_consignee_name"
+                            style="@style/itemview"
+                            android:paddingLeft="0dp"
+                            android:paddingRight="0dp"
+                            app:textcenterhide="请输入收货人姓名"
+                            app:textleft="* 收货人姓名" />
+
+                        <com.sang.common.widget.ItemView
+                            android:id="@+id/item_consignee_phone"
+                            style="@style/itemview"
+                            android:paddingLeft="0dp"
+                            android:paddingRight="0dp"
+                            app:centerType="phone"
+                            app:showline="false"
+                            app:textcenterhide="请输入收货人手机"
+                            app:textleft="* 收货人手机" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
