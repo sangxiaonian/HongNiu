@@ -10,12 +10,15 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParams;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.RefrushActivity;
+import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventParams;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
 import com.hongniu.modulecargoodsmatch.R;
 import com.hongniu.modulecargoodsmatch.entity.GoodsOwnerInforBean;
+import com.hongniu.modulecargoodsmatch.entity.MatchQueryGoodsInforParams;
+import com.hongniu.modulecargoodsmatch.net.HttpMatchFactory;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.utils.ToastUtils;
@@ -30,8 +33,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import io.reactivex.Observable;
-
-import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CARGO_OWNER;
 
 /**
  * @data 2019/5/12
@@ -49,6 +50,7 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
     private ArrayList<String> states;
     private int leftSelection;
     private int rightSelection;
+    private MatchQueryGoodsInforParams params;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,12 +82,11 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
     @Override
     protected void initData() {
         super.initData();
+        params = new MatchQueryGoodsInforParams(currentPage);
         orderMainPop = new OrderMainPop<>(mContext);
         String[] stringArray = getResources().getStringArray(R.array.order_main_state);
         states = new ArrayList<>();
         states.addAll(Arrays.asList(stringArray));
-
-
         times = Arrays.asList(getResources().getStringArray(R.array.order_main_time));
     }
 
@@ -101,16 +102,9 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
 
     @Override
     protected Observable<CommonBean<PageBean<GoodsOwnerInforBean>>> getListDatas() {
-        CommonBean<PageBean<GoodsOwnerInforBean>> commonBean = new CommonBean<>();
-        PageBean<GoodsOwnerInforBean> pageBean = new PageBean<>();
-        commonBean.setCode(200);
-        commonBean.setData(pageBean);
-        List<GoodsOwnerInforBean> list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            list.add(new GoodsOwnerInforBean());
-        }
-        pageBean.setList(list);
-        return Observable.just(commonBean);
+        params.queryType = 1;
+        params.pageNum = currentPage;
+        return HttpMatchFactory.queryMatchGoodsInfor(params);
     }
 
     @Override
@@ -118,37 +112,43 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
         return new XAdapter<GoodsOwnerInforBean>(mContext, datas) {
             @Override
             public BaseHolder<GoodsOwnerInforBean> initHolder(ViewGroup parent, int viewType) {
-                return new BaseHolder<GoodsOwnerInforBean>(mContext, parent, R.layout.item_match_car_good) {
+                return new BaseHolder<GoodsOwnerInforBean>(mContext, parent, R.layout.item_match_my_record) {
                     @Override
-                    public void initView(View itemView, int position, GoodsOwnerInforBean data) {
+                    public void initView(View itemView, int position, final GoodsOwnerInforBean data) {
                         super.initView(itemView, position, data);
+                        TextView bt_left = itemView.findViewById(R.id.bt_left);
+                        TextView bt_right = itemView.findViewById(R.id.bt_right);
                         TextView tvTitle = itemView.findViewById(R.id.tv_title);
                         TextView tvTime = itemView.findViewById(R.id.tv_time);
                         TextView tv_start_point = itemView.findViewById(R.id.tv_start_point);
                         TextView tv_end_point = itemView.findViewById(R.id.tv_end_point);
                         TextView tv_goods = itemView.findViewById(R.id.tv_goods);
-                        TextView bt_left = itemView.findViewById(R.id.bt_left);
-                        TextView bt_right = itemView.findViewById(R.id.bt_right);
+                        TextView tv_price = itemView.findViewById(R.id.tv_price);
+                        TextView tv1 = itemView.findViewById(R.id.tv1);
 
-                        bt_left.setText("联系货主");
-                        bt_right.setText("我要抢单");
-                        tvTitle.setText("罗超正在寻找小面包车");
-                        tvTime.setText("需要发货时间：2019-07-10");
-                        tv_start_point.setText("发货地：上海市普陀区中山北路208号");
-                        tv_end_point.setText("收货地：上海市静安区广中路788号");
-                        tv_goods.setText("货物名：医疗器材(2方、0.5吨)");
-                        bt_left.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                ChactHelper.getHelper().startPriver(mContext, "10", "测试");
+                        tv1.setVisibility(View.GONE);
+                        tv_price.setVisibility(View.GONE);
 
-                            }
-                        });
+                        tvTitle.setText(data.userName + "正在寻找" + data.carType);
+                        tvTime.setText("需要发货时间：" + data.startTime);
+                        tv_start_point.setText("发货地：" + data.startPlaceInfo);
+                        tv_end_point.setText("收货地：" + data.destinationInfo);
+                        tv_goods.setText("货物名：" + data.goodName);
+                        bt_right.setText("联系货主");
+                        bt_left.setText("我要抢单");
+
                         bt_right.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                ToastUtils.getInstance().show("我要抢单");
-                                ArouterUtils.getInstance().builder(ArouterParams.activity_match_grap_single)
+                                ChactHelper.getHelper().startPriver(mContext, data.userId, data.userName);
+                            }
+                        });
+                        bt_left.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                ArouterUtils.getInstance()
+                                        .builder(ArouterParams.activity_match_grap_single)
+                                        .withString(Param.TRAN,data.userName)
                                         .navigation(mContext);
                             }
                         });
@@ -234,14 +234,13 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
         if (target.getId() == R.id.switch_left) {//时间
             leftSelection = position;
             switchLeft.setTitle(position == 0 ? getString(R.string.order_main_start_time) : times.get(position));
-
-            ToastUtils.getInstance().show(times.get(position));
+            params.deliveryDateType = times.get(position);
         } else if (target.getId() == R.id.switch_right) {
             rightSelection = position;
             switchRight.setTitle(states.get(position));
-            ToastUtils.getInstance().show(states.get(position));
-
+            params.carTypeId = states.get(position);
         }
+        queryData(true, true);
         pop.dismiss();
     }
 }

@@ -82,9 +82,7 @@ public class MatchMyRecordActivity extends BaseActivity implements RadioGroup.On
         if (checkedId==R.id.rb_left) {
             if (releastFragment==null){
                 releastFragment= (Fragment) ArouterUtils.getInstance().builder(ArouterParams.fragment_match_my_record).navigation();
-                Bundle bundle=new Bundle();
-                bundle.putInt(Param.TRAN,0);
-                releastFragment.setArguments(bundle);
+
                 fragmentTransaction.add(R.id.content,releastFragment);
             }else {
                 fragmentTransaction.show(releastFragment);
@@ -93,10 +91,7 @@ public class MatchMyRecordActivity extends BaseActivity implements RadioGroup.On
 
         }else {
             if (participateFragment==null){
-                participateFragment= (Fragment) ArouterUtils.getInstance().builder(ArouterParams.fragment_match_my_record).navigation();
-                Bundle bundle=new Bundle();
-                bundle.putInt(Param.TRAN,1);
-                participateFragment.setArguments(bundle);
+                participateFragment= (Fragment) ArouterUtils.getInstance().builder(ArouterParams.fragment_match_my_join).navigation();
                 fragmentTransaction.add(R.id.content,participateFragment);
             }else {
                 fragmentTransaction.show(participateFragment);

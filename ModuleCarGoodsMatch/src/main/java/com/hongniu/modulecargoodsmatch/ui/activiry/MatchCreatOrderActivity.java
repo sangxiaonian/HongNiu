@@ -12,12 +12,16 @@ import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParams;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.event.Event;
+import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.utils.PickerDialogUtils;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.modulecargoodsmatch.R;
+import com.hongniu.modulecargoodsmatch.entity.MatchCreatGoodsSourceParams;
+import com.hongniu.modulecargoodsmatch.net.HttpMatchFactory;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.ToastUtils;
@@ -45,12 +49,13 @@ public class MatchCreatOrderActivity extends BaseActivity implements View.OnClic
     private ItemView itemStartLocation;     //发货地点
     private ItemView itemEndLocation;       //收货地点
     private ItemView itemCargoName;          //货物名称
+    private ItemView itemStartCarNum;          //货物名称
     private ItemView itemPrice;                 //运费
     private ItemView itemWeight;                 //货物重量
     private ItemView itemSize;                 //货物体积
     private TimePickerView timePickerView;
     private Button btNext;
-
+    MatchCreatGoodsSourceParams params;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +73,7 @@ public class MatchCreatOrderActivity extends BaseActivity implements View.OnClic
         itemStartTime = findViewById(R.id.item_start_time);
         itemStartLocation = findViewById(R.id.item_start_loaction);
         itemEndLocation = findViewById(R.id.item_end_loaction);
+        itemStartCarNum = findViewById(R.id.item_start_car_num);
         itemCargoName = findViewById(R.id.item_cargo_name);
         itemPrice = findViewById(R.id.item_price);
         itemWeight = findViewById(R.id.item_weight);
@@ -82,6 +88,12 @@ public class MatchCreatOrderActivity extends BaseActivity implements View.OnClic
                 .build();
         timePickerView.setKeyBackCancelable(false);//系统返回键监听屏蔽掉
 
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+        params=new MatchCreatGoodsSourceParams();
     }
 
     @Override
@@ -128,9 +140,27 @@ public class MatchCreatOrderActivity extends BaseActivity implements View.OnClic
             });
         } else if (id == R.id.bt_entry) {
             if (check()) {
-                ToastUtils.getInstance().show("提交信息");
+                HttpMatchFactory.creatGoodSour(getParams())
+                    .subscribe(new NetObserver<Object>(this) {
+                        @Override
+                        public void doOnSuccess(Object data) {
+                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
+                            finish();
+                        }
+                    });
+                ;
             }
         }
+    }
+
+    private MatchCreatGoodsSourceParams getParams() {
+        params.startTime=itemStartTime.getTextCenter();
+        params.departNum	=itemStartCarNum.getTextCenter();
+        params.goodName	=itemCargoName.getTextCenter();
+        params.goodVolume	=itemSize.getTextCenter();
+        params.goodWeight	=itemWeight.getTextCenter();
+        params.freightAmount	=itemPrice.getTextCenter();
+        return params;
     }
 
     private boolean check() {
@@ -167,7 +197,7 @@ public class MatchCreatOrderActivity extends BaseActivity implements View.OnClic
             return false;
         }
         ;
-        return false;
+        return true;
     }
 
     @Override
@@ -180,9 +210,9 @@ public class MatchCreatOrderActivity extends BaseActivity implements View.OnClic
         if (startLoactionEvent != null && startLoactionEvent.t != null) {
             String title= Utils.dealPioPlace(startLoactionEvent.t);
             itemStartLocation.setTextCenter(title);
-//            paramBean.setStartLatitude(startLoactionEvent.t.getLatLonPoint().getLatitude()+"");
-//            paramBean.setStartLongitude(startLoactionEvent.t.getLatLonPoint().getLongitude()+"");
-//            paramBean.setStartPlaceInfo(title);
+            params.setStartPlaceY(startLoactionEvent.t.getLatLonPoint().getLatitude()+"");
+            params.setStartPlaceX(startLoactionEvent.t.getLatLonPoint().getLongitude()+"");
+            params.setStartPlaceInfo(title);
         }
     }
 
@@ -192,9 +222,9 @@ public class MatchCreatOrderActivity extends BaseActivity implements View.OnClic
         if (endLoactionEvent != null && endLoactionEvent.t != null) {
             String title= Utils.dealPioPlace(endLoactionEvent.t);
             itemEndLocation.setTextCenter(title);
-//            paramBean.setDestinationLatitude(endLoactionEvent.t.getLatLonPoint().getLatitude()+"");
-//            paramBean.setDestinationLongitude(endLoactionEvent.t.getLatLonPoint().getLongitude()+"");
-//            paramBean.setDestinationInfo(title);
+            params.setDestinationY(endLoactionEvent.t.getLatLonPoint().getLatitude()+"");
+            params.setDestinationX(endLoactionEvent.t.getLatLonPoint().getLongitude()+"");
+            params.setDestinationInfo(title);
         }
     }
 

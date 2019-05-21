@@ -19,9 +19,13 @@ public class ArouterParams {
      */
     public final static String activity_match_my_record="/ModuleCarGoodsMatch/activity_match_my_record";
     /**
-     * 我参与和发布的车货匹配需求
+     * 我 发布的车货匹配需求
      */
     public final static String fragment_match_my_record="/ModuleCarGoodsMatch/fragment_match_my_record";
+    /**
+     * 我参与的车货匹配需求
+     */
+    public final static String fragment_match_my_join="/ModuleCarGoodsMatch/fragment_match_my_join";
     /**
      * 车货匹配创建订单
      */
