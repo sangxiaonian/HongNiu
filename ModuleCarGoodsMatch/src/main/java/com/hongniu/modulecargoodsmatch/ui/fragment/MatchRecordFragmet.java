@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParams;
+import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.base.RefrushFragmet;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
@@ -99,9 +100,9 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
         return new XAdapter<GoodsOwnerInforBean>(getContext(), datas) {
             @Override
             public BaseHolder<GoodsOwnerInforBean> initHolder(ViewGroup parent, int viewType) {
-                return new BaseHolder<GoodsOwnerInforBean>(getContext(), parent,R.layout.item_match_my_record) {
+                return new BaseHolder<GoodsOwnerInforBean>(getContext(), parent, R.layout.item_match_my_record) {
                     @Override
-                    public void initView(View itemView, int position, GoodsOwnerInforBean data) {
+                    public void initView(View itemView, final int position, final GoodsOwnerInforBean data) {
                         super.initView(itemView, position, data);
                         TextView bt_left = itemView.findViewById(R.id.bt_left);
                         TextView bt_right = itemView.findViewById(R.id.bt_right);
@@ -113,11 +114,11 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
                         TextView tv_price = itemView.findViewById(R.id.tv_price);
                         TextView tv1 = itemView.findViewById(R.id.tv1);
 
-                        tvTitle.setText(data.userName+"正在寻找"+data.carType);
-                        tvTime.setText("需要发货时间："+data.startTime);
-                        tv_start_point.setText("发货地："+data.startPlaceInfo);
-                        tv_end_point.setText("收货地："+data.destinationInfo);
-                        tv_goods.setText("货物名："+data.goodName);
+                        tvTitle.setText("你正在寻找" + data.carType);
+                        tvTime.setText("需要发货时间：" + data.startTime);
+                        tv_start_point.setText("发货地：" + data.startPlaceInfo);
+                        tv_end_point.setText("收货地：" + data.destinationInfo);
+                        tv_goods.setText("货物名：" + data.goodName);
                         bt_left.setText("删除发布");
                         bt_right.setText("抢单明细");
 
@@ -130,8 +131,8 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
                                     @Override
                                     public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
                                         dialog.dismiss();
-                                        ToastUtils.getInstance().show("删除发布");
-                                        queryData(true, true);
+                                        deletedMatch(data.id, position);
+
                                     }
                                 })
                                         .creatDialog(new CenterAlertDialog(mContext))
@@ -144,16 +145,8 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
                         bt_right.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                ToastUtils.getInstance().show("抢单明细");
-                                int random = ConvertUtils.getRandom(2, 10);
-                                singleDetail.clear();
-                                dialog.setTitle("抢单明细");
-                                dialog.setDescribe("共有 " + random + " 人支付抢单意向金，你可选择1人完成下单");
-                                for (int i = 0; i < random; i++) {
-                                    singleDetail.add(new MatchGrapSingleDetailBean());
-                                }
-                                listAdapter.notifyDataSetChanged();
-                                dialog.show(getChildFragmentManager(), "");
+
+                                queryGrapDetail(data.id);
 
                             }
                         });
@@ -163,6 +156,44 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
                 };
             }
         };
+    }
+
+    /**
+     * 抢单明细
+     * @param id
+     */
+    private void queryGrapDetail(String id) {
+        HttpMatchFactory
+                .queryGraoDetail(id,1)
+                .subscribe(new NetObserver<PageBean<MatchGrapSingleDetailBean>>(this) {
+                    @Override
+                    public void doOnSuccess(PageBean<MatchGrapSingleDetailBean> data) {
+                        singleDetail.clear();
+                        singleDetail.addAll(data.getList());
+                        dialog.setTitle("抢单明细");
+                        dialog.setDescribe("共有 " + singleDetail.size() + " 人支付抢单意向金，你可选择1人完成下单");
+                        listAdapter.notifyDataSetChanged();
+                        dialog.show(getChildFragmentManager(), "");
+                    }
+
+                });
+    }
+
+    /**
+     * 删除发布
+     *
+     * @param id
+     * @param position
+     */
+    private void deletedMatch(String id, final int position) {
+        HttpMatchFactory.deleteMatchGoods(id)
+                .subscribe(new NetObserver<Object>(this) {
+                    @Override
+                    public void doOnSuccess(Object data) {
+                        adapter.notifyItemDeleted(position);
+                        queryData(true);
+                    }
+                });
     }
 }
 

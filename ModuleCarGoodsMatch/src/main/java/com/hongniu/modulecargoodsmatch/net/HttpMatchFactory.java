@@ -1,10 +1,13 @@
 package com.hongniu.modulecargoodsmatch.net;
 
 import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.IDParams;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
 import com.hongniu.modulecargoodsmatch.entity.GoodsOwnerInforBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchCreatGoodsSourceParams;
+import com.hongniu.modulecargoodsmatch.entity.MatchGrapDetailParams;
+import com.hongniu.modulecargoodsmatch.entity.MatchGrapSingleDetailBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchMyJoinGoodsInofrBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchQueryGoodsInforParams;
 import com.sang.common.net.rx.RxUtils;
@@ -19,6 +22,7 @@ public class HttpMatchFactory {
 
     /**
      * 创建货源信息
+     *
      * @param params
      * @return
      */
@@ -32,6 +36,7 @@ public class HttpMatchFactory {
 
     /**
      * 查询车货匹配信息列表
+     *
      * @param params
      * @return
      */
@@ -41,8 +46,10 @@ public class HttpMatchFactory {
                 .compose(RxUtils.<CommonBean<PageBean<GoodsOwnerInforBean>>>getSchedulersObservableTransformer())
                 ;
     }
-  /**
+
+    /**
      * 我参与的车货匹配
+     *
      * @param params
      * @return
      */
@@ -50,6 +57,34 @@ public class HttpMatchFactory {
         return MatchClient.getInstance().getService()
                 .queryMatchMyJoinGoodsInfor(params)
                 .compose(RxUtils.<CommonBean<PageBean<MatchMyJoinGoodsInofrBean>>>getSchedulersObservableTransformer())
+                ;
+    }
+
+    /**
+     * 删除车货匹配
+     *
+     * @return
+     */
+    public static Observable<CommonBean<Object>> deleteMatchGoods(String id) {
+        IDParams params = new IDParams();
+        params.id = id;
+        return MatchClient.getInstance().getService()
+                .deleteMatchGoods(params)
+                .compose(RxUtils.<CommonBean<Object>>getSchedulersObservableTransformer())
+                ;
+    }
+
+    /**
+     * 抢单明细查詢
+     *
+     * @return
+     */
+    public static Observable<CommonBean<PageBean<MatchGrapSingleDetailBean>>> queryGraoDetail(String id, int currentPage) {
+        MatchGrapDetailParams params = new MatchGrapDetailParams(currentPage);
+        params.goodsSourceId = id;
+        return MatchClient.getInstance().getService()
+                .queryGraoDetail(params)
+                .compose(RxUtils.<CommonBean<PageBean<MatchGrapSingleDetailBean>>>getSchedulersObservableTransformer())
                 ;
     }
 
