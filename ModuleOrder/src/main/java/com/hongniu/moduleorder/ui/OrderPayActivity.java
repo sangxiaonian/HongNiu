@@ -23,12 +23,12 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CreatInsuranceBean;
 import com.hongniu.baselibrary.entity.H5Config;
 import com.hongniu.baselibrary.entity.OrderInsuranceInforBean;
+import com.hongniu.baselibrary.entity.PayOrderInfor;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.PayPasswordKeyBord;
 import com.hongniu.baselibrary.widget.dialog.AccountDialog;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OnItemClickListener;
-import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.control.OrderPayControl;
 import com.hongniu.moduleorder.present.OrderPayPresenter;
 import com.hongniu.moduleorder.widget.PayAleartPop;
@@ -209,10 +209,10 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
 
 
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(OrderEvent.PayOrder event) {
+    public void onMessageEvent(PayOrderInfor event) {
         if (event != null) {
             //此处判断是否是购买保险
-            payPresent.saveTranDate(event.insurance, event.money, event.orderID, event.orderNum, this);
+            payPresent.saveTranDate(event,this);
             rbOnline.performClick();
         }
         BusFactory.getBus().removeStickyEvent(event);
@@ -283,7 +283,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
         } else if (i == R.id.rl_yue) {//余额支付
             payPresent.onChoiceYuePay();
         } else if (i == R.id.bt_pay) {//支付订单
-            payPresent.pay(this);
+            payPresent.pay(item_consignee_name.getTextCenter(),item_consignee_phone.getTextCenter(),this);
         } else if (i == R.id.bt_cancle_insurance) {//取消保险
             payPresent.clearInsurance();
         } else if (i == R.id.tv_change_cargo_price) {//修改保险金额
@@ -399,16 +399,16 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
 
     /**
      * 根据传入的数值初始化界面数据
+     *  @param event
      *
-     * @param money    订单金额
-     * @param orderID  订单id
-     * @param orderNum 订单号
      */
     @Override
-    public void setTranDate(float money, String orderID, String orderNum) {
-        tvOrder.setText("订单号" + orderNum);
-        tvPrice.setText("￥" + money);
-        buyInsuranceDialog.setOrderID(orderID);
+    public void setTranDate(PayOrderInfor event) {
+        tvOrder.setText("订单号" + event.orderNum);
+        tvPrice.setText("￥" + event.money);
+        buyInsuranceDialog.setOrderID(event.orderID);
+        item_consignee_name.setTextCenter(event.receiptName);
+        item_consignee_phone.setTextCenter(event.receiptMobile);
     }
 
     /**
@@ -696,6 +696,14 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
     @Override
     public void switChconsignee(int payWays) {
         llShow.setVisibility(payWays==1?View.VISIBLE:View.GONE);
+    }
+
+    /**
+     * @param msg
+     */
+    @Override
+    public void showError(String msg) {
+        ToastUtils.getInstance().show(msg);
     }
 
 

@@ -31,6 +31,7 @@ public class PayWayView extends FrameLayout implements View.OnClickListener, Rad
     private int payType;//支付方式
     private int yueType=1;
     private OnPayTypeChangeListener changeListener;
+    private boolean showCompany;
 
     public PayWayView(Context context) {
         this(context, null);
@@ -57,6 +58,10 @@ public class PayWayView extends FrameLayout implements View.OnClickListener, Rad
         rbCompany = inflate.findViewById(R.id.rb_company);
         rbPerson = inflate.findViewById(R.id.rb_person);
 
+        if (showCompany){
+
+        }
+
         rlAli.setOnClickListener(this);
         rlUnion.setOnClickListener(this);
         rlYue.setOnClickListener(this);
@@ -68,6 +73,8 @@ public class PayWayView extends FrameLayout implements View.OnClickListener, Rad
     public void setChangeListener(OnPayTypeChangeListener changeListener) {
         this.changeListener = changeListener;
     }
+
+
 
     /**
      * Called when a view has been clicked.
@@ -111,14 +118,19 @@ public class PayWayView extends FrameLayout implements View.OnClickListener, Rad
         cbUnion.setImageResource(payType == 4 ? R.mipmap.icon_xz_36 : R.mipmap.icon_wxz_36);
         boolean yue = payType == 1;
         rg1.setEnabled(yue);
-        if (!yue) {
-            rg1.clearCheck();
-        } else {
-            if (yueType == 0) {
-                rbCompany.performClick();
+        //只有在有企业支付权限的情况下，才会触发
+        if (showCompany) {
+            if (!yue) {
+                rg1.clearCheck();
             } else {
-                rbPerson.performClick();
+                if (yueType == 0) {
+                    rbCompany.performClick();
+                } else {
+                    rbPerson.performClick();
+                }
             }
+        }else {
+            yueType=1;
         }
         rbPerson.setEnabled(yue);
         rbCompany.setEnabled(yue);
@@ -139,13 +151,27 @@ public class PayWayView extends FrameLayout implements View.OnClickListener, Rad
      */
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
-        if (checkedId == R.id.rb_company) {//企业账号
-            yueType=0;
-        } else if ((checkedId == R.id.rb_person)) {//个人账户
-            yueType=1;
+        if (showCompany) {
+            if (checkedId == R.id.rb_company) {//企业账号
+                yueType = 0;
+            } else if ((checkedId == R.id.rb_person)) {//个人账户
+                yueType = 1;
+            }
+            if (changeListener != null) {
+                changeListener.onPayTypeChang(payType, yueType);
+            }
         }
-        if (changeListener!=null){
-            changeListener.onPayTypeChang(payType,yueType);
+    }
+
+    /**
+     * 设置是否支持企业账号支付
+     * @param showCompany true 支持 默认为false
+     */
+    public void setShowCompany(boolean showCompany){
+        this.showCompany=showCompany;
+        yueType = showCompany?yueType:1;
+        if (rg1!=null){
+            rg1.setVisibility(showCompany?VISIBLE:GONE);
         }
     }
 

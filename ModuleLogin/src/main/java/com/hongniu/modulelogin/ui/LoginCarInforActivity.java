@@ -1,5 +1,6 @@
 package com.hongniu.modulelogin.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -48,14 +49,15 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
     private ItemView itemCarPhone;//车主手机号
 
     private Button button;
-    private boolean isAdd;//是否是添加车辆
+    private boolean isAdd=true;//是否是添加车辆
     private OptionsPickerBuilder pickerDialog;
-    private CarInforBean carBean;
+    private CarInforBean carBean=new CarInforBean();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_car_infor);
+        setToolbarTitle(getString(R.string.login_add_car));
         initView();
         initData();
         initListener();
@@ -81,8 +83,6 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
     protected void initData() {
         super.initData();
         cars = new ArrayList<>();
-
-
     }
 
     @Override
@@ -110,9 +110,6 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
             itemCarType.setTextCenter(carBean.getCartypename() == null ? "" : carBean.getCartypename());
             itemCarOwner.setTextCenter(carBean.getContactName() == null ? "" : carBean.getContactName());
             itemCarPhone.setTextCenter(carBean.getContactMobile() == null ? "" : carBean.getContactMobile());
-        }
-
-        if (!isAdd) {
             setToolbarSrcRight(getString(R.string.deleted));
             setToolbarRightClick(new View.OnClickListener() {
                 @Override
@@ -167,6 +164,7 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
                                 public void doOnSuccess(ResponseBody data) {
                                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show(R.string.login_add_car_success);
                                     BusFactory.getBus().post(new LoginEvent.UpdateEvent());
+                                    setResult(2,new Intent());
                                     finish();
 
                                 }
@@ -178,6 +176,7 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
                                 public void doOnSuccess(String data) {
                                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show(R.string.login_add_car_modification);
                                     BusFactory.getBus().post(new LoginEvent.UpdateEvent());
+                                    setResult(2,new Intent());
                                     finish();
 
                                 }
@@ -255,5 +254,13 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
             ((ItemView) v).setTextCenter(carTypeBean.getCarType());
             carBean.setCarType(carTypeBean.getId());
         }
+    }
+
+    @Override
+    public void finish() {
+
+
+        super.finish();
+
     }
 }

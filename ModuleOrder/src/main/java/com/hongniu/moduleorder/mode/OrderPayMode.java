@@ -3,11 +3,12 @@ package com.hongniu.moduleorder.mode;
 import android.text.TextUtils;
 
 import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.PayOrderInfor;
 import com.hongniu.baselibrary.entity.WalletDetail;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.moduleorder.control.OrderPayControl;
 import com.hongniu.baselibrary.entity.OrderInsuranceInforBean;
-import com.hongniu.moduleorder.entity.OrderParamBean;
+import com.hongniu.baselibrary.entity.PayParam;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.ConvertUtils;
@@ -23,10 +24,10 @@ import io.reactivex.Observable;
  */
 public class OrderPayMode implements OrderPayControl.IOrderPayMode {
 
-    private boolean insurance;//是否是购买保险界面
-    private float money;//订单金额,就是运费
-    private String orderID;//订单id
-    private String orderNum;//订单号
+//    private boolean insurance;//是否是购买保险界面
+//    private float money;//订单金额,就是运费
+//    private String orderID;//订单id
+//    private String orderNum;//订单号
     private float insurancePrice;
     private float cargoPrice;
     private boolean buyInsurance;//是否需要购买保险
@@ -37,21 +38,20 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
     OrderInsuranceInforBean currentInsurancInfor;//当前选中的保险人信息
     private int roleType;//1 企业支付 2个人支付
     private int payWay;//付款方式 0 现付（线上支付） 1回付 2到付（线下支付）
+    private PayOrderInfor orderInfor=new PayOrderInfor();//订单相关信息
 
     /**
      * 储存其他界面传入的参数
+     *  @param event
      *
-     * @param insurance 是否是购买保险界面
-     * @param money     金额
-     * @param orderID   订单ID
-     * @param orderNum  订单号
      */
     @Override
-    public void saveTranDate(boolean insurance, float money, String orderID, String orderNum) {
-        this.insurance = insurance;
-        this.money = money;
-        this.orderID = orderID;
-        this.orderNum = orderNum;
+    public void saveTranDate(PayOrderInfor event) {
+        this.orderInfor=event;
+//        this.insurance = insurance;
+//        this.money = money;
+//        this.orderID = orderID;
+//        this.orderNum = orderNum;
     }
 
     /**
@@ -79,7 +79,7 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
      */
     @Override
     public String getOrderId() {
-        return orderID;
+        return orderInfor==null?"":orderInfor.orderID;
     }
 
 
@@ -149,7 +149,7 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
      */
     @Override
     public boolean showPayWays() {
-        return insurance || buyInsurance || payWay==0;
+        return isInsurance()|| buyInsurance || payWay==0;
     }
 
     /**
@@ -160,12 +160,12 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
     @Override
     public double getMoney() {
 
-        if (insurance) {//单独购买保险
+        if (isInsurance()) {//单独购买保险
             return insurancePrice;
         }else {
             float tranFee=0;
             if (payWay==0) {//线上支付
-                tranFee=money;
+                tranFee=orderInfor==null?0:orderInfor.money;
             }
             return buyInsurance?(tranFee + insurancePrice):tranFee;
         }
@@ -178,7 +178,7 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
      */
     @Override
     public boolean isInsurance() {
-        return insurance;
+        return orderInfor != null && orderInfor.insurance;
     }
 
     /**
@@ -188,7 +188,7 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
      */
     @Override
     public boolean isShowPriceAboutInsurance() {
-        return !insurance && payWay==0 && buyInsurance;
+        return !isInsurance()&& payWay==0 && buyInsurance;
     }
 
     /**
@@ -204,10 +204,12 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
     /**
      * 开始支付
      * @param passWord
+     * @param consigneeName
+     * @param consigneePhone
      */
     @Override
-    public Observable<CommonBean<PayBean>> getPayParams(String passWord) {
-        return HttpOrderFactory.payOrderOffLine(creatBuyParams(passWord,payWay==0, !insurance, buyInsurance));
+    public Observable<CommonBean<PayBean>> getPayParams(String passWord, String consigneeName, String consigneePhone) {
+        return HttpOrderFactory.payOrderOffLine(creatBuyParams(consigneeName,consigneePhone,passWord,payWay==0, !isInsurance(), isBuyInsurance()));
     }
 
     //获取支付方式
@@ -233,7 +235,7 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
      */
     @Override
     public String getOrderNum() {
-        return orderNum;
+        return orderInfor==null?"":orderInfor.orderNum;
     }
 
     /**
@@ -348,10 +350,12 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
      * 是否需要输入支付密码
      *
      * @return true 需要 目前仅有余额支付个人账户和企业支付有权限的时候需要显示
+     *                  同时如果购买保险的时候也需要
      */
     @Override
     public boolean needPassword() {
-        return payType==4&&(roleType==2||(roleType==1&&wallletInfor!=null&&wallletInfor.getType()==3));
+        return (isBuyInsurance()||payWay==0)&&
+        payType==4&&(roleType==2||(roleType==1&&wallletInfor!=null&&wallletInfor.getType()==3));
     }
 
     /**
@@ -376,15 +380,18 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
 
     /**
      *
+     *
+     * @param consigneeName
+     * @param consigneePhone
      * @param passWord   余额支付时候需要支付密码
      * @param onLine     线上线下支付方式
      * @param hasFrenght 是否支付运费（单独购买保险的时候不支付运费）
      * @param policy     是否购买保险
      * @return
      */
-    private OrderParamBean creatBuyParams(String passWord, boolean onLine, boolean hasFrenght, boolean policy) {
-        OrderParamBean bean = new OrderParamBean();
-        bean.setOrderNum(orderNum);
+    private PayParam creatBuyParams(String consigneeName, String consigneePhone, String passWord, boolean onLine, boolean hasFrenght, boolean policy) {
+        PayParam bean = new PayParam();
+        bean.setOrderNum(getOrderNum());
         if (!TextUtils.isEmpty(passWord)){
             bean.setPayPassword(ConvertUtils.MD5(passWord));
         }
@@ -399,7 +406,11 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
         }else {
             bean.setPayType((onLine || policy) ? payType : 2);
         }
-
+        bean.setFreightPayClass(payWay+1);
+        if (payWay==1){
+            bean.setReceiptName(consigneeName);
+            bean.setReceiptMobile(consigneePhone);
+        }
         if (buyInsurance&&currentInsurancInfor!=null){
             bean.setInsuranceUserId(currentInsurancInfor.getId());
         }

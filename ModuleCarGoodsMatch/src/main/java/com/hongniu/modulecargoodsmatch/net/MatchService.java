@@ -68,7 +68,7 @@ public interface MatchService {
      * @return
      */
     @POST("hongniu/api/robOrder/add")
-    Observable<CommonBean<Object>> grapMatch(@Body MatchGrapDetailParams params);
+    Observable<CommonBean<GoodsOwnerInforBean>> grapMatch(@Body MatchGrapDetailParams params);
 
 
 }

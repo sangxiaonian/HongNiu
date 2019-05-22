@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.hongniu.baselibrary.R;
@@ -34,6 +35,11 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
     private String describe;
     private String title;
     private PayWayView.OnPayTypeChangeListener changeListener;
+    private OnClickPayListener payListener;
+    private boolean showCompany;
+    private Button btPay;
+    private int yueWay;
+    private int payType;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,18 +49,19 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
         tvTitle = inflate.findViewById(R.id.tv_title);
         tvDescribe = inflate.findViewById(R.id.tv_describe);
         payWay = inflate.findViewById(R.id.pay_way);
+        btPay = inflate.findViewById(R.id.bt_pay);
         payWay.setChangeListener(this);
+        btPay.setOnClickListener(this);
         imgCancel.setOnClickListener(this);
+        payWay.setShowCompany(showCompany);
         return inflate;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         setTitle(title);
         setDescribe(describe);
-
     }
 
 
@@ -79,6 +86,11 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
     public void setChangeListener(PayWayView.OnPayTypeChangeListener changeListener) {
         this.changeListener = changeListener;
     }
+
+    public void setPayListener(OnClickPayListener payListener) {
+        this.payListener = payListener;
+    }
+
     public void setTitle(String title) {
         this.title=title;
         if (tvTitle != null) {
@@ -94,6 +106,13 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
         }
     }
 
+    /**
+     * 设置是否支持企业账号支付
+     * @param showCompany true 支持 默认为false
+     */
+    public void setShowCompany(boolean showCompany){
+        this.showCompany=showCompany;
+    }
 
     /**
      * Called when a view has been clicked.
@@ -104,19 +123,40 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
     public void onClick(View v) {
         if (v.getId() == R.id.img_cancel) {
             dismiss();
+        }else if (v.getId()==R.id.bt_pay){
+            if (payListener!=null){
+                payListener.onClickPay("",payType,yueWay);
+            }
         }
     }
 
     /**
      * 支付方式更改监听
      *
-     * @param payType
+     * @param payType 1 余额 2微信 3支付宝 4银联
      * @param yueWay  余额支付方式更改监听 0 企业支付 1余额支付
      */
     @Override
     public void onPayTypeChang(int payType, int yueWay) {
+        this.yueWay=yueWay;
+        this.payType=payType;
         if (changeListener!=null){
             changeListener.onPayTypeChang(payType,yueWay);
         }
+        if (payType==1&&yueWay==0){
+            btPay.setText("申请支付");
+        }else {
+            btPay.setText("立即支付");
+        }
+    }
+
+    public interface OnClickPayListener{
+        /**
+         * 点击支付
+         * @param amount     支付金额
+         * @param payType    1 余额 2微信 3支付宝 4银联
+         * @param yueWay     余额支付方式更改监听 0 企业支付 1余额支付
+         */
+      void   onClickPay(String amount,int payType,int yueWay);
     }
 }

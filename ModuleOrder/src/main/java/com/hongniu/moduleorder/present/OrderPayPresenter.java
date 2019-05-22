@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 
 import com.hongniu.baselibrary.base.NetObserver;
+import com.hongniu.baselibrary.entity.PayOrderInfor;
 import com.hongniu.baselibrary.entity.WalletDetail;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.moduleorder.R;
@@ -35,18 +36,14 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
 
     /**
      * 储存其他界面传入的参数，同时做一些初始化的操作
-     *
-     * @param insurance 是否是购买保险界面
-     * @param money     金额
-     * @param orderID   订单ID
-     * @param orderNum  订单号
+     * @param event
      * @param listener
      */
     @Override
-    public void saveTranDate(final boolean insurance, final float money, String orderID, String orderNum, TaskControl.OnTaskListener listener) {
-        mode.saveTranDate(insurance, money, orderID, orderNum);
-        view.setTranDate(money, orderID, orderNum);
-        if (insurance) {//如果是购买保险
+    public void saveTranDate(PayOrderInfor event, TaskControl.OnTaskListener listener) {
+        mode.saveTranDate(event );
+        view.setTranDate(event );
+        if (mode.isInsurance()) {//如果是购买保险
             view.showBuyInsurance();
         } else {
             view.showPayOrder();
@@ -157,11 +154,21 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
     /**
      * 支付
      *
+     * @param consigneeName
+     * @param consigneePhone
      * @param listener
      */
     @Override
-    public void pay(TaskControl.OnTaskListener listener) {
+    public void pay(String consigneeName, String consigneePhone, TaskControl.OnTaskListener listener) {
 
+        if (mode.getPayWays()==1) {
+            //对于回付，必填
+            if (TextUtils.isEmpty(consigneeName)||TextUtils.isEmpty(consigneePhone)){
+                view.showError("请输入正确的收货人姓名和手机号");
+                return;
+            }
+
+        }
         //单独购买保险界面，却没有购买保险，
         if ((mode.isInsurance() && !mode.isBuyInsurance())) {
             view.noChoiceInsurance("请选择投保金额");
@@ -180,7 +187,7 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
                     view.hasNoSetPassword();
                 }
             } else {
-                mode.getPayParams(null)
+                mode.getPayParams(null,consigneeName,consigneePhone)
                         .subscribe(new NetObserver<PayBean>(listener) {
                             @Override
                             public void doOnSuccess(PayBean data) {
@@ -230,7 +237,7 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
      */
     @Override
     public void setPayPassoword(String passWord, TaskControl.OnTaskListener listener) {
-        mode.getPayParams(passWord)
+        mode.getPayParams(passWord, null, null)
                 .subscribe(new NetObserver<PayBean>(listener) {
                     @Override
                     public void doOnSuccess(PayBean data) {

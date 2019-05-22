@@ -1,5 +1,7 @@
 package com.hongniu.modulecargoodsmatch.ui.activiry;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -9,23 +11,32 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.hongniu.baselibrary.arouter.ArouterParamLogin;
+import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParams;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CarInforBean;
 import com.hongniu.baselibrary.entity.PageBean;
+import com.hongniu.baselibrary.entity.PayParam;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.widget.dialog.ListDialog;
 import com.hongniu.baselibrary.widget.dialog.PayDialog;
 import com.hongniu.baselibrary.widget.pay.PayWayView;
 import com.hongniu.modulecargoodsmatch.R;
+import com.hongniu.modulecargoodsmatch.entity.GoodsOwnerInforBean;
 import com.hongniu.modulecargoodsmatch.net.HttpMatchFactory;
+import com.sang.common.event.BusFactory;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.utils.ToastUtils;
+import com.sang.thirdlibrary.pay.entiy.PayBean;
 
 import java.util.ArrayList;
+
+import static com.hongniu.baselibrary.config.Param.isDebug;
 
 /**
  * @data 2019/5/12
@@ -33,7 +44,7 @@ import java.util.ArrayList;
  * @Description 我要抢单页面
  */
 @Route(path = ArouterParams.activity_match_grap_single)
-public class MatchGrapSingleActivity extends BaseActivity implements View.OnClickListener, PayWayView.OnPayTypeChangeListener {
+public class MatchGrapSingleActivity extends BaseActivity implements View.OnClickListener, PayWayView.OnPayTypeChangeListener, PayDialog.OnClickPayListener {
 
     private TextView tvCarNum;
     private TextView tvCarType;
@@ -46,6 +57,7 @@ public class MatchGrapSingleActivity extends BaseActivity implements View.OnClic
     private CarInforBean infor;//选择的车辆信息
     private String id;
     PayDialog payDialog;
+    private String grapId;//抢单id
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +72,7 @@ public class MatchGrapSingleActivity extends BaseActivity implements View.OnClic
     @Override
     protected void initView() {
         super.initView();
-        payDialog=new PayDialog();
+        payDialog = new PayDialog();
         dialog = new ListDialog<>();
         dialog.setAdapter(adapter = new XAdapter<CarInforBean>(mContext, datas = new ArrayList<>()) {
             @Override
@@ -113,8 +125,10 @@ public class MatchGrapSingleActivity extends BaseActivity implements View.OnClic
         dialog.setTitle("选择抢单车辆");
         dialog.setDescribe(null);
         String title = getIntent().getStringExtra(Param.TITLE);
-          id = getIntent().getStringExtra(Param.TRAN);
-        setToolbarTitle(title+"的车货匹配");
+        id = getIntent().getStringExtra(Param.TRAN);
+        setToolbarTitle(title + "的车货匹配");
+        queryCarInfor();
+
     }
 
     @Override
@@ -123,6 +137,34 @@ public class MatchGrapSingleActivity extends BaseActivity implements View.OnClic
         btSubmit.setOnClickListener(this);
         llCar.setOnClickListener(this);
         payDialog.setChangeListener(this);
+        payDialog.setPayListener(this);
+    }
+
+
+    private void queryCarInfor() {
+        HttpAppFactory.getCarList(1)
+                .subscribe(new NetObserver<PageBean<CarInforBean>>(this) {
+                    @Override
+                    public void doOnSuccess(PageBean<CarInforBean> data) {
+                        datas.clear();
+                        if (data != null && data.getList() != null) {
+                            datas.addAll(data.getList());
+                        }
+                        adapter.notifyDataSetChanged();
+                        if (datas.size() == 0) {
+                            //添加车辆
+                            ArouterUtils.getInstance()
+                                    .builder(ArouterParamLogin.activity_car_infor)
+                                    .navigation((Activity) mContext, 1);
+
+                        } else if (datas.size() == 1) {
+                            changeInfor(datas.get(0));
+                        } else {
+                            dialog.show(getSupportFragmentManager(), "");
+                        }
+
+                    }
+                });
     }
 
     /**
@@ -133,45 +175,28 @@ public class MatchGrapSingleActivity extends BaseActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.bt_sum) {
-            ToastUtils.getInstance().show("提交");
-            if (infor==null){
+            if (infor == null) {
                 ToastUtils.getInstance().show("请选择车辆");
-            }else if (TextUtils.isEmpty(etPrice.getText().toString().trim())){
+            } else if (TextUtils.isEmpty(etPrice.getText().toString().trim())) {
                 ToastUtils.getInstance().show("请输入意向金");
 
-            }else {
+            } else {
                 String price = etPrice.getText().toString().trim();
-                payDialog.setDescribe("意向金 "+price+"元");
-                payDialog.show(getSupportFragmentManager(),"");
-
-//                HttpMatchFactory
-//                        .grapMatch(id,infor.getId(),price)
-//                        .subscribe(new NetObserver<Object>(this) {
-//                            @Override
-//                            public void doOnSuccess(Object data) {
-//                                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
-//                                finish();
-//                            }
-//                        });
-                ;
+                payDialog.setDescribe("意向金 " + price + "元");
+                HttpMatchFactory
+                        .grapMatch(id, infor.getId(), price)
+                        .subscribe(new NetObserver<GoodsOwnerInforBean>(this) {
+                            @Override
+                            public void doOnSuccess(GoodsOwnerInforBean data) {
+                                grapId=data.id;
+                                payDialog.show(getSupportFragmentManager(), "");
+                            }
+                        });
             }
 
 
-
         } else if (v.getId() == R.id.ll_car) {
-            HttpAppFactory.getCarList(1)
-                    .subscribe(new NetObserver<PageBean<CarInforBean>>(this) {
-                        @Override
-                        public void doOnSuccess(PageBean<CarInforBean> data) {
-                            datas.clear();
-                            if (data != null && data.getList() != null) {
-                                datas.addAll(data.getList());
-                            }
-                            adapter.notifyDataSetChanged();
-                            dialog.show(getSupportFragmentManager(), "");
-
-                        }
-                    });
+            dialog.show(getSupportFragmentManager(), "");
         }
     }
 
@@ -183,19 +208,97 @@ public class MatchGrapSingleActivity extends BaseActivity implements View.OnClic
      */
     @Override
     public void onPayTypeChang(int payType, int yueWay) {
-        if (payType==2){
+        if (payType == 2) {
             ToastUtils.getInstance().show("微信支付");
-        }else if (payType==4){
+        } else if (payType == 4) {
             ToastUtils.getInstance().show("银联支付");
-        }else if (payType==3){
+        } else if (payType == 3) {
             ToastUtils.getInstance().show("支付宝支付");
-        }else if (payType==1){
-            if (yueWay==1){
+        } else if (payType == 1) {
+            if (yueWay == 1) {
                 ToastUtils.getInstance().show("个人支付");
-            }else {
+            } else {
                 ToastUtils.getInstance().show("公司账户");
             }
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            int payResult = data.getIntExtra("payResult", 0);
+            String msg = "";
+
+            switch (payResult) {
+                case 1000://成功
+                    msg = "支付成功！";
+                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show(msg);
+                    finish();
+                    break;
+                case 2000://失败
+                    msg = "支付失败！";
+                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show(msg);
+                    break;
+                case 3000://取消
+                    msg = "取消支付";
+                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show(msg);
+                    break;
+            }
+        }else if (requestCode==2){
+            queryCarInfor();
+        }
+    }
+
+    /**
+     * 点击支付
+     *
+     * @param amount  支付金额
+     * @param payType 1 余额 2微信 3支付宝 4银联
+     * @param yueWay  余额支付方式更改监听 0 企业支付 1余额支付
+     */
+    @Override
+    public void onClickPay(String amount, final int payType, int yueWay) {
+        final PayParam payParam = new PayParam();
+        payParam.setPaybusiness(3);
+        payParam.setMatchingId(grapId);//抢单ID
+//        0微信支付 1银联支付 2线下支付3 支付宝支付 4余额支付 5企业支付
+        int type = -1;
+        switch (payType) {
+            case 1:
+                if (yueWay==0){
+                    type=5;
+                }else {
+                    type=4;
+                }
+                break;
+            case 2:
+                type=0;
+                break;
+            case 3:
+                type=3;
+                break;
+            case 4:
+                type=1;
+                break;
+        }
+        payParam.setPayType(type);
+        final int finalType = type;
+        HttpAppFactory.pay(payParam)
+                .subscribe(new NetObserver<PayBean>(this) {
+                    @Override
+                    public void doOnSuccess(PayBean data) {
+                        ArouterUtils.getInstance()
+                                .builder(ArouterParamOrder.activity_waite_pay)
+                                .withInt("payType", finalType)
+                                .withParcelable("payInfor",data)
+                                .withBoolean("ISDEUBG", isDebug)
+                                .withString("ORDERID",id)
+                                .withBoolean("havePolicy",false)
+                                .withInt("queryType",1)
+                                .navigation((Activity) mContext,1);
+                    }
+                });
 
 
     }

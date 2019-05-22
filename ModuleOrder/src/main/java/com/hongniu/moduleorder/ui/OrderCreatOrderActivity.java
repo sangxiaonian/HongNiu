@@ -25,6 +25,7 @@ import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
+import com.hongniu.baselibrary.entity.PayOrderInfor;
 import com.hongniu.baselibrary.entity.UpImgData;
 import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.utils.PermissionUtils;
@@ -407,11 +408,15 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
                     .subscribe(new NetObserver<OrderDetailBean>(this) {
                         @Override
                         public void doOnSuccess(OrderDetailBean data) {
-                            OrderEvent.PayOrder payOrder = new OrderEvent.PayOrder();
+                            PayOrderInfor payOrder = new PayOrderInfor();
                             payOrder.insurance = false;
                             payOrder.money = Float.parseFloat(paramBean.getMoney());
                             payOrder.orderID = data.getId();
                             payOrder.orderNum = data.getOrderNum();
+                            if (select) {
+                                payOrder.receiptMobile =itemConsigneePhone.getTextCenter();
+                                payOrder.receiptName = itemConsigneeName.getTextCenter();
+                            }
                             BusFactory.getBus().postSticky(payOrder);
                             ArouterUtils.getInstance()
                                     .builder(ArouterParamOrder.activity_order_pay)
@@ -441,6 +446,11 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         paramBean.setOwnerName(itemCarName.getTextCenter());
         paramBean.setDriverName(itemDriverName.getTextCenter());
         paramBean.setDriverMobile(itemDriverPhone.getTextCenter());
+
+        paramBean.setReplaceState(select?1:0);
+        paramBean.setPaymentAmount(itemCargoPrice.getTextCenter());
+        paramBean.setReceiptName(itemConsigneeName.getTextCenter());
+        paramBean.setReceiptMobile(itemConsigneePhone.getTextCenter());
         if (changeOrder) { //如果是修改订单界面,清除不可修改部分的内容
             if (!itemStartTime.isEnabled()) {//不可更改
                 paramBean.setDeliveryDate(null);
@@ -483,6 +493,9 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
             }
 
         }
+
+
+
     }
 
     @Override
@@ -616,6 +629,24 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
             return false;
         }
 
+        if (select){
+            if (TextUtils.isEmpty(itemCargoPrice.getTextCenter())) {
+                showAleart(itemCargoPrice.getTextCenterHide());
+                return false;
+            }
+            ; if (TextUtils.isEmpty(itemConsigneeName.getTextCenter())) {
+                showAleart(itemConsigneeName.getTextCenterHide());
+                return false;
+            }
+            ; if (TextUtils.isEmpty(itemConsigneePhone.getTextCenter())) {
+                showAleart(itemConsigneePhone.getTextCenterHide());
+                return false;
+            }else if (!CommonUtils.isPhone(itemConsigneePhone.getTextCenter())) {
+                showAleart(getString(R.string.phone_error));
+                return false;
+            }
+            ;
+        }
 
         return true;
 

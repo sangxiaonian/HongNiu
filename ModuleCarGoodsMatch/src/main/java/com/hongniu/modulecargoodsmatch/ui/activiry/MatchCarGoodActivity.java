@@ -106,6 +106,11 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
         params.pageNum = currentPage;
         return HttpMatchFactory.queryMatchGoodsInfor(params);
     }
+    @Override
+    public void onStart() {
+        super.onStart();
+        queryData(true);
+    }
 
     @Override
     protected XAdapter<GoodsOwnerInforBean> getAdapter(List<GoodsOwnerInforBean> datas) {

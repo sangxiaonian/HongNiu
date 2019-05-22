@@ -15,7 +15,7 @@ public class ArouterParamOrder {
      * 我要下单
      */
     public static final String activity_order_create = "/order/activity_order_create";
-     /**
+    /**
      * 单纯的订单列表页面，从首页点击进入
      */
     public static final String activity_order_order = "/order/activity_order_order";
@@ -66,5 +66,9 @@ public class ArouterParamOrder {
      * 上传保单
      */
     public static final String activity_order_up_receipt = "/order/activity_order_up_receipt";
+    /**
+     * 等待付款
+     */
+    public static final String activity_waite_pay = "/order/activity_waite_pay";
 
 }

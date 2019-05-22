@@ -86,6 +86,26 @@ public class OrderCreatParamBean {
      */
     protected String payWay;
     private List<String> goodsImageUrls;
+    /**
+     * true	number	代收货款:0:否 1:是
+     */
+    private int replaceState;    //
+    /**
+     * false	number	货款金额 replaceState=1 时必填
+     */
+    private String paymentAmount;//
+    /**
+     * false	string	收货人姓名 replaceState=1 时必填
+     */
+    private String receiptName;  //
+    /**
+     * false	string	收货人手机 replaceState=1 时必填
+     */
+    private String receiptMobile;//
+    /**
+     * false	string	货源单号(车货匹配货主下单时使用)
+     */
+    private String gsNum;        //
 
     public String getId() {
         return id;
@@ -253,5 +273,53 @@ public class OrderCreatParamBean {
 
     public void setPayWay(String payWay) {
         this.payWay = payWay;
+    }
+
+    public List<String> getGoodsImageUrls() {
+        return goodsImageUrls;
+    }
+
+    public void setGoodsImageUrls(List<String> goodsImageUrls) {
+        this.goodsImageUrls = goodsImageUrls;
+    }
+
+    public int getReplaceState() {
+        return replaceState;
+    }
+
+    public void setReplaceState(int replaceState) {
+        this.replaceState = replaceState;
+    }
+
+    public String getPaymentAmount() {
+        return paymentAmount;
+    }
+
+    public void setPaymentAmount(String paymentAmount) {
+        this.paymentAmount = paymentAmount;
+    }
+
+    public String getReceiptName() {
+        return receiptName;
+    }
+
+    public void setReceiptName(String receiptName) {
+        this.receiptName = receiptName;
+    }
+
+    public String getReceiptMobile() {
+        return receiptMobile;
+    }
+
+    public void setReceiptMobile(String receiptMobile) {
+        this.receiptMobile = receiptMobile;
+    }
+
+    public String getGsNum() {
+        return gsNum;
+    }
+
+    public void setGsNum(String gsNum) {
+        this.gsNum = gsNum;
     }
 }

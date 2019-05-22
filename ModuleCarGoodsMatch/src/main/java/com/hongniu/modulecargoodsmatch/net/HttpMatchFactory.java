@@ -92,14 +92,14 @@ public class HttpMatchFactory {
      *
      * @return
      */
-    public static Observable<CommonBean<Object>> grapMatch(String id, String carId,String robAount) {
+    public static Observable<CommonBean<GoodsOwnerInforBean>> grapMatch(String id, String carId, String robAount) {
         MatchGrapDetailParams params = new MatchGrapDetailParams(0);
         params.goodsSourceId = id;
         params.carId = carId;
         params.robAmount = robAount;
         return MatchClient.getInstance().getService()
                 .grapMatch(params)
-                .compose(RxUtils.<CommonBean<Object>>getSchedulersObservableTransformer())
+                .compose(RxUtils.<CommonBean<GoodsOwnerInforBean>>getSchedulersObservableTransformer())
                 ;
     }
 

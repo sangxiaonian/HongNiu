@@ -195,6 +195,12 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
                     }
                 });
     }
+    @Override
+    public void onStart() {
+        super.onStart();
+        queryData(true);
+    }
+
 }
 
 

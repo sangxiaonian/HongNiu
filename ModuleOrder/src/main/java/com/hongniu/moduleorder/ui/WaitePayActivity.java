@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.widget.ImageView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.entity.CommonBean;
@@ -27,6 +29,8 @@ import org.greenrobot.eventbus.ThreadMode;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
+import java.lang.reflect.Type;
+
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -38,6 +42,7 @@ import io.reactivex.schedulers.Schedulers;
  * @Author PING
  * @Description 支付界面
  */
+@Route(path = ArouterParamOrder.activity_waite_pay)
 public class WaitePayActivity extends BaseActivity {
     public static final String PAYTYPE = "payType";
     public static final String PAYINFOR = "payInfor";
@@ -48,6 +53,7 @@ public class WaitePayActivity extends BaseActivity {
     private String orderID;
     private Subscription sub;
     private boolean havePolicy;//是否购买保险，默认是false
+    private int queryType;//查询类型 0 订单支付 1支付意向金 默认为0
 
 
     @Override
@@ -73,6 +79,7 @@ public class WaitePayActivity extends BaseActivity {
         super.initData();
         int payType = getIntent().getIntExtra(PAYTYPE, 0);
         orderID = getIntent().getStringExtra(ORDERID);
+        queryType = getIntent().getIntExtra("queryType",0);
         havePolicy = getIntent().getBooleanExtra(HAVEPOLICY,false);
         PayBean bean = getIntent().getParcelableExtra(PAYINFOR);
         boolean isDebug = getIntent().getBooleanExtra(ISDEUBG, false);
@@ -160,7 +167,7 @@ public class WaitePayActivity extends BaseActivity {
         intent.putExtra(ISDEUBG, isDebug);
         intent.putExtra(ORDERID, orderId);
         intent.putExtra(HAVEPOLICY, havePolicy);
-        activity.startActivityForResult(intent, 0);
+        activity.startActivityForResult(intent, 1);
     }
 
     @Override
@@ -195,46 +202,14 @@ public class WaitePayActivity extends BaseActivity {
 
                     @Override
                     public void onNext(Integer aLong) {
-                        HttpAppFactory.queryOrderState(orderID)
-                                .map(new Function<CommonBean<QueryOrderStateBean>, CommonBean<QueryOrderStateBean>>() {
-                                    @Override
-                                    public CommonBean<QueryOrderStateBean> apply(CommonBean<QueryOrderStateBean> queryOrderStateBeanCommonBean) throws Exception {
-                                        return queryOrderStateBeanCommonBean ;
-                                    }
-                                })
-                                .subscribe(new NetObserver<QueryOrderStateBean>(null) {
-
-                                    @Override
-                                    public void onSubscribe(Disposable d) {
-                                        super.onSubscribe(d);
-                                        disposable = d;
-                                    }
-
-                                    @Override
-                                    public void doOnSuccess(QueryOrderStateBean data) {
-
-                                        //如果没有保险，订单状态为2，表示此事已经支付完成
-                                        if (!havePolicy && data.getOrderState() == 2) {
-                                            BusFactory.getBus().post(new PaySucess( ));
-
-                                            //如果购买保险，且保险状态为已经支付
-                                        } else if (havePolicy&& data.getPayPolicyState() == 1 && data.getOrderState() == 2) {
-                                            BusFactory.getBus().post(new PaySucess( ));
-                                        } else if (sub != null) {
-                                            sub.request(1);
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onError(Throwable e) {
-                                        super.onError(e);
-                                        if (sub != null) {
-                                            sub.request(1);
-                                        }
-                                    }
-                                });
+                        if (queryType==0) {
+                            queryOrder();
+                        }else if (queryType==1){
+                            queryMatch();
+                        }
 
                     }
+
 
                     @Override
                     public void onError(Throwable t) {
@@ -251,6 +226,56 @@ public class WaitePayActivity extends BaseActivity {
 
 
     }
+
+    /**
+     * 查询订单
+     */
+    private void queryOrder() {
+        HttpAppFactory.queryOrderState(orderID)
+                .map(new Function<CommonBean<QueryOrderStateBean>, CommonBean<QueryOrderStateBean>>() {
+                    @Override
+                    public CommonBean<QueryOrderStateBean> apply(CommonBean<QueryOrderStateBean> queryOrderStateBeanCommonBean) throws Exception {
+                        return queryOrderStateBeanCommonBean ;
+                    }
+                })
+                .subscribe(new NetObserver<QueryOrderStateBean>(null) {
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        super.onSubscribe(d);
+                        disposable = d;
+                    }
+
+                    @Override
+                    public void doOnSuccess(QueryOrderStateBean data) {
+
+                        //如果没有保险，订单状态为2，表示此事已经支付完成
+                        if (!havePolicy && data.getOrderState() == 2) {
+                            BusFactory.getBus().post(new PaySucess( ));
+                            //如果购买保险，且保险状态为已经支付
+                        } else if (havePolicy&& data.getPayPolicyState() == 1 && data.getOrderState() == 2) {
+                            BusFactory.getBus().post(new PaySucess( ));
+                        } else if (sub != null) {
+                            sub.request(1);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        if (sub != null) {
+                            sub.request(1);
+                        }
+                    }
+                });
+    }
+    /**
+     * 查询支付意向金
+     */
+    private void queryMatch(){
+//        BusFactory.getBus().post(new PaySucess( ));
+    }
+
 
     public static class PaySucess implements IBus.IEvent{}
 

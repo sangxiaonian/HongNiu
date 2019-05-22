@@ -8,6 +8,7 @@ import com.hongniu.baselibrary.entity.OrderIdBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
 import com.hongniu.baselibrary.entity.PayInforBeans;
+import com.hongniu.baselibrary.entity.PayParam;
 import com.hongniu.baselibrary.entity.QueryOrderParamBean;
 import com.hongniu.baselibrary.entity.QueryOrderStateBean;
 import com.hongniu.baselibrary.entity.QueryPayPassword;
@@ -21,6 +22,7 @@ import com.hongniu.baselibrary.utils.Utils;
 import com.sang.common.net.rx.RxUtils;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.thirdlibrary.chact.UserInfor;
+import com.sang.thirdlibrary.pay.entiy.PayBean;
 
 import java.io.File;
 import java.util.List;
@@ -242,4 +244,58 @@ public class HttpAppFactory {
         return AppClient.getInstance().getService().getCarList(bean).compose(RxUtils.<CommonBean<PageBean<CarInforBean>>>getSchedulersObservableTransformer());
 
     }
+
+
+    /**
+     * 线下支付订单
+     * <p>
+     * orderNum     true	string	订单号
+     * openid       true	string	微信用户openid
+     * hasFreight   true	boolean	是否付运费，true=是
+     * hasPolicy    true	boolean	是否买保险，true=是
+     * onlinePay    true	boolean	是否线上支付,false=线下支付
+     * payType      true	    int 	支付方式 0微信支付 1银联支付 2线下支付 3 支付宝
+     */
+    public static Observable<CommonBean<PayBean>> pay(PayParam bean) {
+        //支付方式
+        int payType = bean.getPayType();
+        if (payType == 1) {//银联支付
+            return AppClient.getInstance()
+                    .getService()
+                    .payUnion(bean)
+                    .compose(RxUtils.<CommonBean<PayBean>>getSchedulersObservableTransformer());
+
+        } else if (payType == 0) {//微信付款
+            return AppClient.getInstance()
+                    .getService()
+                    .payWeChat(bean)
+                    .compose(RxUtils.<CommonBean<PayBean>>getSchedulersObservableTransformer());
+        } else if (payType == 3) {//支付宝
+            return AppClient.getInstance()
+                    .getService()
+                    .payAli(bean)
+                    .compose(RxUtils.<CommonBean<PayBean>>getSchedulersObservableTransformer());
+        } else if (payType == 2) {//线下支付
+            return AppClient.getInstance()
+                    .getService()
+                    .payOrderOffLine(bean)
+                    .compose(RxUtils.<CommonBean<PayBean>>getSchedulersObservableTransformer());
+        } else if (payType == 4) {//余额支付
+            return AppClient.getInstance()
+                    .getService()
+                    .payBalance(bean)
+                    .compose(RxUtils.<CommonBean<PayBean>>getSchedulersObservableTransformer());
+        }  else if (payType == 5) {//企业支付
+            return AppClient.getInstance()
+                    .getService()
+                    .payBalance(bean)
+                    .compose(RxUtils.<CommonBean<PayBean>>getSchedulersObservableTransformer());
+        } else {
+            return null;
+        }
+
+
+    }
+
+
 }

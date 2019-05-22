@@ -1,11 +1,10 @@
 package com.hongniu.baselibrary.net;
 
 import com.hongniu.baselibrary.entity.CarInforBean;
-import com.hongniu.baselibrary.entity.CarTypeBean;
 import com.hongniu.baselibrary.entity.CommonBean;
-import com.hongniu.baselibrary.entity.LoginPersonInfor;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.OrderIdBean;
+import com.hongniu.baselibrary.entity.PayParam;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
 import com.hongniu.baselibrary.entity.PayInforBeans;
@@ -19,12 +18,12 @@ import com.hongniu.baselibrary.entity.TruckGudieSwitchBean;
 import com.hongniu.baselibrary.entity.UpImgData;
 import com.hongniu.baselibrary.entity.WalletDetail;
 import com.sang.thirdlibrary.chact.UserInfor;
+import com.sang.thirdlibrary.pay.entiy.PayBean;
 
 import java.util.List;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
-import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -131,6 +130,76 @@ public interface AppService {
      */
     @POST("hongniu/api/car/selectpagecar")
     Observable<CommonBean<PageBean<CarInforBean>>> getCarList(@Body PagerParambean parambean);
+
+    /**
+     * 微信支付
+     * orderNum     true	string	订单号
+     * openid       true	string	微信用户openid
+     * hasFreight   true	boolean	是否付运费，true=是
+     * hasPolicy    true	boolean	是否买保险，true=是
+     * onlinePay    true	boolean	是否线上支付,false=线下支付
+     *
+     * @param infor 订单ID
+     * @return
+     */
+    @POST("hongniu/wx/jsApiPay")
+    Observable<CommonBean<PayBean>> payWeChat(@Body PayParam infor);
+
+    /**
+     * 线下支付订单
+     * orderNum     true	string	订单号
+     * openid       true	string	微信用户openid
+     * hasFreight   true	boolean	是否付运费，true=是
+     * hasPolicy    true	boolean	是否买保险，true=是
+     * onlinePay    true	boolean	是否线上支付,false=线下支付
+     *
+     * @param infor 订单ID
+     * @return
+     */
+    @POST("hongniu/wx/jsApiPay")
+    Observable<CommonBean<PayBean>> payOrderOffLine(@Body PayParam infor);
+
+    /**
+     * 银联支付
+     * orderNum     true	string	订单号
+     * openid       true	string	微信用户openid
+     * hasFreight   true	boolean	是否付运费，true=是
+     * hasPolicy    true	boolean	是否买保险，true=是
+     * onlinePay    true	boolean	是否线上支付,false=线下支付
+     *
+     * @param infor 订单ID
+     * @return
+     */
+    @POST("hongniu/api/unionpay/unionpaytn")
+    Observable<CommonBean<PayBean>> payUnion(@Body PayParam infor);
+
+    /**
+     * 支付宝支付
+     * orderNum     true	string	订单号
+     * openid       true	string	微信用户openid
+     * hasFreight   true	boolean	是否付运费，true=是
+     * hasPolicy    true	boolean	是否买保险，true=是
+     * onlinePay    true	boolean	是否线上支付,false=线下支付
+     *
+     * @param infor 订单ID
+     * @return
+     */
+    @POST("hongniu/api/alipay/getorderinfo")
+    Observable<CommonBean<PayBean>> payAli(@Body PayParam infor);
+
+    /**
+     * 余额支付
+     * orderNum     true	string	订单号
+     * openid       true	string	微信用户openid
+     * hasFreight   true	boolean	是否付运费，true=是
+     * hasPolicy    true	boolean	是否买保险，true=是
+     * onlinePay    true	boolean	是否线上支付,false=线下支付
+     *
+     * @param infor 订单ID
+     * @return
+     */
+    @POST("hongniu/api/account/accountpay")
+    Observable<CommonBean<PayBean>> payBalance(@Body PayParam infor);
 
 }
 

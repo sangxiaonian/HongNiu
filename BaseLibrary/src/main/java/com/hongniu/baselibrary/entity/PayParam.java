@@ -1,17 +1,17 @@
-package com.hongniu.moduleorder.entity;
+package com.hongniu.baselibrary.entity;
 
 /**
  * 作者： ${桑小年} on 2018/8/18.
  * 努力，为梦长留
  * 订单相关操作参数
  */
-public class OrderParamBean  {
+public class PayParam {
     /**
      * true	string	订单ID
      */
     private String id;
     /**
-     * 支付方式 0微信支付 1银联支付 2线下支付 3支付宝 4余额
+     * 支付方式 0微信支付 1银联支付 2线下支付3 支付宝支付 4余额支付 5企业支付
      */
     private int payType=-1;
 
@@ -41,6 +41,61 @@ public class OrderParamBean  {
      * 被保险人ID
      */
     private String insuranceUserId;
+
+   private int paybusiness	;//true	string	1订单支付2代收货款和代收运费支付3意向金支付
+   private String matchingId	;//true	long	车货匹配抢单记录id
+   private int freightPayClass	;//true	number	运费支付类型1:现付 2:到付 3:回付
+   private String receiptName	;//false	string	收货人姓名 到付时必填
+   private String receiptMobile	;//false	string	收货人手机 到付时必填
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public int getPaybusiness() {
+        return paybusiness;
+    }
+
+    public void setPaybusiness(int paybusiness) {
+        this.paybusiness = paybusiness;
+    }
+
+    public String getMatchingId() {
+        return matchingId;
+    }
+
+    public void setMatchingId(String matchingId) {
+        this.matchingId = matchingId;
+    }
+
+    public int getFreightPayClass() {
+        return freightPayClass;
+    }
+
+    public void setFreightPayClass(int freightPayClass) {
+        this.freightPayClass = freightPayClass;
+    }
+
+    public String getReceiptName() {
+        return receiptName;
+    }
+
+    public void setReceiptName(String receiptName) {
+        this.receiptName = receiptName;
+    }
+
+    public String getReceiptMobile() {
+        return receiptMobile;
+    }
+
+    public void setReceiptMobile(String receiptMobile) {
+        this.receiptMobile = receiptMobile;
+    }
 
     public String getInsuranceUserId() {
         return insuranceUserId;

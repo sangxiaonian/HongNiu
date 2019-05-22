@@ -45,7 +45,6 @@ public class MatchMyJoinRecordFragmet extends RefrushFragmet<MatchMyJoinGoodsIno
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        queryData(true);
     }
 
     @Override
@@ -54,6 +53,11 @@ public class MatchMyJoinRecordFragmet extends RefrushFragmet<MatchMyJoinGoodsIno
 
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        queryData(true);
+    }
 
     @Override
     protected Observable<CommonBean<PageBean<MatchMyJoinGoodsInofrBean>>> getListDatas() {

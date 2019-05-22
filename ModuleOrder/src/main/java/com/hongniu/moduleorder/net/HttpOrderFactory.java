@@ -22,7 +22,7 @@ import com.hongniu.moduleorder.entity.OrderCreatParamBean;
 import com.hongniu.moduleorder.entity.OrderDriverPhoneBean;
 import com.hongniu.baselibrary.entity.OrderInsuranceInforBean;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
-import com.hongniu.moduleorder.entity.OrderParamBean;
+import com.hongniu.baselibrary.entity.PayParam;
 import com.hongniu.moduleorder.entity.OrderSearchBean;
 import com.hongniu.moduleorder.entity.PathBean;
 import com.hongniu.moduleorder.entity.QueryInsurancePriceBean;
@@ -177,43 +177,9 @@ public class HttpOrderFactory {
      * onlinePay    true	boolean	是否线上支付,false=线下支付
      * payType      true	    int 	支付方式 0微信支付 1银联支付 2线下支付 3 支付宝
      */
-    public static Observable<CommonBean<PayBean>> payOrderOffLine(OrderParamBean bean) {
+    public static Observable<CommonBean<PayBean>> payOrderOffLine(PayParam bean) {
         //支付方式
-        int payType = bean.getPayType();
-        if (payType == 1) {//银联支付
-            return OrderClient.getInstance()
-                    .getService()
-                    .payUnion(bean)
-                    .compose(RxUtils.<CommonBean<PayBean>>getSchedulersObservableTransformer());
-
-        } else if (payType == 0) {//微信付款
-            return OrderClient.getInstance()
-                    .getService()
-                    .payWeChat(bean)
-                    .compose(RxUtils.<CommonBean<PayBean>>getSchedulersObservableTransformer());
-        } else if (payType == 3) {//支付宝
-            return OrderClient.getInstance()
-                    .getService()
-                    .payAli(bean)
-                    .compose(RxUtils.<CommonBean<PayBean>>getSchedulersObservableTransformer());
-        } else if (payType == 2) {//线下支付
-            return OrderClient.getInstance()
-                    .getService()
-                    .payOrderOffLine(bean)
-                    .compose(RxUtils.<CommonBean<PayBean>>getSchedulersObservableTransformer());
-        } else if (payType == 4) {//余额支付
-            return OrderClient.getInstance()
-                    .getService()
-                    .payBalance(bean)
-                    .compose(RxUtils.<CommonBean<PayBean>>getSchedulersObservableTransformer());
-        }  else if (payType == 5) {//企业支付
-            return OrderClient.getInstance()
-                    .getService()
-                    .payBalance(bean)
-                    .compose(RxUtils.<CommonBean<PayBean>>getSchedulersObservableTransformer());
-        } else {
-            return null;
-        }
+         return HttpAppFactory.pay(bean);
 
 
     }

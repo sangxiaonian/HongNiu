@@ -3,6 +3,7 @@ package com.hongniu.moduleorder.control;
 import android.text.SpannableStringBuilder;
 
 import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.PayOrderInfor;
 import com.hongniu.baselibrary.entity.WalletDetail;
 import com.hongniu.baselibrary.entity.OrderInsuranceInforBean;
 import com.sang.common.net.listener.TaskControl;
@@ -21,12 +22,10 @@ public class OrderPayControl {
 
         /**
          * 根据传入的数值初始化界面数据
+         *  @param event
          *
-         * @param money    订单金额
-         * @param orderID  订单id
-         * @param orderNum 订单号
          */
-        void setTranDate(float money, String orderID, String orderNum);
+        void setTranDate(PayOrderInfor event);
 
         /**
          * 如果是单独购买保险功能，显示购买保险界面
@@ -158,19 +157,22 @@ public class OrderPayControl {
          * @param payWays
          */
         void switChconsignee(int payWays);
+
+        /**
+         *
+         * @param msg
+         */
+        void showError(String msg);
     }
 
     public interface IOrderPayPresent {
 
         /**
          * 储存其他界面传入的参数
-         *  @param insurance 是否是购买保险界面
-         * @param money     金额
-         * @param orderID   订单ID
-         * @param orderNum  订单号
+         * @param event
          * @param listener
          */
-        void saveTranDate(boolean insurance, float money, String orderID, String orderNum, TaskControl.OnTaskListener listener);
+        void saveTranDate(PayOrderInfor event, TaskControl.OnTaskListener listener);
 
 
 
@@ -202,9 +204,11 @@ public class OrderPayControl {
 
         /**
          * 支付
+         * @param consigneeName
+         * @param consigneePhone
          * @param listener
          */
-        void pay(TaskControl.OnTaskListener listener);
+        void pay(String consigneeName, String consigneePhone, TaskControl.OnTaskListener listener);
 
         /**
          * 支付成功
@@ -276,13 +280,10 @@ public class OrderPayControl {
     public interface IOrderPayMode {
         /**
          * 储存其他界面传入的参数
+         *  @param event
          *
-         * @param insurance 是否是购买保险界面
-         * @param money     金额
-         * @param orderID   订单ID
-         * @param orderNum  订单号
          */
-        void saveTranDate(boolean insurance, float money, String orderID, String orderNum);
+        void saveTranDate(PayOrderInfor event);
 
         /**
          * 查询账户余额
@@ -359,8 +360,10 @@ public class OrderPayControl {
         /**
          * 开始支付
          * @param passWord
+         * @param consigneeName
+         * @param consigneePhone
          */
-        Observable<CommonBean<PayBean>> getPayParams(String passWord);
+        Observable<CommonBean<PayBean>> getPayParams(String passWord, String consigneeName, String consigneePhone);
 
 
         int getPayType();

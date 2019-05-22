@@ -24,6 +24,7 @@ import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderCreatBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
+import com.hongniu.baselibrary.entity.PayOrderInfor;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.entity.UpImgData;
 import com.hongniu.baselibrary.event.Event;
@@ -200,7 +201,7 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
                 .builder(ArouterParamOrder.activity_order_pay)
                 .withBoolean(Param.TRAN, true)
                 .navigation(getContext());
-        OrderEvent.PayOrder payOrder = new OrderEvent.PayOrder();
+        PayOrderInfor payOrder = new PayOrderInfor();
         payOrder.insurance = true;
         payOrder.orderID = orderBean.getId();
         payOrder.orderNum = orderBean.getOrderNum();
@@ -217,11 +218,13 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
     public void onOrderPay(OrderDetailBean orderBean) {
         if (orderBean.getMoney() != null) {
             try {
-                OrderEvent.PayOrder payOrder = new OrderEvent.PayOrder();
+                PayOrderInfor payOrder = new PayOrderInfor();
                 payOrder.insurance = false;
                 payOrder.money = Float.parseFloat(orderBean.getMoney());
                 payOrder.orderID = orderBean.getId();
                 payOrder.orderNum = orderBean.getOrderNum();
+                payOrder.receiptMobile = orderBean.getReceiptMobile();
+                payOrder.receiptName = orderBean.getReceiptName();
                 BusFactory.getBus().postSticky(payOrder);
                 ArouterUtils.getInstance()
                         .builder(ArouterParamOrder.activity_order_pay)
