@@ -7,9 +7,8 @@ import com.hongniu.baselibrary.entity.LoginPersonInfor;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
 import com.hongniu.baselibrary.entity.QueryBlankInforsBean;
-import com.hongniu.baselibrary.entity.QueryPayPassword;
 import com.hongniu.modulelogin.entity.LoginBlindBlankParams;
-import com.hongniu.modulelogin.entity.LoginCarInforBean;
+import com.hongniu.baselibrary.entity.CarInforBean;
 import com.hongniu.modulelogin.entity.LoginCreatInsuredBean;
 import com.hongniu.modulelogin.entity.LoginSMSParams;
 import com.hongniu.baselibrary.entity.PayInforBeans;
@@ -66,19 +65,19 @@ public interface LoginService {
      * 新增车辆信息
      */
     @POST("hongniu/api/car/savecar")
-    Observable<CommonBean<ResponseBody>> addCar(@Body LoginCarInforBean infor);
+    Observable<CommonBean<ResponseBody>> addCar(@Body CarInforBean infor);
 
     /**
      * 修改车辆信息
      */
     @POST("hongniu/api/car/updatecar")
-    Observable<CommonBean<String>> upDataCar(@Body LoginCarInforBean infor);
+    Observable<CommonBean<String>> upDataCar(@Body CarInforBean infor);
 
     /**
      * 删除车辆信息
      */
     @POST("hongniu/api/car/deletebyid")
-    Observable<CommonBean<String>> deletedCar(@Body LoginCarInforBean infor);
+    Observable<CommonBean<String>> deletedCar(@Body CarInforBean infor);
 
     /**
      * 获取车辆类型
@@ -88,13 +87,6 @@ public interface LoginService {
     @POST("hongniu//api/car/vehicletype")
     Observable<CommonBean<List<CarTypeBean>>> getCarType();
 
-    /**
-     * 获取车辆类型
-     *
-     * @return
-     */
-    @POST("hongniu/api/car/selectpagecar")
-    Observable<CommonBean<PageBean<LoginCarInforBean>>> getCarList(@Body PagerParambean parambean);
 
     /**
      * 根据车牌号查询车辆详情信息
@@ -102,7 +94,7 @@ public interface LoginService {
      * @return
      */
     @POST("hongniu/api/car/querynumber")
-    Observable<CommonBean<List<LoginCarInforBean>>> queyCarDetailInfor(@Body LoginCarInforBean parambean);
+    Observable<CommonBean<List<CarInforBean>>> queyCarDetailInfor(@Body CarInforBean parambean);
 
     /**
      * 获取货车导航车辆类型
@@ -118,7 +110,7 @@ public interface LoginService {
      * @return
      */
     @POST("hongniu/api/car/updatenavigationcar")
-    Observable<CommonBean<String>> upTruckInfor(@Body LoginCarInforBean bean);
+    Observable<CommonBean<String>> upTruckInfor(@Body CarInforBean bean);
 
     /**
      * 获取我的付款方式

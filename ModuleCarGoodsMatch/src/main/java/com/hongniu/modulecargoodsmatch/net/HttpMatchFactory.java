@@ -87,6 +87,21 @@ public class HttpMatchFactory {
                 .compose(RxUtils.<CommonBean<PageBean<MatchGrapSingleDetailBean>>>getSchedulersObservableTransformer())
                 ;
     }
+    /**
+     * 抢单明细查詢
+     *
+     * @return
+     */
+    public static Observable<CommonBean<Object>> grapMatch(String id, String carId,String robAount) {
+        MatchGrapDetailParams params = new MatchGrapDetailParams(0);
+        params.goodsSourceId = id;
+        params.carId = carId;
+        params.robAmount = robAount;
+        return MatchClient.getInstance().getService()
+                .grapMatch(params)
+                .compose(RxUtils.<CommonBean<Object>>getSchedulersObservableTransformer())
+                ;
+    }
 
 
 }

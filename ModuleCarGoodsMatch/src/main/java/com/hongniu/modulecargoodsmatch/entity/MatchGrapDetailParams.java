@@ -8,6 +8,8 @@ import com.hongniu.baselibrary.entity.PagerParambean;
 public class MatchGrapDetailParams extends PagerParambean {
 
     public String goodsSourceId;
+    public String carId;
+    public String robAmount;
 
     public MatchGrapDetailParams(int currentPage) {
         super(currentPage);

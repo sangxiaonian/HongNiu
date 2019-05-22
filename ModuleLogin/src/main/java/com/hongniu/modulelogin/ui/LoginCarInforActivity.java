@@ -16,7 +16,7 @@ import com.hongniu.baselibrary.entity.CarTypeBean;
 import com.hongniu.baselibrary.utils.PickerDialogUtils;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.modulelogin.R;
-import com.hongniu.modulelogin.entity.LoginCarInforBean;
+import com.hongniu.baselibrary.entity.CarInforBean;
 import com.hongniu.modulelogin.entity.LoginEvent;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.sang.common.event.BusFactory;
@@ -50,7 +50,7 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
     private Button button;
     private boolean isAdd;//是否是添加车辆
     private OptionsPickerBuilder pickerDialog;
-    private LoginCarInforBean carBean;
+    private CarInforBean carBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +102,7 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
         this.isAdd = event.type == 0;
         if (event.type == 0) {
             setToolbarTitle(getString(R.string.login_add_car));
-            carBean = new LoginCarInforBean();
+            carBean = new CarInforBean();
         } else {
             setToolbarTitle(getString(R.string.login_modification_car));
             carBean = event.bean;
@@ -212,7 +212,7 @@ public class LoginCarInforActivity extends BaseActivity implements View.OnClickL
         }
     }
 
-    private LoginCarInforBean getValue() {
+    private CarInforBean getValue() {
         carBean.setCarNumber(itemCarNum.getTextCenter());
         carBean.setContactMobile(itemCarPhone.getTextCenter());
         carBean.setContactName(itemCarOwner.getTextCenter());

@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/rl_yue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:background="@color/color_white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:paddingLeft="17sp"
+            android:paddingRight="17sp">
+
+            <ImageView
+                android:id="@+id/img_yue"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_yezf_40" />
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/app_item_gap"
+                android:layout_toEndOf="@id/img_yue"
+                android:layout_toRightOf="@id/img_yue"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="余额支付"
+                    android:textColor="@color/color_title_dark"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="快速付费"
+                    android:textColor="@color/color_content_light"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+
+            <ImageView
+                android:id="@+id/cb_yue"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_wxz_36" />
+        </RelativeLayout>
+
+        <RadioGroup
+            android:id="@+id/rg1"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginLeft="@dimen/app_gap"
+            android:layout_marginTop="@dimen/app_item_gap"
+            android:layout_marginRight="@dimen/app_gap"
+            android:layout_marginBottom="@dimen/app_item_gap"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_company"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1"
+                android:background="@drawable/rb_bg"
+                android:button="@null"
+                android:gravity="center"
+                android:text="企业账号"
+                android:textColor="@drawable/rb_txt_color"
+                android:textSize="15sp" />
+
+            <RadioButton
+                android:id="@+id/rb_person"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="3dp"
+                android:layout_weight="1"
+                android:background="@drawable/rb_bg"
+                android:button="@null"
+                android:gravity="center"
+                android:text="个人账户"
+                android:textColor="@drawable/rb_txt_color"
+                android:textSize="15sp" />
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_height"
+        android:background="@color/line_color" />
+
+    <RelativeLayout
+        android:id="@+id/rl_wechact"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/color_white"
+        android:paddingLeft="17sp"
+        android:paddingRight="17sp">
+
+        <ImageView
+            android:id="@+id/img_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_wechat_40" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/app_item_gap"
+            android:layout_toEndOf="@id/img_icon"
+            android:layout_toRightOf="@id/img_icon"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/order_pay_wechat"
+                android:textColor="@color/color_title_dark"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/order_pay_wechat_discribe"
+                android:textColor="@color/color_content_light"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/checkbox"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_wxz_36" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_height"
+        android:background="@color/line_color" />
+
+    <RelativeLayout
+        android:id="@+id/rl_ali"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/color_white"
+        android:paddingLeft="17sp"
+        android:paddingRight="17sp">
+
+        <ImageView
+            android:id="@+id/img_ali"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_zfb_40" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/app_item_gap"
+            android:layout_toEndOf="@id/img_ali"
+            android:layout_toRightOf="@id/img_ali"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/order_pay_ali"
+                android:textColor="@color/color_title_dark"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/order_pay_ali_discribe"
+                android:textColor="@color/color_content_light"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/ali_box"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_wxz_36" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_height"
+        android:background="@color/line_color" />
+
+    <RelativeLayout
+        android:id="@+id/rl_union"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/color_white"
+        android:paddingLeft="17sp"
+        android:paddingRight="17sp">
+
+        <ImageView
+            android:id="@+id/img_union"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_ylzf_40" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/app_item_gap"
+            android:layout_toEndOf="@id/img_union"
+            android:layout_toRightOf="@id/img_union"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/order_pay_union"
+                android:textColor="@color/color_title_dark"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/order_pay_union_discribe"
+                android:textColor="@color/color_content_light"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/union_box"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_wxz_36" />
+    </RelativeLayout>
+</LinearLayout>

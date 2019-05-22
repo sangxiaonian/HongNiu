@@ -62,5 +62,13 @@ public interface MatchService {
     @POST("hongniu/api/robOrder/queryPage")
     Observable<CommonBean<PageBean<MatchGrapSingleDetailBean>>> queryGraoDetail(@Body MatchGrapDetailParams params);
 
+ /**
+     * 支付抢单意向金，生成抢单记录
+     *
+     * @return
+     */
+    @POST("hongniu/api/robOrder/add")
+    Observable<CommonBean<Object>> grapMatch(@Body MatchGrapDetailParams params);
+
 
 }

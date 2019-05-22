@@ -1,10 +1,13 @@
 package com.hongniu.baselibrary.net;
 
+import com.hongniu.baselibrary.entity.CarInforBean;
 import com.hongniu.baselibrary.entity.CarTypeBean;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.LoginPersonInfor;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.OrderIdBean;
+import com.hongniu.baselibrary.entity.PageBean;
+import com.hongniu.baselibrary.entity.PagerParambean;
 import com.hongniu.baselibrary.entity.PayInforBeans;
 import com.hongniu.baselibrary.entity.QueryOrderParamBean;
 import com.hongniu.baselibrary.entity.QueryOrderStateBean;
@@ -121,6 +124,13 @@ public interface AppService {
      */
     @POST("hongniu/api/car/navigationSwitch")
     Observable<CommonBean<TruckGudieSwitchBean>> queryTruckGuide();
+    /**
+     * 获取车辆类型
+     *
+     * @return
+     */
+    @POST("hongniu/api/car/selectpagecar")
+    Observable<CommonBean<PageBean<CarInforBean>>> getCarList(@Body PagerParambean parambean);
 
 }
 

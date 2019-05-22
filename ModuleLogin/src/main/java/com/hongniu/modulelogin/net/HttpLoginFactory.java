@@ -7,8 +7,9 @@ import com.hongniu.baselibrary.entity.LoginPersonInfor;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
 import com.hongniu.baselibrary.entity.QueryBlankInforsBean;
+import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.modulelogin.entity.LoginBlindBlankParams;
-import com.hongniu.modulelogin.entity.LoginCarInforBean;
+import com.hongniu.baselibrary.entity.CarInforBean;
 import com.hongniu.modulelogin.entity.LoginCreatInsuredBean;
 import com.hongniu.modulelogin.entity.LoginSMSParams;
 import com.hongniu.baselibrary.entity.PayInforBeans;
@@ -113,7 +114,7 @@ public class HttpLoginFactory {
     /**
      * 新增车辆
      */
-    public static Observable<CommonBean<ResponseBody>> addCar(LoginCarInforBean infor) {
+    public static Observable<CommonBean<ResponseBody>> addCar(CarInforBean infor) {
 
         return LoginClient.getInstance().getLoginService()
                 .addCar(infor)
@@ -124,7 +125,7 @@ public class HttpLoginFactory {
     /**
      * 修改车辆
      */
-    public static Observable<CommonBean<String>> upDataCar(LoginCarInforBean infor) {
+    public static Observable<CommonBean<String>> upDataCar(CarInforBean infor) {
 
         return LoginClient.getInstance().getLoginService()
                 .upDataCar(infor)
@@ -136,7 +137,7 @@ public class HttpLoginFactory {
      * 删除车辆
      */
     public static Observable<CommonBean<String>> deletedCar(String id) {
-        LoginCarInforBean bean = new LoginCarInforBean();
+        CarInforBean bean = new CarInforBean();
         bean.setId(id);
         return LoginClient.getInstance().getLoginService()
                 .deletedCar(bean)
@@ -168,7 +169,7 @@ public class HttpLoginFactory {
     /**
      * 修改货车信息
      */
-    public static Observable<CommonBean<String>> upTruckInfor(LoginCarInforBean bean) {
+    public static Observable<CommonBean<String>> upTruckInfor(CarInforBean bean) {
 
         return LoginClient.getInstance()
                 .getLoginService()
@@ -180,42 +181,40 @@ public class HttpLoginFactory {
     /**
      * 查询货车量详细信息
      */
-    public static Observable<CommonBean<LoginCarInforBean>> queyCarDetailInfor(final String carNumber) {
-        final LoginCarInforBean bean = new LoginCarInforBean();
+    public static Observable<CommonBean<CarInforBean>> queyCarDetailInfor(final String carNumber) {
+        final CarInforBean bean = new CarInforBean();
         bean.setCarNumber(carNumber);
         return LoginClient.getInstance()
                 .getLoginService()
                 .queyCarDetailInfor(bean)
-                .map(new Function<CommonBean<List<LoginCarInforBean>>, CommonBean<LoginCarInforBean>>() {
+                .map(new Function<CommonBean<List<CarInforBean>>, CommonBean<CarInforBean>>() {
                     @Override
-                    public CommonBean<LoginCarInforBean> apply(CommonBean<List<LoginCarInforBean>> listCommonBean) throws Exception {
+                    public CommonBean<CarInforBean> apply(CommonBean<List<CarInforBean>> listCommonBean) throws Exception {
 
-                        CommonBean<LoginCarInforBean> bean1 = new CommonBean<LoginCarInforBean>();
+                        CommonBean<CarInforBean> bean1 = new CommonBean<CarInforBean>();
                         bean1.setMsg(listCommonBean.getMsg());
                         bean1.setCode(listCommonBean.getCode());
-                        List<LoginCarInforBean> data = listCommonBean.getData();
+                        List<CarInforBean> data = listCommonBean.getData();
                         if (!CommonUtils.isEmptyCollection(data)) {
                             bean1.setData(data.get(0));
                         } else {
-                            LoginCarInforBean bean2 = new LoginCarInforBean();
+                            CarInforBean bean2 = new CarInforBean();
                             bean2.setCarNumber(carNumber);
                             bean1.setData(bean2);
                         }
                         return bean1;
                     }
                 })
-                .compose(RxUtils.<CommonBean<LoginCarInforBean>>getSchedulersObservableTransformer());
+                .compose(RxUtils.<CommonBean<CarInforBean>>getSchedulersObservableTransformer());
 
     }
 
     /**
      * 获取车辆类型
      */
-    public static Observable<CommonBean<PageBean<LoginCarInforBean>>> getCarList(int currentPage) {
+    public static Observable<CommonBean<PageBean<CarInforBean>>> getCarList(int currentPage) {
 
-        PagerParambean bean = new PagerParambean(currentPage);
-        return LoginClient.getInstance().getLoginService().getCarList(bean).compose(RxUtils.<CommonBean<PageBean<LoginCarInforBean>>>getSchedulersObservableTransformer());
-
+        return HttpAppFactory.getCarList(currentPage);
     }
 
 

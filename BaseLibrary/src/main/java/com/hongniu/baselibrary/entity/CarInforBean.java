@@ -1,10 +1,10 @@
-package com.hongniu.modulelogin.entity;
+package com.hongniu.baselibrary.entity;
 
 /**
  * 作者： ${PING} on 2018/8/15.
  * 新增修改车辆
  */
-public class LoginCarInforBean {
+public class CarInforBean {
 
 
     /**

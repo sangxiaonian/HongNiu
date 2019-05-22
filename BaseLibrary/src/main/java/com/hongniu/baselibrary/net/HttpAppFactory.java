@@ -1,9 +1,12 @@
 package com.hongniu.baselibrary.net;
 
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.entity.CarInforBean;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.OrderIdBean;
+import com.hongniu.baselibrary.entity.PageBean;
+import com.hongniu.baselibrary.entity.PagerParambean;
 import com.hongniu.baselibrary.entity.PayInforBeans;
 import com.hongniu.baselibrary.entity.QueryOrderParamBean;
 import com.hongniu.baselibrary.entity.QueryOrderStateBean;
@@ -228,5 +231,15 @@ public class HttpAppFactory {
                 .queryTruckGuide()
                 .compose(RxUtils.<CommonBean<TruckGudieSwitchBean>>getSchedulersObservableTransformer())
                 ;
+    }
+
+    /**
+     * 获取车辆类型
+     */
+    public static Observable<CommonBean<PageBean<CarInforBean>>> getCarList(int currentPage) {
+
+        PagerParambean bean = new PagerParambean(currentPage);
+        return AppClient.getInstance().getService().getCarList(bean).compose(RxUtils.<CommonBean<PageBean<CarInforBean>>>getSchedulersObservableTransformer());
+
     }
 }

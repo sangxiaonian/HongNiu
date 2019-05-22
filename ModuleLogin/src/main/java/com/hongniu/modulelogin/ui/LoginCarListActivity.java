@@ -12,7 +12,7 @@ import com.hongniu.baselibrary.base.RefrushActivity;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.modulelogin.R;
-import com.hongniu.modulelogin.entity.LoginCarInforBean;
+import com.hongniu.baselibrary.entity.CarInforBean;
 import com.hongniu.modulelogin.entity.LoginEvent;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.sang.common.event.BusFactory;
@@ -34,7 +34,7 @@ import io.reactivex.Observable;
  *
  */
 @Route(path = ArouterParamLogin.activity_car_list)
-public class LoginCarListActivity extends RefrushActivity<LoginCarInforBean> implements View.OnClickListener {
+public class LoginCarListActivity extends RefrushActivity<CarInforBean> implements View.OnClickListener {
 
 
     @Override
@@ -56,13 +56,13 @@ public class LoginCarListActivity extends RefrushActivity<LoginCarInforBean> imp
 
 
     @Override
-    protected XAdapter<LoginCarInforBean> getAdapter(List<LoginCarInforBean> datas) {
-        return new XAdapter<LoginCarInforBean>(mContext, datas) {
+    protected XAdapter<CarInforBean> getAdapter(List<CarInforBean> datas) {
+        return new XAdapter<CarInforBean>(mContext, datas) {
             @Override
-            public BaseHolder<LoginCarInforBean> initHolder(ViewGroup parent, int viewType) {
-                return new BaseHolder<LoginCarInforBean>(mContext, parent, R.layout.login_item_car_list) {
+            public BaseHolder<CarInforBean> initHolder(ViewGroup parent, int viewType) {
+                return new BaseHolder<CarInforBean>(mContext, parent, R.layout.login_item_car_list) {
                     @Override
-                    public void initView(View itemView, int position, final LoginCarInforBean data) {
+                    public void initView(View itemView, int position, final CarInforBean data) {
                         super.initView(itemView, position, data);
                         TextView tvCarNum = itemView.findViewById(R.id.tv_car_num);//车牌号
                         TextView tvCarType = itemView.findViewById(R.id.tv_cat_type);//车辆类型
@@ -89,7 +89,7 @@ public class LoginCarListActivity extends RefrushActivity<LoginCarInforBean> imp
     }
 
     @Override
-    protected Observable<CommonBean<PageBean<LoginCarInforBean>>> getListDatas() {
+    protected Observable<CommonBean<PageBean<CarInforBean>>> getListDatas() {
         return HttpLoginFactory.getCarList(currentPage);
     }
 

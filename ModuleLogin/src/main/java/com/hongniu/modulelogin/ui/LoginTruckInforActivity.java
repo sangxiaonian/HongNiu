@@ -22,7 +22,7 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.TruckGudieSwitchBean;
 import com.hongniu.baselibrary.utils.PickerDialogUtils;
 import com.hongniu.modulelogin.R;
-import com.hongniu.modulelogin.entity.LoginCarInforBean;
+import com.hongniu.baselibrary.entity.CarInforBean;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.DeviceUtils;
@@ -119,9 +119,9 @@ public class LoginTruckInforActivity extends BaseActivity implements View.OnClic
         axelsDialog.setPicker(carAxles);
 
         HttpLoginFactory.queyCarDetailInfor(carNumber)
-                .subscribe(new NetObserver<LoginCarInforBean>(this) {
+                .subscribe(new NetObserver<CarInforBean>(this) {
                     @Override
-                    public void doOnSuccess(LoginCarInforBean data) {
+                    public void doOnSuccess(CarInforBean data) {
                         itemCarNumber.setTextCenter(data.getCarNumber());
 
                         if (!CommonUtils.isEmptyCollection(carTypes)) {
@@ -173,7 +173,7 @@ public class LoginTruckInforActivity extends BaseActivity implements View.OnClic
         if (v.getId() == R.id.bt_save) {
 
             if (check()) {
-                final LoginCarInforBean vaule = getVaule();
+                final CarInforBean vaule = getVaule();
                 HttpLoginFactory.upTruckInfor(vaule)
                         .subscribe(new NetObserver<String>(this) {
                             @Override
@@ -217,8 +217,8 @@ public class LoginTruckInforActivity extends BaseActivity implements View.OnClic
     }
 
 
-    private LoginCarInforBean getVaule() {
-        LoginCarInforBean bean = new LoginCarInforBean();
+    private CarInforBean getVaule() {
+        CarInforBean bean = new CarInforBean();
         bean.setCarNumber(itemCarNumber.getTextCenter());
         if (!CommonUtils.isEmptyCollection(carTypes)) {
             for (TruckGudieSwitchBean.DataInfor carType : carTypes) {
