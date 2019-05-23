@@ -127,9 +127,9 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
     public void setInfor(OrderDetailBean data) {
         this.orderBean = data;
 
-        if (roleState == null) {
-            roleState = CommonOrderUtils.getRoleState(data.getRoleType());
-        }
+//        if (roleState == null) {
+            roleState = CommonOrderUtils.getRoleState(data.getUserType());
+//        }
         setIdentity(roleState);
         setEndLocation(data.getDestinationInfo());
         setStartLocation(data.getStartPlaceInfo());
@@ -201,6 +201,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                     );
                     break;
                 case CARGO_OWNER:
+                case CARGO_RECEIVE:
                     setContent(data.getDepartNum(), data.getCarNum(), "车主：", data.getOwnerName(), data.getOwnerMobile(), data.getOwnerId()
                             , data.getGoodName(), "司机：", data.getDriverName(), data.getDriverMobile(), data.getDriverId()
                     );
@@ -217,7 +218,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
             );
         }
 
-        buildButton(data.isInsurance(), data.isHasGoodsImage(), data.isHasReceiptImage());
+        buildButton(data);
 
         //司机隐藏价格,保险控件
         if (tv_price.getVisibility() != GONE) {
@@ -246,7 +247,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
 
     public void hideButton(boolean hideButton) {
         this.hideButton = hideButton;
-        buildButton(false, false, false);
+        buildButton(null);
     }
 
     /**
@@ -432,6 +433,8 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
 
                             break;
                         case CARGO_OWNER:
+                        case CARGO_RECEIVE:
+
                             ClickEventUtils.getInstance().onClick(ClickEventParams.我是货主_拨打电话);
 
                             break;
@@ -453,6 +456,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
 
                             break;
                         case CARGO_OWNER:
+                        case CARGO_RECEIVE:
                             ClickEventUtils.getInstance().onClick(ClickEventParams.我是货主_聊天);
 
                             break;
@@ -477,6 +481,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
 
                             break;
                         case CARGO_OWNER:
+                        case CARGO_RECEIVE:
                             ClickEventUtils.getInstance().onClick(ClickEventParams.我是货主_聊天);
 
                             break;
@@ -497,6 +502,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
 
                             break;
                         case CARGO_OWNER:
+                        case CARGO_RECEIVE:
                             ClickEventUtils.getInstance().onClick(ClickEventParams.我是货主_拨打电话);
 
                             break;
@@ -527,21 +533,29 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
 
 
     /**
-     * @param b               是否购买保险
-     * @param hasGoodsImage   是否有回单，是否有货单
-     * @param hasReceiptImage
+     * @param data
+     *
      */
-    public void buildButton(boolean b, boolean hasGoodsImage, boolean hasReceiptImage) {
+    public void buildButton(OrderDetailBean data) {
         llBottom.removeAllViews();
-        if (hideButton) {
+        if (hideButton||data==null) {
             llBottom.setVisibility(GONE);
             lineBottom.setVisibility(GONE);
             return;
         }
         final OrderDetailItemControl.IOrderItemHelper helper = new OrderItemHelper(orderState, roleState);
-        helper.setInsurance(b)
-                .setHasGoodsImage(hasGoodsImage)
-                .setHasReceiptImage(hasReceiptImage)
+
+
+
+
+        helper.setInsurance( data.isInsurance())
+                .setHasGoodsImage(data.isHasGoodsImage())
+                .setHasReceiptImage( data.isHasReceiptImage())
+//        由 货主（发货人） 确认收货按钮 的情况：
+//        1、	无收货人；
+//        2、	有收货人，但是代收货款为0，且运费支付方式非到付。
+                .setHasPay(TextUtils.isEmpty(data.getReceiptName())
+                        ||(data.getPaymentAmount()<=0&&!"2".equals(data.getPayWay())));
         ;
         List<ButtonInforBean> infors = helper.getButtonInfors();
         for (ButtonInforBean infor : infors) {
@@ -925,7 +939,10 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
 
 
     public TextView creatButton(ButtonInforBean infor) {
-        TextView button = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.order_item_text, llBottom, false);
+        TextView button =new TextView(getContext());
+        MarginLayoutParams params=new MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        button.setLayoutParams(params);
+        params.setMargins(DeviceUtils.dip2px(getContext(),15),0,0,0);
         button.setTextColor(infor.getType() == 1 ? getResources().getColor(R.color.white) : getResources().getColor(R.color.color_title_dark));
         button.setBackgroundResource(infor.getType() == 1 ? R.drawable.shape_2_e83e15 : R.drawable.shape_2_stoke_dddddd);
         button.setGravity(Gravity.CENTER);

@@ -6,6 +6,10 @@
         android:bottomRightRadius="2dp"
         android:bottomLeftRadius="2dp">
     </corners>
-
+    <padding
+        android:bottom="4dp"
+        android:left="8dp"
+        android:right="8dp"
+        android:top="4dp" />
     <solid android:color="#E83E15"/>
 </shape>

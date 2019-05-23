@@ -223,10 +223,12 @@ public class OrderDetailBean {
     private int financeType;
 
     /**
-     * 角色类似 1车主 2司机 3 货主
+     * 角色类似 1车主 2司机 3 货主,4 收货人
      */
     @SerializedName(value = "roleType", alternate = {"role"})
     private int roleType;
+
+    private int userType;
 
     /**
      * 货单信息
@@ -244,7 +246,7 @@ public class OrderDetailBean {
     /**
      * false	number	货款金额 replaceState=1 时必填
      */
-    private String paymentAmount;//
+    private float paymentAmount;//
     /**
      * false	string	收货人姓名 replaceState=1 时必填
      */
@@ -654,11 +656,11 @@ public class OrderDetailBean {
         this.replaceState = replaceState;
     }
 
-    public String getPaymentAmount() {
+    public float getPaymentAmount() {
         return paymentAmount;
     }
 
-    public void setPaymentAmount(String paymentAmount) {
+    public void setPaymentAmount(float paymentAmount) {
         this.paymentAmount = paymentAmount;
     }
 
@@ -684,5 +686,13 @@ public class OrderDetailBean {
 
     public void setGsNum(String gsNum) {
         this.gsNum = gsNum;
+    }
+
+    public int getUserType() {
+        return userType;
+    }
+
+    public void setUserType(int userType) {
+        this.userType = userType;
     }
 }

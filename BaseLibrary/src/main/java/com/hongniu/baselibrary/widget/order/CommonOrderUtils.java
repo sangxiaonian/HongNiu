@@ -30,7 +30,6 @@ public class CommonOrderUtils {
     public static final String ORDER_CHANGE_RECEIPT = "修改回单";
 
 
-
     /**
      * 根据当前的状态值获取不同的状态状态,此方法是为了防止订单状态数据更改，因此更改为自己的状态，后期不需要再关心该字段
      *
@@ -41,13 +40,12 @@ public class CommonOrderUtils {
         OrderDetailItemControl.OrderState[] values = OrderDetailItemControl.OrderState.values();
         OrderDetailItemControl.OrderState statu = null;
         for (OrderDetailItemControl.OrderState value : values) {
-            if (value.getState()==status){
-                statu=value;
+            if (value.getState() == status) {
+                statu = value;
                 break;
             }
         }
-        return statu==null? OrderDetailItemControl.OrderState.UNKNOW:statu;
-
+        return statu == null ? OrderDetailItemControl.OrderState.UNKNOW : statu;
 
 
     }
@@ -62,7 +60,7 @@ public class CommonOrderUtils {
     public static String getOrderStateDes(OrderDetailItemControl.OrderState state) {
         if (state == null) {
             return OrderDetailItemControl.OrderState.UNKNOW.getDes();
-        }else {
+        } else {
             return state.getDes();
         }
 
@@ -79,6 +77,7 @@ public class CommonOrderUtils {
                 role = "车主";
                 break;
             case CARGO_OWNER:
+            case CARGO_RECEIVE:
                 role = "货主";
                 break;
             case DRIVER:
@@ -102,6 +101,9 @@ public class CommonOrderUtils {
                 break;
             case 3:
                 role = OrderDetailItemControl.RoleState.CARGO_OWNER;
+                break;
+            case 4:
+                role = OrderDetailItemControl.RoleState.CARGO_RECEIVE;
                 break;
             default:
                 role = OrderDetailItemControl.RoleState.CARGO_OWNER;
@@ -140,7 +142,7 @@ public class CommonOrderUtils {
             return "支付宝";
         } else if (payWay.equals("4")) {
             return "余额";
-        } else  if (payWay.equals("5")) {
+        } else if (payWay.equals("5")) {
             return "企业余额";
         } else {
             return "";

@@ -93,7 +93,7 @@ public class OrderCreatParamBean {
     /**
      * false	number	货款金额 replaceState=1 时必填
      */
-    private String paymentAmount;//
+    private float paymentAmount;//
     /**
      * false	string	收货人姓名 replaceState=1 时必填
      */
@@ -291,11 +291,11 @@ public class OrderCreatParamBean {
         this.replaceState = replaceState;
     }
 
-    public String getPaymentAmount() {
+    public float getPaymentAmount() {
         return paymentAmount;
     }
 
-    public void setPaymentAmount(String paymentAmount) {
+    public void setPaymentAmount(float paymentAmount) {
         this.paymentAmount = paymentAmount;
     }
 

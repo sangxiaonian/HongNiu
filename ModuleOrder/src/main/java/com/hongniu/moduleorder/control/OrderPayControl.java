@@ -222,10 +222,12 @@ public class OrderPayControl {
 
         /**
          * 支付密码输入完成
+         * @param name
+         * @param phone
          * @param passWord
          * @param listener
          */
-        void setPayPassoword(String passWord, TaskControl.OnTaskListener listener);
+        void setPayPassoword(String name, String phone, String passWord, TaskControl.OnTaskListener listener);
 
         /**
          * 显示被保险人信息

@@ -55,10 +55,9 @@ public class OrderDetailItemControl {
     public enum RoleState {
         CAR_OWNER,//车主
         CARGO_OWNER,//货主
-        DRIVER;//司机
+        DRIVER,//司机
+        CARGO_RECEIVE;//收货人
 
-        private int role;
-        private String roleName;
 
     }
 
@@ -107,6 +106,7 @@ public class OrderDetailItemControl {
          */
         List<ButtonInforBean> getButtonInfors();
 
+        OrderDetailItemControl.IOrderItemHelper setHasPay(boolean hasPay);
     }
 
 

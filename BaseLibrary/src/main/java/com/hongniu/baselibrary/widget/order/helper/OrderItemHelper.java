@@ -22,6 +22,9 @@ public class OrderItemHelper implements OrderDetailItemControl.IOrderItemHelper 
             case DRIVER:
                 helper = new DriveOwnerOrder(state);
                 break;
+            case CARGO_RECEIVE:
+                helper = new CargoConsigneeOrder(state);
+                break;
         }
     }
 
@@ -77,6 +80,12 @@ public class OrderItemHelper implements OrderDetailItemControl.IOrderItemHelper 
     @Override
     public List<ButtonInforBean> getButtonInfors() {
         return helper.getButtonInfors();
+    }
+
+    @Override
+    public OrderDetailItemControl.IOrderItemHelper setHasPay(boolean hasPay) {
+          helper.setHasPay(hasPay);
+          return this;
     }
 
 

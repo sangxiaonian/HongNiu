@@ -67,7 +67,7 @@ public class CargoConsigneeOrder extends OwnerOrder implements OrderDetailItemCo
                     buttonInfors.add(new ButtonInforBean(ORDER_CHECK_RECEIPT));//查看回单
                 }
 
-                buttonInfors.add(new ButtonInforBean(1, ORDER_ENTRY_ORDER));//确认收货
+//                buttonInfors.add(new ButtonInforBean(1, ORDER_ENTRY_ORDER));//确认收货
                 buttonInfors.add(new ButtonInforBean(1, ORDER_ENTRY_AND_PAY_ORDER));//确认收货,并支付订单
                 break;
             case RECEIPT://已收货

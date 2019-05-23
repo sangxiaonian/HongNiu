@@ -232,12 +232,14 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
     /**
      * 支付密码输入完成
      *
+     * @param name
+     * @param phone
      * @param passWord
      * @param listener
      */
     @Override
-    public void setPayPassoword(String passWord, TaskControl.OnTaskListener listener) {
-        mode.getPayParams(passWord, null, null)
+    public void setPayPassoword(String name, String phone, String passWord, TaskControl.OnTaskListener listener) {
+        mode.getPayParams(passWord, name, phone)
                 .subscribe(new NetObserver<PayBean>(listener) {
                     @Override
                     public void doOnSuccess(PayBean data) {

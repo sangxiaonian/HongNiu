@@ -727,7 +727,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
     @Override
     public void onInputPassWordSuccess(DialogControl.IDialog dialog, String count, String passWord) {
         dialog.dismiss();
-        payPresent.setPayPassoword(passWord, this);
+        payPresent.setPayPassoword(item_consignee_name.getTextCenter(),item_consignee_phone.getTextCenter(),passWord, this);
     }
 
     /**

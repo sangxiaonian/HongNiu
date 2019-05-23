@@ -20,6 +20,7 @@ public abstract class OwnerOrder   implements OrderDetailItemControl.IOrderItemH
      * 是否有回单
      */
     protected boolean hasReceiptImage;
+    protected boolean hasPay;//设置是否已经支付，目前仅仅在发货人里面使用
 
 
     public OwnerOrder(OrderDetailItemControl.OrderState state) {
@@ -63,5 +64,9 @@ public abstract class OwnerOrder   implements OrderDetailItemControl.IOrderItemH
         return this;
     }
 
-
+    @Override
+    public OrderDetailItemControl.IOrderItemHelper setHasPay(boolean hasPay) {
+        this.hasPay=hasPay;
+        return this;
+    }
 }

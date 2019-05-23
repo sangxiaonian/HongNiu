@@ -352,10 +352,15 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
         paramBean.setGoodVolume(itemSize.getTextCenter());
 
         paramBean.setReplaceState(select ? 1 : 0);
-        paramBean.setPaymentAmount(itemCargoPrice.getTextCenter());
-        paramBean.setReceiptName(itemConsigneeName.getTextCenter());
-        paramBean.setReceiptMobile(itemConsigneePhone.getTextCenter());
-
+        if (select) {
+            try {
+                paramBean.setPaymentAmount(TextUtils.isEmpty(itemCargoPrice.getTextCenter())?0:Float.parseFloat(itemCargoPrice.getTextCenter()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            paramBean.setReceiptName(itemConsigneeName.getTextCenter());
+            paramBean.setReceiptMobile(itemConsigneePhone.getTextCenter());
+        }
 
         if (!itemWeight.isEnabled()) {//不可更改
             paramBean.setGoodWeight(null);
@@ -747,7 +752,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
         itemPrice.setTextCenter(paramBean.getMoney());
         itemWeight.setTextCenter(paramBean.getGoodWeight());
         itemSize.setTextCenter(paramBean.getGoodVolume());
-        itemCargoPrice.setTextCenter(paramBean.getPaymentAmount());
+        itemCargoPrice.setTextCenter(paramBean.getPaymentAmount()+"");
         itemConsigneeName.setTextCenter(paramBean.getReceiptName());
         itemConsigneePhone.setTextCenter(paramBean.getReceiptMobile());
 

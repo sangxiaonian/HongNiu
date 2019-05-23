@@ -1,5 +1,6 @@
 package com.hongniu.baselibrary.widget.order.helper;
 
+import com.autonavi.ae.route.model.JamSegment;
 import com.hongniu.baselibrary.widget.order.CommonOrderUtils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 
@@ -83,7 +84,9 @@ public class CargoOwnerOrder extends OwnerOrder implements OrderDetailItemContro
                 if (insurance) {//如果已经购买保险
                     buttonInfors.add(new ButtonInforBean(ORDER_CHECK_INSURANCE));//查看保单
                 }
-                buttonInfors.add(new ButtonInforBean(1, ORDER_ENTRY_ORDER));//确认收货
+                if (hasPay) {
+                    buttonInfors.add(new ButtonInforBean(1, ORDER_ENTRY_ORDER));//确认收货
+                }
                 break;
             case RECEIPT://已收货
                 if (hasGoodsImage) {//如果存在货单

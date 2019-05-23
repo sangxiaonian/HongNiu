@@ -30,6 +30,7 @@ import com.hongniu.baselibrary.entity.UpImgData;
 import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.utils.Utils;
+import com.hongniu.baselibrary.widget.order.CommonOrderUtils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItem;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.moduleorder.R;
@@ -128,7 +129,7 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
                     public void initView(View itemView, int position, final OrderDetailBean data) {
                         super.initView(itemView, position, data);
                         OrderDetailItem item = itemView.findViewById(R.id.order_detail);//身份角色
-                        item.setIdentity(roleState);
+                        item.setIdentity(CommonOrderUtils.getRoleState(data.getRoleType()));
                         item.setInfor(data);
                         item.setOnButtonClickListener(OrderFragmet.this);
                         itemView.setOnClickListener(new View.OnClickListener() {
