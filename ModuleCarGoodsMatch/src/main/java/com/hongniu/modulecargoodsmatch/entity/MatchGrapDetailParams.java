@@ -10,6 +10,7 @@ public class MatchGrapDetailParams extends PagerParambean {
     public String goodsSourceId;
     public String carId;
     public String robAmount;
+    public String robId;//抢单ID
 
     public MatchGrapDetailParams(int currentPage) {
         super(currentPage);

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParams;
+import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.base.RefrushFragmet;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
@@ -72,7 +73,7 @@ public class MatchMyJoinRecordFragmet extends RefrushFragmet<MatchMyJoinGoodsIno
             public BaseHolder<MatchMyJoinGoodsInofrBean> initHolder(ViewGroup parent, int viewType) {
                 return new BaseHolder<MatchMyJoinGoodsInofrBean>(getContext(), parent,R.layout.item_match_my_record) {
                     @Override
-                    public void initView(View itemView, int position, MatchMyJoinGoodsInofrBean data) {
+                    public void initView(View itemView, int position, final MatchMyJoinGoodsInofrBean data) {
                         super.initView(itemView, position, data);
                         TextView tvTitle = itemView.findViewById(R.id.tv_title);
                         TextView tvTime = itemView.findViewById(R.id.tv_time);
@@ -83,6 +84,14 @@ public class MatchMyJoinRecordFragmet extends RefrushFragmet<MatchMyJoinGoodsIno
                         TextView tv1 = itemView.findViewById(R.id.tv1);
                         final TextView bt_left = itemView.findViewById(R.id.bt_left);
                         TextView bt_right = itemView.findViewById(R.id.bt_right);
+
+                        tvTitle.setText("正在等待" + data.goodsUserName+"下单");
+                        tvTime.setText("需要发货时间：" + data.startTime);
+                        tv_start_point.setText("发货地：" + data.startPlaceInfo);
+                        tv_end_point.setText("收货地：" + data.destinationInfo);
+                        tv_goods.setText("货物名：" + data.goodsSourceDetail);
+                        tv_price.setText("￥ "+data.robAmount);
+
                         bt_left.setText("取消参与");
                         bt_right.setText("联系货主");
                         bt_left.setOnClickListener(new View.OnClickListener() {
@@ -94,8 +103,7 @@ public class MatchMyJoinRecordFragmet extends RefrushFragmet<MatchMyJoinGoodsIno
                                     @Override
                                     public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
                                         dialog.dismiss();
-                                        ToastUtils.getInstance().show("确定取消");
-                                        queryData(true, true);
+                                        cancleMatchOrder(data);
                                     }
                                 })
                                         .creatDialog(new CenterAlertDialog(mContext))
@@ -107,8 +115,7 @@ public class MatchMyJoinRecordFragmet extends RefrushFragmet<MatchMyJoinGoodsIno
                             @Override
                             public void onClick(View v) {
 
-                                ChactHelper.getHelper().startPriver(mContext, "10", "测试");
-                                ToastUtils.getInstance().show("联系货主");
+                                ChactHelper.getHelper().startPriver(mContext, data.goodsUserId, data.goodsUserName);
                             }
                         });
 
@@ -117,6 +124,20 @@ public class MatchMyJoinRecordFragmet extends RefrushFragmet<MatchMyJoinGoodsIno
                 };
             }
         };
+    }
+
+    /**
+     * 取消下单
+     * @param data
+     */
+    private void cancleMatchOrder(MatchMyJoinGoodsInofrBean data) {
+        HttpMatchFactory.cancleParticipation(data.id)
+                .subscribe(new NetObserver<Object>(this) {
+                    @Override
+                    public void doOnSuccess(Object data) {
+                        queryData(true);
+                    }
+                });
     }
 }
 

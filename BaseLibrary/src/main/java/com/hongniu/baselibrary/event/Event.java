@@ -105,4 +105,21 @@ public class Event {
         public UpChactFragment( ) {
         }
     }
+
+    /**
+     * 修改订单信息
+     */
+    public static class ChangeOrder implements IBus.IEvent {
+
+        public int orderType;
+        public OrderDetailBean bean;
+        public String orderID;
+        public ChangeOrder(OrderDetailBean bean) {
+            this.bean = bean;
+        }
+
+        public ChangeOrder(String orderID) {
+            this.orderID = orderID;
+        }
+    }
 }

@@ -8,11 +8,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParams;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.base.RefrushFragmet;
 import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
+import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.dialog.ListDialog;
 import com.hongniu.modulecargoodsmatch.R;
@@ -20,6 +24,7 @@ import com.hongniu.modulecargoodsmatch.entity.GoodsOwnerInforBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchGrapSingleDetailBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchQueryGoodsInforParams;
 import com.hongniu.modulecargoodsmatch.net.HttpMatchFactory;
+import com.sang.common.event.BusFactory;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.utils.ConvertUtils;
@@ -67,17 +72,35 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
             public BaseHolder<MatchGrapSingleDetailBean> initHolder(ViewGroup parent, int viewType) {
                 return new BaseHolder<MatchGrapSingleDetailBean>(getContext(), parent, R.layout.match_item_grap_single_detail) {
                     @Override
-                    public void initView(View itemView, int position, MatchGrapSingleDetailBean data) {
+                    public void initView(View itemView, int position, final MatchGrapSingleDetailBean data) {
                         super.initView(itemView, position, data);
                         TextView tvTitle = itemView.findViewById(R.id.tv_title);
                         TextView tvCarInfor = itemView.findViewById(R.id.tv_car_infor);
                         TextView bt = itemView.findViewById(R.id.bt);
-                        tvTitle.setText("大佬 已支付2000元意向金");
-                        tvCarInfor.setText("车辆信息：大货车");
+                        tvTitle.setText(data.driverName+" 已支付"+data.robAmount+"元意向金");
+                        tvCarInfor.setText("车辆信息："+data.carTypeName);
                         bt.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 ToastUtils.getInstance().show("我要下单");
+                                HttpMatchFactory
+                                        .choseMatch(data.goodsSourceId,data.id)
+
+
+                                ;
+
+//                                ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_create).navigation(getContext());
+//                                OrderDetailBean detailBean=new OrderDetailBean();
+//                                detailBean.setCarId(data.carId);
+//                                detailBean.setCarNum(data.carNum);
+//                                detailBean.setDriverId(data.driverId);
+//                                detailBean.setDriverName(data.driverName);
+//                                detailBean.setDriverMobile(data.driverMobile);
+//
+//
+//                                Event.ChangeOrder changeOrder = new Event.ChangeOrder(orderBean.getId());
+//                                changeOrder.orderType=1;
+//                                BusFactory.getBus().postSticky(changeOrder);
                             }
                         });
                     }
@@ -113,6 +136,8 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
                         TextView tv_goods = itemView.findViewById(R.id.tv_goods);
                         TextView tv_price = itemView.findViewById(R.id.tv_price);
                         TextView tv1 = itemView.findViewById(R.id.tv1);
+                        tv1.setVisibility(View.GONE);
+                        tv_price.setVisibility(View.GONE);
 
                         tvTitle.setText("你正在寻找" + data.carType);
                         tvTime.setText("需要发货时间：" + data.startTime);
@@ -146,7 +171,7 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
                             @Override
                             public void onClick(View v) {
 
-                                queryGrapDetail(data.id);
+                                queryGrapDetail(data);
 
                             }
                         });
@@ -158,13 +183,14 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
         };
     }
 
+    private PageBean<MatchGrapSingleDetailBean> inforBean;//所选择的订单信息
     /**
      * 抢单明细
-     * @param id
+     * @param data
      */
-    private void queryGrapDetail(String id) {
+    private void queryGrapDetail(GoodsOwnerInforBean data) {
         HttpMatchFactory
-                .queryGraoDetail(id,1)
+                .queryGraoDetail(data.id,1)
                 .subscribe(new NetObserver<PageBean<MatchGrapSingleDetailBean>>(this) {
                     @Override
                     public void doOnSuccess(PageBean<MatchGrapSingleDetailBean> data) {
@@ -174,6 +200,7 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
                         dialog.setDescribe("共有 " + singleDetail.size() + " 人支付抢单意向金，你可选择1人完成下单");
                         listAdapter.notifyDataSetChanged();
                         dialog.show(getChildFragmentManager(), "");
+                        inforBean=data;
                     }
 
                 });

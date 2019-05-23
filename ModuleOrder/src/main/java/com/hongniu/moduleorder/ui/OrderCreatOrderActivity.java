@@ -26,24 +26,23 @@ import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PayOrderInfor;
-import com.hongniu.baselibrary.entity.UpImgData;
 import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.utils.PickerDialogUtils;
 import com.hongniu.baselibrary.utils.PictureSelectorUtils;
 import com.hongniu.baselibrary.utils.UpLoadImageUtils;
 import com.hongniu.baselibrary.utils.Utils;
-import com.hongniu.baselibrary.widget.order.CommonOrderUtils;
-import com.hongniu.baselibrary.widget.order.OrderDetailItem;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OnItemClickListener;
 import com.hongniu.moduleorder.control.OnItemDeletedClickListener;
+import com.hongniu.moduleorder.control.OrderCreatControl;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
 import com.hongniu.moduleorder.entity.OrderCreatParamBean;
 import com.hongniu.moduleorder.entity.OrderDriverPhoneBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
+import com.hongniu.moduleorder.present.OrderCreataPresenter;
 import com.hongniu.moduleorder.ui.adapter.PicAdapter;
 import com.hongniu.moduleorder.widget.CarNumPop;
 import com.luck.picture.lib.PictureSelector;
@@ -70,13 +69,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import io.reactivex.disposables.Disposable;
 
 /**
  * 创建订单
  */
 @Route(path = ArouterParamOrder.activity_order_create)
-public class OrderCreatOrderActivity extends BaseActivity implements View.OnClickListener, OnTimeSelectListener, CarNumPop.onItemClickListener, OnItemDeletedClickListener<LocalMedia>, OnItemClickListener<LocalMedia>, UpLoadImageUtils.OnUpLoadListener {
+public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatControl.IOrderCreataView, View.OnClickListener, OnTimeSelectListener, CarNumPop.onItemClickListener, OnItemDeletedClickListener<LocalMedia>, OnItemClickListener<LocalMedia>, UpLoadImageUtils.OnUpLoadListener {
+    OrderCreatControl.IOrderCreataPresenter presenter;
+
     private boolean select;//是否选中代收货款
 
 
@@ -84,11 +84,10 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-
             if (msg.what == 0) {
-                getCarNum();
+                presenter.queryCarInfor(itemCarNum.getTextCenter());
             } else {
-                getDriverInfor();
+                presenter.queryDriverInfor(itemDriverName.getTextCenter());
             }
         }
     };
@@ -118,13 +117,10 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     private CarNumPop<OrderCarNumbean> pop;
     private CarNumPop<OrderDriverPhoneBean> popDriver;
     private OrderCreatParamBean paramBean = new OrderCreatParamBean();
-    List<OrderCarNumbean> carNumbeans = new ArrayList<>();
-    List<OrderDriverPhoneBean> driverNumbeans = new ArrayList<>();
     PicAdapter adapter;
     List<LocalMedia> pics;
     //是否是修改订单
     private boolean changeOrder;
-    private OrderDetailBean orderDetailBean;
 
     UpLoadImageUtils imageUtils = new UpLoadImageUtils(Param.GOODS);
 
@@ -133,6 +129,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_creat_order);
         setToolbarTitle(getString(R.string.order_create_order));
+        presenter = new OrderCreataPresenter(this);
         initView();
         initData();
         initListener();
@@ -161,16 +158,13 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         itemConsigneePhone = findViewById(R.id.item_consignee_phone);
 
         Calendar startDate = Calendar.getInstance();
-
         Calendar endDate = Calendar.getInstance();
         endDate.set(startDate.get(Calendar.YEAR) + 2, 12, 31);
         timePickerView = PickerDialogUtils.creatTimePicker(mContext, this, new boolean[]{true, true, true, false, false, false})
                 .setRangDate(startDate, endDate)
                 .build();
         timePickerView.setKeyBackCancelable(false);//系统返回键监听屏蔽掉
-
-
-        pop = new CarNumPop<OrderCarNumbean>(mContext);
+        pop = new CarNumPop<>(mContext);
         popDriver = new CarNumPop<>(mContext);
 
     }
@@ -231,7 +225,6 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
                 handler.removeMessages(0);
                 handler.removeMessages(1);
                 if (!TextUtils.isEmpty(itemCarNum.getTextCenter()) && show) {
-
                     handler.sendEmptyMessageDelayed(0, 300);
                 }
                 show = true;
@@ -264,70 +257,6 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
 
     }
 
-    private Disposable carDisposable;
-
-    /**
-     * 获取牌相关信息
-     */
-    private void getCarNum() {
-        String carNum = itemCarNum.getTextCenter();
-        if (carDisposable != null) {
-            carDisposable.dispose();
-        }
-        if (TextUtils.isEmpty(carNum)) {
-            return;
-        }
-        HttpOrderFactory.getCarNum(carNum)
-                .subscribe(new NetObserver<List<OrderCarNumbean>>(null) {
-                    @Override
-                    public void doOnSuccess(List<OrderCarNumbean> data) {
-                        carNumbeans.clear();
-                        carNumbeans.addAll(data);
-                        pop.upData(itemCarNum.getTextCenter(), carNumbeans);
-                        pop.show(itemCarNum);
-                    }
-
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        super.onSubscribe(d);
-                        carDisposable = d;
-                    }
-
-
-                });
-    }
-
-    /**
-     * 获取牌相关信息
-     */
-    private void getDriverInfor() {
-        String driverName = itemDriverName.getTextCenter();
-        if (carDisposable != null) {
-            carDisposable.dispose();
-        }
-        if (TextUtils.isEmpty(driverName)) {
-            return;
-        }
-        HttpOrderFactory.getDriverPhone(driverName)
-                .subscribe(new NetObserver<List<OrderDriverPhoneBean>>(null) {
-                    @Override
-                    public void doOnSuccess(List<OrderDriverPhoneBean> data) {
-                        driverNumbeans.clear();
-                        driverNumbeans.addAll(data);
-                        popDriver.upData(itemDriverName.getTextCenter(), driverNumbeans);
-                        popDriver.show(itemDriverName);
-
-                    }
-
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        super.onSubscribe(d);
-                        carDisposable = d;
-                    }
-
-
-                });
-    }
 
     @Override
     public void onClick(View v) {
@@ -363,6 +292,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
                 if (imageUtils.isFinish()) {
                     // 如果没有更改过图片，则不上传
                     upDate();
+                    presenter.submit();
                 } else {
                     creatDialog(imageUtils.unFinishCount() + "张图片上传中", "是否放弃上传？", "确定放弃", "继续上传")
                             .setLeftClickListener(new DialogControl.OnButtonLeftClickListener() {
@@ -377,21 +307,22 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
                 }
 
             }
-        }else if (id == R.id.rl_dai) {
+        } else if (id == R.id.rl_dai) {
             switchCargo(!select);
         }
     }
 
     /**
      * 切换是否选中代收货款相关信息
+     *
      * @param select
      */
     private void switchCargo(boolean select) {
-        this.select=select;
-        imgCheck.setImageResource(select?R.mipmap.icon_xz_36:R.mipmap.icon_wxz_36);
-        itemCargoPrice.setVisibility(select?View.VISIBLE:View.GONE);
-        itemConsigneeName.setVisibility(select?View.VISIBLE:View.GONE);
-        itemConsigneePhone.setVisibility(select?View.VISIBLE:View.GONE);
+        this.select = select;
+        imgCheck.setImageResource(select ? R.mipmap.icon_xz_36 : R.mipmap.icon_wxz_36);
+        itemCargoPrice.setVisibility(select ? View.VISIBLE : View.GONE);
+        itemConsigneeName.setVisibility(select ? View.VISIBLE : View.GONE);
+        itemConsigneePhone.setVisibility(select ? View.VISIBLE : View.GONE);
     }
 
 
@@ -400,7 +331,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
      */
     private void upDate() {
         List<String> result = imageUtils.getResult();
-        if (result.size() == 0 && !CommonUtils.isEmptyCollection(pics)) {
+        if (result.size() == 0 && CommonUtils.isEmptyCollection(pics)) {
             result = null;
         }
         if (!changeOrder) {
@@ -414,7 +345,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
                             payOrder.orderID = data.getId();
                             payOrder.orderNum = data.getOrderNum();
                             if (select) {
-                                payOrder.receiptMobile =itemConsigneePhone.getTextCenter();
+                                payOrder.receiptMobile = itemConsigneePhone.getTextCenter();
                                 payOrder.receiptName = itemConsigneeName.getTextCenter();
                             }
                             BusFactory.getBus().postSticky(payOrder);
@@ -447,7 +378,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         paramBean.setDriverName(itemDriverName.getTextCenter());
         paramBean.setDriverMobile(itemDriverPhone.getTextCenter());
 
-        paramBean.setReplaceState(select?1:0);
+        paramBean.setReplaceState(select ? 1 : 0);
         paramBean.setPaymentAmount(itemCargoPrice.getTextCenter());
         paramBean.setReceiptName(itemConsigneeName.getTextCenter());
         paramBean.setReceiptMobile(itemConsigneePhone.getTextCenter());
@@ -495,7 +426,6 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         }
 
 
-
     }
 
     @Override
@@ -515,10 +445,10 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onStartEvent(Event.StartLoactionEvent startLoactionEvent) {
         if (startLoactionEvent != null && startLoactionEvent.t != null) {
-            String title= Utils.dealPioPlace(startLoactionEvent.t);
+            String title = Utils.dealPioPlace(startLoactionEvent.t);
             itemStartLocation.setTextCenter(title);
-            paramBean.setStartLatitude(startLoactionEvent.t.getLatLonPoint().getLatitude()+"");
-            paramBean.setStartLongitude(startLoactionEvent.t.getLatLonPoint().getLongitude()+"");
+            paramBean.setStartLatitude(startLoactionEvent.t.getLatLonPoint().getLatitude() + "");
+            paramBean.setStartLongitude(startLoactionEvent.t.getLatLonPoint().getLongitude() + "");
             paramBean.setStartPlaceInfo(title);
         }
     }
@@ -527,10 +457,10 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEndEvent(Event.EndLoactionEvent endLoactionEvent) {
         if (endLoactionEvent != null && endLoactionEvent.t != null) {
-            String title= Utils.dealPioPlace(endLoactionEvent.t);
+            String title = Utils.dealPioPlace(endLoactionEvent.t);
             itemEndLocation.setTextCenter(title);
-            paramBean.setDestinationLatitude(endLoactionEvent.t.getLatLonPoint().getLatitude()+"");
-            paramBean.setDestinationLongitude(endLoactionEvent.t.getLatLonPoint().getLongitude()+"");
+            paramBean.setDestinationLatitude(endLoactionEvent.t.getLatLonPoint().getLatitude() + "");
+            paramBean.setDestinationLongitude(endLoactionEvent.t.getLatLonPoint().getLongitude() + "");
             paramBean.setDestinationInfo(title);
         }
     }
@@ -538,7 +468,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
     @Override
     public void onBackPressed() {
         new BottomAlertBuilder()
-                .setDialogTitle(changeOrder?"确认要放弃修改吗":"确认要放弃下单吗？")
+                .setDialogTitle(changeOrder ? "确认要放弃修改吗" : "确认要放弃下单吗？")
                 .setTopClickListener(new DialogControl.OnButtonTopClickListener() {
                     @Override
                     public void onTopClick(View view, DialogControl.IBottomDialog dialog) {
@@ -598,11 +528,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
             showAleart(itemCarNum.getTextCenterHide());
             return false;
         }
-//        else if (!CommonUtils.carNumMatches(itemCarNum.getTextCenter())) {
-//            showAleart(getString(R.string.carnum_error));
-//            return false;
-//        }
-        ;
+
         if (TextUtils.isEmpty(itemCarPhone.getTextCenter())) {
             showAleart(itemCarPhone.getTextCenterHide());
             return false;
@@ -629,19 +555,21 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
             return false;
         }
 
-        if (select){
+        if (select) {
             if (TextUtils.isEmpty(itemCargoPrice.getTextCenter())) {
                 showAleart(itemCargoPrice.getTextCenterHide());
                 return false;
             }
-            ; if (TextUtils.isEmpty(itemConsigneeName.getTextCenter())) {
+            ;
+            if (TextUtils.isEmpty(itemConsigneeName.getTextCenter())) {
                 showAleart(itemConsigneeName.getTextCenterHide());
                 return false;
             }
-            ; if (TextUtils.isEmpty(itemConsigneePhone.getTextCenter())) {
+            ;
+            if (TextUtils.isEmpty(itemConsigneePhone.getTextCenter())) {
                 showAleart(itemConsigneePhone.getTextCenterHide());
                 return false;
-            }else if (!CommonUtils.isPhone(itemConsigneePhone.getTextCenter())) {
+            } else if (!CommonUtils.isPhone(itemConsigneePhone.getTextCenter())) {
                 showAleart(getString(R.string.phone_error));
                 return false;
             }
@@ -708,19 +636,16 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
      * @param event
      */
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(OrderEvent.ChangeOrder event) {
+    public void onMessageEvent(Event.ChangeOrder event) {
         changeOrder = true;
         if (event != null && event.orderID != null) {
-            HttpOrderFactory.queryOrderDetail(event.orderID)
-                    .subscribe(new NetObserver<OrderDetailBean>(this) {
-                        @Override
-                        public void doOnSuccess(OrderDetailBean data) {
-                            initValue(data);
-                        }
-                    });
+            presenter.changeType(event.orderType, mContext);
+            presenter.queryOrderInfor(event.orderID, this);
+
         }
         BusFactory.getBus().removeStickyEvent(event);
     }
+
 
     /**
      * 删除条目被点击
@@ -735,42 +660,86 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         imageUtils.upList(pics);
     }
 
-    private void initValue(OrderDetailBean orderDetailBean) {
-        setToolbarTitle(getString(R.string.order_change));
-        btSave.setText(R.string.order_entry_change);
-        if (orderDetailBean == null) {
-            return;
+
+    /**
+     * 图片条目被点击
+     *
+     * @param position
+     * @param localMedia
+     */
+    @Override
+    public void onItemClick(int position, LocalMedia localMedia) {
+
+    }
+
+    @Override
+    public void onUpLoadFail(int failCount) {
+
+        creatDialog("图片上传失败", "有" + failCount + "张图片上传失败，是否重新上传？", "放弃上传", "重新上传")
+                .setLeftClickListener(new DialogControl.OnButtonLeftClickListener() {
+                    @Override
+                    public void onLeftClick(View view, DialogControl.ICenterDialog dialog) {
+                        dialog.dismiss();
+                    }
+                })
+                .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
+                    @Override
+                    public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
+                        dialog.dismiss();
+                        imageUtils.reUpLoad();
+                    }
+                })
+                .creatDialog(new CenterAlertDialog(mContext))
+                .show();
+    }
+
+    private CenterAlertBuilder creatDialog(String title, String content, String btleft, String btRight) {
+        return Utils.creatDialog(mContext, title, content, btleft, btRight);
+    }
+
+    /**
+     * 跟进类型更改标题
+     *
+     * @param title
+     * @param bt
+     */
+    @Override
+    public void changeTitle(String title, String bt) {
+        setToolbarTitle(title);
+        if (bt!=null) {
+            btSave.setText(bt);
         }
-        this.orderDetailBean = orderDetailBean;
-        paramBean.setId(orderDetailBean.getId());
-        paramBean.setDepartNum(orderDetailBean.getDepartNum());
-        paramBean.setStartLatitude(orderDetailBean.getStartLatitude()+"");
-        paramBean.setStartLongitude(orderDetailBean.getStartLongitude()+"");
-        paramBean.setStartPlaceInfo(orderDetailBean.getStartPlaceInfo()+"");
-        paramBean.setDestinationLatitude(orderDetailBean.getDestinationLatitude()+"");
-        paramBean.setDestinationLongitude(orderDetailBean.getDestinationLongitude()+"");
-        paramBean.setDestinationInfo(orderDetailBean.getDestinationInfo());
+    }
 
-        String timeDes = orderDetailBean.getDeliveryDate();
-        try {
-            timeDes = ConvertUtils.formatString(orderDetailBean.getDeliveryDate(),"yyyy-MM-dd HH:mm:ss","yyyy-MM-dd");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    /**
+     * 显示车辆信息
+     *
+     * @param data
+     */
+    @Override
+    public void showCarPop(List<OrderCarNumbean> data) {
+        pop.upData(itemCarNum.getTextCenter(), data);
+        pop.show(itemCarNum);
+    }
 
+    /**
+     * 显示司机信息
+     *
+     * @param data
+     */
+    @Override
+    public void showDriverPop(List<OrderDriverPhoneBean> data) {
+        popDriver.upData(itemDriverName.getTextCenter(), data);
+        popDriver.show(itemDriverName);
+    }
 
-        paramBean.setDeliveryDate(timeDes);
-        paramBean.setGoodName(orderDetailBean.getGoodName());
-        paramBean.setGoodVolume(orderDetailBean.getGoodVolume());
-        paramBean.setGoodWeight(orderDetailBean.getGoodWeight());
-        paramBean.setMoney(orderDetailBean.getMoney());
-        paramBean.setCarNum(orderDetailBean.getCarNum());
-        paramBean.setOwnerMobile(orderDetailBean.getOwnerMobile());
-        paramBean.setOwnerName(orderDetailBean.getOwnerName());
-        paramBean.setDriverName(orderDetailBean.getDriverName());
-        paramBean.setDriverMobile(orderDetailBean.getDriverMobile());
-
-
+    /**
+     * 根据数据初始化页面信息
+     *
+     * @param infor
+     */
+    @Override
+    public void showInfor(OrderCreatParamBean infor) {
         itemStartTime.setTextCenter(paramBean.getDeliveryDate());
         itemStartLocation.setTextCenter(paramBean.getStartPlaceInfo());
         itemEndLocation.setTextCenter(paramBean.getDestinationInfo());
@@ -778,37 +747,44 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
         itemCargoName.setTextCenter(paramBean.getGoodName());
         itemPrice.setTextCenter(paramBean.getMoney());
 
-        show=false;
+        show = false;
         itemCarNum.setTextCenter(paramBean.getCarNum());
         itemCarPhone.setTextCenter(paramBean.getOwnerMobile());
         itemCarName.setTextCenter(paramBean.getOwnerName());
 
-        show=false;
+        show = false;
         itemDriverName.setTextCenter(paramBean.getDriverName());
         itemDriverPhone.setTextCenter(paramBean.getDriverMobile());
-
-        dealImgURl(orderDetailBean);
-        adapter.notifyDataSetChanged();
-        imageUtils.upList(pics);
-        //更改是否可以修改订单
-        changeOrderByState(orderDetailBean.getOrderState(), CommonOrderUtils.isPayOnLine(orderDetailBean.getPayWay()), orderDetailBean.isInsurance());
     }
 
     /**
-     * 根据订单状态判断是否可以修改订单
+     * 展示所有的图片信息
      *
-     * @param orderState  订单状态
-     * @param payOnLine   true 线上支付
-     * @param isInsurance true 已经购买保险
+     * @param imageInfors
      */
-    private void changeOrderByState(OrderDetailItemControl.OrderState orderState, boolean payOnLine, boolean isInsurance) {
+    @Override
+    public void showImageInfors(List<LocalMedia> imageInfors) {
+        pics.addAll(imageInfors);
+        adapter.notifyDataSetChanged();
+        imageUtils.upList(pics);
+    }
+
+    /**
+     * 根据订单状态修更改item能否修改
+     *
+     * @param orderState
+     * @param payOnLine
+     * @param insurance
+     */
+    @Override
+    public void changeEnableByOrder(OrderDetailItemControl.OrderState orderState, boolean payOnLine, boolean insurance) {
         switch (orderState) {
 
             case WAITE_PAY://待支付,所有选项都可以修改
             case PAY_REFUSE://申请被拒绝,所有选项都可以修改
                 break;
             case WAITE_START://待发车 ，根据保险和支付方式分为4中情况
-                if (isInsurance) {//购买保险情况
+                if (insurance) {//购买保险情况
                     //当订单状态为待发车，买保险且已购线上支付运费：只能修改：司机信息、货单图片；
                     if (payOnLine) {
                         itemStartTime.setEnabled(false);
@@ -871,55 +847,5 @@ public class OrderCreatOrderActivity extends BaseActivity implements View.OnClic
                 break;
 
         }
-
-    }
-
-
-    private void dealImgURl(OrderDetailBean orderDetailBean) {
-        if (orderDetailBean != null && !CommonUtils.isEmptyCollection(orderDetailBean.getGoodsImages())) {
-            for (UpImgData imagesBean : orderDetailBean.getGoodsImages()) {
-                LocalMedia media = new LocalMedia();
-                media.setPath(imagesBean.getAbsolutePath());
-                media.setRelativePath(imagesBean.getPath());
-                pics.add(media);
-            }
-        }
-        imageUtils.upList(pics);
-    }
-
-    /**
-     * 图片条目被点击
-     *
-     * @param position
-     * @param localMedia
-     */
-    @Override
-    public void onItemClick(int position, LocalMedia localMedia) {
-
-    }
-
-    @Override
-    public void onUpLoadFail(int failCount) {
-
-        creatDialog("图片上传失败", "有" + failCount + "张图片上传失败，是否重新上传？", "放弃上传", "重新上传")
-                .setLeftClickListener(new DialogControl.OnButtonLeftClickListener() {
-                    @Override
-                    public void onLeftClick(View view, DialogControl.ICenterDialog dialog) {
-                        dialog.dismiss();
-                    }
-                })
-                .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
-                    @Override
-                    public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
-                        dialog.dismiss();
-                        imageUtils.reUpLoad();
-                    }
-                })
-                .creatDialog(new CenterAlertDialog(mContext))
-                .show();
-    }
-
-    private CenterAlertBuilder creatDialog(String title, String content, String btleft, String btRight) {
-           return Utils.creatDialog(mContext,title,content,btleft,btRight);
     }
 }

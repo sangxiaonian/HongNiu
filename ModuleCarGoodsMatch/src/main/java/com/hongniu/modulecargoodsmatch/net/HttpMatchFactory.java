@@ -2,6 +2,7 @@ package com.hongniu.modulecargoodsmatch.net;
 
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.IDParams;
+import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
 import com.hongniu.modulecargoodsmatch.entity.GoodsOwnerInforBean;
@@ -87,6 +88,7 @@ public class HttpMatchFactory {
                 .compose(RxUtils.<CommonBean<PageBean<MatchGrapSingleDetailBean>>>getSchedulersObservableTransformer())
                 ;
     }
+
     /**
      * 抢单明细查詢
      *
@@ -103,5 +105,32 @@ public class HttpMatchFactory {
                 ;
     }
 
+    /**
+     * 取消参与抢单
+     *
+     * @return
+     */
+    public static Observable<CommonBean<Object>> cancleParticipation(String id ) {
+        MatchGrapDetailParams params = new MatchGrapDetailParams(0);
 
+        params.robId = id;
+        return MatchClient.getInstance().getService()
+                .cancleParticipation(params)
+                .compose(RxUtils.<CommonBean<Object>>getSchedulersObservableTransformer())
+                ;
+    }
+
+
+    public static void choseMatch(String goodsSourceId, String id) {
+        MatchGrapDetailParams params = new MatchGrapDetailParams(0);
+        params.robId = id;
+        params.goodsSourceId = goodsSourceId;
+
+        MatchClient.getInstance().getService()
+                .cancleParticipation(params)
+                .compose(RxUtils.<CommonBean<Object>>getSchedulersObservableTransformer())
+        ;
+
+
+    }
 }

@@ -115,19 +115,5 @@ public class OrderEvent {
         }
     }
 
-    /**
-     * 修改订单信息
-     */
-    public static class ChangeOrder implements IBus.IEvent {
 
-        public OrderDetailBean bean;
-        public String orderID;
-        public ChangeOrder(OrderDetailBean bean) {
-            this.bean = bean;
-        }
-
-        public ChangeOrder(String orderID) {
-            this.orderID = orderID;
-        }
-    }
 }

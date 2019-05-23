@@ -145,6 +145,8 @@ public class MatchCreatOrderActivity extends BaseActivity implements View.OnClic
                         @Override
                         public void doOnSuccess(Object data) {
                             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
+                            ArouterUtils.getInstance().builder(ArouterParams.activity_match_my_record)
+                                    .navigation(mContext);
                             finish();
                         }
                     });

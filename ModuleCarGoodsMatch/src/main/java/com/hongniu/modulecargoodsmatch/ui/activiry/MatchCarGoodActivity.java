@@ -139,16 +139,16 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
                         tv_start_point.setText("发货地：" + data.startPlaceInfo);
                         tv_end_point.setText("收货地：" + data.destinationInfo);
                         tv_goods.setText("货物名：" + data.goodName);
-                        bt_right.setText("联系货主");
-                        bt_left.setText("我要抢单");
+                        bt_left.setText("联系货主");
+                        bt_right.setText("我要抢单");
 
-                        bt_right.setOnClickListener(new View.OnClickListener() {
+                        bt_left.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 ChactHelper.getHelper().startPriver(mContext, data.userId, data.userName);
                             }
                         });
-                        bt_left.setOnClickListener(new View.OnClickListener() {
+                        bt_right.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 ArouterUtils.getInstance()

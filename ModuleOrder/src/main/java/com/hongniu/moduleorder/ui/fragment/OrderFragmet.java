@@ -579,7 +579,9 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
     public void onChangeOrder(OrderDetailBean orderBean) {
 
         ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_create).navigation(getContext());
-        BusFactory.getBus().postSticky(new OrderEvent.ChangeOrder(orderBean.getId()));
+        Event.ChangeOrder changeOrder = new Event.ChangeOrder(orderBean.getId());
+        changeOrder.orderType=1;
+        BusFactory.getBus().postSticky(changeOrder);
 
 
     }

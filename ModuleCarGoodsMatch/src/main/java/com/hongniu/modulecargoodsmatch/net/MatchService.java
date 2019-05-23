@@ -70,5 +70,13 @@ public interface MatchService {
     @POST("hongniu/api/robOrder/add")
     Observable<CommonBean<GoodsOwnerInforBean>> grapMatch(@Body MatchGrapDetailParams params);
 
+/**
+     * 取消参与
+     *
+     * @return
+     */
+    @POST("hongniu/api/robOrder/cancel")
+    Observable<CommonBean<Object>> cancleParticipation(@Body MatchGrapDetailParams params);
+
 
 }
