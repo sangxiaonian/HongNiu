@@ -231,6 +231,11 @@ public class OrderDetailItemControl {
         void onPayRefuse(OrderDetailBean orderBean);
 
 
+        /**
+         * ORDER_ENTRY_AND_PAY_ORDER 确认收货并支付订单
+         * @param orderBean
+         */
+        void onEntryAndPay(OrderDetailBean orderBean);
     }
 
 

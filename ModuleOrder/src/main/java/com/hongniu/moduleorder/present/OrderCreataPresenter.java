@@ -3,16 +3,25 @@ package com.hongniu.moduleorder.present;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.amap.api.services.core.PoiItem;
+import com.hongniu.baselibrary.arouter.ArouterParamOrder;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.NetObserver;
+import com.hongniu.baselibrary.entity.OrderCreatParamBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
+import com.hongniu.baselibrary.entity.PayOrderInfor;
 import com.hongniu.baselibrary.entity.UpImgData;
+import com.hongniu.baselibrary.event.Event;
+import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.order.CommonOrderUtils;
+import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderCreatControl;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
 import com.hongniu.moduleorder.entity.OrderDriverPhoneBean;
 import com.hongniu.moduleorder.mode.OrderCreataMode;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.sang.common.event.BusFactory;
 import com.sang.common.net.listener.TaskControl;
 import com.sang.common.utils.CommonUtils;
 
@@ -20,6 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.disposables.Disposable;
+
+import static com.unionpay.sdk.ab.mContext;
 
 /**
  * 作者： ${PING} on 2019/5/23.
@@ -96,10 +107,22 @@ public class OrderCreataPresenter implements OrderCreatControl.IOrderCreataPrese
 
     /**
      * 填写完数据之后点击提交按钮
+     * @param result
+     * @param listener
      */
     @Override
-    public void submit() {
-        mode.submit();
+    public void submit(List<String> result, TaskControl.OnTaskListener listener) {
+
+        OrderCreatParamBean infor = mode.getInfor();
+        view.getValue(infor);
+        mode.submit(result)
+            .subscribe(new NetObserver<OrderDetailBean>(listener) {
+                @Override
+                public void doOnSuccess(OrderDetailBean data) {
+                    view.finishSuccess(data,mode.getType());
+                }
+            })
+        ;
     }
 
     /**
@@ -129,7 +152,6 @@ public class OrderCreataPresenter implements OrderCreatControl.IOrderCreataPrese
                         if (data != null) {
                             view.changeEnableByOrder(data.getOrderState(), CommonOrderUtils.isPayOnLine(data.getPayWay()), data.isInsurance());
                         }
-
                     }
                 });
         ;
@@ -149,5 +171,58 @@ public class OrderCreataPresenter implements OrderCreatControl.IOrderCreataPrese
         } else if (type == 1) {
             view.changeTitle(context.getString(R.string.order_change), context.getString(R.string.order_entry_change));
         }
+    }
+
+    /**
+     * 车货匹配时候，传入的数据
+     *
+     * @param event
+     */
+    @Override
+    public void saveInfor(OrderCreatParamBean event) {
+        mode.saveInfor(event);
+        view.showInfor(mode.getInfor());
+    }
+
+    /**
+     * 更改起始位置
+     *
+     * @param t
+     */
+    @Override
+    public void changeStartPlaceInfor(PoiItem t) {
+        OrderCreatParamBean infor = mode.getInfor();
+        if (t!=null) {
+            String title = Utils.dealPioPlace( t);
+            infor.setStartLatitude(t.getLatLonPoint().getLatitude() + "");
+            infor.setStartLongitude(t.getLatLonPoint().getLongitude() + "");
+            infor.setStartPlaceInfo(title);
+        }
+    }
+
+    /**
+     * 更改设置目的地
+     *
+     * @param t
+     */
+    @Override
+    public void changeEndPlaceInfor(PoiItem t) {
+        OrderCreatParamBean infor = mode.getInfor();
+        if (t!=null) {
+            String title = Utils.dealPioPlace( t);
+            infor.setDestinationLatitude( t.getLatLonPoint().getLatitude() + "");
+            infor.setDestinationLongitude( t.getLatLonPoint().getLongitude() + "");
+            infor.setDestinationInfo(title);
+        }
+    }
+
+    /**
+     * 点击返回按钮
+     */
+    @Override
+    public void onBacePress() {
+        String s = mode.getType() == 1 ? "确认要放弃修改吗" : "确认要放弃下单吗？";
+        view.showFinishAleart(s);
+
     }
 }

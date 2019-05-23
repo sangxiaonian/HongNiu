@@ -391,6 +391,7 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
      */
     private PayParam creatBuyParams(String consigneeName, String consigneePhone, String passWord, boolean onLine, boolean hasFrenght, boolean policy) {
         PayParam bean = new PayParam();
+        bean.setPaybusiness(1);//订单支付，固定值
         bean.setOrderNum(getOrderNum());
         if (!TextUtils.isEmpty(passWord)){
             bean.setPayPassword(ConvertUtils.MD5(passWord));

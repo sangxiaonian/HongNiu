@@ -18,7 +18,7 @@ import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.moduleorder.entity.LocationBean;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
-import com.hongniu.moduleorder.entity.OrderCreatParamBean;
+import com.hongniu.baselibrary.entity.OrderCreatParamBean;
 import com.hongniu.moduleorder.entity.OrderDriverPhoneBean;
 import com.hongniu.baselibrary.entity.OrderInsuranceInforBean;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;

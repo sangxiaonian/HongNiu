@@ -5,6 +5,7 @@ import com.hongniu.baselibrary.entity.IDParams;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
 import com.hongniu.modulecargoodsmatch.entity.GoodsOwnerInforBean;
+import com.hongniu.modulecargoodsmatch.entity.MatchChooseGrapBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchCreatGoodsSourceParams;
 import com.hongniu.modulecargoodsmatch.entity.MatchGrapDetailParams;
 import com.hongniu.modulecargoodsmatch.entity.MatchGrapSingleDetailBean;
@@ -39,7 +40,7 @@ public interface MatchService {
     @POST("hongniu/api/goodsSource/queryPage")
     Observable<CommonBean<PageBean<GoodsOwnerInforBean>>> queryMatchGoodsInfor(@Body MatchQueryGoodsInforParams params);
 
-   /**
+    /**
      * 我参与的车货匹配
      *
      * @return
@@ -47,14 +48,15 @@ public interface MatchService {
     @POST("hongniu/api/robOrder/myJoin")
     Observable<CommonBean<PageBean<MatchMyJoinGoodsInofrBean>>> queryMatchMyJoinGoodsInfor(@Body PagerParambean params);
 
-   /**
+    /**
      * 删除车货匹配
      *
      * @return
      */
     @POST("hongniu/api/goodsSource/delete")
     Observable<CommonBean<Object>> deleteMatchGoods(@Body IDParams params);
-   /**
+
+    /**
      * 抢单明细
      *
      * @return
@@ -62,7 +64,7 @@ public interface MatchService {
     @POST("hongniu/api/robOrder/queryPage")
     Observable<CommonBean<PageBean<MatchGrapSingleDetailBean>>> queryGraoDetail(@Body MatchGrapDetailParams params);
 
- /**
+    /**
      * 支付抢单意向金，生成抢单记录
      *
      * @return
@@ -70,13 +72,21 @@ public interface MatchService {
     @POST("hongniu/api/robOrder/add")
     Observable<CommonBean<GoodsOwnerInforBean>> grapMatch(@Body MatchGrapDetailParams params);
 
-/**
+    /**
      * 取消参与
      *
      * @return
      */
     @POST("hongniu/api/robOrder/cancel")
     Observable<CommonBean<Object>> cancleParticipation(@Body MatchGrapDetailParams params);
+
+    /**
+     * 下单
+     *
+     * @return
+     */
+    @POST("hongniu/api/robOrder/choose")
+    Observable<CommonBean<MatchChooseGrapBean>> chooseGrap(@Body MatchGrapDetailParams params);
 
 
 }

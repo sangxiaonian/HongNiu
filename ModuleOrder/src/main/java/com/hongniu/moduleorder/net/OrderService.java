@@ -11,7 +11,7 @@ import com.hongniu.baselibrary.entity.UpImgData;
 import com.hongniu.baselibrary.entity.UpReceiverBean;
 import com.hongniu.moduleorder.entity.LocationBean;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
-import com.hongniu.moduleorder.entity.OrderCreatParamBean;
+import com.hongniu.baselibrary.entity.OrderCreatParamBean;
 import com.hongniu.moduleorder.entity.OrderDriverPhoneBean;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
 import com.hongniu.moduleorder.entity.OrderSearchBean;

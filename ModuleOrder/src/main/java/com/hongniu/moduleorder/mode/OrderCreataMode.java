@@ -2,14 +2,11 @@ package com.hongniu.moduleorder.mode;
 
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
-import com.hongniu.baselibrary.entity.UpImgData;
 import com.hongniu.moduleorder.control.OrderCreatControl;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
-import com.hongniu.moduleorder.entity.OrderCreatParamBean;
+import com.hongniu.baselibrary.entity.OrderCreatParamBean;
 import com.hongniu.moduleorder.entity.OrderDriverPhoneBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
-import com.luck.picture.lib.entity.LocalMedia;
-import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.ConvertUtils;
 
 import java.util.List;
@@ -59,10 +56,15 @@ public class OrderCreataMode implements OrderCreatControl.IOrderCreataMode {
 
     /**
      * 填写完数据之后点击提交按钮
+     * @param images
      */
     @Override
-    public void submit() {
-
+    public Observable<CommonBean<OrderDetailBean>> submit(List<String> images) {
+        if (type==1){//修改订单
+           return HttpOrderFactory.changeOrder(images, paramBean);
+        }else {//创建订单，车货匹配创建订单
+            return  HttpOrderFactory.creatOrder(images, paramBean);
+        }
     }
 
     /**
@@ -90,6 +92,8 @@ public class OrderCreataMode implements OrderCreatControl.IOrderCreataMode {
         paramBean.setDestinationLatitude(orderDetailBean.getDestinationLatitude() + "");
         paramBean.setDestinationLongitude(orderDetailBean.getDestinationLongitude() + "");
         paramBean.setDestinationInfo(orderDetailBean.getDestinationInfo());
+
+
         String timeDes = orderDetailBean.getDeliveryDate();
         try {
             timeDes = ConvertUtils.formatString(orderDetailBean.getDeliveryDate(), "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd");
@@ -107,6 +111,13 @@ public class OrderCreataMode implements OrderCreatControl.IOrderCreataMode {
         paramBean.setDriverName(orderDetailBean.getDriverName());
         paramBean.setDriverMobile(orderDetailBean.getDriverMobile());
 
+        paramBean.setGoodVolume(orderDetailBean.getGoodVolume());
+        paramBean.setGoodWeight(orderDetailBean.getGoodWeight());
+        paramBean.setReplaceState(orderDetailBean.getReplaceState());
+        paramBean.setPaymentAmount(orderDetailBean.getPaymentAmount());
+        paramBean.setReceiptMobile(orderDetailBean.getReceiptMobile());
+        paramBean.setReceiptName(orderDetailBean.getReceiptName());
+
     }
 
     /**
@@ -115,6 +126,26 @@ public class OrderCreataMode implements OrderCreatControl.IOrderCreataMode {
     @Override
     public OrderCreatParamBean getInfor() {
         return paramBean;
+    }
+
+    /**
+     * 车货匹配时候，传入的数据
+     *
+     * @param event
+     */
+    @Override
+    public void saveInfor(OrderCreatParamBean event) {
+        if (event!=null){
+            paramBean= event;
+        }
+    }
+
+    /**
+     * 获取当前类型
+     */
+    @Override
+    public int getType() {
+        return type;
     }
 
 

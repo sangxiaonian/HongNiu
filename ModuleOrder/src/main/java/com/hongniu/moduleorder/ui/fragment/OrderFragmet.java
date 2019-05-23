@@ -629,6 +629,16 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
 
     }
 
+    /**
+     * ORDER_ENTRY_AND_PAY_ORDER 确认收货并支付订单
+     *
+     * @param orderBean
+     */
+    @Override
+    public void onEntryAndPay(OrderDetailBean orderBean) {
+        ToastUtils.getInstance().show("确认收货并且去支付订单");
+    }
+
     protected CenterAlertBuilder creatDialog(String title, String content, String btleft, String
             btRight) {
         return Utils.creatDialog(getContext(), title, content, btleft, btRight);

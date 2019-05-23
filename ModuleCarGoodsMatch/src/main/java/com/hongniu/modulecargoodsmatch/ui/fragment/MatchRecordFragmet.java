@@ -14,6 +14,8 @@ import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.base.RefrushFragmet;
 import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.OrderCreatBean;
+import com.hongniu.baselibrary.entity.OrderCreatParamBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.event.Event;
@@ -21,6 +23,7 @@ import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.dialog.ListDialog;
 import com.hongniu.modulecargoodsmatch.R;
 import com.hongniu.modulecargoodsmatch.entity.GoodsOwnerInforBean;
+import com.hongniu.modulecargoodsmatch.entity.MatchChooseGrapBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchGrapSingleDetailBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchQueryGoodsInforParams;
 import com.hongniu.modulecargoodsmatch.net.HttpMatchFactory;
@@ -37,6 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.rong.eventbus.EventBus;
 
 /**
  * 作者： ${PING} on 2019/5/12.
@@ -72,20 +76,43 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
             public BaseHolder<MatchGrapSingleDetailBean> initHolder(ViewGroup parent, int viewType) {
                 return new BaseHolder<MatchGrapSingleDetailBean>(getContext(), parent, R.layout.match_item_grap_single_detail) {
                     @Override
-                    public void initView(View itemView, int position, final MatchGrapSingleDetailBean data) {
-                        super.initView(itemView, position, data);
+                    public void initView(View itemView, int position, final MatchGrapSingleDetailBean match) {
+                        super.initView(itemView, position, match);
                         TextView tvTitle = itemView.findViewById(R.id.tv_title);
                         TextView tvCarInfor = itemView.findViewById(R.id.tv_car_infor);
                         TextView bt = itemView.findViewById(R.id.bt);
-                        tvTitle.setText(data.driverName+" 已支付"+data.robAmount+"元意向金");
-                        tvCarInfor.setText("车辆信息："+data.carTypeName);
+                        tvTitle.setText(match.driverName+" 已支付"+match.robAmount+"元意向金");
+                        tvCarInfor.setText("车辆信息："+match.carTypeName);
                         bt.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 ToastUtils.getInstance().show("我要下单");
                                 HttpMatchFactory
-                                        .choseMatch(data.goodsSourceId,data.id)
-
+                                        .choseMatch(match.goodsSourceId,match.id)
+                                        .subscribe(new NetObserver<MatchChooseGrapBean>(MatchRecordFragmet.this) {
+                                            @Override
+                                            public void doOnSuccess(MatchChooseGrapBean data) {
+                                                OrderCreatParamBean bean=new OrderCreatParamBean();
+                                                bean.setGsNum(data.gsNum);
+                                                bean.setDeliveryDate(data.startTime);
+                                                bean.setStartPlaceInfo(data.startPlaceInfo);
+                                                bean.setStartLongitude(data.startPlaceX);
+                                                bean.setStartLatitude(data.startPlaceY);
+                                                bean.setDestinationInfo(data.destinationInfo);
+                                                bean.setDestinationLongitude(data.destinationX);
+                                                bean.setDestinationLatitude(data.destinationY);
+                                                bean.setDepartNum(data.departNum);
+                                                bean.setGoodName(data.goodName);
+                                                bean.setGoodVolume(data.goodVolume);
+                                                bean.setGoodWeight(data.goodWeight);
+                                                bean.setMoney(data.freightAmount);
+                                                bean.setDriverMobile(match.driverMobile);
+                                                bean.setDriverName(match.driverName);
+                                                bean.setCarNum(match.carNum);
+                                                EventBus.getDefault().postSticky(bean);
+                                                ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_create).navigation(getContext());
+                                            }
+                                        });
 
                                 ;
 
@@ -96,8 +123,6 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
 //                                detailBean.setDriverId(data.driverId);
 //                                detailBean.setDriverName(data.driverName);
 //                                detailBean.setDriverMobile(data.driverMobile);
-//
-//
 //                                Event.ChangeOrder changeOrder = new Event.ChangeOrder(orderBean.getId());
 //                                changeOrder.orderType=1;
 //                                BusFactory.getBus().postSticky(changeOrder);

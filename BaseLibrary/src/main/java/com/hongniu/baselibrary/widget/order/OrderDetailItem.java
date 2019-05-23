@@ -46,6 +46,7 @@ import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_PATH;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_RECEIPT;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_ROUT;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_ENTRY_AND_PAY_ORDER;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_ENTRY_ARRIVE;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_ENTRY_ORDER;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_PAY;
@@ -232,8 +233,8 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
      */
     private void setInsruancePrice(String insruancePrice) {
         //屏蔽保费
-        if (!Utils.showInscance()){
-            insruancePrice="";
+        if (!Utils.showInscance()) {
+            insruancePrice = "";
         }
         tv_instances.setText(insruancePrice == null ? "" : insruancePrice);
 
@@ -545,11 +546,11 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
         List<ButtonInforBean> infors = helper.getButtonInfors();
         for (ButtonInforBean infor : infors) {
             //是否显示购买保险按钮
-            if (!Utils.showInscance()&&
+            if (!Utils.showInscance() &&
                     (ORDER_BUY_INSURANCE.equals(infor.getText())
-                            ||ORDER_CHECK_INSURANCE.equals(infor.getText())
+                            || ORDER_CHECK_INSURANCE.equals(infor.getText())
                     )
-            ){
+            ) {
                 //如果不显示保险信息，此处屏蔽
                 continue;
             }
@@ -869,7 +870,24 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                 switch (roleState) {
                     case DRIVER:
 //                        ClickEventUtils.getInstance().onClick(ClickEventParams.我是司机_货车导航);
+                        break;
+                    case CAR_OWNER:
 
+                        break;
+                    case CARGO_OWNER:
+
+                        break;
+                }
+                break;
+            case ORDER_ENTRY_AND_PAY_ORDER://确认收货,并支付订单;
+                if (listener != null) {
+                    listener.onEntryAndPay(orderBean);
+                } else {
+                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show(ORDER_ENTRY_AND_PAY_ORDER);
+                }
+                switch (roleState) {
+                    case DRIVER:
+//                        ClickEventUtils.getInstance().onClick(ClickEventParams.我是司机_货车导航);
                         break;
                     case CAR_OWNER:
 

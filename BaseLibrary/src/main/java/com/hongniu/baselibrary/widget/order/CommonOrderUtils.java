@@ -17,6 +17,7 @@ public class CommonOrderUtils {
     public static final String ORDER_CHECK_INSURANCE = "查看保单";
     public static final String ORDER_CHECK_PATH = "查看轨迹";
     public static final String ORDER_ENTRY_ORDER = "确认收货";
+    public static final String ORDER_ENTRY_AND_PAY_ORDER = "确认收货,并支付订单";
     public static final String ORDER_START_CAR = "开始发车";
     public static final String ORDER_CHECK_ROUT = "查看路线";
     public static final String ORDER_TRUCK_GUIDE = "货车导航";

@@ -1,5 +1,7 @@
 package com.hongniu.moduleorder.entity;
 
+import com.hongniu.baselibrary.entity.OrderCreatParamBean;
+
 /**
  * 作者： ${PING} on 2018/8/17.
  */

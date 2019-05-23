@@ -37,9 +37,8 @@ import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OnItemClickListener;
 import com.hongniu.moduleorder.control.OnItemDeletedClickListener;
 import com.hongniu.moduleorder.control.OrderCreatControl;
-import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
-import com.hongniu.moduleorder.entity.OrderCreatParamBean;
+import com.hongniu.baselibrary.entity.OrderCreatParamBean;
 import com.hongniu.moduleorder.entity.OrderDriverPhoneBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.present.OrderCreataPresenter;
@@ -61,6 +60,7 @@ import com.sang.common.widget.dialog.builder.BottomAlertBuilder;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -99,6 +99,8 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
     private ItemView itemStartCarNum;       //发车编号
     private ItemView itemCargoName;          //货物名称
     private ItemView itemPrice;                 //运费
+    private ItemView itemWeight;                 //货物重量
+    private ItemView itemSize;                 //货物体积
     private ItemView itemCarNum;         //车牌号
     private ItemView itemCarPhone;         //车主手机号
     private ItemView itemCarName;         //车主姓名
@@ -116,11 +118,10 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
     private RecyclerView rv;
     private CarNumPop<OrderCarNumbean> pop;
     private CarNumPop<OrderDriverPhoneBean> popDriver;
-    private OrderCreatParamBean paramBean = new OrderCreatParamBean();
+    //    private OrderCreatParamBean paramBean = new OrderCreatParamBean();
     PicAdapter adapter;
     List<LocalMedia> pics;
     //是否是修改订单
-    private boolean changeOrder;
 
     UpLoadImageUtils imageUtils = new UpLoadImageUtils(Param.GOODS);
 
@@ -156,6 +157,8 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
         itemCargoPrice = findViewById(R.id.item_cargo_price);
         itemConsigneeName = findViewById(R.id.item_consignee_name);
         itemConsigneePhone = findViewById(R.id.item_consignee_phone);
+        itemWeight = findViewById(R.id.item_weight);
+        itemSize = findViewById(R.id.item_size);
 
         Calendar startDate = Calendar.getInstance();
         Calendar endDate = Calendar.getInstance();
@@ -288,18 +291,17 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
             });
         } else if (id == R.id.bt_entry) {
             if (check()) {
-                getValue();
+
                 if (imageUtils.isFinish()) {
                     // 如果没有更改过图片，则不上传
-                    upDate();
-                    presenter.submit();
+                    submit();
                 } else {
                     creatDialog(imageUtils.unFinishCount() + "张图片上传中", "是否放弃上传？", "确定放弃", "继续上传")
                             .setLeftClickListener(new DialogControl.OnButtonLeftClickListener() {
                                 @Override
                                 public void onLeftClick(View view, DialogControl.ICenterDialog dialog) {
                                     dialog.dismiss();
-                                    upDate();
+                                    submit();
                                 }
                             })
                             .creatDialog(new CenterAlertDialog(mContext))
@@ -310,6 +312,14 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
         } else if (id == R.id.rl_dai) {
             switchCargo(!select);
         }
+    }
+
+    private void submit() {
+        List<String> result = imageUtils.getResult();
+        if (result.size() == 0 && CommonUtils.isEmptyCollection(pics)) {
+            result = null;
+        }
+        presenter.submit(result, this);
     }
 
     /**
@@ -326,49 +336,8 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
     }
 
 
-    /**
-     * 向服务器提交数据
-     */
-    private void upDate() {
-        List<String> result = imageUtils.getResult();
-        if (result.size() == 0 && CommonUtils.isEmptyCollection(pics)) {
-            result = null;
-        }
-        if (!changeOrder) {
-            HttpOrderFactory.creatOrder(result, paramBean)
-                    .subscribe(new NetObserver<OrderDetailBean>(this) {
-                        @Override
-                        public void doOnSuccess(OrderDetailBean data) {
-                            PayOrderInfor payOrder = new PayOrderInfor();
-                            payOrder.insurance = false;
-                            payOrder.money = Float.parseFloat(paramBean.getMoney());
-                            payOrder.orderID = data.getId();
-                            payOrder.orderNum = data.getOrderNum();
-                            if (select) {
-                                payOrder.receiptMobile = itemConsigneePhone.getTextCenter();
-                                payOrder.receiptName = itemConsigneeName.getTextCenter();
-                            }
-                            BusFactory.getBus().postSticky(payOrder);
-                            ArouterUtils.getInstance()
-                                    .builder(ArouterParamOrder.activity_order_pay)
-                                    .navigation(mContext);
-                            BusFactory.getBus().postSticky(new Event.UpRoale(OrderDetailItemControl.RoleState.CARGO_OWNER));
-                            finish();
-                        }
-                    });
-        } else {
-            HttpOrderFactory.changeOrder(result, paramBean)
-                    .subscribe(new NetObserver<OrderDetailBean>(this) {
-                        @Override
-                        public void doOnSuccess(OrderDetailBean data) {
-                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
-                            finish();
-                        }
-                    });
-        }
-    }
-
-    private void getValue() {
+    @Override
+    public void getValue(OrderCreatParamBean paramBean) {
         paramBean.setDepartNum(itemStartCarNum.getTextCenter());
         paramBean.setGoodName(itemCargoName.getTextCenter());
         paramBean.setMoney(itemPrice.getTextCenter());
@@ -377,98 +346,70 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
         paramBean.setOwnerName(itemCarName.getTextCenter());
         paramBean.setDriverName(itemDriverName.getTextCenter());
         paramBean.setDriverMobile(itemDriverPhone.getTextCenter());
+        paramBean.setDriverMobile(itemDriverPhone.getTextCenter());
+        paramBean.setDeliveryDate(itemStartTime.getTextCenter());
+        paramBean.setGoodWeight(itemWeight.getTextCenter());
+        paramBean.setGoodVolume(itemSize.getTextCenter());
 
         paramBean.setReplaceState(select ? 1 : 0);
         paramBean.setPaymentAmount(itemCargoPrice.getTextCenter());
         paramBean.setReceiptName(itemConsigneeName.getTextCenter());
         paramBean.setReceiptMobile(itemConsigneePhone.getTextCenter());
-        if (changeOrder) { //如果是修改订单界面,清除不可修改部分的内容
-            if (!itemStartTime.isEnabled()) {//不可更改
-                paramBean.setDeliveryDate(null);
-            }
-            if (!itemStartLocation.isEnabled()) {//发货地点不可更改
-                paramBean.setStartLatitude(null);
-                paramBean.setStartLongitude(null);
-                paramBean.setStartPlaceInfo(null);
-            }
-            if (!itemEndLocation.isEnabled()) {//收货地点不可更改
-                paramBean.setDestinationLatitude(null);
-                paramBean.setDestinationLongitude(null);
-                paramBean.setDestinationInfo(null);
-            }
-            if (!itemStartCarNum.isEnabled()) {//发货编号不可更改
-                paramBean.setDepartNum(null);
-            }
-            if (!itemCargoName.isEnabled()) {//货物名称
-                paramBean.setGoodName(null);
 
-            }
 
-            if (!itemPrice.isEnabled()) {//运费
-                paramBean.setMoney(null);
-            }
-            if (!itemCarNum.isEnabled()) {//运费
-                paramBean.setCarNum(null);
-            }
-            if (!itemCarPhone.isEnabled()) {//运费
-                paramBean.setOwnerMobile(null);
-            }
-            if (!itemCarName.isEnabled()) {//运费
-                paramBean.setOwnerName(null);
-            }
-            if (!itemDriverName.isEnabled()) {//运费
-                paramBean.setDriverName(null);
-            }
-            if (!itemDriverPhone.isEnabled()) {//运费
-                paramBean.setDriverMobile(null);
-            }
+        if (!itemWeight.isEnabled()) {//不可更改
+            paramBean.setGoodWeight(null);
+        }
+        if (!itemSize.isEnabled()) {//不可更改
+            paramBean.setGoodVolume(null);
+        }
+        if (!itemStartTime.isEnabled()) {//不可更改
+            paramBean.setDeliveryDate(null);
+        }
+        if (!itemStartLocation.isEnabled()) {//发货地点不可更改
+            paramBean.setStartLatitude(null);
+            paramBean.setStartLongitude(null);
+            paramBean.setStartPlaceInfo(null);
+        }
+        if (!itemEndLocation.isEnabled()) {//收货地点不可更改
+            paramBean.setDestinationLatitude(null);
+            paramBean.setDestinationLongitude(null);
+            paramBean.setDestinationInfo(null);
+        }
+        if (!itemStartCarNum.isEnabled()) {//发货编号不可更改
+            paramBean.setDepartNum(null);
+        }
+        if (!itemCargoName.isEnabled()) {//货物名称
+            paramBean.setGoodName(null);
 
+        }
+
+        if (!itemPrice.isEnabled()) {//运费
+            paramBean.setMoney(null);
+        }
+        if (!itemCarNum.isEnabled()) {//运费
+            paramBean.setCarNum(null);
+        }
+        if (!itemCarPhone.isEnabled()) {//运费
+            paramBean.setOwnerMobile(null);
+        }
+        if (!itemCarName.isEnabled()) {//运费
+            paramBean.setOwnerName(null);
+        }
+        if (!itemDriverName.isEnabled()) {//运费
+            paramBean.setDriverName(null);
+        }
+        if (!itemDriverPhone.isEnabled()) {//运费
+            paramBean.setDriverMobile(null);
         }
 
 
     }
 
     @Override
-    public void onTimeSelect(Date date, View v) {
-
-        itemStartTime.setTextCenter(ConvertUtils.formatTime(date, "yyyy-MM-dd"));
-        paramBean.setDeliveryDate(ConvertUtils.formatTime(date, "yyyy-MM-dd"));
-
-    }
-
-    @Override
-    protected boolean getUseEventBus() {
-        return true;
-    }
-
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onStartEvent(Event.StartLoactionEvent startLoactionEvent) {
-        if (startLoactionEvent != null && startLoactionEvent.t != null) {
-            String title = Utils.dealPioPlace(startLoactionEvent.t);
-            itemStartLocation.setTextCenter(title);
-            paramBean.setStartLatitude(startLoactionEvent.t.getLatLonPoint().getLatitude() + "");
-            paramBean.setStartLongitude(startLoactionEvent.t.getLatLonPoint().getLongitude() + "");
-            paramBean.setStartPlaceInfo(title);
-        }
-    }
-
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEndEvent(Event.EndLoactionEvent endLoactionEvent) {
-        if (endLoactionEvent != null && endLoactionEvent.t != null) {
-            String title = Utils.dealPioPlace(endLoactionEvent.t);
-            itemEndLocation.setTextCenter(title);
-            paramBean.setDestinationLatitude(endLoactionEvent.t.getLatLonPoint().getLatitude() + "");
-            paramBean.setDestinationLongitude(endLoactionEvent.t.getLatLonPoint().getLongitude() + "");
-            paramBean.setDestinationInfo(title);
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
+    public void showFinishAleart(String s) {
         new BottomAlertBuilder()
-                .setDialogTitle(changeOrder ? "确认要放弃修改吗" : "确认要放弃下单吗？")
+                .setDialogTitle(s)
                 .setTopClickListener(new DialogControl.OnButtonTopClickListener() {
                     @Override
                     public void onTopClick(View view, DialogControl.IBottomDialog dialog) {
@@ -485,6 +426,49 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
                     }
 
                 }).creatDialog(new BottomAlertDialog(mContext)).show();
+    }
+
+    @Override
+    public void onTimeSelect(Date date, View v) {
+
+        itemStartTime.setTextCenter(ConvertUtils.formatTime(date, "yyyy-MM-dd"));
+//        presenter.changeStartTime();
+//        paramBean.setDeliveryDate(ConvertUtils.formatTime(date, "yyyy-MM-dd"));
+
+    }
+
+    @Override
+    protected boolean getUseEventBus() {
+        return true;
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onStartEvent(Event.StartLoactionEvent startLoactionEvent) {
+        if (startLoactionEvent != null && startLoactionEvent.t != null) {
+            String title = Utils.dealPioPlace(startLoactionEvent.t);
+            itemStartLocation.setTextCenter(title);
+            presenter.changeStartPlaceInfor(startLoactionEvent.t);
+
+        }
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEndEvent(Event.EndLoactionEvent endLoactionEvent) {
+        if (endLoactionEvent != null && endLoactionEvent.t != null) {
+            String title = Utils.dealPioPlace(endLoactionEvent.t);
+            itemEndLocation.setTextCenter(title);
+            presenter.changeEndPlaceInfor(endLoactionEvent.t);
+
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        presenter.onBacePress();
+
 
     }
 
@@ -637,13 +621,28 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
      */
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onMessageEvent(Event.ChangeOrder event) {
-        changeOrder = true;
         if (event != null && event.orderID != null) {
-            presenter.changeType(event.orderType, mContext);
+            presenter.changeType(1, mContext);
             presenter.queryOrderInfor(event.orderID, this);
 
         }
         BusFactory.getBus().removeStickyEvent(event);
+    }
+
+    /**
+     * 修改订单信息
+     *
+     * @param event
+     */
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(OrderCreatParamBean event) {
+        if (event != null) {
+            presenter.changeType(2, mContext);
+            presenter.saveInfor(event);
+
+
+        }
+        EventBus.getDefault().removeStickyEvent(event);
     }
 
 
@@ -706,7 +705,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
     @Override
     public void changeTitle(String title, String bt) {
         setToolbarTitle(title);
-        if (bt!=null) {
+        if (bt != null) {
             btSave.setText(bt);
         }
     }
@@ -736,16 +735,23 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
     /**
      * 根据数据初始化页面信息
      *
-     * @param infor
+     * @param paramBean
      */
     @Override
-    public void showInfor(OrderCreatParamBean infor) {
+    public void showInfor(OrderCreatParamBean paramBean) {
         itemStartTime.setTextCenter(paramBean.getDeliveryDate());
         itemStartLocation.setTextCenter(paramBean.getStartPlaceInfo());
         itemEndLocation.setTextCenter(paramBean.getDestinationInfo());
         itemStartCarNum.setTextCenter(paramBean.getDepartNum());
         itemCargoName.setTextCenter(paramBean.getGoodName());
         itemPrice.setTextCenter(paramBean.getMoney());
+        itemWeight.setTextCenter(paramBean.getGoodWeight());
+        itemSize.setTextCenter(paramBean.getGoodVolume());
+        itemCargoPrice.setTextCenter(paramBean.getPaymentAmount());
+        itemConsigneeName.setTextCenter(paramBean.getReceiptName());
+        itemConsigneePhone.setTextCenter(paramBean.getReceiptMobile());
+
+        switchCargo(paramBean.getReplaceState()==1);
 
         show = false;
         itemCarNum.setTextCenter(paramBean.getCarNum());
@@ -793,6 +799,9 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
                         itemStartCarNum.setEnabled(false);
                         itemCargoName.setEnabled(false);
                         itemPrice.setEnabled(false);
+                        itemWeight.setEnabled(false);
+                        itemSize.setEnabled(false);
+                        itemPrice.setEnabled(false);
                         itemCarNum.setEnabled(false);
                         itemCarPhone.setEnabled(false);
                         itemCarName.setEnabled(false);
@@ -804,6 +813,8 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
                         itemStartCarNum.setEnabled(false);
                         itemCargoName.setEnabled(false);
                         itemCarNum.setEnabled(false);
+                        itemWeight.setEnabled(false);
+                        itemSize.setEnabled(false);
                         itemCarPhone.setEnabled(false);
                         itemCarName.setEnabled(false);
                         itemDriverName.setEnabled(true);
@@ -835,6 +846,8 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
                 itemEndLocation.setEnabled(false);
                 itemStartCarNum.setEnabled(false);
                 itemCargoName.setEnabled(false);
+                itemWeight.setEnabled(false);
+                itemSize.setEnabled(false);
                 itemPrice.setEnabled(false);
                 itemCarNum.setEnabled(false);
                 itemCarPhone.setEnabled(false);
@@ -846,6 +859,36 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
                 adapter.removeFoot(0);
                 break;
 
+        }
+    }
+
+    /**
+     * 新增修改订单成功
+     *
+     * @param data
+     * @param type
+     */
+    @Override
+    public void finishSuccess(OrderDetailBean data, int type) {
+        if (type == 1) {
+            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
+            finish();
+        } else {
+            PayOrderInfor payOrder = new PayOrderInfor();
+            payOrder.insurance = false;
+            payOrder.money = Float.parseFloat(itemPrice.getTextCenter());
+            payOrder.orderID = data.getId();
+            payOrder.orderNum = data.getOrderNum();
+            if (select) {
+                payOrder.receiptMobile = itemConsigneePhone.getTextCenter();
+                payOrder.receiptName = itemConsigneeName.getTextCenter();
+            }
+            BusFactory.getBus().postSticky(payOrder);
+            ArouterUtils.getInstance()
+                    .builder(ArouterParamOrder.activity_order_pay)
+                    .navigation(mContext);
+            BusFactory.getBus().postSticky(new Event.UpRoale(OrderDetailItemControl.RoleState.CARGO_OWNER));
+            finish();
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.hongniu.moduleorder.entity;
+package com.hongniu.baselibrary.entity;
 
 import java.util.List;
 

@@ -2,11 +2,12 @@ package com.hongniu.moduleorder.control;
 
 import android.content.Context;
 
+import com.amap.api.services.core.PoiItem;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
-import com.hongniu.moduleorder.entity.OrderCreatParamBean;
+import com.hongniu.baselibrary.entity.OrderCreatParamBean;
 import com.hongniu.moduleorder.entity.OrderDriverPhoneBean;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.sang.common.net.listener.TaskControl;
@@ -63,6 +64,20 @@ public class OrderCreatControl {
          */
         void changeEnableByOrder(OrderDetailItemControl.OrderState orderState, boolean payOnLine, boolean insurance);
 
+        /**
+         * 新增修改订单成功
+         * @param data
+         * @param type
+         */
+        void finishSuccess(OrderDetailBean data, int type);
+
+        /**
+         * 获取当前已经更改的信息
+         * @param infor
+         */
+        void getValue(OrderCreatParamBean infor);
+
+        void showFinishAleart(String s);
     }
 
     public interface IOrderCreataPresenter {
@@ -83,8 +98,10 @@ public class OrderCreatControl {
 
         /**
          * 填写完数据之后点击提交按钮
+         * @param result
+         * @param listener
          */
-        void submit();
+        void submit(List<String> result, TaskControl.OnTaskListener listener);
 
         /**
          * 修改订单的时候，根据传入的订单ID查询相应的订单数据
@@ -101,6 +118,29 @@ public class OrderCreatControl {
          * @param context
          */
         void changeType(int type, Context context);
+
+        /**
+         * 车货匹配时候，传入的数据
+         * @param event
+         */
+        void saveInfor(OrderCreatParamBean event);
+
+        /**
+         * 更改起始位置
+         * @param t
+         */
+        void changeStartPlaceInfor(PoiItem t);
+
+        /**
+         * 更改设置目的地
+         * @param t
+         */
+        void changeEndPlaceInfor(PoiItem t);
+
+        /**
+         * 点击返回按钮
+         */
+        void onBacePress();
     }
 
     public interface IOrderCreataMode {
@@ -127,8 +167,9 @@ public class OrderCreatControl {
 
         /**
          * 填写完数据之后点击提交按钮
+         * @param images
          */
-        void submit();
+        Observable<CommonBean<OrderDetailBean>> submit(List<String> images);
 
         /**
          * 修改订单的时候，根据订单ID查询订单数据
@@ -149,6 +190,16 @@ public class OrderCreatControl {
          */
         OrderCreatParamBean getInfor();
 
+        /**
+         * 车货匹配时候，传入的数据
+         * @param event
+         */
+        void saveInfor(OrderCreatParamBean event);
+
+        /**
+         * 获取当前类型
+         */
+        int getType();
     }
 
 
