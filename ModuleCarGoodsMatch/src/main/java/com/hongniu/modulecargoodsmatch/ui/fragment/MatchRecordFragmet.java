@@ -86,7 +86,6 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
                         bt.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                ToastUtils.getInstance().show("我要下单");
                                 HttpMatchFactory
                                         .choseMatch(match.goodsSourceId,match.id)
                                         .subscribe(new NetObserver<MatchChooseGrapBean>(MatchRecordFragmet.this) {
@@ -237,6 +236,8 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
                     public void doOnSuccess(Object data) {
                         adapter.notifyItemDeleted(position);
                         queryData(true);
+                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
+
                     }
                 });
     }

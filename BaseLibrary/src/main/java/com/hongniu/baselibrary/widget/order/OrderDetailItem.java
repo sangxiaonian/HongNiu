@@ -68,7 +68,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
     private TextView tv_start_loaction;
     private TextView tv_end_loaction;
     private TextView tv_price;
-    private TextView tv_instances;
+//    private TextView tv_instances;
     private TextView tv_order_detail;
     private ViewGroup llBottom;
     private View lineBottom;
@@ -114,7 +114,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
         tv_start_loaction = itemView.findViewById(R.id.tv_start_loaction);//发车地点
         tv_end_loaction = itemView.findViewById(R.id.tv_end_loaction);//到达地点
         tv_price = itemView.findViewById(R.id.tv_price);//运费
-        tv_instances = itemView.findViewById(R.id.tv_instances);//保费
+//        tv_instances = itemView.findViewById(R.id.tv_instances);//保费
         tv_order_detail = itemView.findViewById(R.id.tv_order_detail);//右侧按钮
         llBottom = itemView.findViewById(R.id.ll_bottom);//右侧按钮
         lineBottom = itemView.findViewById(R.id.line_bottom);//右侧按钮
@@ -137,28 +137,20 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
         if (data.getDeliveryDate() != null) {
             setTiem(ConvertUtils.formatString(data.getDeliveryDate(), "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd"));
         }
-
-        //对于司机，隐藏保费
-        hideInsurance(roleState == OrderDetailItemControl.RoleState.DRIVER);
-
         String money = data.getMoney();
-        if (!TextUtils.isEmpty(money)) {
-            String s = TextUtils.isEmpty(CommonOrderUtils.getPayWay(data.getPayWay())) ? "" : ("(" + CommonOrderUtils.getPayWay(data.getPayWay()) + ")");
-            setPrice("运费：￥" + money + s);
-        } else {
-            setPrice("");
+        StringBuilder builder=new StringBuilder();
+        String s = TextUtils.isEmpty(data.freightPayWayStr)?"":("("+data.freightPayWayStr+")");
+        builder.append(TextUtils.isEmpty(money)?"":("运费：" + money + s)).append("\t");
+        if (data.getPaymentAmount()>0){
+            //代收货款金额大于0
+            builder.append("代收货款：").append(data.getPaymentAmount()).append("\t");
+        }
+        if (!hideInsurance&&data.isInsurance()) {
+            //如果不隐藏保费，并且购买了保险
+            builder.append("保费：").append(data.getPolicyMoney()).append("\t");
         }
 
-        if (hideInsurance || !data.isInsurance()) {
-            tv_instances.setVisibility(GONE);
-        } else {
-            tv_instances.setVisibility(VISIBLE);
-
-        }
-
-        String s = TextUtils.isEmpty(CommonOrderUtils.getPayWay(data.getPolicyPayWay())) ? "" : ("(" + CommonOrderUtils.getPayWay(data.getPolicyPayWay()) + ")");
-        String plicy = "保费：" + data.getPolicyMoney() + "元" + s;
-        setInsruancePrice((data.isInsurance() && data.getPolicyMoney() != null) ? plicy : "");
+        setPrice(builder.toString());
         setOrderState(data.getOrderState());
 
         if (data.getOrderState() == OrderDetailItemControl.OrderState.IN_TRANSIT) {//正在运输中
@@ -170,6 +162,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
             } else {
                 progress.setCurent(0);
             }
+            progress.showLog(true);
             //已到达
         } else if (data.getOrderState() == OrderDetailItemControl.OrderState.HAS_ARRIVED) {
             progress.showProgress(true);
@@ -222,24 +215,12 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
 
         //司机隐藏价格,保险控件
         if (tv_price.getVisibility() != GONE) {
-            tv_price.setVisibility(roleState == OrderDetailItemControl.RoleState.DRIVER ? GONE : VISIBLE);
-            tv_instances.setVisibility(roleState == OrderDetailItemControl.RoleState.DRIVER ? GONE : VISIBLE);
+            tv_price.setVisibility(hideInsurance||roleState == OrderDetailItemControl.RoleState.DRIVER ? GONE : VISIBLE);
         }
 
 
     }
 
-    /**
-     * 设置保费
-     */
-    private void setInsruancePrice(String insruancePrice) {
-        //屏蔽保费
-        if (!Utils.showInscance()) {
-            insruancePrice = "";
-        }
-        tv_instances.setText(insruancePrice == null ? "" : insruancePrice);
-
-    }
 
 
     private boolean hideButton;
@@ -923,7 +904,6 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
     public void hideBottom(boolean b) {
 
         tv_price.setVisibility(b ? GONE : VISIBLE);
-        tv_instances.setVisibility(b ? GONE : VISIBLE);
         hideButton(b);
 
     }

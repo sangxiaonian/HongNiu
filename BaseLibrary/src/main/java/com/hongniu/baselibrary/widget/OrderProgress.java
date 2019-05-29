@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.annotation.Nullable;
@@ -29,8 +30,8 @@ public class OrderProgress extends View {
     private Bitmap bitmap;
 
     private Rect rect;
-    private boolean showProgress=true;
-    private boolean showLog=true;
+    private boolean showProgress = true;
+    private boolean showLog = true;
 
     public OrderProgress(Context context) {
         this(context, null, 0);
@@ -53,7 +54,7 @@ public class OrderProgress extends View {
         current = 50;
         proWidth = DeviceUtils.dip2px(context, 2);
         pointSize = DeviceUtils.dip2px(context, 5);
-        passColor = Color.parseColor("#43BFA3");
+        passColor = Color.parseColor("#E83515");
         unPassColor = Color.parseColor("#DDDDDD");
         bitmap = creatBitmap();
         rect = new Rect();
@@ -61,11 +62,21 @@ public class OrderProgress extends View {
 
     private Bitmap creatBitmap() {
         int size = DeviceUtils.dip2px(getContext(), 25);
-        Bitmap bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_4444);
-        Canvas canvas = new Canvas(bitmap);
-        canvas.drawBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.icon_carmap_50), 0, 0, mPaint);
-        canvas = null;
-        return bitmap;
+        Bitmap bm = BitmapFactory.decodeResource(getResources(), R.mipmap.icon_carmap_50);
+// 获得图片的宽高
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        // 设置想要的大小
+        int newWidth = size;
+        int newHeight = size;
+        // 计算缩放比例
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        // 取得想要缩放的matrix参数
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleWidth, scaleHeight);
+        // 得到新的图片
+        return Bitmap.createBitmap(bm, 0, 0, width, height, matrix, true);
     }
 
     @Override
@@ -77,7 +88,8 @@ public class OrderProgress extends View {
 
 
         if (showProgress) {
-            final float currentPro = current * 1.0f / max;
+//            final float currentPro = current * 1.0f / max;
+            final float currentPro = 0.5f;
             final float proY = getMeasuredHeight() * currentPro;
             canvas.save();
             rect.top = 0;
@@ -87,8 +99,7 @@ public class OrderProgress extends View {
             canvas.clipRect(rect);
             drawProprogress(canvas);
             canvas.restore();
-
-            if (showLog) {
+            if (true) {
                 final float bitmapY = (proY - bitmap.getHeight()) > 0 ? (proY - bitmap.getHeight()) : 0;
                 canvas.drawBitmap(bitmap, (getMeasuredWidth() - bitmap.getWidth()) / 2
                         , bitmapY, mPaint);
@@ -112,23 +123,25 @@ public class OrderProgress extends View {
     }
 
 
-    public void setCurent(float curent){
+    public void setCurent(float curent) {
 
-        this.current=curent<0?0:curent>max ?max:curent;
+        this.current = curent < 0 ? 0 : curent > max ? max : curent;
         postInvalidate();
     }
 
     //隐藏当前进度
     public void showProgress(boolean show) {
-        showProgress=show;
+        showProgress = show;
         postInvalidate();
     }
 
     /**
      * 隐藏进度图标
+     *
      * @param showLog
      */
-    public void showLog(boolean showLog){
-       this. showLog=showLog;
+    public void showLog(boolean showLog) {
+        this.showLog = showLog;
+        postInvalidate();
     }
 }

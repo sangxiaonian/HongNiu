@@ -136,6 +136,7 @@ public class MatchMyJoinRecordFragmet extends RefrushFragmet<MatchMyJoinGoodsIno
                     @Override
                     public void doOnSuccess(Object data) {
                         queryData(true);
+                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
                     }
                 });
     }

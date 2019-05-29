@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 import com.hongniu.baselibrary.widget.order.CommonOrderUtils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 
+import java.security.PublicKey;
 import java.util.List;
 
 /**
@@ -211,7 +212,7 @@ public class OrderDetailBean {
     /**
      * false	number	保费
      */
-    private String policyMoney;
+    private float policyMoney;
     /**
      * false	string	保单信息
      */
@@ -259,6 +260,8 @@ public class OrderDetailBean {
      * false	string	货源单号(车货匹配货主下单时使用)
      */
     private String gsNum;        //
+   public int freightPayClass;	//true	number	运费支付类型1:现付 2:到付 3:回付
+   public String  freightPayWayStr;//	true	string	运费支付方式描述
 
 
     public String getVerifyFailCause() {
@@ -321,11 +324,11 @@ public class OrderDetailBean {
         this.companyName = companyName;
     }
 
-    public String getPolicyMoney() {
+    public float getPolicyMoney() {
         return policyMoney;
     }
 
-    public void setPolicyMoney(String policyMoney) {
+    public void setPolicyMoney(float policyMoney) {
         this.policyMoney = policyMoney;
     }
 
