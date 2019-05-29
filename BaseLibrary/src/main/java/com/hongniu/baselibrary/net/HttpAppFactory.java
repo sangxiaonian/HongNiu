@@ -4,6 +4,8 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CarInforBean;
 import com.hongniu.baselibrary.entity.CarTypeBean;
 import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.GrapSingleInforBean;
+import com.hongniu.baselibrary.entity.GrapSingleInforParams;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.OrderIdBean;
 import com.hongniu.baselibrary.entity.PageBean;
@@ -43,6 +45,15 @@ public class HttpAppFactory {
 
 
     /**
+     * 查询抢单状态
+     */
+    public static Observable<CommonBean<GrapSingleInforBean>> queryGrapSingleInfor(String robid) {
+        GrapSingleInforParams params=new GrapSingleInforParams();
+        params.robId=robid;
+         return AppClient.getInstance().getService().queryGrapSingleInfor(params)
+                .compose(RxUtils.<CommonBean<GrapSingleInforBean>>getSchedulersObservableTransformer());
+
+    }  /**
      * 获取车辆类型
      */
     public static Observable<CommonBean<List<CarTypeBean>>> getCarType() {

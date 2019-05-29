@@ -25,6 +25,7 @@ import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CloseActivityEvent;
 import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.GrapSingleInforBean;
 import com.hongniu.baselibrary.entity.LoginBean;
 import com.hongniu.baselibrary.entity.QueryPayPassword;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
@@ -344,9 +345,28 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         demo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferencesUtils.getInstance().putBoolean(Param.SHOW_INSURANCE,!SharedPreferencesUtils.getInstance().getBoolean(Param.SHOW_INSURANCE));
-                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show(SharedPreferencesUtils.getInstance().getBoolean(Param.SHOW_INSURANCE)?"显示保险相关信息":"敏感信息已隐藏");
-                EventBus.getDefault().post("");
+                HttpAppFactory.queryGrapSingleInfor("")
+                        .subscribe(new NetObserver<GrapSingleInforBean>(null) {
+
+                            @Override
+                            public void onSubscribe(Disposable d) {
+                                super.onSubscribe(d);
+                                disposable = d;
+                            }
+
+                            @Override
+                            public void doOnSuccess(GrapSingleInforBean data) {
+                                if (1 == data.status) {
+
+                                }
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                super.onError(e);
+
+                            }
+                        });
             }
         });
 

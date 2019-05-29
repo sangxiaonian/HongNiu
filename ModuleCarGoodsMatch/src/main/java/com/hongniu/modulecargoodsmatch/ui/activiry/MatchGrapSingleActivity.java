@@ -281,7 +281,7 @@ public class MatchGrapSingleActivity extends BaseActivity implements View.OnClic
                                 .withInt("payType", finalType)
                                 .withParcelable("payInfor",data)
                                 .withBoolean("ISDEUBG", isDebug)
-                                .withString("ORDERID",id)
+                                .withString("ORDERID",grapId)
                                 .withBoolean("havePolicy",false)
                                 .withInt("queryType",1)
                                 .navigation((Activity) mContext,1);

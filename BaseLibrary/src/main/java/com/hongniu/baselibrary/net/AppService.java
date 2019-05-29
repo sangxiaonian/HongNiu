@@ -3,6 +3,8 @@ package com.hongniu.baselibrary.net;
 import com.hongniu.baselibrary.entity.CarInforBean;
 import com.hongniu.baselibrary.entity.CarTypeBean;
 import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.GrapSingleInforBean;
+import com.hongniu.baselibrary.entity.GrapSingleInforParams;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.OrderIdBean;
 import com.hongniu.baselibrary.entity.PayParam;
@@ -35,6 +37,14 @@ import retrofit2.http.Part;
  */
 public interface AppService {
 
+
+    /**
+     * 查询抢单状态
+     *
+     * @return
+     */
+    @POST("hongniu/api/robOrder/queryRob")
+    Observable<CommonBean<GrapSingleInforBean>> queryGrapSingleInfor(@Body GrapSingleInforParams params);
 
     /**
      * 获取车辆类型
