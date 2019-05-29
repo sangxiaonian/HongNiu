@@ -140,14 +140,14 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
         String money = data.getMoney();
         StringBuilder builder=new StringBuilder();
         String s = TextUtils.isEmpty(data.freightPayWayStr)?"":("("+data.freightPayWayStr+")");
-        builder.append(TextUtils.isEmpty(money)?"":("运费：" + money + s)).append("\t");
+        builder.append(TextUtils.isEmpty(money)?"":("运费：" + money + s)).append("  ");
         if (data.getPaymentAmount()>0){
             //代收货款金额大于0
-            builder.append("代收货款：").append(data.getPaymentAmount()).append("\t");
+            builder.append("代收货款：").append(data.getPaymentAmount()).append("  ");
         }
         if (!hideInsurance&&data.isInsurance()) {
             //如果不隐藏保费，并且购买了保险
-            builder.append("保费：").append(data.getPolicyMoney()).append("\t");
+            builder.append("保费：").append(data.getPolicyMoney());
         }
 
         setPrice(builder.toString());

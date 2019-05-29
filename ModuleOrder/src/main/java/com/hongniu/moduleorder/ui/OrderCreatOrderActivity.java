@@ -645,7 +645,6 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
         if (event != null) {
             presenter.changeType(2, mContext);
             presenter.saveInfor(event);
-            JLog.i("接收到信息");
         }
         EventBus.getDefault().removeStickyEvent(event);
     }

@@ -167,7 +167,7 @@ public class OrderCreataPresenter implements OrderCreatControl.IOrderCreataPrese
     public void changeType(int type, Context context) {
         mode.saveType(type);
         if (type == 0 || type == 2) {
-            view.changeTitle(context.getString(R.string.order_create_order), "");
+            view.changeTitle(context.getString(R.string.order_create_order), "确定下单");
         } else if (type == 1) {
             view.changeTitle(context.getString(R.string.order_change), context.getString(R.string.order_entry_change));
         }

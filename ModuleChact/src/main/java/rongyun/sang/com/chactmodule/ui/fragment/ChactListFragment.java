@@ -78,7 +78,6 @@ public class ChactListFragment extends BaseFragment {
             messageFragment.setUri(uri);  //设置 ConverssationListFragment 的显示属性
             messageFragment.onRestoreUI();
         }
-        JLog.i("手工刀消息，开始更新界面"+messageFragment);
 
     }
 }
