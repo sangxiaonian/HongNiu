@@ -79,14 +79,6 @@ public interface LoginService {
     @POST("hongniu/api/car/deletebyid")
     Observable<CommonBean<String>> deletedCar(@Body CarInforBean infor);
 
-    /**
-     * 获取车辆类型
-     *
-     * @return
-     */
-    @POST("hongniu//api/car/vehicletype")
-    Observable<CommonBean<List<CarTypeBean>>> getCarType();
-
 
     /**
      * 根据车牌号查询车辆详情信息

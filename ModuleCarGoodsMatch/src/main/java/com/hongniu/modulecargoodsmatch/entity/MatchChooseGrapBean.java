@@ -25,5 +25,13 @@ public class MatchChooseGrapBean {
   public String userMobile;//	true	string	创建用户手机号
   public String status;//	true	string	货源状态(0生成1已预定2已失效 3完成)
   public String goodsDetail;//	true	string	货物详细信息
+  public String carId	;//rue	string	车辆id
+  public String carNum	;//rue	string	车牌号
+  public String ownerId	;//rue	string	车主id
+  public String ownerName	;//rue	string	车主名
+  public String ownerMobile	;//rue	string	车主手机号
+  public String driverId	;//rue	string	司机id
+  public String driverName	;//rue	string	司机名
+  public String driverMobile	;//rue	string	司机手机号
 
 }

@@ -282,10 +282,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                         .navigation(getContext());
                 break;
             case R.id.card_policy:
-                ClickEventUtils.getInstance().onClick(ClickEventParams.首页_牛人保);
-//                ToastUtils.getInstance().show("保险");
-//                H5Config h5Config = new H5Config("牛人保", Param.NIURENBAO, true);
-//                ArouterUtils.getInstance().builder(ArouterParamsApp.activity_niu_insurance_h5).withSerializable(Param.TRAN, h5Config).navigation(getContext());
 
                 ArouterUtils.getInstance().builder(ArouterParams.activity_match_car_good).navigation(getContext());
                 break;
@@ -295,7 +291,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
 
                 break;
             case R.id.card_etc:
-                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("功能暂未开放，敬请期待");
+                ClickEventUtils.getInstance().onClick(ClickEventParams.首页_牛人保);
+                H5Config h5Config = new H5Config("牛人保", Param.NIURENBAO, true);
+                ArouterUtils.getInstance().builder(ArouterParamsApp.activity_niu_insurance_h5).withSerializable(Param.TRAN, h5Config).navigation(getContext());
                 break;
         }
     }

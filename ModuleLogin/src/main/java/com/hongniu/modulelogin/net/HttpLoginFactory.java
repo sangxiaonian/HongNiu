@@ -150,7 +150,7 @@ public class HttpLoginFactory {
      */
     public static Observable<CommonBean<List<CarTypeBean>>> getCarType() {
 
-        return LoginClient.getInstance().getLoginService().getCarType().compose(RxUtils.<CommonBean<List<CarTypeBean>>>getSchedulersObservableTransformer());
+        return HttpAppFactory.getCarType();
 
     }
 

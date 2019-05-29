@@ -2,6 +2,7 @@ package com.hongniu.baselibrary.net;
 
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CarInforBean;
+import com.hongniu.baselibrary.entity.CarTypeBean;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.OrderIdBean;
@@ -41,6 +42,14 @@ import okhttp3.RequestBody;
 public class HttpAppFactory {
 
 
+    /**
+     * 获取车辆类型
+     */
+    public static Observable<CommonBean<List<CarTypeBean>>> getCarType() {
+
+        return AppClient.getInstance().getService().getCarType().compose(RxUtils.<CommonBean<List<CarTypeBean>>>getSchedulersObservableTransformer());
+
+    }
     /**
      * 获取用户最近使用角色
      */

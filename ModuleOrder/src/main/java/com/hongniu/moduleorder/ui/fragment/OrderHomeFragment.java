@@ -123,25 +123,6 @@ public class OrderHomeFragment extends BaseFragment implements OrderMainControl.
 
     }
 
-    protected void showAleart(String msg) {
-        CenterAlertDialog alertDialog = new CenterAlertDialog(getContext());
-
-        new CenterAlertBuilder()
-                .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
-                    @Override
-                    public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
-
-                        dialog.dismiss();
-                    }
-
-                })
-                .hideBtLeft()
-                .hideContent()
-                .setDialogTitle(msg)
-                .creatDialog(alertDialog)
-                .show();
-    }
-
     @Override
     protected void initData() {
         super.initData();

@@ -1,6 +1,7 @@
 package com.hongniu.baselibrary.net;
 
 import com.hongniu.baselibrary.entity.CarInforBean;
+import com.hongniu.baselibrary.entity.CarTypeBean;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.OrderIdBean;
@@ -34,6 +35,14 @@ import retrofit2.http.Part;
  */
 public interface AppService {
 
+
+    /**
+     * 获取车辆类型
+     *
+     * @return
+     */
+    @POST("hongniu//api/car/vehicletype")
+    Observable<CommonBean<List<CarTypeBean>>> getCarType();
 
     /**
      * 跟进userID 获取融云指定用户信息

@@ -180,6 +180,7 @@
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
+                android:paddingLeft="10dp"
                 android:layout_height="match_parent">
 
                 <TextView
@@ -190,13 +191,13 @@
                     android:text="车货匹配"
                     android:textColor="@color/color_new_light"
                     android:textSize="18sp"
-                    app:layout_constraintEnd_toStartOf="@+id/tv2"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tv2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_marginLeft="@dimen/app_item_gap"
                     android:layout_height="wrap_content"
                     android:text="在线发布货源信息"
                     android:textColor="@color/color_title_dark"
@@ -225,7 +226,6 @@
                     android:src="@mipmap/icon_chpp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/tv2"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </android.support.constraint.ConstraintLayout>
@@ -261,7 +261,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="邀好友玩牛贝"
+                        android:text="邀好友赚佣金"
                         android:textColor="@color/color_title_dark"
                         android:textSize="@dimen/text_small_14" />
 
@@ -308,14 +308,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="ETC充值缴费"
+                        android:text="牛人保"
                         android:textColor="@color/color_title_dark"
                         android:textSize="@dimen/text_small_14" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="近期上线"
+                        android:text="在线购买货运险"
                         android:textColor="@color/color_content_light"
                         android:textSize="@dimen/text_min_11sp" />
                 </LinearLayout>

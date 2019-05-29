@@ -52,6 +52,7 @@ import com.sang.common.recycleview.holder.PeakHolder;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
+import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.ItemView;
 import com.sang.common.widget.dialog.BottomAlertDialog;
@@ -635,17 +636,16 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
     }
 
     /**
-     * 修改订单信息
+     * 车货匹配订单下单
      *
      * @param event
      */
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(OrderCreatParamBean event) {
+    public void onMessageMatchEvent(OrderCreatParamBean event) {
         if (event != null) {
             presenter.changeType(2, mContext);
             presenter.saveInfor(event);
-
-
+            JLog.i("接收到信息");
         }
         EventBus.getDefault().removeStickyEvent(event);
     }

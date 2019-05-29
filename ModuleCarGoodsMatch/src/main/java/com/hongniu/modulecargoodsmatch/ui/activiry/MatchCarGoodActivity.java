@@ -9,19 +9,19 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParams;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
+import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.base.RefrushActivity;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.entity.CarTypeBean;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
-import com.hongniu.baselibrary.utils.clickevent.ClickEventParams;
-import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
+import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.modulecargoodsmatch.R;
 import com.hongniu.modulecargoodsmatch.entity.GoodsOwnerInforBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchQueryGoodsInforParams;
 import com.hongniu.modulecargoodsmatch.net.HttpMatchFactory;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
-import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.SwitchTextLayout;
 import com.sang.common.widget.popu.BasePopu;
 import com.sang.common.widget.popu.OrderMainPop;
@@ -46,8 +46,9 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
     private SwitchTextLayout switchRight;
     private Button btSave;
     private List<String> times;
-    private OrderMainPop<String> orderMainPop;
-    private ArrayList<String> states;
+    private OrderMainPop<String> popLeft;
+    private OrderMainPop<CarTypeBean> popRight;
+    private List<CarTypeBean> states;
     private int leftSelection;
     private int rightSelection;
     private MatchQueryGoodsInforParams params;
@@ -59,6 +60,9 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
         initView();
         initData();
         initListener();
+
+
+
         queryData(true);
     }
 
@@ -83,11 +87,22 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
     protected void initData() {
         super.initData();
         params = new MatchQueryGoodsInforParams(currentPage);
-        orderMainPop = new OrderMainPop<>(mContext);
-        String[] stringArray = getResources().getStringArray(R.array.order_main_state);
-        states = new ArrayList<>();
-        states.addAll(Arrays.asList(stringArray));
+        popLeft = new OrderMainPop<>(mContext);
+        popRight = new OrderMainPop<>(mContext);
+         states = new ArrayList<>();
         times = Arrays.asList(getResources().getStringArray(R.array.order_main_time));
+
+        HttpAppFactory.getCarType()
+                .subscribe(new NetObserver<List<CarTypeBean>>(this) {
+                    @Override
+                    public void doOnSuccess(List<CarTypeBean> data) {
+                        states.clear();
+                        CarTypeBean carTypeBean=new CarTypeBean();
+                        carTypeBean.setCarType("全部");
+                        states.add(carTypeBean);
+                        states.addAll(data==null?new ArrayList<CarTypeBean>():data);
+                    }
+                });
     }
 
     @Override
@@ -96,8 +111,10 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
         btSave.setOnClickListener(this);
         switchRight.setListener(this);
         switchLeft.setListener(this);
-        orderMainPop.setOnDismissListener(this);
-        orderMainPop.setListener(this);
+        popLeft.setOnDismissListener(this);
+        popLeft.setListener(this);
+        popRight.setOnDismissListener(this);
+        popRight.setListener(this);
     }
 
     @Override
@@ -191,35 +208,29 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
 
     private void changeState(View view, boolean open) {
         if (view.getId() == R.id.switch_left) {
-            ClickEventUtils.getInstance().onClick(ClickEventParams.订单_发车时间);
-
             switchLeft.setSelect(true);
             switchRight.setSelect(false);
             switchRight.closeSwitch();
-
             if (open) {
-                orderMainPop.setSelectPosition(leftSelection);
-                orderMainPop.upDatas(times);
-                orderMainPop.show(view);
+                popLeft.setSelectPosition(leftSelection);
+                popLeft.upDatas(times);
+                popLeft.show(view);
             } else {
-                orderMainPop.dismiss();
+                popLeft.dismiss();
             }
-
+            popRight.dismiss();
         } else if (view.getId() == R.id.switch_right) {
-            ClickEventUtils.getInstance().onClick(ClickEventParams.订单_全部状);
-
             switchRight.setSelect(true);
             switchLeft.setSelect(false);
             switchLeft.closeSwitch();
             if (open) {
-
-                orderMainPop.setSelectPosition(rightSelection);
-                orderMainPop.upDatas(states);
-                orderMainPop.show(view);
+                popRight.setSelectPosition(rightSelection);
+                popRight.upDatas(states);
+                popRight.show(view);
             } else {
-                orderMainPop.dismiss();
-
+                popRight.dismiss();
             }
+            popLeft.dismiss();
         }
     }
 
@@ -240,11 +251,29 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
         if (target.getId() == R.id.switch_left) {//时间
             leftSelection = position;
             switchLeft.setTitle(position == 0 ? getString(R.string.order_main_start_time) : times.get(position));
-            params.deliveryDateType = times.get(position);
+            String time = null;
+            switch (position) {
+                case 0://全部
+                    break;
+                case 1://今天
+                    time = "today";
+
+                    break;
+                case 2://明天
+                    time = "tomorrow";
+                    break;
+                case 3://本周
+                    time = "thisweek";
+                    break;
+                case 4://下周
+                    time = "nextweek";
+                    break;
+            }
+            params.deliveryDateType = time;
         } else if (target.getId() == R.id.switch_right) {
             rightSelection = position;
-            switchRight.setTitle(states.get(position));
-            params.carTypeId = states.get(position);
+            switchRight.setTitle(states.get(position).getCarType());
+            params.carTypeId = states.get(position).getId();
         }
         queryData(true, true);
         pop.dismiss();

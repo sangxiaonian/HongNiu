@@ -9,11 +9,11 @@ public interface IBus {
 
     void unregister(Object object);
 
-    void post(IEvent event);
+    void post(Object event);
 
-    void postSticky(IEvent event);
+    void postSticky(Object event);
 
-    void removeStickyEvent(IEvent event);
+    void removeStickyEvent(Object event);
     void removeStickyEvent(Class event);
 
 

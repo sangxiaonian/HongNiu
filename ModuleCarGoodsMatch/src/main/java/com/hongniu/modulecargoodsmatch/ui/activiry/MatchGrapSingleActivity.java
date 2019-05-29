@@ -208,19 +208,7 @@ public class MatchGrapSingleActivity extends BaseActivity implements View.OnClic
      */
     @Override
     public void onPayTypeChang(int payType, int yueWay) {
-        if (payType == 2) {
-            ToastUtils.getInstance().show("微信支付");
-        } else if (payType == 4) {
-            ToastUtils.getInstance().show("银联支付");
-        } else if (payType == 3) {
-            ToastUtils.getInstance().show("支付宝支付");
-        } else if (payType == 1) {
-            if (yueWay == 1) {
-                ToastUtils.getInstance().show("个人支付");
-            } else {
-                ToastUtils.getInstance().show("公司账户");
-            }
-        }
+
     }
 
     @Override

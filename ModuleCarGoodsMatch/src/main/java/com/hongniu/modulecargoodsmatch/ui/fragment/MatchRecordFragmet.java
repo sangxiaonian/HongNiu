@@ -92,6 +92,8 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
                                         .subscribe(new NetObserver<MatchChooseGrapBean>(MatchRecordFragmet.this) {
                                             @Override
                                             public void doOnSuccess(MatchChooseGrapBean data) {
+                                                dialog.dismiss();
+
                                                 OrderCreatParamBean bean=new OrderCreatParamBean();
                                                 bean.setGsNum(data.gsNum);
                                                 bean.setDeliveryDate(data.startTime);
@@ -106,26 +108,17 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
                                                 bean.setGoodVolume(data.goodVolume);
                                                 bean.setGoodWeight(data.goodWeight);
                                                 bean.setMoney(data.freightAmount);
-                                                bean.setDriverMobile(match.driverMobile);
-                                                bean.setDriverName(match.driverName);
-                                                bean.setCarNum(match.carNum);
-                                                EventBus.getDefault().postSticky(bean);
+                                                bean.setDriverMobile(data.driverMobile);
+                                                bean.setDriverName(data.driverName);
+                                                bean.setCarNum(data.carNum);
+                                                bean.setOwnerName(data.ownerName);
+                                                bean.setOwnerMobile(data.ownerMobile);
                                                 ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_create).navigation(getContext());
+                                                EventBus.getDefault().postSticky(bean);
+                                                BusFactory.getBus().postSticky(bean);
                                             }
                                         });
 
-                                ;
-
-//                                ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_create).navigation(getContext());
-//                                OrderDetailBean detailBean=new OrderDetailBean();
-//                                detailBean.setCarId(data.carId);
-//                                detailBean.setCarNum(data.carNum);
-//                                detailBean.setDriverId(data.driverId);
-//                                detailBean.setDriverName(data.driverName);
-//                                detailBean.setDriverMobile(data.driverMobile);
-//                                Event.ChangeOrder changeOrder = new Event.ChangeOrder(orderBean.getId());
-//                                changeOrder.orderType=1;
-//                                BusFactory.getBus().postSticky(changeOrder);
                             }
                         });
                     }
