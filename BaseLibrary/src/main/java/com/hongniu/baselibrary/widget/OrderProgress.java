@@ -88,8 +88,8 @@ public class OrderProgress extends View {
 
 
         if (showProgress) {
-//            final float currentPro = current * 1.0f / max;
-            final float currentPro = 0.5f;
+            final float currentPro = current * 1.0f / max;
+//            final float currentPro = 0.5f;
             final float proY = getMeasuredHeight() * currentPro;
             canvas.save();
             rect.top = 0;
@@ -99,7 +99,7 @@ public class OrderProgress extends View {
             canvas.clipRect(rect);
             drawProprogress(canvas);
             canvas.restore();
-            if (true) {
+            if (showLog) {
                 final float bitmapY = (proY - bitmap.getHeight()) > 0 ? (proY - bitmap.getHeight()) : 0;
                 canvas.drawBitmap(bitmap, (getMeasuredWidth() - bitmap.getWidth()) / 2
                         , bitmapY, mPaint);

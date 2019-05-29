@@ -59,18 +59,18 @@ public class AppApplication extends BaseApplication {
 
         ARouter.init(this); // 尽可能早，推荐在Application中初始化
 //        XMPush();
-//        CrashHelper.getInstance()
-//                .init(this);
-//        ChactHelper.getHelper()
-//                .initHelper(this)
-//                //未读消息监听
-//                .setUnReadCountListener(new ChactControl.OnReceiveUnReadCountListener() {
-//                    @Override
-//                    public void onReceiveUnRead(int count) {
-//                        EventBus.getDefault().postSticky(count);
-//                    }
-//                })
-//        ;
+        CrashHelper.getInstance()
+                .init(this);
+        ChactHelper.getHelper()
+                .initHelper(this)
+                //未读消息监听
+                .setUnReadCountListener(new ChactControl.OnReceiveUnReadCountListener() {
+                    @Override
+                    public void onReceiveUnRead(int count) {
+                        EventBus.getDefault().postSticky(count);
+                    }
+                })
+        ;
 
         initData();
     }

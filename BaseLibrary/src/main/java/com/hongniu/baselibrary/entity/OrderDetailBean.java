@@ -263,6 +263,14 @@ public class OrderDetailBean {
    public int freightPayClass;	//true	number	运费支付类型1:现付 2:到付 3:回付
    public String  freightPayWayStr;//	true	string	运费支付方式描述
 
+    /**
+     * 运费支付状态: 0待支付 1支付成功 2支付失败
+     */
+    public int freightStatus;
+    /**
+     * false	number	货款状态: 0待支付 1支付成功 2支付失败
+     */
+    public int  paymentStatus	;
 
     public String getVerifyFailCause() {
         return verifyFailCause;

@@ -36,7 +36,7 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
     private String title;
     private PayWayView.OnPayTypeChangeListener changeListener;
     private OnClickPayListener payListener;
-    private boolean showCompany;
+    private int showCompany;//1:不可用企业支付  2:企业支付需要审核  3:企业支付不需要审核
     private Button btPay;
     private int yueWay;
     private int payType;
@@ -53,7 +53,7 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
         payWay.setChangeListener(this);
         btPay.setOnClickListener(this);
         imgCancel.setOnClickListener(this);
-        payWay.setShowCompany(showCompany);
+        payWay.setShowCompany(showCompany!=1);
         return inflate;
     }
 
@@ -110,7 +110,7 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
      * 设置是否支持企业账号支付
      * @param showCompany true 支持 默认为false
      */
-    public void setShowCompany(boolean showCompany){
+    public void setShowCompany(int showCompany){
         this.showCompany=showCompany;
     }
 
@@ -143,7 +143,7 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
         if (changeListener!=null){
             changeListener.onPayTypeChang(payType,yueWay);
         }
-        if (payType==1&&yueWay==0){
+        if (payType==1&&yueWay==0&&showCompany==2){
             btPay.setText("申请支付");
         }else {
             btPay.setText("立即支付");

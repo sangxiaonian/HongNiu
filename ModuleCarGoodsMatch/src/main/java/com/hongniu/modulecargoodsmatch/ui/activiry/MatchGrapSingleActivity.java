@@ -22,16 +22,20 @@ import com.hongniu.baselibrary.entity.CarInforBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PayParam;
 import com.hongniu.baselibrary.net.HttpAppFactory;
+import com.hongniu.baselibrary.utils.Utils;
+import com.hongniu.baselibrary.widget.PayPasswordKeyBord;
 import com.hongniu.baselibrary.widget.dialog.ListDialog;
 import com.hongniu.baselibrary.widget.dialog.PayDialog;
 import com.hongniu.baselibrary.widget.pay.PayWayView;
 import com.hongniu.modulecargoodsmatch.R;
 import com.hongniu.modulecargoodsmatch.entity.GoodsOwnerInforBean;
 import com.hongniu.modulecargoodsmatch.net.HttpMatchFactory;
-import com.sang.common.event.BusFactory;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
+import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.ToastUtils;
+import com.sang.common.widget.dialog.CenterAlertDialog;
+import com.sang.common.widget.dialog.inter.DialogControl;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
 
 import java.util.ArrayList;
@@ -44,7 +48,7 @@ import static com.hongniu.baselibrary.config.Param.isDebug;
  * @Description 我要抢单页面
  */
 @Route(path = ArouterParams.activity_match_grap_single)
-public class MatchGrapSingleActivity extends BaseActivity implements View.OnClickListener, PayWayView.OnPayTypeChangeListener, PayDialog.OnClickPayListener {
+public class MatchGrapSingleActivity extends BaseActivity implements View.OnClickListener, PayWayView.OnPayTypeChangeListener, PayDialog.OnClickPayListener, PayPasswordKeyBord.PayKeyBordListener {
 
     private TextView tvCarNum;
     private TextView tvCarType;
@@ -58,6 +62,10 @@ public class MatchGrapSingleActivity extends BaseActivity implements View.OnClic
     private String id;
     PayDialog payDialog;
     private String grapId;//抢单id
+    private PayPasswordKeyBord payPasswordKeyBord;
+
+      PayParam payParam  ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +80,10 @@ public class MatchGrapSingleActivity extends BaseActivity implements View.OnClic
     @Override
     protected void initView() {
         super.initView();
+        payPasswordKeyBord = new PayPasswordKeyBord(this);
+        payPasswordKeyBord.setProgressListener(this);
+        payPasswordKeyBord.sePaytListener(this);
+        payPasswordKeyBord.setPayDes("付款金额");
         payDialog = new PayDialog();
         dialog = new ListDialog<>();
         dialog.setAdapter(adapter = new XAdapter<CarInforBean>(mContext, datas = new ArrayList<>()) {
@@ -121,6 +133,7 @@ public class MatchGrapSingleActivity extends BaseActivity implements View.OnClic
     protected void initData() {
         super.initData();
         changeInfor(null);
+        payParam = new PayParam();
         payDialog.setTitle("支付抢单意向金");
         dialog.setTitle("选择抢单车辆");
         dialog.setDescribe(null);
@@ -247,8 +260,8 @@ public class MatchGrapSingleActivity extends BaseActivity implements View.OnClic
      */
     @Override
     public void onClickPay(String amount, final int payType, int yueWay) {
-        final PayParam payParam = new PayParam();
         payParam.setPaybusiness(3);
+        payParam.setPayPassword(null);
         payParam.setMatchingId(grapId);//抢单ID
 //        0微信支付 1银联支付 2线下支付3 支付宝支付 4余额支付 5企业支付
         int type = -1;
@@ -271,14 +284,50 @@ public class MatchGrapSingleActivity extends BaseActivity implements View.OnClic
                 break;
         }
         payParam.setPayType(type);
-        final int finalType = type;
+        if (payType!=1) {
+            pay();
+        }else {
+            if (Utils.querySetPassword()) {//设置过支付密码
+                try {
+                    payPasswordKeyBord.setPayCount(ConvertUtils.changeFloat(Double.parseDouble(etPrice.getText().toString().trim()), 2));
+                    payPasswordKeyBord.show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Utils.creatDialog(mContext,  "使用余额支付前，必须设置泓牛支付密码", null, "取消", "去设置")
+                        .setLeftClickListener(new DialogControl.OnButtonLeftClickListener() {
+                            @Override
+                            public void onLeftClick(View view, DialogControl.ICenterDialog dialog) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
+                            @Override
+                            public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
+                                dialog.dismiss();
+                                ArouterUtils.getInstance()
+                                        .builder(ArouterParamLogin.activity_login_forget_pass)
+                                        .withInt(Param.TRAN, 1)
+                                        .navigation(mContext);
+                            }
+                        })
+                        .creatDialog(new CenterAlertDialog(mContext))
+                        .show();
+            }
+        }
+
+
+    }
+
+    private void pay() {
         HttpAppFactory.pay(payParam)
                 .subscribe(new NetObserver<PayBean>(this) {
                     @Override
                     public void doOnSuccess(PayBean data) {
                         ArouterUtils.getInstance()
                                 .builder(ArouterParamOrder.activity_waite_pay)
-                                .withInt("payType", finalType)
+                                .withInt("payType", payParam.getPayType())
                                 .withParcelable("payInfor",data)
                                 .withBoolean("ISDEUBG", isDebug)
                                 .withString("ORDERID",grapId)
@@ -287,7 +336,52 @@ public class MatchGrapSingleActivity extends BaseActivity implements View.OnClic
                                 .navigation((Activity) mContext,1);
                     }
                 });
+    }
 
+    /**
+     * 取消支付
+     *
+     * @param dialog
+     */
+    @Override
+    public void onCancle(DialogControl.IDialog dialog) {
+        dialog.dismiss();
+    }
+
+    /**
+     * 密码输入完成
+     *
+     * @param dialog
+     * @param count    金额
+     * @param passWord 密码
+     */
+    @Override
+    public void onInputPassWordSuccess(DialogControl.IDialog dialog, String count, String passWord) {
+        dialog.dismiss();
+        payParam.setPayPassword(passWord);
+        pay();
+
+    }
+
+    /**
+     * 忘记密码
+     *
+     * @param dialog
+     */
+    @Override
+    public void onForgetPassowrd(DialogControl.IDialog dialog) {
+        ArouterUtils.getInstance()
+                .builder(ArouterParamLogin.activity_login_forget_pass)
+                .navigation(mContext);
+    }
+
+    /**
+     * 从未设置过密码
+     *
+     * @param dialog
+     */
+    @Override
+    public void hasNoPassword(DialogControl.IDialog dialog) {
 
     }
 }

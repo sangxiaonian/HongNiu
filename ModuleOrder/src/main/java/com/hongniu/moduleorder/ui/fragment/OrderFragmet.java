@@ -1,6 +1,5 @@
 package com.hongniu.moduleorder.ui.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
@@ -12,7 +11,6 @@ import com.amap.api.maps.model.Poi;
 import com.amap.api.navi.AmapNaviPage;
 import com.amap.api.navi.AmapNaviParams;
 import com.amap.api.navi.AmapNaviType;
-import com.amap.api.navi.model.AMapCarInfo;
 import com.google.gson.Gson;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
@@ -27,9 +25,13 @@ import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PayOrderInfor;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.entity.UpImgData;
+import com.hongniu.baselibrary.entity.WalletDetail;
 import com.hongniu.baselibrary.event.Event;
+import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.utils.Utils;
+import com.hongniu.baselibrary.widget.PayPasswordKeyBord;
+import com.hongniu.baselibrary.widget.dialog.PayDialog;
 import com.hongniu.baselibrary.widget.order.CommonOrderUtils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItem;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
@@ -73,16 +75,30 @@ import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleSt
 /**
  * 订单列表Fragment
  */
-public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements OrderDetailItemControl.OnOrderDetailBtClickListener {
+public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements OrderDetailItemControl.OnOrderDetailBtClickListener, PayPasswordKeyBord.PayKeyBordListener {
 
 
     protected OrderDetailItemControl.RoleState roleState;//角色
     protected OrderMainQueryBean queryBean = new OrderMainQueryBean();
     protected LatLng latLng = new LatLng(0, 0);
+    private PayPasswordKeyBord payPasswordKeyBord;
+    private PayDialog payDialog;
 
     public OrderFragmet() {
     }
 
+
+    @Override
+    protected void initData() {
+        super.initData();
+        payPasswordKeyBord = new PayPasswordKeyBord(getActivity());
+        payPasswordKeyBord.setProgressListener(this);
+        payPasswordKeyBord.sePaytListener(this);
+        payPasswordKeyBord.setPayDes("付款金额");
+        payDialog = new PayDialog();
+        payDialog.setTitle("确认收货并支付订单");
+
+    }
 
     @Override
     protected boolean getUseEventBus() {
@@ -581,7 +597,7 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
 
         ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_create).navigation(getContext());
         Event.ChangeOrder changeOrder = new Event.ChangeOrder(orderBean.getId());
-        changeOrder.orderType=1;
+        changeOrder.orderType = 1;
         BusFactory.getBus().postSticky(changeOrder);
 
 
@@ -621,7 +637,7 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
     public void onPayRefuse(OrderDetailBean orderBean) {
         new CenterAlertBuilder()
                 .setDialogTitle("被拒原因")
-                .setDialogContent(orderBean!=null?orderBean.getVerifyFailCause():"")
+                .setDialogContent(orderBean != null ? orderBean.getVerifyFailCause() : "")
                 .setBtLeft("知道了")
                 .hideBtRight()
                 .setBtLeftColor(getContext().getResources().getColor(com.hongniu.baselibrary.R.color.color_title_dark))
@@ -638,6 +654,27 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
     @Override
     public void onEntryAndPay(OrderDetailBean orderBean) {
         ToastUtils.getInstance().show("确认收货并且去支付订单");
+        StringBuilder builder = new StringBuilder();
+        builder.append("费用明细：").append("  ");
+        if (orderBean.freightStatus != 1) {//运费未支付
+            builder.append("运费").append(orderBean.getMoney()).append("元");
+        }
+        if (orderBean.paymentStatus != 1) {//货款未支付
+            builder.append("+").append("货款").append(orderBean.getPaymentAmount()).append("元");
+        }
+
+
+        payDialog.setDescribe(builder.toString());
+        HttpAppFactory.queryAccountdetails()
+                .subscribe(new NetObserver<WalletDetail>(this) {
+                    @Override
+                    public void doOnSuccess(WalletDetail data) {
+                        payDialog.setShowCompany(data.getType() );
+                        payDialog.show(getChildFragmentManager(), "");
+                    }
+                });
+
+
     }
 
     protected CenterAlertBuilder creatDialog(String title, String content, String btleft, String
@@ -647,4 +684,50 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
     }
 
 
+    /**
+     * 取消支付
+     *
+     * @param dialog
+     */
+    @Override
+    public void onCancle(DialogControl.IDialog dialog) {
+        dialog.dismiss();
+    }
+
+    /**
+     * 密码输入完成
+     *
+     * @param dialog
+     * @param count    金额
+     * @param passWord 密码
+     */
+    @Override
+    public void onInputPassWordSuccess(DialogControl.IDialog dialog, String count, String passWord) {
+        dialog.dismiss();
+//        payParam.setPayPassword(passWord);
+//        pay();
+
+    }
+
+    /**
+     * 忘记密码
+     *
+     * @param dialog
+     */
+    @Override
+    public void onForgetPassowrd(DialogControl.IDialog dialog) {
+        ArouterUtils.getInstance()
+                .builder(ArouterParamLogin.activity_login_forget_pass)
+                .navigation(getActivity());
+    }
+
+    /**
+     * 从未设置过密码
+     *
+     * @param dialog
+     */
+    @Override
+    public void hasNoPassword(DialogControl.IDialog dialog) {
+
+    }
 }
