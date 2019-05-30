@@ -109,6 +109,9 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
      */
     public void setShowCompany(int showCompany){
         this.showCompany=showCompany;
+        if (payWay!=null) {
+            payWay.setShowCompany(showCompany!=1);
+        }
     }
 
     /**
@@ -135,7 +138,7 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
      */
     @Override
     public void onPayTypeChang(int payType, int yueWay) {
-        if (payType==1&&data!=null&&!TextUtils.isEmpty(data.getAvailableBalance())){
+        if (yueWay==1&&payType==1&&data!=null&&!TextUtils.isEmpty(data.getAvailableBalance())){
             float balance = 0;
             try {
                 balance = Float.parseFloat(data.getAvailableBalance());
@@ -148,9 +151,6 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
                 return;
             }
         }
-
-
-
         this.yueWay=yueWay;
         this.payType=payType;
         if (changeListener!=null){
