@@ -32,7 +32,7 @@ public class CargoConsigneeOrder extends OwnerOrder implements OrderDetailItemCo
 
     @Override
     public String getOrderState() {
-        return state==null?OrderDetailItemControl.OrderState.UNKNOW.getDes():state.getDes();
+        return state == null ? OrderDetailItemControl.OrderState.UNKNOW.getDes() : state.getDes();
     }
 
     /**
@@ -67,8 +67,11 @@ public class CargoConsigneeOrder extends OwnerOrder implements OrderDetailItemCo
                     buttonInfors.add(new ButtonInforBean(ORDER_CHECK_RECEIPT));//查看回单
                 }
 
-//                buttonInfors.add(new ButtonInforBean(1, ORDER_ENTRY_ORDER));//确认收货
-                buttonInfors.add(new ButtonInforBean(1, ORDER_ENTRY_AND_PAY_ORDER));//确认收货,并支付订单
+                if (hasPay) {
+                    buttonInfors.add(new ButtonInforBean(1, ORDER_ENTRY_ORDER));//确认收货
+                } else {
+                    buttonInfors.add(new ButtonInforBean(1, ORDER_ENTRY_AND_PAY_ORDER));//确认收货,并支付订单
+                }
                 break;
             case RECEIPT://已收货
                 if (hasGoodsImage) {//如果存在货单

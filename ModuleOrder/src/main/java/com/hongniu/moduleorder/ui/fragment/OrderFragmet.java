@@ -1,6 +1,5 @@
 package com.hongniu.moduleorder.ui.fragment;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
@@ -74,7 +73,6 @@ import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 
-import static com.hongniu.baselibrary.config.Param.isDebug;
 import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CARGO_OWNER;
 import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.DRIVER;
 
@@ -246,23 +244,23 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
      */
     @Override
     public void onOrderPay(OrderDetailBean orderBean) {
-            try {
-                PayOrderInfor payOrder = new PayOrderInfor();
-                payOrder.insurance = false;
-                payOrder.money = orderBean.getMoney();
-                payOrder.orderID = orderBean.getId();
-                payOrder.orderNum = orderBean.getOrderNum();
-                payOrder.receiptMobile = orderBean.getReceiptMobile();
-                payOrder.receiptName = orderBean.getReceiptName();
-                BusFactory.getBus().postSticky(payOrder);
-                ArouterUtils.getInstance()
-                        .builder(ArouterParamOrder.activity_order_pay)
-                        .navigation(getContext());
+        try {
+            PayOrderInfor payOrder = new PayOrderInfor();
+            payOrder.insurance = false;
+            payOrder.money = orderBean.getMoney();
+            payOrder.orderID = orderBean.getId();
+            payOrder.orderNum = orderBean.getOrderNum();
+            payOrder.receiptMobile = orderBean.getReceiptMobile();
+            payOrder.receiptName = orderBean.getReceiptName();
+            BusFactory.getBus().postSticky(payOrder);
+            ArouterUtils.getInstance()
+                    .builder(ArouterParamOrder.activity_order_pay)
+                    .navigation(getContext());
 
 //                changeOrderState(orderBean, 2, false, true);
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -667,17 +665,17 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
         payParam.setOrderId(orderBean.getId());
         payParam.setOrderNum(orderBean.getOrderNum());
 
-        float pauAmount=0;
+        float pauAmount = 0;
         StringBuilder builder = new StringBuilder();
         builder.append("费用明细：").append("  ");
 
         if (orderBean.freightStatus != 1) {//运费未支付
             builder.append("运费").append(orderBean.getMoney()).append("元");
-            pauAmount+=orderBean.getMoney();
+            pauAmount += orderBean.getMoney();
         }
         if (orderBean.paymentStatus != 1) {//货款未支付
             builder.append("+").append("货款").append(orderBean.getPaymentAmount()).append("元");
-            pauAmount+=orderBean.getPaymentAmount();
+            pauAmount += orderBean.getPaymentAmount();
         }
 
         payDialog.setDescribe(builder.toString());
@@ -686,7 +684,7 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
                 .subscribe(new NetObserver<WalletDetail>(this) {
                     @Override
                     public void doOnSuccess(WalletDetail data) {
-                        payDialog.setShowCompany(data.getType() );
+                        payDialog.setShowCompany(data.getType());
                         payDialog.setWalletDetaile(data);
                         payDialog.show(getChildFragmentManager(), "");
                     }
@@ -753,7 +751,8 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
 
     /**
      * 点击支付
-     *  @param amount  支付金额
+     *
+     * @param amount  支付金额
      * @param payType 1 余额 2微信 3支付宝 4银联
      * @param yueWay  余额支付方式更改监听 0 企业支付 1余额支付
      */
@@ -766,35 +765,35 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
         int type = -1;
         switch (payType) {
             case 1:
-                if (yueWay==0){
-                    type=5;
-                }else {
-                    type=4;
+                if (yueWay == 0) {
+                    type = 5;
+                } else {
+                    type = 4;
                 }
                 break;
             case 2:
-                type=0;
+                type = 0;
                 break;
             case 3:
-                type=3;
+                type = 3;
                 break;
             case 4:
-                type=1;
+                type = 1;
                 break;
         }
         payParam.setPayType(type);
-        if (payType!=1) {
+        if (payType != 1) {
             pay();
-        }else {
+        } else {
             if (Utils.querySetPassword()) {//设置过支付密码
                 try {
-                    payPasswordKeyBord.setPayCount(ConvertUtils.changeFloat(amount,2));
+                    payPasswordKeyBord.setPayCount(ConvertUtils.changeFloat(amount, 2));
                     payPasswordKeyBord.show();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             } else {
-                Utils.creatDialog(getActivity(),  "使用余额支付前，必须设置泓牛支付密码", null, "取消", "去设置")
+                Utils.creatDialog(getActivity(), "使用余额支付前，必须设置泓牛支付密码", null, "取消", "去设置")
                         .setLeftClickListener(new DialogControl.OnButtonLeftClickListener() {
                             @Override
                             public void onLeftClick(View view, DialogControl.ICenterDialog dialog) {
@@ -823,7 +822,7 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
                 .subscribe(new NetObserver<PayBean>(this) {
                     @Override
                     public void doOnSuccess(PayBean data) {
-                        WaitePayActivity.startPay(getActivity(), payParam.getPayType(), data, payParam.getOrderId(), false, Param.isDebug,2);
+                        WaitePayActivity.startPay(getActivity(), payParam.getPayType(), data, payParam.getOrderId(), false, Param.isDebug, 2);
                     }
                 });
 

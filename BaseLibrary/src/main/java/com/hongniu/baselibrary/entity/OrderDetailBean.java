@@ -228,7 +228,9 @@ public class OrderDetailBean {
      */
     @SerializedName(value = "roleType", alternate = {"role"})
     private int roleType;
-
+    /**
+     * 角色类似 1车主 2司机 3 货主,4 收货人
+     */
     private int userType;
 
     /**

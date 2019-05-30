@@ -148,7 +148,18 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
             builder.append("保费：").append(data.getPolicyMoney());
         }
         setPrice(builder.toString());
-        setOrderState(data.getOrderState());
+
+        //订单状态进行设置
+        if (data.getOrderState().getState()==4&&data.getUserType()==2&&data.getReplaceState()==1){//
+//            已到达，如果是司机，并且代收货款
+            if (data.freightStatus==1&&data.paymentStatus==1){
+                setOrderState(OrderDetailItemControl.OrderState.ARRIVED_PAY);
+            }else {
+                setOrderState(OrderDetailItemControl.OrderState.ARRIVED_WAITE_PAY);
+            }
+        }else {
+            setOrderState(data.getOrderState());
+        }
         if (data.getOrderState() == OrderDetailItemControl.OrderState.IN_TRANSIT) {//正在运输中
             progress.showProgress(true);
             if (data.getLatitude() > 0 && data.getLongitude() > 0) {
@@ -523,13 +534,21 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
 
         helper.setInsurance(data.isInsurance())
                 .setHasGoodsImage(data.isHasGoodsImage())
-                .setHasReceiptImage(data.isHasReceiptImage())
-//        由 货主（发货人） 确认收货按钮 的情况：
+                .setHasReceiptImage(data.isHasReceiptImage());
+
+        if (data.getUserType()==3){//发货人
+            //        由 货主（发货人） 确认收货按钮 的情况：
 //        1、	无收货人；
 //        2、	有收货人，但是代收货款为0，且运费支付方式非到付。
-                .setHasPay(TextUtils.isEmpty(data.getReceiptName())
-                        || (data.getPaymentAmount() <= 0 && !"2".equals(data.getPayWay())));
-        ;
+            helper.setHasPay(TextUtils.isEmpty(data.getReceiptName())
+                    || (data.getPaymentAmount() <= 0 && !"2".equals(data.getPayWay())));
+            ;
+        }else if (data.getUserType()==4){//收货人
+            helper.setHasPay(data.freightStatus==1||data.paymentStatus==1);
+        }else if (data.getUserType()==2){//对于司机
+            helper.setHasPay(data.freightStatus==1||data.paymentStatus==1);
+        }
+
         List<ButtonInforBean> infors = helper.getButtonInfors();
         for (ButtonInforBean infor : infors) {
             //是否显示购买保险按钮
