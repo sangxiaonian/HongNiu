@@ -21,8 +21,6 @@ public class QueryOrderStateBean implements Serializable{
       */
     private boolean havePolicy;
 
-
-
     /**
      *  fasle	string	保单号码
       */
@@ -40,6 +38,8 @@ public class QueryOrderStateBean implements Serializable{
      * 红包金额
      */
     private String redPacket ;
+   public int freightStatus	;//false	number	运费支付状态: 0待支付 1支付成功 2支付失败
+   public int paymentStatus	;//false	number	货款状态: 0待支付 1支付成功 2支付失败
 
 
     public String getRedPacket() {

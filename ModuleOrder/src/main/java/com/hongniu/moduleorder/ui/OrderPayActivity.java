@@ -502,7 +502,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
         if (btPay.getText().toString().trim().equals("申请支付")) {
             finish();
         } else {
-            WaitePayActivity.startPay(this, payType, data, orderId, buyInsurance, Param.isDebug);
+            WaitePayActivity.startPay(this, payType, data, orderId, buyInsurance, Param.isDebug,0);
         }
     }
 

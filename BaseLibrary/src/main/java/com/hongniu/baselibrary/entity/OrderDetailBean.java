@@ -139,7 +139,7 @@ public class OrderDetailBean {
     /**
      * true number 运费，单位元
      */
-    private String money;
+    private float money;
 
     /**
      * true string 货物名称
@@ -610,11 +610,11 @@ public class OrderDetailBean {
         this.carNum = carNum;
     }
 
-    public String getMoney() {
+    public float getMoney() {
         return money;
     }
 
-    public void setMoney(String money) {
+    public void setMoney(float money) {
         this.money = money;
     }
 

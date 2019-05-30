@@ -68,7 +68,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
     private TextView tv_start_loaction;
     private TextView tv_end_loaction;
     private TextView tv_price;
-//    private TextView tv_instances;
+    //    private TextView tv_instances;
     private TextView tv_order_detail;
     private ViewGroup llBottom;
     private View lineBottom;
@@ -126,10 +126,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
 
     public void setInfor(OrderDetailBean data) {
         this.orderBean = data;
-
-//        if (roleState == null) {
-            roleState = CommonOrderUtils.getRoleState(data.getUserType());
-//        }
+        roleState = CommonOrderUtils.getRoleState(data.getUserType());
         setIdentity(roleState);
         setEndLocation(data.getDestinationInfo());
         setStartLocation(data.getStartPlaceInfo());
@@ -137,22 +134,21 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
         if (data.getDeliveryDate() != null) {
             setTiem(ConvertUtils.formatString(data.getDeliveryDate(), "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd"));
         }
-        String money = data.getMoney();
-        StringBuilder builder=new StringBuilder();
-        String s = TextUtils.isEmpty(data.freightPayWayStr)?"":("("+data.freightPayWayStr+")");
-        builder.append(TextUtils.isEmpty(money)?"":("运费：" + money + s)).append("  ");
-        if (data.getPaymentAmount()>0){
+        StringBuilder builder = new StringBuilder();
+        String s = TextUtils.isEmpty(data.freightPayWayStr) ? "" : ("(" + data.freightPayWayStr + ")");
+        if (data.getMoney()>0){
+            builder.append("运费：").append(data.getMoney()).append(s).append("  ");
+        }
+        if (data.getPaymentAmount() > 0) {
             //代收货款金额大于0
             builder.append("代收货款：").append(data.getPaymentAmount()).append("  ");
         }
-        if (!hideInsurance&&data.isInsurance()) {
+        if (!hideInsurance && data.isInsurance()) {
             //如果不隐藏保费，并且购买了保险
             builder.append("保费：").append(data.getPolicyMoney());
         }
-
         setPrice(builder.toString());
         setOrderState(data.getOrderState());
-
         if (data.getOrderState() == OrderDetailItemControl.OrderState.IN_TRANSIT) {//正在运输中
             progress.showProgress(true);
             if (data.getLatitude() > 0 && data.getLongitude() > 0) {
@@ -215,12 +211,11 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
 
         //司机隐藏价格,保险控件
         if (tv_price.getVisibility() != GONE) {
-            tv_price.setVisibility(hideInsurance||roleState == OrderDetailItemControl.RoleState.DRIVER ? GONE : VISIBLE);
+            tv_price.setVisibility(hideInsurance || roleState == OrderDetailItemControl.RoleState.DRIVER ? GONE : VISIBLE);
         }
 
 
     }
-
 
 
     private boolean hideButton;
@@ -515,11 +510,10 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
 
     /**
      * @param data
-     *
      */
     public void buildButton(OrderDetailBean data) {
         llBottom.removeAllViews();
-        if (hideButton||data==null) {
+        if (hideButton || data == null) {
             llBottom.setVisibility(GONE);
             lineBottom.setVisibility(GONE);
             return;
@@ -527,16 +521,14 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
         final OrderDetailItemControl.IOrderItemHelper helper = new OrderItemHelper(orderState, roleState);
 
 
-
-
-        helper.setInsurance( data.isInsurance())
+        helper.setInsurance(data.isInsurance())
                 .setHasGoodsImage(data.isHasGoodsImage())
-                .setHasReceiptImage( data.isHasReceiptImage())
+                .setHasReceiptImage(data.isHasReceiptImage())
 //        由 货主（发货人） 确认收货按钮 的情况：
 //        1、	无收货人；
 //        2、	有收货人，但是代收货款为0，且运费支付方式非到付。
                 .setHasPay(TextUtils.isEmpty(data.getReceiptName())
-                        ||(data.getPaymentAmount()<=0&&!"2".equals(data.getPayWay())));
+                        || (data.getPaymentAmount() <= 0 && !"2".equals(data.getPayWay())));
         ;
         List<ButtonInforBean> infors = helper.getButtonInfors();
         for (ButtonInforBean infor : infors) {
@@ -919,10 +911,10 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
 
 
     public TextView creatButton(ButtonInforBean infor) {
-        TextView button =new TextView(getContext());
-        MarginLayoutParams params=new MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        TextView button = new TextView(getContext());
+        MarginLayoutParams params = new MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         button.setLayoutParams(params);
-        params.setMargins(DeviceUtils.dip2px(getContext(),15),0,0,0);
+        params.setMargins(DeviceUtils.dip2px(getContext(), 15), 0, 0, 0);
         button.setTextColor(infor.getType() == 1 ? getResources().getColor(R.color.white) : getResources().getColor(R.color.color_title_dark));
         button.setBackgroundResource(infor.getType() == 1 ? R.drawable.shape_2_e83e15 : R.drawable.shape_2_stoke_dddddd);
         button.setGravity(Gravity.CENTER);

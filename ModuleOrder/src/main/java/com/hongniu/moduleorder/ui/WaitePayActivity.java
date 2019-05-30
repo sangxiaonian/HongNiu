@@ -51,7 +51,7 @@ public class WaitePayActivity extends BaseActivity {
     private String orderID;
     private Subscription sub;
     private boolean havePolicy;//是否购买保险，默认是false
-    private int queryType;//查询类型 0 订单支付 1支付意向金 默认为0
+    private int queryType;//查询类型 0 订单支付 1支付意向金 2确认收货并支付 默认为0
 
 
     @Override
@@ -143,10 +143,6 @@ public class WaitePayActivity extends BaseActivity {
     }
 
 
-    public static void startPay(Activity activity, int payType, PayBean payBean, String orderId, boolean havePolicy) {
-        startPay(activity, payType, payBean, orderId, havePolicy, false);
-    }
-
     /**
      * @param activity
      * @param payType    支付方式
@@ -155,13 +151,14 @@ public class WaitePayActivity extends BaseActivity {
      * @param havePolicy 是否购买保险
      * @param isDebug    是否是测试模式
      */
-    public static void startPay(Activity activity, int payType, PayBean payBean, String orderId, boolean havePolicy, boolean isDebug) {
+    public static void startPay(Activity activity, int payType, PayBean payBean, String orderId, boolean havePolicy, boolean isDebug, int queryType) {
         Intent intent = new Intent(activity, WaitePayActivity.class);
         intent.putExtra(PAYTYPE, payType);
         intent.putExtra(PAYINFOR, payBean);
         intent.putExtra(ISDEUBG, isDebug);
         intent.putExtra(ORDERID, orderId);
         intent.putExtra(HAVEPOLICY, havePolicy);
+        intent.putExtra("queryType", queryType);
         activity.startActivityForResult(intent, 1);
     }
 
@@ -243,15 +240,23 @@ public class WaitePayActivity extends BaseActivity {
 
                     @Override
                     public void doOnSuccess(QueryOrderStateBean data) {
-
-                        //如果没有保险，订单状态为2，表示此事已经支付完成
-                        if (!havePolicy && data.getOrderState() == 2) {
-                            BusFactory.getBus().post(new PaySucess());
-                            //如果购买保险，且保险状态为已经支付
-                        } else if (havePolicy && data.getPayPolicyState() == 1 && data.getOrderState() == 2) {
-                            BusFactory.getBus().post(new PaySucess());
-                        } else if (sub != null) {
-                            sub.request(1);
+                        if (queryType == 0) {
+                            //如果没有保险，订单状态为2，表示此事已经支付完成
+                            if (!havePolicy && data.getOrderState() == 2) {
+                                BusFactory.getBus().post(new PaySucess());
+                                //如果购买保险，且保险状态为已经支付
+                            } else if (havePolicy && data.getPayPolicyState() == 1 && data.getOrderState() == 2) {
+                                BusFactory.getBus().post(new PaySucess());
+                            } else if (sub != null) {
+                                sub.request(1);
+                            }
+                        } else {
+                            if (data.freightStatus == 1 && data.paymentStatus == 1) {
+                                BusFactory.getBus().post(new PaySucess());
+                                //如果购买保险，且保险状态为已经支付
+                            } else if (sub != null) {
+                                sub.request(1);
+                            }
                         }
                     }
 

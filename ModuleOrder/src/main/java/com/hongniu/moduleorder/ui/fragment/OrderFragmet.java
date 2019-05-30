@@ -1,8 +1,10 @@
 package com.hongniu.moduleorder.ui.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -23,6 +25,7 @@ import com.hongniu.baselibrary.entity.OrderCreatBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PayOrderInfor;
+import com.hongniu.baselibrary.entity.PayParam;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.entity.UpImgData;
 import com.hongniu.baselibrary.entity.WalletDetail;
@@ -41,6 +44,7 @@ import com.hongniu.moduleorder.entity.OrderMainQueryBean;
 import com.hongniu.moduleorder.entity.QueryReceiveBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.ui.OrderScanReceiptActivity;
+import com.hongniu.moduleorder.ui.WaitePayActivity;
 import com.hongniu.moduleorder.utils.LoactionCollectionUtils;
 import com.hongniu.moduleorder.utils.OrderUtils;
 import com.sang.common.event.BusFactory;
@@ -54,6 +58,7 @@ import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
 import com.sang.thirdlibrary.map.utils.MapConverUtils;
+import com.sang.thirdlibrary.pay.entiy.PayBean;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -69,15 +74,16 @@ import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.hongniu.baselibrary.config.Param.isDebug;
 import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CARGO_OWNER;
 import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.DRIVER;
 
 /**
  * 订单列表Fragment
  */
-public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements OrderDetailItemControl.OnOrderDetailBtClickListener, PayPasswordKeyBord.PayKeyBordListener {
+public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements OrderDetailItemControl.OnOrderDetailBtClickListener, PayPasswordKeyBord.PayKeyBordListener, PayDialog.OnClickPayListener {
 
-
+    protected PayParam payParam;
     protected OrderDetailItemControl.RoleState roleState;//角色
     protected OrderMainQueryBean queryBean = new OrderMainQueryBean();
     protected LatLng latLng = new LatLng(0, 0);
@@ -92,12 +98,19 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
     protected void initData() {
         super.initData();
         payPasswordKeyBord = new PayPasswordKeyBord(getActivity());
-        payPasswordKeyBord.setProgressListener(this);
-        payPasswordKeyBord.sePaytListener(this);
+        payParam = new PayParam();
         payPasswordKeyBord.setPayDes("付款金额");
         payDialog = new PayDialog();
         payDialog.setTitle("确认收货并支付订单");
 
+    }
+
+    @Override
+    protected void initListener() {
+        super.initListener();
+        payPasswordKeyBord.setProgressListener(this);
+        payPasswordKeyBord.sePaytListener(this);
+        payDialog.setPayListener(this);
     }
 
     @Override
@@ -233,11 +246,10 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
      */
     @Override
     public void onOrderPay(OrderDetailBean orderBean) {
-        if (orderBean.getMoney() != null) {
             try {
                 PayOrderInfor payOrder = new PayOrderInfor();
                 payOrder.insurance = false;
-                payOrder.money = Float.parseFloat(orderBean.getMoney());
+                payOrder.money = orderBean.getMoney();
                 payOrder.orderID = orderBean.getId();
                 payOrder.orderNum = orderBean.getOrderNum();
                 payOrder.receiptMobile = orderBean.getReceiptMobile();
@@ -251,10 +263,6 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
-
-
-        }
-
     }
 
 
@@ -653,23 +661,33 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
      */
     @Override
     public void onEntryAndPay(OrderDetailBean orderBean) {
-        ToastUtils.getInstance().show("确认收货并且去支付订单");
+
+        payParam.setPayPassword(null);
+        payParam.setPaybusiness(2);
+        payParam.setOrderId(orderBean.getId());
+        payParam.setOrderNum(orderBean.getOrderNum());
+
+        float pauAmount=0;
         StringBuilder builder = new StringBuilder();
         builder.append("费用明细：").append("  ");
+
         if (orderBean.freightStatus != 1) {//运费未支付
             builder.append("运费").append(orderBean.getMoney()).append("元");
+            pauAmount+=orderBean.getMoney();
         }
         if (orderBean.paymentStatus != 1) {//货款未支付
             builder.append("+").append("货款").append(orderBean.getPaymentAmount()).append("元");
+            pauAmount+=orderBean.getPaymentAmount();
         }
 
-
         payDialog.setDescribe(builder.toString());
+        payDialog.setPayAmount(pauAmount);
         HttpAppFactory.queryAccountdetails()
                 .subscribe(new NetObserver<WalletDetail>(this) {
                     @Override
                     public void doOnSuccess(WalletDetail data) {
                         payDialog.setShowCompany(data.getType() );
+                        payDialog.setWalletDetaile(data);
                         payDialog.show(getChildFragmentManager(), "");
                     }
                 });
@@ -704,8 +722,10 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
     @Override
     public void onInputPassWordSuccess(DialogControl.IDialog dialog, String count, String passWord) {
         dialog.dismiss();
-//        payParam.setPayPassword(passWord);
-//        pay();
+        if (!TextUtils.isEmpty(passWord)) {
+            payParam.setPayPassword(ConvertUtils.MD5(passWord));
+        }
+        pay();
 
     }
 
@@ -728,6 +748,85 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
      */
     @Override
     public void hasNoPassword(DialogControl.IDialog dialog) {
+
+    }
+
+    /**
+     * 点击支付
+     *  @param amount  支付金额
+     * @param payType 1 余额 2微信 3支付宝 4银联
+     * @param yueWay  余额支付方式更改监听 0 企业支付 1余额支付
+     */
+    @Override
+    public void onClickPay(float amount, int payType, int yueWay) {
+        payDialog.dismiss();
+        payParam.setPaybusiness(2);
+        payParam.setPayPassword(null);
+//        0微信支付 1银联支付 2线下支付3 支付宝支付 4余额支付 5企业支付
+        int type = -1;
+        switch (payType) {
+            case 1:
+                if (yueWay==0){
+                    type=5;
+                }else {
+                    type=4;
+                }
+                break;
+            case 2:
+                type=0;
+                break;
+            case 3:
+                type=3;
+                break;
+            case 4:
+                type=1;
+                break;
+        }
+        payParam.setPayType(type);
+        if (payType!=1) {
+            pay();
+        }else {
+            if (Utils.querySetPassword()) {//设置过支付密码
+                try {
+                    payPasswordKeyBord.setPayCount(ConvertUtils.changeFloat(amount,2));
+                    payPasswordKeyBord.show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Utils.creatDialog(getActivity(),  "使用余额支付前，必须设置泓牛支付密码", null, "取消", "去设置")
+                        .setLeftClickListener(new DialogControl.OnButtonLeftClickListener() {
+                            @Override
+                            public void onLeftClick(View view, DialogControl.ICenterDialog dialog) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
+                            @Override
+                            public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
+                                dialog.dismiss();
+                                ArouterUtils.getInstance()
+                                        .builder(ArouterParamLogin.activity_login_forget_pass)
+                                        .withInt(Param.TRAN, 1)
+                                        .navigation(getContext());
+                            }
+                        })
+                        .creatDialog(new CenterAlertDialog(getActivity()))
+                        .show();
+            }
+        }
+
+    }
+
+    private void pay() {
+        HttpAppFactory.pay(payParam)
+                .subscribe(new NetObserver<PayBean>(this) {
+                    @Override
+                    public void doOnSuccess(PayBean data) {
+                        WaitePayActivity.startPay(getActivity(), payParam.getPayType(), data, payParam.getOrderId(), false, Param.isDebug,2);
+                    }
+                });
+
 
     }
 }

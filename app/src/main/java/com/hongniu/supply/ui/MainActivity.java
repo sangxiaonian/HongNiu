@@ -345,28 +345,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         demo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HttpAppFactory.queryGrapSingleInfor("")
-                        .subscribe(new NetObserver<GrapSingleInforBean>(null) {
-
-                            @Override
-                            public void onSubscribe(Disposable d) {
-                                super.onSubscribe(d);
-                                disposable = d;
-                            }
-
-                            @Override
-                            public void doOnSuccess(GrapSingleInforBean data) {
-                                if (1 == data.status) {
-
-                                }
-                            }
-
-                            @Override
-                            public void onError(Throwable e) {
-                                super.onError(e);
-
-                            }
-                        });
+                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("余额不足");
             }
         });
 

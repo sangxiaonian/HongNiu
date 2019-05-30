@@ -2,8 +2,6 @@ package com.hongniu.baselibrary.widget.dialog;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -15,12 +13,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.hongniu.baselibrary.R;
-import com.hongniu.baselibrary.utils.LinearDividerDecoration;
+import com.hongniu.baselibrary.entity.WalletDetail;
 import com.hongniu.baselibrary.widget.pay.PayWayView;
-import com.sang.common.recycleview.adapter.XAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.sang.common.utils.ToastUtils;
 
 /**
  * 作者： ${PING} on 2019/5/19.
@@ -40,6 +35,8 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
     private Button btPay;
     private int yueWay;
     private int payType;
+    private float payAmount;//支付金额
+    private WalletDetail data;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -125,7 +122,7 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
             dismiss();
         }else if (v.getId()==R.id.bt_pay){
             if (payListener!=null){
-                payListener.onClickPay("",payType,yueWay);
+                payListener.onClickPay(payAmount,payType,yueWay);
             }
         }
     }
@@ -138,6 +135,22 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
      */
     @Override
     public void onPayTypeChang(int payType, int yueWay) {
+        if (payType==1&&data!=null&&!TextUtils.isEmpty(data.getAvailableBalance())){
+            float balance = 0;
+            try {
+                balance = Float.parseFloat(data.getAvailableBalance());
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+            if (balance<payAmount){
+                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show(getContext(),"余额不足");
+                payWay.setPayType(2);
+                return;
+            }
+        }
+
+
+
         this.yueWay=yueWay;
         this.payType=payType;
         if (changeListener!=null){
@@ -150,6 +163,18 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
         }
     }
 
+    public void setPayAmount(float payAmount) {
+        this.payAmount=payAmount;
+    }
+
+    /**
+     * 个人钱包信息
+     * @param data
+     */
+    public void setWalletDetaile(WalletDetail data) {
+        this.data=data;
+    }
+
     public interface OnClickPayListener{
         /**
          * 点击支付
@@ -157,6 +182,6 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
          * @param payType    1 余额 2微信 3支付宝 4银联
          * @param yueWay     余额支付方式更改监听 0 企业支付 1余额支付
          */
-      void   onClickPay(String amount,int payType,int yueWay);
+      void   onClickPay(float amount, int payType, int yueWay);
     }
 }

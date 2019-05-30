@@ -19,8 +19,10 @@ import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CarInforBean;
+import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PayParam;
+import com.hongniu.baselibrary.entity.WalletDetail;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.PayPasswordKeyBord;
@@ -39,6 +41,9 @@ import com.sang.common.widget.dialog.inter.DialogControl;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
 
 import java.util.ArrayList;
+
+import io.reactivex.Observable;
+import io.reactivex.functions.BiFunction;
 
 import static com.hongniu.baselibrary.config.Param.isDebug;
 
@@ -196,15 +201,44 @@ public class MatchGrapSingleActivity extends BaseActivity implements View.OnClic
             } else {
                 String price = etPrice.getText().toString().trim();
                 payDialog.setDescribe("意向金 " + price + "元");
-                HttpMatchFactory
-                        .grapMatch(id, infor.getId(), price)
-                        .subscribe(new NetObserver<GoodsOwnerInforBean>(this) {
-                            @Override
-                            public void doOnSuccess(GoodsOwnerInforBean data) {
-                                grapId=data.id;
-                                payDialog.show(getSupportFragmentManager(), "");
-                            }
-                        });
+                try {
+                    payDialog.setPayAmount(Float.parseFloat(price));
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+
+               Observable.zip(HttpMatchFactory
+                               .grapMatch(id, infor.getId(), price)
+                       , HttpAppFactory.queryAccountdetails()
+                       , new BiFunction<CommonBean<GoodsOwnerInforBean>, CommonBean<WalletDetail>, CommonBean<WalletDetail>>() {
+                           @Override
+                           public CommonBean<WalletDetail> apply(CommonBean<GoodsOwnerInforBean> goodsOwnerInforBeanCommonBean, CommonBean<WalletDetail> walletDetailCommonBean) throws Exception {
+                               if (goodsOwnerInforBeanCommonBean.getCode()==200&&goodsOwnerInforBeanCommonBean.getData()!=null){
+                                   grapId=goodsOwnerInforBeanCommonBean.getData().id;
+                               }else {
+                                   throw new RuntimeException(goodsOwnerInforBeanCommonBean.getMsg());
+                               }
+                               return walletDetailCommonBean;
+                           }
+                       }
+               ).subscribe(new NetObserver<WalletDetail>(this) {
+                   @Override
+                   public void doOnSuccess(WalletDetail data) {
+                       payDialog.setShowCompany(data.getType() );
+                       payDialog.setWalletDetaile(data);
+                       payDialog.show(getSupportFragmentManager(), "");
+                   }
+               });
+
+//                HttpMatchFactory
+//                        .grapMatch(id, infor.getId(), price)
+//                        .subscribe(new NetObserver<GoodsOwnerInforBean>(this) {
+//                            @Override
+//                            public void doOnSuccess(GoodsOwnerInforBean data) {
+//                                grapId=data.id;
+//                                payDialog.show(getSupportFragmentManager(), "");
+//                            }
+//                        });
             }
 
 
@@ -253,13 +287,13 @@ public class MatchGrapSingleActivity extends BaseActivity implements View.OnClic
 
     /**
      * 点击支付
-     *
-     * @param amount  支付金额
+     *  @param amount  支付金额
      * @param payType 1 余额 2微信 3支付宝 4银联
      * @param yueWay  余额支付方式更改监听 0 企业支付 1余额支付
      */
     @Override
-    public void onClickPay(String amount, final int payType, int yueWay) {
+    public void onClickPay(float amount, final int payType, int yueWay) {
+        dialog.dismiss();
         payParam.setPaybusiness(3);
         payParam.setPayPassword(null);
         payParam.setMatchingId(grapId);//抢单ID
@@ -358,7 +392,9 @@ public class MatchGrapSingleActivity extends BaseActivity implements View.OnClic
     @Override
     public void onInputPassWordSuccess(DialogControl.IDialog dialog, String count, String passWord) {
         dialog.dismiss();
-        payParam.setPayPassword(passWord);
+        if (!TextUtils.isEmpty(passWord)) {
+            payParam.setPayPassword(ConvertUtils.MD5(passWord));
+        }
         pay();
 
     }

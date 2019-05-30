@@ -77,8 +77,10 @@ public class CommonOrderUtils {
                 role = "车主";
                 break;
             case CARGO_OWNER:
+                role = "发货人";
+                break;
             case CARGO_RECEIVE:
-                role = "货主";
+                role = "收货人";
                 break;
             case DRIVER:
                 role = "司机";

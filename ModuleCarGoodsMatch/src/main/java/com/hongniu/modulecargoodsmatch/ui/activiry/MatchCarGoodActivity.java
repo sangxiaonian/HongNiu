@@ -60,10 +60,6 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
         initView();
         initData();
         initListener();
-
-
-
-        queryData(true);
     }
 
     @Override

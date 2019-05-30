@@ -104,7 +104,7 @@ public class OrderCreataMode implements OrderCreatControl.IOrderCreataMode {
         paramBean.setGoodName(orderDetailBean.getGoodName());
         paramBean.setGoodVolume(orderDetailBean.getGoodVolume());
         paramBean.setGoodWeight(orderDetailBean.getGoodWeight());
-        paramBean.setMoney(orderDetailBean.getMoney());
+        paramBean.setMoney(orderDetailBean.getMoney()+"");
         paramBean.setCarNum(orderDetailBean.getCarNum());
         paramBean.setOwnerMobile(orderDetailBean.getOwnerMobile());
         paramBean.setOwnerName(orderDetailBean.getOwnerName());
