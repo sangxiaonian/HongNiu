@@ -51,6 +51,9 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
         btPay.setOnClickListener(this);
         imgCancel.setOnClickListener(this);
         payWay.setShowCompany(showCompany!=1);
+
+        payWay.setPayType(1);
+
         return inflate;
     }
 

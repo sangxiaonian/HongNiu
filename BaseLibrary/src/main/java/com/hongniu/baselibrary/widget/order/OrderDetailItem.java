@@ -541,7 +541,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
 //        1、	无收货人；
 //        2、	有收货人，但是代收货款为0，且运费支付方式非到付。
             helper.setHasPay(TextUtils.isEmpty(data.getReceiptName())
-                    || (data.getPaymentAmount() <= 0 && !"2".equals(data.getPayWay())));
+                    || (data.getPaymentAmount() <= 0 && !TextUtils.isEmpty(data.getPayWay())&&!"2".equals(data.getPayWay())));
             ;
         }else if (data.getUserType()==4){//收货人
             helper.setHasPay(data.freightStatus==1&&data.paymentStatus==1);
