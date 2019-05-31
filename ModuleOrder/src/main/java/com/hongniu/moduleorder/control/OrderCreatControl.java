@@ -78,6 +78,8 @@ public class OrderCreatControl {
         void getValue(OrderCreatParamBean infor);
 
         void showFinishAleart(String s);
+
+        void showConsigneePop(List<OrderDriverPhoneBean> data);
     }
 
     public interface IOrderCreataPresenter {
@@ -141,6 +143,12 @@ public class OrderCreatControl {
          * 点击返回按钮
          */
         void onBacePress();
+
+        /**
+         * 查询收货人
+         * @param textCenter
+         */
+        void queryConsighee(String textCenter);
     }
 
     public interface IOrderCreataMode {

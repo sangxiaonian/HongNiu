@@ -26,8 +26,10 @@ public class OrderDetailItemControl {
         RECEIPT(5,"已收货"),//已收货
         PAY_CHECK(6,"支付审核中"),//企业支付，支付申请中
         PAY_REFUSE(7,"申请被拒"),//企业支付，支付被拒绝
-        ARRIVED_PAY(8,"收货人已支付"),//到达后收货人已支付
-        ARRIVED_WAITE_PAY(9,"收货人待支付"),//到达后收货人待支付
+        WAITE_CHECK(8,"到付待审核"),//企业支付，支付被拒绝
+
+        ARRIVED_PAY(99,"收货人已支付"),//到达后收货人已支付
+        ARRIVED_WAITE_PAY(100,"收货人待支付"),//到达后收货人待支付
 
         HAS_CANCLE(20,"已取消"),//已取消
         UNKNOW(999,"未知状态");//未知状态

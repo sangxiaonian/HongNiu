@@ -188,7 +188,7 @@ public class PayWayView extends FrameLayout implements View.OnClickListener, Rad
          * 支付方式更改监听
          *
          * @param payType  1 余额 2微信 3支付宝 4银联
-         * @param yueWay  余额支付方式更改监听 0 企业支付 1余额支付
+         * @param yueWay  余额支付方式更改监听 0 企业支付 1余额支付 2 申请支付
          */
         void onPayTypeChang(int payType, int yueWay);
     }

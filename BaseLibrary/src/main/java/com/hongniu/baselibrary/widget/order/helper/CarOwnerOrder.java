@@ -67,6 +67,7 @@ public class CarOwnerOrder extends OwnerOrder {
 
                 break;
             case HAS_ARRIVED://已到达
+            case WAITE_CHECK://到付待审核
 
                 if (hasGoodsImage) {//如果存在货单
                     buttonInfors.add(new ButtonInforBean(ORDER_CHECK_GOODS));//查看货单

@@ -180,15 +180,18 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
             }
         }
 
-        this.yueWay=yueWay;
-        this.payType=payType;
-        if (changeListener!=null){
-            changeListener.onPayTypeChang(payType,yueWay);
-        }
+
         if (payType==1&&yueWay==0&&showCompany==2){
+            yueWay=2;
             btPay.setText("申请支付");
         }else {
             btPay.setText("立即支付");
+        }
+        this.yueWay=yueWay;
+        this.payType=payType;
+
+        if (changeListener!=null){
+            changeListener.onPayTypeChang(payType,yueWay);
         }
     }
 
@@ -209,7 +212,7 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
          * 点击支付
          * @param amount     支付金额
          * @param payType    1 余额 2微信 3支付宝 4银联
-         * @param yueWay     余额支付方式更改监听 0 企业支付 1余额支付
+         * @param yueWay     余额支付方式更改监听 0 企业支付 1余额支付 2 申请支付
          */
       void   onClickPay(float amount, int payType, int yueWay);
     }

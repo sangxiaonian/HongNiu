@@ -89,11 +89,8 @@ public class OrderCreataPresenter implements OrderCreatControl.IOrderCreataPrese
                 .subscribe(new NetObserver<List<OrderDriverPhoneBean>>(null) {
                     @Override
                     public void doOnSuccess(List<OrderDriverPhoneBean> data) {
-
                         view.showDriverPop(data);
-
                     }
-
                     @Override
                     public void onSubscribe(Disposable d) {
                         super.onSubscribe(d);
@@ -104,7 +101,34 @@ public class OrderCreataPresenter implements OrderCreatControl.IOrderCreataPrese
                 });
 
     }
+    /**
+     * 查询收货人
+     *
+     * @param textCenter
+     */
+    @Override
+    public void queryConsighee(String textCenter) {
+        if (carDisposable != null) {
+            carDisposable.dispose();
+        }
+        if (TextUtils.isEmpty(textCenter)) {
+            return;
+        }
+        mode.queryDriverInfor(textCenter)
+                .subscribe(new NetObserver<List<OrderDriverPhoneBean>>(null) {
+                    @Override
+                    public void doOnSuccess(List<OrderDriverPhoneBean> data) {
+                        view.showConsigneePop(data);
+                    }
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        super.onSubscribe(d);
+                        carDisposable = d;
+                    }
 
+
+                });
+    }
     /**
      * 填写完数据之后点击提交按钮
      * @param result
@@ -225,4 +249,6 @@ public class OrderCreataPresenter implements OrderCreatControl.IOrderCreataPrese
         view.showFinishAleart(s);
 
     }
+
+
 }

@@ -99,6 +99,15 @@ public class CargoOwnerOrder extends OwnerOrder implements OrderDetailItemContro
                     buttonInfors.add(new ButtonInforBean(ORDER_CHECK_INSURANCE));//查看保单
                 }
                 break;
+            case WAITE_CHECK://到付待审核
+                if (hasGoodsImage) {//如果存在货单
+                    buttonInfors.add(new ButtonInforBean(ORDER_CHECK_GOODS));//查看货单
+                }
+                if (hasReceiptImage) {//如果存在回单
+                    buttonInfors.add(new ButtonInforBean(ORDER_CHECK_RECEIPT));//查看回单
+                }
+
+                break;
             case PAY_REFUSE://企业支付申请被拒绝
 
                 buttonInfors.add(new ButtonInforBean(1, ORDER_PAY_REFUSE));//被拒原因

@@ -194,7 +194,7 @@ public class WaitePayActivity extends BaseActivity {
 
                     @Override
                     public void onNext(Integer aLong) {
-                        if (queryType == 0||queryType == 2) {
+                        if (queryType == 0 || queryType == 2) {
                             queryOrder();
                         } else if (queryType == 1) {
                             queryMatch();
@@ -251,9 +251,13 @@ public class WaitePayActivity extends BaseActivity {
                                 sub.request(1);
                             }
                         } else {
-                            if (data.freightStatus == 1 && data.paymentStatus == 1) {
+
+                            if (data.freightStatus == 3 || data.paymentStatus == 3) {
+                                //企业申请支付，有一个即表示待审核状态
                                 BusFactory.getBus().post(new PaySucess());
-                                //如果购买保险，且保险状态为已经支付
+                            } else if (data.freightStatus == 1 && data.paymentStatus == 1) {
+                                //其他支付
+                                BusFactory.getBus().post(new PaySucess());
                             } else if (sub != null) {
                                 sub.request(1);
                             }

@@ -87,8 +87,10 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
             super.handleMessage(msg);
             if (msg.what == 0) {
                 presenter.queryCarInfor(itemCarNum.getTextCenter());
-            } else {
+            } else if (msg.what==1){
                 presenter.queryDriverInfor(itemDriverName.getTextCenter());
+            }else if (msg.what==2){
+                presenter.queryConsighee(itemConsigneeName.getTextCenter());
             }
         }
     };
@@ -119,6 +121,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
     private RecyclerView rv;
     private CarNumPop<OrderCarNumbean> pop;
     private CarNumPop<OrderDriverPhoneBean> popDriver;
+    private CarNumPop<OrderDriverPhoneBean> popReceive;
     //    private OrderCreatParamBean paramBean = new OrderCreatParamBean();
     PicAdapter adapter;
     List<LocalMedia> pics;
@@ -170,6 +173,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
         timePickerView.setKeyBackCancelable(false);//系统返回键监听屏蔽掉
         pop = new CarNumPop<>(mContext);
         popDriver = new CarNumPop<>(mContext);
+        popReceive = new CarNumPop<>(mContext);
 
     }
 
@@ -228,6 +232,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
             public void afterTextChanged(Editable s) {
                 handler.removeMessages(0);
                 handler.removeMessages(1);
+                handler.removeMessages(2);
                 if (!TextUtils.isEmpty(itemCarNum.getTextCenter()) && show) {
                     handler.sendEmptyMessageDelayed(0, 300);
                 }
@@ -250,14 +255,41 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
             public void afterTextChanged(Editable s) {
                 handler.removeMessages(1);
                 handler.removeMessages(0);
+                handler.removeMessages(2);
                 if (!TextUtils.isEmpty(itemDriverName.getTextCenter()) && show) {
                     handler.sendEmptyMessageDelayed(1, 300);
                 }
                 show = true;
             }
         });
+        itemConsigneeName.getEtCenter().addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                handler.removeMessages(1);
+                handler.removeMessages(0);
+                handler.removeMessages(2);
+                if (!TextUtils.isEmpty(itemConsigneeName.getTextCenter()) && show) {
+                    handler.sendEmptyMessageDelayed(2, 300);
+                }
+                show = true;
+            }
+        });
+
+
         pop.setListener(this);
         popDriver.setListener(this);
+        popReceive.setListener(this);
 
     }
 
@@ -435,6 +467,12 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
     }
 
     @Override
+    public void showConsigneePop(List<OrderDriverPhoneBean> data) {
+        popReceive.upData(itemConsigneeName.getTextCenter(), data);
+        popReceive.show(itemConsigneeName);
+    }
+
+    @Override
     public void onTimeSelect(Date date, View v) {
 
         itemStartTime.setTextCenter(ConvertUtils.formatTime(date, "yyyy-MM-dd"));
@@ -578,6 +616,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
     public void onItemClick(View tragetView, int position, Object data) {
         pop.dismiss();
         popDriver.dismiss();
+        popReceive.dismiss();
         show = false;
         if (tragetView != null) {
             if (tragetView.getId() == R.id.item_car_num && data instanceof OrderCarNumbean) {
@@ -589,6 +628,10 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
                 OrderDriverPhoneBean bean = (OrderDriverPhoneBean) data;
                 itemDriverPhone.setTextCenter(bean.getMobile());
                 itemDriverName.setTextCenter(bean.getContact());
+            }else if (tragetView.getId() == R.id.item_consignee_name && data instanceof OrderDriverPhoneBean){
+                OrderDriverPhoneBean bean = (OrderDriverPhoneBean) data;
+                itemConsigneePhone.setTextCenter(bean.getMobile());
+                itemConsigneeName.setTextCenter(bean.getContact());
             }
         }
 
@@ -752,6 +795,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
         itemWeight.setTextCenter(paramBean.getGoodWeight());
         itemSize.setTextCenter(paramBean.getGoodVolume());
         itemCargoPrice.setTextCenter(paramBean.getPaymentAmount()+"");
+        show = false;
         itemConsigneeName.setTextCenter(paramBean.getReceiptName());
         itemConsigneePhone.setTextCenter(paramBean.getReceiptMobile());
 

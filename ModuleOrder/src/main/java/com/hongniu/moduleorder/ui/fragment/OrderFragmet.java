@@ -669,7 +669,7 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
             pauAmount += orderBean.getMoney();
         }
         if (orderBean.paymentStatus != 1) {//货款未支付
-            if (orderBean.freightStatus != 1){
+            if (orderBean.freightStatus != 1) {
                 builder.append("+");
             }
             builder.append("货款").append(orderBean.getPaymentAmount()).append("元");
@@ -752,7 +752,7 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
      *
      * @param amount  支付金额
      * @param payType 1 余额 2微信 3支付宝 4银联
-     * @param yueWay  余额支付方式更改监听 0 企业支付 1余额支付
+     * @param yueWay  余额支付方式更改监听 0 企业支付 1余额支付 2 申请支付
      */
     @Override
     public void onClickPay(float amount, int payType, int yueWay) {
@@ -763,7 +763,7 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
         int type = -1;
         switch (payType) {
             case 1:
-                if (yueWay == 0) {
+                if (yueWay == 0||yueWay == 2) {
                     type = 5;
                 } else {
                     type = 4;
@@ -784,13 +784,18 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
             pay();
         } else {
             if (Utils.querySetPassword()) {//设置过支付密码
-                try {
-                    payPasswordKeyBord.setPayCount(ConvertUtils.changeFloat(amount, 2));
-                    payPasswordKeyBord.show();
-                } catch (Exception e) {
-                    e.printStackTrace();
+                if (yueWay == 2) {
+                    pay();
+                } else {
+                    try {
+                        payPasswordKeyBord.setPayCount(ConvertUtils.changeFloat(amount, 2));
+                        payPasswordKeyBord.show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             } else {
+
                 Utils.creatDialog(getActivity(), "使用余额支付前，必须设置泓牛支付密码", null, "取消", "去设置")
                         .setLeftClickListener(new DialogControl.OnButtonLeftClickListener() {
                             @Override
@@ -810,6 +815,7 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
                         })
                         .creatDialog(new CenterAlertDialog(getActivity()))
                         .show();
+
             }
         }
 
