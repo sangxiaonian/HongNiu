@@ -19,6 +19,7 @@ import com.hongniu.baselibrary.entity.OrderCreatParamBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.event.Event;
+import com.hongniu.baselibrary.utils.BaseUtils;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.dialog.ListDialog;
 import com.hongniu.modulecargoodsmatch.R;
@@ -156,11 +157,11 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
                         tv1.setVisibility(View.GONE);
                         tv_price.setVisibility(View.GONE);
 
-                        tvTitle.setText("你正在寻找" + data.carType);
+                        tvTitle.setText("你正在寻找车辆");
                         tvTime.setText("需要发货时间：" + data.startTime);
                         tv_start_point.setText("发货地：" + data.startPlaceInfo);
                         tv_end_point.setText("收货地：" + data.destinationInfo);
-                        tv_goods.setText("货物名：" + data.goodName);
+                        tv_goods.setText("货物名：" + data.goodsSourceDetail);
                         bt_left.setText("删除发布");
                         bt_right.setText("抢单明细");
 
@@ -211,13 +212,19 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
                 .subscribe(new NetObserver<PageBean<MatchGrapSingleDetailBean>>(this) {
                     @Override
                     public void doOnSuccess(PageBean<MatchGrapSingleDetailBean> data) {
-                        singleDetail.clear();
-                        singleDetail.addAll(data.getList());
-                        dialog.setTitle("抢单明细");
-                        dialog.setDescribe("共有 " + singleDetail.size() + " 人支付抢单意向金，你可选择1人完成下单");
-                        listAdapter.notifyDataSetChanged();
-                        dialog.show(getChildFragmentManager(), "");
-                        inforBean=data;
+
+                        if (BaseUtils.isCollectionsEmpty(data.getList())){
+                            ToastUtils.getInstance().show("暂无抢单记录");
+                        }else {
+                            singleDetail.clear();
+                            singleDetail.addAll(data.getList());
+                            dialog.setTitle("抢单明细");
+                            dialog.setDescribe("共有 " + singleDetail.size() + " 人支付抢单意向金，你可选择1人完成下单");
+                            listAdapter.notifyDataSetChanged();
+                            dialog.show(getChildFragmentManager(), "");
+                            inforBean=data;
+                        }
+
                     }
 
                 });

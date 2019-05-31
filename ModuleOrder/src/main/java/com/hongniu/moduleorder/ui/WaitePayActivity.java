@@ -194,7 +194,7 @@ public class WaitePayActivity extends BaseActivity {
 
                     @Override
                     public void onNext(Integer aLong) {
-                        if (queryType == 0) {
+                        if (queryType == 0||queryType == 2) {
                             queryOrder();
                         } else if (queryType == 1) {
                             queryMatch();

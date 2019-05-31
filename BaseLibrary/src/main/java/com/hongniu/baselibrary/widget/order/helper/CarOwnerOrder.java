@@ -1,6 +1,5 @@
 package com.hongniu.baselibrary.widget.order.helper;
 
-import com.hongniu.baselibrary.widget.order.CommonOrderUtils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 
 import java.util.List;
@@ -15,7 +14,9 @@ import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_
 /**
  * 作者： ${PING} on 2018/8/2.
  * 车主订单
- */
+ *
+ * 2019/5/31 去除查看货单入口 setHasGoodsImage 值强制更改为false
+ * */
 public class CarOwnerOrder extends OwnerOrder {
 
 
@@ -25,9 +26,13 @@ public class CarOwnerOrder extends OwnerOrder {
 
     @Override
     public String getOrderState() {
-        return state==null?OrderDetailItemControl.OrderState.UNKNOW.getDes():state.getDes();
+        return state == null ? OrderDetailItemControl.OrderState.UNKNOW.getDes() : state.getDes();
     }
-
+    @Override
+    public OrderDetailItemControl.IOrderItemHelper setHasGoodsImage(boolean hasGoodsImage) {
+        this. hasGoodsImage=false;
+        return this;
+    }
     /**
      * 获取要显示的按钮类型
      */

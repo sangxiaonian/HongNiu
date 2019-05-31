@@ -19,6 +19,7 @@ import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_UP_REC
 /**
  * 作者： ${PING} on 2018/8/2.
  * 司机订单
+ * 2019/5/31 去除查看货单入口 2019/5/31 去除查看货单入口 setHasGoodsImage 值强制更改为false
  */
 public class DriveOwnerOrder extends OwnerOrder implements OrderDetailItemControl.IOrderItemHelper {
 
@@ -30,6 +31,12 @@ public class DriveOwnerOrder extends OwnerOrder implements OrderDetailItemContro
     @Override
     public String getOrderState() {
         return state == null ? OrderDetailItemControl.OrderState.UNKNOW.getDes() : state.getDes();
+    }
+
+    @Override
+    public OrderDetailItemControl.IOrderItemHelper setHasGoodsImage(boolean hasGoodsImage) {
+       this. hasGoodsImage=false;
+        return this;
     }
 
     /**

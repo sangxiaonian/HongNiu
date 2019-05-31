@@ -1,5 +1,7 @@
 package com.hongniu.baselibrary.entity;
 
+import com.sang.thirdlibrary.pay.PayConfig;
+
 /**
  * 作者： ${桑小年} on 2018/8/18.
  * 努力，为梦长留
@@ -13,7 +15,7 @@ public class PayParam {
     /**
      * 支付方式 0微信支付 1银联支付 2线下支付3 支付宝支付 4余额支付 5企业支付
      */
-    private int payType=-1;
+    private Integer payType=-1;
 
     /**
      * true	string	订单号
@@ -22,19 +24,19 @@ public class PayParam {
     /**
      * true	string	微信appid
      */
-    private String appid;
+    private String appid ;
     /**
      * true	boolean	是否付运费，true=是
      */
-    private boolean hasFreight;
+    private Boolean hasFreight;
     /**
      * true	boolean	是否买保险，true=是
      */
-    private boolean hasPolicy;
+    private Boolean hasPolicy;
     /**
      * true	boolean	是否线上支付,false=线下支付
      */
-    private boolean onlinePay;
+    private Boolean onlinePay;
     private String payPassword;
 
     /**
@@ -42,9 +44,9 @@ public class PayParam {
      */
     private String insuranceUserId;
 
-   private int paybusiness	;//true	string	1订单支付2代收货款和代收运费支付3意向金支付
+   private Integer paybusiness	;//true	string	1订单支付2代收货款和代收运费支付3意向金支付
    private String matchingId	;//true	long	车货匹配抢单记录id
-   private int freightPayClass	;//true	number	运费支付类型1:现付 2:到付 3:回付
+   private Integer freightPayClass	;//true	number	运费支付类型1:现付 2:到付 3:回付
    private String receiptName	;//false	string	收货人姓名 到付时必填
    private String receiptMobile	;//false	string	收货人手机 到付时必填
 
@@ -73,11 +75,11 @@ public class PayParam {
         this.matchingId = matchingId;
     }
 
-    public int getFreightPayClass() {
+    public Integer getFreightPayClass() {
         return freightPayClass;
     }
 
-    public void setFreightPayClass(int freightPayClass) {
+    public void setFreightPayClass(Integer freightPayClass) {
         this.freightPayClass = freightPayClass;
     }
 
@@ -119,7 +121,7 @@ public class PayParam {
     }
 
     public int getPayType() {
-        return payType;
+        return payType==null?0:payType;
     }
 
     public void setPayType(int payType) {

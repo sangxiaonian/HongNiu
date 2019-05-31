@@ -175,7 +175,7 @@ public interface AppService {
      * @param infor 订单ID
      * @return
      */
-    @POST("hongniu/wx/jsApiPay")
+    @POST("hongniu/api/account/accountpay")
     Observable<CommonBean<PayBean>> payOrderOffLine(@Body PayParam infor);
 
     /**

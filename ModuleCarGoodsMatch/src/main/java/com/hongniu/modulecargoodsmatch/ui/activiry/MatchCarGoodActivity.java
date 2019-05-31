@@ -147,11 +147,11 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
                         tv1.setVisibility(View.GONE);
                         tv_price.setVisibility(View.GONE);
 
-                        tvTitle.setText(data.userName + "正在寻找" + data.carType);
+                        tvTitle.setText(data.userName + "正在寻找车辆"  );
                         tvTime.setText("需要发货时间：" + data.startTime);
                         tv_start_point.setText("发货地：" + data.startPlaceInfo);
                         tv_end_point.setText("收货地：" + data.destinationInfo);
-                        tv_goods.setText("货物名：" + data.goodName);
+                        tv_goods.setText("货物名：" + data.goodsSourceDetail);
                         bt_left.setText("联系货主");
                         bt_right.setText("我要抢单");
 

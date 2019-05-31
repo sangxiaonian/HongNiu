@@ -159,11 +159,7 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
                         item.setIdentity(CommonOrderUtils.getRoleState(data.getRoleType()));
                         item.setInfor(data);
                         item.setOnButtonClickListener(OrderFragmet.this);
-                        itemView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                            }
-                        });
+
                     }
                 };
             }
@@ -662,9 +658,8 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
 
         payParam.setPayPassword(null);
         payParam.setPaybusiness(2);
-        payParam.setOrderId(orderBean.getId());
         payParam.setOrderNum(orderBean.getOrderNum());
-
+        payParam.setOrderId(orderBean.getId());
         float pauAmount = 0;
         StringBuilder builder = new StringBuilder();
         builder.append("费用明细：").append("  ");
@@ -674,7 +669,10 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
             pauAmount += orderBean.getMoney();
         }
         if (orderBean.paymentStatus != 1) {//货款未支付
-            builder.append("+").append("货款").append(orderBean.getPaymentAmount()).append("元");
+            if (orderBean.freightStatus != 1){
+                builder.append("+");
+            }
+            builder.append("货款").append(orderBean.getPaymentAmount()).append("元");
             pauAmount += orderBean.getPaymentAmount();
         }
 

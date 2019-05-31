@@ -544,9 +544,9 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                     || (data.getPaymentAmount() <= 0 && !"2".equals(data.getPayWay())));
             ;
         }else if (data.getUserType()==4){//收货人
-            helper.setHasPay(data.freightStatus==1||data.paymentStatus==1);
+            helper.setHasPay(data.freightStatus==1&&data.paymentStatus==1);
         }else if (data.getUserType()==2){//对于司机
-            helper.setHasPay(data.freightStatus==1||data.paymentStatus==1);
+            helper.setHasPay(data.freightStatus==1&&data.paymentStatus==1);
         }
 
         List<ButtonInforBean> infors = helper.getButtonInfors();
@@ -932,8 +932,9 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
     public TextView creatButton(ButtonInforBean infor) {
         TextView button = new TextView(getContext());
         MarginLayoutParams params = new MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
         button.setLayoutParams(params);
-        params.setMargins(DeviceUtils.dip2px(getContext(), 15), 0, 0, 0);
+        params.setMargins(DeviceUtils.dip2px(getContext(), 10), 0, 0, 0);
         button.setTextColor(infor.getType() == 1 ? getResources().getColor(R.color.white) : getResources().getColor(R.color.color_title_dark));
         button.setBackgroundResource(infor.getType() == 1 ? R.drawable.shape_2_e83e15 : R.drawable.shape_2_stoke_dddddd);
         button.setGravity(Gravity.CENTER);

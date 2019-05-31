@@ -29,4 +29,5 @@ public class GoodsOwnerInforBean {
   public String status;//	true	string	货源状态(0生成1已预定2已失效 3完成)
 
 
+  public String goodsSourceDetail;//货物详情
 }

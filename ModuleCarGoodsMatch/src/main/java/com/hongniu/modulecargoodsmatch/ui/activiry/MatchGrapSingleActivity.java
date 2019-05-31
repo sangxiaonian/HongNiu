@@ -225,21 +225,12 @@ public class MatchGrapSingleActivity extends BaseActivity implements View.OnClic
                    @Override
                    public void doOnSuccess(WalletDetail data) {
                        payDialog.setShowCompany(data.getType() );
-//                       payDialog.setShowCompany(2);
+                       payDialog.setShowCompany(1);
                        payDialog.setWalletDetaile(data);
                        payDialog.show(getSupportFragmentManager(), "");
                    }
                });
 
-//                HttpMatchFactory
-//                        .grapMatch(id, infor.getId(), price)
-//                        .subscribe(new NetObserver<GoodsOwnerInforBean>(this) {
-//                            @Override
-//                            public void doOnSuccess(GoodsOwnerInforBean data) {
-//                                grapId=data.id;
-//                                payDialog.show(getSupportFragmentManager(), "");
-//                            }
-//                        });
             }
 
 
@@ -294,7 +285,8 @@ public class MatchGrapSingleActivity extends BaseActivity implements View.OnClic
      */
     @Override
     public void onClickPay(float amount, final int payType, int yueWay) {
-        dialog.dismiss();
+        payDialog.dismiss();
+
         payParam.setPaybusiness(3);
         payParam.setPayPassword(null);
         payParam.setMatchingId(grapId);//抢单ID
@@ -351,8 +343,6 @@ public class MatchGrapSingleActivity extends BaseActivity implements View.OnClic
                         .show();
             }
         }
-
-
     }
 
     private void pay() {

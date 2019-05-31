@@ -101,6 +101,13 @@ public class PayWayView extends FrameLayout implements View.OnClickListener, Rad
      */
     public void setPayType(int payType) {
         changePayType(payType);
+    }  /**
+     * 更改当前支付方法
+     * @param yueType  0 企业支付 1余额支付
+     */
+    public void setYue(int yueType) {
+        this.yueType=yueType;
+        changePayType(1);
     }
 
 
