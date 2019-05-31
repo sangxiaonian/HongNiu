@@ -10,6 +10,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 作者： ${PING} on 2018/8/6.
@@ -214,5 +216,20 @@ public class ConvertUtils {
     }
 
 
+    /**
+     * 去除参数中的汉字
+     * @param s
+     * @return
+     */
+    public static String replaceChinese(String s){
+        if (!TextUtils.isEmpty(s)) {
+            String REGEX_CHINESE = "[\u4e00-\u9fa5]";// 中文正则
+            Pattern pat = Pattern.compile(REGEX_CHINESE);
+            Matcher mat = pat.matcher(s);
+            return mat.replaceAll("");
+        }else {
+            return s;
+        }
+    }
 
 }

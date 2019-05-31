@@ -22,6 +22,7 @@ import com.hongniu.modulecargoodsmatch.entity.MatchQueryGoodsInforParams;
 import com.hongniu.modulecargoodsmatch.net.HttpMatchFactory;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
+import com.sang.common.utils.ConvertUtils;
 import com.sang.common.widget.SwitchTextLayout;
 import com.sang.common.widget.popu.BasePopu;
 import com.sang.common.widget.popu.OrderMainPop;
@@ -47,8 +48,8 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
     private Button btSave;
     private List<String> times;
     private OrderMainPop<String> popLeft;
-    private OrderMainPop<CarTypeBean> popRight;
-    private List<CarTypeBean> states;
+    private OrderMainPop<String> popRight;
+    private List<String> states;
     private int leftSelection;
     private int rightSelection;
     private MatchQueryGoodsInforParams params;
@@ -87,18 +88,8 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
         popRight = new OrderMainPop<>(mContext);
          states = new ArrayList<>();
         times = Arrays.asList(getResources().getStringArray(R.array.order_main_time));
+        states = Arrays.asList(getResources().getStringArray(R.array.match_grap_price));
 
-        HttpAppFactory.getCarType()
-                .subscribe(new NetObserver<List<CarTypeBean>>(this) {
-                    @Override
-                    public void doOnSuccess(List<CarTypeBean> data) {
-                        states.clear();
-                        CarTypeBean carTypeBean=new CarTypeBean();
-                        carTypeBean.setCarType("全部");
-                        states.add(carTypeBean);
-                        states.addAll(data==null?new ArrayList<CarTypeBean>():data);
-                    }
-                });
     }
 
     @Override
@@ -268,8 +259,16 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
             params.deliveryDateType = time;
         } else if (target.getId() == R.id.switch_right) {
             rightSelection = position;
-            switchRight.setTitle(states.get(position).getCarType());
-            params.carTypeId = states.get(position).getId();
+            String s = states.get(position);
+            String[] split = ConvertUtils.replaceChinese(s).split("–");
+            if (split.length>=2){
+                params.amountMin=split[0];
+                params.amountMax=split[1];
+            }else {
+                params.amountMin=split[0];
+                params.amountMax=null;
+            }
+            switchRight.setTitle(s);
         }
         queryData(true, true);
         pop.dismiss();

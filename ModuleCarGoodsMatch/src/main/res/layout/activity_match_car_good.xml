@@ -37,7 +37,7 @@
             app:closeIcon="@drawable/icon_arrow_down_d8d8d8"
             app:openColor="@color/color_light"
             app:openIcon="@drawable/icon_arrow_down_f06f28"
-            app:title="车辆型号"
+            app:title="全部"
             app:titleSize="14sp" />
     </LinearLayout>
 
