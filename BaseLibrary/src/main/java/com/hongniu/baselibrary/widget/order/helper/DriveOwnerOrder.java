@@ -71,7 +71,7 @@ public class DriveOwnerOrder extends OwnerOrder implements OrderDetailItemContro
                 buttonInfors.add(new ButtonInforBean(1, ORDER_ENTRY_ARRIVE));//确认到达
                 break;
             case HAS_ARRIVED://已到达
-            case WAITE_CHECK://已到达
+            case WAITE_CHECK://货款带审核
             case ARRIVED_PAY://已到达
             case ARRIVED_WAITE_PAY://已到达
                 if (hasGoodsImage) {//如果存在货单

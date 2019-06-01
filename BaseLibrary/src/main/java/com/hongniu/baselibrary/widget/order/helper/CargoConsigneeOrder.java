@@ -92,6 +92,10 @@ public class CargoConsigneeOrder extends OwnerOrder implements OrderDetailItemCo
 
                 break;
             case PAY_REFUSE://企业支付申请被拒绝
+            case WAITE_CHECK_FAIL://企业支付申请被拒绝
+
+                buttonInfors.add(new ButtonInforBean(1, ORDER_PAY_REFUSE));//被拒原因
+                break;
             case PAY_CHECK://支付申请中
             case REFUND://退款
             case UNKNOW://未知状态

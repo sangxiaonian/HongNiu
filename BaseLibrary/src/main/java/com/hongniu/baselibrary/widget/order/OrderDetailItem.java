@@ -544,9 +544,9 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                     || (data.getPaymentAmount() <= 0 && !TextUtils.isEmpty(data.getPayWay())&&!"2".equals(data.getPayWay())));
             ;
         }else if (data.getUserType()==4){//收货人
-            helper.setHasPay(data.freightStatus==1&&data.paymentStatus==1);
+            helper.setHasPay((data.freightStatus==1&&data.paymentStatus==1)||(data.freightStatus==3&&data.paymentStatus==3));
         }else if (data.getUserType()==2){//对于司机
-            helper.setHasPay(data.freightStatus==1&&data.paymentStatus==1);
+            helper.setHasPay((data.freightStatus==1&&data.paymentStatus==1)||(data.freightStatus==3&&data.paymentStatus==3));
         }
 
         List<ButtonInforBean> infors = helper.getButtonInfors();
@@ -868,6 +868,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                 }
                 break;
             case ORDER_PAY_REFUSE://    = "被拒原因";
+
                 if (listener != null) {
                     listener.onPayRefuse(orderBean);
                 } else {
