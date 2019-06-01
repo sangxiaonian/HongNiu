@@ -35,6 +35,7 @@ import com.hongniu.modulecargoodsmatch.net.HttpMatchFactory;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.utils.ConvertUtils;
+import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.inter.DialogControl;
@@ -388,7 +389,7 @@ public class MatchGrapSingleActivity extends BaseActivity implements View.OnClic
             payParam.setPayPassword(ConvertUtils.MD5(passWord));
         }
         pay();
-
+//        DeviceUtils.closeSoft(this);
     }
 
     /**
@@ -411,5 +412,11 @@ public class MatchGrapSingleActivity extends BaseActivity implements View.OnClic
     @Override
     public void hasNoPassword(DialogControl.IDialog dialog) {
 
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        DeviceUtils.closeSoft(this);
     }
 }

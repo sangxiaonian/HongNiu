@@ -3,10 +3,18 @@
     package="com.hongniu.modulecargoodsmatch">
 
     <application>
-        <activity android:name=".ui.activiry.MatchCreatOrderActivity"></activity>
-        <activity android:name=".ui.activiry.MatchMyRecordActivity" />
-        <activity android:name=".ui.activiry.MatchGrapSingleActivity" />
-        <activity android:name=".ui.activiry.MatchCarGoodActivity" />
+        <activity
+            android:name=".ui.activiry.MatchCreatOrderActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"></activity>
+        <activity
+            android:name=".ui.activiry.MatchMyRecordActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+        <activity
+            android:name=".ui.activiry.MatchGrapSingleActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+        <activity
+            android:name=".ui.activiry.MatchCarGoodActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
     </application>
 
 </manifest>
