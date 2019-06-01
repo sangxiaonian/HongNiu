@@ -161,7 +161,7 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
                 }else {
                     //如果企业账户余额也不足
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("余额不足");
-                    payWay.setYue(2);
+                    payWay.setPayType(2);
                     return;
                 }
             }else if (yueWay==0&&data.getType()==3&&balanceCom<payAmount){
@@ -174,7 +174,7 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
                 }else {
                     //如果个人账户余额也不足
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("余额不足");
-                    payWay.setYue(2);
+                    payWay.setPayType(2);
                     return;
                 }
             }

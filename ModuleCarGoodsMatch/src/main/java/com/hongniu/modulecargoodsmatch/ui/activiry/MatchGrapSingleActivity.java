@@ -131,6 +131,7 @@ public class MatchGrapSingleActivity extends BaseActivity implements View.OnClic
             this.infor = data;
             tvCarNum.setText(data.getCarNumber() == null ? "" : data.getCarNumber());
             tvCarType.setText(data.getCartypename() == null ? "" : data.getCartypename());
+            tvCarType.setVisibility(TextUtils.isEmpty(data.getCartypename())?View.GONE:View.VISIBLE);
         }
     }
 
