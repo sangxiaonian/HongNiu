@@ -69,7 +69,7 @@ public class HomeHeader extends PeakHolder implements View.OnClickListener {
         card_yongjin.setOnClickListener(this);
         card_etc.setOnClickListener(this);
 
-        card_policy.setVisibility(Utils.showInscance()?View.VISIBLE:View.GONE);
+        card_etc.setVisibility(Utils.showInscance()?View.VISIBLE:View.GONE);
 
     }
 
