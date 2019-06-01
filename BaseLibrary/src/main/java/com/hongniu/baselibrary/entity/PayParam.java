@@ -24,7 +24,7 @@ public class PayParam {
     /**
      * true	string	微信appid
      */
-    private String appid ;
+    private String appid =PayConfig.weChatAppid;
     /**
      * true	boolean	是否付运费，true=是
      */
