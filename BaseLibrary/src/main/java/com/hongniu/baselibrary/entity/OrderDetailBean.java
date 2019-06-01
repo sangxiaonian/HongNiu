@@ -273,6 +273,7 @@ public class OrderDetailBean {
      * false	number	货款状态: 0待支付 1支付成功 2支付失败
      */
     public int  paymentStatus	;
+    private String paymentPayWay;
 
     public String getVerifyFailCause() {
         return verifyFailCause;
@@ -707,5 +708,13 @@ public class OrderDetailBean {
 
     public void setUserType(int userType) {
         this.userType = userType;
+    }
+
+    public String getPaymentPayWay() {
+        return paymentPayWay;
+    }
+
+    public void setPaymentPayWay(String paymentPayWay) {
+        this.paymentPayWay = paymentPayWay;
     }
 }

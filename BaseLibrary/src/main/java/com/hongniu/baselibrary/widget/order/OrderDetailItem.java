@@ -141,11 +141,15 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
         }
         if (data.getPaymentAmount() > 0) {
             //代收货款金额大于0
-            builder.append("代收货款：").append(data.getPaymentAmount()).append("  ");
+            String policyPayWay = CommonOrderUtils.getPayWay(data.getPaymentPayWay());
+            String s1 = TextUtils.isEmpty(policyPayWay) ? "" : ("(" + policyPayWay + ")");
+            builder.append("代收货款：").append(data.getPaymentAmount()).append(s1).append("  ");
         }
         if (!hideInsurance && data.isInsurance()) {
             //如果不隐藏保费，并且购买了保险
-            builder.append("保费：").append(data.getPolicyMoney());
+            String policyPayWay = CommonOrderUtils.getPayWay(data.getPolicyPayWay());
+            String s1 = TextUtils.isEmpty(policyPayWay) ? "" : ("(" + policyPayWay + ")");
+            builder.append("保费：").append(data.getPolicyMoney()).append(s1);
         }
         setPrice(builder.toString());
 
