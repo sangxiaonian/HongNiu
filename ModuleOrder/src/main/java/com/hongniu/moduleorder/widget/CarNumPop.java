@@ -86,13 +86,14 @@ public class CarNumPop<T> {
                         super.initView(itemView, position, data);
                         TextView tv = itemView.findViewById(R.id.tv);
                         if (!TextUtils.isEmpty(mark) && data.toString().contains(mark)) {
-                            int start  ;
+                            int start = 0;
                             SpannableStringBuilder builder = new SpannableStringBuilder(data.toString());
                             do {
-                                start = data.toString().indexOf(mark);
+                                start = data.toString().indexOf(mark,start);
                                 ForegroundColorSpan span = new ForegroundColorSpan(context.getResources().getColor(R.color.color_light));
                                 builder.setSpan(span, start, start+mark.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                                 start += mark.length();
+                                JLog.i(data+"  start:"+start+">>>"+mark+">>>"+data.toString().indexOf(mark, start));
                             } while (data.toString().indexOf(mark, start) > 0);
                             tv.setText(builder);
                         } else {

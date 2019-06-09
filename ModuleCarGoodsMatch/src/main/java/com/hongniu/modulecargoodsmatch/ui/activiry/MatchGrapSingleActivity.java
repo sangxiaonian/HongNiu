@@ -147,7 +147,7 @@ public class MatchGrapSingleActivity extends BaseActivity implements View.OnClic
         String title = getIntent().getStringExtra(Param.TITLE);
         id = getIntent().getStringExtra(Param.TRAN);
         setToolbarTitle(title + "的车货匹配");
-        queryCarInfor();
+        queryCarInfor(true);
 
     }
 
@@ -161,7 +161,7 @@ public class MatchGrapSingleActivity extends BaseActivity implements View.OnClic
     }
 
 
-    private void queryCarInfor() {
+    private void queryCarInfor(final boolean b) {
         HttpAppFactory.getCarList(1)
                 .subscribe(new NetObserver<PageBean<CarInforBean>>(this) {
                     @Override
@@ -171,7 +171,7 @@ public class MatchGrapSingleActivity extends BaseActivity implements View.OnClic
                             datas.addAll(data.getList());
                         }
                         adapter.notifyDataSetChanged();
-                        if (datas.size() == 0) {
+                        if (datas.size() == 0&&b) {
                             //添加车辆
                             ArouterUtils.getInstance()
                                     .builder(ArouterParamLogin.activity_car_infor)
@@ -237,7 +237,7 @@ public class MatchGrapSingleActivity extends BaseActivity implements View.OnClic
 
 
         } else if (v.getId() == R.id.ll_car) {
-            dialog.show(getSupportFragmentManager(), "");
+            queryCarInfor(false);
         }
     }
 
@@ -274,8 +274,6 @@ public class MatchGrapSingleActivity extends BaseActivity implements View.OnClic
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show(msg);
                     break;
             }
-        }else if (requestCode==2){
-            queryCarInfor();
         }
     }
 
