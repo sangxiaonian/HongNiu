@@ -16,6 +16,7 @@ import com.hongniu.baselibrary.entity.OrderInsuranceInforBean;
 import com.hongniu.moduleorder.mode.OrderPayMode;
 import com.sang.common.net.listener.TaskControl;
 import com.sang.common.utils.ConvertUtils;
+import com.sang.common.utils.ToastUtils;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
 
 import java.util.List;
@@ -147,6 +148,7 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
     @Override
     public void setPayType(int payType) {
         mode.savePayType(payType);
+        view.changePayType(mode.getPayType(),mode.getPayRole());
         //每次更改支付方式都需要判断一次
         view.showHasCompanyApply(mode.showApplyCompanyPay());
     }
@@ -222,7 +224,8 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
      */
     @Override
     public void onChoiceYuePay() {
-        if (!mode.isHasEnoughBalance()) {
+        //企业和个人余额都不足
+        if (!mode.isComHasEnoughBalance()&&!mode.isPreHasEnoughBalance()) {
             view.showNoEnoughBalance();
         } else {
             view.onSelectYuePay();
@@ -333,10 +336,14 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
     @Override
     public void onChoicePersonPay() {
         mode.savePayRole(2);
-        //判断是否需要切换支付方式
-        view.isHasEnoughBalance(mode.isHasEnoughBalance(), mode.getPayType());
-        if (mode.isHasEnoughBalance() && mode.getPayType() == 4) {
-            view.showHasCompanyApply(mode.showApplyCompanyPay());
+        if (!mode.isComHasEnoughBalance()&&!mode.isPreHasEnoughBalance()){
+            //如果企业余额和个人余额都不足,切换支付方式
+            view.isHasEnoughBalance(mode.isComHasEnoughBalance(), mode.getPayType());
+        }else if (mode.isComHasEnoughBalance()&&!mode.isPreHasEnoughBalance()){
+            //如果企业余额充足，切换成企业支付方式
+            ToastUtils.getInstance().show("个人余额不足");
+            mode.savePayRole(1);
+            setPayType(4);
         }
     }
 
@@ -346,8 +353,16 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
     @Override
     public void onChoiceCompanyPay() {
         mode.savePayRole(1);
-        view.isHasEnoughBalance(mode.isHasEnoughBalance(), mode.getPayType());
-        view.showHasCompanyApply(mode.showApplyCompanyPay());
+        if (!mode.isComHasEnoughBalance()&&!mode.isPreHasEnoughBalance()){
+            //如果企业余额和个人余额都不足,切换支付方式
+            view.isHasEnoughBalance(mode.isComHasEnoughBalance(), mode.getPayType());
+        }else if (!mode.isComHasEnoughBalance()&&mode.isPreHasEnoughBalance()){
+            //如果个人余额充足，切换成个人支付方式
+            ToastUtils.getInstance().show("企业余额不足");
+            mode.savePayRole(2);
+            setPayType(4);
+        }
+
 
     }
 

@@ -72,15 +72,15 @@ public class WalletDetail implements Parcelable {
      * 是否有企业支付权限(true:有  false:无)
      */
     private boolean companyPayPermission;
-/**
+    /**
      * 企业支付可用余额
      */
     private double companyAvailableBalance;
-/**
+    /**
      * 1:不可用企业支付  2:企业支付需要审核  3:企业支付不需要审核
      */
     private int type;
-/**
+    /**
      * 1开户状态 true:已开子账户 false:未开
      */
     private boolean subAccStatus;
@@ -151,7 +151,6 @@ public class WalletDetail implements Parcelable {
     public void setSubAccStatus(boolean subAccStatus) {
         this.subAccStatus = subAccStatus;
     }
-
 
 
     public String getAccountCode() {

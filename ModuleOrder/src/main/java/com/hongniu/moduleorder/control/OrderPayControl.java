@@ -22,8 +22,8 @@ public class OrderPayControl {
 
         /**
          * 根据传入的数值初始化界面数据
-         *  @param event
          *
+         * @param event
          */
         void setTranDate(PayOrderInfor event);
 
@@ -59,6 +59,7 @@ public class OrderPayControl {
 
         /**
          * 显示金额
+         *
          * @param builder
          */
         void showPayCount(SpannableStringBuilder builder);
@@ -76,6 +77,7 @@ public class OrderPayControl {
 
         /**
          * 支付完成，开始购买保险
+         *
          * @param price
          * @param orderNum
          * @param orderID
@@ -84,12 +86,14 @@ public class OrderPayControl {
 
         /**
          * 单独购买保险却尚未选择保险
+         *
          * @param title
          */
         void noChoiceInsurance(String title);
 
         /**
          * 是否默认选中微信，余额是否充足
+         *
          * @param isEnough true 余额充足
          * @param payType
          */
@@ -107,6 +111,7 @@ public class OrderPayControl {
 
         /**
          * 显示支付密码键盘
+         *
          * @param money
          */
         void showPasswordDialog(double money);
@@ -123,57 +128,70 @@ public class OrderPayControl {
 
         /**
          * 显示被保险人信息
+         *
          * @param name   个人名称或者公司名称
          * @param number 个人身份照明或者公司税号
          */
-        void showInsruanceUserInfor(String name,String number);
+        void showInsruanceUserInfor(String name, String number);
 
         /**
          * 显示被保险人信息列表
+         *
          * @param data
          */
         void showInsruanceUserInforDialog(List<OrderInsuranceInforBean> data);
 
         /**
          * 是否有企业支付权限
+         *
          * @param companyPayPermission true 有
          */
         void showCompanyInfor(boolean companyPayPermission);
 
         /**
          * 显示是否为申请支付
+         *
          * @param showApplyCompanyPay true 是
          */
         void showHasCompanyApply(boolean showApplyCompanyPay);
 
         /**
          * 调往实名认证界面进行实名认证
+         *
          * @param s
          */
         void realNameAuthentication(String s);
 
         /**
          * 切换支付方式，判断是否显示收货人信息
+         *
          * @param payWays
          */
         void switChconsignee(int payWays);
 
         /**
-         *
          * @param msg
          */
         void showError(String msg);
+
+        /**
+         * 更改支付方式UI
+         *
+         * @param payType
+         * @param payRole
+         */
+        void changePayType(int payType, int payRole);
     }
 
     public interface IOrderPayPresent {
 
         /**
          * 储存其他界面传入的参数
+         *
          * @param event
          * @param listener
          */
         void saveTranDate(PayOrderInfor event, TaskControl.OnTaskListener listener);
-
 
 
         /**
@@ -204,6 +222,7 @@ public class OrderPayControl {
 
         /**
          * 支付
+         *
          * @param consigneeName
          * @param consigneePhone
          * @param listener
@@ -222,6 +241,7 @@ public class OrderPayControl {
 
         /**
          * 支付密码输入完成
+         *
          * @param name
          * @param phone
          * @param passWord
@@ -231,19 +251,22 @@ public class OrderPayControl {
 
         /**
          * 显示被保险人信息
+         *
          * @param listener
          */
         void showInsurancDialog(TaskControl.OnTaskListener listener);
 
         /**
          * 选中保险人信息
+         *
          * @param position 位置
          * @param bean     被选中的保险人信息
          */
         void onSelectInsurancUserInfro(int position, OrderInsuranceInforBean bean);
 
         /**
-         *  查询被保险人列表
+         * 查询被保险人列表
+         *
          * @param
          * @param listenre
          */
@@ -251,6 +274,7 @@ public class OrderPayControl {
 
         /**
          * 删除指定的被保险人
+         *
          * @param id
          * @param listenre
          */
@@ -268,12 +292,14 @@ public class OrderPayControl {
 
         /**
          * 查询钱包信息
+         *
          * @param listener
          */
         void queryWallInfor(TaskControl.OnTaskListener listener);
 
         /**
          * 设置支付方式
+         *
          * @param payWay 付款方式 0 现付（线上支付） 1回付 2到付（线下支付）
          */
         void setPayWay(int payWay);
@@ -282,8 +308,8 @@ public class OrderPayControl {
     public interface IOrderPayMode {
         /**
          * 储存其他界面传入的参数
-         *  @param event
          *
+         * @param event
          */
         void saveTranDate(PayOrderInfor event);
 
@@ -294,9 +320,11 @@ public class OrderPayControl {
 
         /**
          * 储存钱包账号信息
+         *
          * @param data
          */
         void setAccountInfor(WalletDetail data);
+
         /**
          * 获取订单ID
          *
@@ -330,8 +358,10 @@ public class OrderPayControl {
          * @param cargoPrice
          */
         Observable<CommonBean<String>> queryInstance(String cargoPrice);
+
         /**
          * 设置支付方式
+         *
          * @param payWay
          */
         void savePayWays(int payWay);
@@ -345,6 +375,7 @@ public class OrderPayControl {
 
         /**
          * 获取订单运费金额
+         *
          * @return
          */
         double getMoney();
@@ -355,12 +386,14 @@ public class OrderPayControl {
 
         /**
          * 获取保费金额
+         *
          * @return
          */
         double getInsurancePrice();
 
         /**
          * 开始支付
+         *
          * @param passWord
          * @param consigneeName
          * @param consigneePhone
@@ -368,18 +401,30 @@ public class OrderPayControl {
         Observable<CommonBean<PayBean>> getPayParams(String passWord, String consigneeName, String consigneePhone);
 
 
+        /**
+         * 0微信,1银联,2线下支付 3 支付宝 4余额支付
+         *
+         * @return 0微信, 1银联, 2线下支付 3 支付宝 4余额支付
+         */
         int getPayType();
 
+        /**
+         * 是否购买保险
+         *
+         * @return true 购买保险了
+         */
         boolean isBuyInsurance();
 
         /**
          * 获取订单号
+         *
          * @return
          */
         String getOrderNum();
 
         /**
          * 获取货物金额
+         *
          * @return
          */
         String getCargoPrice();
@@ -387,9 +432,25 @@ public class OrderPayControl {
 
         /**
          * 账户余额是否充足
+         *
          * @return
          */
         boolean isHasEnoughBalance();
+
+        /**
+         * 个人账户余额是否充足
+         *
+         * @return
+         */
+        boolean isPreHasEnoughBalance();
+
+        /**
+         * 企业账户余额是否充足
+         *
+         * @return
+         */
+        boolean isComHasEnoughBalance();
+
 
         /**
          * 查询被保险人信息
@@ -398,48 +459,56 @@ public class OrderPayControl {
 
         /**
          * 储存被保险人联系信息
+         *
          * @param data
          */
         void saveInsruancUserInfor(List<OrderInsuranceInforBean> data);
 
         /**
          * 获取当前选中的被保险人信息数据
+         *
          * @return
          */
         OrderInsuranceInforBean getCurrentInsuranceUserInfor();
 
         /**
          * 储存当前被选中的被保险人信息
+         *
          * @param currentInsuranceUserInfor
          */
         void saveSelectInsuranceInfor(OrderInsuranceInforBean currentInsuranceUserInfor);
 
         /**
          * 储存当前支付类型
+         *
          * @param roleType 1 企业支付 2个人支付
          */
         void savePayRole(int roleType);
 
         /**
          * 显示是否需要申请支付
+         *
          * @return true 申请企业支付
          */
         boolean showApplyCompanyPay();
 
         /**
          * 是否需要进行实名认证
+         *
          * @return
          */
         boolean isRealNameAuthentication();
 
         /**
          * 是否需要输入支付密码
+         *
          * @return true 需要 目前仅有余额支付个人账户和企业支付有权限的时候需要显示
          */
         boolean needPassword();
 
         /**
          * 是否需要进行数据的初始化
+         *
          * @return true 需要
          */
         boolean isInit();
@@ -447,9 +516,17 @@ public class OrderPayControl {
 
         /**
          * 获取选择的支付方式
+         *
          * @return
          */
         int getPayWays();
+
+        /**
+         * 获取企业支付和余额支付方式
+         *
+         * @return
+         */
+        int getPayRole();
     }
 
 }

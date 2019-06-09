@@ -123,10 +123,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
         initView();
         initData();
         initListener();
-
         payPresent = new OrderPayPresenter(this, this);
-        onSelectYuePay();
-//        ;
 
     }
 
@@ -272,13 +269,10 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
 
             }
         } else if (i == R.id.rl_wechact) {//选择微信支付
-            changePayType(0);
             payPresent.setPayType(0);
         } else if (i == R.id.rl_ali) {//选择支付宝
-            changePayType(3);
             payPresent.setPayType(3);
         } else if (i == R.id.rl_union) {//选择银联
-            changePayType(1);
             payPresent.setPayType(1);
         } else if (i == R.id.rl_yue) {//余额支付
             payPresent.onChoiceYuePay();
@@ -296,25 +290,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
         }
     }
 
-    //更改支付方式
-    private void changePayType(int payType) {
-        cbWechat.setImageResource(payType == 0 ? R.mipmap.icon_xz_36 : R.mipmap.icon_wxz_36);
-        cbAli.setImageResource(payType == 3 ? R.mipmap.icon_xz_36 : R.mipmap.icon_wxz_36);
-        cbUnion.setImageResource(payType == 1 ? R.mipmap.icon_xz_36 : R.mipmap.icon_wxz_36);
-        cbYue.setImageResource(payType == 4 ? R.mipmap.icon_xz_36 : R.mipmap.icon_wxz_36);
-        boolean yue = payType == 4;
 
-        rg1.setEnabled(yue);
-        if (!yue){
-            rg1.clearCheck();
-        }else {
-            rbPerson.performClick();
-        }
-        rbPerson.setEnabled(yue);
-        rbCompany.setEnabled(yue);
-        rg1.setEnabled(yue);
-
-    }
 
     @Override
     public void entryClick(Dialog dialog, boolean checked, String cargoPrice) {
@@ -574,7 +550,6 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
      */
     @Override
     public void onSelectYuePay() {
-        changePayType(4);
         payPresent.setPayType(4);
     }
 
@@ -622,8 +597,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
      */
     @Override
     public void initPayWay() {
-        onSelectYuePay();
-        rbPerson.performClick();
+        payPresent.onChoiceYuePay();
     }
 
     /**
@@ -704,6 +678,40 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
     @Override
     public void showError(String msg) {
         ToastUtils.getInstance().show(msg);
+    }
+
+    /**
+     * 更改支付方式UI
+     *
+     * @param payType
+     * @param payRole
+     */
+    @Override
+    public void changePayType(int payType, int payRole) {
+        cbWechat.setImageResource(payType == 0 ? R.mipmap.icon_xz_36 : R.mipmap.icon_wxz_36);
+        cbAli.setImageResource(payType == 3 ? R.mipmap.icon_xz_36 : R.mipmap.icon_wxz_36);
+        cbUnion.setImageResource(payType == 1 ? R.mipmap.icon_xz_36 : R.mipmap.icon_wxz_36);
+        cbYue.setImageResource(payType == 4 ? R.mipmap.icon_xz_36 : R.mipmap.icon_wxz_36);
+        boolean yue = payType == 4;
+
+       if (yue){
+           rg1.setEnabled(yue);
+           rbPerson.setEnabled(yue);
+           rbCompany.setEnabled(yue);
+           rg1.clearCheck();
+            //当选择余额支付的时候
+            if (payRole==1){
+                rbCompany.performClick();
+            }else {
+                rbPerson.performClick();
+            }
+        }else {
+           rg1.clearCheck();
+           rg1.setEnabled(yue);
+           rbPerson.setEnabled(yue);
+           rbCompany.setEnabled(yue);
+        }
+
     }
 
 

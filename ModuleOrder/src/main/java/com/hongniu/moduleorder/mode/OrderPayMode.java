@@ -24,10 +24,6 @@ import io.reactivex.Observable;
  */
 public class OrderPayMode implements OrderPayControl.IOrderPayMode {
 
-    //    private boolean insurance;//是否是购买保险界面
-//    private float money;//订单金额,就是运费
-//    private String orderID;//订单id
-//    private String orderNum;//订单号
     private float insurancePrice;
     private float cargoPrice;
     private boolean buyInsurance;//是否需要购买保险
@@ -48,10 +44,7 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
     @Override
     public void saveTranDate(PayOrderInfor event) {
         this.orderInfor = event;
-//        this.insurance = insurance;
-//        this.money = money;
-//        this.orderID = orderID;
-//        this.orderNum = orderNum;
+
     }
 
     /**
@@ -257,12 +250,36 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
     @Override
     public boolean isHasEnoughBalance() {
         if (roleType == 2) {
-            return wallletInfor == null || Float.parseFloat(wallletInfor.getAvailableBalance()) >= getMoney();
+            return isPreHasEnoughBalance();
         } else if (roleType == 1) {
-            return wallletInfor == null || wallletInfor.getCompanyAvailableBalance() >= getMoney();
+            return isComHasEnoughBalance();
         } else {
             return true;
         }
+    }
+
+    /**
+     * 个人账户余额是否充足
+     *
+     * @return
+     */
+    @Override
+    public boolean isPreHasEnoughBalance() {
+        return wallletInfor == null || Float.parseFloat(wallletInfor.getAvailableBalance()) >= getMoney();
+
+    }
+
+    /**
+     * 企业账户余额是否充足,或者是申请支付
+     *
+     * @return
+     */
+    @Override
+    public boolean isComHasEnoughBalance() {
+        return wallletInfor == null
+                || wallletInfor.getCompanyAvailableBalance() >= getMoney()
+                ||wallletInfor.getType()==2;
+
     }
 
     @Override
@@ -377,6 +394,16 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
     @Override
     public int getPayWays() {
         return payWay;
+    }
+
+    /**
+     * 获取企业支付和余额支付方式
+     *
+     * @return
+     */
+    @Override
+    public int getPayRole() {
+        return roleType;
     }
 
     /**
