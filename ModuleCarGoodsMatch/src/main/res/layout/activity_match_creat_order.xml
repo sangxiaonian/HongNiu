@@ -23,10 +23,10 @@
             <com.sang.common.widget.CircularFramlayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/app_gap"
                 android:layout_marginLeft="@dimen/app_item_gap"
-                android:layout_marginRight="@dimen/app_item_gap"
                 android:layout_marginTop="@dimen/app_gap"
+                android:layout_marginRight="@dimen/app_item_gap"
+                android:layout_marginBottom="@dimen/app_gap"
 
                 app:viewradius="4dp">
 
@@ -98,9 +98,9 @@
                             style="@style/itemview"
                             android:paddingLeft="@dimen/app_item_gap"
                             app:editable="false"
+                            app:isSingleLine="false"
                             app:showline="false"
                             app:srcshow="false"
-                            app:isSingleLine="false"
                             app:textcenterhide="请选择发货地" />
 
                     </LinearLayout>
@@ -137,9 +137,9 @@
                             style="@style/itemview"
                             android:paddingLeft="@dimen/app_item_gap"
                             app:editable="false"
+                            app:isSingleLine="false"
                             app:showline="false"
                             app:srcshow="false"
-                            app:isSingleLine="false"
                             app:textcenterhide="请选择收货地" />
 
                     </LinearLayout>
@@ -160,12 +160,14 @@
                 <com.sang.common.widget.ItemView
                     android:id="@+id/item_start_car_num"
                     style="@style/itemview"
+                    app:srcLeftshow="show"
                     app:textcenterhide="请输入发车编号"
                     app:textleft="发车编号" />
 
                 <com.sang.common.widget.ItemView
                     android:id="@+id/item_cargo_name"
                     style="@style/itemview"
+                    app:srcLeftshow="show"
                     app:textcenterhide="请输入货物名称"
                     app:textleft="货物名称" />
 
@@ -173,13 +175,16 @@
                     android:id="@+id/item_size"
                     style="@style/itemview"
                     app:centerType="number"
+                    app:srcLeftshow="show"
                     app:textcenterhide="请输入货物体积"
                     app:textleft="货物体积"
                     app:textright="方" />
+
                 <com.sang.common.widget.ItemView
                     android:id="@+id/item_weight"
                     style="@style/itemview"
                     app:centerType="number"
+                    app:srcLeftshow="show"
                     app:textcenterhide="请输入货物重量"
                     app:textleft="货物重量"
                     app:textright="吨" />
@@ -188,6 +193,7 @@
                     android:id="@+id/item_price"
                     style="@style/itemview"
                     app:centerType="number"
+                    app:srcLeftshow="show"
                     app:showline="false"
                     app:textcenterhide="请输入运费"
                     app:textleft="运费"
@@ -197,13 +203,10 @@
             </LinearLayout>
 
 
-
-
-
-
         </LinearLayout>
 
     </ScrollView>
+
     <Button
         android:id="@+id/bt_entry"
         style="@style/bt_sum_red"

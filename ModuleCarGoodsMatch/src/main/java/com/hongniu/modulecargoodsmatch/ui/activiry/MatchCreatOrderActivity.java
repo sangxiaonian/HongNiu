@@ -43,7 +43,8 @@ import java.util.List;
  *
  */
 @Route(path = ArouterParams.activity_match_creat_order)
-public class MatchCreatOrderActivity extends BaseActivity implements View.OnClickListener, OnTimeSelectListener {
+public class
+MatchCreatOrderActivity extends BaseActivity implements View.OnClickListener, OnTimeSelectListener {
 
     private ItemView itemStartTime;         //发货时间
     private ItemView itemStartLocation;     //发货地点
@@ -60,7 +61,7 @@ public class MatchCreatOrderActivity extends BaseActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match_creat_order);
-        setToolbarTitle("发布车货匹配");
+        setToolbarTitle("发布货源信息");
 
         initView();
         initData();
@@ -182,7 +183,10 @@ public class MatchCreatOrderActivity extends BaseActivity implements View.OnClic
         }
 
         ;
-        if (TextUtils.isEmpty(itemCargoName.getTextCenter())) {
+        if (TextUtils.isEmpty(itemStartCarNum.getTextCenter())) {
+            showAleart(itemStartCarNum.getTextCenterHide());
+            return false;
+        } if (TextUtils.isEmpty(itemCargoName.getTextCenter())) {
             showAleart(itemCargoName.getTextCenterHide());
             return false;
         }
