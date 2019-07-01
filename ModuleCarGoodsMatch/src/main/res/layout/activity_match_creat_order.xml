@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_bg_dark"
-    android:orientation="vertical"
-    tools:context=".ui.OrderCreatOrderActivity">
+    android:orientation="vertical">
 
     <include layout="@layout/toolbar" />
 
@@ -193,13 +191,57 @@
                     android:id="@+id/item_price"
                     style="@style/itemview"
                     app:centerType="number"
+                    app:showline="true"
                     app:srcLeftshow="show"
-                    app:showline="false"
                     app:textcenterhide="请输入运费"
                     app:textleft="运费"
                     app:textright="元" />
 
+                <com.sang.common.widget.ItemView
+                    android:id="@+id/item_car_size"
+                    style="@style/itemview"
+                    app:centerType="normal"
+                    app:editable="false"
+                    app:showline="true"
+                    app:srcLeftshow="hide"
+                    app:srcshow="true"
+                    app:textcenterhide="请选择车辆长宽高"
+                    app:textleft="车辆长宽高" />
 
+                <com.sang.common.widget.ItemView
+                    android:id="@+id/item_car_type"
+                    style="@style/itemview"
+                    app:centerType="normal"
+                    app:editable="false"
+                    app:showline="true"
+                    app:srcLeftshow="hide"
+                    app:srcshow="true"
+                    app:textcenterhide="请选择所需车型"
+                    app:textleft="所需车型" />
+
+                <com.sang.common.widget.ItemView
+                    android:id="@+id/item_remark"
+                    style="@style/itemview"
+                    app:centerType="normal"
+                    app:editable="false"
+                    app:showline="false"
+                    app:srcLeftshow="hide"
+                    app:srcshow="false"
+                    app:textleft="备注" />
+
+                <EditText
+                    android:id="@+id/et_remark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="start"
+                    android:hint="请输入备注"
+                    android:minHeight="90dp"
+                    android:paddingLeft="25dp"
+                    android:paddingRight="@dimen/app_gap"
+                    android:textColor="@color/color_title_dark"
+                    android:textColorHint="@color/color_content_light"
+                    android:textSize="@dimen/text_small_15" />
             </LinearLayout>
 
 

@@ -187,8 +187,12 @@ public class ChactHelper {
     }
 
     public void disConnect() {
-        RongIM.getInstance().logout();
-        RongIM.getInstance().disconnect();
+        try {
+            RongIM.getInstance().logout();
+            RongIM.getInstance().disconnect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

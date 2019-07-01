@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
@@ -15,7 +16,6 @@ import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.event.Event;
-import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.utils.PickerDialogUtils;
 import com.hongniu.baselibrary.utils.Utils;
@@ -35,12 +35,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
- *@data  2019/5/19
- *@Author PING
- *@Description
- *
- * 创建车货匹配订单
- *
+ * @data 2019/5/19
+ * @Author PING
+ * @Description 创建车货匹配订单
  */
 @Route(path = ArouterParams.activity_match_creat_order)
 public class
@@ -54,9 +51,13 @@ MatchCreatOrderActivity extends BaseActivity implements View.OnClickListener, On
     private ItemView itemPrice;                 //运费
     private ItemView itemWeight;                 //货物重量
     private ItemView itemSize;                 //货物体积
+    private ItemView itemCarSize;                 //车辆宽高
+    private ItemView itemcarType;                 //车辆类型
+    private EditText etRemark;                 //备注
     private TimePickerView timePickerView;
     private Button btNext;
     MatchCreatGoodsSourceParams params;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,7 +80,12 @@ MatchCreatOrderActivity extends BaseActivity implements View.OnClickListener, On
         itemPrice = findViewById(R.id.item_price);
         itemWeight = findViewById(R.id.item_weight);
         itemSize = findViewById(R.id.item_size);
-        btNext=findViewById(R.id.bt_entry);
+        btNext = findViewById(R.id.bt_entry);
+        etRemark=findViewById(R.id.et_remark);
+        itemCarSize=findViewById(R.id.item_car_size);
+        itemcarType=findViewById(R.id.item_car_type);
+
+
         Calendar startDate = Calendar.getInstance();
 
         Calendar endDate = Calendar.getInstance();
@@ -94,7 +100,7 @@ MatchCreatOrderActivity extends BaseActivity implements View.OnClickListener, On
     @Override
     protected void initData() {
         super.initData();
-        params=new MatchCreatGoodsSourceParams();
+        params = new MatchCreatGoodsSourceParams();
     }
 
     @Override
@@ -114,7 +120,7 @@ MatchCreatOrderActivity extends BaseActivity implements View.OnClickListener, On
     @Override
     public void onClick(View v) {
         DeviceUtils.closeSoft(this);
-        int id=v.getId();
+        int id = v.getId();
         if (id == R.id.item_start_time) {
             timePickerView.show();
         } else if (id == R.id.item_start_loaction) {
@@ -142,27 +148,27 @@ MatchCreatOrderActivity extends BaseActivity implements View.OnClickListener, On
         } else if (id == R.id.bt_entry) {
             if (check()) {
                 HttpMatchFactory.creatGoodSour(getParams())
-                    .subscribe(new NetObserver<Object>(this) {
-                        @Override
-                        public void doOnSuccess(Object data) {
-                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
-                            ArouterUtils.getInstance().builder(ArouterParams.activity_match_my_record)
-                                    .navigation(mContext);
-                            finish();
-                        }
-                    });
+                        .subscribe(new NetObserver<Object>(this) {
+                            @Override
+                            public void doOnSuccess(Object data) {
+                                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
+                                ArouterUtils.getInstance().builder(ArouterParams.activity_match_my_record)
+                                        .navigation(mContext);
+                                finish();
+                            }
+                        });
                 ;
             }
         }
     }
 
     private MatchCreatGoodsSourceParams getParams() {
-        params.startTime=itemStartTime.getTextCenter();
-        params.departNum	=itemStartCarNum.getTextCenter();
-        params.goodName	=itemCargoName.getTextCenter();
-        params.goodVolume	=itemSize.getTextCenter();
-        params.goodWeight	=itemWeight.getTextCenter();
-        params.freightAmount	=itemPrice.getTextCenter();
+        params.startTime = itemStartTime.getTextCenter();
+        params.departNum = itemStartCarNum.getTextCenter();
+        params.goodName = itemCargoName.getTextCenter();
+        params.goodVolume = itemSize.getTextCenter();
+        params.goodWeight = itemWeight.getTextCenter();
+        params.freightAmount = itemPrice.getTextCenter();
         return params;
     }
 
@@ -182,23 +188,27 @@ MatchCreatOrderActivity extends BaseActivity implements View.OnClickListener, On
             return false;
         }
 
-        ;
+
         if (TextUtils.isEmpty(itemStartCarNum.getTextCenter())) {
             showAleart(itemStartCarNum.getTextCenterHide());
             return false;
-        } if (TextUtils.isEmpty(itemCargoName.getTextCenter())) {
+        }
+        if (TextUtils.isEmpty(itemCargoName.getTextCenter())) {
             showAleart(itemCargoName.getTextCenterHide());
             return false;
         }
-        ;    if (TextUtils.isEmpty(itemSize.getTextCenter())) {
+        ;
+        if (TextUtils.isEmpty(itemSize.getTextCenter())) {
             showAleart(itemSize.getTextCenterHide());
             return false;
         }
-        ;    if (TextUtils.isEmpty(itemWeight.getTextCenter())) {
+        ;
+        if (TextUtils.isEmpty(itemWeight.getTextCenter())) {
             showAleart(itemWeight.getTextCenterHide());
             return false;
         }
-        ;    if (TextUtils.isEmpty(itemPrice.getTextCenter())) {
+        ;
+        if (TextUtils.isEmpty(itemPrice.getTextCenter())) {
             showAleart(itemPrice.getTextCenterHide());
             return false;
         }
@@ -214,10 +224,10 @@ MatchCreatOrderActivity extends BaseActivity implements View.OnClickListener, On
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onStartEvent(Event.StartLoactionEvent startLoactionEvent) {
         if (startLoactionEvent != null && startLoactionEvent.t != null) {
-            String title= Utils.dealPioPlace(startLoactionEvent.t);
+            String title = Utils.dealPioPlace(startLoactionEvent.t);
             itemStartLocation.setTextCenter(title);
-            params.setStartPlaceY(startLoactionEvent.t.getLatLonPoint().getLatitude()+"");
-            params.setStartPlaceX(startLoactionEvent.t.getLatLonPoint().getLongitude()+"");
+            params.setStartPlaceY(startLoactionEvent.t.getLatLonPoint().getLatitude() + "");
+            params.setStartPlaceX(startLoactionEvent.t.getLatLonPoint().getLongitude() + "");
             params.setStartPlaceInfo(title);
         }
     }
@@ -226,10 +236,10 @@ MatchCreatOrderActivity extends BaseActivity implements View.OnClickListener, On
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEndEvent(Event.EndLoactionEvent endLoactionEvent) {
         if (endLoactionEvent != null && endLoactionEvent.t != null) {
-            String title= Utils.dealPioPlace(endLoactionEvent.t);
+            String title = Utils.dealPioPlace(endLoactionEvent.t);
             itemEndLocation.setTextCenter(title);
-            params.setDestinationY(endLoactionEvent.t.getLatLonPoint().getLatitude()+"");
-            params.setDestinationX(endLoactionEvent.t.getLatLonPoint().getLongitude()+"");
+            params.setDestinationY(endLoactionEvent.t.getLatLonPoint().getLatitude() + "");
+            params.setDestinationX(endLoactionEvent.t.getLatLonPoint().getLongitude() + "");
             params.setDestinationInfo(title);
         }
     }

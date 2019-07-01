@@ -133,18 +133,21 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
                         TextView tv_end_point = itemView.findViewById(R.id.tv_end_point);
                         TextView tv_goods = itemView.findViewById(R.id.tv_goods);
                         TextView tv_price = itemView.findViewById(R.id.tv_price);
+                        TextView tv_remark = itemView.findViewById(R.id.tv_remark);
                         TextView tv1 = itemView.findViewById(R.id.tv1);
 
                         tv1.setVisibility(View.GONE);
                         tv_price.setVisibility(View.GONE);
 
-                        tvTitle.setText(data.userName + "正在寻找车辆"  );
+//                        TODO 货主备注 车型尚未更改
+                        tvTitle.setText(data.userName + "正在寻找车型（"+(1*2)+"）"  );
                         tvTime.setText("需要发货时间：" + data.startTime);
                         tv_start_point.setText("发货地：" + data.startPlaceInfo);
                         tv_end_point.setText("收货地：" + data.destinationInfo);
                         tv_goods.setText("货物名：" + data.goodsSourceDetail);
+                        tv_remark.setText("货主备注：" );
                         bt_left.setText("联系货主");
-                        bt_right.setText("我要抢单");
+                        bt_right.setText("我要接单");
 
                         bt_left.setOnClickListener(new View.OnClickListener() {
                             @Override
