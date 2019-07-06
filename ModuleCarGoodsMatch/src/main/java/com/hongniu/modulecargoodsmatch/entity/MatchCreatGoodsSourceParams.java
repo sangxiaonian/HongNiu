@@ -1,5 +1,7 @@
 package com.hongniu.modulecargoodsmatch.entity;
 
+import java.security.PublicKey;
+
 /**
  * 作者： ${PING} on 2019/5/21.
  * 车货匹配创建货源信息
@@ -18,6 +20,9 @@ public class MatchCreatGoodsSourceParams {
    public String goodWeight	;//true	string	货物质量(吨)
    public String freightAmount	;//true	string	运费
    public String carTypeId	;//false	string	车辆类型(默认id为1,小货车) 车辆类型接口见文档4.9)
+   public String carLength	;//false	string	车辆长(值由13.1接口指定)
+   public String carType	;//false	string	车辆类型(值由13.1接口指定)
+   public String remark	;//false	string	备注信息
 
     public String getStartTime() {
         return startTime;

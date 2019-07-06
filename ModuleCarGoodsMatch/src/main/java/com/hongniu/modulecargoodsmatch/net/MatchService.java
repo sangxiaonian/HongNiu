@@ -5,6 +5,7 @@ import com.hongniu.baselibrary.entity.IDParams;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
 import com.hongniu.modulecargoodsmatch.entity.GoodsOwnerInforBean;
+import com.hongniu.modulecargoodsmatch.entity.MatchCarPreInforBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchChooseGrapBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchCreatGoodsSourceParams;
 import com.hongniu.modulecargoodsmatch.entity.MatchGrapDetailParams;
@@ -87,6 +88,13 @@ public interface MatchService {
      */
     @POST("hongniu/api/robOrder/choose")
     Observable<CommonBean<MatchChooseGrapBean>> chooseGrap(@Body MatchGrapDetailParams params);
+   /**
+     * 车货匹配查询车辆宽高和所需车辆类型
+     *
+     * @return
+     */
+    @POST("hongniu/api/goodsSource/preload")
+    Observable<CommonBean<MatchCarPreInforBean>> queryGoodCarInfor( );
 
 
 }

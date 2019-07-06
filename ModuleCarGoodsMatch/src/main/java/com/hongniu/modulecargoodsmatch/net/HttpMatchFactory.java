@@ -5,6 +5,7 @@ import com.hongniu.baselibrary.entity.IDParams;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
 import com.hongniu.modulecargoodsmatch.entity.GoodsOwnerInforBean;
+import com.hongniu.modulecargoodsmatch.entity.MatchCarPreInforBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchChooseGrapBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchCreatGoodsSourceParams;
 import com.hongniu.modulecargoodsmatch.entity.MatchGrapDetailParams;
@@ -137,6 +138,17 @@ public class HttpMatchFactory {
                 .compose(RxUtils.<CommonBean<MatchChooseGrapBean>>getSchedulersObservableTransformer())
         ;
 
+
+    }
+
+    /**
+     * 查询查了宽高信息
+     */
+    public static Observable<CommonBean<MatchCarPreInforBean>> queryGoodCarInfor() {
+
+        return MatchClient.getInstance().getService()
+                .queryGoodCarInfor( )
+                .compose(RxUtils.<CommonBean<MatchCarPreInforBean>>getSchedulersObservableTransformer());
 
     }
 }

@@ -1,21 +1,13 @@
 package com.hongniu.supply;
 
-import android.app.ActivityManager;
-import android.content.Context;
 import android.text.TextUtils;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.hongniu.baselibrary.base.BaseApplication;
 import com.hongniu.baselibrary.base.NetObserver;
-import com.hongniu.baselibrary.config.Param;
-import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventBean;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
-import com.hongniu.baselibrary.utils.clickevent.ItemClickEventBean;
 import com.hongniu.supply.net.HttpMainFactory;
-import com.sang.common.event.BusFactory;
-import com.sang.common.net.rx.RxUtils;
-import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.JLog;
 import com.sang.common.utils.errorcrushhelper.CrashHelper;
@@ -30,14 +22,12 @@ import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
 import java.io.File;
-import java.util.List;
 
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
-import io.rong.push.RongPushClient;
 
 import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
 
@@ -58,49 +48,22 @@ public class AppApplication extends BaseApplication {
         }
 
         ARouter.init(this); // 尽可能早，推荐在Application中初始化
-//        XMPush();
         CrashHelper.getInstance()
                 .init(this);
-        ChactHelper.getHelper()
-                .initHelper(this)
-                //未读消息监听
-                .setUnReadCountListener(new ChactControl.OnReceiveUnReadCountListener() {
-                    @Override
-                    public void onReceiveUnRead(int count) {
-                        EventBus.getDefault().postSticky(count);
-                    }
-                })
+//        ChactHelper.getHelper()
+//                .initHelper(this)
+//                //未读消息监听
+//                .setUnReadCountListener(new ChactControl.OnReceiveUnReadCountListener() {
+//                    @Override
+//                    public void onReceiveUnRead(int count) {
+//                        EventBus.getDefault().postSticky(count);
+//                    }
+//                })
         ;
 
         initData();
     }
 
-    private void XMPush() {
-//        RongPushClient.registerMiPush(application, "2882303761517871354", "5731787151354");
-        JLog.i("注册小米");
-        if (getApplicationInfo().packageName.equals(getCurProcessName(this))) {
-            MiPushClient.registerPush(this, "2882303761517871354", "5731787151354");
-            LoggerInterface newLogger = new LoggerInterface() {
-                @Override
-                public void setTag(String tag) {
-                    // ignore
-                }
-
-                @Override
-                public void log(String content, Throwable t) {
-                    JLog.d(content);
-                    t.printStackTrace();
-                }
-
-                @Override
-                public void log(String content) {
-                    JLog.d(content);
-                }
-            };
-            Logger.setLogger(this, newLogger);
-        }
-
-    }
 
 
     //上传异常情况
