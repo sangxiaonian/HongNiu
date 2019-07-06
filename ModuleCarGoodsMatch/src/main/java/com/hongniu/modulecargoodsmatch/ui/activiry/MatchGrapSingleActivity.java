@@ -51,7 +51,7 @@ import static com.hongniu.baselibrary.config.Param.isDebug;
 /**
  * @data 2019/5/12
  * @Author PING
- * @Description 我要抢单页面
+ * @Description 我要接单页面
  */
 @Route(path = ArouterParams.activity_match_grap_single)
 public class MatchGrapSingleActivity extends BaseActivity implements View.OnClickListener, PayWayView.OnPayTypeChangeListener, PayDialog.OnClickPayListener, PayPasswordKeyBord.PayKeyBordListener {
@@ -67,7 +67,7 @@ public class MatchGrapSingleActivity extends BaseActivity implements View.OnClic
     private CarInforBean infor;//选择的车辆信息
     private String id;
     PayDialog payDialog;
-    private String grapId;//抢单id
+    private String grapId;//接单id
     private PayPasswordKeyBord payPasswordKeyBord;
 
       PayParam payParam  ;
@@ -141,12 +141,13 @@ public class MatchGrapSingleActivity extends BaseActivity implements View.OnClic
         super.initData();
         changeInfor(null);
         payParam = new PayParam();
-        payDialog.setTitle("支付抢单意向金");
-        dialog.setTitle("选择抢单车辆");
+        payDialog.setTitle("支付接单保证金");
+        dialog.setTitle("选择接单车辆");
         dialog.setDescribe(null);
         String title = getIntent().getStringExtra(Param.TITLE);
         id = getIntent().getStringExtra(Param.TRAN);
-        setToolbarTitle(title + "的车货匹配");
+        String carType = getIntent().getStringExtra(Param.CAR_TYPE);
+        setToolbarTitle(String.format("%s急需%s",title,TextUtils.isEmpty(carType)?"车辆":carType));
         queryCarInfor(true);
 
     }
@@ -198,11 +199,11 @@ public class MatchGrapSingleActivity extends BaseActivity implements View.OnClic
             if (infor == null) {
                 ToastUtils.getInstance().show("请选择车辆");
             } else if (TextUtils.isEmpty(etPrice.getText().toString().trim())) {
-                ToastUtils.getInstance().show("请输入意向金");
+                ToastUtils.getInstance().show("请输入保证金");
 
             } else {
                 String price = etPrice.getText().toString().trim();
-                payDialog.setDescribe("意向金 " + price + "元");
+                payDialog.setDescribe("保证金 " + price + "元");
                 try {
                     payDialog.setPayAmount(Float.parseFloat(price));
                 } catch (NumberFormatException e) {
@@ -289,7 +290,7 @@ public class MatchGrapSingleActivity extends BaseActivity implements View.OnClic
 
         payParam.setPaybusiness(3);
         payParam.setPayPassword(null);
-        payParam.setMatchingId(grapId);//抢单ID
+        payParam.setMatchingId(grapId);//接单ID
 //        0微信支付 1银联支付 2线下支付3 支付宝支付 4余额支付 5企业支付
         int type = -1;
         switch (payType) {

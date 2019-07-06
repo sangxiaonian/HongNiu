@@ -58,7 +58,7 @@ public interface MatchService {
     Observable<CommonBean<Object>> deleteMatchGoods(@Body IDParams params);
 
     /**
-     * 抢单明细
+     * 接单明细
      *
      * @return
      */
@@ -66,7 +66,7 @@ public interface MatchService {
     Observable<CommonBean<PageBean<MatchGrapSingleDetailBean>>> queryGraoDetail(@Body MatchGrapDetailParams params);
 
     /**
-     * 支付抢单意向金，生成抢单记录
+     * 支付接单保证金，生成接单记录
      *
      * @return
      */

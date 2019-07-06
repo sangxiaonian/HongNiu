@@ -82,7 +82,7 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
                         TextView tvTitle = itemView.findViewById(R.id.tv_title);
                         TextView tvCarInfor = itemView.findViewById(R.id.tv_car_infor);
                         TextView bt = itemView.findViewById(R.id.bt);
-                        tvTitle.setText(match.driverName+" 已支付"+match.robAmount+"元意向金");
+                        tvTitle.setText(match.driverName+" 已支付"+match.robAmount+"元保证金");
                         tvCarInfor.setText("车辆信息："+match.carTypeName);
                         bt.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -163,7 +163,7 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
                         tv_end_point.setText("收货地：" + data.destinationInfo);
                         tv_goods.setText("货物名：" + data.goodsSourceDetail);
                         bt_left.setText("删除发布");
-                        bt_right.setText("抢单明细");
+                        bt_right.setText("接单明细");
 
                         bt_left.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -203,7 +203,7 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
 
     private PageBean<MatchGrapSingleDetailBean> inforBean;//所选择的订单信息
     /**
-     * 抢单明细
+     * 接单明细
      * @param data
      */
     private void queryGrapDetail(GoodsOwnerInforBean data) {
@@ -214,12 +214,12 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
                     public void doOnSuccess(PageBean<MatchGrapSingleDetailBean> data) {
 
                         if (BaseUtils.isCollectionsEmpty(data.getList())){
-                            ToastUtils.getInstance().show("暂无抢单记录");
+                            ToastUtils.getInstance().show("暂无接单记录");
                         }else {
                             singleDetail.clear();
                             singleDetail.addAll(data.getList());
-                            dialog.setTitle("抢单明细");
-                            dialog.setDescribe("共有 " + singleDetail.size() + " 人支付抢单意向金，你可选择1人完成下单");
+                            dialog.setTitle("接单明细");
+                            dialog.setDescribe("共有 " + singleDetail.size() + " 人支付接单保证金，你可选择1人完成下单");
                             listAdapter.notifyDataSetChanged();
                             dialog.show(getChildFragmentManager(), "");
                             inforBean=data;

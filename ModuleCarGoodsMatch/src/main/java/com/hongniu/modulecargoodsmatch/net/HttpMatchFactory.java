@@ -77,7 +77,7 @@ public class HttpMatchFactory {
     }
 
     /**
-     * 抢单明细查詢
+     * 接单明细查詢
      *
      * @return
      */
@@ -91,7 +91,7 @@ public class HttpMatchFactory {
     }
 
     /**
-     * 抢单明细查詢
+     * 接单明细查詢
      *
      * @return
      */
@@ -107,7 +107,7 @@ public class HttpMatchFactory {
     }
 
     /**
-     * 取消参与抢单
+     * 取消参与接单
      *
      * @return
      */

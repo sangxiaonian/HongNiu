@@ -39,7 +39,7 @@ public interface AppService {
 
 
     /**
-     * 查询抢单状态
+     * 查询接单状态
      *
      * @return
      */

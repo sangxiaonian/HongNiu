@@ -45,7 +45,7 @@ public class HttpAppFactory {
 
 
     /**
-     * 查询抢单状态
+     * 查询接单状态
      */
     public static Observable<CommonBean<GrapSingleInforBean>> queryGrapSingleInfor(String robid) {
         GrapSingleInforParams params=new GrapSingleInforParams();

@@ -1,10 +1,13 @@
 package com.hongniu.modulecargoodsmatch.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * 作者： ${PING} on 2019/5/12.
  * 车货匹配列表获取寻车信息
  */
-public class GoodsOwnerInforBean {
+public class GoodsOwnerInforBean implements Parcelable {
 
   public String id;//	true	string	货源id
   public String gsNum;//	true	string	货源单号
@@ -32,4 +35,80 @@ public class GoodsOwnerInforBean {
 
   public String goodsSourceDetail;//货物详情
   public String remark;
+
+
+  @Override
+  public int describeContents() {
+    return 0;
+  }
+
+  @Override
+  public void writeToParcel(Parcel dest, int flags) {
+    dest.writeString(this.id);
+    dest.writeString(this.gsNum);
+    dest.writeString(this.startTime);
+    dest.writeString(this.creationTime);
+    dest.writeString(this.startPlaceInfo);
+    dest.writeString(this.startPlaceX);
+    dest.writeString(this.startPlaceY);
+    dest.writeString(this.destinationInfo);
+    dest.writeString(this.destinationX);
+    dest.writeString(this.destinationY);
+    dest.writeString(this.departNum);
+    dest.writeString(this.goodName);
+    dest.writeString(this.goodVolume);
+    dest.writeString(this.goodWeight);
+    dest.writeString(this.freightAmount);
+    dest.writeString(this.carTypeId);
+    dest.writeString(this.carType);
+    dest.writeString(this.carLength);
+    dest.writeString(this.userId);
+    dest.writeString(this.userName);
+    dest.writeString(this.userMobile);
+    dest.writeString(this.status);
+    dest.writeString(this.goodsSourceDetail);
+    dest.writeString(this.remark);
+  }
+
+  public GoodsOwnerInforBean() {
+  }
+
+  protected GoodsOwnerInforBean(Parcel in) {
+    this.id = in.readString();
+    this.gsNum = in.readString();
+    this.startTime = in.readString();
+    this.creationTime = in.readString();
+    this.startPlaceInfo = in.readString();
+    this.startPlaceX = in.readString();
+    this.startPlaceY = in.readString();
+    this.destinationInfo = in.readString();
+    this.destinationX = in.readString();
+    this.destinationY = in.readString();
+    this.departNum = in.readString();
+    this.goodName = in.readString();
+    this.goodVolume = in.readString();
+    this.goodWeight = in.readString();
+    this.freightAmount = in.readString();
+    this.carTypeId = in.readString();
+    this.carType = in.readString();
+    this.carLength = in.readString();
+    this.userId = in.readString();
+    this.userName = in.readString();
+    this.userMobile = in.readString();
+    this.status = in.readString();
+    this.goodsSourceDetail = in.readString();
+    this.remark = in.readString();
+  }
+
+  public static final Parcelable.Creator<GoodsOwnerInforBean> CREATOR = new Parcelable.Creator<GoodsOwnerInforBean>() {
+    @Override
+    public GoodsOwnerInforBean createFromParcel(Parcel source) {
+      return new GoodsOwnerInforBean(source);
+    }
+
+    @Override
+    public GoodsOwnerInforBean[] newArray(int size) {
+      return new GoodsOwnerInforBean[size];
+    }
+  };
 }

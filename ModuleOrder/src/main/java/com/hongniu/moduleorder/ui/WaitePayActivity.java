@@ -51,7 +51,7 @@ public class WaitePayActivity extends BaseActivity {
     private String orderID;
     private Subscription sub;
     private boolean havePolicy;//是否购买保险，默认是false
-    private int queryType;//查询类型 0 订单支付 1支付意向金 2确认收货并支付 默认为0
+    private int queryType;//查询类型 0 订单支付 1支付保证金 2确认收货并支付 默认为0
 
 
     @Override
@@ -275,7 +275,7 @@ public class WaitePayActivity extends BaseActivity {
     }
 
     /**
-     * 查询支付意向金
+     * 查询支付保证金
      */
     private void queryMatch() {
         HttpAppFactory.queryGrapSingleInfor(orderID)

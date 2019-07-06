@@ -17,7 +17,7 @@
         <item>支付审核中</item>
         <item>审核被拒</item>
     </string-array>
-    <!--抢单价格区间-->
+    <!--接单价格区间-->
     <string-array name="match_grap_price">
         <item>0–500</item>
         <item>500–1500</item>

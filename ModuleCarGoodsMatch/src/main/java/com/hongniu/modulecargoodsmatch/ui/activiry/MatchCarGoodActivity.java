@@ -162,6 +162,7 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
                                 ArouterUtils.getInstance()
                                         .builder(ArouterParams.activity_match_grap_single)
                                         .withString(Param.TITLE, data.userName)
+                                        .withString(Param.CAR_TYPE, data.carType)
                                         .withString(Param.TRAN, data.id)
                                         .navigation(mContext);
                             }

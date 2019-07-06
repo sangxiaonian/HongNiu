@@ -44,8 +44,8 @@ public class PayParam {
      */
     private String insuranceUserId;
 
-   private Integer paybusiness	;//true	string	1订单支付2代收货款和代收运费支付3意向金支付
-   private String matchingId	;//true	long	车货匹配抢单记录id
+   private Integer paybusiness	;//true	string	1订单支付2代收货款和代收运费支付3保证金支付
+   private String matchingId	;//true	long	车货匹配接单记录id
    private Integer freightPayClass	;//true	number	运费支付类型1:现付 2:到付 3:回付
    private String receiptName	;//false	string	收货人姓名 到付时必填
    private String receiptMobile	;//false	string	收货人手机 到付时必填

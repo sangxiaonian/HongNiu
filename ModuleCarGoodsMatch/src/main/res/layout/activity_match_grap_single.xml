@@ -86,21 +86,13 @@
             android:id="@+id/tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="请输入意向金"
+            android:text="请输入保证金"
             android:textColor="@color/color_title_dark"
             android:textSize="@dimen/text_small"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_des"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="金额不限，如抢单不成功，将退回意向金"
-            android:textColor="@color/color_content_light"
-            android:textSize="@dimen/text_min_11sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv" />
+
 
         <TextView
             android:id="@+id/tv_unit"
@@ -111,7 +103,7 @@
             android:textSize="45sp"
             app:layout_constraintBottom_toBottomOf="@+id/et_price"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_des" />
+            app:layout_constraintTop_toBottomOf="@id/tv" />
 
         <EditText
             android:id="@+id/et_price"
@@ -125,7 +117,7 @@
             app:layout_constraintBottom_toBottomOf="@id/tv_unit"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_unit"
-            app:layout_constraintTop_toBottomOf="@id/tv_des" />
+            app:layout_constraintTop_toBottomOf="@id/tv" />
 
         <View
             android:id="@+id/line"
@@ -142,7 +134,7 @@
         android:id="@+id/bt_sum"
         style="@style/bt_sum_red"
         android:layout_marginTop="@dimen/app_gap"
-        android:text="支付抢单意向金"
+        android:text="支付接单保证金"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/con_withdrawal" />

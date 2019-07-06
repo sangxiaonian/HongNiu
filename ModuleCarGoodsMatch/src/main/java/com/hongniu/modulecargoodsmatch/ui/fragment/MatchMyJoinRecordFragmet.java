@@ -98,7 +98,7 @@ public class MatchMyJoinRecordFragmet extends RefrushFragmet<MatchMyJoinGoodsIno
                             @Override
                             public void onClick(View v) {
 
-                                CenterAlertBuilder builder = Utils.creatDialog(mContext, "确认取消参与抢单？", "参与一旦取消，无法恢复", "返回记录", "确定取消");
+                                CenterAlertBuilder builder = Utils.creatDialog(mContext, "确认取消参与接单？", "参与一旦取消，无法恢复", "返回记录", "确定取消");
                                 builder.setRightClickListener(new DialogControl.OnButtonRightClickListener() {
                                     @Override
                                     public void onRightClick(View view, DialogControl.ICenterDialog dialog) {

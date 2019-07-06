@@ -10,7 +10,7 @@ public class ArouterParams {
     public final static String activity_match_car_good="/ModuleCarGoodsMatch/activity_match_car_good";
 
     /**
-     * 车货匹配抢单
+     * 车货匹配接单
      */
     public final static String activity_match_grap_single="/ModuleCarGoodsMatch/activity_match_grap_single";
 
