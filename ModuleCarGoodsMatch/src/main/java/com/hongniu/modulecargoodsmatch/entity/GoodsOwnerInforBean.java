@@ -30,12 +30,16 @@ public class GoodsOwnerInforBean implements Parcelable {
   public String userId;//	true	string	创建用户id
   public String userName;//	true	string	创建用户名
   public String userMobile;//	true	string	创建用户手机号
-  public String status;//	true	string	货源状态(0生成1已预定2已失效 3完成)
+  public int status;//	true	货源状态(0待接单 1待确认 2已下单 3运输中 4已完成 5已失效)
+
 
 
   public String goodsSourceDetail;//货物详情
   public String remark;
 
+
+  public GoodsOwnerInforBean() {
+  }
 
   @Override
   public int describeContents() {
@@ -65,12 +69,9 @@ public class GoodsOwnerInforBean implements Parcelable {
     dest.writeString(this.userId);
     dest.writeString(this.userName);
     dest.writeString(this.userMobile);
-    dest.writeString(this.status);
+    dest.writeInt(this.status);
     dest.writeString(this.goodsSourceDetail);
     dest.writeString(this.remark);
-  }
-
-  public GoodsOwnerInforBean() {
   }
 
   protected GoodsOwnerInforBean(Parcel in) {
@@ -95,12 +96,12 @@ public class GoodsOwnerInforBean implements Parcelable {
     this.userId = in.readString();
     this.userName = in.readString();
     this.userMobile = in.readString();
-    this.status = in.readString();
+    this.status = in.readInt();
     this.goodsSourceDetail = in.readString();
     this.remark = in.readString();
   }
 
-  public static final Parcelable.Creator<GoodsOwnerInforBean> CREATOR = new Parcelable.Creator<GoodsOwnerInforBean>() {
+  public static final Creator<GoodsOwnerInforBean> CREATOR = new Creator<GoodsOwnerInforBean>() {
     @Override
     public GoodsOwnerInforBean createFromParcel(Parcel source) {
       return new GoodsOwnerInforBean(source);

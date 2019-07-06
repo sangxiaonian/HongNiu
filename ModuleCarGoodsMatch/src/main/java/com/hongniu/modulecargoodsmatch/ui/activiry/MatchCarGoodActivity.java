@@ -136,8 +136,9 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
                         TextView tv_price = itemView.findViewById(R.id.tv_price);
                         TextView tv_remark = itemView.findViewById(R.id.tv_remark);
                         TextView tv1 = itemView.findViewById(R.id.tv1);
-
+                        TextView tv_state = itemView.findViewById(R.id.tv_state);
                         tv1.setVisibility(View.GONE);
+                        tv_state.setVisibility(View.GONE);
                         tv_price.setVisibility(View.GONE);
 
                         tvTitle.setText(String.format("%s正在寻找%s（%s米）", data.userName==null?"":data.userName, data.carType==null?"车辆":data.carType, data.carLength==null?"0":data.carLength));

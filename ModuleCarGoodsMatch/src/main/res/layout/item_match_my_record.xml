@@ -24,12 +24,23 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/app_gap"
-            android:layout_marginEnd="@dimen/app_gap"
             android:text="男神正在寻找"
             android:textColor="@color/color_title_dark"
             android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/tv_state"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="状态"
+            android:visibility="gone"
+            android:textColor="@color/color_title_dark"
+            android:textSize="@dimen/text_small_15"
+            app:layout_constraintEnd_toEndOf="@id/line"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -40,7 +51,7 @@
             android:text="需要发货时间：2018-10-11"
             android:textColor="@color/color_order_color_6d6d6d"
             android:textSize="13sp"
-            app:layout_constraintEnd_toEndOf="@id/tv_title"
+            app:layout_constraintEnd_toEndOf="@+id/line"
             app:layout_constraintStart_toStartOf="@id/tv_title"
             app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
@@ -50,7 +61,8 @@
             android:layout_height="@dimen/line_height"
             android:layout_marginTop="12dp"
             android:background="@color/line_color"
-            app:layout_constraintEnd_toEndOf="@id/tv_title"
+            android:layout_marginEnd="@dimen/app_gap"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_title"
             app:layout_constraintTop_toBottomOf="@id/tv_time" />
 
@@ -62,8 +74,8 @@
             android:text="发货地："
             android:textColor="@color/color_title_dark"
             android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="@id/tv_title"
-            app:layout_constraintStart_toStartOf="@id/tv_title"
+            app:layout_constraintEnd_toEndOf="@+id/line"
+            app:layout_constraintStart_toStartOf="@+id/line"
             app:layout_constraintTop_toBottomOf="@id/line" />
 
         <TextView
@@ -74,8 +86,8 @@
             android:text="收货地：上海市静安区广中路788号"
             android:textColor="@color/color_title_dark"
             android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="@id/tv_title"
-            app:layout_constraintStart_toStartOf="@id/tv_title"
+            app:layout_constraintEnd_toEndOf="@+id/line"
+            app:layout_constraintStart_toStartOf="@+id/line"
             app:layout_constraintTop_toBottomOf="@id/tv_start_point" />
 
         <TextView
@@ -86,10 +98,11 @@
             android:text="货物："
             android:textColor="@color/color_title_dark"
             android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="@id/tv_title"
-            app:layout_constraintStart_toStartOf="@id/tv_title"
+            app:layout_constraintEnd_toEndOf="@+id/line"
+            app:layout_constraintStart_toStartOf="@+id/line"
             app:layout_constraintTop_toBottomOf="@id/tv_end_point" />
-      <TextView
+
+        <TextView
             android:id="@+id/tv_remark"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -97,8 +110,8 @@
             android:text="货主备注："
             android:textColor="@color/color_title_dark"
             android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="@id/tv_title"
-            app:layout_constraintStart_toStartOf="@id/tv_title"
+            app:layout_constraintEnd_toEndOf="@+id/line"
+            app:layout_constraintStart_toStartOf="@+id/line"
             app:layout_constraintTop_toBottomOf="@id/tv_goods" />
 
         <View
@@ -124,7 +137,7 @@
             android:text="我要接单"
             android:textColor="@color/white"
             android:textSize="13sp"
-            app:layout_constraintEnd_toEndOf="@id/tv_title"
+            app:layout_constraintEnd_toEndOf="@+id/line"
             app:layout_constraintTop_toBottomOf="@id/line1" />
 
         <TextView
@@ -146,23 +159,24 @@
 
         <TextView
             android:id="@+id/tv1"
-            app:layout_constraintStart_toStartOf="@id/tv_title"
-            app:layout_constraintTop_toTopOf="@id/bt_left"
-            app:layout_constraintBottom_toBottomOf="@id/bt_right"
-            android:textSize="13sp"
-            android:textColor="@color/color_title_dark"
-            android:text="保证金："
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="保证金："
+            android:textColor="@color/color_title_dark"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="@id/bt_right"
+            app:layout_constraintStart_toStartOf="@+id/line"
+            app:layout_constraintTop_toTopOf="@id/bt_left" />
+
         <TextView
             android:id="@+id/tv_price"
-            app:layout_constraintStart_toEndOf="@id/tv1"
-            app:layout_constraintTop_toTopOf="@id/bt_left"
-            app:layout_constraintBottom_toBottomOf="@id/bt_right"
-            android:textSize="16sp"
-            android:textColor="@color/color_title_dark"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_title_dark"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/bt_right"
+            app:layout_constraintStart_toEndOf="@id/tv1"
+            app:layout_constraintTop_toTopOf="@id/bt_left" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

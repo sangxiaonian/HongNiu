@@ -2,6 +2,7 @@ package com.hongniu.modulecargoodsmatch.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,19 +83,19 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
                         TextView tvTitle = itemView.findViewById(R.id.tv_title);
                         TextView tvCarInfor = itemView.findViewById(R.id.tv_car_infor);
                         TextView bt = itemView.findViewById(R.id.bt);
-                        tvTitle.setText(match.driverName+" 已支付"+match.robAmount+"元保证金");
-                        tvCarInfor.setText("车辆信息："+match.carTypeName);
+                        tvTitle.setText(match.driverName + " 已支付" + match.robAmount + "元保证金");
+                        tvCarInfor.setText("车辆信息：" + match.carTypeName);
                         bt.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 HttpMatchFactory
-                                        .choseMatch(match.goodsSourceId,match.id)
+                                        .choseMatch(match.goodsSourceId, match.id)
                                         .subscribe(new NetObserver<MatchChooseGrapBean>(MatchRecordFragmet.this) {
                                             @Override
                                             public void doOnSuccess(MatchChooseGrapBean data) {
                                                 dialog.dismiss();
 
-                                                OrderCreatParamBean bean=new OrderCreatParamBean();
+                                                OrderCreatParamBean bean = new OrderCreatParamBean();
                                                 bean.setGsNum(data.gsNum);
                                                 bean.setDeliveryDate(data.startTime);
                                                 bean.setStartPlaceInfo(data.startPlaceInfo);
@@ -153,17 +154,46 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
                         TextView tv_end_point = itemView.findViewById(R.id.tv_end_point);
                         TextView tv_goods = itemView.findViewById(R.id.tv_goods);
                         TextView tv_price = itemView.findViewById(R.id.tv_price);
+                        TextView tv_remark = itemView.findViewById(R.id.tv_remark);
                         TextView tv1 = itemView.findViewById(R.id.tv1);
+                        TextView tv_state = itemView.findViewById(R.id.tv_state);
+
+                        tv_state.setVisibility(View.VISIBLE);
                         tv1.setVisibility(View.GONE);
                         tv_price.setVisibility(View.GONE);
+                        String statusName="";
+                        switch (data.status) {
+                            case 0:
+                                statusName = "待接单";
+                                break;
+                            case 1:
+                                statusName = "待确认";
+                                break;
+                            case 2:
+                                statusName = "已下单";
+                                break;
+                            case 3:
+                                statusName = "运输中";
+                                break;
+                            case 4:
+                                statusName = "已完成";
+                                break;
+                            case 5:
+                                statusName = "已失效";
+                                break;
+                        }
 
-                        tvTitle.setText("你正在寻找车辆");
-                        tvTime.setText("需要发货时间：" + data.startTime);
-                        tv_start_point.setText("发货地：" + data.startPlaceInfo);
-                        tv_end_point.setText("收货地：" + data.destinationInfo);
-                        tv_goods.setText("货物名：" + data.goodsSourceDetail);
+                        tv_state.setText(statusName);
+                        tvTitle.setText(String.format("%s正在寻找%s（%s米）", data.userName == null ? "" : data.userName, data.carType == null ? "车辆" : data.carType, data.carLength == null ? "0" : data.carLength));
+                        tvTime.setText(String.format("需要发货时间：%s", data.startTime));
+                        tv_start_point.setText(String.format("发货地：%s", data.startPlaceInfo));
+                        tv_end_point.setText(String.format("收货地：%s", data.destinationInfo));
+                        tv_goods.setText(String.format("货物名：%s", data.goodsSourceDetail));
+                        tv_remark.setVisibility(TextUtils.isEmpty(data.remark) ? View.GONE : View.VISIBLE);
+                        tv_remark.setText(String.format("货主备注：%s", data.remark == null ? "" : data.remark));
+
                         bt_left.setText("删除发布");
-                        bt_right.setText("接单明细");
+                        bt_right.setText("接单信息");
 
                         bt_left.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -202,27 +232,29 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
     }
 
     private PageBean<MatchGrapSingleDetailBean> inforBean;//所选择的订单信息
+
     /**
      * 接单明细
+     *
      * @param data
      */
     private void queryGrapDetail(GoodsOwnerInforBean data) {
         HttpMatchFactory
-                .queryGraoDetail(data.id,1)
+                .queryGraoDetail(data.id, 1)
                 .subscribe(new NetObserver<PageBean<MatchGrapSingleDetailBean>>(this) {
                     @Override
                     public void doOnSuccess(PageBean<MatchGrapSingleDetailBean> data) {
 
-                        if (BaseUtils.isCollectionsEmpty(data.getList())){
+                        if (BaseUtils.isCollectionsEmpty(data.getList())) {
                             ToastUtils.getInstance().show("暂无接单记录");
-                        }else {
+                        } else {
                             singleDetail.clear();
                             singleDetail.addAll(data.getList());
                             dialog.setTitle("接单明细");
                             dialog.setDescribe("共有 " + singleDetail.size() + " 人支付接单保证金，你可选择1人完成下单");
                             listAdapter.notifyDataSetChanged();
                             dialog.show(getChildFragmentManager(), "");
-                            inforBean=data;
+                            inforBean = data;
                         }
 
                     }
@@ -248,6 +280,7 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
                     }
                 });
     }
+
     @Override
     public void onStart() {
         super.onStart();

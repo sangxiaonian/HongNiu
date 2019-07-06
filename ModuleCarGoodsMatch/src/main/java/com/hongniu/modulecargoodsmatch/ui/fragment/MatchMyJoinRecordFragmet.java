@@ -2,6 +2,7 @@ package com.hongniu.modulecargoodsmatch.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,7 @@ import io.reactivex.Observable;
 
 /**
  * 作者： ${PING} on 2019/5/12.
- * 我发布的车货匹配列表
+ * 我参与的车货匹配列表
  */
 @Route(path = ArouterParams.fragment_match_my_join)
 public class MatchMyJoinRecordFragmet extends RefrushFragmet<MatchMyJoinGoodsInofrBean> {
@@ -75,22 +76,53 @@ public class MatchMyJoinRecordFragmet extends RefrushFragmet<MatchMyJoinGoodsIno
                     @Override
                     public void initView(View itemView, int position, final MatchMyJoinGoodsInofrBean data) {
                         super.initView(itemView, position, data);
+                        TextView bt_left = itemView.findViewById(R.id.bt_left);
+                        TextView bt_right = itemView.findViewById(R.id.bt_right);
                         TextView tvTitle = itemView.findViewById(R.id.tv_title);
                         TextView tvTime = itemView.findViewById(R.id.tv_time);
                         TextView tv_start_point = itemView.findViewById(R.id.tv_start_point);
                         TextView tv_end_point = itemView.findViewById(R.id.tv_end_point);
                         TextView tv_goods = itemView.findViewById(R.id.tv_goods);
                         TextView tv_price = itemView.findViewById(R.id.tv_price);
+                        TextView tv_remark = itemView.findViewById(R.id.tv_remark);
                         TextView tv1 = itemView.findViewById(R.id.tv1);
-                        final TextView bt_left = itemView.findViewById(R.id.bt_left);
-                        TextView bt_right = itemView.findViewById(R.id.bt_right);
+                        TextView tv_state = itemView.findViewById(R.id.tv_state);
 
-                        tvTitle.setText("正在等待" + data.goodsUserName+"下单");
-                        tvTime.setText("需要发货时间：" + data.startTime);
-                        tv_start_point.setText("发货地：" + data.startPlaceInfo);
-                        tv_end_point.setText("收货地：" + data.destinationInfo);
-                        tv_goods.setText("货物名：" + data.goodsSourceDetail);
-                        tv_price.setText("￥ "+data.robAmount);
+                        tv_state.setVisibility(View.VISIBLE);
+                        tv1.setVisibility(View.VISIBLE);
+                        tv_price.setVisibility(View.VISIBLE);
+                        String statusName="";
+                        switch (data.status) {
+                            case 0:
+                                statusName = "待接单";
+                                break;
+                            case 1:
+                                statusName = "待确认";
+                                break;
+                            case 2:
+                                statusName = "已下单";
+                                break;
+                            case 3:
+                                statusName = "运输中";
+                                break;
+                            case 4:
+                                statusName = "已完成";
+                                break;
+                            case 5:
+                                statusName = "已失效";
+                                break;
+                        }
+
+                        tv_state.setText(statusName);
+                        tvTitle.setText(String.format("%s正在寻找%s（%s米）", data.goodsUserName == null ? "" : data.goodsUserName, data.carTypeName == null ? "车辆" : data.carTypeName, data.carLength == null ? "0" : data.carLength));
+                        tvTime.setText(String.format("需要发货时间：%s", data.startTime));
+                        tv_start_point.setText(String.format("发货地：%s", data.startPlaceInfo));
+                        tv_end_point.setText(String.format("收货地：%s", data.destinationInfo));
+                        tv_goods.setText(String.format("货物名：%s", data.goodsSourceDetail));
+                        tv_remark.setVisibility(TextUtils.isEmpty(data.remark) ? View.GONE : View.VISIBLE);
+                        tv_remark.setText(String.format("货主备注：%s", data.remark == null ? "" : data.remark));
+
+                        tv_price.setText(String.format("￥ %s", data.robAmount));
 
                         bt_left.setText("取消参与");
                         bt_right.setText("联系货主");
