@@ -1,6 +1,7 @@
 package com.hongniu.modulecargoodsmatch.ui.activiry;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -12,12 +13,11 @@ import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.base.RefrushActivity;
 import com.hongniu.baselibrary.config.Param;
-import com.hongniu.baselibrary.entity.CarTypeBean;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
-import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.modulecargoodsmatch.R;
 import com.hongniu.modulecargoodsmatch.entity.GoodsOwnerInforBean;
+import com.hongniu.modulecargoodsmatch.entity.MatchCarPreInforBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchQueryGoodsInforParams;
 import com.hongniu.modulecargoodsmatch.net.HttpMatchFactory;
 import com.sang.common.recycleview.adapter.XAdapter;
@@ -49,10 +49,10 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
     private List<String> times;
     private OrderMainPop<String> popLeft;
     private OrderMainPop<String> popRight;
-    private List<String> states;
     private int leftSelection;
     private int rightSelection;
     private MatchQueryGoodsInforParams params;
+    private List<String> states;//车辆长度预加载信息
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +61,7 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
         initView();
         initData();
         initListener();
+        querPreloadInfor();
     }
 
     @Override
@@ -86,9 +87,7 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
         params = new MatchQueryGoodsInforParams(currentPage);
         popLeft = new OrderMainPop<>(mContext);
         popRight = new OrderMainPop<>(mContext);
-         states = new ArrayList<>();
         times = Arrays.asList(getResources().getStringArray(R.array.order_main_time));
-        states = Arrays.asList(getResources().getStringArray(R.array.match_grap_price));
 
     }
 
@@ -110,9 +109,11 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
         params.pageNum = currentPage;
         return HttpMatchFactory.queryMatchGoodsInfor(params);
     }
+
     @Override
     public void onStart() {
         super.onStart();
+
         queryData(true);
     }
 
@@ -139,13 +140,13 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
                         tv1.setVisibility(View.GONE);
                         tv_price.setVisibility(View.GONE);
 
-//                        TODO 货主备注 车型尚未更改
-                        tvTitle.setText(data.userName + "正在寻找车型（"+(1*2)+"）"  );
-                        tvTime.setText("需要发货时间：" + data.startTime);
-                        tv_start_point.setText("发货地：" + data.startPlaceInfo);
-                        tv_end_point.setText("收货地：" + data.destinationInfo);
-                        tv_goods.setText("货物名：" + data.goodsSourceDetail);
-                        tv_remark.setText("货主备注：" );
+                        tvTitle.setText(String.format("%s正在寻找%s（%s米）", data.userName==null?"":data.userName, data.carType==null?"车辆":data.carType, data.carLength==null?"0":data.carLength));
+                        tvTime.setText(String.format("需要发货时间：%s", data.startTime));
+                        tv_start_point.setText(String.format("发货地：%s", data.startPlaceInfo));
+                        tv_end_point.setText(String.format("收货地：%s", data.destinationInfo));
+                        tv_goods.setText(String.format("货物名：%s", data.goodsSourceDetail));
+                        tv_remark.setVisibility(TextUtils.isEmpty(data.remark)?View.GONE:View.VISIBLE);
+                        tv_remark.setText(String.format("货主备注：%s", data.remark==null?"":data.remark));
                         bt_left.setText("联系货主");
                         bt_right.setText("我要接单");
 
@@ -160,8 +161,8 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
                             public void onClick(View v) {
                                 ArouterUtils.getInstance()
                                         .builder(ArouterParams.activity_match_grap_single)
-                                        .withString(Param.TITLE,data.userName)
-                                        .withString(Param.TRAN,data.id)
+                                        .withString(Param.TITLE, data.userName)
+                                        .withString(Param.TRAN, data.id)
                                         .navigation(mContext);
                             }
                         });
@@ -214,9 +215,13 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
             switchLeft.setSelect(false);
             switchLeft.closeSwitch();
             if (open) {
-                popRight.setSelectPosition(rightSelection);
-                popRight.upDatas(states);
-                popRight.show(view);
+                if (states==null){
+                    querPreloadInfor();
+                }else {
+                    popRight.setSelectPosition(rightSelection);
+                    popRight.upDatas(states);
+                    popRight.show(view);
+                }
             } else {
                 popRight.dismiss();
             }
@@ -263,17 +268,23 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
         } else if (target.getId() == R.id.switch_right) {
             rightSelection = position;
             String s = states.get(position);
-            String[] split = ConvertUtils.replaceChinese(s).split("–");
-            if (split.length>=2){
-                params.amountMin=split[0];
-                params.amountMax=split[1];
-            }else {
-                params.amountMin=split[0];
-                params.amountMax=null;
-            }
+            params.carType=s;
             switchRight.setTitle(s);
         }
         queryData(true, true);
         pop.dismiss();
+    }
+    private void querPreloadInfor() {
+        HttpMatchFactory
+                .queryGoodCarInfor()
+                .subscribe(new NetObserver<MatchCarPreInforBean>(this) {
+
+                    @Override
+                    public void doOnSuccess(MatchCarPreInforBean data) {
+                        states=data.getCarType();
+                        popRight.upDatas(states);
+                    }
+                })
+        ;
     }
 }

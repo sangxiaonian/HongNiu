@@ -23,6 +23,7 @@ public class GoodsOwnerInforBean {
   public String freightAmount;//	true	string	运费
   public String carTypeId;//	false	string	车辆类型id
   public String carType;//	true	string	车辆类型名称
+  public String carLength;//	true	string	车辆长度
   public String userId;//	true	string	创建用户id
   public String userName;//	true	string	创建用户名
   public String userMobile;//	true	string	创建用户手机号
@@ -30,4 +31,5 @@ public class GoodsOwnerInforBean {
 
 
   public String goodsSourceDetail;//货物详情
+  public String remark;
 }
