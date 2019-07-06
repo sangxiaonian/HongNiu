@@ -15,11 +15,8 @@ import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.base.RefrushFragmet;
 import com.hongniu.baselibrary.entity.CommonBean;
-import com.hongniu.baselibrary.entity.OrderCreatBean;
 import com.hongniu.baselibrary.entity.OrderCreatParamBean;
-import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
-import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.utils.BaseUtils;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.dialog.ListDialog;
@@ -32,7 +29,6 @@ import com.hongniu.modulecargoodsmatch.net.HttpMatchFactory;
 import com.sang.common.event.BusFactory;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
-import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
@@ -82,9 +78,20 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
                         super.initView(itemView, position, match);
                         TextView tvTitle = itemView.findViewById(R.id.tv_title);
                         TextView tvCarInfor = itemView.findViewById(R.id.tv_car_infor);
+                        TextView tv_car_number = itemView.findViewById(R.id.tv_car_number);
                         TextView bt = itemView.findViewById(R.id.bt);
-                        tvTitle.setText(match.driverName + " 已支付" + match.robAmount + "元保证金");
-                        tvCarInfor.setText("车辆信息：" + match.carTypeName);
+                        TextView btCancle = itemView.findViewById(R.id.btn_cancel);
+                        tvTitle.setText(String.format("%s 已支付%s元保证金", match.driverName, match.robAmount));
+                        tvCarInfor.setText(String.format("车辆信息：%s", match.carTypeName));
+                        tv_car_number.setText(String.format("车牌号：%s", match.carNum));
+                        btCancle.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+
+                                resetDriver(match);
+                            }
+                        });
                         bt.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -94,7 +101,6 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
                                             @Override
                                             public void doOnSuccess(MatchChooseGrapBean data) {
                                                 dialog.dismiss();
-
                                                 OrderCreatParamBean bean = new OrderCreatParamBean();
                                                 bean.setGsNum(data.gsNum);
                                                 bean.setDeliveryDate(data.startTime);
@@ -123,9 +129,37 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
                             }
                         });
                     }
-                };
+                }
+
+                        ;
             }
         });
+
+    }
+
+    private void resetDriver(final MatchGrapSingleDetailBean match) {
+        CenterAlertBuilder builder = Utils.creatDialog(getContext(), "确认删除车货匹配？", "发布一旦删除，无法恢复", "返回记录", "确定删除");
+        builder.setRightClickListener(new DialogControl.OnButtonRightClickListener() {
+            @Override
+            public void onRightClick(View view, DialogControl.ICenterDialog cdialog) {
+                cdialog.dismiss();
+                HttpMatchFactory
+                        .resetDriver(match.goodsSourceId, match.id)
+                        .subscribe(new NetObserver<Object>(MatchRecordFragmet.this) {
+                            @Override
+                            public void doOnSuccess(Object data) {
+                                dialog.dismiss();
+                                queryData(true,true);
+                            }
+
+                        });
+
+            }
+        })
+                .creatDialog(new CenterAlertDialog(getContext()))
+                .show();
+        ;
+
 
     }
 
@@ -161,7 +195,7 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
                         tv_state.setVisibility(View.VISIBLE);
                         tv1.setVisibility(View.GONE);
                         tv_price.setVisibility(View.GONE);
-                        String statusName="";
+                        String statusName = "";
                         switch (data.status) {
                             case 0:
                                 statusName = "待接单";
@@ -250,8 +284,8 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
                         } else {
                             singleDetail.clear();
                             singleDetail.addAll(data.getList());
-                            dialog.setTitle("接单明细");
-                            dialog.setDescribe("共有 " + singleDetail.size() + " 人支付接单保证金，你可选择1人完成下单");
+                            dialog.setTitle("接单信息");
+                            dialog.setDescribe("请尽快确认并下单，超时将自动取消该接单信息");
                             listAdapter.notifyDataSetChanged();
                             dialog.show(getChildFragmentManager(), "");
                             inforBean = data;

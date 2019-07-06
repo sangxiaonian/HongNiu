@@ -8,48 +8,78 @@
     android:minHeight="60dp"
     android:orientation="horizontal"
     android:paddingTop="@dimen/app_model_gap"
+
     android:paddingBottom="@dimen/app_model_gap">
 
 
     <TextView
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/tv_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="杨毅 已支付2000元保证金"
-        app:layout_constraintEnd_toStartOf="@+id/bt"
         android:textColor="@color/color_title_dark"
-        android:textSize="@dimen/text_small_15" />
-
-
+        android:textSize="@dimen/text_small_15"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <TextView
-        android:layout_width="0dp"
-        android:layout_marginTop="5dp"
         android:id="@+id/tv_car_infor"
-        android:textSize="@dimen/text_small"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:text="车辆信息：小面包车"
         android:textColor="@color/color_content_light"
+        android:textSize="@dimen/text_small"
+        app:layout_constraintEnd_toEndOf="@id/tv_title"
         app:layout_constraintStart_toStartOf="@id/tv_title"
-        app:layout_constraintEnd_toStartOf="@id/bt"
-        app:layout_constraintTop_toBottomOf="@id/tv_title"
-        android:layout_height="wrap_content" />
+        app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
     <TextView
+        android:id="@+id/tv_car_number"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="车牌号：沪A12345"
+        android:textColor="@color/color_content_light"
+        android:textSize="@dimen/text_small"
+        app:layout_constraintEnd_toEndOf="@id/tv_title"
+        app:layout_constraintStart_toStartOf="@id/tv_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_car_infor" />
+
+    <TextView
+        android:layout_marginTop="@dimen/app_gap"
         android:id="@+id/bt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/bt_radius_2_e83518_b2e83515"
-        android:textColor="@color/white"
-        android:text="我要下单"
-        android:paddingRight="9dp"
         android:paddingLeft="9dp"
         android:paddingTop="5dp"
+        android:paddingRight="9dp"
         android:paddingBottom="5dp"
+        android:text="确认并下单"
+        android:textColor="@color/white"
         android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_cancel"
+        app:layout_constraintTop_toBottomOf="@id/tv_car_number" />
+
+    <TextView
+        android:id="@+id/btn_cancel"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="@drawable/bt_radius_2_e83518_b2e83515"
+        android:paddingLeft="9dp"
+        android:paddingTop="5dp"
+        android:paddingRight="9dp"
+        android:paddingBottom="5dp"
+        android:text="重新找司机"
+        android:textColor="@color/white"
+        android:textSize="13sp"
+        app:layout_constraintStart_toEndOf="@id/bt"
+        app:layout_constraintBottom_toBottomOf="@id/bt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/bt" />
 </android.support.constraint.ConstraintLayout>

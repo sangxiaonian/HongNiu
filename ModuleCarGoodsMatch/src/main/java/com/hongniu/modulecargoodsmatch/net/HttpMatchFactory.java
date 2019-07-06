@@ -140,6 +140,24 @@ public class HttpMatchFactory {
 
 
     }
+    /**
+     * 确定下单
+     * @param goodsSourceId
+     * @param id
+     * @return
+     */
+    public static Observable<CommonBean<Object>> resetDriver(String goodsSourceId, String id) {
+        MatchGrapDetailParams params = new MatchGrapDetailParams(0);
+        params.robId = id;
+        params.goodsSourceId = goodsSourceId;
+
+       return MatchClient.getInstance().getService()
+                .resetDriver(params)
+                .compose(RxUtils.<CommonBean<Object>>getSchedulersObservableTransformer())
+        ;
+
+
+    }
 
     /**
      * 查询查了宽高信息

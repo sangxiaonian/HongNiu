@@ -228,7 +228,6 @@ public class MatchGrapSingleActivity extends BaseActivity implements View.OnClic
                    @Override
                    public void doOnSuccess(WalletDetail data) {
                        payDialog.setShowCompany(data.getType() );
-                       payDialog.setShowCompany(1);
                        payDialog.setWalletDetaile(data);
                        payDialog.show(getSupportFragmentManager(), "");
                    }

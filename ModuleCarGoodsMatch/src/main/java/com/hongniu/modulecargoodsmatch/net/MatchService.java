@@ -14,6 +14,7 @@ import com.hongniu.modulecargoodsmatch.entity.MatchMyJoinGoodsInofrBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchQueryGoodsInforParams;
 
 import io.reactivex.Observable;
+import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
@@ -88,6 +89,14 @@ public interface MatchService {
      */
     @POST("hongniu/api/robOrder/choose")
     Observable<CommonBean<MatchChooseGrapBean>> chooseGrap(@Body MatchGrapDetailParams params);
+
+    /**
+     * 重新找司机
+     *
+     * @return
+     */
+    @POST("hongniu/api/robOrder/reset")
+    Observable<CommonBean<Object>> resetDriver(@Body MatchGrapDetailParams params);
    /**
      * 车货匹配查询车辆宽高和所需车辆类型
      *

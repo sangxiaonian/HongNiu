@@ -152,8 +152,8 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
                 }
             }
             if (yueWay==1&&balance<payAmount){
-                //选择个人账户支付切个人账户余额不足
-                if (balanceCom>=payAmount||data.getType()==2){
+                //选择个人账户支付切个人账户余额不足,并且
+                if (balanceCom>=payAmount||showCompany==2){
                     //如果个人余额不足,公司余额充足，选择公司余额
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("个人账户余额不足");
                     payWay.setYue(0);
