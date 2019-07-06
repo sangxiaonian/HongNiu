@@ -20,7 +20,9 @@ public class MatchMyJoinGoodsInofrBean {
    public String startPlaceInfo;//	true	string	货源发货地址
    public String destinationInfo;//	true	string	货源收货地址
    public String goodsSourceDetail;//	true	string	货物名称
-   public String status;//	true	string	接单状态(0生成1已支付2确认3失效4已完成)
+   public int status;//	true	string	接单状态(0生成1已支付2确认3失效4已完成)
+   public String remark;//	true	string	接单状态(0生成1已支付2确认3失效4已完成)
    public String cancel;//	true	string	取消接单(0可以取消 1不能取消,2已取消)
 
+   public String carLength;
 }
