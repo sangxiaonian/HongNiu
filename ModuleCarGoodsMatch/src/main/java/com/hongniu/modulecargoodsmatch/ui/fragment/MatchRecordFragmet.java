@@ -138,8 +138,9 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
     }
 
     private void resetDriver(final MatchGrapSingleDetailBean match) {
-        CenterAlertBuilder builder = Utils.creatDialog(getContext(), "确认删除车货匹配？", "发布一旦删除，无法恢复", "返回记录", "确定删除");
-        builder.setRightClickListener(new DialogControl.OnButtonRightClickListener() {
+        CenterAlertBuilder builder = Utils.creatDialog(getContext(), "确认要重新找司机吗？", "", "取消", "确认");
+        builder.hideContent()
+                .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
             @Override
             public void onRightClick(View view, DialogControl.ICenterDialog cdialog) {
                 cdialog.dismiss();
