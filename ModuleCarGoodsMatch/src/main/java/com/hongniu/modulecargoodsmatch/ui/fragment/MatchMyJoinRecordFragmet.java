@@ -92,24 +92,19 @@ public class MatchMyJoinRecordFragmet extends RefrushFragmet<MatchMyJoinGoodsIno
                         tv1.setVisibility(View.VISIBLE);
                         tv_price.setVisibility(View.VISIBLE);
                         String statusName="";
+//                        抢单状态1(已支付)待确认2已确认3已失效4已完成)
                         switch (data.status) {
-                            case 0:
-                                statusName = "待接单";
-                                break;
                             case 1:
-                                statusName = "待确认";
+                                statusName = "(已支付)待确认";
                                 break;
                             case 2:
-                                statusName = "已下单";
+                                statusName = "已确认";
                                 break;
                             case 3:
-                                statusName = "运输中";
+                                statusName = "已失效";
                                 break;
                             case 4:
                                 statusName = "已完成";
-                                break;
-                            case 5:
-                                statusName = "已失效";
                                 break;
                         }
 
@@ -126,6 +121,8 @@ public class MatchMyJoinRecordFragmet extends RefrushFragmet<MatchMyJoinGoodsIno
 
                         bt_left.setText("取消参与");
                         bt_right.setText("联系货主");
+                        bt_left.setVisibility(data.status==1?View.VISIBLE:View.GONE);
+                        bt_right.setText((data.status==1||data.status==2)?View.VISIBLE:View.GONE);
                         bt_left.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {

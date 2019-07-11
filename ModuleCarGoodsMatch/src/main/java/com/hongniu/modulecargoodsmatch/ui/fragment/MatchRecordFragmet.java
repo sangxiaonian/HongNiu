@@ -84,11 +84,11 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
                         tvTitle.setText(String.format("%s 已支付%s元保证金", match.driverName, match.robAmount));
                         tvCarInfor.setText(String.format("车辆信息：%s", match.carTypeName));
                         tv_car_number.setText(String.format("车牌号：%s", match.carNum));
+                        btCancle.setVisibility(match.status==1?View.VISIBLE:View.GONE);
+                        bt.setVisibility(match.status==1?View.VISIBLE:View.GONE);
                         btCancle.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-
-
                                 resetDriver(match);
                             }
                         });
@@ -229,7 +229,8 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> {
 
                         bt_left.setText("删除发布");
                         bt_right.setText("接单信息");
-
+                        bt_left.setVisibility((data.status==1||data.status==0)?View.VISIBLE:View.GONE);
+                        bt_right.setVisibility((data.status!=5)?View.VISIBLE:View.GONE);
                         bt_left.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {

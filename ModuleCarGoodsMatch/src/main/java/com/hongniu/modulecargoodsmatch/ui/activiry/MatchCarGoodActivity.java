@@ -138,8 +138,30 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
                         TextView tv1 = itemView.findViewById(R.id.tv1);
                         TextView tv_state = itemView.findViewById(R.id.tv_state);
                         tv1.setVisibility(View.GONE);
-                        tv_state.setVisibility(View.GONE);
+                        tv_state.setVisibility(View.VISIBLE);
                         tv_price.setVisibility(View.GONE);
+                        String statusName = "";
+                        switch (data.status) {
+                            case 0:
+                                statusName = "待接单";
+                                break;
+                            case 1:
+                                statusName = "待确认";
+                                break;
+                            case 2:
+                                statusName = "已下单";
+                                break;
+                            case 3:
+                                statusName = "运输中";
+                                break;
+                            case 4:
+                                statusName = "已完成";
+                                break;
+                            case 5:
+                                statusName = "已失效";
+                                break;
+                        }
+                        tv_state.setText(statusName);
 
                         tvTitle.setText(String.format("%s正在寻找%s（%s米）", data.userName==null?"":data.userName, data.carType==null?"车辆":data.carType, data.carLength==null?"0":data.carLength));
                         tvTime.setText(String.format("需要发货时间：%s", data.startTime));
@@ -151,6 +173,8 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
                         bt_left.setText("联系货主");
                         bt_right.setText("我要接单");
 
+                        bt_left.setVisibility((data.status==0||data.status==1)?View.VISIBLE:View.GONE);
+                        bt_right.setVisibility((data.status==0||data.status==1)?View.VISIBLE:View.GONE);
                         bt_left.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {

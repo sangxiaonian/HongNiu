@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:text="状态"
             android:visibility="gone"
-            android:textColor="@color/color_title_dark"
+            android:textColor="@color/color_content_light"
             android:textSize="@dimen/text_small_15"
             app:layout_constraintEnd_toEndOf="@id/line"
             app:layout_constraintTop_toTopOf="parent" />

@@ -19,7 +19,7 @@ public class MatchGrapSingleDetailBean {
  public String  robAmount	;//true	string	保证金金额
  public String  payWay	;//true	string	保证金支付方式
  public String  payTime	;//true	string	保证金支付时间
- public String  status	;//true	string	接单状态(0生成1已支付2确认3失效4已完成)
+ public int  status	;//true	string	接单状态(0生成1已支付2确认3失效4已完成)
  public String  cancel	;//true	string	取消接单(0可以取消 1不能取消,2已取消)
  public String  cancelTime	;//true	string	取消接单时间
  public String  robNum	;//true	string	接单单号
