@@ -14,7 +14,9 @@ import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.base.RefrushActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.LoginBean;
 import com.hongniu.baselibrary.entity.PageBean;
+import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.modulecargoodsmatch.R;
 import com.hongniu.modulecargoodsmatch.entity.GoodsOwnerInforBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchCarPreInforBean;
@@ -23,6 +25,7 @@ import com.hongniu.modulecargoodsmatch.net.HttpMatchFactory;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.utils.ConvertUtils;
+import com.sang.common.utils.JLog;
 import com.sang.common.widget.SwitchTextLayout;
 import com.sang.common.widget.popu.BasePopu;
 import com.sang.common.widget.popu.OrderMainPop;
@@ -53,6 +56,7 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
     private int rightSelection;
     private MatchQueryGoodsInforParams params;
     private List<String> states;//车辆长度预加载信息
+    private String id;//自己的id，用于判断订单是否是自己创建的订单
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +88,8 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
     @Override
     protected void initData() {
         super.initData();
+        LoginBean loginInfor = Utils.getLoginInfor();
+          id =loginInfor==null?"": loginInfor.getId();
         params = new MatchQueryGoodsInforParams(currentPage);
         popLeft = new OrderMainPop<>(mContext);
         popRight = new OrderMainPop<>(mContext);
@@ -173,8 +179,10 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
                         bt_left.setText("联系货主");
                         bt_right.setText("我要接单");
 
+
+                        JLog.i(id+">>>>>>"+data.id+">>>"+data.userId);
                         bt_left.setVisibility((data.status==0||data.status==1)?View.VISIBLE:View.GONE);
-                        bt_right.setVisibility((data.status==0||data.status==1)?View.VISIBLE:View.GONE);
+                        bt_right.setVisibility((!id.equals(data.userId)&&(data.status==0||data.status==1))?View.VISIBLE:View.GONE);
                         bt_left.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
