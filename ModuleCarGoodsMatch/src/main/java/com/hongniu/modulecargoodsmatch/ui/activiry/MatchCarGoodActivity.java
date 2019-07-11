@@ -180,7 +180,6 @@ public class MatchCarGoodActivity extends RefrushActivity<GoodsOwnerInforBean> i
                         bt_right.setText("我要接单");
 
 
-                        JLog.i(id+">>>>>>"+data.id+">>>"+data.userId);
                         bt_left.setVisibility((data.status==0||data.status==1)?View.VISIBLE:View.GONE);
                         bt_right.setVisibility((!id.equals(data.userId)&&(data.status==0||data.status==1))?View.VISIBLE:View.GONE);
                         bt_left.setOnClickListener(new View.OnClickListener() {

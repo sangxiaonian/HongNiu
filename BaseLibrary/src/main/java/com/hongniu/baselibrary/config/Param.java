@@ -61,6 +61,10 @@ public class Param {
      * 华夏银行签约流程
      */
     public static final String HUAXIA ="https://api.hongniudai.cn/static/huaxia_process.html";
+ /**
+     * 华夏银行签约流程
+     */
+    public static final String CASHDEPOSIT ="https://api.hongniudai.cn/static/recognizance.html";
 
 
     /**

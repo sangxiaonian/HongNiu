@@ -14,12 +14,14 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParams;
+import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CarInforBean;
 import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.H5Config;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PayParam;
 import com.hongniu.baselibrary.entity.WalletDetail;
@@ -78,6 +80,15 @@ public class MatchGrapSingleActivity extends BaseActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match_grap_single);
         setToolbarTitle("XX的车货匹配");
+        setToolbarSrcRight("保证金说明");
+        setToolbarRightClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                H5Config h5Config = new H5Config("保证金说明", Param.CASHDEPOSIT, true);
+                ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5).withSerializable(Param.TRAN, h5Config).navigation(mContext);
+
+            }
+        });
         initView();
         initData();
         initListener();

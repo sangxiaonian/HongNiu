@@ -122,7 +122,7 @@ public class MatchMyJoinRecordFragmet extends RefrushFragmet<MatchMyJoinGoodsIno
                         bt_left.setText("取消参与");
                         bt_right.setText("联系货主");
                         bt_left.setVisibility(data.status==1?View.VISIBLE:View.GONE);
-                        bt_right.setText((data.status==1||data.status==2)?View.VISIBLE:View.GONE);
+                        bt_right.setVisibility((data.status==1||data.status==2)?View.VISIBLE:View.GONE);
                         bt_left.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
