@@ -81,9 +81,10 @@ public class HttpMatchFactory {
      *
      * @return
      */
-    public static Observable<CommonBean<PageBean<MatchGrapSingleDetailBean>>> queryGraoDetail(String id, int currentPage) {
+    public static Observable<CommonBean<PageBean<MatchGrapSingleDetailBean>>> queryGraoDetail(String id, int status, int currentPage) {
         MatchGrapDetailParams params = new MatchGrapDetailParams(currentPage);
         params.goodsSourceId = id;
+        params.status = status;
         return MatchClient.getInstance().getService()
                 .queryGraoDetail(params)
                 .compose(RxUtils.<CommonBean<PageBean<MatchGrapSingleDetailBean>>>getSchedulersObservableTransformer())

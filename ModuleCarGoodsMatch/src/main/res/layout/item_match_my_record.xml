@@ -138,6 +138,7 @@
             android:textColor="@color/white"
             android:textSize="13sp"
             app:layout_constraintEnd_toEndOf="@+id/line"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/line1" />
 
         <TextView
@@ -155,6 +156,7 @@
             android:textColor="@color/color_title_dark"
             android:textSize="13sp"
             app:layout_goneMarginRight="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/bt_right"
             app:layout_constraintTop_toBottomOf="@id/line1" />
 
@@ -163,11 +165,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="保证金："
+            android:layout_marginTop="@dimen/app_gap"
             android:textColor="@color/color_title_dark"
             android:textSize="13sp"
-            app:layout_constraintBottom_toBottomOf="@id/bt_right"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/line1"
             app:layout_constraintStart_toStartOf="@+id/line"
-            app:layout_constraintTop_toTopOf="@id/bt_left" />
+             />
 
         <TextView
             android:id="@+id/tv_price"
@@ -175,9 +179,12 @@
             android:layout_height="wrap_content"
             android:textColor="@color/color_title_dark"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@id/bt_right"
+            android:layout_marginTop="@dimen/app_gap"
+            android:text="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/line1"
             app:layout_constraintStart_toEndOf="@id/tv1"
-            app:layout_constraintTop_toTopOf="@id/bt_left" />
+              />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

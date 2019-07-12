@@ -72,7 +72,7 @@ public class MatchMyJoinRecordFragmet extends RefrushFragmet<MatchMyJoinGoodsIno
         return new XAdapter<MatchMyJoinGoodsInofrBean>(getContext(), datas) {
             @Override
             public BaseHolder<MatchMyJoinGoodsInofrBean> initHolder(ViewGroup parent, int viewType) {
-                return new BaseHolder<MatchMyJoinGoodsInofrBean>(getContext(), parent,R.layout.item_match_my_record) {
+                return new BaseHolder<MatchMyJoinGoodsInofrBean>(getContext(), parent, R.layout.item_match_my_record) {
                     @Override
                     public void initView(View itemView, int position, final MatchMyJoinGoodsInofrBean data) {
                         super.initView(itemView, position, data);
@@ -87,11 +87,10 @@ public class MatchMyJoinRecordFragmet extends RefrushFragmet<MatchMyJoinGoodsIno
                         TextView tv_remark = itemView.findViewById(R.id.tv_remark);
                         TextView tv1 = itemView.findViewById(R.id.tv1);
                         TextView tv_state = itemView.findViewById(R.id.tv_state);
-
                         tv_state.setVisibility(View.VISIBLE);
                         tv1.setVisibility(View.VISIBLE);
                         tv_price.setVisibility(View.VISIBLE);
-                        String statusName="";
+                        String statusName = "";
 //                        抢单状态1(已支付)待确认2已确认3已失效4已完成)
                         switch (data.status) {
                             case 1:
@@ -109,7 +108,8 @@ public class MatchMyJoinRecordFragmet extends RefrushFragmet<MatchMyJoinGoodsIno
                         }
 
                         tv_state.setText(statusName);
-                        tvTitle.setText(String.format("%s正在寻找%s（%s米）", data.goodsUserName == null ? "" : data.goodsUserName, data.carTypeName == null ? "车辆" : data.carTypeName, data.carLength == null ? "0" : data.carLength));
+                        String userName = data.goodsUserName == null ? "" : data.goodsUserName;
+                        tvTitle.setText(String.format("%s正在寻找%s%s", userName, data.carTypeName == null ? "车辆" : data.carTypeName, data.carLength == null ? "" : String.format("（%s米）", data.carLength)));
                         tvTime.setText(String.format("需要发货时间：%s", data.startTime));
                         tv_start_point.setText(String.format("发货地：%s", data.startPlaceInfo));
                         tv_end_point.setText(String.format("收货地：%s", data.destinationInfo));
@@ -121,8 +121,8 @@ public class MatchMyJoinRecordFragmet extends RefrushFragmet<MatchMyJoinGoodsIno
 
                         bt_left.setText("取消参与");
                         bt_right.setText("联系货主");
-                        bt_left.setVisibility(data.status==1?View.VISIBLE:View.GONE);
-                        bt_right.setVisibility((data.status==1||data.status==2)?View.VISIBLE:View.GONE);
+                        bt_left.setVisibility(data.status == 1 ? View.VISIBLE : View.GONE);
+                        bt_right.setVisibility((data.status == 1 || data.status == 2) ? View.VISIBLE : View.GONE);
                         bt_left.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -157,6 +157,7 @@ public class MatchMyJoinRecordFragmet extends RefrushFragmet<MatchMyJoinGoodsIno
 
     /**
      * 取消下单
+     *
      * @param data
      */
     private void cancleMatchOrder(MatchMyJoinGoodsInofrBean data) {

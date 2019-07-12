@@ -11,6 +11,7 @@ public class MatchGrapDetailParams extends PagerParambean {
     public String carId;
     public String robAmount;
     public String robId;//接单ID
+    public int status;//抢单状态(0(生成)待接单1(已支付)待确认2已确认3已失效4已完成)
 
     public MatchGrapDetailParams(int currentPage) {
         super(currentPage);

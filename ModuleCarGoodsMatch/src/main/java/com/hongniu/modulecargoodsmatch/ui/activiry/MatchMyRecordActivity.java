@@ -82,7 +82,9 @@ public class MatchMyRecordActivity extends BaseActivity implements RadioGroup.On
         if (checkedId==R.id.rb_left) {
             if (releastFragment==null){
                 releastFragment= (Fragment) ArouterUtils.getInstance().builder(ArouterParams.fragment_match_my_record).navigation();
-
+                Bundle bundle=new Bundle();
+                bundle.putInt(Param.TYPE,2);
+                releastFragment.setArguments(bundle);
                 fragmentTransaction.add(R.id.content,releastFragment);
             }else {
                 fragmentTransaction.show(releastFragment);
