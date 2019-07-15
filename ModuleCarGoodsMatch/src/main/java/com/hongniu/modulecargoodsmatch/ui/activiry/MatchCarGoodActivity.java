@@ -58,7 +58,7 @@ public class MatchCarGoodActivity extends BaseActivity implements View.OnClickLi
     private OrderMainPop<String> popRight;
     private int leftSelection;
     private int rightSelection;
-    private List<String> states;//车辆长度预加载信息
+    private List<String> states;//车辆类型预加载信息
     private Fragment fragment;//列表
     private String time;//发车时间
     private String carType;//车辆类型
@@ -216,8 +216,8 @@ public class MatchCarGoodActivity extends BaseActivity implements View.OnClickLi
             this.time = time;
         } else if (target.getId() == R.id.switch_right) {
             rightSelection = position;
-            String s = states.get(position);
-            this.carType=s;
+            String s =  states.get(position);
+            this.carType=position==0?null:states.get(position);
             switchRight.setTitle(s);
         }
         if (fragment instanceof RecordFragmentControl.OnSwitchFiltrateListener){
@@ -233,6 +233,9 @@ public class MatchCarGoodActivity extends BaseActivity implements View.OnClickLi
                     @Override
                     public void doOnSuccess(MatchCarPreInforBean data) {
                         states=data.getCarType();
+                        if (states!=null&&!states.contains("全部")){
+                            states.add(0,"全部");
+                        }
                         popRight.upDatas(states);
                     }
                 })

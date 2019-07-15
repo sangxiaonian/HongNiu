@@ -206,7 +206,7 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> impl
 
                     @Override
                     public void onClickRight(String btName, int position, GoodsOwnerInforBean data) {
-                        queryGrapDetail(data);
+                        onClickButton(position,btName,data);
                     }
                 });
                 return holder;
