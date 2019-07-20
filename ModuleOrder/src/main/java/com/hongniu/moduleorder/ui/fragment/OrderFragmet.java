@@ -15,11 +15,13 @@ import com.amap.api.navi.AmapNaviType;
 import com.google.gson.Gson;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
+import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.base.RefrushFragmet;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.H5Config;
 import com.hongniu.baselibrary.entity.OrderCreatBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
@@ -269,7 +271,10 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
     public void onCheckInsruance(OrderDetailBean orderBean) {
         if (orderBean.getPolicyInfo() != null) {
             OrderCreatBean orderCreatBean = new Gson().fromJson(orderBean.getPolicyInfo(), OrderCreatBean.class);
-            OrderUtils.scanPDf(getActivity(), orderCreatBean.getDownloadUrl());
+            H5Config h5Config = new H5Config("查看保单", orderCreatBean.getDownloadUrl(), false);
+            ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5).withSerializable(Param.TRAN, h5Config).navigation(getActivity());
+
+//            OrderUtils.scanPDf(getActivity(), orderCreatBean.getDownloadUrl());
         } else {
             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("暂无保单信息");
 
@@ -763,7 +768,7 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
         int type = -1;
         switch (payType) {
             case 1:
-                if (yueWay == 0||yueWay == 2) {
+                if (yueWay == 0 || yueWay == 2) {
                     type = 5;
                 } else {
                     type = 4;
