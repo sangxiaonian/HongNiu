@@ -13,6 +13,7 @@ import com.sang.common.utils.JLog;
 import com.sang.common.utils.errorcrushhelper.CrashHelper;
 import com.sang.thirdlibrary.chact.ChactHelper;
 import com.sang.thirdlibrary.chact.control.ChactControl;
+import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 import com.xiaomi.channel.commonutils.logger.LoggerInterface;
 import com.xiaomi.mipush.sdk.Logger;
 import com.xiaomi.mipush.sdk.MiPushClient;
@@ -39,6 +40,10 @@ public class AppApplication extends BaseApplication {
 
     @Override
     public void onCreate() {
+
+        //二维码扫描
+        ZXingLibrary.initDisplayOpinion(this);
+
         JLog.e("启动：-------------------------");
         super.onCreate();
         if (BuildConfig.DEBUG) {           // 这两行必须写在init之前，否则这些配置在init过程中将无效

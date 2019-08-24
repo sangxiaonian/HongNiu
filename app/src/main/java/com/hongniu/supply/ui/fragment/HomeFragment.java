@@ -252,7 +252,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
             case R.id.ll_search:
                 ClickEventUtils.getInstance().onClick(ClickEventParams.首页_搜索);
                 ArouterUtils.getInstance()
-                        .builder(ArouterParamOrder.activity_order_search)
+//                        .builder(ArouterParamOrder.activity_order_search)
+                        .builder(ArouterParamsApp.activity_qrcode)
                         .withSerializable(Param.TRAN, CARGO_OWNER)
                         .navigation(getContext());
 //                ToastUtils.getInstance().show("搜索");

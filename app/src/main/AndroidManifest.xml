@@ -2,15 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hongniu.supply">
 
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.permission.REORDER_TASKS" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-    <!--小米推送配置-->
-    <permission
-        android:name="com.hongniu.supply.permission.MIPUSH_RECEIVE"
-        android:protectionLevel="signature" />
-    <uses-permission android:name="com.hongniu.supply.permission.MIPUSH_RECEIVE" />
     <application
         android:name=".AppApplication"
         android:allowBackup="true"
@@ -18,9 +9,10 @@
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/AppTheme">
-        <uses-library android:name="org.apache.http.legacy" android:required="false" />
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".ui.WayBillActivity"></activity>
+        <activity android:name=".ui.QRCodeActivity" />
         <activity
             android:name=".SplashActivity"
             android:screenOrientation="portrait">
@@ -53,35 +45,49 @@
         <activity
             android:name=".ui.H5Activity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.NiuInsuranceH5Activity"></activity>
-
-
-        <!-- 小米 配置开始 < -->
-        <service
-            android:name="com.xiaomi.push.service.XMPushService"
-            android:enabled="true" />
-        <service
-            android:name="com.xiaomi.mipush.sdk.PushMessageHandler"
-            android:enabled="true"
-            android:exported="true" />
-        <service
-            android:name="com.xiaomi.mipush.sdk.MessageHandleService"
-            android:enabled="true" />
-        <service
-            android:name="com.xiaomi.push.service.XMJobService"
-            android:enabled="true"
+        <activity android:name=".ui.NiuInsuranceH5Activity" />
+        <activity
+            android:name="com.huawei.hms.activity.BridgeActivity"
+            android:configChanges="orientation|locale|screenSize|layoutDirection|fontScale"
+            android:excludeFromRecents="true"
             android:exported="false"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-        <!--注：此service必须在3.0.1版本以后（包括3.0.1版本）加入-->
+            android:hardwareAccelerated="true"
+            android:theme="@android:style/Theme.Translucent">
+            <meta-data
+                android:name="hwc-theme"
+                android:value="androidhwext:style/Theme.Emui.Translucent" />
+        </activity> <!-- 小米 配置开始 < -->
+        <activity
+            android:name="io.rong.push.platform.hms.common.HMSAgentActivity"
+            android:configChanges="orientation|locale|screenSize|layoutDirection|fontScale"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:theme="@android:style/Theme.Translucent">
+            <meta-data
+                android:name="hwc-theme"
+                android:value="androidhwext:style/Theme.Emui.Translucent" />
+        </activity>
+
+        <meta-data
+            android:name="com.huawei.hms.client.appid"
+            android:value="${HUAWEI_KEY}" />
+
+        <provider
+            android:name="com.huawei.hms.update.provider.UpdateProvider"
+            android:authorities="com.hongniu.supply.hms.update.provider"
+            android:exported="false"
+            android:grantUriPermissions="true" />
 
         <receiver
             android:name="com.xiaomi.push.service.receivers.NetworkStatusReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </receiver>
+        </receiver> <!-- 注：此service必须在3.0.1版本以后（包括3.0.1版本）加入 -->
         <receiver
             android:name="com.xiaomi.push.service.receivers.PingReceiver"
             android:exported="false">
@@ -102,47 +108,9 @@
                 <action android:name="com.xiaomi.mipush.ERROR" />
             </intent-filter>
         </receiver>
-        <!-- 小米 配置结束 < -->
-
-        <!--华为离线推送开始-->
-        <meta-data
-            android:name="com.huawei.hms.client.appid"
-            android:value="${HUAWEI_KEY}" />
-
-        <!-- BridgeActivity定义了HMS-SDK中一些跳转所需要的透明页面-->
-        <activity
-            android:name="com.huawei.hms.activity.BridgeActivity"
-            android:configChanges="orientation|locale|screenSize|layoutDirection|fontScale"
-            android:excludeFromRecents="true"
-            android:exported="false"
-            android:hardwareAccelerated="true"
-            android:theme="@android:style/Theme.Translucent">
-            <meta-data
-                android:name="hwc-theme"
-                android:value="androidhwext:style/Theme.Emui.Translucent" />
-        </activity>
-
-        <!-- 解决华为移动服务升级问题的透明界面（必须声明）-->
-        <activity
-            android:name="io.rong.push.platform.hms.common.HMSAgentActivity"
-            android:configChanges="orientation|locale|screenSize|layoutDirection|fontScale"
-            android:excludeFromRecents="true"
-            android:exported="false"
-            android:hardwareAccelerated="true"
-            android:theme="@android:style/Theme.Translucent">
-            <meta-data
-                android:name="hwc-theme"
-                android:value="androidhwext:style/Theme.Emui.Translucent" />
-        </activity>
-
-        <provider
-            android:name="com.huawei.hms.update.provider.UpdateProvider"
-            android:authorities="com.hongniu.supply.hms.update.provider"
-            android:exported="false"
-            android:grantUriPermissions="true" />
-        <!-- 第三方相关 :接收Push消息（注册、Push消息、Push连接状态）广播 -->
         <receiver android:name="io.rong.push.platform.HMSReceiver">
             <intent-filter>
+
                 <!-- 必须,用于接收token -->
                 <action android:name="com.huawei.android.push.intent.REGISTRATION" />
                 <!-- 必须，用于接收消息 -->
@@ -152,17 +120,15 @@
                 <!-- 可选，查看push通道是否连接，不查看则不需要 -->
                 <action android:name="com.huawei.intent.action.PUSH_STATE" />
             </intent-filter>
-        </receiver>
+        </receiver> <!-- 小米 配置结束 < -->
+        <!-- 华为离线推送开始 -->
         <receiver android:name="com.huawei.hms.support.api.push.PushEventReceiver">
             <intent-filter>
 
                 <!-- 接收通道发来的通知栏消息，兼容老版本Push -->
                 <action android:name="com.huawei.intent.action.PUSH" />
             </intent-filter>
-        </receiver>
-        <!--华为离线推送结束-->
-
-
+        </receiver> <!-- BridgeActivity定义了HMS-SDK中一些跳转所需要的透明页面 -->
         <receiver
             android:name=".utils.DemoNotificationReceiver"
             android:exported="true">
@@ -173,8 +139,34 @@
                 <action android:name="io.rong.push.intent.MI_MESSAGE_CLICKED" />
                 <action android:name="io.rong.push.intent.THIRD_PARTY_PUSH_STATE" />
             </intent-filter>
-        </receiver>
-
+        </receiver> <!-- 解决华为移动服务升级问题的透明界面（必须声明） -->
+        <service
+            android:name="com.xiaomi.push.service.XMPushService"
+            android:enabled="true" />
+        <service
+            android:name="com.xiaomi.mipush.sdk.PushMessageHandler"
+            android:enabled="true"
+            android:exported="true" /> <!-- 第三方相关 :接收Push消息（注册、Push消息、Push连接状态）广播 -->
+        <service
+            android:name="com.xiaomi.mipush.sdk.MessageHandleService"
+            android:enabled="true" />
+        <service
+            android:name="com.xiaomi.push.service.XMJobService"
+            android:enabled="true"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE" /> <!-- 华为离线推送结束 -->
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
     </application>
+
+    <permission
+        android:name="com.hongniu.supply.permission.MIPUSH_RECEIVE"
+        android:protectionLevel="signature" /> <!-- 小米推送配置 -->
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="com.hongniu.supply.permission.MIPUSH_RECEIVE" />
+    <uses-permission android:name="android.permission.REORDER_TASKS" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 </manifest>

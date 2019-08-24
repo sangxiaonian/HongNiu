@@ -64,8 +64,8 @@ android {
             buildConfigField "boolean", "debugMode", "true"
             //自定义一些清单文件数据，根据打包自动更改
             manifestPlaceholders = [RONG_CLOUD_APP_KEY: Debug_RONG_CLOUD_APP_KEY.toString()//融云聊天key
-                                    ,GAODE_KEY:GAODE_KEY.toString()//高德地图key
-                                    ,HUAWEI_KEY:HUAWEI_KEY.toString()//HUAWEI推送key
+                                    , GAODE_KEY       : GAODE_KEY.toString()//高德地图key
+                                    , HUAWEI_KEY      : HUAWEI_KEY.toString()//HUAWEI推送key
             ]
             signingConfig signingConfigs.release
         }
@@ -74,8 +74,8 @@ android {
             minifyEnabled false
             buildConfigField "boolean", "debugMode", "false"
             manifestPlaceholders = [RONG_CLOUD_APP_KEY: Releast_RONG_CLOUD_APP_KEY.toString()//融云聊天key
-                                    ,GAODE_KEY:GAODE_KEY.toString()//高德地图key
-                                    ,HUAWEI_KEY:HUAWEI_KEY.toString()//HUAWEI推送key
+                                    , GAODE_KEY       : GAODE_KEY.toString()//高德地图key
+                                    , HUAWEI_KEY      : HUAWEI_KEY.toString()//HUAWEI推送key
             ]
             signingConfig signingConfigs.release
             // proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'

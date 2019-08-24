@@ -30,9 +30,21 @@ public class ArouterParamsApp {
      */
     public final static String activity_main = "/app/activity_main";
     /**
+     * 扫描二维码
+     */
+    public final static String activity_qrcode = "/app/activity_qrcode";
+    /**
      * 首页Fragment
      */
     public final static String fragment_home_fragment = "/app/fragment_home_fragment";
+    /**
+     * 手动输入运单号
+     */
+    public final static String fragment_hand_input = "/app/fragment_hand_input";
+    /**
+     * 手动输入运单号
+     */
+    public final static String activity_way_bill = "/app/activity_way_bill";
 
 
 }

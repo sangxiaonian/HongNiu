@@ -72,6 +72,9 @@ public class ConvertUtils {
      */
     public static String formatTime(Date date, String format) {
 
+        if (date==null){
+            return "";
+        }
         try {
             return new SimpleDateFormat(format).format(date.getTime());
         } catch (Exception e) {
