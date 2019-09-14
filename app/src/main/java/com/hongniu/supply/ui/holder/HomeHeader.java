@@ -26,6 +26,7 @@ public class HomeHeader extends PeakHolder implements View.OnClickListener {
     ViewGroup card_policy;
     ViewGroup card_yongjin;
     ViewGroup card_etc;
+    private ViewGroup card_left;
     private View.OnClickListener onClickListener;
     private String walletInfor;
 
@@ -56,6 +57,7 @@ public class HomeHeader extends PeakHolder implements View.OnClickListener {
         ll_car = itemView.findViewById(R.id.ll_car);
         ll_driver = itemView.findViewById(R.id.ll_driver);
         card_policy = itemView.findViewById(R.id.card_policy);
+        card_left = itemView.findViewById(R.id.card_left);
         card_yongjin = itemView.findViewById(R.id.card_yongjin);
         card_etc = itemView.findViewById(R.id.card_etc);
         tv_balance.setText(walletInfor==null?"0.00":walletInfor);
@@ -68,6 +70,7 @@ public class HomeHeader extends PeakHolder implements View.OnClickListener {
         card_policy.setOnClickListener(this);
         card_yongjin.setOnClickListener(this);
         card_etc.setOnClickListener(this);
+        card_left.setOnClickListener(this);
 
         card_etc.setVisibility(Utils.showInscance()?View.VISIBLE:View.GONE);
 

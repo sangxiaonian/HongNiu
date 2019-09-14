@@ -74,7 +74,7 @@ public class QRCodeActivity extends BaseActivity implements View.OnClickListener
             if (tool != null) {
                 tool.setBackgroundColor(getResources().getColor(R.color.transparent));
             }
-            tvToolbarTitle.setTextColor(getResources().getColor(R.color.color_007aff));
+            tvToolbarTitle.setTextColor(getResources().getColor(R.color.white));
             if (imgToolbarLeft != null) {
                 imgToolbarLeft.setImageResource(R.mipmap.icon_back_w_36);
             }

@@ -154,7 +154,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                         .map(new Function<CommonBean<List<HomeADBean>>, CommonBean<List<HomeADBean>>>() {
                             @Override
                             public CommonBean<List<HomeADBean>> apply(CommonBean<List<HomeADBean>> listCommonBean) throws Exception {
-                                if (listCommonBean.getCode()==200) {
+                                if (listCommonBean.getCode() == 200) {
                                     List<HomeADBean> data = listCommonBean.getData();
                                     ads.clear();
                                     ads.addAll(data);
@@ -175,7 +175,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                             }
                         })
         )
-                .subscribe(new BaseObserver(isFirst?this:null) {
+                .subscribe(new BaseObserver(isFirst ? this : null) {
                     @Override
                     public void onNext(Object result) {
                         super.onNext(result);
@@ -194,18 +194,18 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                 });
     }
 
-    private boolean isFirst=true;
+    private boolean isFirst = true;
 
     @Override
     public void onTaskStart(Disposable d) {
-            isFirst = false;
-            super.onTaskStart(d);
+        isFirst = false;
+        super.onTaskStart(d);
 
     }
 
     @Override
     public void onTaskFail(Throwable e, String code, String msg) {
-            super.onTaskFail(e, code, msg);
+        super.onTaskFail(e, code, msg);
 
     }
 
@@ -289,6 +289,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
             case R.id.card_yongjin:
                 ArouterUtils.getInstance().builder(ArouterParamFestivity.activity_festivity_home).navigation(getContext());
                 ClickEventUtils.getInstance().onClick(ClickEventParams.首页_邀请好友);
+
+                break;
+            case R.id.card_left:
+                ToastUtils.getInstance().show("零担发货");
 
                 break;
             case R.id.card_etc:
