@@ -9,6 +9,8 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.widget.XRefreshLayout;
+import com.sang.common.net.rx.BaseObserver;
+import com.sang.common.net.rx.RxUtils;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -16,6 +18,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
@@ -134,8 +137,17 @@ public abstract class RefrushActivity<T> extends BaseActivity implements OnRefre
      * 显示没有更多数据了
      */
     public void showNoMore() {
+        Observable.just(1)
+                .delay(200, TimeUnit.MILLISECONDS)
+                .compose(RxUtils.<Integer>getSchedulersObservableTransformer())
+                .subscribe(new BaseObserver<Integer>(null) {
+                    @Override
+                    public void onNext(Integer result) {
+                        super.onNext(result);
+                        refresh.loadmoreFinished(false);
 
+                    }
 
-        refresh.loadmoreFinished(false);
+                });
     }
 }

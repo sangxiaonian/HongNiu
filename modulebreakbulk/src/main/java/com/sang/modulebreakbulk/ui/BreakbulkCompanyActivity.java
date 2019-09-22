@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.QuickContactBadge;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -16,10 +15,12 @@ import com.hongniu.modulebreakbulk.R;
 import com.sang.common.imgload.ImageLoader;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
-import com.sang.common.utils.ToastUtils;
+import com.sang.common.utils.CommonUtils;
 import com.sang.modulebreakbulk.entity.BreakbulkCompanyInfoBean;
+import com.sang.modulebreakbulk.entity.BreakbulkCompanyInfoParam;
+import com.sang.modulebreakbulk.net.HttpBreakFactory;
+import com.sang.thirdlibrary.chact.ChactHelper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -41,51 +42,45 @@ public class BreakbulkCompanyActivity extends RefrushActivity<BreakbulkCompanyIn
         initData();
         initListener();
         queryData(true);
+        refresh.hideLoadFinish();
     }
 
     @Override
     protected Observable<CommonBean<PageBean<BreakbulkCompanyInfoBean>>> getListDatas() {
-        CommonBean<PageBean<BreakbulkCompanyInfoBean>> pageBeanCommonBean = new CommonBean<PageBean<BreakbulkCompanyInfoBean>>();
-        pageBeanCommonBean.setCode(200);
-        PageBean<BreakbulkCompanyInfoBean> pageBean = new PageBean<>();
-        ArrayList<BreakbulkCompanyInfoBean> infoBeans = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            infoBeans.add(new BreakbulkCompanyInfoBean());
-        }
-        pageBean.setList(infoBeans);
-        pageBeanCommonBean.setData(pageBean);
-        return Observable.just(pageBeanCommonBean);
+        BreakbulkCompanyInfoParam breakbulkCompanyInfoParam = new BreakbulkCompanyInfoParam();
+        return HttpBreakFactory.creatGoodSour(breakbulkCompanyInfoParam);
     }
 
     @Override
     protected XAdapter<BreakbulkCompanyInfoBean> getAdapter(List<BreakbulkCompanyInfoBean> datas) {
-        return new XAdapter<BreakbulkCompanyInfoBean>(mContext,datas) {
+        return new XAdapter<BreakbulkCompanyInfoBean>(mContext, datas) {
             @Override
             public BaseHolder<BreakbulkCompanyInfoBean> initHolder(ViewGroup parent, int viewType) {
-                return new BaseHolder<BreakbulkCompanyInfoBean>(mContext,parent,R.layout.item_breakbulk_company){
+                return new BaseHolder<BreakbulkCompanyInfoBean>(mContext, parent, R.layout.item_breakbulk_company) {
                     @Override
-                    public void initView(View itemView, int position, BreakbulkCompanyInfoBean data) {
+                    public void initView(View itemView, int position, final BreakbulkCompanyInfoBean data) {
                         super.initView(itemView, position, data);
-                        ImageView img=itemView.findViewById(R.id.img);
-                        ImageView img_phone=itemView.findViewById(R.id.img_phone);
-                        ImageView img_chat=itemView.findViewById(R.id.img_chat);
-                        TextView tv_point=itemView.findViewById(R.id.tv_point);
-                        TextView tv_title=itemView.findViewById(R.id.tv_title);
-                        TextView tv_address=itemView.findViewById(R.id.tv_address);
-                        tv_title.setText("测试有限公司");
-                        tv_address.setText("宇宙中心");
-                        tv_point.setText("我心里<------->你心里");
-                        ImageLoader.getLoader().load(mContext,img,null);
+                        ImageView img = itemView.findViewById(R.id.img);
+                        ImageView img_phone = itemView.findViewById(R.id.img_phone);
+                        ImageView img_chat = itemView.findViewById(R.id.img_chat);
+                        TextView tv_point = itemView.findViewById(R.id.tv_point);
+                        TextView tv_title = itemView.findViewById(R.id.tv_title);
+                        TextView tv_address = itemView.findViewById(R.id.tv_address);
+
+                        tv_title.setText(data.getCompanyname() == null ? "" : data.getCompanyname());
+                        tv_address.setText(data.getWorkaddress() == null ? "" : data.getWorkaddress());
+                        tv_point.setText(data.getTransportLine() == null ? "" : data.getTransportLine());
+                        ImageLoader.getLoader().load(mContext, img, data.getRef1());
                         img_phone.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                ToastUtils.getInstance().show("打电话");
+                                CommonUtils.toDial(mContext, data.getContactPhone());
                             }
                         });
                         img_chat.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                ToastUtils.getInstance().show("聊天");
+                                ChactHelper.getHelper().startPriver(mContext, data.getContactPhone(), data.getCompanyname());
                             }
                         });
 
