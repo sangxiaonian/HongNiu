@@ -70,5 +70,9 @@ public class ArouterParamOrder {
      * 等待付款
      */
     public static final String activity_waite_pay = "/order/activity_waite_pay";
+    /**
+     * 保险中间过渡页面
+     */
+    public static final String activity_order_insurance_calculate = "/order/activity_order_insurance_calculate";
 
 }

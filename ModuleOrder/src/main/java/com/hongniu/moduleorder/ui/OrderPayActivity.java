@@ -30,6 +30,7 @@ import com.hongniu.baselibrary.widget.dialog.AccountDialog;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OnItemClickListener;
 import com.hongniu.moduleorder.control.OrderPayControl;
+import com.hongniu.moduleorder.entity.OrderInsuranceParam;
 import com.hongniu.moduleorder.present.OrderPayPresenter;
 import com.hongniu.moduleorder.widget.PayAleartPop;
 import com.hongniu.moduleorder.widget.dialog.BuyInsuranceDialog;
@@ -211,6 +212,15 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
             //此处判断是否是购买保险
             payPresent.saveTranDate(event,this);
             rbOnline.performClick();
+        }
+        BusFactory.getBus().removeStickyEvent(event);
+    }
+   @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(OrderInsuranceParam event) {
+        if (event != null) {
+            //此处判断是否是购买保险
+            payPresent.saveInsurance(event);
+            buyInsuranceDialog.setPrice(event.getPrice());
         }
         BusFactory.getBus().removeStickyEvent(event);
     }

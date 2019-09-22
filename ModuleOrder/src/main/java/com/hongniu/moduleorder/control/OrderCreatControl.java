@@ -4,11 +4,12 @@ import android.content.Context;
 
 import com.amap.api.services.core.PoiItem;
 import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.OrderCreatParamBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
-import com.hongniu.baselibrary.entity.OrderCreatParamBean;
 import com.hongniu.moduleorder.entity.OrderDriverPhoneBean;
+import com.hongniu.moduleorder.entity.OrderInsuranceParam;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.sang.common.net.listener.TaskControl;
 
@@ -25,6 +26,7 @@ public class OrderCreatControl {
 
         /**
          * 跟进类型更改标题
+         *
          * @param title
          * @param bt
          */
@@ -46,18 +48,21 @@ public class OrderCreatControl {
 
         /**
          * 根据数据初始化页面信息
+         *
          * @param infor
          */
         void showInfor(OrderCreatParamBean infor);
 
         /**
          * 展示所有的图片信息
+         *
          * @param imageInfors
          */
         void showImageInfors(List<LocalMedia> imageInfors);
 
         /**
          * 根据订单状态修更改item能否修改
+         *
          * @param orderState
          * @param payOnLine
          * @param insurance
@@ -66,13 +71,15 @@ public class OrderCreatControl {
 
         /**
          * 新增修改订单成功
-         * @param data
+         *  @param data
          * @param type
+         * @param insuranceInfo
          */
-        void finishSuccess(OrderDetailBean data, int type);
+        void finishSuccess(OrderDetailBean data, int type, OrderInsuranceParam insuranceInfo);
 
         /**
          * 获取当前已经更改的信息
+         *
          * @param infor
          */
         void getValue(OrderCreatParamBean infor);
@@ -80,6 +87,14 @@ public class OrderCreatControl {
         void showFinishAleart(String s);
 
         void showConsigneePop(List<OrderDriverPhoneBean> data);
+
+        /**
+         * 展示货物名称
+         *
+         * @param cargoName
+         * @param price
+         */
+        void showCargoName(String cargoName, String price);
     }
 
     public interface IOrderCreataPresenter {
@@ -100,6 +115,7 @@ public class OrderCreatControl {
 
         /**
          * 填写完数据之后点击提交按钮
+         *
          * @param result
          * @param listener
          */
@@ -116,25 +132,28 @@ public class OrderCreatControl {
         /**
          * 更改当前页面状态
          *
-         * @param type 0 创建订单 1修改订单 2车货匹配订单
+         * @param type    0 创建订单 1修改订单 2车货匹配订单
          * @param context
          */
         void changeType(int type, Context context);
 
         /**
          * 车货匹配时候，传入的数据
+         *
          * @param event
          */
         void saveInfor(OrderCreatParamBean event);
 
         /**
          * 更改起始位置
+         *
          * @param t
          */
         void changeStartPlaceInfor(PoiItem t);
 
         /**
          * 更改设置目的地
+         *
          * @param t
          */
         void changeEndPlaceInfor(PoiItem t);
@@ -146,9 +165,17 @@ public class OrderCreatControl {
 
         /**
          * 查询收货人
+         *
          * @param textCenter
          */
         void queryConsighee(String textCenter);
+
+        /**
+         * 如果是牛人保界面，储存保险信息
+         *
+         * @param insuranceParam
+         */
+        void saveInsuranceInfo(OrderInsuranceParam insuranceParam);
     }
 
     public interface IOrderCreataMode {
@@ -159,6 +186,7 @@ public class OrderCreatControl {
          * @param type 0 创建订单 1修改订单 2车货匹配订单
          */
         void saveType(int type);
+
         /**
          * 根据车牌号查询车辆
          *
@@ -175,6 +203,7 @@ public class OrderCreatControl {
 
         /**
          * 填写完数据之后点击提交按钮
+         *
          * @param images
          */
         Observable<CommonBean<OrderDetailBean>> submit(List<String> images);
@@ -200,6 +229,7 @@ public class OrderCreatControl {
 
         /**
          * 车货匹配时候，传入的数据
+         *
          * @param event
          */
         void saveInfor(OrderCreatParamBean event);
@@ -208,6 +238,19 @@ public class OrderCreatControl {
          * 获取当前类型
          */
         int getType();
+
+        /**
+         * 如果是牛人保界面，储存保险信息
+         *
+         * @param insuranceParam
+         */
+        void saveInsuranceInfo(OrderInsuranceParam insuranceParam);
+
+        /**
+         * 如果是牛人保界面，储存保险信息
+         *
+         */
+        OrderInsuranceParam getInsuranceInfo();
     }
 
 

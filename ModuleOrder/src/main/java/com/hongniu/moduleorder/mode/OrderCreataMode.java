@@ -6,6 +6,7 @@ import com.hongniu.moduleorder.control.OrderCreatControl;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
 import com.hongniu.baselibrary.entity.OrderCreatParamBean;
 import com.hongniu.moduleorder.entity.OrderDriverPhoneBean;
+import com.hongniu.moduleorder.entity.OrderInsuranceParam;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.sang.common.utils.ConvertUtils;
 
@@ -19,7 +20,8 @@ import io.reactivex.Observable;
 public class OrderCreataMode implements OrderCreatControl.IOrderCreataMode {
     private List<OrderCarNumbean> carNumbeans; //车牌号相关信息
     private OrderCreatParamBean paramBean ;
-    private int type;//0 创建订单 1修改订单 2车货匹配订单
+    private int type;//0 创建订单 1修改订单 2车货匹配订单 3 保险
+    private OrderInsuranceParam insuranceParam;
 
     public OrderCreataMode() {
         paramBean = new OrderCreatParamBean();
@@ -146,6 +148,24 @@ public class OrderCreataMode implements OrderCreatControl.IOrderCreataMode {
     @Override
     public int getType() {
         return type;
+    }
+
+    /**
+     * 如果是牛人保界面，储存保险信息
+     *
+     * @param insuranceParam
+     */
+    @Override
+    public void saveInsuranceInfo(OrderInsuranceParam insuranceParam) {
+        this.insuranceParam=insuranceParam;
+    }
+
+    /**
+     * 如果是牛人保界面，储存保险信息
+     */
+    @Override
+    public OrderInsuranceParam getInsuranceInfo() {
+        return insuranceParam;
     }
 
 

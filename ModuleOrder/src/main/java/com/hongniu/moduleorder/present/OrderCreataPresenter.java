@@ -19,6 +19,7 @@ import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderCreatControl;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
 import com.hongniu.moduleorder.entity.OrderDriverPhoneBean;
+import com.hongniu.moduleorder.entity.OrderInsuranceParam;
 import com.hongniu.moduleorder.mode.OrderCreataMode;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.sang.common.event.BusFactory;
@@ -129,6 +130,20 @@ public class OrderCreataPresenter implements OrderCreatControl.IOrderCreataPrese
 
                 });
     }
+
+    /**
+     * 如果是牛人保界面，储存保险信息
+     *
+     * @param insuranceParam
+     */
+    @Override
+    public void saveInsuranceInfo(OrderInsuranceParam insuranceParam) {
+        if (insuranceParam!=null) {
+            mode.saveInsuranceInfo(insuranceParam);
+            view.showCargoName(insuranceParam.getCargoName(),insuranceParam.getPrice());
+        }
+    }
+
     /**
      * 填写完数据之后点击提交按钮
      * @param result
@@ -143,7 +158,7 @@ public class OrderCreataPresenter implements OrderCreatControl.IOrderCreataPrese
             .subscribe(new NetObserver<OrderDetailBean>(listener) {
                 @Override
                 public void doOnSuccess(OrderDetailBean data) {
-                    view.finishSuccess(data,mode.getType());
+                    view.finishSuccess(data,mode.getType(),mode.getInsuranceInfo());
                 }
             })
         ;
@@ -184,7 +199,7 @@ public class OrderCreataPresenter implements OrderCreatControl.IOrderCreataPrese
     /**
      * 更改当前页面类型
      *
-     * @param type    0 创建订单 1修改订单 2车货匹配订单
+     * @param type    0 创建订单 1修改订单 2车货匹配订单 3完善信息
      * @param context
      */
     @Override
@@ -194,6 +209,8 @@ public class OrderCreataPresenter implements OrderCreatControl.IOrderCreataPrese
             view.changeTitle(context.getString(R.string.order_create_order), "确定下单");
         } else if (type == 1) {
             view.changeTitle(context.getString(R.string.order_change), context.getString(R.string.order_entry_change));
+        }else if (type == 3) {
+            view.changeTitle("完善信息", "确定下单");
         }
     }
 

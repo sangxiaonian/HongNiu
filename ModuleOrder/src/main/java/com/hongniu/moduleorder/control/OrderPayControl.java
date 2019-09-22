@@ -6,6 +6,7 @@ import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PayOrderInfor;
 import com.hongniu.baselibrary.entity.WalletDetail;
 import com.hongniu.baselibrary.entity.OrderInsuranceInforBean;
+import com.hongniu.moduleorder.entity.OrderInsuranceParam;
 import com.sang.common.net.listener.TaskControl;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
 
@@ -303,6 +304,12 @@ public class OrderPayControl {
          * @param payWay 付款方式 0 现付（线上支付） 1回付 2到付（线下支付）
          */
         void setPayWay(int payWay);
+
+        /**
+         * 储存已知的保险信息
+         * @param event
+         */
+        void saveInsurance(OrderInsuranceParam event);
     }
 
     public interface IOrderPayMode {

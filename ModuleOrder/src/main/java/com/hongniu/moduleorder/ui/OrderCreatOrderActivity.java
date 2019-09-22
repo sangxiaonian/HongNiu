@@ -22,7 +22,6 @@ import com.bigkoo.pickerview.view.TimePickerView;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
-import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PayOrderInfor;
@@ -40,7 +39,7 @@ import com.hongniu.moduleorder.control.OrderCreatControl;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
 import com.hongniu.baselibrary.entity.OrderCreatParamBean;
 import com.hongniu.moduleorder.entity.OrderDriverPhoneBean;
-import com.hongniu.moduleorder.net.HttpOrderFactory;
+import com.hongniu.moduleorder.entity.OrderInsuranceParam;
 import com.hongniu.moduleorder.present.OrderCreataPresenter;
 import com.hongniu.moduleorder.ui.adapter.PicAdapter;
 import com.hongniu.moduleorder.widget.CarNumPop;
@@ -52,7 +51,6 @@ import com.sang.common.recycleview.holder.PeakHolder;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.ItemView;
 import com.sang.common.widget.dialog.BottomAlertDialog;
@@ -87,9 +85,9 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
             super.handleMessage(msg);
             if (msg.what == 0) {
                 presenter.queryCarInfor(itemCarNum.getTextCenter());
-            } else if (msg.what==1){
+            } else if (msg.what == 1) {
                 presenter.queryDriverInfor(itemDriverName.getTextCenter());
-            }else if (msg.what==2){
+            } else if (msg.what == 2) {
                 presenter.queryConsighee(itemConsigneeName.getTextCenter());
             }
         }
@@ -138,6 +136,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
         initView();
         initData();
         initListener();
+        presenter.saveInsuranceInfo((OrderInsuranceParam) getIntent().getParcelableExtra(Param.TRAN));
     }
 
     @Override
@@ -324,7 +323,6 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
             });
         } else if (id == R.id.bt_entry) {
             if (check()) {
-
                 if (imageUtils.isFinish()) {
                     // 如果没有更改过图片，则不上传
                     submit();
@@ -387,7 +385,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
         paramBean.setReplaceState(select ? 1 : 0);
         if (select) {
             try {
-                paramBean.setPaymentAmount(TextUtils.isEmpty(itemCargoPrice.getTextCenter())?0:Float.parseFloat(itemCargoPrice.getTextCenter()));
+                paramBean.setPaymentAmount(TextUtils.isEmpty(itemCargoPrice.getTextCenter()) ? 0 : Float.parseFloat(itemCargoPrice.getTextCenter()));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -470,6 +468,19 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
     public void showConsigneePop(List<OrderDriverPhoneBean> data) {
         popReceive.upData(itemConsigneeName.getTextCenter(), data);
         popReceive.show(itemConsigneeName);
+    }
+
+    /**
+     * 展示货物名称
+     *
+     * @param cargoName
+     * @param price
+     */
+    @Override
+    public void showCargoName(String cargoName, String price) {
+        itemCargoName.setTextCenter(cargoName);
+        itemPrice.setTextCenter(price);
+
     }
 
     @Override
@@ -628,7 +639,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
                 OrderDriverPhoneBean bean = (OrderDriverPhoneBean) data;
                 itemDriverPhone.setTextCenter(bean.getMobile());
                 itemDriverName.setTextCenter(bean.getContact());
-            }else if (tragetView.getId() == R.id.item_consignee_name && data instanceof OrderDriverPhoneBean){
+            } else if (tragetView.getId() == R.id.item_consignee_name && data instanceof OrderDriverPhoneBean) {
                 OrderDriverPhoneBean bean = (OrderDriverPhoneBean) data;
                 itemConsigneePhone.setTextCenter(bean.getMobile());
                 itemConsigneeName.setTextCenter(bean.getContact());
@@ -677,6 +688,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
         }
         BusFactory.getBus().removeStickyEvent(event);
     }
+
 
     /**
      * 车货匹配订单下单
@@ -794,12 +806,12 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
         itemPrice.setTextCenter(paramBean.getMoney());
         itemWeight.setTextCenter(paramBean.getGoodWeight());
         itemSize.setTextCenter(paramBean.getGoodVolume());
-        itemCargoPrice.setTextCenter(paramBean.getPaymentAmount()+"");
+        itemCargoPrice.setTextCenter(paramBean.getPaymentAmount() + "");
         show = false;
         itemConsigneeName.setTextCenter(paramBean.getReceiptName());
         itemConsigneePhone.setTextCenter(paramBean.getReceiptMobile());
 
-        switchCargo(paramBean.getReplaceState()==1);
+        switchCargo(paramBean.getReplaceState() == 1);
 
         show = false;
         itemCarNum.setTextCenter(paramBean.getCarNum());
@@ -915,9 +927,10 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
      *
      * @param data
      * @param type
+     * @param insuranceInfo
      */
     @Override
-    public void finishSuccess(OrderDetailBean data, int type) {
+    public void finishSuccess(OrderDetailBean data, int type, OrderInsuranceParam insuranceInfo) {
         if (type == 1) {
             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
             finish();
@@ -936,6 +949,10 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
                     .builder(ArouterParamOrder.activity_order_pay)
                     .navigation(mContext);
             BusFactory.getBus().postSticky(new Event.UpRoale(OrderDetailItemControl.RoleState.CARGO_OWNER));
+            if ( insuranceInfo != null) {
+                //对于牛人保
+                BusFactory.getBus().postSticky(insuranceInfo);
+            }
             finish();
         }
     }

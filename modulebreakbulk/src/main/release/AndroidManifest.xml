@@ -4,7 +4,7 @@
 
     <application>
         <activity android:name="com.sang.modulebreakbulk.ui.BreakbulkConsignmentCreatActivityActivity"></activity>
-        <activity android:name="com.sang.modulebreakbulk.ui.BreakbulkConsignmentRecordActivity" />
+        <activity android:name="com.sang.modulebreakbulk.ui.BreakbulkConsignmentRecordActivity" android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
         <activity android:name="com.sang.modulebreakbulk.ui.BreakbulkCompanyDetailActivity" />
         <activity android:name="com.sang.modulebreakbulk.ui.BreakbulkCompanyActivity" />
     </application>

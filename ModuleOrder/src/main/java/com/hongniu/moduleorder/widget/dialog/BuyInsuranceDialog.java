@@ -10,6 +10,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.InputFilter;
+import android.text.PrecomputedText;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextPaint;
@@ -79,6 +80,7 @@ public class BuyInsuranceDialog extends Dialog implements TextWatcher, DialogInt
             }
         }
     };
+    private String price;
 
 
     public BuyInsuranceDialog(@NonNull Context context) {
@@ -101,7 +103,10 @@ public class BuyInsuranceDialog extends Dialog implements TextWatcher, DialogInt
             @Override
             public void run() {
                 DeviceUtils.openSoft(et_price);
-
+                if (!TextUtils.isEmpty(price)){
+                    et_price.setText(price);
+                    price=null;
+                }
             }
         });
     }
@@ -300,6 +305,10 @@ public class BuyInsuranceDialog extends Dialog implements TextWatcher, DialogInt
         handler.removeMessages(0);
         super.onDetachedFromWindow();
 
+    }
+
+    public void setPrice(String price) {
+        this.price=price;
     }
 
     public interface OnBuyInsuranceClickListener {

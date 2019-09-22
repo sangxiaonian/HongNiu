@@ -13,6 +13,7 @@ import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderPayControl;
 import com.hongniu.baselibrary.entity.OrderInsuranceInforBean;
+import com.hongniu.moduleorder.entity.OrderInsuranceParam;
 import com.hongniu.moduleorder.mode.OrderPayMode;
 import com.sang.common.net.listener.TaskControl;
 import com.sang.common.utils.ConvertUtils;
@@ -400,6 +401,26 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
         mode.savePayWays(payWay);
         switchOnlinePay();
         view.switChconsignee(mode.getPayWays());
+    }
+
+    /**
+     * 储存已知的保险信息
+     *
+     * @param event
+     */
+    @Override
+    public void saveInsurance(OrderInsuranceParam event) {
+        try {
+            mode.saveCargoPrice(TextUtils.isEmpty(event.getPrice()) ? "0" : event.getPrice(), TextUtils.isEmpty(event.getInsurancePrice()) ? "0" : event.getInsurancePrice());
+            float cargoPrices = Float.parseFloat(event.getPrice());
+            float insurancePrice = Float.parseFloat(event.getInsurancePrice());
+            //显示保险金额和货物金额
+            view.showCargoInfor("货物金额" + cargoPrices+"元", "￥" + insurancePrice);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //保费更改之后，切换支付方式显示
+        switchOnlinePay();
     }
 
     private void showInsurance(OrderInsuranceInforBean currentInsuranceUserInfor) {

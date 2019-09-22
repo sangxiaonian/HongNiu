@@ -104,7 +104,9 @@ public class NiuInsuranceH5Activity extends BaseActivity implements XWebView.OnR
      */
     @Override
     public void onClick(View v) {
-        ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_create).navigation(this);
+        ArouterUtils.getInstance()
+                .builder(ArouterParamOrder.activity_order_insurance_calculate)
+                .navigation(this);
 
     }
 }
