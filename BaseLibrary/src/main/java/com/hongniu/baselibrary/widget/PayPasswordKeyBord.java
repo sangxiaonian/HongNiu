@@ -79,6 +79,7 @@ public class PayPasswordKeyBord implements PasswordDialog.OnPasswordDialogListen
         if (payListener != null) {
             payListener.onCancle(dialog);
         } else {
+            dialog.dismiss();
             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("取消支付");
         }
 

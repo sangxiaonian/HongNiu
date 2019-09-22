@@ -51,7 +51,6 @@ public class BreakbulkConsignmentCreatActivityActivity extends BaseActivity impl
         setContentView(R.layout.activity_breakbulk_consignment_creat_activity);
         setToolbarTitle("零担发货");
         id = getIntent().getStringExtra(Param.TRAN);
-
         initView();
         initData();
         initListener();

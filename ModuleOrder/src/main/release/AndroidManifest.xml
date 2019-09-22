@@ -30,9 +30,7 @@
             android:name=".ui.OrderPayActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
-        <activity
-            android:name=".ui.OrderInsuranceActivity"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.OrderInsuranceResultActivity"
             android:screenOrientation="portrait" />
@@ -60,7 +58,9 @@
         <activity android:name=".ui.OrderScanReceiptActivity" />
         <activity android:name=".ui.OrderUpReceiptActivity" />
         <activity android:name=".ui.OrderSearchResultActivity" />
-        <activity android:name=".ui.WaitePayActivity" />
+        <activity
+            android:name=".ui.WaitePayActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity android:name=".ui.OrderQueryInsuranceActivity" />
         <activity android:name=".ui.OrderOrderActivity"></activity>
     </application>

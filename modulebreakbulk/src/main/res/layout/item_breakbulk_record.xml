@@ -14,44 +14,66 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_company"
-            style="@style/tv_item_breakbulk_record"
-            android:text="发货单位：" />
-
         <LinearLayout
             android:layout_marginTop="@dimen/app_item_gap"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical">
-
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/tv_phone"
-                style="@style/tv_item_breakbulk_record"
-                android:layout_marginTop="0dp"
-                android:text="收货人电话：" />
+                android:layout_marginLeft="@dimen/app_item_gap"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="收货人信息"
+                android:textColor="@color/color_title_dark"
+                android:textSize="@dimen/text_small_15" />
 
             <ImageView
                 android:id="@+id/img_phone"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginRight="@dimen/app_gap"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/icon_call_30" />
 
             <ImageView
+                android:visibility="gone"
                 android:id="@+id/img_chat"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/icon_maessage_30" />
 
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tv_company"
+            style="@style/tv_item_breakbulk_record"
+            android:text="收货单位：" />
+
+
+            <TextView
+                android:id="@+id/tv_phone"
+                style="@style/tv_item_breakbulk_record"
+
+                android:text="收货人电话：" />
+
+
+
+        <TextView
             android:id="@+id/tv_address"
             style="@style/tv_item_breakbulk_record"
             android:text="收货人地址：" />
+
+        <TextView
+            android:layout_marginLeft="@dimen/app_item_gap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="货物信息"
+            android:layout_marginTop="@dimen/app_item_gap"
+            android:textColor="@color/color_title_dark"
+            android:textSize="@dimen/text_small_15" />
 
         <TextView
             android:id="@+id/tv_cargo_name"
@@ -91,8 +113,8 @@
             android:background="@color/line_color" />
 
         <TextView
-            style="@style/bt_sum_red"
             android:id="@+id/bt_pay"
+            style="@style/bt_sum_red"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
@@ -100,8 +122,8 @@
             android:layout_marginRight="@dimen/app_model_gap"
             android:layout_marginBottom="@dimen/app_model_gap"
             android:padding="@dimen/app_item_gap"
-            android:textSize="@dimen/text_small"
-            android:text="支付" />
+            android:text="支付"
+            android:textSize="@dimen/text_small" />
 
     </LinearLayout>
 </com.sang.common.widget.CircularFramlayout>

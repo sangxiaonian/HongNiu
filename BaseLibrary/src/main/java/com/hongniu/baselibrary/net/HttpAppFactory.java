@@ -1,6 +1,7 @@
 package com.hongniu.baselibrary.net;
 
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.entity.BreakbulkConsignmentInfoBean;
 import com.hongniu.baselibrary.entity.CarInforBean;
 import com.hongniu.baselibrary.entity.CarTypeBean;
 import com.hongniu.baselibrary.entity.CommonBean;
@@ -48,12 +49,14 @@ public class HttpAppFactory {
      * 查询接单状态
      */
     public static Observable<CommonBean<GrapSingleInforBean>> queryGrapSingleInfor(String robid) {
-        GrapSingleInforParams params=new GrapSingleInforParams();
-        params.robId=robid;
-         return AppClient.getInstance().getService().queryGrapSingleInfor(params)
+        GrapSingleInforParams params = new GrapSingleInforParams();
+        params.robId = robid;
+        return AppClient.getInstance().getService().queryGrapSingleInfor(params)
                 .compose(RxUtils.<CommonBean<GrapSingleInforBean>>getSchedulersObservableTransformer());
 
-    }  /**
+    }
+
+    /**
      * 获取车辆类型
      */
     public static Observable<CommonBean<List<CarTypeBean>>> getCarType() {
@@ -61,6 +64,7 @@ public class HttpAppFactory {
         return AppClient.getInstance().getService().getCarType().compose(RxUtils.<CommonBean<List<CarTypeBean>>>getSchedulersObservableTransformer());
 
     }
+
     /**
      * 获取用户最近使用角色
      */
@@ -79,6 +83,19 @@ public class HttpAppFactory {
         bean.setId(orderId);
         return AppClient.getInstance().getService().queryOrder(bean)
                 .compose(RxUtils.<CommonBean<QueryOrderStateBean>>getSchedulersObservableTransformer())
+                ;
+    }
+
+    /**
+     * 查询零担订单状态
+     *
+     * @param orderId
+     */
+    public static Observable<CommonBean<BreakbulkConsignmentInfoBean>> queryBreak(String orderId) {
+        OrderIdBean bean = new OrderIdBean();
+        bean.setId(orderId);
+        return AppClient.getInstance().getService().queryBreak(bean)
+                .compose(RxUtils.<CommonBean<BreakbulkConsignmentInfoBean>>getSchedulersObservableTransformer())
                 ;
     }
 
@@ -305,7 +322,7 @@ public class HttpAppFactory {
                     .getService()
                     .payBalance(bean)
                     .compose(RxUtils.<CommonBean<PayBean>>getSchedulersObservableTransformer());
-        }  else if (payType == 5) {//企业支付
+        } else if (payType == 5) {//企业支付
             return AppClient.getInstance()
                     .getService()
                     .payBalance(bean)

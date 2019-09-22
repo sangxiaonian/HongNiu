@@ -22,6 +22,10 @@ public class PayParam {
      */
     private String orderNum;
     /**
+     * 零担发货ID
+     */
+    private String ltlGoodsId;
+    /**
      * true	string	微信appid
      */
     private String appid =PayConfig.weChatAppid;
@@ -65,6 +69,14 @@ public class PayParam {
 
     public void setPaybusiness(int paybusiness) {
         this.paybusiness = paybusiness;
+    }
+
+    public String getLtlGoodsId() {
+        return ltlGoodsId;
+    }
+
+    public void setLtlGoodsId(String ltlGoodsId) {
+        this.ltlGoodsId = ltlGoodsId;
     }
 
     public String getMatchingId() {

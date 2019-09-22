@@ -1,5 +1,6 @@
 package com.hongniu.baselibrary.net;
 
+import com.hongniu.baselibrary.entity.BreakbulkConsignmentInfoBean;
 import com.hongniu.baselibrary.entity.CarInforBean;
 import com.hongniu.baselibrary.entity.CarTypeBean;
 import com.hongniu.baselibrary.entity.CommonBean;
@@ -68,6 +69,14 @@ public interface AppService {
      */
     @POST("hongniu/api/order/queryOrder")
     Observable<CommonBean<QueryOrderStateBean>> queryOrder(@Body OrderIdBean bean);
+    /**
+     * 查询零担订单状态
+     *
+     * @param bean
+     * @return
+     */
+    @POST("hongniu/api/ltl/queryGoods")
+    Observable<CommonBean<BreakbulkConsignmentInfoBean>> queryBreak(@Body OrderIdBean bean);
 
     /**
      * 获取用户最近使用角色

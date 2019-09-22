@@ -35,6 +35,7 @@
                     android:id="@+id/item_start_phone"
                     style="@style/itemview"
                     app:srcLeftshow="show"
+                    app:centerType="phone"
                     app:textcenterhide="请输入发货人电话"
                     app:textleft="发货人电话" />
 
@@ -65,6 +66,7 @@
                     android:id="@+id/item_consignee_phone"
                     style="@style/itemview"
                     app:srcLeftshow="show"
+                    app:centerType="phone"
                     app:textcenterhide="请输入收货人电话"
                     app:textleft="收货人电话" />
 
@@ -95,6 +97,7 @@
                     android:id="@+id/item_cargo_size"
                     style="@style/itemview"
                     app:srcLeftshow="show"
+                    app:centerType="number"
                     app:textcenterhide="请输入货物体积"
                     app:textleft="货物体积" />
 
@@ -102,6 +105,7 @@
                     android:id="@+id/item_cargo_weight"
                     style="@style/itemview"
                     app:srcLeftshow="show"
+                    app:centerType="number"
                     app:textcenterhide="请输入货物重量"
                     app:textleft="货物重量" />
 
@@ -142,6 +146,7 @@
                     android:id="@+id/item_cargo_price"
                     style="@style/itemview"
                     app:srcLeftshow="show"
+                    app:centerType="number"
                     app:textcenterhide="请输入预估运费"
                     app:textleft="预估运费" />
             </LinearLayout>

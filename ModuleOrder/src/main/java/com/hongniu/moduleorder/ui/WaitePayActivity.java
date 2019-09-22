@@ -10,6 +10,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
+import com.hongniu.baselibrary.entity.BreakbulkConsignmentInfoBean;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.GrapSingleInforBean;
 import com.hongniu.baselibrary.entity.QueryOrderStateBean;
@@ -51,7 +52,7 @@ public class WaitePayActivity extends BaseActivity {
     private String orderID;
     private Subscription sub;
     private boolean havePolicy;//是否购买保险，默认是false
-    private int queryType;//查询类型 0 订单支付 1支付保证金 2确认收货并支付 默认为0
+    private int queryType;//查询类型 0 订单支付 1支付保证金 2确认收货并支付 3零担预估运费 4零担差额 默认为0
 
 
     @Override
@@ -150,6 +151,7 @@ public class WaitePayActivity extends BaseActivity {
      * @param orderId    订单ID
      * @param havePolicy 是否购买保险
      * @param isDebug    是否是测试模式
+     * @param queryType  //查询类型 0 订单支付 1支付保证金 2确认收货并支付 3零担预估运费 4零担差额
      */
     public static void startPay(Activity activity, int payType, PayBean payBean, String orderId, boolean havePolicy, boolean isDebug, int queryType) {
         Intent intent = new Intent(activity, WaitePayActivity.class);
@@ -198,6 +200,8 @@ public class WaitePayActivity extends BaseActivity {
                             queryOrder();
                         } else if (queryType == 1) {
                             queryMatch();
+                        } else if (queryType == 3 || queryType == 4) {
+                            queryBreakbulk();
                         }
 
                     }
@@ -217,6 +221,40 @@ public class WaitePayActivity extends BaseActivity {
                 });
 
 
+    }
+
+    /**
+     * 零担支付状态
+     */
+    private void queryBreakbulk() {
+        HttpAppFactory.queryBreak(orderID)
+                .subscribe(new NetObserver<BreakbulkConsignmentInfoBean>(null) {
+                    @Override
+                    public void doOnSuccess(BreakbulkConsignmentInfoBean data) {
+                        if ((queryType == 3 && data.getEstimateFareIsPay() == 1)
+                                || ((queryType == 4 && data.getActualFareIsPay() == 1))
+                        ) {
+                            BusFactory.getBus().post(new PaySucess());
+                        } else if (sub != null) {
+                            sub.request(1);
+                        }
+                    }
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        super.onSubscribe(d);
+                        disposable = d;
+                    }
+
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        if (sub != null) {
+                            sub.request(1);
+                        }
+                    }
+                });
     }
 
     /**

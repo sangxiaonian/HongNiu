@@ -97,7 +97,6 @@
     </LinearLayout>
 
 
-
     <android.support.v7.widget.CardView
         android:id="@+id/card_balance"
         style="@style/home_card"
@@ -162,7 +161,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.36" />
+                app:layout_constraintGuide_begin="38dp" />
 
         </android.support.constraint.ConstraintLayout>
 
@@ -171,111 +170,98 @@
     <android.support.v7.widget.CardView
         android:id="@+id/card_left"
         style="@style/home_card"
-        android:layout_marginRight="1dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginRight="1dp"
         app:layout_constraintEnd_toStartOf="@+id/card_policy"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/card_balance">
 
-        <android.support.constraint.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="10dp">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/app_model_gap"
+                android:paddingTop="@dimen/app_model_gap">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="零担发货"
+                    android:textColor="@color/color_title_dark"
+                    android:textSize="@dimen/text_small_14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="在线沟通快速发货"
+                    android:textColor="@color/color_content_light"
+                    android:textSize="@dimen/text_min_11sp" />
+            </LinearLayout>
 
             <ImageView
-                android:visibility="gone"
-                android:id="@+id/img_2"
-                android:layout_width="96dp"
-                android:layout_height="43dp"
-                android:src="@mipmap/icon_chpp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_width="73dp"
+                android:layout_height="73dp"
+                android:src="@mipmap/icon_yhyzyj_146" />
 
-
-            <TextView
-                android:id="@+id/tv_title_2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="26dp"
-                android:text="零担发货"
-                android:textColor="@color/color_new_light"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toStartOf="@id/img_2"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-            <TextView
-                android:id="@+id/tv_des_2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="23dp"
-                android:text="在线沟通快速发货"
-                android:textColor="@color/color_content_light"
-                android:textSize="@dimen/text_small"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/tv_title_2"
-                app:layout_constraintStart_toStartOf="@id/tv_title_2"
-                app:layout_constraintTop_toBottomOf="@id/tv_title_2" />
-        </android.support.constraint.ConstraintLayout>
-
-
+        </LinearLayout>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
         android:id="@+id/card_policy"
         style="@style/home_card"
-        android:layout_marginLeft="1dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="1dp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/card_left"
         app:layout_constraintTop_toBottomOf="@id/card_balance">
 
-        <android.support.constraint.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="10dp">
+            android:minHeight="73dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/app_model_gap"
+                android:paddingTop="@dimen/app_model_gap">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="车货匹配"
+                    android:textColor="@color/color_title_dark"
+                    android:textSize="@dimen/text_small_14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="在线发布货源信息"
+                    android:textColor="@color/color_content_light"
+                    android:textSize="@dimen/text_min_11sp" />
+            </LinearLayout>
 
             <ImageView
-                android:id="@+id/img_1"
-                android:layout_width="96dp"
-                android:layout_height="43dp"
-                android:src="@mipmap/icon_chpp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_width="43dp"
+                android:layout_height="60dp"
+                android:layout_marginBottom="@dimen/app_item_gap"
+                android:layout_marginRight="@dimen/app_item_gap"
+                android:scaleType="fitEnd"
+                android:layout_gravity="bottom"
+                android:src="@mipmap/icon_chpp" />
 
-
-            <TextView
-                android:id="@+id/tv_title_1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="26dp"
-                android:text="车货匹配"
-                android:textColor="@color/color_new_light"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toStartOf="@id/img_1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-            <TextView
-                android:id="@+id/tv_des_1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="23dp"
-                android:text="在线发布货源信息"
-                android:textColor="@color/color_content_light"
-                android:textSize="@dimen/text_small"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/tv_title_1"
-                app:layout_constraintStart_toStartOf="@id/tv_title_1"
-                app:layout_constraintTop_toBottomOf="@id/tv_title_1" />
-        </android.support.constraint.ConstraintLayout>
+        </LinearLayout>
 
 
     </android.support.v7.widget.CardView>
@@ -320,6 +306,7 @@
                     android:textColor="@color/color_content_light"
                     android:textSize="@dimen/text_min_11sp" />
             </LinearLayout>
+
             <ImageView
                 android:layout_width="73dp"
                 android:layout_height="73dp"
@@ -367,6 +354,7 @@
                     android:textColor="@color/color_content_light"
                     android:textSize="@dimen/text_min_11sp" />
             </LinearLayout>
+
             <ImageView
                 android:layout_width="73dp"
                 android:layout_height="73dp"

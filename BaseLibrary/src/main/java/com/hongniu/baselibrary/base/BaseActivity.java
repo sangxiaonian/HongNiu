@@ -343,8 +343,12 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
     }
 
     public void hideLoad() {
-        if (loading != null && loading.isShowing()) {
-            loading.dismiss();
+        try {
+            if (loading != null && loading.isShowing()) {
+                loading.dismiss();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
