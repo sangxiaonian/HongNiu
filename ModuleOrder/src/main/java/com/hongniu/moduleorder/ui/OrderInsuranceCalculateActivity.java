@@ -79,7 +79,6 @@ public class OrderInsuranceCalculateActivity extends BaseActivity implements Vie
         itemPrice = findViewById(R.id.item_cargo_price);
         itemInsurancePrice = findViewById(R.id.item_insurance_price);
         btNext = findViewById(R.id.bt_next);
-        itemInsurancePrice.setTextCenter("1");
     }
 
     @Override

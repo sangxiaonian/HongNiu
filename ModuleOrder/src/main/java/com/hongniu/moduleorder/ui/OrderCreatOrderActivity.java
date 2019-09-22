@@ -480,6 +480,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
     public void showCargoName(String cargoName, String price) {
         itemCargoName.setTextCenter(cargoName);
         itemPrice.setTextCenter(price);
+        setToolbarTitle("完善信息");
 
     }
 
