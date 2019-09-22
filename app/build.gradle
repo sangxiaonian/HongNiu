@@ -98,6 +98,8 @@ dependencies {
         implementation project(':ModuleFinance')
         implementation project(':ModuleFestivity')
         implementation project(path: ':ModuleCarGoodsMatch')
+//        implementation project(path: 'modulebreakbulk')
+        implementation project(':ModuleBreakbulk')
 
     } else {
         implementation project(':BaseLibrary')

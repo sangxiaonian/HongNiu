@@ -5,12 +5,10 @@ if (IsBuildMudle.toBoolean()) {
 }
 
 android {
-
-
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
         if (IsBuildMudle.toBoolean()) {
-            applicationId "com.hongniu.modulelogin"
+            applicationId "com.sang.modulebreakbulk"
         }
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
@@ -27,13 +25,6 @@ android {
 
     }
 
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
     sourceSets {
         main {
             if (IsBuildMudle.toBoolean()) {
@@ -41,6 +32,14 @@ android {
             } else {
                 manifest.srcFile 'src/main/release/AndroidManifest.xml'
             }
+        }
+    }
+
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 

@@ -15,6 +15,7 @@ import com.hongniu.baselibrary.arouter.ArouterParamFestivity;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParams;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
+import com.hongniu.baselibrary.arouter.ArouterParamsBreakbulk;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseFragment;
@@ -292,8 +293,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
 
                 break;
             case R.id.card_left:
-                ToastUtils.getInstance().show("零担发货");
-
+                ArouterUtils.getInstance().builder( ArouterParamsBreakbulk.activity_breakbulk_company).navigation(getContext());
                 break;
             case R.id.card_etc:
                 ClickEventUtils.getInstance().onClick(ClickEventParams.首页_牛人保);

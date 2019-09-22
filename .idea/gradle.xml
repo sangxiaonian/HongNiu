@@ -24,6 +24,7 @@
             <option value="$PROJECT_DIR$/ResLibrary" />
             <option value="$PROJECT_DIR$/ThirdLibrary" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/modulebreakbulk" />
             <option value="$PROJECT_DIR$/pickerview" />
             <option value="$PROJECT_DIR$/picture_library" />
             <option value="$PROJECT_DIR$/ucrop" />
@@ -32,6 +33,7 @@
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
+        <option name="testRunner" value="PLATFORM" />
       </GradleProjectSettings>
     </option>
   </component>

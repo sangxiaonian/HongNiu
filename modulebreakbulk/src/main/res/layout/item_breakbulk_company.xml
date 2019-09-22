@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/app_gap"
+    android:paddingRight="@dimen/app_gap"
+    android:background="@color/white"
+    android:minHeight="84dp">
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="85dp"
+        android:layout_height="64dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/icon_bx_60"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/img_phone"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:scaleType="centerCrop"
+        android:layout_marginRight="@dimen/app_gap"
+        android:src="@mipmap/icon_call_30"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/img_chat"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/img_chat"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/icon_maessage_30"
+        app:layout_constraintBottom_toBottomOf="@+id/img_phone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/img_phone" />
+
+    <TextView
+        android:id="@+id/tv_point"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/app_gap"
+        android:layout_marginTop="@dimen/app_item_gap"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="北京上海"
+        android:textColor="@color/color_content_light"
+        android:textSize="@dimen/text_min_11sp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_title"
+        app:layout_constraintStart_toEndOf="@+id/img"
+        app:layout_constraintTop_toBottomOf="@+id/tv_address" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/app_gap"
+        android:layout_marginRight="@dimen/app_model_gap"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="公司名称"
+        android:textColor="@color/color_title_dark"
+        android:textSize="@dimen/text_small_15"
+        app:layout_constraintEnd_toStartOf="@+id/img_phone"
+        app:layout_constraintStart_toEndOf="@id/img"
+        app:layout_constraintTop_toTopOf="@id/img" />
+
+    <TextView
+        android:id="@+id/tv_address"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/app_gap"
+        android:layout_marginTop="@dimen/app_item_gap"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="公司地址"
+        android:textColor="@color/color_title_dark"
+        android:textSize="@dimen/text_small"
+        app:layout_constraintEnd_toEndOf="@+id/tv_title"
+        app:layout_constraintStart_toEndOf="@id/img"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="@dimen/line_height"
+        android:background="@color/line_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tv_title" />
+</android.support.constraint.ConstraintLayout>
