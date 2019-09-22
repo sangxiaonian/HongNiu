@@ -47,7 +47,7 @@ public class BreakbulkCompanyDetailActivity extends BaseActivity implements View
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_breakbulk_company_detail);
-        setToolbarTitle("物流公司详情页");
+        setToolbarTitle("物流公司详情");
         initView();
         initData();
         initListener();
@@ -110,7 +110,7 @@ public class BreakbulkCompanyDetailActivity extends BaseActivity implements View
         }else if (v.getId()==R.id.tv_send){
             ArouterUtils.getInstance()
                     .builder(ArouterParamsBreakbulk.activity_breakbulk_consignment_creat_activity)
-                    .withParcelable(Param.TRAN,infoBean)
+                    .withString(Param.TRAN,infoBean.getId())
                     .navigation(mContext);
         }
     }

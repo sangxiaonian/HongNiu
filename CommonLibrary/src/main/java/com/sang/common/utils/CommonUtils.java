@@ -2,13 +2,12 @@ package com.sang.common.utils;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Parcelable;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.TextUtils;
+import android.widget.TextView;
 
 import java.util.Collection;
 import java.util.regex.Matcher;
@@ -160,6 +159,14 @@ public class CommonUtils {
         VerticalImageSpan imageSpan = new VerticalImageSpan(context, resId);
         hotSpan.setSpan(imageSpan, 0, 1, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE);*/
         return hotSpan;
+    }
+
+    public static void setText(TextView text,String msg){
+        if (text!=null){
+            text.setText(msg==null?"":msg);
+        }
+    }public static String getText(String msg){
+        return TextUtils.isEmpty(msg)?"": msg;
     }
 
 }

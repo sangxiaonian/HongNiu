@@ -2,8 +2,11 @@ package com.sang.modulebreakbulk.net;
 
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
+import com.hongniu.baselibrary.entity.PagerParambean;
 import com.sang.modulebreakbulk.entity.BreakbulkCompanyInfoBean;
 import com.sang.modulebreakbulk.entity.BreakbulkCompanyInfoParam;
+import com.sang.modulebreakbulk.entity.BreakbulkConsignmentCreateParams;
+import com.sang.modulebreakbulk.entity.BreakbulkConsignmentInfoBean;
 
 import java.util.List;
 
@@ -30,8 +33,18 @@ public interface BreabulkService {
      * 车货匹配列表信息
      *
      * @return
+     * @param params
      */
-    @POST("hongniu/api/companyAccount/list")
-    Observable<CommonBean<List<BreakbulkCompanyInfoBean>>> queryBreakbulkConsignmentRecord(@Body BreakbulkCompanyInfoParam params);
+    @POST("hongniu//api/ltl/queryPage")
+    Observable<CommonBean<PageBean<BreakbulkConsignmentInfoBean>>> queryBreakbulkConsignmentRecord(@Body PagerParambean params);
+
+   /**
+     * 创建零担发货
+     *
+     * @return
+    * @param params
+     */
+    @POST("hongniu/api/ltl/addGoods")
+    Observable<CommonBean<Object>> creatBreakbulkConsignment(@Body BreakbulkConsignmentCreateParams params);
 
 }

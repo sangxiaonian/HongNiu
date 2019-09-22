@@ -40,6 +40,15 @@ public class BreakbulkCompanyActivity extends RefrushActivity<BreakbulkCompanyIn
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_breakbulk_company);
         setToolbarTitle("选择物流公司");
+        setToolbarSrcRight("发货记录");
+        setToolbarRightClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArouterUtils.getInstance()
+                        .builder(ArouterParamsBreakbulk.activity_breakbulk_consignment_record)
+                        .navigation(mContext);
+            }
+        });
         initView();
         initData();
         initListener();
