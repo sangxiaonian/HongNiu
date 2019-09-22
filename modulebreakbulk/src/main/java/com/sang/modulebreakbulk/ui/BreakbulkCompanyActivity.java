@@ -7,7 +7,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.hongniu.baselibrary.arouter.ArouterParams;
 import com.hongniu.baselibrary.arouter.ArouterParamsBreakbulk;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.RefrushActivity;
@@ -51,7 +50,7 @@ public class BreakbulkCompanyActivity extends RefrushActivity<BreakbulkCompanyIn
     @Override
     protected Observable<CommonBean<PageBean<BreakbulkCompanyInfoBean>>> getListDatas() {
         BreakbulkCompanyInfoParam breakbulkCompanyInfoParam = new BreakbulkCompanyInfoParam();
-        return HttpBreakFactory.creatGoodSour(breakbulkCompanyInfoParam);
+        return HttpBreakFactory.queryBreakbulkCompany(breakbulkCompanyInfoParam);
     }
 
     @Override

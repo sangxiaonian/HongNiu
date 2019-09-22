@@ -3,7 +3,9 @@
     package="com.hongniu.modulebreakbulk">
 
     <application>
-        <activity android:name="com.sang.modulebreakbulk.ui.BreakbulkCompanyDetailActivity"></activity>
+        <activity android:name="com.sang.modulebreakbulk.ui.BreakbulkConsignmentCreatActivityActivity"></activity>
+        <activity android:name="com.sang.modulebreakbulk.ui.BreakbulkConsignmentRecordActivity" />
+        <activity android:name="com.sang.modulebreakbulk.ui.BreakbulkCompanyDetailActivity" />
         <activity android:name="com.sang.modulebreakbulk.ui.BreakbulkCompanyActivity" />
     </application>
 

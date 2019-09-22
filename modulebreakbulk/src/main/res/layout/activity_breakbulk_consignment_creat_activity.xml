@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_bg_dark"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_model_gap"
+                android:orientation="vertical">
+
+                <com.sang.common.widget.ItemView
+                    android:id="@+id/item_start_company"
+                    style="@style/itemview"
+                    app:srcLeftshow="show"
+                    app:textcenterhide="请输入发货人（单位）"
+                    app:textleft="发货人（单位）" />
+
+                <com.sang.common.widget.ItemView
+                    android:id="@+id/item_start_phone"
+                    style="@style/itemview"
+                    app:srcLeftshow="show"
+                    app:textcenterhide="请输入发货人电话"
+                    app:textleft="发货人电话" />
+
+                <com.sang.common.widget.ItemView
+                    android:id="@+id/item_start_address"
+                    style="@style/itemview"
+                    app:srcLeftshow="show"
+                    app:textcenterhide="请输入发货人地址"
+                    app:textleft="发货人地址" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_model_gap"
+                android:orientation="vertical">
+
+                <com.sang.common.widget.ItemView
+                    android:id="@+id/item_consignee_company"
+                    style="@style/itemview"
+                    app:srcLeftshow="show"
+                    app:textcenterhide="请输入收货人（单位）"
+                    app:textleft="收货人（单位）" />
+
+                <com.sang.common.widget.ItemView
+                    android:id="@+id/item_consignee_phone"
+                    style="@style/itemview"
+                    app:srcLeftshow="show"
+                    app:textcenterhide="请输入收货人电话"
+                    app:textleft="收货人电话" />
+
+                <com.sang.common.widget.ItemView
+                    android:id="@+id/item_consignee_address"
+                    style="@style/itemview"
+                    app:srcLeftshow="show"
+                    app:textcenterhide="请输入收货人地址"
+                    app:textleft="发货人地址" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/app_model_gap"
+                android:orientation="vertical">
+
+                <com.sang.common.widget.ItemView
+                    android:id="@+id/item_cargo"
+                    style="@style/itemview"
+                    app:srcLeftshow="show"
+                    app:textcenterhide="请输入货物名称"
+                    app:textleft="货物名称" />
+
+                <com.sang.common.widget.ItemView
+                    android:id="@+id/item_cargo_size"
+                    style="@style/itemview"
+                    app:srcLeftshow="show"
+                    app:textcenterhide="请输入货物体积"
+                    app:textleft="货物体积" />
+
+                <com.sang.common.widget.ItemView
+                    android:id="@+id/item_cargo_weight"
+                    style="@style/itemview"
+                    app:srcLeftshow="show"
+                    app:textcenterhide="请输入货物重量"
+                    app:textleft="货物重量" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="24dp"
+                    android:paddingRight="@dimen/app_gap">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:minWidth="90dp"
+                        android:text="是否需要上门接货"
+                        android:textColor="@color/color_title_dark"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:id="@+id/img_check"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/icon_wxz_36" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/line_height"
+                    android:layout_marginLeft="5dp"
+                    android:background="@color/line_color" />
+
+                <com.sang.common.widget.ItemView
+                    android:id="@+id/item_cargo_price"
+                    style="@style/itemview"
+                    app:srcLeftshow="show"
+                    app:textcenterhide="请输入预估运费"
+                    app:textleft="预估运费" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="24dp"
+                android:paddingTop="@dimen/app_item_gap"
+                android:paddingRight="@dimen/app_gap"
+                android:paddingBottom="@dimen/app_item_gap"
+                android:text="预估运费说明：请与物流公司沟通运费，如货物重量体积与实际不符，物流公司可在线发起补差价要求，你需支付运费差价"
+                android:textColor="@color/color_content_light"
+                android:textSize="11sp" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:minHeight="45dp"
+                android:paddingLeft="24dp"
+                android:text="备注"
+                android:textColor="@color/color_title_dark"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/et_remark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="start"
+                android:hint="200字以内"
+                android:maxLength="200"
+                android:minHeight="100dp"
+                android:paddingLeft="24dp"
+                android:paddingTop="@dimen/app_item_gap"
+                android:paddingRight="@dimen/app_gap"
+                android:paddingBottom="@dimen/app_item_gap"
+                android:textColor="@color/color_title_dark"
+                android:textColorHint="@color/color_content_light"
+                android:textSize="@dimen/text_small" />
+
+
+            <Button
+                android:id="@+id/bt_entry"
+                style="@style/bt_sum_red"
+                android:text="确定下单" />
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

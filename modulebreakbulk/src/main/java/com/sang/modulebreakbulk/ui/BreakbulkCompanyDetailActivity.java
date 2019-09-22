@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamsBreakbulk;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.modulebreakbulk.R;
@@ -21,6 +22,13 @@ import com.sang.thirdlibrary.chact.ChactHelper;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+/**
+ *@data  2019/9/22
+ *@Author PING
+ *@Description
+ * 零担发货物流公司详情页面
+ *
+ */
 @Route(path = ArouterParamsBreakbulk.activity_breakbulk_company_detail)
 public class BreakbulkCompanyDetailActivity extends BaseActivity implements View.OnClickListener {
 
@@ -100,7 +108,10 @@ public class BreakbulkCompanyDetailActivity extends BaseActivity implements View
                 ChactHelper.getHelper().startPriver(mContext, infoBean.getId(), infoBean.getContact());
             }
         }else if (v.getId()==R.id.tv_send){
-            ToastUtils.getInstance().show("立即发货");
+            ArouterUtils.getInstance()
+                    .builder(ArouterParamsBreakbulk.activity_breakbulk_consignment_creat_activity)
+                    .withParcelable(Param.TRAN,infoBean)
+                    .navigation(mContext);
         }
     }
 }
