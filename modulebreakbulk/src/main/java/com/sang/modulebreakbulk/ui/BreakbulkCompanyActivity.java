@@ -7,8 +7,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.hongniu.baselibrary.arouter.ArouterParams;
 import com.hongniu.baselibrary.arouter.ArouterParamsBreakbulk;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.RefrushActivity;
+import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.modulebreakbulk.R;
@@ -80,7 +83,16 @@ public class BreakbulkCompanyActivity extends RefrushActivity<BreakbulkCompanyIn
                         img_chat.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                ChactHelper.getHelper().startPriver(mContext, data.getContactPhone(), data.getCompanyname());
+                                ChactHelper.getHelper().startPriver(mContext, data.getId(), data.getContact());
+                            }
+                        });
+                        itemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                ArouterUtils.getInstance()
+                                        .builder(ArouterParamsBreakbulk.activity_breakbulk_company_detail)
+                                        .withParcelable(Param.TRAN,data)
+                                        .navigation(mContext);
                             }
                         });
 
