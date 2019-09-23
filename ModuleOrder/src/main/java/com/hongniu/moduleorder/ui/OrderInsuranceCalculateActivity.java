@@ -18,6 +18,8 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.entity.OrderInsuranceParam;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
+import com.sang.common.utils.CommonUtils;
+import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.ItemView;
 
@@ -35,30 +37,7 @@ public class OrderInsuranceCalculateActivity extends BaseActivity implements Vie
     private ItemView itemPrice;
     private ItemView itemInsurancePrice;
 
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if (disposable != null) {
-                disposable.dispose();
-            }
-            HttpOrderFactory.queryInstancePrice(itemPrice.getTextCenter(), "")
-                    .subscribe(new NetObserver<String>(null) {
-                        @Override
-                        public void onSubscribe(Disposable d) {
-                            super.onSubscribe(d);
-                            disposable = d;
-                        }
 
-                        @Override
-                        public void doOnSuccess(String data) {
-                            if (itemInsurancePrice != null) {
-                                itemInsurancePrice.setTextCenter(data);
-                            }
-                        }
-                    });
-        }
-    };
     private Button btNext;
 
     @Override
@@ -98,8 +77,22 @@ public class OrderInsuranceCalculateActivity extends BaseActivity implements Vie
 
             @Override
             public void afterTextChanged(Editable s) {
-                handler.removeMessages(0);
-                handler.sendEmptyMessageDelayed(0, 200);
+                String price = s.toString();
+                if (TextUtils.isEmpty(price)){
+                    if (itemInsurancePrice!=null){
+                        itemInsurancePrice.setTextCenter("");
+                    }
+                }else {
+                    try {
+                        double v = Double.parseDouble(price) * 0.00015;
+                        String result = ConvertUtils.changeFloat(v, 2);
+                        if (itemInsurancePrice!=null){
+                            itemInsurancePrice.setTextCenter(result);
+                        }
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         });
 
@@ -126,22 +119,7 @@ public class OrderInsuranceCalculateActivity extends BaseActivity implements Vie
     @Override
     public void onClick(View v) {
         if (check()) {
-            HttpOrderFactory.queryInstancePrice(itemPrice.getTextCenter(), "")
-                    .subscribe(new NetObserver<String>(this) {
-                        @Override
-                        public void onSubscribe(Disposable d) {
-                            super.onSubscribe(d);
-                            disposable = d;
-                        }
-
-                        @Override
-                        public void doOnSuccess(String data) {
-                            if (itemInsurancePrice != null) {
-                                itemInsurancePrice.setTextCenter(data);
-                            }
-                            jump();
-                        }
-                    });
+            jump();
         }
 
     }
