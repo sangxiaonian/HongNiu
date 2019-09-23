@@ -75,7 +75,7 @@
                     style="@style/itemview"
                     app:srcLeftshow="show"
                     app:textcenterhide="请输入收货人地址"
-                    app:textleft="发货人地址" />
+                    app:textleft="收货人地址" />
 
 
             </LinearLayout>
@@ -90,6 +90,7 @@
                     android:id="@+id/item_cargo"
                     style="@style/itemview"
                     app:srcLeftshow="show"
+
                     app:textcenterhide="请输入货物名称"
                     app:textleft="货物名称" />
 
@@ -98,6 +99,7 @@
                     style="@style/itemview"
                     app:srcLeftshow="show"
                     app:centerType="number"
+                    app:textright="方"
                     app:textcenterhide="请输入货物体积"
                     app:textleft="货物体积" />
 
@@ -106,6 +108,7 @@
                     style="@style/itemview"
                     app:srcLeftshow="show"
                     app:centerType="number"
+                    app:textright="吨"
                     app:textcenterhide="请输入货物重量"
                     app:textleft="货物重量" />
 
@@ -147,6 +150,7 @@
                     style="@style/itemview"
                     app:srcLeftshow="show"
                     app:centerType="number"
+                    app:textright="元"
                     app:textcenterhide="请输入预估运费"
                     app:textleft="预估运费" />
             </LinearLayout>

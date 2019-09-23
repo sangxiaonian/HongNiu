@@ -140,62 +140,62 @@ public class BreakbulkConsignmentCreatActivityActivity extends BaseActivity impl
     private boolean check(boolean show) {
         if (TextUtils.isEmpty(item_start_company.getTextCenter())) {
             if (show) {
-                ToastUtils.getInstance().show(item_start_company.getTextCenter());
+                ToastUtils.getInstance().show(item_start_company.getTextCenterHide());
             }
             return false;
         }
         if (TextUtils.isEmpty(item_start_phone.getTextCenter())) {
             if (show) {
-                ToastUtils.getInstance().show(item_start_phone.getTextCenter());
+                ToastUtils.getInstance().show(item_start_phone.getTextCenterHide());
             }
             return false;
         }
         if (TextUtils.isEmpty(item_start_address.getTextCenter())) {
             if (show) {
-                ToastUtils.getInstance().show(item_start_address.getTextCenter());
+                ToastUtils.getInstance().show(item_start_address.getTextCenterHide());
             }
             return false;
         }
         if (TextUtils.isEmpty(item_cargo.getTextCenter())) {
             if (show) {
-                ToastUtils.getInstance().show(item_cargo.getTextCenter());
+                ToastUtils.getInstance().show(item_cargo.getTextCenterHide());
             }
             return false;
         }
         if (TextUtils.isEmpty(item_cargo_weight.getTextCenter())) {
             if (show) {
-                ToastUtils.getInstance().show(item_cargo_weight.getTextCenter());
+                ToastUtils.getInstance().show(item_cargo_weight.getTextCenterHide());
             }
             return false;
         }
         if (TextUtils.isEmpty(item_cargo_size.getTextCenter())) {
             if (show) {
-                ToastUtils.getInstance().show(item_cargo_size.getTextCenter());
+                ToastUtils.getInstance().show(item_cargo_size.getTextCenterHide());
             }
             return false;
         }
         if (TextUtils.isEmpty(item_consignee_company.getTextCenter())) {
             if (show) {
-                ToastUtils.getInstance().show(item_consignee_company.getTextCenter());
+                ToastUtils.getInstance().show(item_consignee_company.getTextCenterHide());
             }
             return false;
         }
         if (TextUtils.isEmpty(item_consignee_phone.getTextCenter())) {
             if (show) {
-                ToastUtils.getInstance().show(item_consignee_phone.getTextCenter());
+                ToastUtils.getInstance().show(item_consignee_phone.getTextCenterHide());
             }
             return false;
         }
         if (TextUtils.isEmpty(item_consignee_address.getTextCenter())) {
             if (show) {
-                ToastUtils.getInstance().show(item_consignee_address.getTextCenter());
+                ToastUtils.getInstance().show(item_consignee_address.getTextCenterHide());
             }
             return false;
         }
 
         if (TextUtils.isEmpty(item_cargo_price.getTextCenter())) {
             if (show) {
-                ToastUtils.getInstance().show(item_cargo_price.getTextCenter());
+                ToastUtils.getInstance().show(item_cargo_price.getTextCenterHide());
             }
             return false;
         }

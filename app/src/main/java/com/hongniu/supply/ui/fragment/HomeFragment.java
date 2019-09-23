@@ -176,7 +176,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                             }
                         })
         )
-                .subscribe(new BaseObserver(isFirst ? this : null) {
+                .subscribe(new BaseObserver<Object>(isFirst ? this : null) {
                     @Override
                     public void onNext(Object result) {
                         super.onNext(result);
@@ -297,8 +297,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                 break;
             case R.id.card_etc:
                 ClickEventUtils.getInstance().onClick(ClickEventParams.首页_牛人保);
-                H5Config h5Config = new H5Config("牛人保", Param.NIURENBAO, true);
-                ArouterUtils.getInstance().builder(ArouterParamsApp.activity_niu_insurance_h5).withSerializable(Param.TRAN, h5Config).navigation(getContext());
+                ArouterUtils.getInstance()
+                        .builder(ArouterParamOrder.activity_order_insurance_calculate)
+                        .navigation(getContext());
                 break;
         }
     }

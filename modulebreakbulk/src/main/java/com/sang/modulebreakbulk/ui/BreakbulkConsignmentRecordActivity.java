@@ -66,6 +66,12 @@ public class BreakbulkConsignmentRecordActivity extends RefrushActivity<Breakbul
 
         initData();
         initListener();
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         queryData(true);
     }
 

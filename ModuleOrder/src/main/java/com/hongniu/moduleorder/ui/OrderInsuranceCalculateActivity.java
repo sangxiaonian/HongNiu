@@ -8,16 +8,20 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
+import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.entity.H5Config;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.entity.OrderInsuranceParam;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
+import com.hongniu.moduleorder.widget.dialog.BuyInsuranceDialog;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.ToastUtils;
@@ -36,6 +40,7 @@ public class OrderInsuranceCalculateActivity extends BaseActivity implements Vie
     private ItemView itemName;
     private ItemView itemPrice;
     private ItemView itemInsurancePrice;
+    private TextView tv_notice;
 
 
     private Button btNext;
@@ -47,6 +52,7 @@ public class OrderInsuranceCalculateActivity extends BaseActivity implements Vie
         setToolbarTitle("保费计算");
         initView();
         initData();
+
         initListener();
 
     }
@@ -56,6 +62,7 @@ public class OrderInsuranceCalculateActivity extends BaseActivity implements Vie
         super.initView();
         itemName = findViewById(R.id.item_cargo_name);
         itemPrice = findViewById(R.id.item_cargo_price);
+        tv_notice = findViewById(R.id.tv_notice);
         itemInsurancePrice = findViewById(R.id.item_insurance_price);
         btNext = findViewById(R.id.bt_next);
     }
@@ -64,6 +71,7 @@ public class OrderInsuranceCalculateActivity extends BaseActivity implements Vie
     protected void initListener() {
         super.initListener();
         btNext.setOnClickListener(this);
+        tv_notice.setOnClickListener(this);
         itemPrice.getEtCenter().addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -118,8 +126,15 @@ public class OrderInsuranceCalculateActivity extends BaseActivity implements Vie
      */
     @Override
     public void onClick(View v) {
-        if (check()) {
-            jump();
+        if (v.getId()==R.id.bt_next) {
+            if (check()) {
+                jump();
+            }
+        }else if (v.getId()==R.id.tv_notice){
+            H5Config h5Config = new H5Config("人保-牛人保介绍", Param.NIURENBAO, false);
+            ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5)
+                    .withSerializable(Param.TRAN, h5Config).navigation(mContext);
+
         }
 
     }
