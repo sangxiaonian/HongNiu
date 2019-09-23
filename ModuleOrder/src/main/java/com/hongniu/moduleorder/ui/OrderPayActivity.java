@@ -219,8 +219,9 @@ public class OrderPayActivity extends BaseActivity implements OrderPayControl.IO
     public void onMessageEvent(OrderInsuranceParam event) {
         if (event != null) {
             //此处判断是否是购买保险
-            payPresent.saveInsurance(event);
+
             buyInsuranceDialog.setPrice(event.getPrice());
+            buyInsuranceDialog.show();
         }
         BusFactory.getBus().removeStickyEvent(event);
     }
