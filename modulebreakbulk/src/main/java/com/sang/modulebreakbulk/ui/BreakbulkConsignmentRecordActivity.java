@@ -83,7 +83,7 @@ public class BreakbulkConsignmentRecordActivity extends RefrushActivity<Breakbul
 
         payPasswordKeyBord.setPayDes("付款金额");
 
-        payDialog=new PayDialog();
+        payDialog = new PayDialog();
     }
 
     @Override
@@ -109,65 +109,78 @@ public class BreakbulkConsignmentRecordActivity extends RefrushActivity<Breakbul
                     public void initView(View itemView, int position, final BreakbulkConsignmentInfoBean data) {
                         super.initView(itemView, position, data);
                         TextView tv_company = itemView.findViewById(R.id.tv_company);
-                        TextView tv_phone = itemView.findViewById(R.id.tv_phone);
+                        TextView tv_address = itemView.findViewById(R.id.tv_address);
+                        ImageView img_call = itemView.findViewById(R.id.img_call);//收货人信息
                         ImageView img_phone = itemView.findViewById(R.id.img_phone);
                         ImageView img_chat = itemView.findViewById(R.id.img_chat);
-                        TextView tv_address = itemView.findViewById(R.id.tv_address);
                         TextView tv_cargo_name = itemView.findViewById(R.id.tv_cargo_name);
-                        TextView tv_cargo_weight = itemView.findViewById(R.id.tv_cargo_weight);
-                        TextView tv_cargo_size = itemView.findViewById(R.id.tv_cargo_size);
                         TextView tv_price = itemView.findViewById(R.id.tv_price);
-                        TextView tv_price_gap = itemView.findViewById(R.id.tv_price_gap);
                         TextView tv_order = itemView.findViewById(R.id.tv_order);
+                        TextView tv_logistics_company = itemView.findViewById(R.id.tv_logistics_company);
+                        TextView tv_state = itemView.findViewById(R.id.tv_state);
                         final TextView bt_pay = itemView.findViewById(R.id.bt_pay);
 
 
+                        tv_company.setText(String.format("%s\t\t%s", CommonUtils.getText(data.getReceiptUserName()), CommonUtils.getText(data.getReceiptMobile())));
+                        tv_address.setText(CommonUtils.getText(data.getDestinationInfo()));
+                        tv_cargo_name.setText(String.format("%s\t\t%s\t\t%s", CommonUtils.getText(data.getGoodsName()), CommonUtils.getText(data.getGoodsWeight()), CommonUtils.getText(data.getGoodsVolume())));
 
-                       tv_company.setText("收货单位："+CommonUtils.getText(data.getReceiptUserName()));
-                       tv_phone.setText("收货人电话："+CommonUtils.getText(data.getReceiptMobile()));
-                       tv_address.setText("收货人地址："+CommonUtils.getText(data.getDestinationInfo()));
-                       tv_cargo_name.setText("货物名称："+CommonUtils.getText(data.getGoodsName()));
-                       tv_cargo_weight.setText("货物重量："+CommonUtils.getText(data.getGoodsWeight()));
-                       tv_cargo_size.setText("货物体积："+CommonUtils.getText(data.getGoodsVolume()));
-                       tv_price.setText("预估运费："+CommonUtils.getText(data.getEstimateFare()));
-                       tv_price_gap.setText("运费差额："+CommonUtils.getText(data.getBalanceFare()));
-                       tv_order.setText("运输单号："+CommonUtils.getText(data.getLtlGoodsNum()));
 
-                       int type=0;
-                       if (data.getEstimateFareIsPay()==0){
-                           //预估运费未支付
-                           type=0;
-                           bt_pay.setText("支付运费");
-                       }else if (data.getActualFareIsPay()==0&&!TextUtils.isEmpty(data.getBalanceFare())){
-                           bt_pay.setText("支付运费差额");
-                           type=1;
-                       }else {
-                           type=2;
-                           bt_pay.setText("查看运单状态");
-                       }
+                        String balanceFare = CommonUtils.getText(data.getBalanceFare());
+                        balanceFare = TextUtils.isEmpty(balanceFare) ? "" : String.format("\t\t运费差额：%s", balanceFare);
+                        tv_price.setText(String.format("预估运费：%s%s", CommonUtils.getText(data.getEstimateFare()), balanceFare));
 
-                        img_phone.setOnClickListener(new View.OnClickListener() {
+                        tv_logistics_company.setText(String.format("物流公司：%s", CommonUtils.getText(data.getLogisticsCompanyName())));
+                        String wayBillNumber = CommonUtils.getText(data.getWaybillNum());
+                        if (TextUtils.isEmpty(wayBillNumber)) {
+                            tv_order.setVisibility(View.GONE);
+                        } else {
+                            tv_order.setVisibility(View.VISIBLE);
+                            tv_order.setText(String.format("运输单号：%s", wayBillNumber));
+                        }
+
+                        final int status = data.getLtlStatus();
+                        tv_state.setText(getBtMsg(status));
+                        if (status == 0) {
+                            bt_pay.setText("支付运费");
+                            bt_pay.setVisibility(View.VISIBLE);
+                        } else if (status == 2) {
+                            bt_pay.setText("支付运费差额");
+                            bt_pay.setVisibility(View.VISIBLE);
+                        } else if (status == 4 || status == 5) {
+                            bt_pay.setText("查看运单状态");
+                        } else {
+                            bt_pay.setVisibility(View.GONE);
+                        }
+
+
+                        img_call.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 CommonUtils.toDial(mContext, data.getReceiptMobile());
                             }
                         });
+                        img_phone.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                CommonUtils.toDial(mContext, TextUtils.isEmpty(data.getLogisticsCompanyCP()) ? data.getLogisticsCompanyTel() : data.getLogisticsCompanyCP());
+                            }
+                        });
                         img_chat.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                ChactHelper.getHelper().startPriver(mContext, data.getId(), data.getReceiptUserName());
+                                ChactHelper.getHelper().startPriver(mContext, data.getLogisticsCompanyId(), data.getLogisticsCompanyName());
                             }
                         });
 
-                        final int finalType = type;
                         bt_pay.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if (finalType==0||finalType==1) {
-                                    showPayDialog(data, finalType, bt_pay.getText().toString());
-                                }else {
+                                if (status == 0 || status == 2) {
+                                    showPayDialog(data, status, bt_pay.getText().toString());
+                                } else if (status == 4 || status == 5) {
                                     //查询运单状态
-                                    ArouterUtils.getInstance().builder(activity_way_bill).withString(Param.TRAN,data.getLtlGoodsNum()).navigation(mContext);
+                                    ArouterUtils.getInstance().builder(activity_way_bill).withString(Param.TRAN, data.getWaybillNum()).navigation(mContext);
                                 }
                             }
                         });
@@ -178,16 +191,48 @@ public class BreakbulkConsignmentRecordActivity extends RefrushActivity<Breakbul
         };
     }
 
+    /**
+     * 根据状态
+     *
+     * @param ltlStatus
+     * @return
+     */
+    private String getBtMsg(int ltlStatus) {
+//        (0待支付运费1待接单 2待支付运费差额 3已接单 4运输中 5 已完成)
+        String msg = "";
+        switch (ltlStatus) {
+            case 0:
+                msg = "待支付运费";
+                break;
+            case 1:
+                msg = "待接单";
+                break;
+            case 2:
+                msg = "待支付运费差额";
+                break;
+            case 3:
+                msg = "已接单";
+                break;
+            case 4:
+                msg = "运输中";
+                break;
+            case 5:
+                msg = "已完成";
+                break;
+        }
+        return msg;
+    }
+
     private void showPayDialog(BreakbulkConsignmentInfoBean data, int finalType, String text) {
-        this.info=data;
+        this.info = data;
         String price;
-        if (finalType==0){
+        if (finalType == 0) {
             //预估运费未支付
-            price= data.getEstimateFare();
-        }else if (finalType==1){
-            price= data.getBalanceFare();
-        }else {
-            price="0";
+            price = data.getEstimateFare();
+        } else if (finalType == 2) {
+            price = data.getBalanceFare();
+        } else {
+            price = "0";
         }
         payParam.setLtlGoodsId(data.getId());
 
@@ -254,7 +299,7 @@ public class BreakbulkConsignmentRecordActivity extends RefrushActivity<Breakbul
      */
     @Override
     public void hasNoPassword(DialogControl.IDialog dialog) {
-        Utils. creatDialog(mContext,"使用余额支付前，必须设置泓牛支付密码", null, "取消", "去设置")
+        Utils.creatDialog(mContext, "使用余额支付前，必须设置泓牛支付密码", null, "取消", "去设置")
                 .setLeftClickListener(new DialogControl.OnButtonLeftClickListener() {
                     @Override
                     public void onLeftClick(View view, DialogControl.ICenterDialog dialog) {
@@ -348,31 +393,30 @@ public class BreakbulkConsignmentRecordActivity extends RefrushActivity<Breakbul
         }
 
     }
+
     private void showPayDialog() {
         HttpAppFactory.pay(payParam)
                 .subscribe(new NetObserver<PayBean>(this) {
                     @Override
                     public void doOnSuccess(PayBean data) {
-                        int type=3;
-                        if (info!=null){
-                            if (info.getEstimateFareIsPay()==0){
+                        int type = 3;
+                        if (info != null) {
+                            if (info.getLtlStatus() == 0) {
                                 //预估运费未支付
-                                type=3;
-                            }else if (info.getActualFareIsPay()==0&&!TextUtils.isEmpty(info.getBalanceFare())){
-                                type=4;
+                                type = 3;
+                            } else if (info.getLtlStatus() == 2) {
+                                type = 4;
                             }
                         }
-
-
                         ArouterUtils.getInstance()
                                 .builder(ArouterParamOrder.activity_waite_pay)
                                 .withInt("payType", payParam.getPayType())
-                                .withParcelable("payInfor",data)
+                                .withParcelable("payInfor", data)
                                 .withBoolean("ISDEUBG", isDebug)
-                                .withString("ORDERID",payParam.getLtlGoodsId())
-                                .withBoolean("havePolicy",false)
-                                .withInt("queryType",type)
-                                .navigation((Activity) mContext,1);
+                                .withString("ORDERID", payParam.getLtlGoodsId())
+                                .withBoolean("havePolicy", false)
+                                .withInt("queryType", type)
+                                .navigation((Activity) mContext, 1);
                     }
                 });
 

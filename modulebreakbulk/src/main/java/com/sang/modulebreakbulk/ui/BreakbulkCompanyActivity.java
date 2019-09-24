@@ -15,6 +15,7 @@ import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.modulebreakbulk.R;
 import com.sang.common.imgload.ImageLoader;
+import com.sang.common.recycleview.RecycleViewSupportEmpty;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.utils.CommonUtils;
@@ -53,6 +54,9 @@ public class BreakbulkCompanyActivity extends RefrushActivity<BreakbulkCompanyIn
         initData();
         initListener();
         queryData(true);
+        if (rv instanceof RecycleViewSupportEmpty) {
+            ((RecycleViewSupportEmpty) rv).setEmptyView(0,"该城市正在对接中，敬请期待...");
+        }
         refresh.hideLoadFinish();
     }
 
