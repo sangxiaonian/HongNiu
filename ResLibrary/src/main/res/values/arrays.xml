@@ -27,20 +27,23 @@
     </string-array>
 
     <!--绑定付款方式-->
-  <string-array name="order_pay_way">
+    <string-array name="order_pay_way">
         <item>绑定微信</item>
         <item>绑定银联卡</item>
-
     </string-array>
 
-   <!--被保险人身份-->
-  <string-array name="insured_type">
+    <!--被保险人身份-->
+    <string-array name="insured_type">
         <item>个人</item>
         <item>企业</item>
-
     </string-array>
-
-
+    <!--物流公司排序-->
+    <string-array name="breakbulk_company_order">
+        <item>智能排序</item>
+        <item>销量最高</item>
+        <item>好评优先</item>
+        <item>离我最近</item>
+    </string-array>
 
 
 </resources>

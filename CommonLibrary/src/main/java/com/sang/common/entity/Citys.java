@@ -1,4 +1,4 @@
-package com.hongniu.modulelogin.entity;
+package com.sang.common.entity;
 
 import java.util.ArrayList;
 import java.util.List;

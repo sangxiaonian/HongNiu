@@ -18,6 +18,7 @@ public class Param {
     public static String insurance_polic;
     //投保须知
     public static String insurance_notify;
+
     static {
         if (isDebug) {
 //            url = "http://47.104.130.110:80/";
@@ -120,5 +121,8 @@ public class Param {
     public static final String CAR_TYPE = "CAR_TYPE";
     //是否显示保险相关信息
     public static final String SHOW_INSURANCE = "SHOW_INSURANCE";
+
+    //当前选中的物流公司所在城市
+    public static String COMPANYCITY="COMPANYCIT";
 
 }

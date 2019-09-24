@@ -1,4 +1,4 @@
-package com.hongniu.modulelogin.entity;
+package com.sang.common.entity;
 
 /**
  * 作者： ${PING} on 2018/9/12.

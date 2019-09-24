@@ -23,10 +23,10 @@ import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.PickerDialogUtils;
 import com.hongniu.baselibrary.utils.PictureSelectorUtils;
 import com.hongniu.baselibrary.utils.Utils;
-import com.hongniu.modulelogin.LoginUtils;
+import com.sang.common.utils.LoginUtils;
 import com.hongniu.modulelogin.R;
-import com.hongniu.modulelogin.entity.Citys;
-import com.hongniu.modulelogin.entity.NewAreaBean;
+import com.sang.common.entity.Citys;
+import com.sang.common.entity.NewAreaBean;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
@@ -36,7 +36,6 @@ import com.sang.common.imgload.ImageLoader;
 import com.sang.common.net.error.NetException;
 import com.sang.common.net.rx.BaseObserver;
 import com.sang.common.net.rx.RxUtils;
-import com.sang.common.recycleview.holder.PeakHolder;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.ToastUtils;
@@ -47,7 +46,6 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
-import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Function;
 
 /**

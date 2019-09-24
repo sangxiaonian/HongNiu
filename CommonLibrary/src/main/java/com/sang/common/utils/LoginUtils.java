@@ -1,12 +1,12 @@
-package com.hongniu.modulelogin;
+package com.sang.common.utils;
 
 import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.hongniu.modulelogin.entity.AreaBean;
-import com.hongniu.modulelogin.entity.Citys;
-import com.hongniu.modulelogin.entity.NewAreaBean;
+import com.sang.common.entity.AreaBean;
+import com.sang.common.entity.Citys;
+import com.sang.common.entity.NewAreaBean;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -110,33 +110,11 @@ public class LoginUtils {
                                 shis.add(newAreaBeans);
                                 quyus.add(quyu1);
                             }
-
                         }
-
-
                         Citys citys = new Citys();
                         citys.setShengs(shengs);
                         citys.setShis(shis);
                         citys.setQuyus(quyus);
-
-
-//                        List<List<CityBean>> cityBean = new ArrayList<>();
-//                        List<List<List<DistrictBean>>> district = new ArrayList<>();
-//                        for (AreaBean provincesBean : provinces) {
-//                            List<CityBean> citys = provincesBean.getCitys();
-//                            cityBean.add(citys);
-//                        }
-//                        for (List<CityBean> cityBeans : cityBean) {
-//                            List<List<DistrictBean>> child = new ArrayList<>();
-//                            for (CityBean bean : cityBeans) {
-//                                if (bean.getDistricts().size() == 0) {//城市没有分区
-//                                    bean.getDistricts().add(new DistrictBean(bean.getInfor()));
-//                                }
-//                                child.add(bean.getDistricts());
-//                            }
-//                            district.add(child);
-//                        }
-//                        AreaBeans areaBeans = new AreaBeans(provinces, cityBean, district);
                         return citys;
                     }
                 })

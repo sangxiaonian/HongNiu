@@ -25,7 +25,7 @@
             app:closeIcon="@drawable/icon_arrow_down_d8d8d8"
             app:openColor="@color/color_light"
             app:openIcon="@drawable/icon_arrow_down_f06f28"
-            app:title="@string/order_main_start_time"
+            app:title="城市"
             app:titleSize="14sp" />
 
         <com.sang.common.widget.SwitchTextLayout
@@ -37,7 +37,7 @@
             app:closeIcon="@drawable/icon_arrow_down_d8d8d8"
             app:openColor="@color/color_light"
             app:openIcon="@drawable/icon_arrow_down_f06f28"
-            app:title="车型"
+            app:title="排序"
             app:titleSize="14sp" />
     </LinearLayout>
 
