@@ -36,11 +36,11 @@ public class BreakbulkConsignmentInfoBean implements Parcelable {
     private String remark;//true	string	备注
     private String createTime;//true	string	创建时间
     private int isDel;//true	int	是否删除(0正常,1删除)
-    private int ltlStatus;//货物状态(0待支付运费1待接单 2待支付运费差额 3已接单 4运输中 5 已完成)
+    private int ltlStatus;// 零担货物状态(0待支付运费1(已支付)待接单 2已接单 3 待支付运费差额 4差额已支付 5运输中 6已完成)
     private String logisticsCompanyTel;//物流公司企业联系电话
     private String logisticsCompanyCP;//物流公司联系人手机号码
     private String userId;
-    private String rongToken;
+    private String rongTokenUserId;
 
 
     public String getUserId() {
@@ -51,12 +51,12 @@ public class BreakbulkConsignmentInfoBean implements Parcelable {
         this.userId = userId;
     }
 
-    public String getRongToken() {
-        return rongToken;
+    public String getRongTokenUserId() {
+        return rongTokenUserId;
     }
 
-    public void setRongToken(String rongToken) {
-        this.rongToken = rongToken;
+    public void setRongTokenUserId(String rongTokenUserId) {
+        this.rongTokenUserId = rongTokenUserId;
     }
 
     public String getLogisticsCompanyTel() {
@@ -348,7 +348,7 @@ public class BreakbulkConsignmentInfoBean implements Parcelable {
         dest.writeString(this.logisticsCompanyTel);
         dest.writeString(this.logisticsCompanyCP);
         dest.writeString(this.userId);
-        dest.writeString(this.rongToken);
+        dest.writeString(this.rongTokenUserId);
     }
 
     public BreakbulkConsignmentInfoBean() {
@@ -387,7 +387,7 @@ public class BreakbulkConsignmentInfoBean implements Parcelable {
         this.logisticsCompanyTel = in.readString();
         this.logisticsCompanyCP = in.readString();
         this.userId = in.readString();
-        this.rongToken = in.readString();
+        this.rongTokenUserId = in.readString();
     }
 
     public static final Parcelable.Creator<BreakbulkConsignmentInfoBean> CREATOR = new Parcelable.Creator<BreakbulkConsignmentInfoBean>() {
