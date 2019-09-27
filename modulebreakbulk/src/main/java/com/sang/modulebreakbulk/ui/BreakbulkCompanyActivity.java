@@ -172,7 +172,7 @@ public class BreakbulkCompanyActivity extends RefrushActivity<BreakbulkCompanyIn
                         img_chat.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                ChactHelper.getHelper().startPriver(mContext, data.getId(), data.getContact());
+                                ChactHelper.getHelper().startPriver(mContext, data.getUserId(), data.getContact());
                             }
                         });
                         itemView.setOnClickListener(new View.OnClickListener() {

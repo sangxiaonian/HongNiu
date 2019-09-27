@@ -41,8 +41,8 @@ public class ChatConversationActivity extends BaseActivity {
                             .setDialogContent(userInfor.getMobile())
                             .setBtLeft("取消")
                             .setBtRight("拨打")
-                            .setBtLeftColor( getResources().getColor(R.color.color_007aff))
-                            .setBtRightColor( getResources().getColor(R.color.color_007aff))
+                            .setBtLeftColor(getResources().getColor(R.color.color_007aff))
+                            .setBtRightColor(getResources().getColor(R.color.color_007aff))
                             .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
                                 @Override
                                 public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
@@ -52,7 +52,7 @@ public class ChatConversationActivity extends BaseActivity {
                             })
                             .creatDialog(new CenterAlertDialog(mContext))
                             .show();
-                }else {
+                } else {
                     ToastUtils.getInstance().show("正在获取信息，请稍后");
                 }
             }
@@ -73,16 +73,18 @@ public class ChatConversationActivity extends BaseActivity {
                     .subscribe(new NetObserver<UserInfor>(null) {
                         @Override
                         public void doOnSuccess(UserInfor data) {
-                            userInfor = data;
-                            ChactHelper.getHelper().refreshUserInfoCache(userId, data);
-                            StringBuilder builder = new StringBuilder();
-                            if (!TextUtils.isEmpty(data.getContact())) {
-                                builder.append(data.getContact()).append("\t\t");
+                            if (data != null) {
+                                userInfor = data;
+                                ChactHelper.getHelper().refreshUserInfoCache(userId, data);
+                                StringBuilder builder = new StringBuilder();
+                                if (!TextUtils.isEmpty(data.getContact())) {
+                                    builder.append(data.getContact()).append("\t\t");
 
+                                }
+                                builder.append(data.getMobile());
+                                final String name = builder.toString();
+                                setToolbarTitle(name);
                             }
-                            builder.append(data.getMobile());
-                            final String name = builder.toString();
-                            setToolbarTitle(name);
                         }
                     });
 

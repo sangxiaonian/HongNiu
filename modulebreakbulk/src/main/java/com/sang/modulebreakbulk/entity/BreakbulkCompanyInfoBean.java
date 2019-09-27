@@ -97,7 +97,25 @@ public class BreakbulkCompanyInfoBean implements Parcelable {
     private String chargeDirections;
     private int orderMark;
     private int sortNum;
+    private String userId;
+    private String rongToken;
 
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getRongToken() {
+        return rongToken;
+    }
+
+    public void setRongToken(String rongToken) {
+        this.rongToken = rongToken;
+    }
 
     public String getRef1() {
         return ref1;
@@ -461,6 +479,9 @@ public class BreakbulkCompanyInfoBean implements Parcelable {
     }
 
 
+    public BreakbulkCompanyInfoBean() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -513,9 +534,8 @@ public class BreakbulkCompanyInfoBean implements Parcelable {
         dest.writeString(this.chargeDirections);
         dest.writeInt(this.orderMark);
         dest.writeInt(this.sortNum);
-    }
-
-    public BreakbulkCompanyInfoBean() {
+        dest.writeString(this.userId);
+        dest.writeString(this.rongToken);
     }
 
     protected BreakbulkCompanyInfoBean(Parcel in) {
@@ -564,6 +584,8 @@ public class BreakbulkCompanyInfoBean implements Parcelable {
         this.chargeDirections = in.readString();
         this.orderMark = in.readInt();
         this.sortNum = in.readInt();
+        this.userId = in.readString();
+        this.rongToken = in.readString();
     }
 
     public static final Creator<BreakbulkCompanyInfoBean> CREATOR = new Creator<BreakbulkCompanyInfoBean>() {

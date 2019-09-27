@@ -195,7 +195,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="零担发货"
-                    android:textColor="@color/color_title_dark"
+                    android:textColor="@color/color_light"
                     android:textSize="@dimen/text_small_14" />
 
                 <TextView
@@ -241,7 +241,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="车货匹配"
-                    android:textColor="@color/color_title_dark"
+                    android:textColor="@color/color_light"
                     android:textSize="@dimen/text_small_14" />
 
                 <TextView

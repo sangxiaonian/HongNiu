@@ -1,10 +1,13 @@
 package com.sang.modulebreakbulk.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * 作者：  on 2019/9/22.
  * 零担发货发货记录信息
  */
-public class BreakbulkConsignmentInfoBean {
+public class BreakbulkConsignmentInfoBean implements Parcelable {
     private String id;//true	long	货物id
     private String ltlGoodsNum;//true	string	零担货物单号
     private String ownerId;//true	string	货主id
@@ -36,7 +39,25 @@ public class BreakbulkConsignmentInfoBean {
     private int ltlStatus;//货物状态(0待支付运费1待接单 2待支付运费差额 3已接单 4运输中 5 已完成)
     private String logisticsCompanyTel;//物流公司企业联系电话
     private String logisticsCompanyCP;//物流公司联系人手机号码
+    private String userId;
+    private String rongToken;
 
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getRongToken() {
+        return rongToken;
+    }
+
+    public void setRongToken(String rongToken) {
+        this.rongToken = rongToken;
+    }
 
     public String getLogisticsCompanyTel() {
         return logisticsCompanyTel;
@@ -287,4 +308,97 @@ public class BreakbulkConsignmentInfoBean {
     public void setIsDel(int isDel) {
         this.isDel = isDel;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.ltlGoodsNum);
+        dest.writeString(this.ownerId);
+        dest.writeString(this.ownerName);
+        dest.writeString(this.ownerMobile);
+        dest.writeString(this.sendUserName);
+        dest.writeString(this.sendMobile);
+        dest.writeString(this.startPlaceInfo);
+        dest.writeString(this.receiptUserName);
+        dest.writeString(this.receiptMobile);
+        dest.writeString(this.destinationInfo);
+        dest.writeString(this.goodsName);
+        dest.writeString(this.goodsVolume);
+        dest.writeString(this.goodsWeight);
+        dest.writeInt(this.isToDoor);
+        dest.writeString(this.estimateFare);
+        dest.writeString(this.actualFare);
+        dest.writeString(this.balanceFare);
+        dest.writeInt(this.estimateFareIsPay);
+        dest.writeString(this.estimateFarePayNum);
+        dest.writeInt(this.actualFareIsPay);
+        dest.writeString(this.actualFarePayNum);
+        dest.writeString(this.logisticsCompanyId);
+        dest.writeString(this.logisticsCompanyName);
+        dest.writeString(this.waybillNum);
+        dest.writeString(this.remark);
+        dest.writeString(this.createTime);
+        dest.writeInt(this.isDel);
+        dest.writeInt(this.ltlStatus);
+        dest.writeString(this.logisticsCompanyTel);
+        dest.writeString(this.logisticsCompanyCP);
+        dest.writeString(this.userId);
+        dest.writeString(this.rongToken);
+    }
+
+    public BreakbulkConsignmentInfoBean() {
+    }
+
+    protected BreakbulkConsignmentInfoBean(Parcel in) {
+        this.id = in.readString();
+        this.ltlGoodsNum = in.readString();
+        this.ownerId = in.readString();
+        this.ownerName = in.readString();
+        this.ownerMobile = in.readString();
+        this.sendUserName = in.readString();
+        this.sendMobile = in.readString();
+        this.startPlaceInfo = in.readString();
+        this.receiptUserName = in.readString();
+        this.receiptMobile = in.readString();
+        this.destinationInfo = in.readString();
+        this.goodsName = in.readString();
+        this.goodsVolume = in.readString();
+        this.goodsWeight = in.readString();
+        this.isToDoor = in.readInt();
+        this.estimateFare = in.readString();
+        this.actualFare = in.readString();
+        this.balanceFare = in.readString();
+        this.estimateFareIsPay = in.readInt();
+        this.estimateFarePayNum = in.readString();
+        this.actualFareIsPay = in.readInt();
+        this.actualFarePayNum = in.readString();
+        this.logisticsCompanyId = in.readString();
+        this.logisticsCompanyName = in.readString();
+        this.waybillNum = in.readString();
+        this.remark = in.readString();
+        this.createTime = in.readString();
+        this.isDel = in.readInt();
+        this.ltlStatus = in.readInt();
+        this.logisticsCompanyTel = in.readString();
+        this.logisticsCompanyCP = in.readString();
+        this.userId = in.readString();
+        this.rongToken = in.readString();
+    }
+
+    public static final Parcelable.Creator<BreakbulkConsignmentInfoBean> CREATOR = new Parcelable.Creator<BreakbulkConsignmentInfoBean>() {
+        @Override
+        public BreakbulkConsignmentInfoBean createFromParcel(Parcel source) {
+            return new BreakbulkConsignmentInfoBean(source);
+        }
+
+        @Override
+        public BreakbulkConsignmentInfoBean[] newArray(int size) {
+            return new BreakbulkConsignmentInfoBean[size];
+        }
+    };
 }

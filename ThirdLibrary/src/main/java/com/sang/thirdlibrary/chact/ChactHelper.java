@@ -13,6 +13,8 @@ import com.sang.common.utils.ToastUtils;
 import com.sang.thirdlibrary.chact.control.ChactControl;
 import com.sang.thirdlibrary.chact.control.OnGetUserInforListener;
 
+import java.util.Objects;
+
 import io.rong.imkit.RongIM;
 import io.rong.imkit.manager.IUnReadMessageObserver;
 import io.rong.imlib.RongIMClient;
@@ -213,10 +215,14 @@ public class ChactHelper {
      * @param title
      */
     public void startPriver(Context context, String userID, String title) {
-        if (userID != null && userID.equals(ownerID)) {
+        if (Objects.equals(userID,ownerID) ) {
             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("您不能和自己对话");
         } else {
-            RongIM.getInstance().startPrivateChat(context, userID, title == null ? "聊天" : title);
+            if (userID!=null){
+                RongIM.getInstance().startPrivateChat(context, userID, title == null ? "聊天" : title);
+            }else {
+                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("用户ID为空");
+            }
         }
 
     }

@@ -144,7 +144,7 @@ public class BreakbulkConsignmentRecordActivity extends RefrushActivity<Breakbul
                         if (status == 0) {
                             bt_pay.setText("支付运费");
                             bt_pay.setVisibility(View.VISIBLE);
-                        } else if (status == 2) {
+                        } else if (status == 3) {
                             bt_pay.setText("支付运费差额");
                             bt_pay.setVisibility(View.VISIBLE);
                         } else if (status == 4 || status == 5) {
@@ -169,16 +169,17 @@ public class BreakbulkConsignmentRecordActivity extends RefrushActivity<Breakbul
                         img_chat.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                ChactHelper.getHelper().startPriver(mContext, data.getLogisticsCompanyId(), data.getLogisticsCompanyName());
+                                ChactHelper.getHelper().startPriver(mContext, data.getUserId(), data.getLogisticsCompanyName());
+//                                ChactHelper.getHelper().startPriver(mContext, data.getLogisticsCompanyId(), data.getLogisticsCompanyName());
                             }
                         });
 
                         bt_pay.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if (status == 0 || status == 2) {
+                                if (status == 0 || status == 3) {
                                     showPayDialog(data, status, bt_pay.getText().toString());
-                                } else if (status == 4 || status == 5) {
+                                } else if (status == 6 || status == 5) {
                                     //查询运单状态
                                     ArouterUtils.getInstance().builder(activity_way_bill).withString(Param.TRAN, data.getWaybillNum()).navigation(mContext);
                                 }
@@ -198,25 +199,29 @@ public class BreakbulkConsignmentRecordActivity extends RefrushActivity<Breakbul
      * @return
      */
     private String getBtMsg(int ltlStatus) {
-//        (0待支付运费1待接单 2待支付运费差额 3已接单 4运输中 5 已完成)
+//        (0待支付运费1 待接单 2待支付运费差额 3已接单 4运输中 5 已完成)
+//        零担货物状态(0待支付运费1(已支付)待接单 2已接单 3 待支付运费差额 4差额已支付 5运输中 6已完成)
         String msg = "";
         switch (ltlStatus) {
             case 0:
                 msg = "待支付运费";
                 break;
             case 1:
-                msg = "待接单";
+                msg = "(已支付)待接单";
                 break;
             case 2:
-                msg = "待支付运费差额";
-                break;
-            case 3:
                 msg = "已接单";
                 break;
+            case 3:
+                msg = "待支付运费差额";
+                break;
             case 4:
-                msg = "运输中";
+                msg = "差额已支付";
                 break;
             case 5:
+                msg = "运输中";
+                break;
+            case 6:
                 msg = "已完成";
                 break;
         }
@@ -229,7 +234,7 @@ public class BreakbulkConsignmentRecordActivity extends RefrushActivity<Breakbul
         if (finalType == 0) {
             //预估运费未支付
             price = data.getEstimateFare();
-        } else if (finalType == 2) {
+        } else if (finalType == 3) {
             price = data.getBalanceFare();
         } else {
             price = "0";

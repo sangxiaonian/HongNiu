@@ -1,9 +1,6 @@
 package com.sang.modulebreakbulk.ui;
 
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.ViewUtils;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -15,12 +12,8 @@ import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.modulebreakbulk.R;
 import com.sang.common.utils.CommonUtils;
-import com.sang.common.utils.ToastUtils;
 import com.sang.modulebreakbulk.entity.BreakbulkCompanyInfoBean;
 import com.sang.thirdlibrary.chact.ChactHelper;
-
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 /**
  *@data  2019/9/22
@@ -105,7 +98,7 @@ public class BreakbulkCompanyDetailActivity extends BaseActivity implements View
             }
         }else if (v.getId()==R.id.tv_chat){
             if (infoBean!=null) {
-                ChactHelper.getHelper().startPriver(mContext, infoBean.getId(), infoBean.getContact());
+                ChactHelper.getHelper().startPriver(mContext, infoBean.getUserId(), infoBean.getCompanyname());
             }
         }else if (v.getId()==R.id.tv_send){
             ArouterUtils.getInstance()
