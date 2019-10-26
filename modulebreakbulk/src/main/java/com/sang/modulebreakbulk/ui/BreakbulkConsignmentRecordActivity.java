@@ -149,6 +149,7 @@ public class BreakbulkConsignmentRecordActivity extends RefrushActivity<Breakbul
                             bt_pay.setVisibility(View.VISIBLE);
                         } else if (status == 6 || status == 5) {
                             bt_pay.setText("查看运单状态");
+                            bt_pay.setVisibility(View.VISIBLE);
                         } else {
                             bt_pay.setVisibility(View.GONE);
                         }
