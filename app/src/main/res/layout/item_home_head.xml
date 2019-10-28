@@ -30,7 +30,7 @@
 
             android:layout_width="28dp"
             android:layout_height="28dp"
-            android:src="@mipmap/icon_home_hw_56" />
+            app:srcCompat="@drawable/ic_icon_home_hw" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -58,7 +58,7 @@
             android:layout_width="28dp"
             android:layout_height="28dp"
 
-            android:src="@mipmap/icon_home_cz" />
+            app:srcCompat="@drawable/ic_icon_home_cz" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -85,7 +85,7 @@
 
             android:layout_width="28dp"
             android:layout_height="28dp"
-            android:src="@mipmap/icon_home_sj_56" />
+            app:srcCompat="@drawable/ic_icon_home_sj" />
 
         <TextView
             android:layout_width="wrap_content"

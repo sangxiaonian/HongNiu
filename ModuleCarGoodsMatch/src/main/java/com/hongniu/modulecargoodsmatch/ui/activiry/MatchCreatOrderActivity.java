@@ -12,7 +12,7 @@ import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
-import com.hongniu.baselibrary.arouter.ArouterParams;
+import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
@@ -42,9 +42,9 @@ import java.util.List;
  * @Author PING
  * @Description 创建车货匹配订单
  */
-@Route(path = ArouterParams.activity_match_creat_order)
-public class
-MatchCreatOrderActivity extends BaseActivity implements View.OnClickListener, OnTimeSelectListener, OnOptionsSelectListener {
+@Deprecated
+@Route(path = ArouterParamsMatch.activity_match_creat_order)
+public class MatchCreatOrderActivity extends BaseActivity implements View.OnClickListener, OnTimeSelectListener, OnOptionsSelectListener {
     private MatchCarPreInforBean preCarInfor;//车辆预加载信息
 
     private ItemView itemStartTime;         //发货时间
@@ -86,9 +86,9 @@ MatchCreatOrderActivity extends BaseActivity implements View.OnClickListener, On
         itemWeight = findViewById(R.id.item_weight);
         itemSize = findViewById(R.id.item_size);
         btNext = findViewById(R.id.bt_entry);
-        etRemark=findViewById(R.id.et_remark);
-        itemCarSize=findViewById(R.id.item_car_size);
-        itemCarType =findViewById(R.id.item_car_type);
+        etRemark = findViewById(R.id.et_remark);
+        itemCarSize = findViewById(R.id.item_car_size);
+        itemCarType = findViewById(R.id.item_car_type);
 
 
         Calendar startDate = Calendar.getInstance();
@@ -100,7 +100,7 @@ MatchCreatOrderActivity extends BaseActivity implements View.OnClickListener, On
                 .build();
         timePickerView.setKeyBackCancelable(false);//系统返回键监听屏蔽掉
 
-          pickerDialog = PickerDialogUtils.initPickerDialog(mContext, this);
+        pickerDialog = PickerDialogUtils.initPickerDialog(mContext, this);
 
     }
 
@@ -118,7 +118,7 @@ MatchCreatOrderActivity extends BaseActivity implements View.OnClickListener, On
 
                     @Override
                     public void doOnSuccess(MatchCarPreInforBean data) {
-                         preCarInfor=data;
+                        preCarInfor = data;
                     }
                 })
         ;
@@ -175,24 +175,24 @@ MatchCreatOrderActivity extends BaseActivity implements View.OnClickListener, On
                             @Override
                             public void doOnSuccess(Object data) {
                                 ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
-                                ArouterUtils.getInstance().builder(ArouterParams.activity_match_my_record)
+                                ArouterUtils.getInstance().builder(ArouterParamsMatch.activity_match_my_record)
                                         .navigation(mContext);
                                 finish();
                             }
                         });
                 ;
             }
-        }else if (id==R.id.item_car_type){
-            if (preCarInfor==null){
+        } else if (id == R.id.item_car_type) {
+            if (preCarInfor == null) {
                 querPreloadInfor();
-            }else {
+            } else {
                 pickerDialog.setPicker(preCarInfor.getCarType());
                 pickerDialog.show(v);
             }
-        }else if (id==R.id.item_car_size){
-            if (preCarInfor==null){
+        } else if (id == R.id.item_car_size) {
+            if (preCarInfor == null) {
                 querPreloadInfor();
-            }else {
+            } else {
                 pickerDialog.setPicker(preCarInfor.getCarLength());
                 pickerDialog.show(v);
             }
@@ -208,7 +208,7 @@ MatchCreatOrderActivity extends BaseActivity implements View.OnClickListener, On
         params.freightAmount = itemPrice.getTextCenter();
         params.carLength = itemCarSize.getTextCenter();
         params.carType = itemCarType.getTextCenter();
-        params.remark=etRemark.getText().toString();
+        params.remark = etRemark.getText().toString();
 
         return params;
     }
@@ -287,6 +287,7 @@ MatchCreatOrderActivity extends BaseActivity implements View.OnClickListener, On
 
     /**
      * 选择器被选择的时候
+     *
      * @param options1
      * @param options2
      * @param options3
@@ -294,10 +295,10 @@ MatchCreatOrderActivity extends BaseActivity implements View.OnClickListener, On
      */
     @Override
     public void onOptionsSelect(int options1, int options2, int options3, View v) {
-        if (v==itemCarSize){
-            itemCarSize.setTextCenter(  preCarInfor.getCarLength().get(options1));
-        }else if (v== itemCarType){
-            itemCarType.setTextCenter(  preCarInfor.getCarType().get(options1));
+        if (v == itemCarSize) {
+            itemCarSize.setTextCenter(preCarInfor.getCarLength().get(options1));
+        } else if (v == itemCarType) {
+            itemCarType.setTextCenter(preCarInfor.getCarType().get(options1));
 
         }
     }

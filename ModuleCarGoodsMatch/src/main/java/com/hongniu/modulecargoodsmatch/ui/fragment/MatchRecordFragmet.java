@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
-import com.hongniu.baselibrary.arouter.ArouterParams;
+import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.base.RefrushFragmet;
@@ -48,7 +48,8 @@ import io.rong.eventbus.EventBus;
  * 作者： ${PING} on 2019/5/12.
  * 我发布的车货匹配列表
  */
-@Route(path = ArouterParams.fragment_match_my_record)
+@Deprecated
+@Route(path = ArouterParamsMatch.fragment_match_my_record)
 public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> implements RecordFragmentControl.OnSwitchFiltrateListener {
 
     private String id;//自己的id，用于判断订单是否是自己创建的订单
@@ -220,7 +221,7 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> impl
 
         }else if ("我要接单".equals(btName)){
             ArouterUtils.getInstance()
-                    .builder(ArouterParams.activity_match_grap_single)
+                    .builder(ArouterParamsMatch.activity_match_grap_single)
                     .withString(Param.TITLE, data.userName)
                     .withString(Param.CAR_TYPE, data.carType)
                     .withString(Param.TRAN, data.id)

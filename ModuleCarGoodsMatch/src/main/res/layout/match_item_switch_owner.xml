@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hongniu.baselibrary.widget.RadioIconGroup xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rib_group"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_tabe_select"
+    android:minHeight="60dp"
+    android:paddingTop="@dimen/app_model_gap">
+
+    <com.hongniu.baselibrary.widget.RadioIconButton
+        android:id="@+id/rib_left"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:iconCheck="@drawable/ic_icon_home_hw"
+        app:icon="@drawable/ic_icon_home_hw_aaffffff"
+        app:indexCheck="@drawable/triangle_white"
+        app:titleColor="#aaffffff"
+        app:titleColorCheck="#ffffff"
+        app:title="货主找车" />
+
+    <com.hongniu.baselibrary.widget.RadioIconButton
+        android:id="@+id/rib_right"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:iconCheck="@drawable/ic_icon_home_cz"
+        app:icon="@drawable/ic_icon_home_cz_aaffffff"
+        app:indexCheck="@drawable/triangle_white"
+        app:titleColor="#aaffffff"
+        app:titleColorCheck="#ffffff"
+        app:title="司机接单" />
+
+
+</com.hongniu.baselibrary.widget.RadioIconGroup>

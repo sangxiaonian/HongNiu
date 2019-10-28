@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.sang.common.widget.CircularFramlayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="7dp"
+    android:layout_marginTop="@dimen/app_model_gap"
+    android:layout_marginRight="7dp"
+    app:viewradius="4dp">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="match_parent"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp">
+
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="15dp" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="15dp" />
+
+        <TextView
+            android:id="@+id/tv_car_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_order_color"
+            android:textSize="@dimen/text_small_14"
+            app:layout_constraintEnd_toStartOf="@id/guideline_right"
+            app:layout_constraintTop_toTopOf="parent"
+            tool:text="三轮车" />
+
+        <TextView
+            android:id="@+id/tv_state_des"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/app_item_gap"
+            android:textColor="@color/color_order_color"
+            android:textSize="@dimen/text_small_14"
+            app:layout_constraintEnd_toStartOf="@id/tv_car_type"
+            app:layout_constraintStart_toEndOf="@+id/tv_state"
+            app:layout_constraintTop_toTopOf="@id/tv_car_type"
+            tool:text="发货人正在等待接单…" />
+
+        <TextView
+            android:id="@+id/tv_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_2_e83e15"
+            android:paddingLeft="3.5dp"
+            android:paddingTop="1dp"
+            android:paddingRight="3.5dp"
+            android:paddingBottom="1dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_min_11sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_car_type"
+            app:layout_constraintStart_toEndOf="@id/guideline_left"
+            app:layout_constraintTop_toTopOf="@id/tv_car_type"
+            tool:text="即刻" />
+
+        <com.sang.common.widget.CircularImageView
+            android:id="@+id/point_start"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:src="#43BFA3"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_start_address"
+            app:layout_constraintEnd_toEndOf="@id/tv_state"
+            app:layout_constraintStart_toStartOf="@id/tv_state"
+            app:layout_constraintTop_toTopOf="@+id/tv_start_address"
+            app:viewradius="5dp" />
+
+        <com.sang.common.widget.CircularImageView
+            android:id="@+id/point_end"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:src="#F06F28"
+            app:showBorder="false"
+            app:borderWidth="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_end_address"
+            app:layout_constraintEnd_toEndOf="@id/point_start"
+            app:layout_constraintStart_toStartOf="@id/point_start"
+            app:layout_constraintTop_toTopOf="@+id/tv_end_address"
+            app:viewradius="5dp"
+            app:radiusLeftTop="5dp"
+
+            />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="@color/line_color"
+            app:layout_constraintBottom_toTopOf="@id/point_end"
+            app:layout_constraintEnd_toEndOf="@id/point_start"
+            app:layout_constraintStart_toStartOf="@id/point_start"
+            app:layout_constraintTop_toBottomOf="@id/point_start" />
+
+        <TextView
+            android:id="@+id/tv_start_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/app_gap"
+            android:layout_marginTop="@dimen/app_gap"
+            android:textColor="@color/color_title_dark"
+            android:textSize="@dimen/text_small_14"
+            app:layout_constraintEnd_toEndOf="@id/guideline_right"
+            app:layout_constraintStart_toEndOf="@+id/point_start"
+            app:layout_constraintTop_toBottomOf="@id/tv_state_des"
+            tool:text="新疆维吾尔自治区喀什地区巴楚和平路651号" />
+
+        <TextView
+            android:id="@+id/tv_end_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_model_gap"
+            android:textColor="@color/color_title_dark"
+            android:textSize="@dimen/text_small_14"
+            app:layout_constraintEnd_toEndOf="@id/tv_start_address"
+            app:layout_constraintStart_toStartOf="@id/tv_start_address"
+            app:layout_constraintTop_toBottomOf="@id/tv_start_address"
+            tool:text="新疆维吾尔自治区喀什地区巴楚和平路651号" />
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/line_height"
+            android:layout_marginTop="@dimen/app_gap"
+            android:background="@color/line_color"
+            app:layout_constraintBottom_toTopOf="@+id/tv_price_des"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_end_address" />
+
+
+        <TextView
+            android:id="@+id/tv_price_des"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_gap"
+            android:text="运费："
+            android:textColor="@color/color_title_dark"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintStart_toEndOf="@id/guideline_left"
+            app:layout_constraintTop_toBottomOf="@id/line" />
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_light"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintBottom_toBottomOf="@id/tv_price_des"
+            app:layout_constraintStart_toEndOf="@id/tv_price_des"
+            app:layout_constraintTop_toTopOf="@id/tv_price_des"
+            tool:text="100￥" />
+
+        <TextView
+            android:id="@+id/bt_sub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_2_e83e15"
+            android:text="我要接单"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintBottom_toBottomOf="@id/tv_price_des"
+            app:layout_constraintEnd_toEndOf="@id/guideline_right"
+            app:layout_constraintTop_toTopOf="@id/tv_price_des" />
+    </android.support.constraint.ConstraintLayout>
+</com.sang.common.widget.CircularFramlayout>
+
+

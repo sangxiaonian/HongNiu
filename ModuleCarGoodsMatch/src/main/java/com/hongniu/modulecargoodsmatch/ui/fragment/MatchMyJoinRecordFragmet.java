@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.hongniu.baselibrary.arouter.ArouterParams;
+import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.base.RefrushFragmet;
 import com.hongniu.baselibrary.entity.CommonBean;
@@ -35,7 +35,8 @@ import io.reactivex.Observable;
  * 作者： ${PING} on 2019/5/12.
  * 我参与的车货匹配列表
  */
-@Route(path = ArouterParams.fragment_match_my_join)
+@Deprecated
+@Route(path = ArouterParamsMatch.fragment_match_my_join)
 public class MatchMyJoinRecordFragmet extends RefrushFragmet<MatchMyJoinGoodsInofrBean> {
 
 

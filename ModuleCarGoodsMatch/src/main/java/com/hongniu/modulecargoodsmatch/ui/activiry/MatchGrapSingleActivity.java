@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
-import com.hongniu.baselibrary.arouter.ArouterParams;
+import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
@@ -55,7 +55,8 @@ import static com.hongniu.baselibrary.config.Param.isDebug;
  * @Author PING
  * @Description 我要接单页面
  */
-@Route(path = ArouterParams.activity_match_grap_single)
+@Deprecated
+@Route(path = ArouterParamsMatch.activity_match_grap_single)
 public class MatchGrapSingleActivity extends BaseActivity implements View.OnClickListener, PayWayView.OnPayTypeChangeListener, PayDialog.OnClickPayListener, PayPasswordKeyBord.PayKeyBordListener {
 
     private TextView tvCarNum;

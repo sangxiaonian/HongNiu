@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="radio_icon_button">
+        <attr name="title" format="string" />
+        <attr name="titleCheck" format="string" />
+        <attr name="titleColor" format="color" />
+        <attr name="titleColorCheck" format="color" />
+        <attr name="icon" format="reference" />
+        <attr name="iconCheck" format="reference" />
+        <attr name="index" format="reference" />
+        <attr name="indexCheck" format="reference" />
+        <attr name="hideIndex" format="boolean" />
+
+    </declare-styleable>
+
+</resources>

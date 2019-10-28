@@ -1,8 +1,8 @@
 package com.hongniu.modulecargoodsmatch.ui.activiry;
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.os.Bundle;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -12,27 +12,25 @@ import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.modulecargoodsmatch.R;
-
 /**
- *@data  2019/5/12
+ *@data  2019/10/27
  *@Author PING
  *@Description
  *
- * 车货匹配我的记录
- */
-@Deprecated
-@Route(path = ArouterParamsMatch.activity_match_my_record)
-public class MatchMyRecordActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
+ * 我的车货匹配订单
+*/
+@Route(path = ArouterParamsMatch.activity_match_my_order)
+public class MatchMyOrderActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
 
     private RadioGroup group;
     private RadioButton btLeft;
     private RadioButton btRight;
-    private Fragment currentFragment,releastFragment,participateFragment;
+    private Fragment currentFragment, findFragment, recevingFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_match_my_record);
+        setContentView(R.layout.activity_match_my_order);
         setToolbarTitle("我的记录");
         initView();
         initData();
@@ -62,25 +60,25 @@ public class MatchMyRecordActivity extends BaseActivity implements RadioGroup.On
             fragmentTransaction.hide(currentFragment);
         }
         if (checkedId==R.id.rb_left) {
-            if (releastFragment==null){
-                releastFragment= (Fragment) ArouterUtils.getInstance().builder(ArouterParamsMatch.fragment_match_my_record).navigation();
+            if (findFragment ==null){
+                findFragment = (Fragment) ArouterUtils.getInstance().builder(ArouterParamsMatch.fragment_match_driver_order_receiving).navigation();
                 Bundle bundle=new Bundle();
                 bundle.putInt(Param.TYPE,2);
-                releastFragment.setArguments(bundle);
-                fragmentTransaction.add(R.id.content,releastFragment);
+                findFragment.setArguments(bundle);
+                fragmentTransaction.add(R.id.content, findFragment);
             }else {
-                fragmentTransaction.show(releastFragment);
+                fragmentTransaction.show(findFragment);
             }
-            currentFragment=releastFragment;
+            currentFragment= findFragment;
 
         }else {
-            if (participateFragment==null){
-                participateFragment= (Fragment) ArouterUtils.getInstance().builder(ArouterParamsMatch.fragment_match_my_join).navigation();
-                fragmentTransaction.add(R.id.content,participateFragment);
+            if (recevingFragment ==null){
+                recevingFragment = (Fragment) ArouterUtils.getInstance().builder(ArouterParamsMatch.fragment_match_driver_order_receiving).navigation();
+                fragmentTransaction.add(R.id.content, recevingFragment);
             }else {
-                fragmentTransaction.show(participateFragment);
+                fragmentTransaction.show(recevingFragment);
             }
-            currentFragment=participateFragment;
+            currentFragment= recevingFragment;
 
         }
         fragmentTransaction.commit();

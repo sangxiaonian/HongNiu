@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="@drawable/shape_e83e15"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/img_icon"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        tool:src="@color/color_light" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/app_item_gap"
+        tool:text="货主"
+        tool:textColor="#333333"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_min_11sp" />
+
+    <ImageView
+        android:id="@+id/img_index"
+        android:layout_width="17dp"
+        android:layout_height="17dp"
+        tool:src="@drawable/triangle_white" />
+
+</LinearLayout>

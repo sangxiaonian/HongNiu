@@ -13,7 +13,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hongniu.baselibrary.arouter.ArouterParamFestivity;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
-import com.hongniu.baselibrary.arouter.ArouterParams;
+import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterParamsBreakbulk;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
@@ -36,10 +36,8 @@ import com.sang.common.net.rx.BaseObserver;
 import com.sang.common.recycleview.RecycleViewScroll;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
-import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.ColorImageView;
 import com.sang.common.widget.DrawableCircle;
 
@@ -285,7 +283,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                 break;
             case R.id.card_policy:
 
-                ArouterUtils.getInstance().builder(ArouterParams.activity_match_car_good).navigation(getContext());
+                ArouterUtils.getInstance().builder(ArouterParamsMatch.activity_match_car_good).navigation(getContext());
                 break;
             case R.id.card_yongjin:
                 ArouterUtils.getInstance().builder(ArouterParamFestivity.activity_festivity_home).navigation(getContext());

@@ -13,14 +13,16 @@ import android.graphics.RectF;
 import android.graphics.Xfermode;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.sang.common.R;
 import com.sang.common.utils.DeviceUtils;
 
-
 /**
  * 作者： ${PING} on 2018/5/21.
- * 圆角ImageView 基于imageView的圆角图片控件，圆角ImageView 的所有属性
+ * 万能圆角控件，基于Framlayout的ViewGroup ，会对子控件进行圆角截取
  */
 
 public class CircularImageView extends android.support.v7.widget.AppCompatImageView {
@@ -28,7 +30,7 @@ public class CircularImageView extends android.support.v7.widget.AppCompatImageV
     /**
      * 是否显示边框
      */
-    private boolean showBorder;
+    private boolean showBorder = true;
 
     /**
      * 边框颜色
@@ -83,27 +85,11 @@ public class CircularImageView extends android.support.v7.widget.AppCompatImageV
         borderWidth = DeviceUtils.dip2px(context, 1);
         borderColor = Color.WHITE;
 
-        if (attrs != null) {
-            TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.CircularFramlayout);
-            borderColor = ta.getColor(R.styleable.CircularFramlayout_borderColor, Color.WHITE);
-            showBorder = ta.getBoolean(R.styleable.CircularFramlayout_showBorder, false);
-            borderWidth = (int) ta.getDimension(R.styleable.CircularFramlayout_borderWidth, borderWidth);
-            radiusLeftTop = (int) ta.getDimension(R.styleable.CircularFramlayout_radiusLeftTop, 0);
-            radiusRightTop = (int) ta.getDimension(R.styleable.CircularFramlayout_radiusRightTop, 0);
-            radiusRightBottom = (int) ta.getDimension(R.styleable.CircularFramlayout_radiusRightBottom, 0);
-            radiusLeftBottom = (int) ta.getDimension(R.styleable.CircularFramlayout_radiusLeftBottom, 0);
-            int radius = (int) ta.getDimension(R.styleable.CircularFramlayout_viewradius, -1);
-            ta.recycle();
-            if (radius >= 0) {
-                setRadius(radius);
-            }
-        }
-
+        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
         //默认为白色
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setColor(borderColor);
-
         borderPath = new Path();
 
         rectLeftTop = new RectF();
@@ -111,6 +97,29 @@ public class CircularImageView extends android.support.v7.widget.AppCompatImageV
         rectRightBottom = new RectF();
         rectLeftBottom = new RectF();
         xfermode = new PorterDuffXfermode(PorterDuff.Mode.DST_IN);
+
+        if (attrs != null) {
+            TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.CircularFramlayout);
+            borderColor = ta.getColor(R.styleable.CircularFramlayout_borderColor, Color.WHITE);
+            showBorder = ta.getBoolean(R.styleable.CircularFramlayout_showBorder, false);
+            borderWidth = (int) ta.getDimension(R.styleable.CircularFramlayout_borderWidth, DeviceUtils.dip2px(context, 1));
+            radiusLeftTop = (int) ta.getDimension(R.styleable.CircularFramlayout_radiusLeftTop, 0);
+            radiusRightTop = (int) ta.getDimension(R.styleable.CircularFramlayout_radiusRightTop, 0);
+            radiusRightBottom = (int) ta.getDimension(R.styleable.CircularFramlayout_radiusRightBottom, 0);
+            radiusLeftBottom = (int) ta.getDimension(R.styleable.CircularFramlayout_radiusLeftBottom, 0);
+            final int radius = (int) ta.getDimension(R.styleable.CircularFramlayout_viewradius, -1);
+            ta.recycle();
+            if (radius >= 0) {
+                post(new Runnable() {
+                    @Override
+                    public void run() {
+                        setRadius(radius);
+
+                    }
+                });
+            }
+        }
+
 
     }
 
@@ -120,7 +129,6 @@ public class CircularImageView extends android.support.v7.widget.AppCompatImageV
      * @param radius
      */
     public void setRadius(int radius) {
-
         setRadius(radius, radius, radius, radius);
     }
 
@@ -133,11 +141,12 @@ public class CircularImageView extends android.support.v7.widget.AppCompatImageV
      * @param leftBottom
      */
     public void setRadius(int leftTop, int rightTop, int rightBottom, int leftBottom) {
-        int min = Math.min(getWidth(), getHeight());
-        radiusLeftTop = leftTop ;//> min ? min : leftTop;
-        radiusRightTop = rightTop ;//> min ? min : rightTop;
-        radiusRightBottom = rightBottom ;//> min ? min : rightBottom;
-        radiusLeftBottom = leftBottom ;//> min ? min : leftBottom;
+        radiusLeftTop = leftTop;// > min ? min : leftTop;
+        radiusRightTop = rightTop;//> min ? min : rightTop;
+        radiusRightBottom = rightBottom;//> min ? min : rightBottom;
+        radiusLeftBottom = leftBottom;//> min ? min : leftBottom;
+
+
         postInvalidate();
     }
 
@@ -176,17 +185,13 @@ public class CircularImageView extends android.support.v7.widget.AppCompatImageV
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         rectF = new RectF(0, 0, w, h);
-    }
 
+    }
 
     @Override
     protected void onDraw(Canvas canvas) {
-
-
         final int layer = canvas.saveLayer(rectF, mPaint, Canvas.ALL_SAVE_FLAG);
         super.onDraw(canvas);
-//        canvas.save();
-
         final Bitmap bitmap = creatBitmap(canvas);
         mPaint.setXfermode(xfermode);
         canvas.drawBitmap(bitmap, 0, 0, mPaint);
@@ -202,23 +207,58 @@ public class CircularImageView extends android.support.v7.widget.AppCompatImageV
 
         canvas.restoreToCount(layer);
     }
+
+
+    @Override
+    protected void dispatchDraw(Canvas canvas) {
+        final int layer = canvas.saveLayer(rectF, mPaint, Canvas.ALL_SAVE_FLAG);
+        super.dispatchDraw(canvas);
+//        canvas.save();y
+        final Bitmap bitmap = creatBitmap(canvas);
+        mPaint.setXfermode(xfermode);
+        canvas.drawBitmap(bitmap, 0, 0, mPaint);
+        mPaint.setXfermode(null);
+        bitmap.recycle();
+
+        if (showBorder) {
+            mPaint.setStrokeWidth(borderWidth);
+            mPaint.setColor(borderColor);
+            mPaint.setStyle(Paint.Style.STROKE);
+            canvas.drawPath(borderPath, mPaint);
+        }
+
+        canvas.restoreToCount(layer);
+    }
+
     private Bitmap creatBitmap(Canvas cvns) {
-        initRadios(cvns.getWidth(), cvns.getHeight(), borderPath, borderWidth / 2);
+        initRadios(cvns.getWidth(), cvns.getHeight(), borderPath, showBorder?borderWidth / 2:0);
         mPaint.setStyle(Paint.Style.FILL);
-        mPaint.setColor(borderColor);
         Bitmap bitmap = Bitmap.createBitmap(cvns.getWidth(), cvns.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         canvas.drawPath(borderPath, mPaint);
         canvas.setBitmap(null);
         return bitmap;
     }
+
+
     private void initRadios(int w, int h, Path borderPath, int borderWidth) {
         borderPath.reset();
-        int left = (int) Math.ceil(borderWidth);
-        int top = (int) Math.ceil(borderWidth);
+        int left ;
+        int top ;
+        int right;
+        int bottom;
 
-        int right = (int) Math.ceil(w - borderWidth);
-        int bottom = (int) Math.ceil(h - borderWidth);
+        if (showBorder) {
+            left = (int) Math.ceil(borderWidth);
+            top = (int) Math.ceil(borderWidth);
+            right = (int) Math.ceil(w - borderWidth);
+            bottom = (int) Math.ceil(h - borderWidth);
+        }else {
+            left = 0;
+            top = 0;
+            right = w;
+            bottom = h;
+        }
         //左上
         borderPath.moveTo(left, top + radiusLeftTop);
         rectLeftTop.left = left;
