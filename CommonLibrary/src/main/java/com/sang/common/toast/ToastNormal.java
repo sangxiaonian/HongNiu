@@ -2,10 +2,14 @@ package com.sang.common.toast;
 
 import android.content.Context;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sang.common.R;
 import com.sang.common.utils.DeviceUtils;
+
 
 /**
  * 作者： ${PING} on 2018/8/3.
@@ -16,6 +20,8 @@ public class ToastNormal implements IToast {
     private Toast toast = null;
     private Context context;
 
+    private long lastTime;
+    private View inflate;
 
     public ToastNormal(Context context) {
         this.context = context;
@@ -23,10 +29,12 @@ public class ToastNormal implements IToast {
     }
 
     private Toast creatToast(Context context) {
-        Toast toast =Toast.makeText(context,"",Toast.LENGTH_SHORT);
+        Toast toast = new Toast(context);
         //设置Toast要显示的位置，水平居中并在底部，X轴偏移0个单位，Y轴偏移70个单位，
-        toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, DeviceUtils.dip2px(context,70));
+        toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, DeviceUtils.dip2px(context, 70));
+
         //设置显示时间
+        toast.setDuration(Toast.LENGTH_SHORT);
         return toast;
     }
 
@@ -52,38 +60,45 @@ public class ToastNormal implements IToast {
      */
     @Override
     public void setText(String text) {
-        toast.setText(text);
+
     }
 
     @Override
     public void show(String msg) {
-        setText(msg == null ? "" : msg);
-        toast.show();
+
+        long curr = System.currentTimeMillis();
+        if (curr - lastTime > 2000) {
+            inflate = LayoutInflater.from(context).inflate(R.layout.layout_toast, null);
+            ((TextView) inflate.findViewById(R.id.tv_title)).setText(msg);
+            toast.setView(inflate);
+            toast.show();
+            lastTime = curr;
+        }else if (inflate!=null){
+            ((TextView) inflate.findViewById(R.id.tv_title)).setText(msg);
+        }
     }
 
     @Override
     public void show(int msg) {
-        setText(msg == 0 ? "" : context.getString(msg));
-        toast.show();
+        show(msg == 0 ? "" : context.getString(msg));
     }
 
     @Override
     public void show() {
-        show("");
+        show("操作成功");
     }
 
     @Override
     public void show(Context context, int msg) {
-        Toast toast = creatToast(context);
-        toast.setText(msg);
-        toast.show();
 
+        show(context, msg == 0 ? "" : context.getString(msg));
     }
 
     @Override
     public void show(Context context, String msg) {
+        View inflate = LayoutInflater.from(context).inflate(R.layout.layout_toast, null);
         Toast toast = creatToast(context);
-        toast.setText(msg);
+        ((TextView) inflate.findViewById(R.id.tv_title)).setText(msg);
         toast.show();
     }
 }

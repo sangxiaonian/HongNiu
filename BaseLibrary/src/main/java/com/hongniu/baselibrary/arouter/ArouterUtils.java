@@ -13,14 +13,16 @@ import com.hongniu.baselibrary.R;
 public class ArouterUtils {
 
 
-    private String path;
 
-
-    public static ArouterUtils getInstance(){
-        return new ArouterUtils();
+    private static class InnerClass{
+        private static ArouterUtils utils=new ArouterUtils();
     }
 
-    public ArouterUtils() {
+    public static ArouterUtils getInstance(){
+        return InnerClass.utils;
+    }
+
+    private ArouterUtils() {
     }
 
 
@@ -30,21 +32,13 @@ public class ArouterUtils {
      * @return
      */
     public Postcard builder(String path){
-//          .withTransition(R.anim.slide_in_bottom, R.anim.slide_out_bottom)
        return ARouter.getInstance().build(path)
-//               .withTransition(R.anim.activity_entry_en,R.anim.activity_entry_out)
                ;
     }
 
 
 
-    /**
-     * 跳转界面
-     * @param context
-     */
-    public void navigation(Context context){
-        ARouter.getInstance().build(path).navigation(context);
-    }
+
 
 
 
