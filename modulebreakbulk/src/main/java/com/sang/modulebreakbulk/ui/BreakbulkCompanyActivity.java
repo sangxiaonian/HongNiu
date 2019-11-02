@@ -2,7 +2,6 @@ package com.sang.modulebreakbulk.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,6 @@ import com.sang.common.entity.Citys;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.sang.common.entity.NewAreaBean;
-import com.sang.common.event.BusFactory;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.JLog;
 import com.sang.common.utils.LoginUtils;
@@ -43,18 +41,12 @@ import com.sang.modulebreakbulk.entity.BreakbulkCompanyInfoBean;
 import com.sang.modulebreakbulk.entity.BreakbulkCompanyInfoParam;
 import com.sang.modulebreakbulk.net.HttpBreakFactory;
 import com.sang.thirdlibrary.chact.ChactHelper;
-import com.sang.thirdlibrary.map.LoactionUtils;
-import com.sang.thirdlibrary.map.utils.MapConverUtils;
 import com.sang.thirdlibrary.map.utils.SingleLoaction;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * @data 2019/9/22
@@ -166,7 +158,7 @@ public class BreakbulkCompanyActivity extends RefrushActivity<BreakbulkCompanyIn
                         img_phone.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                CommonUtils.toDial(mContext, data.getContactPhone());
+                                CommonUtils.call(mContext, data.getContactPhone());
                             }
                         });
                         img_chat.setOnClickListener(new View.OnClickListener() {

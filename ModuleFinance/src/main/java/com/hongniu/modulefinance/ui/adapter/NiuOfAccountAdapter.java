@@ -7,14 +7,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.hongniu.baselibrary.widget.order.OrderDetailDialog;
 import com.hongniu.modulefinance.R;
 import com.hongniu.modulefinance.control.OnItemClickListener;
 import com.hongniu.modulefinance.entity.NiuOfAccountBean;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.utils.CommonUtils;
-import com.sang.common.widget.dialog.builder.BottomAlertBuilder;
 import com.sang.thirdlibrary.chact.ChactHelper;
 
 import java.util.List;
@@ -57,7 +55,7 @@ public class NiuOfAccountAdapter extends XAdapter<NiuOfAccountBean> {
                 imagePhone.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        CommonUtils.toDial(context, data.getMobile());
+                        CommonUtils.call(context, data.getMobile());
                     }
                 });
 

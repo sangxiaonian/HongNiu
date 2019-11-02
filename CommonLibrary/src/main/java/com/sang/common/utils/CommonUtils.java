@@ -24,7 +24,7 @@ public class CommonUtils {
      * @param cxt
      * @param num
      */
-    public static void toDial(Context cxt, String num) {
+    public static void call(Context cxt, String num) {
         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + num));
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         cxt.startActivity(intent);

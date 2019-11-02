@@ -158,13 +158,13 @@ public class BreakbulkConsignmentRecordActivity extends RefrushActivity<Breakbul
                         img_call.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                CommonUtils.toDial(mContext, data.getReceiptMobile());
+                                CommonUtils.call(mContext, data.getReceiptMobile());
                             }
                         });
                         img_phone.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                CommonUtils.toDial(mContext, TextUtils.isEmpty(data.getLogisticsCompanyCP()) ? data.getLogisticsCompanyTel() : data.getLogisticsCompanyCP());
+                                CommonUtils.call(mContext, TextUtils.isEmpty(data.getLogisticsCompanyCP()) ? data.getLogisticsCompanyTel() : data.getLogisticsCompanyCP());
                             }
                         });
                         img_chat.setOnClickListener(new View.OnClickListener() {

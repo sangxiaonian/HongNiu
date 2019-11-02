@@ -94,7 +94,7 @@ public class BreakbulkCompanyDetailActivity extends BaseActivity implements View
     public void onClick(View v) {
         if (v.getId()==R.id.tv_call){
             if (infoBean!=null) {
-                CommonUtils.toDial(mContext, infoBean.getContactPhone());
+                CommonUtils.call(mContext, infoBean.getContactPhone());
             }
         }else if (v.getId()==R.id.tv_chat){
             if (infoBean!=null) {

@@ -1,12 +1,17 @@
 package com.hongniu.modulecargoodsmatch.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.List;
+
 /**
  * 作者：  on 2019/10/27.
  */
-public class MatchOrderInfoBean {
-
+public class MatchOrderInfoBean implements Parcelable {
 
     private String id;//true	number	订单id
+    private String startPrice;//true	number	起步价
     private String orderNum;//true	string	订单号
     private String userId;//true	string	用户id
     private String userName;//true	string	用户名
@@ -33,8 +38,45 @@ public class MatchOrderInfoBean {
     private int payWay;//true	number	支付方式(0微信,1银联,2线下支付,3支付宝支付,4余额支付,5企业钱包)
     private String deliveryMark;//true	string	送达备注
     private String isRefundRecord;//true	number	是否生成退款记录
-    private String isAppraiseRecord;//true	number	是否生成点评记录
+    private boolean isAppraiseRecord;//true	number	是否生成点评记录
     private String createTime;//true	string	创建时间
+    private List<String> imageUrls;//true	string	图片url集合
+    private int serviceScore;//true	string	服务评分
+    private String content;//true	string	点评内容
+
+    public String getStartPrice() {
+        return startPrice;
+    }
+
+    public void setStartPrice(String startPrice) {
+        this.startPrice = startPrice;
+    }
+
+
+
+    public List<String> getImageUrls() {
+        return imageUrls;
+    }
+
+    public void setImageUrls(List<String> imageUrls) {
+        this.imageUrls = imageUrls;
+    }
+
+    public int getServiceScore() {
+        return serviceScore;
+    }
+
+    public void setServiceScore(int serviceScore) {
+        this.serviceScore = serviceScore;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 
     public String getId() {
         return id;
@@ -252,11 +294,11 @@ public class MatchOrderInfoBean {
         this.isRefundRecord = isRefundRecord;
     }
 
-    public String getIsAppraiseRecord() {
+    public boolean getIsAppraiseRecord() {
         return isAppraiseRecord;
     }
 
-    public void setIsAppraiseRecord(String isAppraiseRecord) {
+    public void setIsAppraiseRecord(boolean isAppraiseRecord) {
         this.isAppraiseRecord = isAppraiseRecord;
     }
 
@@ -267,4 +309,95 @@ public class MatchOrderInfoBean {
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.orderNum);
+        dest.writeString(this.userId);
+        dest.writeString(this.userName);
+        dest.writeString(this.userMobile);
+        dest.writeString(this.departureTime);
+        dest.writeString(this.startPlaceInfo);
+        dest.writeString(this.destinationInfo);
+        dest.writeString(this.shipperName);
+        dest.writeString(this.shipperMobile);
+        dest.writeString(this.receiverName);
+        dest.writeString(this.receiverMobile);
+        dest.writeString(this.remark);
+        dest.writeString(this.distance);
+        dest.writeString(this.cartypeId);
+        dest.writeString(this.cartypeName);
+        dest.writeString(this.estimateFare);
+        dest.writeInt(this.status);
+        dest.writeString(this.driverId);
+        dest.writeString(this.driverName);
+        dest.writeString(this.driverMobile);
+        dest.writeString(this.deliveryTime);
+        dest.writeString(this.endTime);
+        dest.writeString(this.payTime);
+        dest.writeInt(this.payWay);
+        dest.writeString(this.deliveryMark);
+        dest.writeString(this.isRefundRecord);
+        dest.writeByte(this.isAppraiseRecord ? (byte) 1 : (byte) 0);
+        dest.writeString(this.createTime);
+        dest.writeStringList(this.imageUrls);
+        dest.writeInt(this.serviceScore);
+        dest.writeString(this.content);
+    }
+
+    public MatchOrderInfoBean() {
+    }
+
+    protected MatchOrderInfoBean(Parcel in) {
+        this.id = in.readString();
+        this.orderNum = in.readString();
+        this.userId = in.readString();
+        this.userName = in.readString();
+        this.userMobile = in.readString();
+        this.departureTime = in.readString();
+        this.startPlaceInfo = in.readString();
+        this.destinationInfo = in.readString();
+        this.shipperName = in.readString();
+        this.shipperMobile = in.readString();
+        this.receiverName = in.readString();
+        this.receiverMobile = in.readString();
+        this.remark = in.readString();
+        this.distance = in.readString();
+        this.cartypeId = in.readString();
+        this.cartypeName = in.readString();
+        this.estimateFare = in.readString();
+        this.status = in.readInt();
+        this.driverId = in.readString();
+        this.driverName = in.readString();
+        this.driverMobile = in.readString();
+        this.deliveryTime = in.readString();
+        this.endTime = in.readString();
+        this.payTime = in.readString();
+        this.payWay = in.readInt();
+        this.deliveryMark = in.readString();
+        this.isRefundRecord = in.readString();
+        this.isAppraiseRecord = in.readByte() != 0;
+        this.createTime = in.readString();
+        this.imageUrls = in.createStringArrayList();
+        this.serviceScore = in.readInt();
+        this.content = in.readString();
+    }
+
+    public static final Parcelable.Creator<MatchOrderInfoBean> CREATOR = new Parcelable.Creator<MatchOrderInfoBean>() {
+        @Override
+        public MatchOrderInfoBean createFromParcel(Parcel source) {
+            return new MatchOrderInfoBean(source);
+        }
+
+        @Override
+        public MatchOrderInfoBean[] newArray(int size) {
+            return new MatchOrderInfoBean[size];
+        }
+    };
 }

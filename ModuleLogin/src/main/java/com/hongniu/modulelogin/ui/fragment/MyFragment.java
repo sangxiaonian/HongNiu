@@ -15,7 +15,6 @@ import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseFragment;
-import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.LoginPersonInfor;
 import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.utils.Utils;
@@ -203,7 +202,7 @@ private ImageView imgHeard;
                         @Override
                         public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
                             dialog.dismiss();
-                            CommonUtils.toDial(getContext(), getString(R.string.login_contact_phone));
+                            CommonUtils.call(getContext(), getString(R.string.login_contact_phone));
 
                         }
                     }).creatDialog(new CenterAlertDialog(getContext())).show();

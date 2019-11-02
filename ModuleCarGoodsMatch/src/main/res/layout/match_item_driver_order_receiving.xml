@@ -11,8 +11,8 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:background="@color/white"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:paddingTop="15dp"
         android:paddingBottom="15dp">
 
@@ -49,25 +49,32 @@
             android:textColor="@color/color_order_color"
             android:textSize="@dimen/text_small_14"
             app:layout_constraintEnd_toStartOf="@id/tv_car_type"
-            app:layout_constraintStart_toEndOf="@+id/tv_state"
+            app:layout_constraintStart_toEndOf="@+id/cir_state"
             app:layout_constraintTop_toTopOf="@id/tv_car_type"
             tool:text="发货人正在等待接单…" />
 
-        <TextView
-            android:id="@+id/tv_state"
+        <com.sang.common.widget.CircularFramlayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_2_e83e15"
-            android:paddingLeft="3.5dp"
-            android:paddingTop="1dp"
-            android:paddingRight="3.5dp"
-            android:paddingBottom="1dp"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_min_11sp"
+            android:id="@+id/cir_state"
             app:layout_constraintBottom_toBottomOf="@id/tv_car_type"
             app:layout_constraintStart_toEndOf="@id/guideline_left"
             app:layout_constraintTop_toTopOf="@id/tv_car_type"
-            tool:text="即刻" />
+            app:viewradius="1dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_2_e83e15"
+                android:paddingLeft="3.5dp"
+                android:paddingTop="1dp"
+                android:paddingRight="3.5dp"
+                android:paddingBottom="1dp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_min_11sp"
+                tool:text="即刻" />
+
+        </com.sang.common.widget.CircularFramlayout>
 
         <com.sang.common.widget.CircularImageView
             android:id="@+id/point_start"
@@ -75,8 +82,8 @@
             android:layout_height="10dp"
             android:src="#43BFA3"
             app:layout_constraintBottom_toBottomOf="@+id/tv_start_address"
-            app:layout_constraintEnd_toEndOf="@id/tv_state"
-            app:layout_constraintStart_toStartOf="@id/tv_state"
+            app:layout_constraintEnd_toEndOf="@id/cir_state"
+            app:layout_constraintStart_toStartOf="@id/cir_state"
             app:layout_constraintTop_toTopOf="@+id/tv_start_address"
             app:viewradius="5dp" />
 
@@ -85,14 +92,14 @@
             android:layout_width="10dp"
             android:layout_height="10dp"
             android:src="#F06F28"
-            app:showBorder="false"
             app:borderWidth="0dp"
             app:layout_constraintBottom_toBottomOf="@+id/tv_end_address"
             app:layout_constraintEnd_toEndOf="@id/point_start"
             app:layout_constraintStart_toStartOf="@id/point_start"
             app:layout_constraintTop_toTopOf="@+id/tv_end_address"
-            app:viewradius="5dp"
             app:radiusLeftTop="5dp"
+            app:showBorder="false"
+            app:viewradius="5dp"
 
             />
 
@@ -174,6 +181,20 @@
             android:textSize="@dimen/text_small"
             app:layout_constraintBottom_toBottomOf="@id/tv_price_des"
             app:layout_constraintEnd_toEndOf="@id/guideline_right"
+            app:layout_constraintTop_toTopOf="@id/tv_price_des" />
+
+        <TextView
+            android:id="@+id/bt_sub_white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_2_stoke_dddddd"
+            android:text="取消找车"
+            app:layout_goneMarginRight="0dp"
+            android:layout_margin="@dimen/app_model_gap"
+            android:textColor="@color/color_title_dark"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintBottom_toBottomOf="@id/tv_price_des"
+            app:layout_constraintEnd_toStartOf="@id/bt_sub"
             app:layout_constraintTop_toTopOf="@id/tv_price_des" />
     </android.support.constraint.ConstraintLayout>
 </com.sang.common.widget.CircularFramlayout>

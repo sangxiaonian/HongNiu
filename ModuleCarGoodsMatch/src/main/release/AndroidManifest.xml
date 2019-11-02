@@ -3,7 +3,8 @@
     package="com.hongniu.modulecargoodsmatch">
 
     <application>
-        <activity android:name=".ui.activiry.MatchMapActivity"></activity>
+        <activity android:name=".ui.activiry.MatchOrderDetailActivity"></activity>
+        <activity android:name=".ui.activiry.MatchMapActivity" />
         <activity android:name=".ui.activiry.MatchCreadOrderActivity" />
         <activity android:name=".ui.activiry.MatchMyOrderActivity" />
         <activity android:name=".ui.activiry.MatchEstimateOrderActivity" />

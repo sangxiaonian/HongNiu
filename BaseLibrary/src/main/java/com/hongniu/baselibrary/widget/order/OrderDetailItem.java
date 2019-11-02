@@ -430,7 +430,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
 
                             break;
                     }
-                    CommonUtils.toDial(getContext(), carOwnerPhone);
+                    CommonUtils.call(getContext(), carOwnerPhone);
                 }
             });
             creatChactSpan(firstChat - 1, builder, new ClickableSpan() {
@@ -482,7 +482,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
             creatPhoneSpan(secondPoint - 1, builder, new ClickableSpan() {
                 @Override
                 public void onClick(View widget) {
-                    CommonUtils.toDial(getContext(), driverPhone);
+                    CommonUtils.call(getContext(), driverPhone);
                     switch (roleState) {
                         case DRIVER:
 

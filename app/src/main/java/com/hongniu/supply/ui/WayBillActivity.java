@@ -29,7 +29,6 @@ import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.ConvertUtils;
-import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -106,7 +105,7 @@ public class WayBillActivity extends BaseActivity {
                                     builder.setSpan(new ClickableSpan() {
                                         @Override
                                         public void onClick(@NonNull View widget) {
-                                            CommonUtils.toDial(mContext, builder.subSequence(finalStart, finalStart + 11).toString());
+                                            CommonUtils.call(mContext, builder.subSequence(finalStart, finalStart + 11).toString());
                                         }
 
                                         @Override

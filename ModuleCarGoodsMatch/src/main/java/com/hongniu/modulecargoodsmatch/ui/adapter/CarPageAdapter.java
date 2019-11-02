@@ -1,4 +1,4 @@
-package com.hongniu.modulecargoodsmatch.ui;
+package com.hongniu.modulecargoodsmatch.ui.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

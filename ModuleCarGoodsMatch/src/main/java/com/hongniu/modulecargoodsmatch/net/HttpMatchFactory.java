@@ -240,4 +240,45 @@ public class HttpMatchFactory {
                 .queryDriverOrder(parambean)
                 .compose(RxUtils.<CommonBean<PageBean<MatchOrderInfoBean>>>getSchedulersObservableTransformer());
     }
+
+    /**
+     * @param id
+     * @return
+     * @data 2019/11/2
+     * @Author PING
+     * @Description 取消找车
+     */
+    public static Observable<CommonBean<Object>> cancleCar(String id) {
+        IDParams params = new IDParams();
+        params.id = id;
+        return MatchClient.getInstance().getService()
+                .cancleCar(params)
+                .compose(RxUtils.<CommonBean<Object>>getSchedulersObservableTransformer())
+                ;
+    }
+
+    /**
+     * @param id
+     * @return
+     * @data 2019/11/2
+     * @Author PING
+     * @Description 我要接单
+     */
+    public static Observable<CommonBean<Object>> receiverOrder(String id) {
+        IDParams params = new IDParams();
+        params.id = id;
+        return MatchClient.getInstance().getService()
+                .receiverOrder(params)
+                .compose(RxUtils.<CommonBean<Object>>getSchedulersObservableTransformer())
+                ;
+    }
+
+    public static Observable<CommonBean<MatchOrderInfoBean>> queryMatchOrderDetail(String id) {
+        IDParams params = new IDParams();
+        params.id = id;
+        return MatchClient.getInstance().getService()
+                .queryMatchOrderDetail(params)
+                .compose(RxUtils.<CommonBean<MatchOrderInfoBean>>getSchedulersObservableTransformer())
+                ;
+    }
 }

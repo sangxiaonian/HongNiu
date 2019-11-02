@@ -156,5 +156,31 @@ public interface MatchService {
     @POST("hongniu/api/carGoodsOrder/queryPage")
     Observable<CommonBean<PageBean<MatchOrderInfoBean>>> queryDriverOrder(@Body PagerParambean params);
 
+    /**
+     * 取消找车
+     *
+     * @param params
+     * @return
+     */
+    @POST("hongniu/api/carGoodsOrder/cancel")
+    Observable<CommonBean<Object>> cancleCar(@Body IDParams params);
+
+    /**
+     * 我要接单
+     *
+     * @param params
+     * @return
+     */
+    @POST("hongniu/api/carGoodsOrder/orderReceive")
+    Observable<CommonBean<Object>> receiverOrder(@Body IDParams params);
+   /**
+     * 查询订单详情
+     *
+     * @param params
+     * @return
+     */
+    @POST("hongniu/api/carGoodsOrder/detail")
+    Observable<CommonBean<MatchOrderInfoBean>> queryMatchOrderDetail(@Body IDParams params);
+
 
 }

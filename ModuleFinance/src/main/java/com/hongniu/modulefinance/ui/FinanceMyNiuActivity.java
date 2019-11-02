@@ -27,7 +27,6 @@ import com.hongniu.modulefinance.net.HttpFinanceFactory;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.utils.CommonUtils;
-import com.sang.common.utils.ConvertUtils;
 import com.sang.common.widget.dialog.inter.DialogControl;
 import com.sang.thirdlibrary.chact.ChactHelper;
 
@@ -35,9 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
 import io.reactivex.functions.Action;
-import io.reactivex.functions.Function;
 
 /**
  * @data 2019/3/3
@@ -165,7 +162,7 @@ public class FinanceMyNiuActivity extends RefrushActivity<NiuOfAccountBean> {
                                         if (position==0){
                                             ChactHelper.getHelper().startPriver(context, data.getId(), name);
                                         }else if (position==1){
-                                            CommonUtils.toDial(context, data.getMobile());
+                                            CommonUtils.call(context, data.getMobile());
                                         }
                                     }
                                 })

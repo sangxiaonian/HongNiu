@@ -283,7 +283,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                 break;
             case R.id.card_policy:
 
-                ArouterUtils.getInstance().builder(ArouterParamsMatch.activity_match_car_good).navigation(getContext());
+                ArouterUtils.getInstance().builder(ArouterParamsMatch.activity_match_estimate_order).navigation(getContext());
                 break;
             case R.id.card_yongjin:
                 ArouterUtils.getInstance().builder(ArouterParamFestivity.activity_festivity_home).navigation(getContext());

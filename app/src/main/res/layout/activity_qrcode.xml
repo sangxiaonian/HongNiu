@@ -31,7 +31,7 @@
             android:id="@+id/img_left"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            app:srcCompat="@drawable/ic_icon_sm_50" />
+            android:src="@mipmap/scan_red" />
 
         <TextView
             android:id="@+id/tv_left"
@@ -60,7 +60,7 @@
             android:layout_width="50dp"
             android:scaleType="centerCrop"
             android:layout_height="50dp"
-            app:srcCompat="@drawable/icon_search_ffffff" />
+            android:src="@mipmap/hand_input_red" />
 
         <TextView
             android:id="@+id/tv_right"

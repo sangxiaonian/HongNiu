@@ -47,7 +47,7 @@ public class ChatConversationActivity extends BaseActivity {
                                 @Override
                                 public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
                                     dialog.dismiss();
-                                    CommonUtils.toDial(mContext, userInfor.getMobile());
+                                    CommonUtils.call(mContext, userInfor.getMobile());
                                 }
                             })
                             .creatDialog(new CenterAlertDialog(mContext))
