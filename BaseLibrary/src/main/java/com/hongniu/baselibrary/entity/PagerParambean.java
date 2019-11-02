@@ -8,7 +8,11 @@ import com.hongniu.baselibrary.config.Param;
 public class PagerParambean {
     public int pageNum = 1;//默认1
     public int pageSize = Param.PAGE_SIZE;//默认20
+    public int type;
     public PagerParambean(int currentPage) {
         this.pageNum=currentPage;
     }
+
+
+
 }

@@ -14,6 +14,7 @@ import com.hongniu.modulecargoodsmatch.entity.MatchCreatOrderParams;
 import com.hongniu.modulecargoodsmatch.entity.MatchGrapDetailParams;
 import com.hongniu.modulecargoodsmatch.entity.MatchGrapSingleDetailBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchMyJoinGoodsInofrBean;
+import com.hongniu.modulecargoodsmatch.entity.MatchOrderInfoBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchQueryCountFareParam;
 import com.hongniu.modulecargoodsmatch.entity.MatchQueryGoodsInforParams;
 import com.sang.common.net.rx.RxUtils;
@@ -118,7 +119,7 @@ public class HttpMatchFactory {
      *
      * @return
      */
-    public static Observable<CommonBean<Object>> cancleParticipation(String id ) {
+    public static Observable<CommonBean<Object>> cancleParticipation(String id) {
         MatchGrapDetailParams params = new MatchGrapDetailParams(0);
 
         params.robId = id;
@@ -131,6 +132,7 @@ public class HttpMatchFactory {
 
     /**
      * 确定下单
+     *
      * @param goodsSourceId
      * @param id
      * @return
@@ -140,15 +142,17 @@ public class HttpMatchFactory {
         params.robId = id;
         params.goodsSourceId = goodsSourceId;
 
-       return MatchClient.getInstance().getService()
+        return MatchClient.getInstance().getService()
                 .chooseGrap(params)
                 .compose(RxUtils.<CommonBean<MatchChooseGrapBean>>getSchedulersObservableTransformer())
-        ;
+                ;
 
 
     }
+
     /**
      * 确定下单
+     *
      * @param goodsSourceId
      * @param id
      * @return
@@ -158,10 +162,10 @@ public class HttpMatchFactory {
         params.robId = id;
         params.goodsSourceId = goodsSourceId;
 
-       return MatchClient.getInstance().getService()
+        return MatchClient.getInstance().getService()
                 .resetDriver(params)
                 .compose(RxUtils.<CommonBean<Object>>getSchedulersObservableTransformer())
-        ;
+                ;
 
 
     }
@@ -172,34 +176,68 @@ public class HttpMatchFactory {
     public static Observable<CommonBean<MatchCarPreInforBean>> queryGoodCarInfor() {
 
         return MatchClient.getInstance().getService()
-                .queryGoodCarInfor( )
+                .queryGoodCarInfor()
                 .compose(RxUtils.<CommonBean<MatchCarPreInforBean>>getSchedulersObservableTransformer());
 
     }
 
     /**
      * 查询车辆类型信息
+     *
      * @return
      */
     public static Observable<CommonBean<List<MatchCarTypeInfoBean>>> queryCarTypeInfo() {
 
         return MatchClient.getInstance().getService()
-                .queryCarTypeInfo( )
+                .queryCarTypeInfo()
                 .compose(RxUtils.<CommonBean<List<MatchCarTypeInfoBean>>>getSchedulersObservableTransformer());
     }
+
     /**
      * 查询车辆类型信息
+     *
      * @return
      */
     public static Observable<CommonBean<MatchCountFareBean>> queryCountFare(MatchQueryCountFareParam param) {
         return MatchClient.getInstance().getService()
-                .queryCountFare(param )
+                .queryCountFare(param)
                 .compose(RxUtils.<CommonBean<MatchCountFareBean>>getSchedulersObservableTransformer());
     }
 
+    /**
+     * 创建订单
+     *
+     * @param creatOrderParams
+     * @return
+     */
     public static Observable<CommonBean<MatchCreatOrderParams>> matchCreatOrder(MatchCreatOrderParams creatOrderParams) {
         return MatchClient.getInstance().getService()
-                .matchCreatOrder(creatOrderParams )
+                .matchCreatOrder(creatOrderParams)
                 .compose(RxUtils.<CommonBean<MatchCreatOrderParams>>getSchedulersObservableTransformer());
+    }
+
+    /**
+     * @data 2019/11/2
+     * @Author PING
+     * @Description 查询订单
+     */
+    public static Observable<CommonBean<PageBean<MatchOrderInfoBean>>> queryMyOrder(int currentPage, int type) {
+        PagerParambean parambean = new PagerParambean(currentPage);
+        parambean.type = type;
+        return MatchClient.getInstance().getService()
+                .queryMyOrder(parambean)
+                .compose(RxUtils.<CommonBean<PageBean<MatchOrderInfoBean>>>getSchedulersObservableTransformer());
+    }
+
+    /**
+     * @data 2019/11/2
+     * @Author PING
+     * @Description 查询司机接单
+     */
+    public static Observable<CommonBean<PageBean<MatchOrderInfoBean>>> queryDriverOrder(int currentPage) {
+        PagerParambean parambean = new PagerParambean(currentPage);
+        return MatchClient.getInstance().getService()
+                .queryDriverOrder(parambean)
+                .compose(RxUtils.<CommonBean<PageBean<MatchOrderInfoBean>>>getSchedulersObservableTransformer());
     }
 }

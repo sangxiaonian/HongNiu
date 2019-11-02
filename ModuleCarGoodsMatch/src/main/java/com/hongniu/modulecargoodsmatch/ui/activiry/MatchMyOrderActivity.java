@@ -63,7 +63,7 @@ public class MatchMyOrderActivity extends BaseActivity implements RadioGroup.OnC
             if (findFragment ==null){
                 findFragment = (Fragment) ArouterUtils.getInstance().builder(ArouterParamsMatch.fragment_match_driver_order_receiving).navigation();
                 Bundle bundle=new Bundle();
-                bundle.putInt(Param.TYPE,2);
+                bundle.putInt(Param.TYPE,1);
                 findFragment.setArguments(bundle);
                 fragmentTransaction.add(R.id.content, findFragment);
             }else {
@@ -74,6 +74,9 @@ public class MatchMyOrderActivity extends BaseActivity implements RadioGroup.OnC
         }else {
             if (recevingFragment ==null){
                 recevingFragment = (Fragment) ArouterUtils.getInstance().builder(ArouterParamsMatch.fragment_match_driver_order_receiving).navigation();
+                Bundle bundle=new Bundle();
+                bundle.putInt(Param.TYPE,2);
+                recevingFragment.setArguments(bundle);
                 fragmentTransaction.add(R.id.content, recevingFragment);
             }else {
                 fragmentTransaction.show(recevingFragment);

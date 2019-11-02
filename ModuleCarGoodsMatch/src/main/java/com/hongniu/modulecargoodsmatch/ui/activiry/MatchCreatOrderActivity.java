@@ -129,7 +129,7 @@ public class MatchCreatOrderActivity extends BaseActivity implements View.OnClic
                 item_start_price.setTextCenter(ConvertUtils.changeFloat(carTypeInfoBean.getStartPrice(), 2) + "元");
                 item_price.setTextCenter(ConvertUtils.changeFloat(carTypeInfoBean.getExceedMileagePrice(), 2) + "元");
 
-                creatOrderParams.setCartypeId(carTypeInfoBean.getCarType());
+                creatOrderParams.setCartypeId(carTypeInfoBean.getId());
 
             }
             creatOrderParams.setDepartureTime(params.getTime());

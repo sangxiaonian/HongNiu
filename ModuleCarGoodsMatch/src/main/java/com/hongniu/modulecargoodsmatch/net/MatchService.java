@@ -14,6 +14,7 @@ import com.hongniu.modulecargoodsmatch.entity.MatchCreatOrderParams;
 import com.hongniu.modulecargoodsmatch.entity.MatchGrapDetailParams;
 import com.hongniu.modulecargoodsmatch.entity.MatchGrapSingleDetailBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchMyJoinGoodsInofrBean;
+import com.hongniu.modulecargoodsmatch.entity.MatchOrderInfoBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchQueryCountFareParam;
 import com.hongniu.modulecargoodsmatch.entity.MatchQueryGoodsInforParams;
 
@@ -136,6 +137,24 @@ public interface MatchService {
      */
     @POST("hongniu//api/carGoodsOrder/add")
     Observable<CommonBean<MatchCreatOrderParams>> matchCreatOrder(@Body MatchCreatOrderParams params);
+
+    /**
+     * 查询订单
+     *
+     * @param params
+     * @return
+     */
+    @POST("hongniu/api/carGoodsOrder/myOrders")
+    Observable<CommonBean<PageBean<MatchOrderInfoBean>>> queryMyOrder(@Body PagerParambean params);
+
+    /**
+     * 查询司机接单信息
+     *
+     * @param params
+     * @return
+     */
+    @POST("hongniu/api/carGoodsOrder/queryPage")
+    Observable<CommonBean<PageBean<MatchOrderInfoBean>>> queryDriverOrder(@Body PagerParambean params);
 
 
 }

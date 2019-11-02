@@ -5,6 +5,7 @@ package com.hongniu.modulecargoodsmatch.entity;
  */
 public class MatchCreatOrderParams {
 
+    String carGoodsOrderId;//false	string	取货时间 null表示立即取货
     String departureTime;//false	string	取货时间 null表示立即取货
     String startPlaceInfo;//true	string	发货地描述
     String startPlaceLon;//true	number	发货地经度
@@ -18,6 +19,14 @@ public class MatchCreatOrderParams {
     String receiverName;//false	string	收货人姓名
     String receiverMobile;//false	string	收货人手机号码
     String remark;//false	string	备注
+
+    public String getCarGoodsOrderId() {
+        return carGoodsOrderId;
+    }
+
+    public void setCarGoodsOrderId(String carGoodsOrderId) {
+        this.carGoodsOrderId = carGoodsOrderId;
+    }
 
     public String getDepartureTime() {
         return departureTime;
