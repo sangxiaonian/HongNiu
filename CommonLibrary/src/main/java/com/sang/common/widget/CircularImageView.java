@@ -12,20 +12,20 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.graphics.Xfermode;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 
 import com.sang.common.R;
 import com.sang.common.utils.DeviceUtils;
+
 
 /**
  * 作者： ${PING} on 2018/5/21.
  * 万能圆角控件，基于Framlayout的ViewGroup ，会对子控件进行圆角截取
  */
 
-public class CircularImageView extends android.support.v7.widget.AppCompatImageView {
+public class CircularImageView extends AppCompatImageView {
 
     /**
      * 是否显示边框

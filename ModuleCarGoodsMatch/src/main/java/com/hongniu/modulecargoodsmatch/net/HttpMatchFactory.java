@@ -6,6 +6,7 @@ import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
 import com.hongniu.modulecargoodsmatch.entity.GoodsOwnerInforBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchCarPreInforBean;
+import com.hongniu.modulecargoodsmatch.entity.MatchCarTypeInfoBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchChooseGrapBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchCreatGoodsSourceParams;
 import com.hongniu.modulecargoodsmatch.entity.MatchGrapDetailParams;
@@ -13,6 +14,8 @@ import com.hongniu.modulecargoodsmatch.entity.MatchGrapSingleDetailBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchMyJoinGoodsInofrBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchQueryGoodsInforParams;
 import com.sang.common.net.rx.RxUtils;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 
@@ -169,5 +172,16 @@ public class HttpMatchFactory {
                 .queryGoodCarInfor( )
                 .compose(RxUtils.<CommonBean<MatchCarPreInforBean>>getSchedulersObservableTransformer());
 
+    }
+
+    /**
+     * 查询车辆类型信息
+     * @return
+     */
+    public static Observable<CommonBean<List<MatchCarTypeInfoBean>>> queryCarTypeInfo() {
+
+        return MatchClient.getInstance().getService()
+                .queryCarTypeInfo( )
+                .compose(RxUtils.<CommonBean<List<MatchCarTypeInfoBean>>>getSchedulersObservableTransformer());
     }
 }

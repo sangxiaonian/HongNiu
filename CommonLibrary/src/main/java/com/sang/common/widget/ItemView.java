@@ -161,7 +161,7 @@ public class ItemView extends FrameLayout {
     private void setColorLeft(int colorRight) {
         this.colorRight = colorRight;
         if (colorRight != 0) {
-            tvRight.setTextColor(colorRight);
+            tvLeft.setTextColor(colorRight);
         }
     }
 

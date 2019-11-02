@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="40dp"
+    android:paddingRight="40dp">
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="122dp"
+        android:scaleType="center"
+        android:layout_height="65dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tool:src="@color/color_content_light" />
+
+    <TextView
+        android:id="@+id/tv_car_weight"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/app_gap"
+        android:textColor="@color/color_of_666666"
+        android:textSize="@dimen/text_small_14"
+        app:layout_constraintBottom_toTopOf="@+id/tv_car_size"
+        app:layout_constraintStart_toEndOf="@id/img"
+        app:layout_constraintTop_toTopOf="@id/img"
+        tool:text="载重：0.65吨" />
+
+    <TextView
+        android:id="@+id/tv_car_size"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_of_666666"
+        android:textSize="@dimen/text_small"
+        app:layout_constraintBottom_toBottomOf="@id/img"
+        app:layout_constraintStart_toStartOf="@id/tv_car_weight"
+        app:layout_constraintTop_toBottomOf="@id/tv_car_weight"
+        tool:text="长宽高：1.6*1.1*1.0米" />
+
+</android.support.constraint.ConstraintLayout>

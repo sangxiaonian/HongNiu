@@ -6,12 +6,15 @@ import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
 import com.hongniu.modulecargoodsmatch.entity.GoodsOwnerInforBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchCarPreInforBean;
+import com.hongniu.modulecargoodsmatch.entity.MatchCarTypeInfoBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchChooseGrapBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchCreatGoodsSourceParams;
 import com.hongniu.modulecargoodsmatch.entity.MatchGrapDetailParams;
 import com.hongniu.modulecargoodsmatch.entity.MatchGrapSingleDetailBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchMyJoinGoodsInofrBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchQueryGoodsInforParams;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.Response;
@@ -104,6 +107,13 @@ public interface MatchService {
      */
     @POST("hongniu/api/goodsSource/preload")
     Observable<CommonBean<MatchCarPreInforBean>> queryGoodCarInfor( );
+   /**
+     * 车货匹配查询车辆宽高和所需车辆类型
+     *
+     * @return
+     */
+    @POST("hongniu/api/car/newCarTypeList")
+    Observable<CommonBean<List<MatchCarTypeInfoBean>>> queryCarTypeInfo();
 
 
 }

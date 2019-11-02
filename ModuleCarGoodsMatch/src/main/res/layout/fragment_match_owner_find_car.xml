@@ -1,13 +1,263 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.fragment.MatchOwnerFindCarFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="货主找车" />
+    <RadioGroup
+        android:id="@+id/rg"
+        style="@style/RadioGroup"
+        android:orientation="horizontal"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp" />
 
-</FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@color/white">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <FrameLayout
+            android:id="@+id/img_last"
+
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/app_gap">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center"
+                android:src="@mipmap/icon_gary_arrow_last_32" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/img_next"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:paddingRight="@dimen/app_gap">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center"
+                android:src="@mipmap/icon_gary_arrowmore_20" />
+        </FrameLayout>
+    </RelativeLayout>
+
+
+    <com.sang.common.widget.CircularFramlayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="7dp"
+
+        app:viewradius="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_white"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@color/color_white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/app_gap">
+
+                <com.sang.common.widget.CircularImageView
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
+                    android:src="#43BFA3"
+                    app:viewradius="3.5dp" />
+
+
+                <LinearLayout
+                    android:id="@+id/ll_start_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/app_item_gap">
+
+                    <TextView
+                        android:id="@+id/tv_start_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="请选择发货地"
+                        android:textColor="@color/color_et_hide"
+                        android:textSize="@dimen/text_small_15" />
+
+                    <TextView
+                        android:id="@+id/tv_start_address_dess"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:textColor="@color/color_content_light"
+                        android:textSize="@dimen/text_min_12sp"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginLeft="@dimen/app_item_gap"
+                    android:src="@mipmap/icon_gary_arrowmore_20" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+
+                android:layout_height="@dimen/line_height"
+                android:layout_marginLeft="@dimen/app_gap"
+                android:background="@color/color_line_eeeeee" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@color/color_white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/app_gap">
+
+
+                <com.sang.common.widget.CircularImageView
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
+                    android:src="#F06F28"
+                    app:viewradius="3.5dp" />
+
+
+                <LinearLayout
+                    android:id="@+id/ll_end_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/app_item_gap">
+
+                    <TextView
+                        android:id="@+id/tv_end_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="请选择收货地"
+                        android:textColor="@color/color_et_hide"
+                        android:textSize="@dimen/text_small_15" />
+
+                    <TextView
+                        android:id="@+id/tv_end_address_dess"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:textColor="@color/color_content_light"
+                        android:textSize="@dimen/text_min_12sp"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginLeft="@dimen/app_item_gap"
+                    android:src="@mipmap/icon_gary_arrowmore_20" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_height"
+                android:layout_marginLeft="@dimen/app_gap"
+                android:background="@color/color_line_eeeeee" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@color/color_white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/app_gap">
+
+                <com.sang.common.widget.CircularImageView
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
+                    android:src="@color/color_of_666666"
+                    app:viewradius="3.5dp" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:paddingLeft="@dimen/app_item_gap"
+                    android:text="取货时间"
+                    android:textColor="@color/color_title_dark"
+                    android:textSize="@dimen/text_small_15" />
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:paddingLeft="@dimen/app_item_gap"
+                    android:text="立即取货"
+                    android:textColor="@color/color_of_666666"
+                    android:textSize="@dimen/text_small_15" />
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginLeft="@dimen/app_item_gap"
+                    android:src="@mipmap/icon_gary_arrowmore_20" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </com.sang.common.widget.CircularFramlayout>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_gap"
+            android:gravity="center"
+            android:text="选择地址后将自动为你预估运费"
+            android:textColor="@color/color_title_dark"
+            android:textSize="@dimen/text_small_15" />
+
+        <Button
+            android:id="@+id/bt_sum"
+            style="@style/bt_sum_red"
+            android:text="立即下单" />
+    </LinearLayout>
+
+</LinearLayout>

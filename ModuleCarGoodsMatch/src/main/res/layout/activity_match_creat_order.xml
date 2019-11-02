@@ -19,12 +19,9 @@
             android:orientation="vertical">
 
             <com.sang.common.widget.CircularFramlayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/app_item_gap"
-                android:layout_marginTop="@dimen/app_gap"
-                android:layout_marginRight="@dimen/app_item_gap"
-                android:layout_marginBottom="@dimen/app_gap"
+                android:layout_margin="7dp"
 
                 app:viewradius="4dp">
 
@@ -34,6 +31,7 @@
                     android:background="@color/color_white"
                     android:orientation="vertical">
 
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
@@ -42,26 +40,40 @@
                         android:orientation="horizontal"
                         android:paddingLeft="@dimen/app_gap">
 
-                        <com.sang.common.widget.CircularFramlayout
+                        <com.sang.common.widget.CircularImageView
                             android:layout_width="7dp"
                             android:layout_height="7dp"
-                            app:viewradius="3.5dp">
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@color/color_line" />
-                        </com.sang.common.widget.CircularFramlayout>
+                            android:src="#43BFA3"
+                            app:viewradius="3.5dp" />
 
 
-                        <com.sang.common.widget.ItemView
-                            android:id="@+id/item_start_time"
-                            style="@style/itemview"
-                            android:paddingLeft="@dimen/app_item_gap"
-                            app:editable="false"
-                            app:showline="false"
-                            app:srcshow="false"
-                            app:textcenterhide="请选择发车时间" />
+                        <LinearLayout
+                            android:id="@+id/ll_start_address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:paddingLeft="@dimen/app_item_gap">
+
+                            <TextView
+                                android:id="@+id/tv_start_address"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:text="请选择发货地"
+                                android:textColor="@color/color_et_hide"
+                                android:textSize="@dimen/text_small_15" />
+
+                            <TextView
+                                android:id="@+id/tv_start_address_dess"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:textColor="@color/color_content_light"
+                                android:textSize="@dimen/text_min_12sp"
+                                android:visibility="gone" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -79,33 +91,46 @@
                         android:orientation="horizontal"
                         android:paddingLeft="@dimen/app_gap">
 
-                        <com.sang.common.widget.CircularFramlayout
+
+                        <com.sang.common.widget.CircularImageView
                             android:layout_width="7dp"
                             android:layout_height="7dp"
-                            app:viewradius="3.5dp">
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="#43BFA3" />
-                        </com.sang.common.widget.CircularFramlayout>
+                            android:src="#F06F28"
+                            app:viewradius="3.5dp" />
 
 
-                        <com.sang.common.widget.ItemView
-                            android:id="@+id/item_start_loaction"
-                            style="@style/itemview"
-                            android:paddingLeft="@dimen/app_item_gap"
-                            app:editable="false"
-                            app:isSingleLine="false"
-                            app:showline="false"
-                            app:srcshow="false"
-                            app:textcenterhide="请选择发货地" />
+                        <LinearLayout
+                            android:id="@+id/ll_end_address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:paddingLeft="@dimen/app_item_gap">
+
+                            <TextView
+                                android:id="@+id/tv_end_address"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:text="请选择收货地"
+                                android:textColor="@color/color_et_hide"
+                                android:textSize="@dimen/text_small_15" />
+
+                            <TextView
+                                android:id="@+id/tv_end_address_dess"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:textColor="@color/color_content_light"
+                                android:textSize="@dimen/text_min_12sp"
+                                android:visibility="gone" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
-
                         android:layout_height="@dimen/line_height"
                         android:layout_marginLeft="@dimen/app_gap"
                         android:background="@color/color_line_eeeeee" />
@@ -118,27 +143,24 @@
                         android:orientation="horizontal"
                         android:paddingLeft="@dimen/app_gap">
 
-                        <com.sang.common.widget.CircularFramlayout
+                        <com.sang.common.widget.CircularImageView
                             android:layout_width="7dp"
                             android:layout_height="7dp"
-                            app:viewradius="3.5dp">
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="#F06F28" />
-                        </com.sang.common.widget.CircularFramlayout>
+                            android:src="@color/color_of_666666"
+                            app:viewradius="3.5dp" />
 
 
-                        <com.sang.common.widget.ItemView
-                            android:id="@+id/item_end_loaction"
-                            style="@style/itemview"
+                        <TextView
+                            android:id="@+id/tv_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:maxLines="1"
                             android:paddingLeft="@dimen/app_item_gap"
-                            app:editable="false"
-                            app:isSingleLine="false"
-                            app:showline="false"
-                            app:srcshow="false"
-                            app:textcenterhide="请选择收货地" />
+                            android:text="立即取货"
+                            android:textColor="@color/color_of_666666"
+                            android:textSize="@dimen/text_small_15" />
+
 
                     </LinearLayout>
 
@@ -152,96 +174,63 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/app_item_gap"
-                android:background="@color/color_white"
                 android:orientation="vertical">
 
                 <com.sang.common.widget.ItemView
-                    android:id="@+id/item_start_car_num"
+                    android:id="@+id/item_name"
                     style="@style/itemview"
-                    app:srcLeftshow="show"
-                    app:textcenterhide="请输入发车编号"
-                    app:textleft="发车编号" />
+                    app:textcenterhide="请输入发货人姓名"
+                    app:textleft="发货人姓名" />
 
                 <com.sang.common.widget.ItemView
-                    android:id="@+id/item_cargo_name"
+                    android:id="@+id/item_phone"
                     style="@style/itemview"
-                    app:srcLeftshow="show"
-                    app:textcenterhide="请输入货物名称"
-                    app:textleft="货物名称" />
-
-                <com.sang.common.widget.ItemView
-                    android:id="@+id/item_size"
-                    style="@style/itemview"
-                    app:centerType="number"
-                    app:srcLeftshow="show"
-                    app:textcenterhide="请输入货物体积"
-                    app:textleft="货物体积"
-                    app:textright="方" />
-
-                <com.sang.common.widget.ItemView
-                    android:id="@+id/item_weight"
-                    style="@style/itemview"
-                    app:centerType="number"
-                    app:srcLeftshow="show"
-                    app:textcenterhide="请输入货物重量"
-                    app:textleft="货物重量"
-                    app:textright="吨" />
-
-                <com.sang.common.widget.ItemView
-                    android:id="@+id/item_price"
-                    style="@style/itemview"
-                    app:centerType="number"
-                    app:showline="true"
-                    app:srcLeftshow="show"
-                    app:textcenterhide="请输入运费"
-                    app:textleft="运费"
-                    app:textright="元" />
-
-                <com.sang.common.widget.ItemView
-                    android:id="@+id/item_car_size"
-                    style="@style/itemview"
-                    app:centerType="normal"
-                    app:editable="false"
-                    app:showline="true"
-                    app:srcLeftshow="hide"
-                    app:srcshow="true"
-                    app:textcenterhide="请选择车辆长宽高"
-                    app:textleft="车辆长宽高" />
-
-                <com.sang.common.widget.ItemView
-                    android:id="@+id/item_car_type"
-                    style="@style/itemview"
-                    app:centerType="normal"
-                    app:editable="false"
-                    app:showline="true"
-                    app:srcLeftshow="hide"
-                    app:srcshow="true"
-                    app:textcenterhide="请选择所需车型"
-                    app:textleft="所需车型" />
+                    app:centerType="phone"
+                    app:textcenterhide="请输入发货人手机"
+                    app:textleft="发货人手机" />
 
                 <com.sang.common.widget.ItemView
                     android:id="@+id/item_remark"
                     style="@style/itemview"
-                    app:centerType="normal"
-                    app:editable="false"
                     app:showline="false"
-                    app:srcLeftshow="hide"
-                    app:srcshow="false"
+                    app:textcenterhide="请输入备注"
                     app:textleft="备注" />
 
-                <EditText
-                    android:id="@+id/et_remark"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:gravity="start"
-                    android:hint="请输入备注"
-                    android:minHeight="90dp"
-                    android:paddingLeft="25dp"
-                    android:paddingRight="@dimen/app_gap"
-                    android:textColor="@color/color_title_dark"
-                    android:textColorHint="@color/color_content_light"
-                    android:textSize="@dimen/text_small_15" />
+                <com.sang.common.widget.ItemView
+                    android:id="@+id/item_car_type"
+                    style="@style/itemview"
+                    android:layout_marginTop="@dimen/app_model_gap"
+                    app:editable="false"
+                    app:textcenterhide="请输入货物重量"
+                    app:textleft="配送车型" />
+
+                <com.sang.common.widget.ItemView
+                    android:id="@+id/item_start_price"
+                    style="@style/itemview"
+                    app:editable="false"
+                    app:textcenterhide="请输入起送价"
+                    app:textleft="起送价" />
+
+
+                <com.sang.common.widget.ItemView
+                    android:id="@+id/item_price"
+                    style="@style/itemview"
+                    app:centerType="normal"
+                    app:editable="false"
+                    app:textcenterhide="请选择配送价"
+                    app:textleft="配送价" />
+
+                <com.sang.common.widget.ItemView
+                    android:id="@+id/item_forecast_price"
+                    style="@style/itemview"
+                    app:centerType="normal"
+                    app:colorCenter="@color/color_light"
+                    app:editable="false"
+                    app:showline="false"
+                    app:textcenterhide="请选择预估运费"
+                    app:textleft="预估运费" />
+
+
             </LinearLayout>
 
 
@@ -252,7 +241,7 @@
     <Button
         android:id="@+id/bt_entry"
         style="@style/bt_sum_red"
-        android:text="发布" />
+        android:text="确定下单" />
 
 
 </LinearLayout>
