@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.hongniu.moduleorder.R;
-import com.hongniu.moduleorder.control.OnItemClickListener;
+import com.sang.common.recycleview.inter.OnItemClickListener;
 import com.hongniu.moduleorder.control.OnItemDeletedClickListener;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.sang.common.imgload.ImageLoader;

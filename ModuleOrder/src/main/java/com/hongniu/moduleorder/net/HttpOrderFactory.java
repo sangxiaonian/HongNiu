@@ -299,34 +299,7 @@ public class HttpOrderFactory {
      * @param poiSearch
      */
     public static Observable<CommonBean<PageBean<PoiItem>>> searchPio(PoiSearch poiSearch) {
-        return Observable.just(poiSearch)
-                .map(new Function<PoiSearch, PoiResult>() {
-
-                    public PoiResult apply(PoiSearch poiSearch) throws Exception {
-                        return poiSearch.searchPOI();
-                    }
-                })
-                .map(new Function<PoiResult, ArrayList<PoiItem>>() {
-                    @Override
-                    public ArrayList<PoiItem> apply(PoiResult poiResult) throws Exception {
-
-
-                        return poiResult.getPois();
-                    }
-                })
-                .map(new Function<ArrayList<PoiItem>, CommonBean<PageBean<PoiItem>>>() {
-                    @Override
-                    public CommonBean<PageBean<PoiItem>> apply(ArrayList<PoiItem> poiItems) throws Exception {
-                        CommonBean<PageBean<PoiItem>> bean = new CommonBean<>();
-                        PageBean<PoiItem> pageBean = new PageBean<>();
-                        pageBean.setList(poiItems);
-                        bean.setCode(200);
-                        bean.setData(pageBean);
-                        return bean;
-                    }
-                })
-                .compose(RxUtils.<CommonBean<PageBean<PoiItem>>>getSchedulersObservableTransformer())
-                ;
+        return HttpAppFactory.searchPio(poiSearch);
 
 
     }

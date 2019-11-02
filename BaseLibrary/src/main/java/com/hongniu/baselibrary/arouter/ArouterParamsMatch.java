@@ -44,5 +44,9 @@ public class ArouterParamsMatch {
      * 我的订单
      */
     public final static String activity_match_my_order="/ModuleCarGoodsMatch/activity_match_my_order";
+    /**
+     * 地图页面
+     */
+    public final static String activity_match_map="/ModuleCarGoodsMatch/activity_match_map";
 
 }

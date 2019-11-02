@@ -1,4 +1,4 @@
-package com.hongniu.moduleorder.ui.adapter;
+package com.hongniu.baselibrary.ui.adapter;
 
 import android.content.Context;
 import android.view.View;
@@ -7,13 +7,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amap.api.services.core.PoiItem;
+import com.hongniu.baselibrary.R;
 import com.hongniu.baselibrary.utils.Utils;
-import com.hongniu.moduleorder.R;
-import com.hongniu.moduleorder.control.OnItemClickListener;
-import com.hongniu.moduleorder.control.OrderEvent;
-import com.sang.common.event.BusFactory;
+
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
+import com.sang.common.recycleview.inter.OnItemClickListener;
 
 import java.util.List;
 
@@ -24,6 +23,8 @@ public class MapSearchAdapter extends XAdapter<PoiItem> {
     public MapSearchAdapter(Context context, List<PoiItem> list) {
         super(context, list);
     }
+
+
 
     OnItemClickListener<PoiItem> clickListener;
 

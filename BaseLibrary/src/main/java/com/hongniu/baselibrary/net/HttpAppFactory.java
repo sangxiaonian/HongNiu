@@ -1,5 +1,8 @@
 package com.hongniu.baselibrary.net;
 
+import com.amap.api.services.core.PoiItem;
+import com.amap.api.services.poisearch.PoiResult;
+import com.amap.api.services.poisearch.PoiSearch;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.BreakbulkConsignmentInfoBean;
 import com.hongniu.baselibrary.entity.CarInforBean;
@@ -29,6 +32,7 @@ import com.sang.thirdlibrary.chact.UserInfor;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -334,5 +338,42 @@ public class HttpAppFactory {
 
     }
 
+    /**
+     * 高德地图搜索PIO
+     *
+     * @param poiSearch
+     */
+    public static Observable<CommonBean<PageBean<PoiItem>>> searchPio(PoiSearch poiSearch) {
+        return Observable.just(poiSearch)
+                .map(new Function<PoiSearch, PoiResult>() {
+
+                    public PoiResult apply(PoiSearch poiSearch) throws Exception {
+                        return poiSearch.searchPOI();
+                    }
+                })
+                .map(new Function<PoiResult, ArrayList<PoiItem>>() {
+                    @Override
+                    public ArrayList<PoiItem> apply(PoiResult poiResult) throws Exception {
+
+
+                        return poiResult.getPois();
+                    }
+                })
+                .map(new Function<ArrayList<PoiItem>, CommonBean<PageBean<PoiItem>>>() {
+                    @Override
+                    public CommonBean<PageBean<PoiItem>> apply(ArrayList<PoiItem> poiItems) throws Exception {
+                        CommonBean<PageBean<PoiItem>> bean = new CommonBean<>();
+                        PageBean<PoiItem> pageBean = new PageBean<>();
+                        pageBean.setList(poiItems);
+                        bean.setCode(200);
+                        bean.setData(pageBean);
+                        return bean;
+                    }
+                })
+                .compose(RxUtils.<CommonBean<PageBean<PoiItem>>>getSchedulersObservableTransformer())
+                ;
+
+
+    }
 
 }

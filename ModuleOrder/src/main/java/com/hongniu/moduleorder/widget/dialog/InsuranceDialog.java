@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.hongniu.baselibrary.widget.dialog.AccountDialog;
 import com.hongniu.moduleorder.R;
-import com.hongniu.moduleorder.control.OnItemClickListener;
+import com.sang.common.recycleview.inter.OnItemClickListener;
 import com.hongniu.baselibrary.entity.OrderInsuranceInforBean;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;

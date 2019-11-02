@@ -28,7 +28,7 @@ import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.PayPasswordKeyBord;
 import com.hongniu.baselibrary.widget.dialog.AccountDialog;
 import com.hongniu.moduleorder.R;
-import com.hongniu.moduleorder.control.OnItemClickListener;
+import com.sang.common.recycleview.inter.OnItemClickListener;
 import com.hongniu.moduleorder.control.OrderPayControl;
 import com.hongniu.moduleorder.entity.OrderInsuranceParam;
 import com.hongniu.moduleorder.present.OrderPayPresenter;

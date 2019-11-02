@@ -3,6 +3,7 @@ package com.hongniu.modulecargoodsmatch.ui.fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -12,6 +13,7 @@ import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseFragment;
 import com.hongniu.baselibrary.base.NetObserver;
+import com.hongniu.baselibrary.config.Param;
 import com.hongniu.modulecargoodsmatch.R;
 import com.hongniu.modulecargoodsmatch.entity.MatchCarTypeInfoBean;
 import com.hongniu.modulecargoodsmatch.net.HttpMatchFactory;
@@ -35,6 +37,8 @@ public class MatchOwnerFindCarFragment extends BaseFragment implements RadioGrou
     private TextView tv_end_address;
     private TextView tv_end_address_dess;
     private TextView tv_time;
+    private ViewGroup ll_start_address;
+    private ViewGroup ll_end_address;
     private View bt_sum;
 
     @Override
@@ -50,6 +54,8 @@ public class MatchOwnerFindCarFragment extends BaseFragment implements RadioGrou
         tv_end_address_dess=inflate.findViewById(R.id.tv_end_address_dess);
         tv_time=inflate.findViewById(R.id.tv_time);
         bt_sum=inflate.findViewById(R.id.bt_sum);
+        ll_start_address=inflate.findViewById(R.id.ll_start_address);
+        ll_end_address=inflate.findViewById(R.id.ll_start_address);
         return inflate;
     }
 
@@ -78,6 +84,8 @@ public class MatchOwnerFindCarFragment extends BaseFragment implements RadioGrou
         img_last.setOnClickListener(this);
         img_next.setOnClickListener(this);
         bt_sum.setOnClickListener(this);
+        ll_start_address.setOnClickListener(this);
+        ll_end_address.setOnClickListener(this);
     }
 
     private void initTags(List<MatchCarTypeInfoBean> data) {
@@ -137,6 +145,15 @@ public class MatchOwnerFindCarFragment extends BaseFragment implements RadioGrou
             }
         }else if (v.getId() == R.id.bt_sum) {
             ArouterUtils.getInstance().builder(ArouterParamsMatch.activity_match_creat_order)
+                    .navigation(getContext());
+        }else if (v.getId() == R.id.ll_start_address) {
+            ArouterUtils.getInstance().builder(ArouterParamsMatch.activity_match_map)
+                    .withBoolean(Param.TRAN,true)
+                    .navigation(getContext());
+        }else if (v.getId() == R.id.ll_end_address) {
+            ArouterUtils.getInstance()
+                    .builder(ArouterParamsMatch.activity_match_map)
+                    .withBoolean(Param.TRAN,false)
                     .navigation(getContext());
         }
     }

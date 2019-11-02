@@ -33,7 +33,7 @@ import com.hongniu.baselibrary.utils.UpLoadImageUtils;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.moduleorder.R;
-import com.hongniu.moduleorder.control.OnItemClickListener;
+import com.sang.common.recycleview.inter.OnItemClickListener;
 import com.hongniu.moduleorder.control.OnItemDeletedClickListener;
 import com.hongniu.moduleorder.control.OrderCreatControl;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
