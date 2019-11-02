@@ -8,16 +8,18 @@ import com.hongniu.modulecargoodsmatch.entity.GoodsOwnerInforBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchCarPreInforBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchCarTypeInfoBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchChooseGrapBean;
+import com.hongniu.modulecargoodsmatch.entity.MatchCountFareBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchCreatGoodsSourceParams;
+import com.hongniu.modulecargoodsmatch.entity.MatchCreatOrderParams;
 import com.hongniu.modulecargoodsmatch.entity.MatchGrapDetailParams;
 import com.hongniu.modulecargoodsmatch.entity.MatchGrapSingleDetailBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchMyJoinGoodsInofrBean;
+import com.hongniu.modulecargoodsmatch.entity.MatchQueryCountFareParam;
 import com.hongniu.modulecargoodsmatch.entity.MatchQueryGoodsInforParams;
 
 import java.util.List;
 
 import io.reactivex.Observable;
-import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
@@ -100,20 +102,40 @@ public interface MatchService {
      */
     @POST("hongniu/api/robOrder/reset")
     Observable<CommonBean<Object>> resetDriver(@Body MatchGrapDetailParams params);
-   /**
+
+    /**
      * 车货匹配查询车辆宽高和所需车辆类型
      *
      * @return
      */
     @POST("hongniu/api/goodsSource/preload")
-    Observable<CommonBean<MatchCarPreInforBean>> queryGoodCarInfor( );
-   /**
+    Observable<CommonBean<MatchCarPreInforBean>> queryGoodCarInfor();
+
+    /**
      * 车货匹配查询车辆宽高和所需车辆类型
      *
      * @return
      */
     @POST("hongniu/api/car/newCarTypeList")
     Observable<CommonBean<List<MatchCarTypeInfoBean>>> queryCarTypeInfo();
+
+    /**
+     * 获取预估运费
+     *
+     * @param params
+     * @return
+     */
+    @POST("hongniu/api/carGoodsOrder/countFare")
+    Observable<CommonBean<MatchCountFareBean>> queryCountFare(@Body MatchQueryCountFareParam params);
+
+    /**
+     * 创建订单
+     *
+     * @param params
+     * @return
+     */
+    @POST("hongniu//api/carGoodsOrder/add")
+    Observable<CommonBean<MatchCreatOrderParams>> matchCreatOrder(@Body MatchCreatOrderParams params);
 
 
 }

@@ -147,11 +147,13 @@
 
 
                 <LinearLayout
+                    android:padding="5dp"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical"
-                    android:paddingLeft="@dimen/app_item_gap">
+                    >
 
                     <TextView
                         android:id="@+id/tv_end_address"
@@ -187,6 +189,7 @@
                 android:background="@color/color_line_eeeeee" />
 
             <LinearLayout
+                android:id="@+id/ll_time"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:background="@color/color_white"

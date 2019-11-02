@@ -8,10 +8,13 @@ import com.hongniu.modulecargoodsmatch.entity.GoodsOwnerInforBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchCarPreInforBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchCarTypeInfoBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchChooseGrapBean;
+import com.hongniu.modulecargoodsmatch.entity.MatchCountFareBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchCreatGoodsSourceParams;
+import com.hongniu.modulecargoodsmatch.entity.MatchCreatOrderParams;
 import com.hongniu.modulecargoodsmatch.entity.MatchGrapDetailParams;
 import com.hongniu.modulecargoodsmatch.entity.MatchGrapSingleDetailBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchMyJoinGoodsInofrBean;
+import com.hongniu.modulecargoodsmatch.entity.MatchQueryCountFareParam;
 import com.hongniu.modulecargoodsmatch.entity.MatchQueryGoodsInforParams;
 import com.sang.common.net.rx.RxUtils;
 
@@ -183,5 +186,20 @@ public class HttpMatchFactory {
         return MatchClient.getInstance().getService()
                 .queryCarTypeInfo( )
                 .compose(RxUtils.<CommonBean<List<MatchCarTypeInfoBean>>>getSchedulersObservableTransformer());
+    }
+    /**
+     * 查询车辆类型信息
+     * @return
+     */
+    public static Observable<CommonBean<MatchCountFareBean>> queryCountFare(MatchQueryCountFareParam param) {
+        return MatchClient.getInstance().getService()
+                .queryCountFare(param )
+                .compose(RxUtils.<CommonBean<MatchCountFareBean>>getSchedulersObservableTransformer());
+    }
+
+    public static Observable<CommonBean<MatchCreatOrderParams>> matchCreatOrder(MatchCreatOrderParams creatOrderParams) {
+        return MatchClient.getInstance().getService()
+                .matchCreatOrder(creatOrderParams )
+                .compose(RxUtils.<CommonBean<MatchCreatOrderParams>>getSchedulersObservableTransformer());
     }
 }

@@ -1,10 +1,13 @@
 package com.hongniu.modulecargoodsmatch.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * 作者：  on 2019/11/1.
  */
-public class MatchCarTypeInfoBean {
-   private int id	;//true	number	车辆类型id
+public class MatchCarTypeInfoBean implements Parcelable {
+   private String id	;//true	number	车辆类型id
    private String carType	;//true	string	车辆类型名称
    private String carImage	;//true	string	图片url
    private float load	;//true	number	载重 (吨)
@@ -14,11 +17,11 @@ public class MatchCarTypeInfoBean {
    private float startPrice	;//true	number	起步价(10公里内)
    private float exceedMileagePrice	;//true	number	超里程费(每超出一公里增加费用)
 
-   public int getId() {
+   public String getId() {
       return id;
    }
 
-   public void setId(int id) {
+   public void setId(String id) {
       this.id = id;
    }
 
@@ -85,4 +88,49 @@ public class MatchCarTypeInfoBean {
    public void setExceedMileagePrice(float exceedMileagePrice) {
       this.exceedMileagePrice = exceedMileagePrice;
    }
+
+   @Override
+   public int describeContents() {
+      return 0;
+   }
+
+   @Override
+   public void writeToParcel(Parcel dest, int flags) {
+      dest.writeString(this.id);
+      dest.writeString(this.carType);
+      dest.writeString(this.carImage);
+      dest.writeFloat(this.load);
+      dest.writeFloat(this.length);
+      dest.writeFloat(this.width);
+      dest.writeFloat(this.height);
+      dest.writeFloat(this.startPrice);
+      dest.writeFloat(this.exceedMileagePrice);
+   }
+
+   public MatchCarTypeInfoBean() {
+   }
+
+   protected MatchCarTypeInfoBean(Parcel in) {
+      this.id = in.readString();
+      this.carType = in.readString();
+      this.carImage = in.readString();
+      this.load = in.readFloat();
+      this.length = in.readFloat();
+      this.width = in.readFloat();
+      this.height = in.readFloat();
+      this.startPrice = in.readFloat();
+      this.exceedMileagePrice = in.readFloat();
+   }
+
+   public static final Parcelable.Creator<MatchCarTypeInfoBean> CREATOR = new Parcelable.Creator<MatchCarTypeInfoBean>() {
+      @Override
+      public MatchCarTypeInfoBean createFromParcel(Parcel source) {
+         return new MatchCarTypeInfoBean(source);
+      }
+
+      @Override
+      public MatchCarTypeInfoBean[] newArray(int size) {
+         return new MatchCarTypeInfoBean[size];
+      }
+   };
 }

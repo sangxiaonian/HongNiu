@@ -1,6 +1,9 @@
 package com.sangxiaonian.xcalendar.utils;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * 作者： ${PING} on 2018/10/15.
@@ -17,6 +20,24 @@ public class CalendarUtils {
     }
 
     public CalendarUtils() {
+    }
+
+    /**
+     * 获取当前月份的日期
+     *
+     * @return
+     */
+    public static List<String> getCurentMonthDays(int count) {
+        final Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM月dd日");
+
+        List<String> times = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+            String format = simpleDateFormat.format(calendar.getTime());
+            times.add(format);
+        }
+        return times;
     }
 
     /**

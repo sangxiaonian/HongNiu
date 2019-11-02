@@ -1,5 +1,6 @@
 package com.hongniu.baselibrary.ui.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,24 +18,18 @@ import com.hongniu.baselibrary.R;
 import com.hongniu.baselibrary.base.BaseFragment;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
-import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.BaseUtils;
 import com.hongniu.baselibrary.utils.Utils;
-import com.sang.common.net.rx.RxUtils;
 import com.sang.thirdlibrary.map.MapUtils;
 
-import java.util.ArrayList;
-
-import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
 
 /**
  * 作者：  on 2019/11/2.
  */
-public class MapPointFrament extends BaseFragment implements MapUtils.OnMapChangeListener {
+public class MapPointFragment extends BaseFragment implements MapUtils.OnMapChangeListener {
 
     private MapView mMapView;
     private AMap aMap;
@@ -47,14 +42,9 @@ public class MapPointFrament extends BaseFragment implements MapUtils.OnMapChang
     private ViewGroup llMarkDes;
     private TextView tv_title;
     private TextView tv_des;
+    OnMapPointChangeListener listener;
 
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-
-    }
 
     @Nullable
     @Override
@@ -87,6 +77,14 @@ public class MapPointFrament extends BaseFragment implements MapUtils.OnMapChang
 //            marker = aMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.end))));
 //        }
 
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnMapPointChangeListener){
+            listener= (OnMapPointChangeListener) context;
+        }
     }
 
     /**
@@ -181,11 +179,8 @@ public class MapPointFrament extends BaseFragment implements MapUtils.OnMapChang
                             PoiItem poiItem = data.getList().get(0);
                             //移动到第一个的位置
 //                            MarkUtils.moveMark(marker, poiItem.getLatLonPoint().getLatitude(), poiItem.getLatLonPoint().getLongitude());
-                            llMarkDes.setVisibility(View.VISIBLE);
-                            String placeInfor = Utils.dealPioPlace(poiItem);
-                            tv_des.setText(placeInfor);
-                            tv_title.setText(poiItem.getTitle());
-                            tv_title.setVisibility(View.VISIBLE);
+                            setTagInfor(poiItem);
+
                         }
 
                     }
@@ -216,10 +211,27 @@ public class MapPointFrament extends BaseFragment implements MapUtils.OnMapChang
 
     public void moveToPoint(PoiItem poiItem) {
         mapUtils.moveTo(poiItem.getLatLonPoint().getLatitude(), poiItem.getLatLonPoint().getLongitude());
+        setTagInfor(poiItem);
+    }
+
+    private void setTagInfor(PoiItem poiItem){
         llMarkDes.setVisibility(View.VISIBLE);
         String placeInfor = Utils.dealPioPlace(poiItem);
         tv_des.setText(placeInfor);
         tv_title.setText(poiItem.getTitle());
+        tv_title.setVisibility(View.VISIBLE);
+        if (listener!=null){
+            listener.onMapPointChange(poiItem);
+        }
+
+    }
+
+    public interface OnMapPointChangeListener {
+        /**
+         * 地图选中地点更改
+         * @param poiItem
+         */
+        void onMapPointChange (PoiItem poiItem);
     }
 
 }
