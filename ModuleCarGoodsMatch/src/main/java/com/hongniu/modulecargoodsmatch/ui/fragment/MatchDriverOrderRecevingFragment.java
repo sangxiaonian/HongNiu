@@ -24,8 +24,10 @@ import com.hongniu.baselibrary.widget.pay.DialogPayUtils;
 import com.hongniu.modulecargoodsmatch.R;
 import com.hongniu.modulecargoodsmatch.entity.MatchOrderInfoBean;
 import com.hongniu.modulecargoodsmatch.net.HttpMatchFactory;
+import com.hongniu.modulecargoodsmatch.ui.activiry.MatchOrderDetailActivity;
 import com.hongniu.modulecargoodsmatch.ui.holder.MatchOrderInfoHolder;
 import com.hongniu.modulecargoodsmatch.utils.MatchOrderListHelper;
+import com.hongniu.modulecargoodsmatch.widget.DriverDialog;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.utils.CommonUtils;
@@ -122,7 +124,7 @@ public class MatchDriverOrderRecevingFragment extends RefrushFragmet<MatchOrderI
             CommonUtils.call(getContext(), infoHolder.getDriverMobile());
         } else if (MatchOrderListHelper.EVALUATE_DRIVER.equals(btState)) {
             //评价司机
-
+            _evaluateDriver(infoHolder);
         } else if (MatchOrderListHelper.RECEIVE_ORDER.equals(btState)) {
             _receiveOrder(infoHolder);
         } else if (MatchOrderListHelper.ENTRY_ARRIVE.equals(btState)) {
@@ -133,6 +135,35 @@ public class MatchDriverOrderRecevingFragment extends RefrushFragmet<MatchOrderI
         }
 
 
+    }
+    DriverDialog dialog;
+    /**
+     *@data  2019/11/3
+     *@Author PING
+     *@Description
+     *
+     * 评价司机
+     */
+    private void _evaluateDriver(final MatchOrderInfoBean infoHolder) {
+        if (dialog==null){
+            dialog=new DriverDialog(getContext());
+        }
+        dialog.setSubTitle(String.format("%s(%s)",infoHolder.getDriverName(),infoHolder.getDriverMobile()));
+        dialog.setEntryClickListener(new DriverDialog.EntryClickListener() {
+            @Override
+            public void OnEntryClick(int rating, String trim) {
+                HttpMatchFactory
+                        .appraiseDrive(rating,trim,infoHolder.getId())
+                .subscribe(new NetObserver<Object>(MatchDriverOrderRecevingFragment.this) {
+                    @Override
+                    public void doOnSuccess(Object data) {
+                        queryData(true);
+                    }
+                })
+                ;
+            }
+        });
+        dialog.builder().show(null);
     }
 
     /**

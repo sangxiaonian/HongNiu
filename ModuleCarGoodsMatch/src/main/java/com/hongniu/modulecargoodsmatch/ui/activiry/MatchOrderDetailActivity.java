@@ -72,7 +72,7 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
     private ViewGroup ll_bottom;//
     private ImageView img_call;//
     private TextView tv_button;//
-    DriverDialog dialog  ;
+    DriverDialog dialog;
 
 
     MatchOrderDataControl.IMatchOrderDataPresenter presenter;
@@ -252,7 +252,6 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
         card_estimate.setVisibility(showEstimate ? View.VISIBLE : View.GONE);
         tv_estimate.setText(TextUtils.isEmpty(estimateContent) ? "" : estimateContent);
         view_start.setStar(estimate);
-        //TODO 星级尚未处理
     }
 
     /**
@@ -351,6 +350,7 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
         dialog.setEntryClickListener(new DriverDialog.EntryClickListener() {
             @Override
             public void OnEntryClick(int rating, String trim) {
+
                 presenter.appraiseDrive(rating,trim, MatchOrderDetailActivity.this);
             }
         });
