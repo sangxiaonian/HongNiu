@@ -195,7 +195,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="零担发货"
-                    android:textColor="@color/color_light"
+                    android:textColor="@color/color_title_dark"
                     android:textSize="@dimen/text_small_14" />
 
                 <TextView
@@ -209,7 +209,7 @@
             <ImageView
                 android:layout_width="73dp"
                 android:layout_height="73dp"
-                android:src="@mipmap/icon_yhyzyj_146" />
+                android:src="@mipmap/lingdan" />
 
         </LinearLayout>
     </android.support.v7.widget.CardView>
@@ -241,7 +241,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="车货匹配"
-                    android:textColor="@color/color_light"
+                    android:textColor="@color/color_title_dark"
                     android:textSize="@dimen/text_small_14" />
 
                 <TextView
@@ -253,13 +253,9 @@
             </LinearLayout>
 
             <ImageView
-                android:layout_width="43dp"
-                android:layout_height="60dp"
-                android:layout_marginBottom="@dimen/app_item_gap"
-                android:layout_marginRight="@dimen/app_item_gap"
-                android:scaleType="fitEnd"
-                android:layout_gravity="bottom"
-                android:src="@mipmap/icon_chpp" />
+                android:layout_width="73dp"
+                android:layout_height="73dp"
+                android:src="@mipmap/chehuopipei" />
 
         </LinearLayout>
 
@@ -358,7 +354,7 @@
             <ImageView
                 android:layout_width="73dp"
                 android:layout_height="73dp"
-                android:src="@mipmap/icon_etc_146" />
+                android:src="@mipmap/icon_nrb" />
 
         </LinearLayout>
 
