@@ -1,5 +1,7 @@
 package com.hongniu.modulecargoodsmatch.ui.activiry;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -7,16 +9,20 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.entity.PayParam;
 import com.hongniu.baselibrary.utils.Utils;
+import com.hongniu.baselibrary.widget.pay.DialogPayUtils;
 import com.hongniu.modulecargoodsmatch.R;
 import com.hongniu.modulecargoodsmatch.entity.MatchCarTypeInfoBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchCountFareBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchCreatOrderParams;
+import com.hongniu.modulecargoodsmatch.entity.MatchCreateInfoBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchOrderTranMapBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchQueryCountFareParam;
 import com.hongniu.modulecargoodsmatch.entity.TranMapBean;
@@ -25,6 +31,10 @@ import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.ItemView;
+import com.sang.common.widget.dialog.inter.DialogControl;
+import com.sang.thirdlibrary.pay.entiy.PayBean;
+
+import static com.hongniu.baselibrary.config.Param.isDebug;
 
 /**
  * @data 2019/5/19
@@ -32,7 +42,7 @@ import com.sang.common.widget.ItemView;
  * @Description 创建车货匹配订单
  */
 @Route(path = ArouterParamsMatch.activity_match_creat_order)
-public class MatchCreatOrderActivity extends BaseActivity implements View.OnClickListener {
+public class MatchCreatOrderActivity extends BaseActivity implements View.OnClickListener, DialogPayUtils.PayListener {
 
 
     MatchCreatOrderParams creatOrderParams = new MatchCreatOrderParams();
@@ -52,6 +62,9 @@ public class MatchCreatOrderActivity extends BaseActivity implements View.OnClic
 
     private Button btNext;
     private MatchOrderTranMapBean params;//参数
+    private PayParam payParam;
+    private DialogPayUtils payUtils;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +80,11 @@ public class MatchCreatOrderActivity extends BaseActivity implements View.OnClic
     @Override
     protected void initView() {
         super.initView();
+
+        payUtils = new DialogPayUtils(mContext);
+        payParam = new PayParam();
+        payUtils.setPayParam(payParam);
+
         item_name = findViewById(R.id.item_name);
         item_phone = findViewById(R.id.item_phone);
         item_remark = findViewById(R.id.item_remark);
@@ -85,6 +103,13 @@ public class MatchCreatOrderActivity extends BaseActivity implements View.OnClic
     @Override
     protected void initData() {
         super.initData();
+
+        payUtils.setTitle("确认下单并支付订单");
+        payUtils.setListener(this);
+        payUtils.setShowCompany(false);
+        payParam.setPaybusiness(5);
+
+
         if (params != null) {
             if (!TextUtils.isEmpty(params.getTime())) {
                 tv_time.setText(params.getTime());
@@ -118,8 +143,8 @@ public class MatchCreatOrderActivity extends BaseActivity implements View.OnClic
                 creatOrderParams.setDestinationInfo(placeInfor + (TextUtils.isEmpty(end.getAddress()) ? "" : end.getAddress()));
                 creatOrderParams.setDestinationLat(params.getEnd().getPoiItem().getLatLonPoint().getLatitude() + "");
                 creatOrderParams.setDestinationLon(params.getEnd().getPoiItem().getLatLonPoint().getLongitude() + "");
-                creatOrderParams.setReceiverName(TextUtils.isEmpty(end.getName())?null:end.getName());
-                creatOrderParams.setReceiverMobile(TextUtils.isEmpty(end.getPhone())?null:end.getPhone());
+                creatOrderParams.setReceiverName(TextUtils.isEmpty(end.getName()) ? null : end.getName());
+                creatOrderParams.setReceiverMobile(TextUtils.isEmpty(end.getPhone()) ? null : end.getPhone());
 
             }
 
@@ -163,7 +188,7 @@ public class MatchCreatOrderActivity extends BaseActivity implements View.OnClic
     protected void initListener() {
         super.initListener();
         btNext.setOnClickListener(this);
-
+        payUtils.setPayListener(this);
     }
 
     /**
@@ -176,25 +201,52 @@ public class MatchCreatOrderActivity extends BaseActivity implements View.OnClic
         DeviceUtils.closeSoft(this);
         int id = v.getId();
         if (id == R.id.bt_entry) {
-            creatOrderParams.setShipperName(TextUtils.isEmpty(item_name.getTextCenter())?"":item_name.getTextCenter());
-            creatOrderParams.setShipperMobile(TextUtils.isEmpty(item_phone.getTextCenter())?"":item_phone.getTextCenter());
-            creatOrderParams.setRemark(TextUtils.isEmpty(item_remark.getTextCenter())?"":item_remark.getTextCenter());
+            creatOrderParams.setShipperName(TextUtils.isEmpty(item_name.getTextCenter()) ? "" : item_name.getTextCenter());
+            creatOrderParams.setShipperMobile(TextUtils.isEmpty(item_phone.getTextCenter()) ? "" : item_phone.getTextCenter());
+            creatOrderParams.setRemark(TextUtils.isEmpty(item_remark.getTextCenter()) ? "" : item_remark.getTextCenter());
 
             HttpMatchFactory.matchCreatOrder(creatOrderParams)
-                .subscribe(new NetObserver<MatchCreatOrderParams>(this) {
-                    @Override
-                    public void doOnSuccess(MatchCreatOrderParams data) {
-                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
-                        ArouterUtils.getInstance().builder(ArouterParamsMatch.activity_match_my_order).navigation(mContext);
-                        finish();
-                    }
-                })
+                    .subscribe(new NetObserver<MatchCreateInfoBean>(this) {
+                        @Override
+                        public void doOnSuccess(MatchCreateInfoBean data) {
+
+
+                            payUtils.setSubtitle(String.format("支付总额：%s" , data.getEstimateFare()));
+                            payUtils.setSubtitleDes(String.format("运费明细  起步价%s元*%s公里", data.getStartPrice(), data.getDistance()));
+                            payParam.setCarGoodsOrderId(data.getCarGoodsOrderId());
+                            payUtils.show(getSupportFragmentManager());
+                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show("创建成功");
+
+                        }
+                    })
             ;
 
         }
     }
 
 
+    @Override
+    public void canclePay(DialogControl.IDialog dialog) {
 
+        ArouterUtils.getInstance().builder(ArouterParamsMatch.activity_match_my_order).navigation(mContext);
+        Intent intent = new Intent();
+        setResult(0, intent);
+        finish();
+    }
 
+    @Override
+    public void jump2Pay(PayBean data, int payType, PayParam payParam) {
+        ArouterUtils.getInstance()
+                .builder(ArouterParamOrder.activity_waite_pay)
+                .withInt("payType", payParam.getPayType())
+                .withParcelable("payInfor", data)
+                .withBoolean("ISDEUBG", isDebug)
+                .withString("ORDERID", payParam.getCarGoodsOrderId())
+                .withBoolean("havePolicy", false)
+                .withInt("queryType", 5)
+                .navigation((Activity) mContext, 1);
+        Intent intent = new Intent();
+        setResult(0, intent);
+        finish();
+    }
 }

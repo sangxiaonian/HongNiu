@@ -1,5 +1,6 @@
 package com.hongniu.modulecargoodsmatch.ui.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.NetObserver;
@@ -14,7 +16,11 @@ import com.hongniu.baselibrary.base.RefrushFragmet;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
+import com.hongniu.baselibrary.entity.PayParam;
 import com.hongniu.baselibrary.utils.Utils;
+import com.hongniu.baselibrary.widget.PayPasswordKeyBord;
+import com.hongniu.baselibrary.widget.dialog.PayDialog;
+import com.hongniu.baselibrary.widget.pay.DialogPayUtils;
 import com.hongniu.modulecargoodsmatch.R;
 import com.hongniu.modulecargoodsmatch.entity.MatchOrderInfoBean;
 import com.hongniu.modulecargoodsmatch.net.HttpMatchFactory;
@@ -26,10 +32,13 @@ import com.sang.common.utils.CommonUtils;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
+import com.sang.thirdlibrary.pay.entiy.PayBean;
 
 import java.util.List;
 
 import io.reactivex.Observable;
+
+import static com.hongniu.baselibrary.config.Param.isDebug;
 
 /**
  * @data 2019/10/27
@@ -37,8 +46,12 @@ import io.reactivex.Observable;
  * @Description 货主找车
  */
 @Route(path = ArouterParamsMatch.fragment_match_driver_order_receiving)
-public class MatchDriverOrderRecevingFragment extends RefrushFragmet<MatchOrderInfoBean> implements MatchOrderInfoHolder.MatchOrderItemClickListener {
+public class MatchDriverOrderRecevingFragment extends RefrushFragmet<MatchOrderInfoBean> implements MatchOrderInfoHolder.MatchOrderItemClickListener, DialogPayUtils.PayListener {
     private int type;//角色类型   0 2 司机 1货主
+
+    protected PayParam payParam;
+    DialogPayUtils payUtils;
+
 
     @Override
     public void setArguments(@Nullable Bundle args) {
@@ -56,8 +69,17 @@ public class MatchDriverOrderRecevingFragment extends RefrushFragmet<MatchOrderI
     @Override
     protected void initData() {
         super.initData();
-        queryData(true);
+        payUtils=new DialogPayUtils(getContext());
+        payParam = new PayParam();
+        payUtils.setPayParam(payParam);
+        payUtils.setPayListener(this);
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        queryData(false);
     }
 
     @Override
@@ -94,10 +116,12 @@ public class MatchDriverOrderRecevingFragment extends RefrushFragmet<MatchOrderI
         if (MatchOrderListHelper.CANCLE_CAR.equals(btState)) {
             _cancleCar(infoHolder);
         } else if (MatchOrderListHelper.PAY.equals(btState)) {
+            _pay(infoHolder);
 
         } else if (MatchOrderListHelper.CONTACT_DRIVER.equals(btState)) {
             CommonUtils.call(getContext(), infoHolder.getDriverMobile());
         } else if (MatchOrderListHelper.EVALUATE_DRIVER.equals(btState)) {
+            //评价司机
 
         } else if (MatchOrderListHelper.RECEIVE_ORDER.equals(btState)) {
             _receiveOrder(infoHolder);
@@ -109,6 +133,23 @@ public class MatchDriverOrderRecevingFragment extends RefrushFragmet<MatchOrderI
         }
 
 
+    }
+
+    /**
+     * 支付
+     * @param infoHolder
+     */
+    private void _pay(MatchOrderInfoBean infoHolder) {
+        payUtils.setTitle("确认下单并支付订单");
+        payUtils.setListener(this);
+        payUtils.setSubtitle(String.format("支付总额：%s",infoHolder.getEstimateFare()));
+        payUtils.setSubtitleDes(String.format("运费明细  起步价%s元*%s公里", infoHolder.getStartPrice(), infoHolder.getDistance()));
+        payUtils.setShowCompany(false);
+        payUtils.setPayCount(infoHolder.getEstimateFare());
+
+        payParam.setPaybusiness(5);
+        payParam.setCarGoodsOrderId(infoHolder.getId());
+        payUtils.show(getChildFragmentManager());
     }
 
     /**
@@ -179,5 +220,22 @@ public class MatchDriverOrderRecevingFragment extends RefrushFragmet<MatchOrderI
                     .withParcelable(Param.TRAN, data)
                     .navigation(getContext());
         }
+    }
+
+    @Override
+    public void canclePay(DialogControl.IDialog dialog) {
+
+    }
+    @Override
+    public void jump2Pay(PayBean data, int payType, PayParam payParam) {
+        ArouterUtils.getInstance()
+                .builder(ArouterParamOrder.activity_waite_pay)
+                .withInt("payType", payParam.getPayType())
+                .withParcelable("payInfor", data)
+                .withBoolean("ISDEUBG", Param.isDebug)
+                .withString("ORDERID", payParam.getCarGoodsOrderId())
+                .withBoolean("havePolicy", false)
+                .withInt("queryType", 5)
+                .navigation((Activity) getContext(), 1);
     }
 }

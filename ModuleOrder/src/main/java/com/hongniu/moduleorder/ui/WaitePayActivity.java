@@ -13,6 +13,7 @@ import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.entity.BreakbulkConsignmentInfoBean;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.GrapSingleInforBean;
+import com.hongniu.baselibrary.entity.IDParams;
 import com.hongniu.baselibrary.entity.QueryOrderStateBean;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.moduleorder.R;
@@ -202,6 +203,8 @@ public class WaitePayActivity extends BaseActivity {
                             queryMatch();
                         } else if (queryType == 3 || queryType == 4) {
                             queryBreakbulk();
+                        }else if (queryType == 5  ) {
+                            queryNewMatch();
                         }
 
                     }
@@ -220,6 +223,37 @@ public class WaitePayActivity extends BaseActivity {
                     }
                 });
 
+
+    }
+
+    private void queryNewMatch() {
+
+        HttpAppFactory. queryNewMatch(orderID)
+                .subscribe(new NetObserver<IDParams>(null) {
+                    @Override
+                    public void doOnSuccess(IDParams data) {
+                        if ("2".equals( data.status)) {
+                            BusFactory.getBus().post(new PaySucess());
+                        } else if (sub != null) {
+                            sub.request(1);
+                        }
+                    }
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        super.onSubscribe(d);
+                        disposable = d;
+                    }
+
+
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        if (sub != null) {
+                            sub.request(1);
+                        }
+                    }
+                });
 
     }
 

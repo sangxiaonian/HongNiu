@@ -11,6 +11,7 @@ import com.hongniu.modulecargoodsmatch.entity.MatchChooseGrapBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchCountFareBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchCreatGoodsSourceParams;
 import com.hongniu.modulecargoodsmatch.entity.MatchCreatOrderParams;
+import com.hongniu.modulecargoodsmatch.entity.MatchCreateInfoBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchEntryArriveParams;
 import com.hongniu.modulecargoodsmatch.entity.MatchGrapDetailParams;
 import com.hongniu.modulecargoodsmatch.entity.MatchGrapSingleDetailBean;
@@ -211,10 +212,10 @@ public class HttpMatchFactory {
      * @param creatOrderParams
      * @return
      */
-    public static Observable<CommonBean<MatchCreatOrderParams>> matchCreatOrder(MatchCreatOrderParams creatOrderParams) {
+    public static Observable<CommonBean<MatchCreateInfoBean>> matchCreatOrder(MatchCreatOrderParams creatOrderParams) {
         return MatchClient.getInstance().getService()
                 .matchCreatOrder(creatOrderParams)
-                .compose(RxUtils.<CommonBean<MatchCreatOrderParams>>getSchedulersObservableTransformer());
+                .compose(RxUtils.<CommonBean<MatchCreateInfoBean>>getSchedulersObservableTransformer());
     }
 
     /**

@@ -5,4 +5,5 @@ package com.hongniu.baselibrary.entity;
  */
 public class IDParams {
   public   String id;
+  public   String status;
 }

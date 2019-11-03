@@ -25,6 +25,7 @@ import com.hongniu.modulecargoodsmatch.entity.MatchCarTypeInfoBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchOrderTranMapBean;
 import com.hongniu.modulecargoodsmatch.entity.TranMapBean;
 import com.hongniu.modulecargoodsmatch.net.HttpMatchFactory;
+import com.hongniu.modulecargoodsmatch.ui.activiry.MatchCreatOrderActivity;
 import com.hongniu.modulecargoodsmatch.ui.adapter.CarPageAdapter;
 import com.hongniu.modulecargoodsmatch.ui.activiry.MatchMapActivity;
 import com.sang.common.net.rx.BaseObserver;
@@ -104,8 +105,8 @@ public class MatchOwnerFindCarFragment extends BaseFragment implements RadioGrou
     }
 
     List<String> days;
-    List<List<String>> hours=new ArrayList<>();
-    List<List<List<String>>> minutes=new ArrayList<>();
+    List<List<String>> hours = new ArrayList<>();
+    List<List<List<String>>> minutes = new ArrayList<>();
 
     private void initPickDialog() {
         pickerView = PickerDialogUtils.creatPickerDialog(getContext(), this)
@@ -114,7 +115,7 @@ public class MatchOwnerFindCarFragment extends BaseFragment implements RadioGrou
                 .map(new Function<Integer, Integer>() {
                     @Override
                     public Integer apply(Integer integer) throws Exception {
-                        days= CalendarUtils.getCurentMonthDays(90);
+                        days = CalendarUtils.getCurentMonthDays(90);
                         hours.clear();
                         minutes.clear();
                         days.remove(0);
@@ -129,24 +130,22 @@ public class MatchOwnerFindCarFragment extends BaseFragment implements RadioGrou
                             for (int j = 0; j < 24; j++) {
                                 List<String> min = new ArrayList<>();
 
-                                if ( i == 0 && j == 0) {
+                                if (i == 0 && j == 0) {
                                     hour.add("立即取货");
                                     ArrayList<String> strings = new ArrayList<>();
                                     minute.add(strings);
                                     for (int k = 0; k < 60; k++) {
-                                        strings.add( "");
+                                        strings.add("");
                                     }
                                 }
                                 for (int k = 0; k < 60; k++) {
-                                    min.add(String.format(Locale.CHINESE, "%d分", (k )));
+                                    min.add(String.format(Locale.CHINESE, "%d分", (k)));
                                 }
                                 minute.add(min);
                                 hour.add(String.format(Locale.CHINESE, "%d点", (j)));
                             }
                         }
                         pickerView.setPicker(days, hours, minutes);
-//                        pickerView.setPicker(days, hours );
-                        JLog.i(days.size()+">>>"+hours.size()+">>"+minutes.size());
                         return integer;
                     }
                 })
@@ -208,6 +207,9 @@ public class MatchOwnerFindCarFragment extends BaseFragment implements RadioGrou
                 tv_end_address_dess.setVisibility(View.VISIBLE);
                 endInfor = result;
             }
+        } else if (requestCode == 3) {
+
+
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
@@ -276,21 +278,22 @@ public class MatchOwnerFindCarFragment extends BaseFragment implements RadioGrou
             bean.setCarTypeInfoBean(carInfo.get(pager.getCurrentItem()));
 
             String s = tv_time.getText().toString();
-            if (TextUtils.isEmpty(s)||s.contains("立刻取货")) {
+            if (TextUtils.isEmpty(s) || s.contains("立刻取货")) {
                 bean.setTime(null);
-            }else if (s.contains("今天")){
+            } else if (s.contains("今天")) {
                 String time = ConvertUtils.formatTime(System.currentTimeMillis(), "MM月dd日");
-                bean.setTime(s.replace("今天",time));
-            }else {
+                bean.setTime(s.replace("今天", time));
+            } else {
                 bean.setTime(s);
             }
 
 
             bean.setTime(s);
-            ArouterUtils.getInstance()
-                    .builder(ArouterParamsMatch.activity_match_creat_order)
-                    .withParcelable(Param.TRAN, bean)
-                    .navigation(getContext());
+
+            Intent intent = new Intent(getContext(), MatchCreatOrderActivity.class);
+            intent.putExtra(Param.TRAN, bean);
+            startActivityForResult(intent, 3);
+
         } else if (v.getId() == R.id.ll_start_address) {
 
             Intent intent = new Intent(getContext(), MatchMapActivity.class);

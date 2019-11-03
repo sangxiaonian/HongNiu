@@ -10,6 +10,7 @@ import com.hongniu.baselibrary.entity.CarTypeBean;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.GrapSingleInforBean;
 import com.hongniu.baselibrary.entity.GrapSingleInforParams;
+import com.hongniu.baselibrary.entity.IDParams;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.OrderIdBean;
 import com.hongniu.baselibrary.entity.PageBean;
@@ -52,6 +53,7 @@ public class HttpAppFactory {
     /**
      * 查询接单状态
      */
+    @Deprecated
     public static Observable<CommonBean<GrapSingleInforBean>> queryGrapSingleInfor(String robid) {
         GrapSingleInforParams params = new GrapSingleInforParams();
         params.robId = robid;
@@ -59,7 +61,19 @@ public class HttpAppFactory {
                 .compose(RxUtils.<CommonBean<GrapSingleInforBean>>getSchedulersObservableTransformer());
 
     }
-
+    /**
+     * 查询车货匹配订单状态
+     *
+     * @param orderId
+     * @return
+     */
+    public static Observable<CommonBean<IDParams>> queryNewMatch(String orderId) {
+        IDParams bean = new IDParams();
+        bean.id=orderId;
+        return AppClient.getInstance().getService().queryNewMatch(bean)
+                .compose(RxUtils.<CommonBean<IDParams>>getSchedulersObservableTransformer())
+                ;
+    }
     /**
      * 获取车辆类型
      */

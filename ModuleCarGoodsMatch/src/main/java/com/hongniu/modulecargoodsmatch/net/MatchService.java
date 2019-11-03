@@ -11,6 +11,7 @@ import com.hongniu.modulecargoodsmatch.entity.MatchChooseGrapBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchCountFareBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchCreatGoodsSourceParams;
 import com.hongniu.modulecargoodsmatch.entity.MatchCreatOrderParams;
+import com.hongniu.modulecargoodsmatch.entity.MatchCreateInfoBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchEntryArriveParams;
 import com.hongniu.modulecargoodsmatch.entity.MatchGrapDetailParams;
 import com.hongniu.modulecargoodsmatch.entity.MatchGrapSingleDetailBean;
@@ -137,7 +138,7 @@ public interface MatchService {
      * @return
      */
     @POST("hongniu//api/carGoodsOrder/add")
-    Observable<CommonBean<MatchCreatOrderParams>> matchCreatOrder(@Body MatchCreatOrderParams params);
+    Observable<CommonBean<MatchCreateInfoBean>> matchCreatOrder(@Body MatchCreatOrderParams params);
 
     /**
      * 查询订单

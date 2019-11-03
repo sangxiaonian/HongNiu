@@ -47,14 +47,26 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
+            <TextView
+                android:id="@+id/tv_describe_sub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text=""
+                android:textColor="@color/color_content_light"
+                android:textSize="@dimen/text_min_12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_describe" />
+
             <com.hongniu.baselibrary.widget.pay.PayWayView
                 android:id="@+id/pay_way"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
+                app:layout_goneMarginTop="25dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_describe" />
+                app:layout_constraintTop_toBottomOf="@id/tv_describe_sub" />
 
 
         </android.support.constraint.ConstraintLayout>

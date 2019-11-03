@@ -37,6 +37,8 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
     private int payType;
     private float payAmount;//支付金额
     private WalletDetail data;
+    private TextView tv_describe_sub;
+    private String describeSub;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,12 +47,13 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
         imgCancel = inflate.findViewById(R.id.img_cancel);
         tvTitle = inflate.findViewById(R.id.tv_title);
         tvDescribe = inflate.findViewById(R.id.tv_describe);
+        tv_describe_sub = inflate.findViewById(R.id.tv_describe_sub);
         payWay = inflate.findViewById(R.id.pay_way);
         btPay = inflate.findViewById(R.id.bt_pay);
         payWay.setChangeListener(this);
         btPay.setOnClickListener(this);
         imgCancel.setOnClickListener(this);
-        payWay.setShowCompany(showCompany!=1);
+        payWay.setShowCompany(showCompany != 1);
 
         payWay.setPayType(1);
 
@@ -60,14 +63,21 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setTitle(title);
-        setDescribe(describe);
+
     }
+
+
 
 
     @Override
     public void onStart() {
         super.onStart();
+
+        setTitle(title);
+        setDescribe(describe);
+        setDescribeSub(describeSub);
+        setShowCompany(showCompany);
+
         Window window = getDialog().getWindow();
         // 如果不设置这句代码, 那么弹框就会与四边都有一定的距离
         window.setBackgroundDrawableResource(android.R.color.transparent);
@@ -92,28 +102,37 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
     }
 
     public void setTitle(String title) {
-        this.title=title;
+        this.title = title;
         if (tvTitle != null) {
             tvTitle.setText(title == null ? "" : title);
         }
     }
 
     public void setDescribe(String describe) {
-        this.describe=describe;
+        this.describe = describe;
         if (tvDescribe != null) {
-            tvDescribe.setVisibility(TextUtils.isEmpty(describe)?View.GONE:View.VISIBLE);
+            tvDescribe.setVisibility(TextUtils.isEmpty(describe) ? View.GONE : View.VISIBLE);
             tvDescribe.setText(describe == null ? "" : describe);
+        }
+    }
+
+    public void setDescribeSub(String describeSub) {
+        this.describeSub = describeSub;
+        if (tv_describe_sub != null) {
+            tv_describe_sub.setVisibility(TextUtils.isEmpty(describeSub) ? View.GONE : View.VISIBLE);
+            tv_describe_sub.setText(describeSub == null ? "" : describeSub);
         }
     }
 
     /**
      * 设置是否支持企业账号支付
+     *
      * @param showCompany true 支持 默认为false
      */
-    public void setShowCompany(int showCompany){
-        this.showCompany=showCompany;
-        if (payWay!=null) {
-            payWay.setShowCompany(showCompany!=1);
+    public void setShowCompany(int showCompany) {
+        this.showCompany = showCompany;
+        if (payWay != null) {
+            payWay.setShowCompany(showCompany != 1);
         }
     }
 
@@ -126,9 +145,9 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
     public void onClick(View v) {
         if (v.getId() == R.id.img_cancel) {
             dismiss();
-        }else if (v.getId()==R.id.bt_pay){
-            if (payListener!=null){
-                payListener.onClickPay(payAmount,payType,yueWay);
+        } else if (v.getId() == R.id.bt_pay) {
+            if (payListener != null) {
+                payListener.onClickPay(payAmount, payType, yueWay);
             }
         }
     }
@@ -141,7 +160,7 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
      */
     @Override
     public void onPayTypeChang(int payType, int yueWay) {
-        if (payType==1&&data!=null){//如果是余额支付
+        if (payType == 1 && data != null) {//如果是余额支付
             float balance = 0;//个人月
             float balanceCom = (float) data.getCompanyAvailableBalance();//公司余额
             if (!TextUtils.isEmpty(data.getAvailableBalance())) {
@@ -151,27 +170,27 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
                     e.printStackTrace();
                 }
             }
-            if (yueWay==1&&balance<payAmount){
+            if (yueWay == 1 && balance < payAmount) {
                 //选择个人账户支付切个人账户余额不足,并且
-                if (balanceCom>=payAmount||showCompany==2){
+                if (balanceCom >= payAmount || showCompany == 2) {
                     //如果个人余额不足,公司余额充足，选择公司余额
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("个人账户余额不足");
                     payWay.setYue(0);
                     return;
-                }else {
+                } else {
                     //如果企业账户余额也不足
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("余额不足");
                     payWay.setPayType(2);
                     return;
                 }
-            }else if (yueWay==0&&data.getType()==3&&balanceCom<payAmount){
+            } else if (yueWay == 0 && data.getType() == 3 && balanceCom < payAmount) {
                 //如果企业支付可以直接支付,并且企业支付余额不足
-                if (balance>=payAmount){
+                if (balance >= payAmount) {
                     //如果个人余额不足,公司余额充足，选择公司余额
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("企业账户余额不足");
                     payWay.setYue(1);
                     return;
-                }else {
+                } else {
                     //如果个人账户余额也不足
                     ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("余额不足");
                     payWay.setPayType(2);
@@ -181,39 +200,41 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
         }
 
 
-        if (payType==1&&yueWay==0&&showCompany==2){
-            yueWay=2;
+        if (payType == 1 && yueWay == 0 && showCompany == 2) {
+            yueWay = 2;
             btPay.setText("申请支付");
-        }else {
+        } else {
             btPay.setText("立即支付");
         }
-        this.yueWay=yueWay;
-        this.payType=payType;
+        this.yueWay = yueWay;
+        this.payType = payType;
 
-        if (changeListener!=null){
-            changeListener.onPayTypeChang(payType,yueWay);
+        if (changeListener != null) {
+            changeListener.onPayTypeChang(payType, yueWay);
         }
     }
 
     public void setPayAmount(float payAmount) {
-        this.payAmount=payAmount;
+        this.payAmount = payAmount;
     }
 
     /**
      * 个人钱包信息
+     *
      * @param data
      */
     public void setWalletDetaile(WalletDetail data) {
-        this.data=data;
+        this.data = data;
     }
 
-    public interface OnClickPayListener{
+    public interface OnClickPayListener {
         /**
          * 点击支付
-         * @param amount     支付金额
-         * @param payType    1 余额 2微信 3支付宝 4银联
-         * @param yueWay     余额支付方式更改监听 0 企业支付 1余额支付 2 申请支付
+         *
+         * @param amount  支付金额
+         * @param payType 1 余额 2微信 3支付宝 4银联
+         * @param yueWay  余额支付方式更改监听 0 企业支付 1余额支付 2 申请支付
          */
-      void   onClickPay(float amount, int payType, int yueWay);
+        void onClickPay(float amount, int payType, int yueWay);
     }
 }
