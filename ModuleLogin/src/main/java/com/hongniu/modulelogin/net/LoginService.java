@@ -30,6 +30,9 @@ public interface LoginService {
     @POST("hongniu/api/login/login")
     Observable<CommonBean<LoginBean>> loginBySms(@Body LoginSMSParams params);
 
+    @POST("hongniu/api/user/appLogout")
+    Observable<CommonBean<LoginBean>> loginOut( );
+
     /**
      * 查询绑定银行卡时候支持的银行卡列表
      *

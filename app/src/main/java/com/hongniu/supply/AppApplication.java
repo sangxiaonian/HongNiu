@@ -1,18 +1,28 @@
 package com.hongniu.supply;
 
+import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseApplication;
 import com.hongniu.baselibrary.base.NetObserver;
+import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventBean;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
+import com.hongniu.modulecargoodsmatch.net.HttpMatchFactory;
 import com.hongniu.supply.net.HttpMainFactory;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.JLog;
 import com.sang.common.utils.errorcrushhelper.CrashHelper;
 import com.sang.thirdlibrary.chact.ChactHelper;
 import com.sang.thirdlibrary.chact.control.ChactControl;
+import com.sang.thirdlibrary.push.PushClient;
+import com.umeng.message.IUmengRegisterCallback;
+import com.umeng.message.UmengNotificationClickHandler;
+import com.umeng.message.entity.UMessage;
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 import com.xiaomi.channel.commonutils.logger.LoggerInterface;
 import com.xiaomi.mipush.sdk.Logger;
@@ -23,6 +33,7 @@ import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
 import java.io.File;
+import java.util.Map;
 
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -43,13 +54,10 @@ public class AppApplication extends BaseApplication {
 
         //二维码扫描
         ZXingLibrary.initDisplayOpinion(this);
-
-        JLog.e("启动：-------------------------");
         super.onCreate();
         if (BuildConfig.DEBUG) {           // 这两行必须写在init之前，否则这些配置在init过程中将无效
             ARouter.openLog();     // 打印日志
             ARouter.openDebug();   // 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
-            JLog.i("----------打印日志---------");
         }
 
         ARouter.init(this); // 尽可能早，推荐在Application中初始化
@@ -67,6 +75,70 @@ public class AppApplication extends BaseApplication {
         ;
 
         initData();
+
+        //注册友盟
+        PushClient.getInstance()
+                .setAppKey("5b9788ecf43e4845ec000071")
+                .setMessageSecret("77a9468f91f6fd0106780654b1140e13")
+                .setNotificationClickHandler(new UmengNotificationClickHandler(){
+                    @Override
+                    public void dealWithCustomAction(Context context, UMessage uMessage) {
+                        super.dealWithCustomAction(context, uMessage);
+                        //处理自定义数据
+                        String custom = uMessage.custom;
+                        Map<String, String> extra = uMessage.extra;
+                        if (extra!=null){
+                                if ("openapp".equals(extra.get("action"))){
+                                    //打开app
+                                    DeviceUtils.openApp(context);
+                                }else if ("opencarmatchlist".equals(extra.get("action"))){
+                                    //打开车货匹配我的接单列表
+                                    ArouterUtils.getInstance()
+                                            .builder(ArouterParamsMatch.activity_match_my_order)
+                                            .withInt(Param.TYPE,1)
+                                            .withFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                            .navigation(context);
+
+                                }
+                        }
+                        JLog.i(custom+">>>>");
+
+                    }
+
+                    @Override
+                    public void openActivity(Context context, UMessage uMessage) {
+                        super.openActivity(context, uMessage);
+                        String custom = uMessage.custom;
+                        JLog.i(custom+">>>>");
+                    }
+
+                    @Override
+                    public void launchApp(Context context, UMessage uMessage) {
+                        super.launchApp(context, uMessage);
+                        String custom = uMessage.custom;
+                        JLog.i(custom+">>>>");
+
+                    }
+                })
+                .addCallback(new IUmengRegisterCallback() {
+                    @Override
+                    public void onSuccess(String s) {
+                        JLog.i("注册成功："+s);
+                        HttpMainFactory.upToken(s).subscribe(new NetObserver<Object>(null) {
+                            @Override
+                            public void doOnSuccess(Object data) {
+                                JLog.d("友盟推送注册成功");
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFailure(String s, String s1) {
+                        JLog.i("友盟注册失败："+s+"------->"+s1);
+                    }
+                })
+                .register(this);
+
     }
 
 

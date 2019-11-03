@@ -6,12 +6,16 @@ import android.support.multidex.MultiDexApplication;
 import com.hongniu.baselibrary.R;
 import com.hongniu.baselibrary.config.Param;
 import com.sang.common.imgload.ImageLoader;
+import com.sang.common.utils.JLog;
 import com.sang.common.utils.SharedPreferencesUtils;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.utils.errorcrushhelper.CrashHelper;
 import com.sang.thirdlibrary.bug.BugClient;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.umeng.commonsdk.UMConfigure;
+import com.umeng.message.IUmengRegisterCallback;
+import com.umeng.message.PushAgent;
 
 /**
  * 作者： ${桑小年} on 2018/7/30.
@@ -20,10 +24,11 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 public class BaseApplication extends MultiDexApplication {
 
     private static Context context;
+
     @Override
     public void onCreate() {
         super.onCreate();
-        context=this;
+        context = this;
         final IWXAPI msgApi = WXAPIFactory.createWXAPI(this, null);
 // 将该app注册到微信
         msgApi.registerApp(Param.weChatAppid);
@@ -39,7 +44,7 @@ public class BaseApplication extends MultiDexApplication {
 
     }
 
-    public static Context getContext(){
+    public static Context getContext() {
         return context;
     }
 }

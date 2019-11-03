@@ -35,8 +35,17 @@ dependencies {
     api 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
     api files('libs/AMap3DMap_6.4.0_AMapNavi_6.2.0_AMapSearch_6.1.0_AMapLocation_4.2.0_20180814.jar')
     //友盟统计
-    api 'com.umeng.sdk:common:1.5.0'
     api 'com.umeng.sdk:analytics:7.5.0'
+
+
+    //PushSDK必须依赖基础组件库，所以需要加入对应依赖
+    api 'com.umeng.umsdk:common:1.5.4'
+//PushSDK必须依赖utdid库，所以需要加入对应依赖
+    api 'com.umeng.umsdk:utdid:1.1.5.3'
+//PushSDK
+    api 'com.umeng.umsdk:push:6.0.1'
+
+
     api files('libs/UPPayPluginExPro.jar')
     api files('libs/UPPayAssistEx.jar')
     api files('libs/alipaySdk-20180601.jar')

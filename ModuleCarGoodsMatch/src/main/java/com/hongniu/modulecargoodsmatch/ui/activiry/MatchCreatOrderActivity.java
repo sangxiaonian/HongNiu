@@ -128,6 +128,8 @@ public class MatchCreatOrderActivity extends BaseActivity implements View.OnClic
                 creatOrderParams.setStartPlaceLat(params.getStart().getPoiItem().getLatLonPoint().getLatitude() + "");
                 creatOrderParams.setStartPlaceLon(params.getStart().getPoiItem().getLatLonPoint().getLongitude() + "");
                 creatOrderParams.setStartPlaceInfo(placeInfor + (TextUtils.isEmpty(start.getAddress()) ? "" : start.getAddress()));
+                creatOrderParams.setShipperName(TextUtils.isEmpty(start.getName()) ? null : start.getName());
+                creatOrderParams.setShipperMobile(TextUtils.isEmpty(start.getPhone()) ? null : start.getPhone());
 
 
             }

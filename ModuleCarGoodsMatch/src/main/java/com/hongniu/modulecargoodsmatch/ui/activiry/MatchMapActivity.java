@@ -27,9 +27,7 @@ import com.hongniu.modulecargoodsmatch.entity.TranMapBean;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.inter.OnItemClickListener;
 import com.sang.common.utils.DeviceUtils;
-import com.sang.thirdlibrary.map.MapUtils;
 
-import java.nio.file.Path;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -54,11 +52,20 @@ public class MatchMapActivity extends RefrushActivity<PoiItem> implements MapPoi
         setContentView(R.layout.activity_match_map);
         StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.color_tran), true);
         StatusBarCompat.setTranslucent(getWindow(), true);
-         getWindow().setSoftInputMode(WindowManager.LayoutParams. SOFT_INPUT_ADJUST_PAN);
-        bean=new TranMapBean();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        bean = new TranMapBean();
         initView();
         initData();
         initListener();
+        boolean isEnd = getIntent().getBooleanExtra(Param.TRAN, false);
+        if (isEnd) {
+            etSearch.setHint("在哪儿收货");
+            et_name.setHint("收货人姓名");
+        } else {
+            et_name.setHint("发货人姓名");
+            etSearch.setHint("从哪儿发货");
+
+        }
     }
 
     @Override
@@ -66,9 +73,9 @@ public class MatchMapActivity extends RefrushActivity<PoiItem> implements MapPoi
         super.initView();
 
 
-       et_address = findViewById(R.id.et_address);
-       et_name = findViewById(R.id.et_name);
-       et_phone = findViewById(R.id.et_phone);
+        et_address = findViewById(R.id.et_address);
+        et_name = findViewById(R.id.et_name);
+        et_phone = findViewById(R.id.et_phone);
         etSearch = findViewById(R.id.et_search);
         btBack = findViewById(R.id.bt_back);
         btCancle = findViewById(R.id.bt_cancel);
@@ -100,16 +107,16 @@ public class MatchMapActivity extends RefrushActivity<PoiItem> implements MapPoi
             etSearch.setText("");
         } else if (v.getId() == R.id.bt_back) {
             finish();
-        }else if (v.getId() == R.id.bt_sum) {
-            Intent intent=new Intent();
+        } else if (v.getId() == R.id.bt_sum) {
+            Intent intent = new Intent();
 
             String phone = et_phone.getText().toString().trim();
 
-            bean.setAddress(TextUtils.isEmpty(et_address.getText().toString().trim())?null:et_address.getText().toString().trim());
-            bean.setName(TextUtils.isEmpty(et_name.getText().toString().trim())?null:et_name.getText().toString().trim());
-            bean.setPhone(TextUtils.isEmpty(phone)?null: phone);
-            intent.putExtra(Param.TRAN,bean);
-            setResult(0,intent);
+            bean.setAddress(TextUtils.isEmpty(et_address.getText().toString().trim()) ? null : et_address.getText().toString().trim());
+            bean.setName(TextUtils.isEmpty(et_name.getText().toString().trim()) ? null : et_name.getText().toString().trim());
+            bean.setPhone(TextUtils.isEmpty(phone) ? null : phone);
+            intent.putExtra(Param.TRAN, bean);
+            setResult(0, intent);
             finish();
         }
     }
@@ -175,15 +182,15 @@ public class MatchMapActivity extends RefrushActivity<PoiItem> implements MapPoi
      */
     @Override
     public void onMapPointChange(PoiItem poiItem) {
-            bean.setPoiItem(poiItem);
+        bean.setPoiItem(poiItem);
     }
 
     @Override
     public void onBackPressed() {
-        if (refresh.getVisibility()==View.VISIBLE){
+        if (refresh.getVisibility() == View.VISIBLE) {
             etSearch.clearFocus();
             refresh.setVisibility(View.GONE);
-        }else {
+        } else {
             super.onBackPressed();
         }
     }

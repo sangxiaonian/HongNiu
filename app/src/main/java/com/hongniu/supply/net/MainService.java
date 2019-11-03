@@ -2,6 +2,7 @@ package com.hongniu.supply.net;
 
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventBean;
+import com.hongniu.supply.entity.AppToken;
 import com.hongniu.supply.entity.HomeADBean;
 import com.hongniu.supply.entity.WayBillBean;
 import com.hongniu.supply.entity.WayBillParams;
@@ -53,6 +54,14 @@ public interface MainService {
      */
     @POST("hongniu/api/waybill/show")
     Observable<CommonBean<List<WayBillBean>>>queryWaybill(@Body WayBillParams eventParams);
+   /**
+     *上传友盟token
+     *
+     * @return
+    * @param eventParams
+    */
+    @POST("hongniu/api/user/updateDevice")
+    Observable<CommonBean<Object>>upToken(@Body AppToken eventParams);
 
 
 }

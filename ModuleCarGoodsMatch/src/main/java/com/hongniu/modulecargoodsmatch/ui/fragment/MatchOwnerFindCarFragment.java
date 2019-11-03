@@ -297,7 +297,7 @@ public class MatchOwnerFindCarFragment extends BaseFragment implements RadioGrou
         } else if (v.getId() == R.id.ll_start_address) {
 
             Intent intent = new Intent(getContext(), MatchMapActivity.class);
-            intent.putExtra(Param.TRAN, true);
+            intent.putExtra(Param.TRAN, false);
 
             startActivityForResult(intent, 1);
 
@@ -307,13 +307,7 @@ public class MatchOwnerFindCarFragment extends BaseFragment implements RadioGrou
 
             startActivityForResult(intent, 2);
 
-        } else if (v.getId() == R.id.ll_end_address) {
-            Intent intent = new Intent(getContext(), MatchMapActivity.class);
-            intent.putExtra(Param.TRAN, true);
-
-            startActivityForResult(intent, 2);
-
-        } else if (v.getId() == R.id.ll_time) {
+        }  else if (v.getId() == R.id.ll_time) {
             pickerView.show();
 
         }

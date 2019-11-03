@@ -45,6 +45,16 @@ public class HttpLoginFactory {
                 .loginBySms(params)
                 .compose(RxUtils.<CommonBean<LoginBean>>getSchedulersObservableTransformer())
                 ;
+    }   /**
+     * 使用验证码登录
+     *
+     */
+    public static Observable<CommonBean<LoginBean>> loginOut() {
+
+        return LoginClient.getInstance().getLoginService()
+                .loginOut()
+                .compose(RxUtils.<CommonBean<LoginBean>>getSchedulersObservableTransformer())
+                ;
     }
 
     /**

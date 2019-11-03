@@ -60,4 +60,6 @@ dependencies {
     api 'com.github.barteksc:android-pdf-viewer:2.8.2'
     api 'cn.yipianfengye.android:zxing-library:2.2'
     api 'com.hedgehog.ratingbar:app:1.1.2'
+
+
 }

@@ -50,16 +50,11 @@ public class ChactHelper {
      */
     public ChactHelper initHelper(Application application) {
         String deviceBrand = DeviceUtils.getDeviceBrand();
-        JLog.i(deviceBrand);
-
         if (application.getApplicationInfo().packageName.equals(getCurProcessName(application))) {
-
             if (deviceBrand.equalsIgnoreCase("Xiaomi")){
                 //小米推送配置
-                JLog.i("小米推送");
                 RongPushClient.registerMiPush(application, "2882303761517871354", "5731787151354");
             }else if (deviceBrand.equalsIgnoreCase("huawei")){
-                JLog.i("华为推送");
                 //华为配置
                 RongPushClient.registerHWPush(application);
             }
