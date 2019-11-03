@@ -38,7 +38,7 @@ public class MatchOrderInfoBean implements Parcelable {
     private int payWay;//true	number	支付方式(0微信,1银联,2线下支付,3支付宝支付,4余额支付,5企业钱包)
     private String deliveryMark;//true	string	送达备注
     private String isRefundRecord;//true	number	是否生成退款记录
-    private boolean isAppraiseRecord;//true	number	是否生成点评记录
+    private int isAppraiseRecord;//true	number	是否生成点评记录
     private String createTime;//true	string	创建时间
     private List<String> imageUrls;//true	string	图片url集合
     private int serviceScore;//true	string	服务评分
@@ -294,11 +294,11 @@ public class MatchOrderInfoBean implements Parcelable {
         this.isRefundRecord = isRefundRecord;
     }
 
-    public boolean getIsAppraiseRecord() {
+    public int getIsAppraiseRecord() {
         return isAppraiseRecord;
     }
 
-    public void setIsAppraiseRecord(boolean isAppraiseRecord) {
+    public void setIsAppraiseRecord(int isAppraiseRecord) {
         this.isAppraiseRecord = isAppraiseRecord;
     }
 
@@ -310,6 +310,9 @@ public class MatchOrderInfoBean implements Parcelable {
         this.createTime = createTime;
     }
 
+    public MatchOrderInfoBean() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -318,6 +321,7 @@ public class MatchOrderInfoBean implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.id);
+        dest.writeString(this.startPrice);
         dest.writeString(this.orderNum);
         dest.writeString(this.userId);
         dest.writeString(this.userName);
@@ -344,18 +348,16 @@ public class MatchOrderInfoBean implements Parcelable {
         dest.writeInt(this.payWay);
         dest.writeString(this.deliveryMark);
         dest.writeString(this.isRefundRecord);
-        dest.writeByte(this.isAppraiseRecord ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.isAppraiseRecord);
         dest.writeString(this.createTime);
         dest.writeStringList(this.imageUrls);
         dest.writeInt(this.serviceScore);
         dest.writeString(this.content);
     }
 
-    public MatchOrderInfoBean() {
-    }
-
     protected MatchOrderInfoBean(Parcel in) {
         this.id = in.readString();
+        this.startPrice = in.readString();
         this.orderNum = in.readString();
         this.userId = in.readString();
         this.userName = in.readString();
@@ -382,14 +384,14 @@ public class MatchOrderInfoBean implements Parcelable {
         this.payWay = in.readInt();
         this.deliveryMark = in.readString();
         this.isRefundRecord = in.readString();
-        this.isAppraiseRecord = in.readByte() != 0;
+        this.isAppraiseRecord = in.readInt();
         this.createTime = in.readString();
         this.imageUrls = in.createStringArrayList();
         this.serviceScore = in.readInt();
         this.content = in.readString();
     }
 
-    public static final Parcelable.Creator<MatchOrderInfoBean> CREATOR = new Parcelable.Creator<MatchOrderInfoBean>() {
+    public static final Creator<MatchOrderInfoBean> CREATOR = new Creator<MatchOrderInfoBean>() {
         @Override
         public MatchOrderInfoBean createFromParcel(Parcel source) {
             return new MatchOrderInfoBean(source);

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_white"
+    android:orientation="vertical">
+
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="@dimen/app_gap">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="评价司机"
+            android:textColor="@color/color_title_dark"
+            android:textSize="19sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/img_cancel"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:src="@mipmap/icon_close_gary_28"
+            app:layout_constraintBottom_toBottomOf="@id/tv_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_title" />
+
+
+        <TextView
+            android:id="@+id/tv_describe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/color_title_dark"
+            android:textSize="@dimen/text_small_14"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            tools:text="张玉珊（13792666382）" />
+
+        <com.hedgehog.ratingbar.RatingBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            app:clickable="true"
+            app:halfstart="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_describe"
+            app:starCount="5"
+            app:starEmpty="@drawable/star_border_hide"
+            app:starFill="@drawable/star_border_show"
+            app:starImageHeight="50dp"
+            app:starImagePadding="10dp"
+            app:starImageWidth="50dp" />
+
+
+        <EditText
+            android:id="@+id/et_remark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/shape_2_f7f7f7"
+            android:gravity="start"
+            android:hint="请对司机做个简单的评价（最多100字）"
+            android:minHeight="145dp"
+            android:padding="@dimen/app_gap"
+            android:textColor="@color/color_title_dark"
+            android:textColorHint="@color/color_et_hide"
+            android:textSize="@dimen/text_small_15"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/progress" />
+    </android.support.constraint.ConstraintLayout>
+
+
+    <Button
+        android:id="@+id/bt_sum"
+        style="@style/bt_sum_red"
+        android:text="提交评价" />
+
+</LinearLayout>

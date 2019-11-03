@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.hedgehog.ratingbar.RatingBar;
 import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
@@ -23,11 +24,12 @@ import com.hongniu.modulecargoodsmatch.control.MatchOrderDataControl;
 import com.hongniu.modulecargoodsmatch.entity.MatchOrderInfoBean;
 import com.hongniu.modulecargoodsmatch.net.HttpMatchFactory;
 import com.hongniu.modulecargoodsmatch.presenter.MatchOrderDetaPresenter;
-import com.hongniu.modulecargoodsmatch.ui.fragment.MatchDriverOrderRecevingFragment;
+import com.hongniu.modulecargoodsmatch.widget.DriverDialog;
 import com.sang.common.imgload.ImageLoader;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.utils.CommonUtils;
+import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
@@ -35,13 +37,10 @@ import com.sang.common.widget.dialog.inter.DialogControl;
 import java.util.List;
 
 /**
- *@data  2019/11/2
- *@Author PING
- *@Description
- *
- * 订单详情页
+ * @data 2019/11/2
+ * @Author PING
+ * @Description 订单详情页
  * type 0 货主 1司机
- *
  */
 @Route(path = ArouterParamsMatch.activity_match_order_detail)
 public class MatchOrderDetailActivity extends BaseActivity implements MatchOrderDataControl.IMatchOrderDataView, View.OnClickListener {
@@ -65,7 +64,7 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
     private RecyclerView recycler_receive;//送达凭证 图片
     private ViewGroup card_estimate;//司机评价
     private TextView tv_estimate;//司机评价
-    private View view_start;//司机评价星级
+    private RatingBar view_start;//司机评价星级
 
     private TextView tv_price;//运费
     private TextView tv_price_des;//运费明细
@@ -73,6 +72,7 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
     private ViewGroup ll_bottom;//
     private ImageView img_call;//
     private TextView tv_button;//
+    DriverDialog dialog  ;
 
 
     MatchOrderDataControl.IMatchOrderDataPresenter presenter;
@@ -87,7 +87,7 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
         initView();
         initData();
         initListener();
-        if (infoBean==null){
+        if (infoBean == null) {
             finish();
             return;
         }
@@ -116,10 +116,13 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
         tv_price = findViewById(R.id.tv_price);
         tv_price_des = findViewById(R.id.tv_price_des);
         group = findViewById(R.id.group);
-       ll_bottom = findViewById(R.id.ll_bottom);
-       img_call = findViewById(R.id.img_call);
-       tv_button = findViewById(R.id.tv_button);
+        ll_bottom = findViewById(R.id.ll_bottom);
+        img_call = findViewById(R.id.img_call);
+        tv_button = findViewById(R.id.tv_button);
         tv_receive_remark = findViewById(R.id.tv_receive_remark);
+
+
+        dialog = new DriverDialog(mContext);
     }
 
     @Override
@@ -206,6 +209,7 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
 
     /**
      * 送达凭证
+     *
      * @param arriveVoucherImages 图片
      * @param showArriveVoucher   是否显示送达凭证 true 显示
      * @param remark
@@ -214,7 +218,7 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
     public void showArriveVoucher(List<String> arriveVoucherImages, boolean showArriveVoucher, String remark) {
         card_receive.setVisibility(showArriveVoucher ? View.VISIBLE : View.GONE);
         tv_receive_remark.setText(remark);
-        tv_receive_remark.setVisibility(TextUtils.isEmpty(remark)?View.GONE:View.VISIBLE);
+        tv_receive_remark.setVisibility(TextUtils.isEmpty(remark) ? View.GONE : View.VISIBLE);
         if (showArriveVoucher && !BaseUtils.isCollectionsEmpty(arriveVoucherImages)) {
             XAdapter<String> adapter = new XAdapter<String>(mContext, arriveVoucherImages) {
                 @Override
@@ -224,7 +228,7 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
                         public void initView(View itemView, int position, String data) {
                             super.initView(itemView, position, data);
                             ImageView img = itemView.findViewById(R.id.img);
-                            ImageLoader.getLoader().load(mContext,img,data);
+                            ImageLoader.getLoader().load(mContext, img, data);
                         }
                     };
                 }
@@ -247,6 +251,7 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
     public void showEstimate(int estimate, String estimateContent, boolean showEstimate) {
         card_estimate.setVisibility(showEstimate ? View.VISIBLE : View.GONE);
         tv_estimate.setText(TextUtils.isEmpty(estimateContent) ? "" : estimateContent);
+        view_start.setStar(estimate);
         //TODO 星级尚未处理
     }
 
@@ -269,20 +274,21 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
      */
     @Override
     public void call(String phone) {
-        CommonUtils.call(mContext,phone);
+        CommonUtils.call(mContext, phone);
     }
 
     /**
      * 展示底部按钮
-     *  @param buttonInfo
+     *
+     * @param buttonInfo
      * @param showButton
      * @param showBtCall
      */
     @Override
     public void showButton(String buttonInfo, boolean showButton, boolean showBtCall) {
-        ll_bottom.setVisibility(showButton?View.VISIBLE:View.GONE);
-        tv_button.setText(TextUtils.isEmpty(buttonInfo)?"":buttonInfo);
-        img_call.setVisibility(showBtCall?View.VISIBLE:View.GONE);
+        ll_bottom.setVisibility(showButton ? View.VISIBLE : View.GONE);
+        tv_button.setText(TextUtils.isEmpty(buttonInfo) ? "" : buttonInfo);
+        img_call.setVisibility(showBtCall ? View.VISIBLE : View.GONE);
     }
 
     /**
@@ -293,7 +299,7 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
     @Override
     public void jumpToEntryArrive(String id) {
         ArouterUtils.getInstance().builder(ArouterParamsMatch.activity_match_entry_arrive)
-                .withString(Param.TRAN,id)
+                .withString(Param.TRAN, id)
                 .navigation(mContext);
     }
 
@@ -333,10 +339,29 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
 
     /**
      * 评价司机
+     * @param id
+     * @param driverName
+     * @param driverMobile
      */
     @Override
-    public void appraiseDriver() {
+    public void appraiseDriver(String id, String driverName, String driverMobile) {
         //评价司机
+
+        dialog.setSubTitle(String.format("%s(%s)",driverName,driverMobile));
+        dialog.setEntryClickListener(new DriverDialog.EntryClickListener() {
+            @Override
+            public void OnEntryClick(int rating, String trim) {
+                presenter.appraiseDrive(rating,trim, MatchOrderDetailActivity.this);
+            }
+        });
+        dialog.builder().show(null);
+
+    }
+
+    @Override
+    public void showSuccess(String ms) {
+        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show(ms);
+        presenter.queryDetailInfo(this);
     }
 
 
@@ -347,12 +372,12 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
      */
     @Override
     public void onClick(View v) {
-        if (v.getId()==R.id.ll_end_call){
+        if (v.getId() == R.id.ll_end_call) {
             presenter.contactEnd();
-        }else if (v.getId()==R.id.ll_start_call){
+        } else if (v.getId() == R.id.ll_start_call) {
             presenter.contactStart();
 
-        }else if (v.getId()==R.id.ll_bottom){
+        } else if (v.getId() == R.id.ll_bottom) {
 
             presenter.clickBt();
         }

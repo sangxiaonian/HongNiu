@@ -1,0 +1,25 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@android:id/background"
+        android:width="30dp"
+        android:height="30dp"
+        android:gravity="center"
+        android:drawable="@drawable/star_border_hide" />
+
+    <item
+        android:id="@android:id/secondaryProgress"
+        android:width="30dp"
+        android:height="30dp"
+        android:gravity="center"
+        android:drawable="@drawable/star_border_hide" />
+
+    <item
+        android:id="@android:id/progress"
+        android:width="30dp"
+        android:gravity="center"
+        android:height="30dp"
+        android:drawable="@drawable/star_border_show" />
+</layer-list>
+
+

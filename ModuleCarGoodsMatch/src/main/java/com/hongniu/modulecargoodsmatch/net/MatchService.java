@@ -191,6 +191,14 @@ public interface MatchService {
      */
     @POST("hongniu/api/carGoodsOrder/arrived")
     Observable<CommonBean<Object>> matchEntryArrive(@Body MatchEntryArriveParams params);
+/**
+     * 确认到达
+     *
+     * @param params
+     * @return
+     */
+    @POST("hongniu/api/carGoodsOrder/appraise")
+    Observable<CommonBean<Object>> appraiseDrive(@Body MatchEntryArriveParams params);
 
 
 }

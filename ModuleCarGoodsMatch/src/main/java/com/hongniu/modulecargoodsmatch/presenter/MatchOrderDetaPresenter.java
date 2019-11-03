@@ -79,15 +79,33 @@ public class MatchOrderDetaPresenter implements MatchOrderDataControl.IMatchOrde
             }
         } else if (status == 4 || status == 5) {
             //已经送达，已完成 司机不能操作
-            if (type==0&&!info.getIsAppraiseRecord()){
+            if (type==0&&!mode.isShowEstimate()){
                 //评价司机
-                view.appraiseDriver();
+                view.appraiseDriver(mode.getInfo().getId(),info.getDriverName(),info.getDriverMobile());
             }
 
 
         }
 
 
+    }
+
+    /**
+     * 评价司机
+     *  @param rating
+     * @param remark
+     * @param listener
+     */
+    @Override
+    public void appraiseDrive(int rating, String remark, TaskControl.OnTaskListener listener) {
+        mode.appraiseDrive(rating,remark)
+            .subscribe(new NetObserver<Object>(listener) {
+                @Override
+                public void doOnSuccess(Object data) {
+                    view.showSuccess("评价成功");
+                }
+            })
+        ;
     }
 
     private void initInfor() {

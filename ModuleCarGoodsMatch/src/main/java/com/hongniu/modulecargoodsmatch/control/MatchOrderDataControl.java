@@ -102,8 +102,13 @@ public class MatchOrderDataControl {
 
         /**
          * 评价司机
+         * @param id
+         * @param driverName
+         * @param driverMobile
          */
-        void appraiseDriver();
+        void appraiseDriver(String id, String driverName, String driverMobile);
+
+        void showSuccess(String 评价成功);
     }
     public interface IMatchOrderDataPresenter {
         void saveInfor(int type, MatchOrderInfoBean infoBean, TaskControl.OnTaskListener listener);
@@ -127,6 +132,13 @@ public class MatchOrderDataControl {
         void clickBt();
 
 
+        /**
+         * 评价司机
+         * @param rating
+         * @param remark
+         * @param listener
+         */
+        void appraiseDrive(int rating, String remark, TaskControl.OnTaskListener listener);
     }
     public interface IMatchOrderDataMode {
 
@@ -248,6 +260,14 @@ public class MatchOrderDataControl {
          * @return
          */
         int getType();
+
+        /**
+         * 评价司机
+         * @param rating
+         * @param remark
+         * @return
+         */
+        Observable<CommonBean<Object>> appraiseDrive(int rating, String remark);
     }
 
 }

@@ -302,4 +302,22 @@ public class HttpMatchFactory {
                 .compose(RxUtils.<CommonBean<Object>>getSchedulersObservableTransformer())
                 ;
     }
+
+    /**
+     * 评价司机
+     * @param rating
+     * @param remark
+     * @param id
+     * @return
+     */
+    public static Observable<CommonBean<Object>> appraiseDrive(int rating, String remark, String id) {
+        MatchEntryArriveParams params=new MatchEntryArriveParams();
+        params.setId(id);
+        params.setContent(remark);
+        params.setServiceScore(rating+"");
+        return MatchClient.getInstance().getService()
+                .appraiseDrive(params)
+                .compose(RxUtils.<CommonBean<Object>>getSchedulersObservableTransformer())
+                ;
+    }
 }

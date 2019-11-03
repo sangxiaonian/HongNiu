@@ -350,11 +350,21 @@
                             android:textSize="17sp" />
 
 
-                        <TextView
+
+                        <com.hedgehog.ratingbar.RatingBar
                             android:id="@+id/view_start"
-                            android:layout_width="match_parent"
-                            android:text="星级评定"
-                            android:layout_height="wrap_content"/>
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center"
+                            app:clickable="false"
+                            app:halfstart="false"
+                            app:starCount="5"
+                            app:starEmpty="@drawable/star_border_hide"
+                            app:starFill="@drawable/star_border_show"
+                            app:starImageHeight="50dp"
+                            app:starImagePadding="10dp"
+                            app:starImageWidth="50dp" />
 
                         <TextView
                             android:id="@+id/tv_estimate"

@@ -11,6 +11,24 @@ public class MatchEntryArriveParams {
   private String  id	;//true	number	订单id
   private String  deliveryMark	;//true	string	送达备注
   private List<String> imageUrls	;//false	arrary	图片url列表(相对路径)
+  private String content;//false	arrary	图片url列表(相对路径)
+  private String serviceScore;//false	arrary	图片url列表(相对路径)
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getServiceScore() {
+        return serviceScore;
+    }
+
+    public void setServiceScore(String serviceScore) {
+        this.serviceScore = serviceScore;
+    }
 
     public String getId() {
         return id;

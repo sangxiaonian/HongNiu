@@ -213,7 +213,7 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
      */
     @Override
     public boolean isShowEstimate() {
-        return infoBean.getIsAppraiseRecord();
+        return infoBean.getIsAppraiseRecord()==1;
     }
 
     /**
@@ -245,7 +245,7 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
     public boolean isShowButton() {
         int status = infoBean.getStatus();
         return (status == 2 || status == 3)
-                || (type == 0 && (status == 4 || status == 5) && !infoBean.getIsAppraiseRecord());
+                || (type == 0 && (status == 4 || status == 5) && !isShowEstimate());
 
 
     }
@@ -269,7 +269,7 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
         } else if (status == 4 || status == 5) {
             //已经送达，已完成 司机不能操作
             msg = type == 1 ? "" :
-                    (infoBean.getIsAppraiseRecord() ? "" : "评价司机");
+                    (isShowEstimate() ? "" : "评价司机");
 
         }
         return msg;
@@ -293,5 +293,16 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
     @Override
     public int getType() {
         return type;
+    }
+
+    /**
+     * 评价司机
+     *  @param rating
+     * @param remark
+     * @return
+     */
+    @Override
+    public Observable<CommonBean<Object>> appraiseDrive(int rating, String remark) {
+      return  HttpMatchFactory.appraiseDrive(rating,remark,infoBean.getId());
     }
 }
