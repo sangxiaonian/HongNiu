@@ -172,4 +172,14 @@ public class MatchMapActivity extends RefrushActivity<PoiItem> implements MapPoi
     public void onMapPointChange(PoiItem poiItem) {
             bean.setPoiItem(poiItem);
     }
+
+    @Override
+    public void onBackPressed() {
+        if (refresh.getVisibility()==View.VISIBLE){
+            etSearch.clearFocus();
+            refresh.setVisibility(View.GONE);
+        }else {
+            super.onBackPressed();
+        }
+    }
 }

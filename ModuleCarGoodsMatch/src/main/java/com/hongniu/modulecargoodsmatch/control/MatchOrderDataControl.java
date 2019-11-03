@@ -55,8 +55,9 @@ public class MatchOrderDataControl {
          * 送达凭证
          * @param arriveVoucherImages 图片
          * @param showArriveVoucher   是否显示送达凭证 true 显示
+         * @param remark
          */
-        void showArriveVoucher(List<String> arriveVoucherImages, boolean showArriveVoucher);
+        void showArriveVoucher(List<String> arriveVoucherImages, boolean showArriveVoucher, String remark);
 
         /**
          * 显示司机评价模块
@@ -86,9 +87,29 @@ public class MatchOrderDataControl {
          * @param showBtCall
          */
         void showButton(String buttonInfo, boolean showButton, boolean showBtCall);
+
+        /**
+         * 确认到达
+         * @param id
+         */
+        void jumpToEntryArrive(String id);
+
+        /**
+         * 我要接单
+         * @param id
+         */
+        void showReceiveOrder(String id);
+
+        /**
+         * 评价司机
+         */
+        void appraiseDriver();
     }
     public interface IMatchOrderDataPresenter {
         void saveInfor(int type, MatchOrderInfoBean infoBean, TaskControl.OnTaskListener listener);
+
+
+        void queryDetailInfo(TaskControl.OnTaskListener listener);
 
         /**
          * 联系发货人
@@ -104,10 +125,13 @@ public class MatchOrderDataControl {
          * 点击底部按钮
          */
         void clickBt();
+
+
     }
     public interface IMatchOrderDataMode {
 
-        void saveInfor(int type, MatchOrderInfoBean infoBean);
+        void saveInfor(int type);
+        void saveDetailInfo(MatchOrderInfoBean data);
 
         /**
          * 查询订单详情
@@ -218,6 +242,12 @@ public class MatchOrderDataControl {
          * @return
          */
         boolean isShowBtCall();
+
+        /**
+         * 获取当前角色类型
+         * @return
+         */
+        int getType();
     }
 
 }

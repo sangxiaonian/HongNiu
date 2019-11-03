@@ -15,18 +15,25 @@ public class MatchOrderDetaPresenter implements MatchOrderDataControl.IMatchOrde
 
     public MatchOrderDetaPresenter(MatchOrderDataControl.IMatchOrderDataView view) {
         this.view = view;
-        mode=new MatchOrderDetaMode();
+        mode = new MatchOrderDetaMode();
     }
 
     @Override
-    public void saveInfor(int type, MatchOrderInfoBean infoBean, TaskControl.OnTaskListener listener) {
-        mode.saveInfor(type, infoBean);
+    public void saveInfor(final int type, final MatchOrderInfoBean infoBean, TaskControl.OnTaskListener listener) {
+        mode.saveInfor(type);
+        mode.saveDetailInfo(infoBean);
         initInfor();
+        queryDetailInfo(listener);
+    }
+
+    @Override
+    public void queryDetailInfo(TaskControl.OnTaskListener listener) {
         mode.queryInfo()
                 .subscribe(new NetObserver<MatchOrderInfoBean>(listener) {
                     @Override
                     public void doOnSuccess(MatchOrderInfoBean data) {
-                      initInfor();
+                        mode.saveDetailInfo(data);
+                        initInfor();
                     }
                 });
     }
@@ -53,19 +60,46 @@ public class MatchOrderDetaPresenter implements MatchOrderDataControl.IMatchOrde
      */
     @Override
     public void clickBt() {
+        int type = mode.getType();//0 货主 1司机
+        MatchOrderInfoBean info = mode.getInfo();
+        int status = info.getStatus();
+
+
+        //        订单状态 1:待付款 2:待接单 3:已接单 4:已送达 5:已完成 6:已取消
+        if (status == 2) {
+            // "我要接单";
+            view.showReceiveOrder(info.getId());
+        } else if (status == 3) {
+            if (type==0){
+                //联系司机
+                view.call(info.getDriverMobile());
+            }else {
+                //确认送达
+                view.jumpToEntryArrive(info.getId());
+            }
+        } else if (status == 4 || status == 5) {
+            //已经送达，已完成 司机不能操作
+            if (type==0&&!info.getIsAppraiseRecord()){
+                //评价司机
+                view.appraiseDriver();
+            }
+
+
+        }
+
 
     }
 
-    private void initInfor(){
+    private void initInfor() {
         view.showTitle(mode.getTitle());
         view.showOrderState(mode.getOrderState());
         view.showPickupTime(mode.getPickupTime());
         view.showCarInfo(mode.getCarInfo());
         view.showArriveTime(mode.getArriveTime());
-        view.showPlaceInfo(mode.getInfo(),mode.isShowContact());
-        view.showArriveVoucher(mode.getArriveVoucherImages(),mode.isShowArriveVoucher());
-        view.showEstimate(mode.getEstimate(),mode.getEstimateContent(),mode.isShowEstimate());
-        view.showPrice(mode.getPrice(),mode.getPriceDetail() );
-        view.showButton(mode.getButtonInfo(),mode.isShowButton() ,mode.isShowBtCall());
+        view.showPlaceInfo(mode.getInfo(), mode.isShowContact());
+        view.showArriveVoucher(mode.getArriveVoucherImages(), mode.isShowArriveVoucher(), mode.getInfo().getDeliveryMark());
+        view.showEstimate(mode.getEstimate(), mode.getEstimateContent(), mode.isShowEstimate());
+        view.showPrice(mode.getPrice(), mode.getPriceDetail());
+        view.showButton(mode.getButtonInfo(), mode.isShowButton(), mode.isShowBtCall());
     }
 }

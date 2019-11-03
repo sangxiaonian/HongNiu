@@ -102,7 +102,10 @@ public class MatchDriverOrderRecevingFragment extends RefrushFragmet<MatchOrderI
         } else if (MatchOrderListHelper.RECEIVE_ORDER.equals(btState)) {
             _receiveOrder(infoHolder);
         } else if (MatchOrderListHelper.ENTRY_ARRIVE.equals(btState)) {
-
+            //确认送达
+            ArouterUtils.getInstance().builder(ArouterParamsMatch.activity_match_entry_arrive)
+                    .withString(Param.TRAN,infoHolder.getId())
+                    .navigation(getContext());
         }
 
 
@@ -169,10 +172,12 @@ public class MatchDriverOrderRecevingFragment extends RefrushFragmet<MatchOrderI
 
     @Override
     public void onItemClick(int position, MatchOrderInfoBean data) {
-        ArouterUtils.getInstance()
-                .builder(ArouterParamsMatch.activity_match_order_detail)
-                .withInt(Param.TYPE,type==1?0:1)
-                .withParcelable(Param.TRAN,data)
-                .navigation(getContext());
+        if (data.getStatus()!=1) {//代付款状态不能进入详情页面
+            ArouterUtils.getInstance()
+                    .builder(ArouterParamsMatch.activity_match_order_detail)
+                    .withInt(Param.TYPE, type == 1 ? 0 : 1)
+                    .withParcelable(Param.TRAN, data)
+                    .navigation(getContext());
+        }
     }
 }

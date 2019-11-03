@@ -12,16 +12,25 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.utils.BaseUtils;
+import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.modulecargoodsmatch.R;
 import com.hongniu.modulecargoodsmatch.control.MatchOrderDataControl;
 import com.hongniu.modulecargoodsmatch.entity.MatchOrderInfoBean;
+import com.hongniu.modulecargoodsmatch.net.HttpMatchFactory;
 import com.hongniu.modulecargoodsmatch.presenter.MatchOrderDetaPresenter;
+import com.hongniu.modulecargoodsmatch.ui.fragment.MatchDriverOrderRecevingFragment;
+import com.sang.common.imgload.ImageLoader;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.utils.CommonUtils;
+import com.sang.common.widget.dialog.CenterAlertDialog;
+import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
+import com.sang.common.widget.dialog.inter.DialogControl;
 
 import java.util.List;
 
@@ -52,6 +61,7 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
 
 
     private ViewGroup card_receive;//送达凭证
+    private TextView tv_receive_remark;//送达备注信息
     private RecyclerView recycler_receive;//送达凭证 图片
     private ViewGroup card_estimate;//司机评价
     private TextView tv_estimate;//司机评价
@@ -109,6 +119,7 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
        ll_bottom = findViewById(R.id.ll_bottom);
        img_call = findViewById(R.id.img_call);
        tv_button = findViewById(R.id.tv_button);
+        tv_receive_remark = findViewById(R.id.tv_receive_remark);
     }
 
     @Override
@@ -124,6 +135,12 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
         ll_end_call.setOnClickListener(this);
         ll_start_call.setOnClickListener(this);
         ll_bottom.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        presenter.queryDetailInfo(this);
     }
 
     /**
@@ -189,13 +206,15 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
 
     /**
      * 送达凭证
-     *
      * @param arriveVoucherImages 图片
      * @param showArriveVoucher   是否显示送达凭证 true 显示
+     * @param remark
      */
     @Override
-    public void showArriveVoucher(List<String> arriveVoucherImages, boolean showArriveVoucher) {
+    public void showArriveVoucher(List<String> arriveVoucherImages, boolean showArriveVoucher, String remark) {
         card_receive.setVisibility(showArriveVoucher ? View.VISIBLE : View.GONE);
+        tv_receive_remark.setText(remark);
+        tv_receive_remark.setVisibility(TextUtils.isEmpty(remark)?View.GONE:View.VISIBLE);
         if (showArriveVoucher && !BaseUtils.isCollectionsEmpty(arriveVoucherImages)) {
             XAdapter<String> adapter = new XAdapter<String>(mContext, arriveVoucherImages) {
                 @Override
@@ -205,6 +224,7 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
                         public void initView(View itemView, int position, String data) {
                             super.initView(itemView, position, data);
                             ImageView img = itemView.findViewById(R.id.img);
+                            ImageLoader.getLoader().load(mContext,img,data);
                         }
                     };
                 }
@@ -263,6 +283,60 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
         ll_bottom.setVisibility(showButton?View.VISIBLE:View.GONE);
         tv_button.setText(TextUtils.isEmpty(buttonInfo)?"":buttonInfo);
         img_call.setVisibility(showBtCall?View.VISIBLE:View.GONE);
+    }
+
+    /**
+     * 确认到达
+     *
+     * @param id
+     */
+    @Override
+    public void jumpToEntryArrive(String id) {
+        ArouterUtils.getInstance().builder(ArouterParamsMatch.activity_match_entry_arrive)
+                .withString(Param.TRAN,id)
+                .navigation(mContext);
+    }
+
+    /**
+     * 我要接单
+     *
+     * @param id
+     */
+    @Override
+    public void showReceiveOrder(final String id) {
+        CenterAlertBuilder builder = Utils.creatDialog(mContext, "确定接单？", "接单后，即可与货主取得联系", "放弃接单", "确定接单");
+        builder
+                .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
+                    @Override
+                    public void onRightClick(View view, DialogControl.ICenterDialog cdialog) {
+                        cdialog.dismiss();
+                        HttpMatchFactory
+                                .receiverOrder(id)
+                                .subscribe(new NetObserver<Object>(MatchOrderDetailActivity.this) {
+                                    @Override
+                                    public void doOnSuccess(Object data) {
+                                    }
+
+                                    @Override
+                                    public void onComplete() {
+                                        super.onComplete();
+                                        presenter.queryDetailInfo(MatchOrderDetailActivity.this);
+
+                                    }
+                                });
+
+                    }
+                })
+                .creatDialog(new CenterAlertDialog(mContext))
+                .show();
+    }
+
+    /**
+     * 评价司机
+     */
+    @Override
+    public void appraiseDriver() {
+        //评价司机
     }
 
 

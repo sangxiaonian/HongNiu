@@ -11,6 +11,7 @@ import com.hongniu.modulecargoodsmatch.entity.MatchChooseGrapBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchCountFareBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchCreatGoodsSourceParams;
 import com.hongniu.modulecargoodsmatch.entity.MatchCreatOrderParams;
+import com.hongniu.modulecargoodsmatch.entity.MatchEntryArriveParams;
 import com.hongniu.modulecargoodsmatch.entity.MatchGrapDetailParams;
 import com.hongniu.modulecargoodsmatch.entity.MatchGrapSingleDetailBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchMyJoinGoodsInofrBean;
@@ -273,12 +274,31 @@ public class HttpMatchFactory {
                 ;
     }
 
+    /**
+     *@data  2019/11/3
+     *@Author PING
+     *@Description
+     *
+     * 查询订单详情
+     */
     public static Observable<CommonBean<MatchOrderInfoBean>> queryMatchOrderDetail(String id) {
         IDParams params = new IDParams();
         params.id = id;
         return MatchClient.getInstance().getService()
                 .queryMatchOrderDetail(params)
                 .compose(RxUtils.<CommonBean<MatchOrderInfoBean>>getSchedulersObservableTransformer())
+                ;
+    }
+
+    /**
+     * 确认到达
+     * @param params
+     * @return
+     */
+    public static Observable<CommonBean<Object>> matchEntryArrive(MatchEntryArriveParams params) {
+        return MatchClient.getInstance().getService()
+                .matchEntryArrive(params)
+                .compose(RxUtils.<CommonBean<Object>>getSchedulersObservableTransformer())
                 ;
     }
 }

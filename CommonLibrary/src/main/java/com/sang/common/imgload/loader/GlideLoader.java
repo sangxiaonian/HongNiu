@@ -126,7 +126,7 @@ public class GlideLoader implements ImageLoaderControl.IImageLoader {
 
     public RequestOptions getOptions(int placeholder, int errorImg) {
         RequestOptions options = new RequestOptions();
-        options.fitCenter();
+//        options.fitCenter();
         if (tempPlaceholder != 0) {
             options.placeholder(tempPlaceholder);
             tempPlaceholder=0;

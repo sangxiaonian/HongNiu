@@ -52,5 +52,9 @@ public class ArouterParamsMatch {
      * 订单详情
      */
     public final static String activity_match_order_detail = "/ModuleCarGoodsMatch/activity_match_order_detail";
+    /**
+     * 确认送达
+     */
+    public final static String activity_match_entry_arrive = "/ModuleCarGoodsMatch/activity_match_entry_arrive";
 
 }

@@ -1,13 +1,12 @@
-package com.hongniu.moduleorder.ui.adapter;
+package com.hongniu.baselibrary.widget.adapter;
 
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.hongniu.moduleorder.R;
+import com.hongniu.baselibrary.R;
 import com.sang.common.recycleview.inter.OnItemClickListener;
-import com.hongniu.moduleorder.control.OnItemDeletedClickListener;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.sang.common.imgload.ImageLoader;
 import com.sang.common.recycleview.adapter.XAdapter;

@@ -11,6 +11,7 @@ import com.hongniu.modulecargoodsmatch.entity.MatchChooseGrapBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchCountFareBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchCreatGoodsSourceParams;
 import com.hongniu.modulecargoodsmatch.entity.MatchCreatOrderParams;
+import com.hongniu.modulecargoodsmatch.entity.MatchEntryArriveParams;
 import com.hongniu.modulecargoodsmatch.entity.MatchGrapDetailParams;
 import com.hongniu.modulecargoodsmatch.entity.MatchGrapSingleDetailBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchMyJoinGoodsInofrBean;
@@ -181,6 +182,14 @@ public interface MatchService {
      */
     @POST("hongniu/api/carGoodsOrder/detail")
     Observable<CommonBean<MatchOrderInfoBean>> queryMatchOrderDetail(@Body IDParams params);
+/**
+     * 确认到达
+     *
+     * @param params
+     * @return
+     */
+    @POST("hongniu/api/carGoodsOrder/arrived")
+    Observable<CommonBean<Object>> matchEntryArrive(@Body MatchEntryArriveParams params);
 
 
 }

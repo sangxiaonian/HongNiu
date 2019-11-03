@@ -5,7 +5,6 @@ import com.hongniu.modulecargoodsmatch.control.MatchOrderDataControl;
 import com.hongniu.modulecargoodsmatch.entity.MatchOrderInfoBean;
 import com.hongniu.modulecargoodsmatch.net.HttpMatchFactory;
 
-import java.util.Date;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -18,9 +17,14 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
     private int type;//0 货主 1司机
 
     @Override
-    public void saveInfor(int type, MatchOrderInfoBean infoBean) {
+    public void saveInfor(int type) {
         this.type = type;
-        this.infoBean = infoBean;
+
+    }
+
+    @Override
+    public void saveDetailInfo(MatchOrderInfoBean data) {
+        this.infoBean = data;
     }
 
     /**
@@ -279,5 +283,15 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
     @Override
     public boolean isShowBtCall() {
         return type==0&&infoBean.getStatus()==3;
+    }
+
+    /**
+     * 获取当前角色类型
+     *
+     * @return //0 货主 1司机
+     */
+    @Override
+    public int getType() {
+        return type;
     }
 }
