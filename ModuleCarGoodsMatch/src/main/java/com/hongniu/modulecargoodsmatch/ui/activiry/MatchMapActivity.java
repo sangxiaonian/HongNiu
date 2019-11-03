@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -53,6 +54,7 @@ public class MatchMapActivity extends RefrushActivity<PoiItem> implements MapPoi
         setContentView(R.layout.activity_match_map);
         StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.color_tran), true);
         StatusBarCompat.setTranslucent(getWindow(), true);
+         getWindow().setSoftInputMode(WindowManager.LayoutParams. SOFT_INPUT_ADJUST_PAN);
         bean=new TranMapBean();
         initView();
         initData();
@@ -100,9 +102,12 @@ public class MatchMapActivity extends RefrushActivity<PoiItem> implements MapPoi
             finish();
         }else if (v.getId() == R.id.bt_sum) {
             Intent intent=new Intent();
+
+            String phone = et_phone.getText().toString().trim();
+
             bean.setAddress(TextUtils.isEmpty(et_address.getText().toString().trim())?null:et_address.getText().toString().trim());
             bean.setName(TextUtils.isEmpty(et_name.getText().toString().trim())?null:et_name.getText().toString().trim());
-            bean.setAddress(TextUtils.isEmpty(et_phone.getText().toString().trim())?null:et_phone.getText().toString().trim());
+            bean.setPhone(TextUtils.isEmpty(phone)?null: phone);
             intent.putExtra(Param.TRAN,bean);
             setResult(0,intent);
             finish();
