@@ -149,18 +149,21 @@ public class PasswordDialog implements DialogControl.IDialog, View.OnClickListen
         }
     }
 
+
+
     /**
      * 设置显示的提现金额
      * @param count
      */
     public void setCount(final String count) {
         this.count = count;
-        tvTitle.post(new Runnable() {
-            @Override
-            public void run() {
-                tvTitle.setText((payDes==null?"金额":payDes)+(TextUtils.isEmpty(count)?"0":count) +" 元");
-            }
-        });
+        tvTitle.setText(String.format("%s%s 元", payDes == null ? "金额" : payDes, TextUtils.isEmpty(count) ? "0" : count));
+//        tvTitle.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                tvTitle.setText((payDes==null?"金额":payDes)+(TextUtils.isEmpty(count)?"0":count) +" 元");
+//            }
+//        });
 
     }
 

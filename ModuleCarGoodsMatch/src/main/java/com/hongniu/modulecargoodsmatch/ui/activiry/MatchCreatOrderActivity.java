@@ -3,6 +3,7 @@ package com.hongniu.modulecargoodsmatch.ui.activiry;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -210,7 +211,7 @@ public class MatchCreatOrderActivity extends BaseActivity implements View.OnClic
                         @Override
                         public void doOnSuccess(MatchCreateInfoBean data) {
 
-
+                            payUtils.setPayCount(data.getEstimateFare());
                             payUtils.setSubtitle(String.format("支付总额：%s" , data.getEstimateFare()));
                             payUtils.setSubtitleDes(String.format("运费明细  起步价%s元*%s公里", data.getStartPrice(), data.getDistance()));
                             payParam.setCarGoodsOrderId(data.getCarGoodsOrderId());
@@ -235,6 +236,19 @@ public class MatchCreatOrderActivity extends BaseActivity implements View.OnClic
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode==1&&resultCode==Activity.RESULT_OK){
+            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show("支付成功");
+            ArouterUtils.getInstance().builder(ArouterParamsMatch.activity_match_my_order).navigation(mContext);
+            setResult(Activity.RESULT_OK);
+            finish();
+        }else {
+            super.onActivityResult(requestCode, resultCode, data);
+
+        }
+    }
+
+    @Override
     public void jump2Pay(PayBean data, int payType, PayParam payParam) {
         ArouterUtils.getInstance()
                 .builder(ArouterParamOrder.activity_waite_pay)
@@ -245,8 +259,6 @@ public class MatchCreatOrderActivity extends BaseActivity implements View.OnClic
                 .withBoolean("havePolicy", false)
                 .withInt("queryType", 5)
                 .navigation((Activity) mContext, 1);
-        Intent intent = new Intent();
-        setResult(0, intent);
-        finish();
+
     }
 }

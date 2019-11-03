@@ -30,6 +30,7 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
     private String describe;
     private String title;
     private PayWayView.OnPayTypeChangeListener changeListener;
+    private OnClickCancleListener cancleListener;
     private OnClickPayListener payListener;
     private int showCompany;//1:不可用企业支付  2:企业支付需要审核  3:企业支付不需要审核
     private Button btPay;
@@ -66,8 +67,9 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
 
     }
 
-
-
+    public void setCancleListener(OnClickCancleListener cancleListener) {
+        this.cancleListener = cancleListener;
+    }
 
     @Override
     public void onStart() {
@@ -144,6 +146,9 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.img_cancel) {
+            if (cancleListener!=null){
+                cancleListener.onClicCancle();
+            }
             dismiss();
         } else if (v.getId() == R.id.bt_pay) {
             if (payListener != null) {
@@ -236,5 +241,12 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
          * @param yueWay  余额支付方式更改监听 0 企业支付 1余额支付 2 申请支付
          */
         void onClickPay(float amount, int payType, int yueWay);
+    }
+
+    public interface OnClickCancleListener {
+        /**
+         * 点击取消
+         */
+        void onClicCancle();
     }
 }

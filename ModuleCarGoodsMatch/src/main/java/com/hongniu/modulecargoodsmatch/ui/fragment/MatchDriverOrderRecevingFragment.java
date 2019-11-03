@@ -79,7 +79,7 @@ public class MatchDriverOrderRecevingFragment extends RefrushFragmet<MatchOrderI
     @Override
     public void onStart() {
         super.onStart();
-        queryData(false);
+        queryData(true);
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
@@ -26,7 +27,7 @@ import com.sang.thirdlibrary.pay.entiy.PayBean;
 /**
  * 作者：  on 2019/11/3.
  */
-public class DialogPayUtils implements PayPasswordKeyBord.PayKeyBordListener, PayDialog.OnClickPayListener {
+public class DialogPayUtils implements PayPasswordKeyBord.PayKeyBordListener, PayDialog.OnClickPayListener, PayDialog.OnClickCancleListener {
 
     private Context mContext;
     protected PayParam payParam;
@@ -48,6 +49,7 @@ public class DialogPayUtils implements PayPasswordKeyBord.PayKeyBordListener, Pa
         payDialog = new PayDialog();
         payPasswordKeyBord.sePaytListener(this);
         payDialog.setPayListener(this);
+        payDialog.setCancleListener(this);
 
     }
 
@@ -87,7 +89,14 @@ public class DialogPayUtils implements PayPasswordKeyBord.PayKeyBordListener, Pa
 
     private void build() {
         payPasswordKeyBord.setPayDes("付款金额");
-        payPasswordKeyBord.setPayCount(payCount);
+        if (!TextUtils.isEmpty(payCount)) {
+            try {
+                payDialog.setPayAmount(Float.parseFloat(payCount));
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+
         payDialog.setTitle(title);
         payDialog.setDescribe(subtitle);
         payDialog.setDescribeSub(subtitleDes);
@@ -276,6 +285,16 @@ public class DialogPayUtils implements PayPasswordKeyBord.PayKeyBordListener, Pa
                     }
                 });
 
+    }
+
+    /**
+     * 点击取消
+     */
+    @Override
+    public void onClicCancle() {
+        if (payListener!=null){
+            payListener.canclePay(null);
+        }
     }
 
     public interface PayListener {
