@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.text.TextUtils;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseApplication;
@@ -13,6 +15,7 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventBean;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
 import com.hongniu.modulecargoodsmatch.net.HttpMatchFactory;
+import com.hongniu.supply.entity.PushBean;
 import com.hongniu.supply.net.HttpMainFactory;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.JLog;
@@ -40,6 +43,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
+import io.rong.push.platform.hms.HMSAgent;
 
 import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
 
@@ -86,37 +90,27 @@ public class AppApplication extends BaseApplication {
                         super.dealWithCustomAction(context, uMessage);
                         //处理自定义数据
                         String custom = uMessage.custom;
-                        Map<String, String> extra = uMessage.extra;
-                        if (extra!=null){
-                                if ("openapp".equals(extra.get("action"))){
-                                    //打开app
-                                    DeviceUtils.openApp(context);
-                                }else if ("opencarmatchlist".equals(extra.get("action"))){
-                                    //打开车货匹配我的接单列表
-                                    ArouterUtils.getInstance()
-                                            .builder(ArouterParamsMatch.activity_match_my_order)
-                                            .withInt(Param.TYPE,1)
-                                            .withFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                            .navigation(context);
-
-                                }
+                        try {
+                            PushBean pushBean = new Gson().fromJson(custom, PushBean.class);
+                            dealPush(pushBean);
+                        } catch (JsonSyntaxException e) {
+                            e.printStackTrace();
                         }
-                        JLog.i(custom+">>>>");
+
+
 
                     }
 
                     @Override
                     public void openActivity(Context context, UMessage uMessage) {
                         super.openActivity(context, uMessage);
-                        String custom = uMessage.custom;
-                        JLog.i(custom+">>>>");
+                        dealWithCustomAction(context,uMessage);
                     }
 
                     @Override
                     public void launchApp(Context context, UMessage uMessage) {
                         super.launchApp(context, uMessage);
-                        String custom = uMessage.custom;
-                        JLog.i(custom+">>>>");
+                        dealWithCustomAction(context,uMessage);
 
                     }
                 })
@@ -141,6 +135,30 @@ public class AppApplication extends BaseApplication {
 
     }
 
+    private void dealPush(PushBean pushBean) {
+        if (pushBean!=null){
+            if ("openapp".equals(pushBean.action)){
+                //打开app
+                DeviceUtils.openApp(this);
+            }else if ("opencarmatchlist".equals(pushBean.action)){
+                //打开车货匹配我的接单列表
+                ArouterUtils.getInstance()
+                        .builder(ArouterParamsMatch.activity_match_my_order)
+                        .withInt(Param.TYPE,1)
+                        .withFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        .navigation(this);
+
+            }else if ("openevaluationlist".equals(pushBean.action)){
+                //打开车货匹配我的接单列表
+                ArouterUtils.getInstance()
+                        .builder(ArouterParamsMatch.activity_match_my_order)
+                        .withInt(Param.TYPE,0)
+                        .withFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        .navigation(this);
+
+            }
+        }
+    }
 
 
     //上传异常情况

@@ -51,6 +51,7 @@ public class DialogPayUtils implements PayPasswordKeyBord.PayKeyBordListener, Pa
         payDialog.setPayListener(this);
         payDialog.setCancleListener(this);
 
+
     }
 
     public void setPayListener(PayListener payListener) {
@@ -276,12 +277,18 @@ public class DialogPayUtils implements PayPasswordKeyBord.PayKeyBordListener, Pa
                 .subscribe(new NetObserver<PayBean>(listener) {
                     @Override
                     public void doOnSuccess(PayBean data) {
-
                         if (payListener != null) {
                             payListener.jump2Pay(data, payParam.getPayType(), payParam);
                         }
+                    }
 
-
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        ToastUtils.getInstance().show("支付失败");
+                        if (payListener != null) {
+                            payListener.canclePay(null);
+                        }
                     }
                 });
 

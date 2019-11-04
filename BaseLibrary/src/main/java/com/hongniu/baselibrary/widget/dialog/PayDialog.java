@@ -1,9 +1,11 @@
 package com.hongniu.baselibrary.widget.dialog;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +59,24 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
         payWay.setShowCompany(showCompany != 1);
 
         payWay.setPayType(1);
+
+
+        this.getDialog().setOnKeyListener(new DialogInterface.OnKeyListener()
+        {
+
+            @Override
+            public boolean onKey(DialogInterface arg0, int keyCode, KeyEvent arg2) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+                    return true;
+                }else if(keyCode == KeyEvent.KEYCODE_MENU) {
+
+                    return true;
+                }
+                return false;
+            }
+        });
+
 
         return inflate;
     }
