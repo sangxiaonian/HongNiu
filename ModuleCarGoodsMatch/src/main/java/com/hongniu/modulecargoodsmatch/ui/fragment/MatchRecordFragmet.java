@@ -227,7 +227,7 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> impl
                     .withString(Param.TRAN, data.id)
                     .navigation(getContext());
         }else if ("删除发布".equals(btName)){
-            CenterAlertBuilder builder = Utils.creatDialog(getContext(), "确认删除车货匹配？", "发布一旦删除，无法恢复", "返回记录", "确定删除");
+            CenterAlertBuilder builder = Utils.creatDialog(getContext(), "确认删除明珠城配？", "发布一旦删除，无法恢复", "返回记录", "确定删除");
             builder.setRightClickListener(new DialogControl.OnButtonRightClickListener() {
                 @Override
                 public void onRightClick(View view, DialogControl.ICenterDialog dialog) {

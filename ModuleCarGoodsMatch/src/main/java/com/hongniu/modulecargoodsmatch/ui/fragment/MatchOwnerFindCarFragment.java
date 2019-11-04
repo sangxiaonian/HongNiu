@@ -1,8 +1,12 @@
 package com.hongniu.modulecargoodsmatch.ui.fragment;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v4.view.ViewPager;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +26,9 @@ import com.hongniu.baselibrary.utils.PickerDialogUtils;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.modulecargoodsmatch.R;
 import com.hongniu.modulecargoodsmatch.entity.MatchCarTypeInfoBean;
+import com.hongniu.modulecargoodsmatch.entity.MatchCountFareBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchOrderTranMapBean;
+import com.hongniu.modulecargoodsmatch.entity.MatchQueryCountFareParam;
 import com.hongniu.modulecargoodsmatch.entity.TranMapBean;
 import com.hongniu.modulecargoodsmatch.net.HttpMatchFactory;
 import com.hongniu.modulecargoodsmatch.ui.activiry.MatchCreatOrderActivity;
@@ -30,6 +36,7 @@ import com.hongniu.modulecargoodsmatch.ui.adapter.CarPageAdapter;
 import com.hongniu.modulecargoodsmatch.ui.activiry.MatchMapActivity;
 import com.sang.common.net.rx.BaseObserver;
 import com.sang.common.net.rx.RxUtils;
+import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
@@ -58,13 +65,14 @@ public class MatchOwnerFindCarFragment extends BaseFragment implements RadioGrou
     private TextView tv_end_address;
     private TextView tv_end_address_dess;
     private TextView tv_time;
+    private TextView tv_price;
     private ViewGroup ll_start_address;
     private ViewGroup ll_end_address;
     private ViewGroup ll_time;
     private View bt_sum;
     private List<MatchCarTypeInfoBean> carInfo;
     private OptionsPickerView<String> pickerView;
-
+    MatchOrderTranMapBean bean = new MatchOrderTranMapBean();
     @Override
     protected View initView(LayoutInflater inflater) {
         View inflate = inflater.inflate(R.layout.fragment_match_owner_find_car, null, false);
@@ -81,6 +89,7 @@ public class MatchOwnerFindCarFragment extends BaseFragment implements RadioGrou
         ll_start_address = inflate.findViewById(R.id.ll_start_address);
         ll_end_address = inflate.findViewById(R.id.ll_end_address);
         ll_time = inflate.findViewById(R.id.ll_time);
+        tv_price = inflate.findViewById(R.id.tv_price);
         return inflate;
     }
 
@@ -194,7 +203,9 @@ public class MatchOwnerFindCarFragment extends BaseFragment implements RadioGrou
                 tv_start_address_dess.setText(placeInfor);
                 tv_start_address_dess.setVisibility(View.VISIBLE);
                 startInfor = result;
-
+                if (endInfor!=null){
+                    queryCardInfor();
+                }
             }
         } else if (data != null && requestCode == 2) {
             //发货
@@ -206,7 +217,11 @@ public class MatchOwnerFindCarFragment extends BaseFragment implements RadioGrou
                 tv_end_address_dess.setText(placeInfor);
                 tv_end_address_dess.setVisibility(View.VISIBLE);
                 endInfor = result;
+                if (startInfor!=null){
+                    queryCardInfor();
+                }
             }
+
         } else if (requestCode == 3) {
 
 
@@ -272,7 +287,6 @@ public class MatchOwnerFindCarFragment extends BaseFragment implements RadioGrou
                 ToastUtils.getInstance().show("请选择收货地");
                 return;
             }
-            MatchOrderTranMapBean bean = new MatchOrderTranMapBean();
             bean.setStart(startInfor);
             bean.setEnd(endInfor);
             bean.setCarTypeInfoBean(carInfo.get(pager.getCurrentItem()));
@@ -322,5 +336,32 @@ public class MatchOwnerFindCarFragment extends BaseFragment implements RadioGrou
         }
 
 
+    }
+
+    //查询预估运费
+    private void queryCardInfor() {
+        MatchQueryCountFareParam bean = new MatchQueryCountFareParam();
+        bean.setCartypeId(carInfo.get(pager.getCurrentItem()).getId());
+        bean.setStartPlaceLat(startInfor.getPoiItem().getLatLonPoint().getLatitude() + "");
+        bean.setStartPlaceLon(startInfor.getPoiItem().getLatLonPoint().getLongitude() + "");
+        bean.setDestinationLat(endInfor.getPoiItem().getLatLonPoint().getLatitude() + "");
+        bean.setDestinationLon(endInfor.getPoiItem().getLatLonPoint().getLongitude() + "");
+        HttpMatchFactory
+                .queryCountFare(bean)
+                .subscribe(new NetObserver<MatchCountFareBean>(null) {
+
+                    @Override
+                    public void doOnSuccess(MatchCountFareBean data) {
+                        try {
+                            SpannableStringBuilder builder=new SpannableStringBuilder("预估运费：￥"+data.getEstimateFare());
+                            ForegroundColorSpan span=new ForegroundColorSpan( getResources().getColor(R.color.color_new_light));
+                            builder.setSpan(span,5,builder.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            tv_price.setText(builder);
+                        } catch (Resources.NotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                })
+        ;
     }
 }

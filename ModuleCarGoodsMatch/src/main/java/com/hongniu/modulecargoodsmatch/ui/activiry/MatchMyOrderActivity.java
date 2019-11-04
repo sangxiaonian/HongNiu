@@ -34,7 +34,8 @@ public class MatchMyOrderActivity extends BaseActivity implements RadioGroup.OnC
         initView();
         initData();
         initListener();
-        if (getIntent() != null && getIntent().getIntExtra(Param.TYPE, 0) == 1) {
+        int type = getIntent().getIntExtra(Param.TYPE, 0);
+        if ( type == 1) {
             btRight.performClick();
         } else {
             btLeft.performClick();

@@ -80,6 +80,8 @@ public class Param {
     public static final int REEIVE = 2;
     //货单
     public static final int GOODS= 1;
+    //新车货匹配
+    public static final int NEWMATCH= 10;
 
 
     //    AppKey: c33fbf23b76246bf8ee4a3d00b621e03
@@ -124,5 +126,10 @@ public class Param {
 
     //当前选中的物流公司所在城市
     public static String COMPANYCITY="COMPANYCIT";
+
+    /**
+     * 车货匹配页面，记录上次选择的标记
+     */
+    public static final String MATCHTYPE = "MATCHTYPE";
 
 }

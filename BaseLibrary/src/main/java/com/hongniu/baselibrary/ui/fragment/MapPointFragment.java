@@ -44,7 +44,7 @@ public class MapPointFragment extends BaseFragment implements MapUtils.OnMapChan
     private TextView tv_des;
     OnMapPointChangeListener listener;
 
-
+    MapUtils.OnMapChangeListener changeListener;
 
     @Nullable
     @Override
@@ -84,6 +84,10 @@ public class MapPointFragment extends BaseFragment implements MapUtils.OnMapChan
         super.onAttach(context);
         if (context instanceof OnMapPointChangeListener){
             listener= (OnMapPointChangeListener) context;
+
+        } if (context instanceof MapUtils.OnMapChangeListener){
+            changeListener= (MapUtils.OnMapChangeListener) context;
+
         }
     }
 
@@ -144,6 +148,9 @@ public class MapPointFragment extends BaseFragment implements MapUtils.OnMapChan
     public void onCameraChange(double latitude, double longitude) {
 //        MarkUtils.moveMark(marker, latitude, longitude);
         llMarkDes.setVisibility(View.GONE);
+        if (changeListener!=null){
+            changeListener.onCameraChange(latitude,longitude);
+        }
     }
 
     /**
@@ -154,7 +161,10 @@ public class MapPointFragment extends BaseFragment implements MapUtils.OnMapChan
      */
     @Override
     public void onCameraChangeFinish(double latitude, double longitude) {
-        queryData(new PoiSearch.SearchBound(new LatLonPoint(latitude, longitude), 1000));
+        queryData(new PoiSearch.SearchBound(new LatLonPoint(latitude, longitude), 100000));
+        if (changeListener!=null){
+            changeListener.onCameraChangeFinish(latitude,longitude);
+        }
     }
 
     private void queryData(PoiSearch.SearchBound keSearch) {
@@ -181,6 +191,8 @@ public class MapPointFragment extends BaseFragment implements MapUtils.OnMapChan
 //                            MarkUtils.moveMark(marker, poiItem.getLatLonPoint().getLatitude(), poiItem.getLatLonPoint().getLongitude());
                             setTagInfor(poiItem);
 
+                        }else {
+                            tv_des.setText("找不到位置");
                         }
 
                     }

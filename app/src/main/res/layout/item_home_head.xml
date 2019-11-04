@@ -207,6 +207,7 @@
             </LinearLayout>
 
             <ImageView
+                android:padding="@dimen/app_model_gap"
                 android:layout_width="73dp"
                 android:layout_height="73dp"
                 android:src="@mipmap/lingdan" />
@@ -240,7 +241,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="车货匹配"
+                    android:text="明珠城配"
                     android:textColor="@color/color_title_dark"
                     android:textSize="@dimen/text_small_14" />
 

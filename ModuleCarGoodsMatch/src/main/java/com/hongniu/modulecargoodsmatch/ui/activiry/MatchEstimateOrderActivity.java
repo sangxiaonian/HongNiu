@@ -9,9 +9,11 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.widget.RadioIconButton;
 import com.hongniu.baselibrary.widget.RadioIconGroup;
 import com.hongniu.modulecargoodsmatch.R;
+import com.sang.common.utils.SharedPreferencesUtils;
 
 /**
  * @data 2019/10/26
@@ -24,24 +26,34 @@ public class MatchEstimateOrderActivity extends BaseActivity implements RadioIco
     private RadioIconButton ribLeft, ribRight;
     private RadioIconGroup iconGroup;
     private Fragment currentFragment, ownerFragment, driverFragment;
+    private int type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match_estimate_order);
-        setToolbarTitle("车货匹配");
+        setToolbarTitle("明珠城配");
         setToolbarSrcRight("我的订单");
         setToolbarRightClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArouterUtils.getInstance().builder(ArouterParamsMatch.activity_match_my_order).navigation(mContext);
+                ArouterUtils.getInstance()
+                        .builder(ArouterParamsMatch.activity_match_my_order)
+                        .withInt(Param.TYPE, type)
+                        .navigation(mContext);
+
 
             }
         });
         initView();
         initData();
         initListener();
-        ribLeft.performClick();
+          type = SharedPreferencesUtils.getInstance().getInt(Param.MATCHTYPE);
+        if (type==1){
+            ribRight.performClick();
+        }else {
+            ribLeft.performClick();
+        }
     }
 
     @Override
@@ -71,6 +83,7 @@ public class MatchEstimateOrderActivity extends BaseActivity implements RadioIco
             transaction.hide(currentFragment);
         }
         if (iconButton.getId() == R.id.rib_left) {
+            type=0;
             if (ownerFragment == null) {
                 ownerFragment = (Fragment) ArouterUtils.getInstance().builder(ArouterParamsMatch.fragment_match_owner_find_car).navigation();
                 transaction.add(R.id.content, ownerFragment);
@@ -81,6 +94,7 @@ public class MatchEstimateOrderActivity extends BaseActivity implements RadioIco
             currentFragment = ownerFragment;
 
         } else if (iconButton.getId() == R.id.rib_right) {
+            type=1;
             if (driverFragment == null) {
                 driverFragment = (Fragment) ArouterUtils.getInstance().builder(ArouterParamsMatch.fragment_match_driver_order_receiving).navigation();
                 transaction.add(R.id.content, driverFragment);
@@ -89,6 +103,7 @@ public class MatchEstimateOrderActivity extends BaseActivity implements RadioIco
             }
             currentFragment = driverFragment;
         }
+        SharedPreferencesUtils.getInstance().putInt(Param.MATCHTYPE,type);
         transaction.commit();
     }
 }

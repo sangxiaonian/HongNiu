@@ -49,7 +49,7 @@ public class MapSearchAdapter extends XAdapter<PoiItem> {
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        img.setVisibility(View.VISIBLE);
+//                        img.setVisibility(View.VISIBLE);
                         if (clickListener != null) {
                             clickListener.onItemClick(position, data);
                         }

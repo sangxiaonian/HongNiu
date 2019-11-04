@@ -1,6 +1,9 @@
 package com.hongniu.modulelogin.ui.fragment;
 
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +60,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     private LinearLayout llNiu;//收款方式
     private ViewGroup card;//收款方式
     private TextView tvName, tvPhone;
-private ImageView imgHeard;
+    private ImageView imgHeard;
+    private TextView tvNiu;
+
     @Override
     protected View initView(LayoutInflater inflater) {
         View inflate = inflater.inflate(R.layout.fragment_login_my, null);
@@ -72,6 +77,7 @@ private ImageView imgHeard;
         tvPhone = inflate.findViewById(R.id.tv_phone);
         card = inflate.findViewById(R.id.card);
         imgHeard = inflate.findViewById(R.id.img_heard);
+        tvNiu = inflate.findViewById(R.id.tv_niu);
 
 
         return inflate;
@@ -80,35 +86,38 @@ private ImageView imgHeard;
     @Override
     protected void initData() {
         super.initData();
+
+        SpannableStringBuilder builder=new SpannableStringBuilder("邀请好友  玩转牛贝");
+        ForegroundColorSpan span=new ForegroundColorSpan( getResources().getColor(R.color.color_new_light));
+        builder.setSpan(span,5,builder.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        tvNiu.setText(builder);
+
         StatusBarCompat.setStatusBarColor(getActivity(), getResources().getColor(R.color.white), true);
         upPerson();
-
 
 
     }
 
 
     /**
-     *@data  2019/3/3
-     *@Author PING
-     *@Description 更新个人资料
-     *
-     *
+     * @data 2019/3/3
+     * @Author PING
+     * @Description 更新个人资料
      */
-    private void upPerson(){
-            if (Utils.checkInfor()) {
-                LoginPersonInfor personInfor = Utils.getPersonInfor();
+    private void upPerson() {
+            LoginPersonInfor personInfor = Utils.getPersonInfor();
 
 
-                String companyName = personInfor.getCompany() == null ? "" : personInfor.getCompany();
-                String phone = TextUtils.isEmpty(personInfor.getMobile())?"": personInfor.getMobile();
-                String name = personInfor.getContact() == null ? "待完善" : personInfor.getContact();
-                tvName.setText( name );
-                tvPhone.setText(TextUtils.isEmpty(companyName)?phone: companyName);
-                ImageLoader.getLoader().loadHeaed(getContext(),imgHeard, personInfor.getLogoPath());
+        if (personInfor!=null) {
+            String companyName = personInfor.getCompany() == null ? "" : personInfor.getCompany();
+            String phone = TextUtils.isEmpty(personInfor.getMobile()) ? "" : personInfor.getMobile();
+            String name = personInfor.getContact() == null ? "待完善" : personInfor.getContact();
+            tvName.setText(name);
+            tvPhone.setText(TextUtils.isEmpty(companyName) ? phone : companyName);
+            ImageLoader.getLoader().loadHeaed(getContext(), imgHeard, personInfor.getLogoPath());
+        }
 
-            }
-     }
+    }
 
     @Override
     public void onStart() {
@@ -224,7 +233,7 @@ private ImageView imgHeard;
             ArouterUtils.getInstance().builder(ArouterParamLogin.activity_person_infor).navigation(getContext());
 
             ClickEventUtils.getInstance().onClick(ClickEventParams.我的_我的资料);
-        }  else if (i == R.id.ll_wallet) {
+        } else if (i == R.id.ll_wallet) {
             ArouterUtils.getInstance().builder(ArouterParamsFinance.activity_finance_wallet).navigation(getContext());
             ClickEventUtils.getInstance().onClick(ClickEventParams.我的_我的钱包);
 
@@ -233,7 +242,7 @@ private ImageView imgHeard;
             ArouterUtils.getInstance()
                     .builder(ArouterParamsFinance.activity_finance_niu)
                     .navigation(getContext());
-        }else if (i == R.id.card) {
+        } else if (i == R.id.card) {
 
             ClickEventUtils.getInstance().onClick(ClickEventParams.我的_邀请好友);
             ArouterUtils.getInstance()
@@ -258,13 +267,11 @@ private ImageView imgHeard;
                     }
                 })
                 .subscribe(new NetObserver<LoginBean>(null) {
-            @Override
-            public void doOnSuccess(LoginBean data) {
-            }
+                    @Override
+                    public void doOnSuccess(LoginBean data) {
+                    }
 
-        });
-
-
+                });
 
 
     }

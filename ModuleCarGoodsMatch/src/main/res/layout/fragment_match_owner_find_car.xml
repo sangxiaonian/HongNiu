@@ -72,9 +72,10 @@
 
 
             <LinearLayout
+                android:minHeight="45dp"
+                android:layout_height="wrap_content"
                 android:id="@+id/ll_start_address"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
                 android:background="@color/color_white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -132,7 +133,8 @@
             <LinearLayout
                 android:id="@+id/ll_end_address"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:minHeight="45dp"
+                android:layout_height="wrap_content"
                 android:background="@color/color_white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -147,7 +149,7 @@
 
 
                 <LinearLayout
-                    android:padding="5dp"
+                    android:paddingLeft="5dp"
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -249,6 +251,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tv_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/app_gap"

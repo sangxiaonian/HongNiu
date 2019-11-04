@@ -16,6 +16,7 @@ import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.entity.LoginPersonInfor;
 import com.hongniu.baselibrary.entity.PayParam;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.pay.DialogPayUtils;
@@ -122,8 +123,10 @@ public class MatchCreatOrderActivity extends BaseActivity implements View.OnClic
                 tv_start_address.setTextColor(getResources().getColor(R.color.color_title_dark));
                 tv_start_address_dess.setText(placeInfor);
                 tv_start_address_dess.setVisibility(View.VISIBLE);
-                item_name.setTextCenter(start.getName());
-                item_phone.setTextCenter(start.getPhone());
+
+                LoginPersonInfor infor = Utils.getPersonInfor();
+                item_name.setTextCenter(TextUtils.isEmpty(start.getName())?infor.getContact():start.getName());
+                item_phone.setTextCenter(TextUtils.isEmpty(start.getPhone())?infor.getMobile():start.getPhone());
 
                 creatOrderParams.setStartPlaceLat(params.getStart().getPoiItem().getLatLonPoint().getLatitude() + "");
                 creatOrderParams.setStartPlaceLon(params.getStart().getPoiItem().getLatLonPoint().getLongitude() + "");
@@ -137,8 +140,8 @@ public class MatchCreatOrderActivity extends BaseActivity implements View.OnClic
             //发货
             TranMapBean end = params.getEnd();
             if (end != null && end.getPoiItem() != null) {
-                String placeInfor = Utils.dealPioPlace(start.getPoiItem());
-                tv_end_address.setText(start.getPoiItem().getTitle());
+                String placeInfor = Utils.dealPioPlace(end.getPoiItem());
+                tv_end_address.setText(end.getPoiItem().getTitle());
                 tv_end_address.setTextColor(getResources().getColor(R.color.color_title_dark));
                 tv_end_address_dess.setText(placeInfor);
                 tv_end_address_dess.setVisibility(View.VISIBLE);

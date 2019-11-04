@@ -3,11 +3,13 @@ package com.hongniu.modulecargoodsmatch.ui.activiry;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.amap.api.services.core.PoiItem;
@@ -27,13 +29,15 @@ import com.hongniu.modulecargoodsmatch.entity.TranMapBean;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.inter.OnItemClickListener;
 import com.sang.common.utils.DeviceUtils;
+import com.sang.common.utils.JLog;
+import com.sang.thirdlibrary.map.MapUtils;
 
 import java.util.List;
 
 import io.reactivex.Observable;
 
 @Route(path = ArouterParamsMatch.activity_match_map)
-public class MatchMapActivity extends RefrushActivity<PoiItem> implements MapPointFragment.OnMapPointChangeListener, View.OnClickListener, OnItemClickListener<PoiItem>, View.OnFocusChangeListener, SearchTextWatcher.SearchTextChangeListener {
+public class MatchMapActivity extends RefrushActivity<PoiItem> implements MapPointFragment.OnMapPointChangeListener, View.OnClickListener, OnItemClickListener<PoiItem>, View.OnFocusChangeListener, SearchTextWatcher.SearchTextChangeListener, MapUtils.OnMapChangeListener {
 
     private MapPointFragment frament;
     private EditText etSearch;
@@ -42,7 +46,9 @@ public class MatchMapActivity extends RefrushActivity<PoiItem> implements MapPoi
     private EditText et_phone;
     private ViewGroup btBack;
     private ViewGroup btCancle;
+    private ViewGroup ll_bottom;
     private Button bt_sum;
+    private TextView tv;
 
     private TranMapBean bean;
 
@@ -61,7 +67,9 @@ public class MatchMapActivity extends RefrushActivity<PoiItem> implements MapPoi
         if (isEnd) {
             etSearch.setHint("在哪儿收货");
             et_name.setHint("收货人姓名");
+            tv.setText("发货地信息（选填）");
         } else {
+            tv.setText("收货地信息（选填）");
             et_name.setHint("发货人姓名");
             etSearch.setHint("从哪儿发货");
 
@@ -74,6 +82,8 @@ public class MatchMapActivity extends RefrushActivity<PoiItem> implements MapPoi
 
 
         et_address = findViewById(R.id.et_address);
+        ll_bottom = findViewById(R.id.ll_bottom);
+        tv = findViewById(R.id.tv);
         et_name = findViewById(R.id.et_name);
         et_phone = findViewById(R.id.et_phone);
         etSearch = findViewById(R.id.et_search);
@@ -95,6 +105,7 @@ public class MatchMapActivity extends RefrushActivity<PoiItem> implements MapPoi
         etSearch.setOnFocusChangeListener(this);
         etSearch.addTextChangedListener(new SearchTextWatcher(this));
     }
+
 
     /**
      * Called when a view has been clicked.
@@ -183,6 +194,7 @@ public class MatchMapActivity extends RefrushActivity<PoiItem> implements MapPoi
     @Override
     public void onMapPointChange(PoiItem poiItem) {
         bean.setPoiItem(poiItem);
+        etSearch.setText("");
     }
 
     @Override
@@ -193,5 +205,44 @@ public class MatchMapActivity extends RefrushActivity<PoiItem> implements MapPoi
         } else {
             super.onBackPressed();
         }
+    }
+
+    /**
+     * 定位改变监听
+     *
+     * @param latitude
+     * @param longitude
+     */
+    @Override
+    public void loactionChangeListener(double latitude, double longitude) {
+
+    }
+
+    boolean scroll;
+    /**
+     * 地图移动变化
+     *
+     * @param latitude
+     * @param longitude
+     */
+    @Override
+    public void onCameraChange(double latitude, double longitude) {
+
+        if (!scroll) {
+            ll_bottom.animate().translationY(ll_bottom.getHeight()).start();
+        }
+        scroll=true;
+    }
+
+    /**
+     * 地图移动完成
+     *
+     * @param latitude
+     * @param longitude
+     */
+    @Override
+    public void onCameraChangeFinish(double latitude, double longitude) {
+        ll_bottom.animate().translationY(0).start();
+        scroll=false;
     }
 }

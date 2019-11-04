@@ -52,7 +52,7 @@ public class MatchEntryArriveActivity extends BaseActivity implements OnItemDele
     private ArrayList<LocalMedia> pics;
     private PicAdapter adapter;
 
-    UpLoadImageUtils imageUtils = new UpLoadImageUtils(Param.GOODS);
+    UpLoadImageUtils imageUtils = new UpLoadImageUtils(Param.NEWMATCH);
     private String id;
 
     @Override

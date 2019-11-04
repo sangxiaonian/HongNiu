@@ -88,6 +88,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="7dp"
+        android:clickable="true"
+        android:id="@+id/ll_bottom"
        android:layout_alignParentBottom="true"
         app:viewradius="4dp">
 
@@ -279,17 +281,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="7dp"
-        android:background="@color/white"
+        android:background="@color/transparent"
         android:visibility="gone"
         android:layout_below="@id/ll_tool"
         >
 
-        <com.sang.common.recycleview.RecycleViewSupportEmpty
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:empty_img="@mipmap/icon_zwdd_260"
-            app:empty_title="暂无数据" />
+          />
     </com.hongniu.baselibrary.widget.XRefreshLayout>
 
 </RelativeLayout>
