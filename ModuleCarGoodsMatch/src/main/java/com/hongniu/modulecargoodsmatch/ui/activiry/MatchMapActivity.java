@@ -2,6 +2,7 @@ package com.hongniu.modulecargoodsmatch.ui.activiry;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,6 +27,7 @@ import com.hongniu.baselibrary.ui.fragment.MapPointFragment;
 import com.hongniu.baselibrary.utils.SearchTextWatcher;
 import com.hongniu.modulecargoodsmatch.R;
 import com.hongniu.modulecargoodsmatch.entity.TranMapBean;
+import com.sang.common.recycleview.XAdapterDataObserver;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.inter.OnItemClickListener;
 import com.sang.common.utils.DeviceUtils;
@@ -37,7 +39,7 @@ import java.util.List;
 import io.reactivex.Observable;
 
 @Route(path = ArouterParamsMatch.activity_match_map)
-public class MatchMapActivity extends RefrushActivity<PoiItem> implements MapPointFragment.OnMapPointChangeListener, View.OnClickListener, OnItemClickListener<PoiItem>, View.OnFocusChangeListener, SearchTextWatcher.SearchTextChangeListener, MapUtils.OnMapChangeListener {
+public class MatchMapActivity extends RefrushActivity<PoiItem> implements MapPointFragment.OnMapPointChangeListener, View.OnClickListener, OnItemClickListener<PoiItem>,   SearchTextWatcher.SearchTextChangeListener, MapUtils.OnMapChangeListener {
 
     private MapPointFragment frament;
     private EditText etSearch;
@@ -74,13 +76,12 @@ public class MatchMapActivity extends RefrushActivity<PoiItem> implements MapPoi
             etSearch.setHint("从哪儿发货");
 
         }
+        etSearch.clearFocus();
     }
 
     @Override
     protected void initView() {
         super.initView();
-
-
         et_address = findViewById(R.id.et_address);
         ll_bottom = findViewById(R.id.ll_bottom);
         tv = findViewById(R.id.tv);
@@ -94,7 +95,9 @@ public class MatchMapActivity extends RefrushActivity<PoiItem> implements MapPoi
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content, frament)
                 .commit();
+       refresh.setVisibility(View.GONE);
     }
+
 
     @Override
     protected void initListener() {
@@ -102,8 +105,9 @@ public class MatchMapActivity extends RefrushActivity<PoiItem> implements MapPoi
         btBack.setOnClickListener(this);
         bt_sum.setOnClickListener(this);
         btCancle.setOnClickListener(this);
-        etSearch.setOnFocusChangeListener(this);
+
         etSearch.addTextChangedListener(new SearchTextWatcher(this));
+
     }
 
 
@@ -148,7 +152,14 @@ public class MatchMapActivity extends RefrushActivity<PoiItem> implements MapPoi
 
     @Override
     protected XAdapter<PoiItem> getAdapter(List<PoiItem> datas) {
-        return new MapSearchAdapter(mContext, datas).setClickListener(this);
+        XAdapter<PoiItem> xAdapter = new MapSearchAdapter(mContext, datas).setClickListener(this);
+        xAdapter.registerAdapterDataObserver(new XAdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                refresh.setVisibility(adapter.getItemCount() == 0 ? View.GONE : View.VISIBLE);
+            }
+        });
+        return xAdapter;
     }
 
     /**
@@ -160,21 +171,13 @@ public class MatchMapActivity extends RefrushActivity<PoiItem> implements MapPoi
     @Override
     public void onItemClick(int position, PoiItem poiItem) {
         DeviceUtils.closeSoft(this);
-        etSearch.clearFocus();
+        refresh.setVisibility(View.GONE);
+
         frament.moveToPoint(poiItem);
 
     }
 
-    /**
-     * Called when the focus state of a view has changed.
-     *
-     * @param v        The view whose state has changed.
-     * @param hasFocus The new focus state of v.
-     */
-    @Override
-    public void onFocusChange(View v, boolean hasFocus) {
-        refresh.setVisibility(hasFocus ? View.VISIBLE : View.GONE);
-    }
+
 
     @Override
     public void onSearchTextChange(String msg) {
@@ -219,6 +222,7 @@ public class MatchMapActivity extends RefrushActivity<PoiItem> implements MapPoi
     }
 
     boolean scroll;
+
     /**
      * 地图移动变化
      *
@@ -231,7 +235,7 @@ public class MatchMapActivity extends RefrushActivity<PoiItem> implements MapPoi
         if (!scroll) {
             ll_bottom.animate().translationY(ll_bottom.getHeight()).start();
         }
-        scroll=true;
+        scroll = true;
     }
 
     /**
@@ -243,6 +247,6 @@ public class MatchMapActivity extends RefrushActivity<PoiItem> implements MapPoi
     @Override
     public void onCameraChangeFinish(double latitude, double longitude) {
         ll_bottom.animate().translationY(0).start();
-        scroll=false;
+        scroll = false;
     }
 }

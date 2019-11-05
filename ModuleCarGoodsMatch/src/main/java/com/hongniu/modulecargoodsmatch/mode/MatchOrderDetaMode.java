@@ -223,7 +223,7 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
      */
     @Override
     public String getPriceDetail() {
-        return String.format("运费明细  起步价%s元*%s公里", infoBean.getStartPrice(), infoBean.getDistance());
+        return String.format("运费明细  起步价%s元+%s公里", infoBean.getStartPrice(), infoBean.getDistance());
     }
 
     /**
