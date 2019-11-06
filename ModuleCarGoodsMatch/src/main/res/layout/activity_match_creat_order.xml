@@ -218,7 +218,7 @@
                     app:centerType="normal"
                     app:editable="false"
                     app:textcenterhide="请选择配送价"
-                    app:textleft="里程费" />
+                    app:textleft="超里程费" />
 
                 <com.sang.common.widget.ItemView
                     android:id="@+id/item_forecast_price"

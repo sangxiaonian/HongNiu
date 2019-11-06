@@ -158,7 +158,6 @@ public class MatchCreatOrderActivity extends BaseActivity implements View.OnClic
             if (carTypeInfoBean != null) {
                 item_car_type.setTextCenter(carTypeInfoBean.getCarType());
                 item_start_price.setTextCenter(ConvertUtils.changeFloat(carTypeInfoBean.getStartPrice(), 2) + "元");
-                item_price.setTextCenter(ConvertUtils.changeFloat(carTypeInfoBean.getExceedMileagePrice(), 2) + "元");
 
                 creatOrderParams.setCartypeId(carTypeInfoBean.getId());
 
@@ -185,6 +184,8 @@ public class MatchCreatOrderActivity extends BaseActivity implements View.OnClic
                     @Override
                     public void doOnSuccess(MatchCountFareBean data) {
                         item_forecast_price.setTextCenter(data.getEstimateFare());
+                        item_price.setTextCenter(data.getMileageFareSumInfo());
+
                     }
                 })
         ;

@@ -43,6 +43,15 @@ public class MatchOrderInfoBean implements Parcelable {
     private List<String> imageUrls;//true	string	图片url集合
     private int serviceScore;//true	string	服务评分
     private String content;//true	string	点评内容
+    private String mileageFareSumInfo;//true	string	点评内容
+
+    public String getMileageFareSumInfo() {
+        return mileageFareSumInfo;
+    }
+
+    public void setMileageFareSumInfo(String mileageFareSumInfo) {
+        this.mileageFareSumInfo = mileageFareSumInfo;
+    }
 
     public String getStartPrice() {
         return startPrice;
@@ -353,6 +362,7 @@ public class MatchOrderInfoBean implements Parcelable {
         dest.writeStringList(this.imageUrls);
         dest.writeInt(this.serviceScore);
         dest.writeString(this.content);
+        dest.writeString(this.mileageFareSumInfo);
     }
 
     protected MatchOrderInfoBean(Parcel in) {
@@ -389,6 +399,7 @@ public class MatchOrderInfoBean implements Parcelable {
         this.imageUrls = in.createStringArrayList();
         this.serviceScore = in.readInt();
         this.content = in.readString();
+        this.mileageFareSumInfo = in.readString();
     }
 
     public static final Creator<MatchOrderInfoBean> CREATOR = new Creator<MatchOrderInfoBean>() {

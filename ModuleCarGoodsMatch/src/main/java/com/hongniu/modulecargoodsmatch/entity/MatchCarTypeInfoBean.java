@@ -17,6 +17,7 @@ public class MatchCarTypeInfoBean implements Parcelable {
    private float startPrice	;//true	number	起步价(10公里内)
    private float exceedMileagePrice	;//true	number	超里程费(每超出一公里增加费用)
 
+
    public String getId() {
       return id;
    }
@@ -89,6 +90,9 @@ public class MatchCarTypeInfoBean implements Parcelable {
       this.exceedMileagePrice = exceedMileagePrice;
    }
 
+   public MatchCarTypeInfoBean() {
+   }
+
    @Override
    public int describeContents() {
       return 0;
@@ -107,9 +111,6 @@ public class MatchCarTypeInfoBean implements Parcelable {
       dest.writeFloat(this.exceedMileagePrice);
    }
 
-   public MatchCarTypeInfoBean() {
-   }
-
    protected MatchCarTypeInfoBean(Parcel in) {
       this.id = in.readString();
       this.carType = in.readString();
@@ -122,7 +123,7 @@ public class MatchCarTypeInfoBean implements Parcelable {
       this.exceedMileagePrice = in.readFloat();
    }
 
-   public static final Parcelable.Creator<MatchCarTypeInfoBean> CREATOR = new Parcelable.Creator<MatchCarTypeInfoBean>() {
+   public static final Creator<MatchCarTypeInfoBean> CREATOR = new Creator<MatchCarTypeInfoBean>() {
       @Override
       public MatchCarTypeInfoBean createFromParcel(Parcel source) {
          return new MatchCarTypeInfoBean(source);

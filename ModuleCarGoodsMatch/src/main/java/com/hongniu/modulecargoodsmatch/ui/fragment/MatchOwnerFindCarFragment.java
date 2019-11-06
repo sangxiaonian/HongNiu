@@ -17,11 +17,13 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseFragment;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.utils.PickerDialogUtils;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.modulecargoodsmatch.R;
@@ -309,17 +311,36 @@ public class MatchOwnerFindCarFragment extends BaseFragment implements RadioGrou
             startActivityForResult(intent, 3);
 
         } else if (v.getId() == R.id.ll_start_address) {
+            PermissionUtils.applyMap(getActivity(), new PermissionUtils.onApplyPermission() {
+                @Override
+                public void hasPermission(List<String> granted, boolean isAll) {
+                    Intent intent = new Intent(getContext(), MatchMapActivity.class);
+                    intent.putExtra(Param.TRAN, false);
 
-            Intent intent = new Intent(getContext(), MatchMapActivity.class);
-            intent.putExtra(Param.TRAN, false);
+                    startActivityForResult(intent, 1);
+                }
 
-            startActivityForResult(intent, 1);
+                @Override
+                public void noPermission(List<String> denied, boolean quick) {
+                }
+            });
+
 
         } else if (v.getId() == R.id.ll_end_address) {
-            Intent intent = new Intent(getContext(), MatchMapActivity.class);
-            intent.putExtra(Param.TRAN, true);
+            PermissionUtils.applyMap(getActivity(), new PermissionUtils.onApplyPermission() {
+                @Override
+                public void hasPermission(List<String> granted, boolean isAll) {
+                    Intent intent = new Intent(getContext(), MatchMapActivity.class);
+                    intent.putExtra(Param.TRAN, true);
 
-            startActivityForResult(intent, 2);
+                    startActivityForResult(intent, 2);
+                }
+
+                @Override
+                public void noPermission(List<String> denied, boolean quick) {
+                }
+            });
+
 
         }  else if (v.getId() == R.id.ll_time) {
             pickerView.show();
