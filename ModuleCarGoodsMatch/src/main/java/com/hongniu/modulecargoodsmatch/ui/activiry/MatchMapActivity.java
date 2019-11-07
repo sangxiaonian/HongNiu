@@ -69,9 +69,9 @@ public class MatchMapActivity extends RefrushActivity<PoiItem> implements MapPoi
         if (isEnd) {
             etSearch.setHint("在哪儿收货");
             et_name.setHint("收货人姓名");
-            tv.setText("发货地信息（选填）");
-        } else {
             tv.setText("收货地信息（选填）");
+        } else {
+            tv.setText("发货地信息（选填）");
             et_name.setHint("发货人姓名");
             etSearch.setHint("从哪儿发货");
 

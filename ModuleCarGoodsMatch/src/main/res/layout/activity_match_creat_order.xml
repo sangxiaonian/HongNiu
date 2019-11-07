@@ -217,6 +217,7 @@
                     style="@style/itemview"
                     app:centerType="normal"
                     app:editable="false"
+                    app:isSingleLine="false"
                     app:textcenterhide="请选择配送价"
                     app:textleft="超里程费" />
 

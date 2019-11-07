@@ -253,6 +253,7 @@ public class MatchOwnerFindCarFragment extends BaseFragment implements RadioGrou
         if (rg.getChildAt(i) != null) {
             rg.getChildAt(i).performClick();
         }
+        queryCardInfor();
     }
 
     @Override
@@ -361,6 +362,10 @@ public class MatchOwnerFindCarFragment extends BaseFragment implements RadioGrou
 
     //查询预估运费
     private void queryCardInfor() {
+        if (startInfor==null||endInfor==null){
+            return;
+        }
+
         MatchQueryCountFareParam bean = new MatchQueryCountFareParam();
         bean.setCartypeId(carInfo.get(pager.getCurrentItem()).getId());
         bean.setStartPlaceLat(startInfor.getPoiItem().getLatLonPoint().getLatitude() + "");
