@@ -17,6 +17,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.LoginPersonInforActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.LoginAboutUsActivity"

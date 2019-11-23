@@ -8,6 +8,7 @@ import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
 import com.hongniu.baselibrary.entity.QueryBlankInforsBean;
 import com.hongniu.baselibrary.net.HttpAppFactory;
+import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.modulelogin.entity.LoginBlindBlankParams;
 import com.hongniu.baselibrary.entity.CarInforBean;
 import com.hongniu.modulelogin.entity.LoginCreatInsuredBean;
@@ -104,6 +105,15 @@ public class HttpLoginFactory {
 
         return LoginClient.getInstance().getLoginService()
                 .getPersonInfor()
+                .map(new Function<CommonBean<LoginPersonInfor>, CommonBean<LoginPersonInfor>>() {
+                    @Override
+                    public CommonBean<LoginPersonInfor> apply(CommonBean<LoginPersonInfor> loginPersonInforCommonBean) throws Exception {
+                        if (loginPersonInforCommonBean.getCode()==200){
+                            Utils.savePersonInfor(loginPersonInforCommonBean.getData());
+                        }
+                        return loginPersonInforCommonBean;
+                    }
+                })
                 .compose(RxUtils.<CommonBean<LoginPersonInfor>>getSchedulersObservableTransformer())
                 ;
     }

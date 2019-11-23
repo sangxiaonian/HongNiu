@@ -487,8 +487,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
     public void onTimeSelect(Date date, View v) {
 
         itemStartTime.setTextCenter(ConvertUtils.formatTime(date, "yyyy-MM-dd"));
-//        presenter.changeStartTime();
-//        paramBean.setDeliveryDate(ConvertUtils.formatTime(date, "yyyy-MM-dd"));
+
 
     }
 

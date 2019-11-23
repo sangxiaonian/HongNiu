@@ -346,8 +346,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         demo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArouterUtils.getInstance().builder(ArouterParamsMatch.activity_match_estimate_order)
+                ArouterUtils.getInstance()
+                        .builder(ArouterParamsMatch.activity_match_estimate_order)
+                        .withInt(Param.TYPE,1)
+                        .withFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         .navigation(mContext);
+
+//                ArouterUtils.getInstance().builder(ArouterParamsMatch.activity_match_estimate_order)
+//                        .navigation(mContext);
             }
         });
 

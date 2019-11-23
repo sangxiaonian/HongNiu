@@ -24,6 +24,7 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.LoginBean;
 import com.hongniu.baselibrary.entity.LoginPersonInfor;
 import com.hongniu.baselibrary.event.Event;
+import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventParams;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
@@ -58,6 +59,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     private LinearLayout llPersonInfor;//个人资料
     private LinearLayout llWallet;//收款方式
     private LinearLayout llNiu;//收款方式
+    private LinearLayout llDriverInfor;//司机认证
     private ViewGroup card;//收款方式
     private TextView tvName, tvPhone;
     private ImageView imgHeard;
@@ -78,6 +80,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         card = inflate.findViewById(R.id.card);
         imgHeard = inflate.findViewById(R.id.img_heard);
         tvNiu = inflate.findViewById(R.id.tv_niu);
+        llDriverInfor = inflate.findViewById(R.id.ll_driver_infor);
 
 
         return inflate;
@@ -106,8 +109,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
      */
     private void upPerson() {
             LoginPersonInfor personInfor = Utils.getPersonInfor();
-
-
         if (personInfor!=null) {
             String companyName = personInfor.getCompany() == null ? "" : personInfor.getCompany();
             String phone = TextUtils.isEmpty(personInfor.getMobile()) ? "" : personInfor.getMobile();
@@ -141,7 +142,12 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onUpPersonInfor(Event.UpPerson event) {
         if (event != null) {
-            upPerson();
+            HttpLoginFactory.getPersonInfor().subscribe(new NetObserver<LoginPersonInfor>(null) {
+                @Override
+                public void doOnSuccess(LoginPersonInfor data) {
+                    upPerson();
+                }
+            });
         }
     }
 
@@ -158,6 +164,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         llLoginOut.setOnClickListener(this);
         llContactService.setOnClickListener(this);
         llAboutUs.setOnClickListener(this);
+        llDriverInfor.setOnClickListener(this);
         llMyCar.setOnClickListener(this);
         llPersonInfor.setOnClickListener(this);
         llWallet.setOnClickListener(this);
@@ -248,6 +255,13 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             ArouterUtils.getInstance()
                     .builder(ArouterParamFestivity.activity_festivity_home)
                     .navigation(getContext());
+        }else if (i == R.id.ll_driver_infor) {//司机认证
+            ArouterUtils.getInstance()
+                    .builder(ArouterParamLogin.activity_person_infor)
+                    .withInt(Param.TYPE,1)
+                    .navigation(getContext());
+
+
         }
     }
 

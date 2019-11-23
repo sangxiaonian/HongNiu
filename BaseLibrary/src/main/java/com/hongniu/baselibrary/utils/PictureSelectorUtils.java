@@ -14,6 +14,7 @@ import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.permissions.RxPermissions;
 import com.luck.picture.lib.tools.PictureFileUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observer;
@@ -25,11 +26,22 @@ import io.reactivex.disposables.Disposable;
  */
 public class PictureSelectorUtils {
 
-    public static void showPicture(final Activity activity,  List<LocalMedia> list){
-        showPicture(activity, Param.IMAGECOUNT,list);
+    public static void showPicture(final Activity activity, List<LocalMedia> list) {
+        showPicture(activity, Param.IMAGECOUNT, list);
+    }
+    public static void showOnePicture(final Activity activity, LocalMedia media,int requestCode) {
+        List<LocalMedia> list=new ArrayList<>();
+        if (media!=null){
+            list.add(media);
+        }
+        showPicture(activity, 1, list,requestCode);
     }
 
-    public static void showPicture(final Activity activity, int count, List<LocalMedia> list){
+    public static void showPicture(final Activity activity, int count, List<LocalMedia> list) {
+
+        showPicture(activity,count,list,PictureConfig.CHOOSE_REQUEST);
+    }
+  public static void showPicture(final Activity activity, int count, List<LocalMedia> list,int requestCode) {
 
         // 清空图片缓存，包括裁剪、压缩后的图片 注意:必须要在上传完成后调用 必须要获取权限
         RxPermissions permissions = new RxPermissions(activity);
@@ -57,7 +69,7 @@ public class PictureSelectorUtils {
         // 进入相册 以下是例子：用不到的api可以不写
         PictureSelector.create(activity)
                 .openGallery(PictureMimeType.ofImage())//全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
-                .theme( R.style.picture_white_style)//主题样式(不设置为默认样式) 也可参考demo values/styles下 例如：R.style.picture.white.style
+                .theme(R.style.picture_white_style)//主题样式(不设置为默认样式) 也可参考demo values/styles下 例如：R.style.picture.white.style
                 .maxSelectNum(count)// 最大图片选择数量 int
                 .minSelectNum(1)// 最小选择数量 int
                 .imageSpanCount(4)// 每行显示个数 int
@@ -93,16 +105,19 @@ public class PictureSelectorUtils {
 //                .videoMinSecond(10)// 显示多少秒以内的视频or音频也可适用 int
 //                .recordVideoSecond()//视频秒数录制 默认60s int
                 .isDragFrame(false)// 是否可拖动裁剪框(固定)
-                .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
+                .forResult(requestCode);//结果回调onActivityResult code
     }
 
 
-    public static void openExternalPreview(Activity activity,int position,List<LocalMedia> selectList){
+    public static void openExternalPreview(Activity activity, int position, List<LocalMedia> selectList) {
         PicturePreview.create(activity).themeStyle(R.style.picture_default_style).openExternalPreview(position, selectList);
     }
 
+    public static void showHeadPicture(final Activity activity) {
+        showHeadPicture(activity, PictureConfig.CHOOSE_REQUEST);
 
-    public static void showHeadPicture(final Activity activity ){
+    }
+    public static void showHeadPicture(final Activity activity, int requestCode) {
 
         // 清空图片缓存，包括裁剪、压缩后的图片 注意:必须要在上传完成后调用 必须要获取权限
         RxPermissions permissions = new RxPermissions(activity);
@@ -130,7 +145,7 @@ public class PictureSelectorUtils {
         // 进入相册 以下是例子：用不到的api可以不写
         PictureSelector.create(activity)
                 .openGallery(PictureMimeType.ofImage())//全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
-                .theme( R.style.picture_white_style)//主题样式(不设置为默认样式) 也可参考demo values/styles下 例如：R.style.picture.white.style
+                .theme(R.style.picture_white_style)//主题样式(不设置为默认样式) 也可参考demo values/styles下 例如：R.style.picture.white.style
                 .maxSelectNum(1)// 最大图片选择数量 int
                 .minSelectNum(1)// 最小选择数量 int
                 .imageSpanCount(4)// 每行显示个数 int
@@ -144,7 +159,7 @@ public class PictureSelectorUtils {
                 .enableCrop(true)// 是否裁剪 true or false
                 .compress(true)// 是否压缩 true or false
 //                .glideOverride()// int glide 加载宽高，越小图片列表越流畅，但会影响列表图片浏览的清晰度
-                .withAspectRatio(1,1)// int 裁剪比例 如16:9 3:2 3:4 1:1 可自定义
+                .withAspectRatio(1, 1)// int 裁剪比例 如16:9 3:2 3:4 1:1 可自定义
 //                .hideBottomControls()// 是否显示uCrop工具栏，默认不显示 true or false
                 .isGif(false)// 是否显示gif图片 true or false
 //                .compressSavePath(getPath())//压缩图片保存地址

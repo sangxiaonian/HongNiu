@@ -141,15 +141,15 @@ public class AppApplication extends BaseApplication {
                 //打开app
                 DeviceUtils.openApp(this);
             }else if ("opencarmatchlist".equals(pushBean.action)){
-                //打开车货匹配我的接单列表
+                //打开车货匹配接单列表
                 ArouterUtils.getInstance()
-                        .builder(ArouterParamsMatch.activity_match_my_order)
+                        .builder(ArouterParamsMatch.activity_match_estimate_order)
                         .withInt(Param.TYPE,1)
                         .withFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         .navigation(this);
 
             }else if ("openevaluationlist".equals(pushBean.action)){
-                //打开车货匹配我的接单列表
+                //打开车货匹配我的找车
                 ArouterUtils.getInstance()
                         .builder(ArouterParamsMatch.activity_match_my_order)
                         .withInt(Param.TYPE,0)

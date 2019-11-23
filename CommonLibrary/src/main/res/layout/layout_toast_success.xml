@@ -6,7 +6,7 @@
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_gravity="center"
-        android:background="@drawable/oval_4_eeeeee"
+        android:background="@drawable/oval_5_c2_111111"
         android:gravity="center"
         android:orientation="vertical">
 

@@ -98,6 +98,9 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
         setTitle(title);
         setDescribe(describe);
         setDescribeSub(describeSub);
+        if (showCompany==0&&data!=null){
+            showCompany=data.getType();
+        }
         setShowCompany(showCompany);
 
         Window window = getDialog().getWindow();
@@ -186,7 +189,7 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
     @Override
     public void onPayTypeChang(int payType, int yueWay) {
         if (payType == 1 && data != null) {//如果是余额支付
-            float balance = 0;//个人月
+            float balance = 0;//个人余额
             float balanceCom = (float) data.getCompanyAvailableBalance();//公司余额
             if (!TextUtils.isEmpty(data.getAvailableBalance())) {
                 try {
@@ -195,33 +198,40 @@ public class PayDialog extends DialogFragment implements View.OnClickListener, P
                     e.printStackTrace();
                 }
             }
-            if (yueWay == 1 && balance < payAmount) {
-                //选择个人账户支付切个人账户余额不足,并且
-                if (balanceCom >= payAmount || showCompany == 2) {
-                    //如果个人余额不足,公司余额充足，选择公司余额
-                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("个人账户余额不足");
-                    payWay.setYue(0);
-                    return;
-                } else {
-                    //如果企业账户余额也不足
-                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("余额不足");
-                    payWay.setPayType(2);
-                    return;
+            if (showCompany!=1) {
+                //如果公司账户可用
+                if (yueWay == 1 && balance < payAmount) {
+                    //选择个人账户支付切个人账户余额不足,并且
+                    if (balanceCom >= payAmount || showCompany == 2) {
+                        //如果个人余额不足,公司余额充足，选择公司余额
+                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("个人账户余额不足");
+                        payWay.setYue(0);
+                        return;
+                    } else {
+                        //如果企业账户余额也不足
+                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("余额不足");
+                        payWay.setPayType(2);
+                        return;
+                    }
+                } else if (yueWay == 0 && data.getType() == 3 && balanceCom < payAmount) {
+                    //如果企业支付可以直接支付,并且企业支付余额不足
+                    if (balance >= payAmount) {
+                        //如果个人余额不足,公司余额充足，选择公司余额
+                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("企业账户余额不足");
+                        payWay.setYue(1);
+                        return;
+                    } else {
+                        //如果个人账户余额也不足
+                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("余额不足");
+                        payWay.setPayType(2);
+                        return;
+                    }
                 }
-            } else if (yueWay == 0 && data.getType() == 3 && balanceCom < payAmount) {
-                //如果企业支付可以直接支付,并且企业支付余额不足
-                if (balance >= payAmount) {
-                    //如果个人余额不足,公司余额充足，选择公司余额
-                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("企业账户余额不足");
-                    payWay.setYue(1);
-                    return;
-                } else {
-                    //如果个人账户余额也不足
-                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("余额不足");
-                    payWay.setPayType(2);
-                    return;
-                }
+            }else if (yueWay == 1 && balance < payAmount){
+                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("余额不足");
+                payWay.setPayType(2);
             }
+
         }
 
 

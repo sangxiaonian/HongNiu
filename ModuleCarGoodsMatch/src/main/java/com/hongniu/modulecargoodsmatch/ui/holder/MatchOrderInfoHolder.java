@@ -119,59 +119,5 @@ public class MatchOrderInfoHolder extends BaseHolder<MatchOrderInfoBean> {
     }
 
 
-    private String getState(int state) {
-        String msg;
-        switch (state) {
-            case 1:
-                msg = "待付款";
-                break;
-            case 2:
-                msg = "待接单";
-                break;
-            case 3:
-                msg = "已接单";
-                break;
-            case 4:
-                msg = "已送达";
-                break;
-            case 5:
-                msg = "已完成";
-                break;
-            case 6:
-                msg = "已取消";
-                break;
-            default:
-                msg = "异常";
-        }
-        return msg;
-    }
-
-
-    private int getStateColor(int state) {
-        int color;
-        switch (state) {
-            case 1:
-                color = mContext.getResources().getColor(R.color.color_of_e83515);
-                break;
-            case 2:
-                color = mContext.getResources().getColor(R.color.color_of_e83515);
-                break;
-            case 3:
-                color = mContext.getResources().getColor(R.color.color_of_52c41a);
-                break;
-            case 4://"已送达"
-            case 6://"已取消"
-            case 5://"已完成"
-
-                color = mContext.getResources().getColor(R.color.color_of_797c8b);
-
-                break;
-
-            default:
-                color = mContext.getResources().getColor(R.color.color_of_797c8b);
-        }
-        return color;
-    }
-
 
 }

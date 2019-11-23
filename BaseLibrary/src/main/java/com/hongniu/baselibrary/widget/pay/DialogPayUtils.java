@@ -100,7 +100,8 @@ public class DialogPayUtils implements PayPasswordKeyBord.PayKeyBordListener, Pa
 
         payDialog.setTitle(title);
         payDialog.setDescribe(subtitle);
-        payDialog.setDescribeSub(subtitleDes);
+//        payDialog.setDescribeSub(subtitleDes);
+        payDialog.setDescribeSub("");
         payPasswordKeyBord.setProgressListener(listener);
     }
 

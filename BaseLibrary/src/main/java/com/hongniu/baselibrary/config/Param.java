@@ -8,6 +8,7 @@ import com.hongniu.baselibrary.BuildConfig;
  */
 public class Param {
     public static final boolean isDebug = BuildConfig.debugMode;
+//    public static final boolean isDebug = false;
     public static String url;
     /**
      * 泓牛协议

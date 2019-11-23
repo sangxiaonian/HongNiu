@@ -49,7 +49,8 @@ public class MatchEstimateOrderActivity extends BaseActivity implements RadioIco
         initData();
         initListener();
           type = SharedPreferencesUtils.getInstance().getInt(Param.MATCHTYPE);
-        if (type==1){
+        int intExtra = getIntent().getIntExtra(Param.TYPE, 0);
+        if (type==1||intExtra==1){
             ribRight.performClick();
         }else {
             ribLeft.performClick();
