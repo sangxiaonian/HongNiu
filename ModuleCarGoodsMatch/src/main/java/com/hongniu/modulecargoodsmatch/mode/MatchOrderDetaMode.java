@@ -1,5 +1,8 @@
 package com.hongniu.modulecargoodsmatch.mode;
 
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.Poi;
+import com.amap.api.navi.model.AMapCarInfo;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.modulecargoodsmatch.control.MatchOrderDataControl;
 import com.hongniu.modulecargoodsmatch.entity.MatchOrderInfoBean;
@@ -304,5 +307,50 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
     @Override
     public Observable<CommonBean<Object>> appraiseDrive(int rating, String remark) {
       return  HttpMatchFactory.appraiseDrive(rating,remark,infoBean.getId());
+    }
+
+    /**
+     * 获取是否是查看路线
+     * @return
+     */
+    @Override
+    public boolean getShowRoute() {
+        // TODO 获取是否是货车导航
+        return false;
+    }
+
+    /**
+     * 获取起点位置
+     * @return
+     */
+    @Override
+    public Poi getStartPoi() {
+        //TODO 发货位置
+        Poi start = new Poi(infoBean.getStartPlaceInfo(), new LatLng(39.96087,116.45798), "");
+        infoBean.getStartPlaceInfo();
+        return start;
+    }
+
+    /**
+     * 获取终点位置
+     * @return
+     */
+    @Override
+    public Poi getEndPoi() {
+        //TODO 收货位置
+        Poi end = new Poi(infoBean.getDestinationInfo(), new LatLng(39.96087,116.45798), "");
+       return end;
+    }
+
+    /**
+     * 获取火车导航信息
+     *
+     * @return
+     */
+    @Override
+    public AMapCarInfo getGuideCarInfo() {
+        AMapCarInfo carInfo=new AMapCarInfo();
+        //TODO 货车车信息
+        return carInfo;
     }
 }

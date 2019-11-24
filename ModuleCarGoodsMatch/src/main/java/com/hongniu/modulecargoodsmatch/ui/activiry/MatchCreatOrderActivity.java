@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -62,10 +64,16 @@ public class MatchCreatOrderActivity extends BaseActivity implements View.OnClic
     private TextView tv_end_address_dess;
     private TextView tv_time;
 
+    private ViewGroup llZhuan;
+    private ViewGroup llPin;
+    private ImageView imgCarZhuan;
+    private ImageView imgCarPin;
+
     private Button btNext;
     private MatchOrderTranMapBean params;//参数
     private PayParam payParam;
     private DialogPayUtils payUtils;
+    private boolean zhuan = true;
 
 
     @Override
@@ -77,6 +85,7 @@ public class MatchCreatOrderActivity extends BaseActivity implements View.OnClic
         initView();
         initData();
         initListener();
+        llZhuan.performClick();
     }
 
     @Override
@@ -100,6 +109,10 @@ public class MatchCreatOrderActivity extends BaseActivity implements View.OnClic
         tv_end_address = findViewById(R.id.tv_end_address);
         tv_end_address_dess = findViewById(R.id.tv_end_address_dess);
         tv_time = findViewById(R.id.tv_time);
+        llZhuan = findViewById(R.id.ll_zhuan);
+        llPin = findViewById(R.id.ll_pin);
+        imgCarZhuan = findViewById(R.id.img_type_zhuan);
+        imgCarPin = findViewById(R.id.img_type_pin);
     }
 
     @Override
@@ -125,8 +138,8 @@ public class MatchCreatOrderActivity extends BaseActivity implements View.OnClic
                 tv_start_address_dess.setVisibility(View.VISIBLE);
 
                 LoginPersonInfor infor = Utils.getPersonInfor();
-                item_name.setTextCenter(TextUtils.isEmpty(start.getName())?infor.getContact():start.getName());
-                item_phone.setTextCenter(TextUtils.isEmpty(start.getPhone())?infor.getMobile():start.getPhone());
+                item_name.setTextCenter(TextUtils.isEmpty(start.getName()) ? infor.getContact() : start.getName());
+                item_phone.setTextCenter(TextUtils.isEmpty(start.getPhone()) ? infor.getMobile() : start.getPhone());
 
                 creatOrderParams.setStartPlaceLat(params.getStart().getPoiItem().getLatLonPoint().getLatitude() + "");
                 creatOrderParams.setStartPlaceLon(params.getStart().getPoiItem().getLatLonPoint().getLongitude() + "");
@@ -196,6 +209,9 @@ public class MatchCreatOrderActivity extends BaseActivity implements View.OnClic
         super.initListener();
         btNext.setOnClickListener(this);
         payUtils.setPayListener(this);
+        llZhuan.setOnClickListener(this);
+        llPin.setOnClickListener(this);
+
     }
 
     /**
@@ -211,14 +227,14 @@ public class MatchCreatOrderActivity extends BaseActivity implements View.OnClic
             creatOrderParams.setShipperName(TextUtils.isEmpty(item_name.getTextCenter()) ? "" : item_name.getTextCenter());
             creatOrderParams.setShipperMobile(TextUtils.isEmpty(item_phone.getTextCenter()) ? "" : item_phone.getTextCenter());
             creatOrderParams.setRemark(TextUtils.isEmpty(item_remark.getTextCenter()) ? "" : item_remark.getTextCenter());
-
+            creatOrderParams.setOrderType(zhuan?1:2);
             HttpMatchFactory.matchCreatOrder(creatOrderParams)
                     .subscribe(new NetObserver<MatchCreateInfoBean>(this) {
                         @Override
                         public void doOnSuccess(MatchCreateInfoBean data) {
 
                             payUtils.setPayCount(data.getEstimateFare());
-                            payUtils.setSubtitle(String.format("支付总额：%s" , data.getEstimateFare()));
+                            payUtils.setSubtitle(String.format("支付总额：%s", data.getEstimateFare()));
                             payUtils.setSubtitleDes(String.format("运费明细  起步价%s元*%s公里", data.getStartPrice(), data.getDistance()));
                             payParam.setCarGoodsOrderId(data.getCarGoodsOrderId());
                             payUtils.show(getSupportFragmentManager());
@@ -228,7 +244,17 @@ public class MatchCreatOrderActivity extends BaseActivity implements View.OnClic
                     })
             ;
 
+        } else if (R.id.ll_zhuan == v.getId()) {
+            switchCarType(true);
+        } else if (R.id.ll_pin == v.getId()) {
+            switchCarType(false);
         }
+    }
+
+    private void switchCarType(boolean b) {
+        zhuan=b;
+        imgCarZhuan.setImageResource(b?R.mipmap.icon_xz_36:R.mipmap.icon_wxz_36);
+        imgCarPin.setImageResource(!b?R.mipmap.icon_xz_36:R.mipmap.icon_wxz_36);
     }
 
 
@@ -243,12 +269,12 @@ public class MatchCreatOrderActivity extends BaseActivity implements View.OnClic
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode==1&&resultCode==Activity.RESULT_OK){
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show("支付成功");
             ArouterUtils.getInstance().builder(ArouterParamsMatch.activity_match_my_order).navigation(mContext);
             setResult(Activity.RESULT_OK);
             finish();
-        }else {
+        } else {
             super.onActivityResult(requestCode, resultCode, data);
 
         }

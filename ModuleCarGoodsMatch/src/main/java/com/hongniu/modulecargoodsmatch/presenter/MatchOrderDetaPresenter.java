@@ -108,6 +108,31 @@ public class MatchOrderDetaPresenter implements MatchOrderDataControl.IMatchOrde
         ;
     }
 
+    /**
+     * 跳转到发货人导航
+     */
+    @Override
+    public void startLoad() {
+        if (mode.getShowRoute()) {
+
+            view.showRoute(null,mode.getStartPoi());
+        }else {
+            view.carLoad(null,mode.getStartPoi(), mode.getGuideCarInfo());
+        }
+    }
+
+    /**
+     * 收货人导航
+     */
+    @Override
+    public void endLoad() {
+        if (mode.getShowRoute()) {
+            view.showRoute(null,mode.getEndPoi());
+        }else {
+            view.carLoad(null,mode.getEndPoi(),mode.getGuideCarInfo());
+        }
+    }
+
     private void initInfor() {
         view.showTitle(mode.getTitle());
         view.showOrderState(mode.getOrderState());
@@ -119,5 +144,6 @@ public class MatchOrderDetaPresenter implements MatchOrderDataControl.IMatchOrde
         view.showEstimate(mode.getEstimate(), mode.getEstimateContent(), mode.isShowEstimate());
         view.showPrice(mode.getPrice(), mode.getPriceDetail());
         view.showButton(mode.getButtonInfo(), mode.isShowButton(), mode.isShowBtCall());
+        view.guideInfo(mode.getShowRoute()?"查看路线":"货车导航");
     }
 }

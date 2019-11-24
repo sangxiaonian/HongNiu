@@ -31,6 +31,7 @@ import com.hongniu.baselibrary.entity.LoginBean;
 import com.hongniu.baselibrary.entity.QueryPayPassword;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.entity.TruckGudieSwitchBean;
+import com.hongniu.baselibrary.entity.UpLoactionEvent;
 import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.PermissionUtils;
@@ -584,7 +585,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 tab1.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        OrderEvent.UpLoactionEvent upLoactionEvent = new OrderEvent.UpLoactionEvent();
+                        UpLoactionEvent upLoactionEvent = new  UpLoactionEvent();
                         upLoactionEvent.start = true;
                         upLoactionEvent.orderID = event.getOrderId();
                         upLoactionEvent.cardID = event.getCarId();
@@ -603,7 +604,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     //开始或停止记录用户位置信息
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onStartLoactionMessage(final OrderEvent.UpLoactionEvent event) {
+    public void onStartLoactionMessage(final UpLoactionEvent event) {
         if (event != null) {
             //如果有正在运输中的订单，则此时获取到用户的位置信息
             if (event.start) {//开始记录数据

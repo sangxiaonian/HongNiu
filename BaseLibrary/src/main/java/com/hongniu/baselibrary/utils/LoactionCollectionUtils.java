@@ -1,12 +1,12 @@
-package com.hongniu.moduleorder.utils;
+package com.hongniu.baselibrary.utils;
 
 import android.view.View;
 
 import com.amap.api.navi.INaviInfoCallback;
 import com.amap.api.navi.model.AMapNaviLocation;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
+import com.hongniu.baselibrary.entity.UpLoactionEvent;
 import com.hongniu.baselibrary.event.Event;
-import com.hongniu.moduleorder.control.OrderEvent;
 import com.sang.common.event.BusFactory;
 import com.sang.common.utils.JLog;
 
@@ -72,7 +72,7 @@ public class LoactionCollectionUtils implements INaviInfoCallback {
         JLog.i("onStartNavi:" + i);
         isSimulate=(i!=1);
         if (orderInfor != null&&!isSimulate) {
-            OrderEvent.UpLoactionEvent upLoactionEvent = new OrderEvent.UpLoactionEvent();
+             UpLoactionEvent upLoactionEvent = new  UpLoactionEvent();
             upLoactionEvent.start = true;
             upLoactionEvent.orderID = orderInfor.getId();
             upLoactionEvent.cardID = orderInfor.getCarId();

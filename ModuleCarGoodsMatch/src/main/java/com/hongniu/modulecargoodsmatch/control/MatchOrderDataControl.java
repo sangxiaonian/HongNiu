@@ -1,5 +1,7 @@
 package com.hongniu.modulecargoodsmatch.control;
 
+import com.amap.api.maps.model.Poi;
+import com.amap.api.navi.model.AMapCarInfo;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchOrderInfoBean;
 import com.sang.common.net.listener.TaskControl;
@@ -108,7 +110,25 @@ public class MatchOrderDataControl {
          */
         void appraiseDriver(String id, String driverName, String driverMobile);
 
-        void showSuccess(String 评价成功);
+        void showSuccess(String msg);
+
+        /**
+         * 开始导航
+         * @param startPoi
+         * @param endPoi
+         * @param guideCarInfo
+         */
+        void carLoad(Poi startPoi, Poi endPoi, AMapCarInfo guideCarInfo);
+
+
+        /**
+         * 查看路线
+         * @param startPoi
+         * @param endPoi
+         */
+        void showRoute(Poi startPoi, Poi endPoi);
+
+        void guideInfo(String showRoute);
     }
     public interface IMatchOrderDataPresenter {
         void saveInfor(int type, MatchOrderInfoBean infoBean, TaskControl.OnTaskListener listener);
@@ -139,6 +159,16 @@ public class MatchOrderDataControl {
          * @param listener
          */
         void appraiseDrive(int rating, String remark, TaskControl.OnTaskListener listener);
+
+        /**
+         * 跳转到发货人导航
+         */
+        void startLoad();
+
+        /**
+         * 收货人导航
+         */
+        void endLoad();
     }
     public interface IMatchOrderDataMode {
 
@@ -268,6 +298,31 @@ public class MatchOrderDataControl {
          * @return
          */
         Observable<CommonBean<Object>> appraiseDrive(int rating, String remark);
+
+
+        /**
+         * 获取是否是查看路线
+         * @return
+         */
+        boolean getShowRoute();
+
+
+        /**
+         * 获取起点位置
+         * @return
+         */
+        Poi getStartPoi();
+        /**
+         * 获取终点位置
+         * @return
+         */
+        Poi getEndPoi();
+
+        /**
+         * 获取火车导航信息
+         * @return
+         */
+        AMapCarInfo getGuideCarInfo();
     }
 
 }

@@ -11,6 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.amap.api.maps.model.Poi;
+import com.amap.api.navi.AmapNaviPage;
+import com.amap.api.navi.AmapNaviParams;
+import com.amap.api.navi.AmapNaviType;
+import com.amap.api.navi.model.AMapCarInfo;
 import com.hedgehog.ratingbar.RatingBar;
 import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
@@ -74,6 +79,9 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
     private TextView tv_button;//
     DriverDialog dialog;
 
+    private TextView tv_start_load;
+    private TextView tv_end_load;
+
 
     MatchOrderDataControl.IMatchOrderDataPresenter presenter;
 
@@ -98,6 +106,10 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
     @Override
     protected void initView() {
         super.initView();
+
+        tv_start_load = findViewById(R.id.tv_start_load);
+        tv_end_load = findViewById(R.id.tv_end_load);
+
         tv_state = findViewById(R.id.tv_state);
         tv_time = findViewById(R.id.tv_time);
         tv_car_infor = findViewById(R.id.tv_car_infor);
@@ -138,6 +150,11 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
         ll_end_call.setOnClickListener(this);
         ll_start_call.setOnClickListener(this);
         ll_bottom.setOnClickListener(this);
+
+        tv_start_load.setOnClickListener(this);
+        tv_end_load.setOnClickListener(this);
+
+
     }
 
     @Override
@@ -338,6 +355,7 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
 
     /**
      * 评价司机
+     *
      * @param id
      * @param driverName
      * @param driverMobile
@@ -346,12 +364,12 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
     public void appraiseDriver(String id, String driverName, String driverMobile) {
         //评价司机
 
-        dialog.setSubTitle(String.format("%s(%s)",driverName,driverMobile));
+        dialog.setSubTitle(String.format("%s(%s)", driverName, driverMobile));
         dialog.setEntryClickListener(new DriverDialog.EntryClickListener() {
             @Override
             public void OnEntryClick(int rating, String trim) {
 
-                presenter.appraiseDrive(rating,trim, MatchOrderDetailActivity.this);
+                presenter.appraiseDrive(rating, trim, MatchOrderDetailActivity.this);
             }
         });
         dialog.builder().show(null);
@@ -359,9 +377,50 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
     }
 
     @Override
-    public void showSuccess(String ms) {
-        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show(ms);
+    public void showSuccess(String msg) {
+        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show(msg);
         presenter.queryDetailInfo(this);
+    }
+
+    /**
+     * 跳转到发货人导航
+     *
+     * @param startPoi
+     * @param endPoi
+     * @param guideCarInfo
+     */
+    @Override
+    public void carLoad(Poi startPoi, Poi endPoi, AMapCarInfo guideCarInfo) {
+        ToastUtils.getInstance().show("货车导航");
+        AmapNaviParams naviParams = new AmapNaviParams(startPoi, null, endPoi, AmapNaviType.DRIVER);
+        naviParams.setCarInfo(guideCarInfo);
+
+        AmapNaviPage.getInstance().showRouteActivity(getApplicationContext(), naviParams, null);
+        finish();
+
+    }
+
+    /**
+     * 查看路线
+     *
+     * @param startPoi
+     * @param endPoi
+     */
+    @Override
+    public void showRoute(Poi startPoi, Poi endPoi) {
+
+        //查看路线
+        AmapNaviParams amapNaviParams = new AmapNaviParams(startPoi, null, endPoi, AmapNaviType.DRIVER);
+        amapNaviParams.setUseInnerVoice(true);
+
+        AmapNaviPage.getInstance().showRouteActivity(getApplicationContext(),
+                amapNaviParams, null);
+    }
+
+    @Override
+    public void guideInfo(String showRoute) {
+        tv_start_load.setText(showRoute == null ? "" : showRoute);
+        tv_end_load.setText(showRoute == null ? "" : showRoute);
     }
 
 
@@ -380,6 +439,12 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
         } else if (v.getId() == R.id.ll_bottom) {
 
             presenter.clickBt();
+        } else if (v.getId() == R.id.tv_start_load) {
+
+            presenter.startLoad();
+        } else if (v.getId() == R.id.tv_end_load) {
+
+            presenter.endLoad();
         }
     }
 }

@@ -19,6 +19,15 @@ public class MatchCreatOrderParams {
     String receiverName;//false	string	收货人姓名
     String receiverMobile;//false	string	收货人手机号码
     String remark;//false	string	备注
+    int orderType;	//false	string	下单类型 1:专车 2:拼车
+
+    public int getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(int orderType) {
+        this.orderType = orderType;
+    }
 
     public String getCarGoodsOrderId() {
         return carGoodsOrderId;

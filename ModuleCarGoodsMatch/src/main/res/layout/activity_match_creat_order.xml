@@ -227,11 +227,71 @@
                     app:centerType="normal"
                     app:colorCenter="@color/color_light"
                     app:editable="false"
-                    app:showline="false"
+                    app:showline="true"
                     app:textcenterhide="请选择预估运费"
                     app:textleft="预估运费" />
 
+                <LinearLayout
+                    android:id="@+id/ll_zhuan"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="@dimen/app_gap">
 
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:minWidth="90dp"
+                        android:text="专车"
+                        android:textColor="@color/color_title_dark"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:id="@+id/img_type_zhuan"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/icon_wxz_36" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/line_height"
+                    android:layout_marginLeft="5dp"
+                    android:background="@color/line_color" />
+
+                <LinearLayout
+                    android:id="@+id/ll_pin"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="@dimen/app_gap">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:minWidth="90dp"
+                        android:text="拼车"
+                        android:textColor="@color/color_title_dark"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:id="@+id/img_type_pin"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/icon_wxz_36" />
+                </LinearLayout>
             </LinearLayout>
 
 

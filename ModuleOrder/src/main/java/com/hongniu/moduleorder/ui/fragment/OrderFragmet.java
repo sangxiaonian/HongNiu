@@ -29,6 +29,7 @@ import com.hongniu.baselibrary.entity.PayOrderInfor;
 import com.hongniu.baselibrary.entity.PayParam;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.entity.UpImgData;
+import com.hongniu.baselibrary.entity.UpLoactionEvent;
 import com.hongniu.baselibrary.entity.WalletDetail;
 import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.net.HttpAppFactory;
@@ -46,8 +47,7 @@ import com.hongniu.moduleorder.entity.QueryReceiveBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.ui.OrderScanReceiptActivity;
 import com.hongniu.moduleorder.ui.WaitePayActivity;
-import com.hongniu.moduleorder.utils.LoactionCollectionUtils;
-import com.hongniu.moduleorder.utils.OrderUtils;
+import com.hongniu.baselibrary.utils.LoactionCollectionUtils;
 import com.sang.common.event.BusFactory;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
@@ -351,7 +351,7 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
                                     .map(new Function<Integer, Integer>() {
                                         @Override
                                         public Integer apply(Integer integer) throws Exception {
-                                            OrderEvent.UpLoactionEvent upLoactionEvent = new OrderEvent.UpLoactionEvent();
+                                             UpLoactionEvent upLoactionEvent = new  UpLoactionEvent();
                                             upLoactionEvent.start = true;
                                             BusFactory.getBus().post(upLoactionEvent);
                                             return integer;
@@ -376,7 +376,7 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
                                         @Override
                                         public boolean test(Double aDouble) throws Exception {
                                             JLog.i(Thread.currentThread().getName());
-                                            OrderEvent.UpLoactionEvent upLoactionEvent = new OrderEvent.UpLoactionEvent();
+                                             UpLoactionEvent upLoactionEvent = new  UpLoactionEvent();
                                             upLoactionEvent.start = false;
                                             BusFactory.getBus().post(upLoactionEvent);
                                             if (aDouble > Param.ENTRY_MIN) {
@@ -507,7 +507,7 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
                                 , orderBean.getDestinationLatitude(), orderBean.getDestinationLongitude());
                         dialog.dismiss();
                         if (latLng.latitude == 0 || latLng.longitude == 0) {
-                            OrderEvent.UpLoactionEvent upLoactionEvent = new OrderEvent.UpLoactionEvent();
+                            UpLoactionEvent upLoactionEvent = new  UpLoactionEvent();
                             upLoactionEvent.start = true;
                             BusFactory.getBus().post(upLoactionEvent);
                             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("正在获取当前位置，请稍后再试");
@@ -518,7 +518,7 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
                                     .subscribe(new NetObserver<String>(taskListener) {
                                         @Override
                                         public void doOnSuccess(String data) {
-                                            BusFactory.getBus().post(new OrderEvent.UpLoactionEvent());
+                                            BusFactory.getBus().post(new  UpLoactionEvent());
                                         }
 
                                         @Override

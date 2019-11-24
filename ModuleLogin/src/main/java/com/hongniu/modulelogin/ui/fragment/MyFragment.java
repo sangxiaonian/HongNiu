@@ -1,7 +1,9 @@
 package com.hongniu.modulelogin.ui.fragment;
 
+import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
@@ -28,6 +30,7 @@ import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventParams;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
+import com.hongniu.baselibrary.widget.RoundedBackgroundSpan;
 import com.hongniu.modulelogin.R;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.sang.common.imgload.ImageLoader;
@@ -113,7 +116,26 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             String companyName = personInfor.getCompany() == null ? "" : personInfor.getCompany();
             String phone = TextUtils.isEmpty(personInfor.getMobile()) ? "" : personInfor.getMobile();
             String name = personInfor.getContact() == null ? "待完善" : personInfor.getContact();
-            tvName.setText(name);
+            SpannableStringBuilder builder=new SpannableStringBuilder(name);
+
+            boolean isDriver=true;
+            if (isDriver) {
+
+                boolean ver=false;
+                int start=builder.length();
+
+                builder.append(ver?"司机":"司机认证审核中");
+                RoundedBackgroundSpan span= new RoundedBackgroundSpan(getContext());
+                int hgap = DeviceUtils.dip2px(getContext(), 5);
+                int vgap = DeviceUtils.dip2px(getContext(), 3);
+                span.setPadding(hgap,vgap,hgap,vgap);
+                span.setMargin(vgap,0,hgap,0);
+                span.setTextSize(DeviceUtils.dip2px(getContext(),10));
+                span.setBackgroundColor(getResources().getColor(ver?R.color.color_of_1c234d:R.color.color_of_ebedfa));
+                span.setTextColor(getResources().getColor(ver?R.color.color_of_f9c57c:R.color.color_of_1c234d));
+                builder.setSpan(span,start,builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+            tvName.setText(builder);
             tvPhone.setText(TextUtils.isEmpty(companyName) ? phone : companyName);
             ImageLoader.getLoader().loadHeaed(getContext(), imgHeard, personInfor.getLogoPath());
         }
