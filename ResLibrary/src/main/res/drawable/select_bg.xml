@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/shape_pad_2_e83515" android:state_checked="true" />
+    <item android:drawable="@drawable/shape_pad_2_e83515" android:state_selected="true" />
+
+    <item android:drawable="@drawable/shape_2_stoke_dddddd" />
+
+</selector>

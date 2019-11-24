@@ -5,6 +5,7 @@ import com.hongniu.baselibrary.entity.IDParams;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
 import com.hongniu.modulecargoodsmatch.entity.GoodsOwnerInforBean;
+import com.hongniu.modulecargoodsmatch.entity.MatchCancelOrderParams;
 import com.hongniu.modulecargoodsmatch.entity.MatchCarPreInforBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchCarTypeInfoBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchChooseGrapBean;
@@ -245,14 +246,19 @@ public class HttpMatchFactory {
 
     /**
      * @param id
+     * @param i
+     * @param remark
      * @return
      * @data 2019/11/2
      * @Author PING
      * @Description 取消找车
      */
-    public static Observable<CommonBean<Object>> cancleCar(String id) {
-        IDParams params = new IDParams();
-        params.id = id;
+    public static Observable<CommonBean<Object>> cancelCar(String id, int i, String remark) {
+
+        MatchCancelOrderParams params=new MatchCancelOrderParams();
+        params.setId(id);
+        params.setCancelCategory(i);
+        params.setCancelCause(remark);
         return MatchClient.getInstance().getService()
                 .cancleCar(params)
                 .compose(RxUtils.<CommonBean<Object>>getSchedulersObservableTransformer())

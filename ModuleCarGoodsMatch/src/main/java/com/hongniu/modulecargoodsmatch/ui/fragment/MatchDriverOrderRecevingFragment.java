@@ -18,15 +18,13 @@ import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PayParam;
 import com.hongniu.baselibrary.utils.Utils;
-import com.hongniu.baselibrary.widget.PayPasswordKeyBord;
-import com.hongniu.baselibrary.widget.dialog.PayDialog;
 import com.hongniu.baselibrary.widget.pay.DialogPayUtils;
 import com.hongniu.modulecargoodsmatch.R;
 import com.hongniu.modulecargoodsmatch.entity.MatchOrderInfoBean;
 import com.hongniu.modulecargoodsmatch.net.HttpMatchFactory;
-import com.hongniu.modulecargoodsmatch.ui.activiry.MatchOrderDetailActivity;
 import com.hongniu.modulecargoodsmatch.ui.holder.MatchOrderInfoHolder;
 import com.hongniu.modulecargoodsmatch.utils.MatchOrderListHelper;
+import com.hongniu.modulecargoodsmatch.widget.CancelOrderDialog;
 import com.hongniu.modulecargoodsmatch.widget.DriverDialog;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
@@ -39,8 +37,6 @@ import com.sang.thirdlibrary.pay.entiy.PayBean;
 import java.util.List;
 
 import io.reactivex.Observable;
-
-import static com.hongniu.baselibrary.config.Param.isDebug;
 
 /**
  * @data 2019/10/27
@@ -71,7 +67,7 @@ public class MatchDriverOrderRecevingFragment extends RefrushFragmet<MatchOrderI
     @Override
     protected void initData() {
         super.initData();
-        payUtils=new DialogPayUtils(getContext());
+        payUtils = new DialogPayUtils(getContext());
         payParam = new PayParam();
         payUtils.setPayParam(payParam);
         payUtils.setPayListener(this);
@@ -130,36 +126,36 @@ public class MatchDriverOrderRecevingFragment extends RefrushFragmet<MatchOrderI
         } else if (MatchOrderListHelper.ENTRY_ARRIVE.equals(btState)) {
             //确认送达
             ArouterUtils.getInstance().builder(ArouterParamsMatch.activity_match_entry_arrive)
-                    .withString(Param.TRAN,infoHolder.getId())
+                    .withString(Param.TRAN, infoHolder.getId())
                     .navigation(getContext());
         }
 
 
     }
+
     DriverDialog dialog;
+
     /**
-     *@data  2019/11/3
-     *@Author PING
-     *@Description
-     *
-     * 评价司机
+     * @data 2019/11/3
+     * @Author PING
+     * @Description 评价司机
      */
     private void _evaluateDriver(final MatchOrderInfoBean infoHolder) {
-        if (dialog==null){
-            dialog=new DriverDialog(getContext());
+        if (dialog == null) {
+            dialog = new DriverDialog(getContext());
         }
-        dialog.setSubTitle(String.format("%s(%s)",infoHolder.getDriverName(),infoHolder.getDriverMobile()));
+        dialog.setSubTitle(String.format("%s(%s)", infoHolder.getDriverName(), infoHolder.getDriverMobile()));
         dialog.setEntryClickListener(new DriverDialog.EntryClickListener() {
             @Override
             public void OnEntryClick(int rating, String trim) {
                 HttpMatchFactory
-                        .appraiseDrive(rating,trim,infoHolder.getId())
-                .subscribe(new NetObserver<Object>(MatchDriverOrderRecevingFragment.this) {
-                    @Override
-                    public void doOnSuccess(Object data) {
-                        queryData(true);
-                    }
-                })
+                        .appraiseDrive(rating, trim, infoHolder.getId())
+                        .subscribe(new NetObserver<Object>(MatchDriverOrderRecevingFragment.this) {
+                            @Override
+                            public void doOnSuccess(Object data) {
+                                queryData(true);
+                            }
+                        })
                 ;
             }
         });
@@ -168,12 +164,13 @@ public class MatchDriverOrderRecevingFragment extends RefrushFragmet<MatchOrderI
 
     /**
      * 支付
+     *
      * @param infoHolder
      */
     private void _pay(MatchOrderInfoBean infoHolder) {
         payUtils.setTitle("确认下单并支付订单");
         payUtils.setListener(this);
-        payUtils.setSubtitle(String.format("支付总额：%s",infoHolder.getEstimateFare()));
+        payUtils.setSubtitle(String.format("支付总额：%s", infoHolder.getEstimateFare()));
         payUtils.setSubtitleDes(String.format("运费明细  起步价%s元*%s公里", infoHolder.getStartPrice(), infoHolder.getDistance()));
         payUtils.setShowCompany(false);
         payUtils.setPayCount(infoHolder.getEstimateFare());
@@ -184,11 +181,9 @@ public class MatchDriverOrderRecevingFragment extends RefrushFragmet<MatchOrderI
     }
 
     /**
-     *@data  2019/11/2
-     *@Author PING
-     *@Description
-     *
-     * 我要接单
+     * @data 2019/11/2
+     * @Author PING
+     * @Description 我要接单
      */
     private void _receiveOrder(final MatchOrderInfoBean infoHolder) {
         CenterAlertBuilder builder = Utils.creatDialog(getContext(), "确定接单？", "接单后，即可与货主取得联系", "放弃接单", "确定接单");
@@ -214,37 +209,46 @@ public class MatchDriverOrderRecevingFragment extends RefrushFragmet<MatchOrderI
     }
 
     /**
-     * 取消找车
+     * 取消订单
      *
      * @param infoHolder
      */
     private void _cancleCar(final MatchOrderInfoBean infoHolder) {
-        CenterAlertBuilder builder = Utils.creatDialog(getContext(), "确认要取消找车？", "取消后，您可在“我的找车”里查看记录", "我再想想", "取消找车");
-        builder
-                .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
-                    @Override
-                    public void onRightClick(View view, DialogControl.ICenterDialog cdialog) {
-                        cdialog.dismiss();
-                        HttpMatchFactory
-                                .cancleCar(infoHolder.getId())
-                                .subscribe(new NetObserver<Object>(MatchDriverOrderRecevingFragment.this) {
-                                    @Override
-                                    public void doOnSuccess(Object data) {
-                                        queryData(true, true);
-                                    }
 
-                                });
+        CancelOrderDialog orderDialog = new CancelOrderDialog(getContext());
+        orderDialog.setEntryClickListener(new CancelOrderDialog.CancelEntryClickListener() {
+            @Override
+            public void OnCancelOrderClick(boolean isDriver, String trim) {
+                HttpMatchFactory
+                        .cancelCar(infoHolder.getId(), isDriver ? 2 : 1, trim)
+                        .subscribe(new NetObserver<Object>(MatchDriverOrderRecevingFragment.this) {
+                            @Override
+                            public void doOnSuccess(Object data) {
+                                queryData(true, true);
+                            }
 
-                    }
-                })
-                .creatDialog(new CenterAlertDialog(getContext()))
-                .show();
+                        });
+            }
+        });
+        orderDialog.show();
+
+//        CenterAlertBuilder builder = Utils.creatDialog(getContext(), "确认要取消订单？", "取消后，您可在“我的找车”里查看记录", "我再想想", "取消找车");
+//        builder
+//                .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
+//                    @Override
+//                    public void onRightClick(View view, DialogControl.ICenterDialog cdialog) {
+//
+//
+//                    }
+//                })
+//                .creatDialog(new CenterAlertDialog(getContext()))
+//                .show();
 
     }
 
     @Override
     public void onItemClick(int position, MatchOrderInfoBean data) {
-        if (data.getStatus()!=1) {//代付款状态不能进入详情页面
+        if (data.getStatus() != 1) {//代付款状态不能进入详情页面
             ArouterUtils.getInstance()
                     .builder(ArouterParamsMatch.activity_match_order_detail)
                     .withInt(Param.TYPE, type == 1 ? 0 : 1)
@@ -257,6 +261,7 @@ public class MatchDriverOrderRecevingFragment extends RefrushFragmet<MatchOrderI
     public void canclePay(DialogControl.IDialog dialog) {
 
     }
+
     @Override
     public void jump2Pay(PayBean data, int payType, PayParam payParam) {
         ArouterUtils.getInstance()

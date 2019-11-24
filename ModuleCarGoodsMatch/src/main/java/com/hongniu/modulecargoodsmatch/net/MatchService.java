@@ -5,6 +5,7 @@ import com.hongniu.baselibrary.entity.IDParams;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
 import com.hongniu.modulecargoodsmatch.entity.GoodsOwnerInforBean;
+import com.hongniu.modulecargoodsmatch.entity.MatchCancelOrderParams;
 import com.hongniu.modulecargoodsmatch.entity.MatchCarPreInforBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchCarTypeInfoBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchChooseGrapBean;
@@ -165,7 +166,7 @@ public interface MatchService {
      * @return
      */
     @POST("hongniu/api/carGoodsOrder/cancel")
-    Observable<CommonBean<Object>> cancleCar(@Body IDParams params);
+    Observable<CommonBean<Object>> cancleCar(@Body MatchCancelOrderParams params);
 
     /**
      * 我要接单

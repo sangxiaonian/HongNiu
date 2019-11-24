@@ -9,12 +9,12 @@ import com.hongniu.modulecargoodsmatch.R;
  */
 public class MatchOrderListHelper {
 
-    public static String CANCLE_CAR ="取消找车";
-    public static String PAY ="立即付款";
-    public static String CONTACT_DRIVER ="联系司机";
-    public static String EVALUATE_DRIVER ="评价司机";
-    public static String RECEIVE_ORDER ="我要接单";
-    public static String ENTRY_ARRIVE ="确认送达";
+    public static String CANCLE_CAR = "取消订单";
+    public static String PAY = "立即付款";
+    public static String CONTACT_DRIVER = "联系司机";
+    public static String EVALUATE_DRIVER = "评价司机";
+    public static String RECEIVE_ORDER = "我要接单";
+    public static String ENTRY_ARRIVE = "确认送达";
 
     private int type;
     private int state;
@@ -29,7 +29,7 @@ public class MatchOrderListHelper {
         return this;
     }
 
-    public String getStateDes( ) {
+    public String getStateDes() {
         String msg;
         switch (state) {
             case 1:
@@ -50,6 +50,9 @@ public class MatchOrderListHelper {
             case 6:
                 msg = "已取消";
                 break;
+            case 7:
+                msg = "已确认收货";
+                break;
             default:
                 msg = "异常";
         }
@@ -59,9 +62,10 @@ public class MatchOrderListHelper {
 
     /**
      * 根据状态获取对状态的描述
+     *
      * @return
      */
-    public String getStateDetailTimeDes( ) {
+    public String getStateDetailTimeDes() {
         String msg;
         switch (state) {
             case 1:
@@ -89,8 +93,7 @@ public class MatchOrderListHelper {
     }
 
 
-
-    public int getStateColor(  Context mContext) {
+    public int getStateColor(Context mContext) {
         int color;
         switch (state) {
             case 1:
@@ -117,12 +120,10 @@ public class MatchOrderListHelper {
     }
 
 
-
-
     public String getButtonWhite() {
-        if (type==1){//货主
-           return  _getOwnerWhite(state);
-        }else {//司机
+        if (type == 1) {//货主
+            return _getOwnerWhite(state);
+        } else {//司机
             return _getDriverWhite(state);
 
         }
@@ -130,13 +131,13 @@ public class MatchOrderListHelper {
     }
 
     private String _getOwnerWhite(int state) {
-        String msg="";
+        String msg = "";
         switch (state) {
             case 1://代付款
             case 2:
+            case 3:
                 msg = CANCLE_CAR;
                 break;
-            case 3:
             case 4:
             case 5:
             case 6:
@@ -150,18 +151,18 @@ public class MatchOrderListHelper {
         return "";
     }
 
-    public String getButtonRed( ) {
-        if (type==1){//货主
-           return  _getOwnerRed(state);
-        }else {//司机
-          return   _getDriverRed(state);
+    public String getButtonRed() {
+        if (type == 1) {//货主
+            return _getOwnerRed(state);
+        } else {//司机
+            return _getDriverRed(state);
 
         }
 
     }
 
     private String _getDriverRed(int state) {
-        String msg="";
+        String msg = "";
         switch (state) {
 
             case 2:
@@ -180,7 +181,7 @@ public class MatchOrderListHelper {
     }
 
     private String _getOwnerRed(int state) {
-        String msg="";
+        String msg = "";
         switch (state) {
             case 1://代付款
                 msg = PAY;
@@ -198,7 +199,6 @@ public class MatchOrderListHelper {
         }
         return msg;
     }
-
 
 
 }

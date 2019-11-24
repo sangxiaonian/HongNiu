@@ -28,7 +28,7 @@ public class MatchOrderInfoBean implements Parcelable {
     private String cartypeId;//true	number	车辆类型id
     private String cartypeName;//true	string	车辆类型名称
     private String estimateFare;//true	number	预估运费
-    private int status;//true	number	订单状态 1:待付款 2:待接单 3:已接单 4:已送达 5:已完成 6:已取消
+    private int status;//true	number	订单状态 1:待付款 2:待接单 3:已接单 4:已送达 5:已完成 6:已取消 7已确认收货
     private String driverId;//true	number	司机id
     private String driverName;//true	string	司机名
     private String driverMobile;//true	string	司机手机号
