@@ -82,6 +82,9 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
             case 6://已取消
                 msg = "已取消找车";
                 break;
+            case 7://已取消
+                msg = "已确认收货";
+                break;
             default:
                 msg = "异常";
         }
@@ -216,7 +219,7 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
      */
     @Override
     public boolean isShowEstimate() {
-        return infoBean.getIsAppraiseRecord()==1;
+        return infoBean.getIsAppraiseRecord() == 1;
     }
 
     /**
@@ -285,7 +288,7 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
      */
     @Override
     public boolean isShowBtCall() {
-        return type==0&&infoBean.getStatus()==3;
+        return type == 0 && infoBean.getStatus() == 3;
     }
 
     /**
@@ -300,17 +303,19 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
 
     /**
      * 评价司机
-     *  @param rating
+     *
+     * @param rating
      * @param remark
      * @return
      */
     @Override
     public Observable<CommonBean<Object>> appraiseDrive(int rating, String remark) {
-      return  HttpMatchFactory.appraiseDrive(rating,remark,infoBean.getId());
+        return HttpMatchFactory.appraiseDrive(rating, remark, infoBean.getId());
     }
 
     /**
      * 获取是否是查看路线
+     *
      * @return
      */
     @Override
@@ -321,25 +326,27 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
 
     /**
      * 获取起点位置
+     *
      * @return
      */
     @Override
     public Poi getStartPoi() {
         //TODO 发货位置
-        Poi start = new Poi(infoBean.getStartPlaceInfo(), new LatLng(39.96087,116.45798), "");
+        Poi start = new Poi(infoBean.getStartPlaceInfo(), new LatLng(39.96087, 116.45798), "");
         infoBean.getStartPlaceInfo();
         return start;
     }
 
     /**
      * 获取终点位置
+     *
      * @return
      */
     @Override
     public Poi getEndPoi() {
         //TODO 收货位置
-        Poi end = new Poi(infoBean.getDestinationInfo(), new LatLng(39.96087,116.45798), "");
-       return end;
+        Poi end = new Poi(infoBean.getDestinationInfo(), new LatLng(39.96087, 116.45798), "");
+        return end;
     }
 
     /**
@@ -349,7 +356,7 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
      */
     @Override
     public AMapCarInfo getGuideCarInfo() {
-        AMapCarInfo carInfo=new AMapCarInfo();
+        AMapCarInfo carInfo = new AMapCarInfo();
         //TODO 货车车信息
         return carInfo;
     }

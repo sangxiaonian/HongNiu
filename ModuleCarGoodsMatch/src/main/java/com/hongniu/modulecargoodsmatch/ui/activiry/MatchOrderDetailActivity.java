@@ -39,7 +39,10 @@ import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static com.hongniu.baselibrary.arouter.ArouterParamsApp.activity_img_previce;
 
 /**
  * @data 2019/11/2
@@ -222,6 +225,8 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
         tv_start_info.setText(String.format("%s（%s）", info.getShipperName(), info.getShipperMobile()));
         tv_end_info.setText(String.format("%s（%s）", info.getReceiverName(), info.getReceiverMobile()));
         group.setVisibility(showContact ? View.VISIBLE : View.GONE);
+        ll_start_call.setVisibility(showContact ? View.VISIBLE : View.GONE);
+        ll_end_call.setVisibility(showContact ? View.VISIBLE : View.GONE);
     }
 
     /**
@@ -232,20 +237,31 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
      * @param remark
      */
     @Override
-    public void showArriveVoucher(List<String> arriveVoucherImages, boolean showArriveVoucher, String remark) {
+    public void showArriveVoucher(final List<String> arriveVoucherImages, boolean showArriveVoucher, String remark) {
         card_receive.setVisibility(showArriveVoucher ? View.VISIBLE : View.GONE);
         tv_receive_remark.setText(remark);
         tv_receive_remark.setVisibility(TextUtils.isEmpty(remark) ? View.GONE : View.VISIBLE);
         if (showArriveVoucher && !BaseUtils.isCollectionsEmpty(arriveVoucherImages)) {
             XAdapter<String> adapter = new XAdapter<String>(mContext, arriveVoucherImages) {
                 @Override
-                public BaseHolder<String> initHolder(ViewGroup parent, int viewType) {
+                public BaseHolder<String> initHolder(final ViewGroup parent, int viewType) {
                     return new BaseHolder<String>(mContext, parent, R.layout.item_match_img) {
                         @Override
-                        public void initView(View itemView, int position, String data) {
+                        public void initView(View itemView, final int position, String data) {
                             super.initView(itemView, position, data);
                             ImageView img = itemView.findViewById(R.id.img);
                             ImageLoader.getLoader().load(mContext, img, data);
+                            img.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    //查看大图
+                                    ArouterUtils.getInstance().builder(activity_img_previce)
+                                            .withInt(Param.TYPE,position)
+                                            .withStringArrayList(Param.TRAN, (ArrayList<String>) arriveVoucherImages)
+                                            .navigation(mContext)
+                                    ;
+                                }
+                            });
                         }
                     };
                 }
@@ -394,9 +410,7 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
         ToastUtils.getInstance().show("货车导航");
         AmapNaviParams naviParams = new AmapNaviParams(startPoi, null, endPoi, AmapNaviType.DRIVER);
         naviParams.setCarInfo(guideCarInfo);
-
         AmapNaviPage.getInstance().showRouteActivity(getApplicationContext(), naviParams, null);
-        finish();
 
     }
 

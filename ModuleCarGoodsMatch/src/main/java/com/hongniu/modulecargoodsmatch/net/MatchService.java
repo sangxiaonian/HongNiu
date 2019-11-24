@@ -176,7 +176,8 @@ public interface MatchService {
      */
     @POST("hongniu/api/carGoodsOrder/orderReceive")
     Observable<CommonBean<Object>> receiverOrder(@Body IDParams params);
-   /**
+
+    /**
      * 查询订单详情
      *
      * @param params
@@ -184,7 +185,8 @@ public interface MatchService {
      */
     @POST("hongniu/api/carGoodsOrder/detail")
     Observable<CommonBean<MatchOrderInfoBean>> queryMatchOrderDetail(@Body IDParams params);
-/**
+
+    /**
      * 确认到达
      *
      * @param params
@@ -192,8 +194,17 @@ public interface MatchService {
      */
     @POST("hongniu/api/carGoodsOrder/arrived")
     Observable<CommonBean<Object>> matchEntryArrive(@Body MatchEntryArriveParams params);
-/**
-     * 确认到达
+    /**
+     * 确认收货
+     *
+     * @param params
+     * @return
+     */
+    @POST("hongniu/api/carGoodsOrder/receipt")
+    Observable<CommonBean<Object>> matchEntryReceive(@Body IDParams params);
+
+    /**
+     * 评价司机
      *
      * @param params
      * @return

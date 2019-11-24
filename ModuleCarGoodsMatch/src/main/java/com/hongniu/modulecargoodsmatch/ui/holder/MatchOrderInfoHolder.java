@@ -54,7 +54,6 @@ public class MatchOrderInfoHolder extends BaseHolder<MatchOrderInfoBean> {
         tv_state.setText(helper.getStateDes());
         tv_state.setBackgroundColor(helper.getStateColor(mContext));
 
-        helper.getButtonRed();
         StringBuilder buffer = new StringBuilder();
         switch (data.getStatus()) {
             case 1:
@@ -73,9 +72,9 @@ public class MatchOrderInfoHolder extends BaseHolder<MatchOrderInfoBean> {
                 break;
         }
         tv_state_des.setText(buffer.toString());
-        bt_sub.setVisibility(TextUtils.isEmpty(helper.getButtonRed()) ? View.GONE : View.VISIBLE);
+        bt_sub.setVisibility(TextUtils.isEmpty(helper.getButtonRed(data.isAppraise()==1)) ? View.GONE : View.VISIBLE);
         bt_sub_white.setVisibility(TextUtils.isEmpty(helper.getButtonWhite()) ? View.GONE : View.VISIBLE);
-        bt_sub.setText(helper.getButtonRed());
+        bt_sub.setText(helper.getButtonRed(data.isAppraise()==1));
         bt_sub_white.setText(helper.getButtonWhite());
         bt_sub.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -68,6 +68,7 @@
                 android:name="hwc-theme"
                 android:value="androidhwext:style/Theme.Emui.Translucent" />
         </activity>
+        <activity android:name=".ui.ImagePreviceActivity" />
 
         <meta-data
             android:name="com.huawei.hms.client.appid"

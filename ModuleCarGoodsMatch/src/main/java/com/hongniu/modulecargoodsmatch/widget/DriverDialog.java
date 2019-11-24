@@ -36,7 +36,9 @@ public class DriverDialog {
     Button button;
     private String subTitleInfo;
     private TextView tv_describe;
+    private TextView tvTitle;
     private View img_cancel;
+    private String title;
 
     public DriverDialog(Context context) {
         this.context = context;
@@ -53,6 +55,7 @@ public class DriverDialog {
     }
 
     private int startCount;
+
     /**
      * 初始化布局
      *
@@ -66,6 +69,7 @@ public class DriverDialog {
         etRemark = view.findViewById(R.id.et_remark);
         button = view.findViewById(R.id.bt_sum);
         tv_describe = view.findViewById(R.id.tv_describe);
+        tvTitle = view.findViewById(R.id.tv_title);
         img_cancel = view.findViewById(R.id.img_cancel);
 
 
@@ -81,14 +85,14 @@ public class DriverDialog {
         ratingBar.setOnRatingChangeListener(new RatingBar.OnRatingChangeListener() {
             @Override
             public void onRatingChange(float RatingCount) {
-                startCount= (int) RatingCount;
+                startCount = (int) RatingCount;
             }
         });
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (startCount<=0){
+                if (startCount <= 0) {
                     ToastUtils.getInstance().show("请先选择星级");
                     return;
                 }
@@ -167,9 +171,16 @@ public class DriverDialog {
     }
 
     public void setSubTitle(String subTitleInfo) {
-        this.subTitleInfo=subTitleInfo;
-        if (tv_describe!=null&&subTitleInfo!=null){
+        this.subTitleInfo = subTitleInfo;
+        if (tv_describe != null && subTitleInfo != null) {
             tv_describe.setText(subTitleInfo);
+        }
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+        if (tvTitle != null && subTitleInfo != null) {
+            tvTitle.setText(subTitleInfo);
         }
     }
 

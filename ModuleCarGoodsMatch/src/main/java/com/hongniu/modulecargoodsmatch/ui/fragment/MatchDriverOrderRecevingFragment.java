@@ -121,6 +121,9 @@ public class MatchDriverOrderRecevingFragment extends RefrushFragmet<MatchOrderI
         } else if (MatchOrderListHelper.EVALUATE_DRIVER.equals(btState)) {
             //评价司机
             _evaluateDriver(infoHolder);
+        } else if (MatchOrderListHelper.EVALUATE_OWNER.equals(btState)) {
+            //评价收货人
+            _evaluateOwner(infoHolder);
         } else if (MatchOrderListHelper.RECEIVE_ORDER.equals(btState)) {
             _receiveOrder(infoHolder);
         } else if (MatchOrderListHelper.ENTRY_ARRIVE.equals(btState)) {
@@ -128,9 +131,39 @@ public class MatchDriverOrderRecevingFragment extends RefrushFragmet<MatchOrderI
             ArouterUtils.getInstance().builder(ArouterParamsMatch.activity_match_entry_arrive)
                     .withString(Param.TRAN, infoHolder.getId())
                     .navigation(getContext());
+        } else if (MatchOrderListHelper.ENTRY_RECEIVE.equals(btState)) {
+            //确认收货
+
+            _entryReceive(infoHolder);
         }
 
 
+    }
+
+    /**
+     * 确认收货
+     *
+     * @param infoHolder
+     */
+    private void _entryReceive(final MatchOrderInfoBean infoHolder) {
+        CenterAlertBuilder builder = Utils.creatDialog(getContext(), "确认收货", "确认收货后，运费将立即转入司机账户", "我再想想", "确认收货");
+        builder
+                .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
+                    @Override
+                    public void onRightClick(View view, DialogControl.ICenterDialog cdialog) {
+                        cdialog.dismiss();
+                        HttpMatchFactory.matchEntryReceive(infoHolder.getId())
+                                .subscribe(new NetObserver<Object>(null) {
+                                    @Override
+                                    public void doOnSuccess(Object data) {
+                                        queryData(true);
+                                    }
+                                });
+
+                    }
+                })
+                .creatDialog(new CenterAlertDialog(getContext()))
+                .show();
     }
 
     DriverDialog dialog;
@@ -144,7 +177,36 @@ public class MatchDriverOrderRecevingFragment extends RefrushFragmet<MatchOrderI
         if (dialog == null) {
             dialog = new DriverDialog(getContext());
         }
+        dialog.setTitle("评价司机");
         dialog.setSubTitle(String.format("%s(%s)", infoHolder.getDriverName(), infoHolder.getDriverMobile()));
+        dialog.setEntryClickListener(new DriverDialog.EntryClickListener() {
+            @Override
+            public void OnEntryClick(int rating, String trim) {
+                HttpMatchFactory
+                        .appraiseDrive(rating, trim, infoHolder.getId())
+                        .subscribe(new NetObserver<Object>(MatchDriverOrderRecevingFragment.this) {
+                            @Override
+                            public void doOnSuccess(Object data) {
+                                queryData(true);
+                            }
+                        })
+                ;
+            }
+        });
+        dialog.builder().show(null);
+    }
+
+    /**
+     * @data 2019/11/3
+     * @Author PING
+     * @Description 评价发货人
+     */
+    private void _evaluateOwner(final MatchOrderInfoBean infoHolder) {
+        if (dialog == null) {
+            dialog = new DriverDialog(getContext());
+        }
+        dialog.setTitle("评价发货人");
+        dialog.setSubTitle(String.format("%s(%s)", infoHolder.getShipperName(), infoHolder.getShipperMobile()));
         dialog.setEntryClickListener(new DriverDialog.EntryClickListener() {
             @Override
             public void OnEntryClick(int rating, String trim) {

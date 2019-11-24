@@ -71,7 +71,7 @@
                             android:id="@+id/group"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:constraint_referenced_ids="tv_start_info,ll_start_call,tv_end_info,ll_end_call" />
+                            app:constraint_referenced_ids="tv_start_info,tv_end_info" />
 
                         <TextView
                             android:id="@+id/tv_time"
@@ -181,43 +181,55 @@
                             tools:text="俞芸素（13708199278）" />
 
                         <LinearLayout
-                            android:id="@+id/ll_start_call"
-                            android:layout_width="0dp"
-                            android:layout_height="27dp"
+                            android:id="@+id/ll_start"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:background="@drawable/shape_2_stoke_dddddd"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
                             app:layout_constraintStart_toStartOf="@id/tv_start_address"
                             app:layout_constraintTop_toBottomOf="@id/tv_start_info">
 
-                            <ImageView
-                                android:layout_width="15dp"
-                                android:layout_height="15dp"
-                                android:src="@mipmap/icon_call_30" />
+                            <LinearLayout
+                                android:id="@+id/ll_start_call"
+                                android:layout_width="wrap_content"
+                                android:layout_height="27dp"
+                                android:background="@drawable/shape_2_stoke_dddddd"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                app:layout_constraintStart_toStartOf="@id/tv_start_address"
+                                app:layout_constraintTop_toBottomOf="@id/tv_start_info">
+
+                                <ImageView
+                                    android:layout_width="15dp"
+                                    android:layout_height="15dp"
+                                    android:src="@mipmap/icon_call_30" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/app_item_gap"
+                                    android:text="联系发货人"
+                                    android:textColor="@color/color_title_dark"
+                                    android:textSize="@dimen/text_small" />
+
+                            </LinearLayout>
 
                             <TextView
+                                android:id="@+id/tv_start_load"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/app_item_gap"
-                                android:text="联系发货人"
+                                android:background="@drawable/shape_2_stoke_dddddd"
+                                android:text="查看路线"
                                 android:textColor="@color/color_title_dark"
-                                android:textSize="@dimen/text_small" />
+                                android:textSize="@dimen/text_small"
+                                app:layout_constraintBottom_toBottomOf="@id/ll_start_call"
+                                app:layout_constraintStart_toEndOf="@id/ll_start_call"
+                                app:layout_constraintTop_toTopOf="@id/ll_start_call" />
 
                         </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/tv_start_load"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/app_item_gap"
-                            android:background="@drawable/shape_2_stoke_dddddd"
-                            android:text="查看路线"
-                            android:textColor="@color/color_title_dark"
-                            android:textSize="@dimen/text_small"
-                            app:layout_constraintBottom_toBottomOf="@id/ll_start_call"
-                            app:layout_constraintStart_toEndOf="@id/ll_start_call"
-                            app:layout_constraintTop_toTopOf="@id/ll_start_call" />
 
                         <TextView
                             android:id="@+id/tv_end_address"
@@ -228,7 +240,7 @@
                             android:textSize="@dimen/text_small_14"
                             app:layout_constraintEnd_toEndOf="@id/tv_start_address"
                             app:layout_constraintStart_toStartOf="@id/tv_start_address"
-                            app:layout_constraintTop_toBottomOf="@id/ll_start_call"
+                            app:layout_constraintTop_toBottomOf="@id/ll_start"
                             app:layout_goneMarginTop="@dimen/app_model_gap"
                             tools:text="新疆维吾尔自治区喀什地区巴楚和平路651号" />
 
@@ -246,44 +258,55 @@
                             tools:text="奚泽（15542955830）" />
 
                         <LinearLayout
-                            android:id="@+id/ll_end_call"
-                            android:layout_width="0dp"
-                            android:layout_height="27dp"
+                            android:id="@+id/ll_end"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:background="@drawable/shape_2_stoke_dddddd"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
                             app:layout_constraintStart_toStartOf="@id/tv_end_address"
-
                             app:layout_constraintTop_toBottomOf="@id/tv_end_info">
+                            <LinearLayout
+                                android:id="@+id/ll_end_call"
+                                android:layout_width="wrap_content"
+                                android:layout_height="27dp"
+                                android:background="@drawable/shape_2_stoke_dddddd"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                app:layout_constraintStart_toStartOf="@id/tv_end_address"
+                                app:layout_constraintTop_toBottomOf="@id/tv_end_info">
 
-                            <ImageView
-                                android:layout_width="15dp"
-                                android:layout_height="15dp"
-                                android:src="@mipmap/icon_call_30" />
+                                <ImageView
+                                    android:layout_width="15dp"
+                                    android:layout_height="15dp"
+                                    android:src="@mipmap/icon_call_30" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/app_item_gap"
+                                    android:text="联系收货人"
+                                    android:textColor="@color/color_title_dark"
+                                    android:textSize="@dimen/text_small" />
+
+                            </LinearLayout>
 
                             <TextView
+                                android:id="@+id/tv_end_load"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/app_item_gap"
-                                android:text="联系收货人"
+                                android:background="@drawable/shape_2_stoke_dddddd"
+                                android:text="查看路线"
                                 android:textColor="@color/color_title_dark"
-                                android:textSize="@dimen/text_small" />
-
+                                android:textSize="@dimen/text_small"
+                                app:layout_constraintBottom_toBottomOf="@id/ll_end_call"
+                                app:layout_constraintStart_toEndOf="@id/ll_end_call"
+                                app:layout_constraintTop_toTopOf="@id/ll_end_call" />
                         </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/tv_end_load"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/app_item_gap"
-                            android:background="@drawable/shape_2_stoke_dddddd"
-                            android:text="查看路线"
-                            android:textColor="@color/color_title_dark"
-                            android:textSize="@dimen/text_small"
-                            app:layout_constraintBottom_toBottomOf="@id/ll_end_call"
-                            app:layout_constraintStart_toEndOf="@id/ll_end_call"
-                            app:layout_constraintTop_toTopOf="@id/ll_end_call" />
+
+
                     </android.support.constraint.ConstraintLayout>
 
                 </android.support.v7.widget.CardView>

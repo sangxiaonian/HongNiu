@@ -13,8 +13,10 @@ public class MatchOrderListHelper {
     public static String PAY = "立即付款";
     public static String CONTACT_DRIVER = "联系司机";
     public static String EVALUATE_DRIVER = "评价司机";
+    public static String EVALUATE_OWNER = "评价货主";
     public static String RECEIVE_ORDER = "我要接单";
     public static String ENTRY_ARRIVE = "确认送达";
+    public static String ENTRY_RECEIVE = "确认收货";
 
     private int type;
     private int state;
@@ -60,37 +62,6 @@ public class MatchOrderListHelper {
     }
 
 
-    /**
-     * 根据状态获取对状态的描述
-     *
-     * @return
-     */
-    public String getStateDetailTimeDes() {
-        String msg;
-        switch (state) {
-            case 1:
-                msg = "待付款";
-                break;
-            case 2://待接单
-                msg = "待司机接单";
-                break;
-            case 3://已接单
-                msg = "待司机送达";
-                break;
-            case 4://已送达
-                msg = "货物已送达";
-                break;
-            case 5://已完成
-                msg = "订单已完成";
-                break;
-            case 6://已取消
-                msg = "已取消找车";
-                break;
-            default:
-                msg = "异常";
-        }
-        return msg;
-    }
 
 
     public int getStateColor(Context mContext) {
@@ -151,17 +122,17 @@ public class MatchOrderListHelper {
         return "";
     }
 
-    public String getButtonRed() {
+    public String getButtonRed(boolean appraise) {
         if (type == 1) {//货主
-            return _getOwnerRed(state);
+            return _getOwnerRed(state,appraise);
         } else {//司机
-            return _getDriverRed(state);
+            return _getDriverRed(state,appraise);
 
         }
 
     }
 
-    private String _getDriverRed(int state) {
+    private String _getDriverRed(int state, boolean appraise) {
         String msg = "";
         switch (state) {
 
@@ -174,14 +145,20 @@ public class MatchOrderListHelper {
             case 1://代付款
             case 4:
             case 5:
+                break;
             case 6:
+            case 7:
+                msg=appraise?EVALUATE_OWNER:"";
+                break;
             default:
         }
-        return msg;
+        return  msg;
     }
 
-    private String _getOwnerRed(int state) {
+    private String _getOwnerRed(int state, boolean appraise) {
         String msg = "";
+        //state	number	订单状态 1:待付款 2:待接单 3:已接单 4:已送达 5:已完成 6:已取消 7已确认收货
+
         switch (state) {
             case 1://代付款
                 msg = PAY;
@@ -190,14 +167,17 @@ public class MatchOrderListHelper {
                 msg = CONTACT_DRIVER;
                 break;
             case 4:
-                msg = EVALUATE_DRIVER;
+                msg = ENTRY_RECEIVE;
                 break;
             case 2:
             case 5:
+                break;
             case 6:
+            case 7:
+                msg=appraise?EVALUATE_DRIVER:"";
             default:
         }
-        return msg;
+        return  msg;
     }
 
 

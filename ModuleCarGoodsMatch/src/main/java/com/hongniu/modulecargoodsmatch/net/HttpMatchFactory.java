@@ -307,6 +307,18 @@ public class HttpMatchFactory {
                 .matchEntryArrive(params)
                 .compose(RxUtils.<CommonBean<Object>>getSchedulersObservableTransformer())
                 ;
+    }  /**
+     * 确认收货
+     * @param id
+     * @return
+     */
+    public static Observable<CommonBean<Object>> matchEntryReceive(String id) {
+        IDParams params = new IDParams();
+        params.id = id;
+        return MatchClient.getInstance().getService()
+                .matchEntryReceive(params)
+                .compose(RxUtils.<CommonBean<Object>>getSchedulersObservableTransformer())
+                ;
     }
 
     /**

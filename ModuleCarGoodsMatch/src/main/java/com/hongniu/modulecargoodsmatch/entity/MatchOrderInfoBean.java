@@ -44,6 +44,15 @@ public class MatchOrderInfoBean implements Parcelable {
     private int serviceScore;//true	string	服务评分
     private String content;//true	string	点评内容
     private String mileageFareSumInfo;//true	string	点评内容
+    private int isAppraise;//true	string	点评内容
+
+    public int isAppraise() {
+        return isAppraise;
+    }
+
+    public void setAppraise(int appraise) {
+        isAppraise = appraise;
+    }
 
     public String getMileageFareSumInfo() {
         return mileageFareSumInfo;
@@ -363,6 +372,7 @@ public class MatchOrderInfoBean implements Parcelable {
         dest.writeInt(this.serviceScore);
         dest.writeString(this.content);
         dest.writeString(this.mileageFareSumInfo);
+        dest.writeInt(this.isAppraise);
     }
 
     protected MatchOrderInfoBean(Parcel in) {
@@ -400,6 +410,7 @@ public class MatchOrderInfoBean implements Parcelable {
         this.serviceScore = in.readInt();
         this.content = in.readString();
         this.mileageFareSumInfo = in.readString();
+        this.isAppraise = in.readInt();
     }
 
     public static final Creator<MatchOrderInfoBean> CREATOR = new Creator<MatchOrderInfoBean>() {

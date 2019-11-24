@@ -14,6 +14,10 @@ public class ArouterParamsApp {
      * Pdf 加载页面
      */
     public final static String activity_pdf = "/app/activity_pdf";
+   /**
+     * 图片预览
+     */
+    public final static String activity_img_previce = "/app/activity_img_previce";
 
     /**
      * h5 加载页面
