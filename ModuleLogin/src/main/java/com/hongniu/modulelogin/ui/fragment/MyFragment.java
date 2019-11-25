@@ -1,6 +1,5 @@
 package com.hongniu.modulelogin.ui.fragment;
 
-import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -17,7 +16,6 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hongniu.baselibrary.arouter.ArouterParamFestivity;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
-import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseFragment;
@@ -26,7 +24,6 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.LoginBean;
 import com.hongniu.baselibrary.entity.LoginPersonInfor;
 import com.hongniu.baselibrary.event.Event;
-import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventParams;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
@@ -99,40 +96,43 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         tvNiu.setText(builder);
 
         StatusBarCompat.setStatusBarColor(getActivity(), getResources().getColor(R.color.white), true);
-        upPerson();
+        upPerson(Utils.getPersonInfor());
+
 
 
     }
+
+
 
 
     /**
      * @data 2019/3/3
      * @Author PING
      * @Description 更新个人资料
+     * @param personInfor
      */
-    private void upPerson() {
-        LoginPersonInfor personInfor = Utils.getPersonInfor();
+    private void upPerson(LoginPersonInfor personInfor) {
         if (personInfor != null) {
             String companyName = personInfor.getCompany() == null ? "" : personInfor.getCompany();
             String phone = TextUtils.isEmpty(personInfor.getMobile()) ? "" : personInfor.getMobile();
             String name = personInfor.getContact() == null ? "待完善" : personInfor.getContact();
             SpannableStringBuilder builder = new SpannableStringBuilder(name);
 
-            if (personInfor.getIs_driver_status()>0) {
-                boolean ver = personInfor.getIs_driver_status()==4;
+            if (personInfor.getIsDriverStatus()>0) {
+                boolean ver = personInfor.getIsDriverStatus()==4;
                 int start = builder.length();
                 String result = "";
-                if (personInfor.getIs_driver_status()==0) {
+                if (personInfor.getIsDriverStatus()==0) {
                     result="未提交审核资料";
-                }else if (personInfor.getIs_driver_status()==1) {
+                }else if (personInfor.getIsDriverStatus()==1) {
                     result = "已提交审核资料";
-                }else if (personInfor.getIs_driver_status()==2){
+                }else if (personInfor.getIsDriverStatus()==2){
                     result = "系统自动审核中";
-                }else if (personInfor.getIs_driver_status()==3){
+                }else if (personInfor.getIsDriverStatus()==3){
                     result = "人工后台审核中";
-                }else if (personInfor.getIs_driver_status()==4){
+                }else if (personInfor.getIsDriverStatus()==4){
                     result = "认证成功";
-                }else if (personInfor.getIs_driver_status()==5){
+                }else if (personInfor.getIsDriverStatus()==5){
                     result = "认证失败";
                 }
                 builder.append(result);
@@ -157,6 +157,12 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onStart() {
         super.onStart();
+        HttpLoginFactory.getPersonInfor().subscribe(new NetObserver<LoginPersonInfor>(null) {
+            @Override
+            public void doOnSuccess(LoginPersonInfor data) {
+                upPerson(data);
+            }
+        });
     }
 
     @Override
@@ -179,7 +185,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             HttpLoginFactory.getPersonInfor().subscribe(new NetObserver<LoginPersonInfor>(null) {
                 @Override
                 public void doOnSuccess(LoginPersonInfor data) {
-                    upPerson();
+                    upPerson(data);
                 }
             });
         }
@@ -323,4 +329,5 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
 
     }
+
 }

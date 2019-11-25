@@ -329,7 +329,7 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
     @Override
     public boolean getShowRoute() {
         // TODO 获取是否是货车导航
-        return true;
+        return type==1;
     }
 
     /**

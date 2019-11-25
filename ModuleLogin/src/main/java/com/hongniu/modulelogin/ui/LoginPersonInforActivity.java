@@ -149,6 +149,7 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
 
     private void initInfor(LoginPersonInfor data) {
         if (data != null) {
+            personInfor.setIsDriverStatus(data.getIsDriverStatus());
             personInfor.setCity(data.getCity());
             personInfor.setCityId(data.getCityId());
             personInfor.setDistrict(data.getDistrict());
@@ -174,7 +175,7 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
             if (data.getSubAccStatus()) {
                 itemAddressDetail.getEtCenter().requestFocus();
             }
-            int status = data.getIs_driver_status();
+            int status = data.getIsDriverStatus();
             //初始化图片：
             if (status != 0) {
                 ImageLoader.getLoader().load(mContext, imgCard1, data.getFaceDLImageUrl());
@@ -188,12 +189,6 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
             llCard3.setVisibility(status != 0 ? View.GONE : View.VISIBLE);
             llCard4.setVisibility(status != 0 ? View.GONE : View.VISIBLE);
 
-            if (status != 0 && status != 5) {
-                imgCard1.setOnClickListener(null);
-                imgCard2.setOnClickListener(null);
-                imgCard3.setOnClickListener(null);
-                imgCard4.setOnClickListener(null);
-            }
 
         }
     }
@@ -269,7 +264,7 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
     }
 
     private void selectPicter(int code) {
-        if (canChange(personInfor.getIs_driver_status())) {
+        if (canChange(personInfor.getIsDriverStatus())) {
             PictureSelectorUtils.showOnePicture(this, null, code);
         } else {
             ToastUtils.getInstance().show("不能操作");
@@ -338,7 +333,7 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
             return false;
         }
 
-        if (type == 1 && personInfor.getIs_driver_status() == 0) {
+        if (type == 1 && personInfor.getIsDriverStatus() == 0) {
             if (media1 == null) {
                 showAleart("行驶证正面尚未上传");
                 return false;

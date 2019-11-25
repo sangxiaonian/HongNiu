@@ -59,7 +59,7 @@ public class LoginPersonInfor {
      */
     private String idnumber;
 
-    private int is_driver_status;//0未提交审核资料 1已提交审核资料 2系统自动审核中 3人工后台审核中 4认证成功 5认证失败
+    private int isDriverStatus;//0未提交审核资料 1已提交审核资料 2系统自动审核中 3人工后台审核中 4认证成功 5认证失败
 
    private String faceDLImageUrl	;//true	string	正面驾照照片url
    private String backDLImageUrl	;//true	string	背面驾照照片url
@@ -119,12 +119,12 @@ public class LoginPersonInfor {
         return subAccStatus;
     }
 
-    public int getIs_driver_status() {
-        return is_driver_status;
+    public int getIsDriverStatus() {
+        return isDriverStatus;
     }
 
-    public void setIs_driver_status(int is_driver_status) {
-        this.is_driver_status = is_driver_status;
+    public void setIsDriverStatus(int isDriverStatus) {
+        this.isDriverStatus = isDriverStatus;
     }
 
     public boolean getSubAccStatus() {
