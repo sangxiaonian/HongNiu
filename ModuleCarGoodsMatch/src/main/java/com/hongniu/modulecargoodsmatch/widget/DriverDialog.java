@@ -81,7 +81,7 @@ public class DriverDialog {
         });
 
         setSubTitle(subTitleInfo);
-
+        setTitle(title);
         ratingBar.setOnRatingChangeListener(new RatingBar.OnRatingChangeListener() {
             @Override
             public void onRatingChange(float RatingCount) {
@@ -179,8 +179,8 @@ public class DriverDialog {
 
     public void setTitle(String title) {
         this.title = title;
-        if (tvTitle != null && subTitleInfo != null) {
-            tvTitle.setText(subTitleInfo);
+        if (tvTitle != null && title != null) {
+            tvTitle.setText(title);
         }
     }
 

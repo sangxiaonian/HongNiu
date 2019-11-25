@@ -39,12 +39,114 @@ public class MatchOrderInfoBean implements Parcelable {
     private String deliveryMark;//true	string	送达备注
     private String isRefundRecord;//true	number	是否生成退款记录
     private int isAppraiseRecord;//true	number	是否生成点评记录
+    private int isAppraiseDriver;//true	number	是否生成点评记录
     private String createTime;//true	string	创建时间
     private List<String> imageUrls;//true	string	图片url集合
     private int serviceScore;//true	string	服务评分
     private String content;//true	string	点评内容
     private String mileageFareSumInfo;//true	string	点评内容
-    private int isAppraise;//true	string	点评内容
+    private int isAppraise;//true	string	1可以评价 0不可以
+    private String driverContent;//true	string	司机对发货人的评价
+    private int driverServiceScore;//true	string	司机对发货人的评价
+
+   private double startPlaceLon;//	true	string	开始地经度
+   private double startPlaceLat;//	true	string	开始地纬度
+   private double destinationLon;//	true	string	目的地经度
+   private double destinationLat;//	true	string	目的地纬度
+   private String approvedLoad;//	true	string	核定载质量
+   private String plateNum;//	true	string	行驶证车牌
+   private String grossMass;//	true	string	总质量
+
+
+    public int getIsAppraise() {
+        return isAppraise;
+    }
+
+    public void setIsAppraise(int isAppraise) {
+        this.isAppraise = isAppraise;
+    }
+
+    public double getStartPlaceLon() {
+        return startPlaceLon;
+    }
+
+    public void setStartPlaceLon(double startPlaceLon) {
+        this.startPlaceLon = startPlaceLon;
+    }
+
+    public double getStartPlaceLat() {
+        return startPlaceLat;
+    }
+
+    public void setStartPlaceLat(double startPlaceLat) {
+        this.startPlaceLat = startPlaceLat;
+    }
+
+    public double getDestinationLon() {
+        return destinationLon;
+    }
+
+    public void setDestinationLon(double destinationLon) {
+        this.destinationLon = destinationLon;
+    }
+
+    public double getDestinationLat() {
+        return destinationLat;
+    }
+
+    public void setDestinationLat(double destinationLat) {
+        this.destinationLat = destinationLat;
+    }
+
+    public String getApprovedLoad() {
+        return approvedLoad;
+    }
+
+    public void setApprovedLoad(String approvedLoad) {
+        this.approvedLoad = approvedLoad;
+    }
+
+    public String getPlateNum() {
+        return plateNum;
+    }
+
+    public void setPlateNum(String plateNum) {
+        this.plateNum = plateNum;
+    }
+
+    public String getGrossMass() {
+        return grossMass;
+    }
+
+    public void setGrossMass(String grossMass) {
+        this.grossMass = grossMass;
+    }
+
+    public String getDriverContent() {
+        return driverContent;
+    }
+
+    public void setDriverContent(String driverContent) {
+        this.driverContent = driverContent;
+    }
+
+    public int getDriverServiceScore() {
+        return driverServiceScore;
+    }
+
+    public void setDriverServiceScore(int driverServiceScore) {
+        this.driverServiceScore = driverServiceScore;
+    }
+
+    public int getIsAppraiseDriver() {
+        return isAppraiseDriver;
+    }
+
+    public void setIsAppraiseDriver(int isAppraiseDriver) {
+        this.isAppraiseDriver = isAppraiseDriver;
+    }
+
+
 
     public int isAppraise() {
         return isAppraise;

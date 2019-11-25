@@ -129,6 +129,17 @@ public class HttpLoginFactory {
                 .changePersonInfor(infor)
                 .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer())
                 ;
+    }  /**
+     * 司机实名认证
+     *
+     * @param infor
+     */
+    public static Observable<CommonBean<String>> changeDriverInfor(LoginPersonInfor infor) {
+
+        return LoginClient.getInstance().getLoginService()
+                .changeDriverInfor(infor)
+                .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer())
+                ;
     }
 
     /**

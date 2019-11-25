@@ -47,9 +47,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.functions.Function;
-import io.reactivex.functions.Function5;
 
 /**
  * 个人资料
@@ -133,10 +130,14 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
     @Override
     protected void initData() {
         super.initData();
+        LoginPersonInfor infor = Utils.getPersonInfor();
+        initInfor(infor);
         HttpLoginFactory.getPersonInfor().subscribe(new NetObserver<LoginPersonInfor>(this) {
             @Override
             public void doOnSuccess(LoginPersonInfor data) {
                 initInfor(data);
+
+
             }
         });
 
@@ -166,6 +167,27 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
             if (data.getSubAccStatus()) {
                 itemAddressDetail.getEtCenter().requestFocus();
             }
+            int status = personInfor.getIs_driver_status();
+            //初始化图片：
+            if (status != 0) {
+                ImageLoader.getLoader().load(mContext, imgCard1, personInfor.getFaceDLImageUrl());
+                ImageLoader.getLoader().load(mContext, imgCard2, personInfor.getBackDLImageUrl());
+                ImageLoader.getLoader().load(mContext, imgCard3, personInfor.getFaceVImageUrl());
+                ImageLoader.getLoader().load(mContext, imgCard4, personInfor.getBackVImageUrl());
+            }
+            //未审核
+            llCard1.setVisibility(status != 0 ? View.GONE : View.VISIBLE);
+            llCard2.setVisibility(status != 0 ? View.GONE : View.VISIBLE);
+            llCard3.setVisibility(status != 0 ? View.GONE : View.VISIBLE);
+            llCard4.setVisibility(status != 0 ? View.GONE : View.VISIBLE);
+
+            if (status != 0 && status != 5) {
+                imgCard1.setOnClickListener(null);
+                imgCard2.setOnClickListener(null);
+                imgCard3.setOnClickListener(null);
+                imgCard4.setOnClickListener(null);
+            }
+
         } else {
             personInfor = new LoginPersonInfor();
         }
@@ -191,18 +213,22 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
         if (i == R.id.bt_save) {
             if (check()) {
                 getValues();
-                HttpLoginFactory.changePersonInfor(personInfor)
-                        .subscribe(new NetObserver<String>(this) {
-                            @Override
-                            public void doOnSuccess(String data) {
-                                //更新个人信息
-                                Utils.savePersonInfor(personInfor);
-                                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
-                                BusFactory.getBus().post(new Event.UpPerson());
-                                setResult(2);
-                                finish();
-                            }
-                        });
+                Observable<CommonBean<String>> infor;
+                if (type == 1) {
+                    infor = HttpLoginFactory.changeDriverInfor(personInfor);
+                } else {
+                    infor = HttpLoginFactory.changePersonInfor(personInfor);
+                }
+                infor.subscribe(new NetObserver<String>(this) {
+                    @Override
+                    public void doOnSuccess(String data) {
+                        //更新个人信息
+                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
+                        BusFactory.getBus().post(new Event.UpPerson());
+                        setResult(2);
+                        finish();
+                    }
+                });
             }
 
         } else if (i == R.id.item_address) {
@@ -226,15 +252,23 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
         } else if (i == R.id.img_head) {
             PictureSelectorUtils.showHeadPicture(this);
         } else if (v.getId() == R.id.img_card1) {
-            PictureSelectorUtils.showOnePicture(this, null, 1);
+            selectPicter(1);
         } else if (v.getId() == R.id.img_card2) {
-            PictureSelectorUtils.showOnePicture(this, null, 2);
+            selectPicter(2);
         } else if (v.getId() == R.id.img_card3) {
-            PictureSelectorUtils.showOnePicture(this, null, 3);
+            selectPicter(3);
         } else if (v.getId() == R.id.img_card4) {
-            PictureSelectorUtils.showOnePicture(this, null, 4);
+            selectPicter(4);
         }
 
+    }
+
+    private void selectPicter(int code) {
+        if (canChange(personInfor.getIs_driver_status())) {
+            PictureSelectorUtils.showOnePicture(this, null, code);
+        } else {
+            ToastUtils.getInstance().show("不能操作");
+        }
     }
 
     private void getValues() {
@@ -245,8 +279,14 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
         personInfor.setIdnumber(itemIdcard.getTextCenter());
         personInfor.setEmail(itemEmail.getTextCenter());
         personInfor.setAddress(itemAddressDetail.getTextCenter());
-        if (headMedia!=null&&headMedia.getState()==1){
+        if (headMedia != null && headMedia.getState() == 1) {
             personInfor.setLogo(headMedia.getPath());
+        }
+        if (type == 1) {
+            personInfor.setFaceDLImageUrl(media1 == null ? null : media1.getPath());
+            personInfor.setBackDLImageUrl(media2 == null ? null : media2.getPath());
+            personInfor.setFaceVImageUrl(media3 == null ? null : media3.getPath());
+            personInfor.setBackVImageUrl(media4 == null ? null : media4.getPath());
         }
     }
 
@@ -283,10 +323,10 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
 
         if (headMedia == null) {
 
-        }else if (headMedia.getState()==0){
+        } else if (headMedia.getState() == 0) {
             showAleart("头像正在上传");
             return false;
-        }else if (headMedia.getState()==2){
+        } else if (headMedia.getState() == 2) {
             showAleart("头像上传失败");
             return false;
         }
@@ -295,40 +335,40 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
             if (media1 == null) {
                 showAleart("行驶证正面尚未上传");
                 return false;
-            }else if (media1.getState()==0){
+            } else if (media1.getState() == 0) {
                 showAleart("行驶证正面正在上传");
                 return false;
-            }else if (media1.getState()==2){
+            } else if (media1.getState() == 2) {
                 showAleart("行驶证正面上传失败");
                 return false;
             }
             if (media2 == null) {
                 showAleart("行驶证反面尚未上传");
                 return false;
-            }else if (media2.getState()==0){
+            } else if (media2.getState() == 0) {
                 showAleart("行驶证反面正在上传");
                 return false;
-            }else if (media2.getState()==2){
+            } else if (media2.getState() == 2) {
                 showAleart("行驶证反面上传失败");
                 return false;
             }
             if (media3 == null) {
                 showAleart("行驶证正页尚未上传");
                 return false;
-            }else if (media3.getState()==0){
+            } else if (media3.getState() == 0) {
                 showAleart("行驶证正页正在上传");
                 return false;
-            }else if (media3.getState()==2){
+            } else if (media3.getState() == 2) {
                 showAleart("行驶证正页上传失败");
                 return false;
             }
             if (media4 == null) {
                 showAleart("行驶证副页尚未上传");
                 return false;
-            }else if (media4.getState()==0){
+            } else if (media4.getState() == 0) {
                 showAleart("行驶证副页正在上传");
                 return false;
-            }else if (media4.getState()==2){
+            } else if (media4.getState() == 2) {
                 showAleart("行驶证副页上传失败");
                 return false;
             }
@@ -428,7 +468,7 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
             List<String> list = new ArrayList<>();
             list.add(media.getPath());
             HttpAppFactory
-                    .upImage(4, list)
+                    .upImage(headMedia==media?4:12, list)
                     .subscribe(new NetObserver<List<UpImgData>>(null) {
                         @Override
                         public void doOnSuccess(List<UpImgData> data) {
@@ -446,6 +486,10 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
                     });
 
         }
+    }
+
+    private boolean canChange(int status) {
+        return status == 0 || status == 5;
     }
 }
 

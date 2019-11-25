@@ -63,6 +63,11 @@ public interface LoginService {
      */
     @POST("hongniu/api/hxbaccount/certification")
     Observable<CommonBean<String>> changePersonInfor(@Body LoginPersonInfor infor);
+ /**
+     * 司机实名认证
+     */
+    @POST("hongniu/api/hxbaccount/certificationDriver")
+    Observable<CommonBean<String>> changeDriverInfor(@Body LoginPersonInfor infor);
 
     /**
      * 新增车辆信息

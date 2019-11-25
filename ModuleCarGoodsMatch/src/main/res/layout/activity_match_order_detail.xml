@@ -266,6 +266,7 @@
                             android:orientation="horizontal"
                             app:layout_constraintStart_toStartOf="@id/tv_end_address"
                             app:layout_constraintTop_toBottomOf="@id/tv_end_info">
+
                             <LinearLayout
                                 android:id="@+id/ll_end_call"
                                 android:layout_width="wrap_content"
@@ -304,7 +305,6 @@
                                 app:layout_constraintStart_toEndOf="@id/ll_end_call"
                                 app:layout_constraintTop_toTopOf="@id/ll_end_call" />
                         </LinearLayout>
-
 
 
                     </android.support.constraint.ConstraintLayout>
@@ -425,6 +425,65 @@
 
                 </android.support.v7.widget.CardView>
 
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_owner_estimate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7dp"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="10dp"
+                    android:elevation="5dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/card_estimate">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="25dp"
+                        android:layout_marginBottom="20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="发货人评价"
+                            android:textColor="@color/color_title_dark"
+                            android:textSize="17sp" />
+
+
+                        <com.hedgehog.ratingbar.RatingBar
+                            android:id="@+id/view_start_woner"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center"
+                            app:clickable="false"
+                            app:halfstart="false"
+                            app:starCount="5"
+                            app:starEmpty="@drawable/star_border_hide"
+                            app:starFill="@drawable/star_border_show"
+                            app:starImageHeight="50dp"
+                            app:starImagePadding="10dp"
+                            app:starImageWidth="50dp" />
+
+                        <TextView
+                            android:id="@+id/tv_estimate_owner"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            tools:text="发货人服务态度一般"
+                            android:textColor="@color/color_content_light"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_price"
@@ -440,7 +499,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/card_estimate">
+                    app:layout_constraintTop_toBottomOf="@id/card_owner_estimate">
 
                     <LinearLayout
                         android:layout_width="match_parent"

@@ -105,10 +105,11 @@ public class MatchOrderDataControl {
         /**
          * 评价司机
          * @param id
+         * @param title
          * @param driverName
          * @param driverMobile
          */
-        void appraiseDriver(String id, String driverName, String driverMobile);
+        void appraiseDriver(String id,String title, String driverName, String driverMobile);
 
         void showSuccess(String msg);
 
@@ -129,6 +130,20 @@ public class MatchOrderDataControl {
         void showRoute(Poi startPoi, Poi endPoi);
 
         void guideInfo(String showRoute);
+
+        /**
+         * 确认收货
+         * @param id
+         */
+        void entryReceive(String id);
+
+        /**
+         * 是否显示发货人评价
+         * @param estimate
+         * @param estimateContent
+         * @param showEstimate
+         */
+        void showOwnerEstimate(int estimate, String estimateContent, boolean showEstimate);
     }
     public interface IMatchOrderDataPresenter {
         void saveInfor(int type, MatchOrderInfoBean infoBean, TaskControl.OnTaskListener listener);
@@ -240,19 +255,19 @@ public class MatchOrderDataControl {
          * 获取评分
          * @return
          */
-        int getEstimate();
+        int getEstimateDriver();
 
         /**
          * 获取评价内容
          * @return
          */
-        String getEstimateContent();
+        String getEstimateContentDriver();
 
         /**
          * 是否显示司机评价
          * @return
          */
-        boolean isShowEstimate();
+        boolean isShowEstimateDriver();
 
 
         /**
@@ -323,6 +338,12 @@ public class MatchOrderDataControl {
          * @return
          */
         AMapCarInfo getGuideCarInfo();
+
+        String getEstimateContentOwner();
+
+        int getEstimateOwner();
+
+        boolean isShowEstimateOwner();
     }
 
 }

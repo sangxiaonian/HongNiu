@@ -77,13 +77,20 @@ public class MatchOrderDetaPresenter implements MatchOrderDataControl.IMatchOrde
                 //确认送达
                 view.jumpToEntryArrive(info.getId());
             }
-        } else if (status == 4 || status == 5) {
+        } else if (status == 4 ) {
+            //确认收货
             //已经送达，已完成 司机不能操作
-            if (type==0&&!mode.isShowEstimate()){
-                //评价司机
-                view.appraiseDriver(mode.getInfo().getId(),info.getDriverName(),info.getDriverMobile());
+            if (type==0 ){
+                view.entryReceive(info.getId());
             }
+        }else if ((status==6||status==7)&&mode.isShowButton()){
+            //评价司机
+            if (type==0){
 
+                view.appraiseDriver(mode.getInfo().getId(),"评价司机", info.getDriverName(), info.getDriverMobile());
+            }else {
+                view.appraiseDriver(mode.getInfo().getId(),"评价发货人", info.getShipperName(), info.getShipperMobile());
+            }
 
         }
 
@@ -141,7 +148,8 @@ public class MatchOrderDetaPresenter implements MatchOrderDataControl.IMatchOrde
         view.showArriveTime(mode.getArriveTime());
         view.showPlaceInfo(mode.getInfo(), mode.isShowContact());
         view.showArriveVoucher(mode.getArriveVoucherImages(), mode.isShowArriveVoucher(), mode.getInfo().getDeliveryMark());
-        view.showEstimate(mode.getEstimate(), mode.getEstimateContent(), mode.isShowEstimate());
+        view.showEstimate(mode.getEstimateDriver(), mode.getEstimateContentDriver(), mode.isShowEstimateDriver());
+        view.showOwnerEstimate(mode.getEstimateOwner(), mode.getEstimateContentOwner(), mode.isShowEstimateOwner());
         view.showPrice(mode.getPrice(), mode.getPriceDetail());
         view.showButton(mode.getButtonInfo(), mode.isShowButton(), mode.isShowBtCall());
         view.guideInfo(mode.getShowRoute()?"查看路线":"货车导航");

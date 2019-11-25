@@ -17,12 +17,11 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
-import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
-import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseFragment;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.utils.PickerDialogUtils;
 import com.hongniu.baselibrary.utils.Utils;
@@ -36,11 +35,8 @@ import com.hongniu.modulecargoodsmatch.net.HttpMatchFactory;
 import com.hongniu.modulecargoodsmatch.ui.activiry.MatchCreatOrderActivity;
 import com.hongniu.modulecargoodsmatch.ui.adapter.CarPageAdapter;
 import com.hongniu.modulecargoodsmatch.ui.activiry.MatchMapActivity;
-import com.sang.common.net.rx.BaseObserver;
 import com.sang.common.net.rx.RxUtils;
-import com.sang.common.utils.CommonUtils;
 import com.sang.common.utils.ConvertUtils;
-import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 import com.sangxiaonian.xcalendar.utils.CalendarUtils;
 
@@ -49,6 +45,7 @@ import java.util.List;
 import java.util.Locale;
 
 import io.reactivex.Observable;
+import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Function;
 
 /**
@@ -75,6 +72,7 @@ public class MatchOwnerFindCarFragment extends BaseFragment implements RadioGrou
     private List<MatchCarTypeInfoBean> carInfo;
     private OptionsPickerView<String> pickerView;
     MatchOrderTranMapBean bean = new MatchOrderTranMapBean();
+
     @Override
     protected View initView(LayoutInflater inflater) {
         View inflate = inflater.inflate(R.layout.fragment_match_owner_find_car, null, false);
@@ -98,11 +96,21 @@ public class MatchOwnerFindCarFragment extends BaseFragment implements RadioGrou
     @Override
     protected void initData() {
         super.initData();
+        pickerView = PickerDialogUtils.creatPickerDialog(getContext(), this)
+                .build();
 
-        initPickDialog();
+        Observable.zip(
+                initPickDialog()
+                , HttpMatchFactory.queryCarTypeInfo()
+                , new BiFunction<Integer, CommonBean<List<MatchCarTypeInfoBean>>, CommonBean<List<MatchCarTypeInfoBean>>>() {
+                    @Override
+                    public CommonBean<List<MatchCarTypeInfoBean>> apply(Integer integer, CommonBean<List<MatchCarTypeInfoBean>> listCommonBean) throws Exception {
+                        return listCommonBean;
+                    }
+                }
 
-        //查询车辆信息
-        HttpMatchFactory.queryCarTypeInfo()
+        )
+                //查询车辆信息
                 .subscribe(new NetObserver<List<MatchCarTypeInfoBean>>(this) {
                     @Override
                     public void doOnSuccess(List<MatchCarTypeInfoBean> data) {
@@ -119,17 +127,16 @@ public class MatchOwnerFindCarFragment extends BaseFragment implements RadioGrou
     List<List<String>> hours = new ArrayList<>();
     List<List<List<String>>> minutes = new ArrayList<>();
 
-    private void initPickDialog() {
-        pickerView = PickerDialogUtils.creatPickerDialog(getContext(), this)
-                .build();
-        Observable.just(1)
+    private Observable<Integer> initPickDialog() {
+
+        return Observable.just(1)
                 .map(new Function<Integer, Integer>() {
                     @Override
                     public Integer apply(Integer integer) throws Exception {
                         days = CalendarUtils.getCurentMonthDays(90);
                         hours.clear();
                         minutes.clear();
-                        days.remove(0);
+//                        days.remove(0);
                         days.add(0, "今天");
                         for (int i = 0; i < days.size(); i++) {
 
@@ -160,8 +167,7 @@ public class MatchOwnerFindCarFragment extends BaseFragment implements RadioGrou
                         return integer;
                     }
                 })
-                .compose(RxUtils.<Integer>getSchedulersObservableTransformer())
-                .subscribe(new BaseObserver<Integer>(null));
+                .compose(RxUtils.<Integer>getSchedulersObservableTransformer());
 
 
     }
@@ -205,7 +211,7 @@ public class MatchOwnerFindCarFragment extends BaseFragment implements RadioGrou
                 tv_start_address_dess.setText(placeInfor);
                 tv_start_address_dess.setVisibility(View.VISIBLE);
                 startInfor = result;
-                if (endInfor!=null){
+                if (endInfor != null) {
                     queryCardInfor();
                 }
             }
@@ -219,7 +225,7 @@ public class MatchOwnerFindCarFragment extends BaseFragment implements RadioGrou
                 tv_end_address_dess.setText(placeInfor);
                 tv_end_address_dess.setVisibility(View.VISIBLE);
                 endInfor = result;
-                if (startInfor!=null){
+                if (startInfor != null) {
                     queryCardInfor();
                 }
             }
@@ -343,7 +349,7 @@ public class MatchOwnerFindCarFragment extends BaseFragment implements RadioGrou
             });
 
 
-        }  else if (v.getId() == R.id.ll_time) {
+        } else if (v.getId() == R.id.ll_time) {
             pickerView.show();
 
         }
@@ -362,7 +368,7 @@ public class MatchOwnerFindCarFragment extends BaseFragment implements RadioGrou
 
     //查询预估运费
     private void queryCardInfor() {
-        if (startInfor==null||endInfor==null){
+        if (startInfor == null || endInfor == null) {
             return;
         }
 
@@ -379,9 +385,9 @@ public class MatchOwnerFindCarFragment extends BaseFragment implements RadioGrou
                     @Override
                     public void doOnSuccess(MatchCountFareBean data) {
                         try {
-                            SpannableStringBuilder builder=new SpannableStringBuilder("预估运费：￥"+data.getEstimateFare());
-                            ForegroundColorSpan span=new ForegroundColorSpan( getResources().getColor(R.color.color_new_light));
-                            builder.setSpan(span,5,builder.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            SpannableStringBuilder builder = new SpannableStringBuilder("预估运费：￥" + data.getEstimateFare());
+                            ForegroundColorSpan span = new ForegroundColorSpan(getResources().getColor(R.color.color_new_light));
+                            builder.setSpan(span, 5, builder.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                             tv_price.setText(builder);
                         } catch (Resources.NotFoundException e) {
                             e.printStackTrace();

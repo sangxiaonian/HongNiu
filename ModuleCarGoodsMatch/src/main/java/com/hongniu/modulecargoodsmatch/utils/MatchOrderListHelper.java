@@ -13,7 +13,7 @@ public class MatchOrderListHelper {
     public static String PAY = "立即付款";
     public static String CONTACT_DRIVER = "联系司机";
     public static String EVALUATE_DRIVER = "评价司机";
-    public static String EVALUATE_OWNER = "评价货主";
+    public static String EVALUATE_OWNER = "评价发货人";
     public static String RECEIVE_ORDER = "我要接单";
     public static String ENTRY_ARRIVE = "确认送达";
     public static String ENTRY_RECEIVE = "确认收货";

@@ -108,7 +108,7 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
             msg = "发货人正在等待接单....";
         } else if (status == 6) {
             msg = "您已取消找车";
-        } else if (status == 4 || status == 5 || status == 3) {
+        } else if (status == 4 || status == 5 || status == 3||status==7) {
             msg = "预约取货时间：" + infoBean.getDepartureTime();
         }
         return msg;
@@ -131,7 +131,7 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
             msg = "配送车辆：" + infoBean.getCartypeName();
         } else if (status == 6) {
             msg = "配送车辆：" + infoBean.getCartypeName();
-        } else if (status == 4 || status == 5 || status == 3) {
+        } else if (status == 4 || status == 5 || status == 3||status==7) {
             msg = String.format("配送车辆：%s（%s  %s）", infoBean.getCartypeName(), infoBean.getDriverName(), infoBean.getDriverMobile());
         }
         return msg;
@@ -198,7 +198,7 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
      * @return
      */
     @Override
-    public int getEstimate() {
+    public int getEstimateDriver() {
         return infoBean.getServiceScore();
     }
 
@@ -208,7 +208,7 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
      * @return
      */
     @Override
-    public String getEstimateContent() {
+    public String getEstimateContentDriver() {
         return infoBean.getContent();
     }
 
@@ -218,8 +218,8 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
      * @return
      */
     @Override
-    public boolean isShowEstimate() {
-        return infoBean.getIsAppraiseRecord() == 1;
+    public boolean isShowEstimateDriver() {
+        return infoBean.getIsAppraiseDriver() == 1;
     }
 
     /**
@@ -249,9 +249,12 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
      */
     @Override
     public boolean isShowButton() {
+
+//        订单状态 1:待付款 2:待接单 3:已接单 4:已送达 5:已完成 6:已取消 7 已确认收货
         int status = infoBean.getStatus();
         return (status == 2 || status == 3)
-                || (type == 0 && (status == 4 || status == 5) && !isShowEstimate());
+                || (type == 0 && (status == 4 )
+                ||( infoBean.isAppraise() == 0 && (status == 6 || status == 7)));
 
 
     }
@@ -263,20 +266,25 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
      */
     @Override
     public String getButtonInfo() {
-//        订单状态 1:待付款 2:待接单 3:已接单 4:已送达 5:已完成 6:已取消
+//        订单状态 1:待付款 2:待接单 3:已接单 4:已送达 5:已完成 6:已取消 7 已确认收货
         int status = infoBean.getStatus();
         String msg = "";
-        if (status == 6 || status == 1) {
+        if (status == 1) {
             msg = "";
         } else if (status == 2) {
             msg = "我要接单";
         } else if (status == 3) {
             msg = type == 0 ? "联系司机" : "确认送达";
-        } else if (status == 4 || status == 5) {
+        } else if (status == 4 ) {
             //已经送达，已完成 司机不能操作
             msg = type == 1 ? "" :
-                    (isShowEstimate() ? "" : "评价司机");
+                    ("确认收货");
+        } else if (status == 6 || status == 7) {
+            //已经送达，已完成 司机不能操作
+            msg = infoBean.isAppraise() == 0 ? (type==0?"评价司机":"评价发货人"):"";
 
+        } else {
+            msg = "";
         }
         return msg;
     }
@@ -321,7 +329,7 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
     @Override
     public boolean getShowRoute() {
         // TODO 获取是否是货车导航
-        return false;
+        return true;
     }
 
     /**
@@ -331,9 +339,7 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
      */
     @Override
     public Poi getStartPoi() {
-        //TODO 发货位置
-        Poi start = new Poi(infoBean.getStartPlaceInfo(), new LatLng(39.96087, 116.45798), "");
-        infoBean.getStartPlaceInfo();
+        Poi start = new Poi(infoBean.getStartPlaceInfo(), new LatLng(infoBean.getStartPlaceLat(), infoBean.getStartPlaceLon()), null);
         return start;
     }
 
@@ -344,8 +350,8 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
      */
     @Override
     public Poi getEndPoi() {
-        //TODO 收货位置
-        Poi end = new Poi(infoBean.getDestinationInfo(), new LatLng(39.96087, 116.45798), "");
+        Poi end = new Poi(infoBean.getDestinationInfo(), new LatLng(infoBean.getDestinationLat(), infoBean.getDestinationLon()),null);
+
         return end;
     }
 
@@ -357,7 +363,26 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
     @Override
     public AMapCarInfo getGuideCarInfo() {
         AMapCarInfo carInfo = new AMapCarInfo();
-        //TODO 货车车信息
+        carInfo.setCarNumber(infoBean.getPlateNum());
+        carInfo.setVehicleLoad(infoBean.getGrossMass());
+        carInfo.setVehicleLoadSwitch(true);//设置车辆的载重是否参与算路
+        carInfo.setRestriction(true);//设置是否躲避车辆限行。
         return carInfo;
+    }
+
+    @Override
+    public String getEstimateContentOwner() {
+
+        return infoBean.getDriverContent();
+    }
+
+    @Override
+    public int getEstimateOwner() {
+        return infoBean.getDriverServiceScore();
+    }
+
+    @Override
+    public boolean isShowEstimateOwner() {
+        return infoBean.getIsAppraiseRecord()==1;
     }
 }

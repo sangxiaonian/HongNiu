@@ -59,6 +59,12 @@ public class LoginPersonInfor {
      */
     private String idnumber;
 
+    private int is_driver_status;//0未提交审核资料 1已提交审核资料 2系统自动审核中 3人工后台审核中 4认证成功 5认证失败
+
+   private String faceDLImageUrl	;//true	string	正面驾照照片url
+   private String backDLImageUrl	;//true	string	背面驾照照片url
+   private String faceVImageUrl	;//true	string	正面行驶证照片url
+   private String backVImageUrl	;//true	string	背面行驶证照片url
 
 
     private String nickname;
@@ -67,6 +73,50 @@ public class LoginPersonInfor {
     private String logo;
     private String remarks;
     private boolean subAccStatus;//开户状态
+
+    public String getFaceDLImageUrl() {
+        return faceDLImageUrl;
+    }
+
+    public void setFaceDLImageUrl(String faceDLImageUrl) {
+        this.faceDLImageUrl = faceDLImageUrl;
+    }
+
+    public String getBackDLImageUrl() {
+        return backDLImageUrl;
+    }
+
+    public void setBackDLImageUrl(String backDLImageUrl) {
+        this.backDLImageUrl = backDLImageUrl;
+    }
+
+    public String getFaceVImageUrl() {
+        return faceVImageUrl;
+    }
+
+    public void setFaceVImageUrl(String faceVImageUrl) {
+        this.faceVImageUrl = faceVImageUrl;
+    }
+
+    public String getBackVImageUrl() {
+        return backVImageUrl;
+    }
+
+    public void setBackVImageUrl(String backVImageUrl) {
+        this.backVImageUrl = backVImageUrl;
+    }
+
+    public boolean isSubAccStatus() {
+        return subAccStatus;
+    }
+
+    public int getIs_driver_status() {
+        return is_driver_status;
+    }
+
+    public void setIs_driver_status(int is_driver_status) {
+        this.is_driver_status = is_driver_status;
+    }
 
     public boolean getSubAccStatus() {
         return subAccStatus;

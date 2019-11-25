@@ -93,9 +93,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     protected void initData() {
         super.initData();
 
-        SpannableStringBuilder builder=new SpannableStringBuilder("邀请好友  玩转牛贝");
-        ForegroundColorSpan span=new ForegroundColorSpan( getResources().getColor(R.color.color_new_light));
-        builder.setSpan(span,5,builder.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        SpannableStringBuilder builder = new SpannableStringBuilder("邀请好友  玩转牛贝");
+        ForegroundColorSpan span = new ForegroundColorSpan(getResources().getColor(R.color.color_new_light));
+        builder.setSpan(span, 5, builder.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         tvNiu.setText(builder);
 
         StatusBarCompat.setStatusBarColor(getActivity(), getResources().getColor(R.color.white), true);
@@ -111,30 +111,42 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
      * @Description 更新个人资料
      */
     private void upPerson() {
-            LoginPersonInfor personInfor = Utils.getPersonInfor();
-        if (personInfor!=null) {
+        LoginPersonInfor personInfor = Utils.getPersonInfor();
+        if (personInfor != null) {
             String companyName = personInfor.getCompany() == null ? "" : personInfor.getCompany();
             String phone = TextUtils.isEmpty(personInfor.getMobile()) ? "" : personInfor.getMobile();
             String name = personInfor.getContact() == null ? "待完善" : personInfor.getContact();
-            SpannableStringBuilder builder=new SpannableStringBuilder(name);
+            SpannableStringBuilder builder = new SpannableStringBuilder(name);
 
-            boolean isDriver=true;
-            if (isDriver) {
-
-                boolean ver=false;
-                int start=builder.length();
-
-                builder.append(ver?"司机":"司机认证审核中");
-                RoundedBackgroundSpan span= new RoundedBackgroundSpan(getContext());
+            if (personInfor.getIs_driver_status()>0) {
+                boolean ver = personInfor.getIs_driver_status()==4;
+                int start = builder.length();
+                String result = "";
+                if (personInfor.getIs_driver_status()==0) {
+                    result="未提交审核资料";
+                }else if (personInfor.getIs_driver_status()==1) {
+                    result = "已提交审核资料";
+                }else if (personInfor.getIs_driver_status()==2){
+                    result = "系统自动审核中";
+                }else if (personInfor.getIs_driver_status()==3){
+                    result = "人工后台审核中";
+                }else if (personInfor.getIs_driver_status()==4){
+                    result = "认证成功";
+                }else if (personInfor.getIs_driver_status()==5){
+                    result = "认证失败";
+                }
+                builder.append(result);
+                RoundedBackgroundSpan span = new RoundedBackgroundSpan(getContext());
                 int hgap = DeviceUtils.dip2px(getContext(), 5);
                 int vgap = DeviceUtils.dip2px(getContext(), 3);
-                span.setPadding(hgap,vgap,hgap,vgap);
-                span.setMargin(vgap,0,hgap,0);
-                span.setTextSize(DeviceUtils.dip2px(getContext(),10));
-                span.setBackgroundColor(getResources().getColor(ver?R.color.color_of_1c234d:R.color.color_of_ebedfa));
-                span.setTextColor(getResources().getColor(ver?R.color.color_of_f9c57c:R.color.color_of_1c234d));
-                builder.setSpan(span,start,builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                span.setPadding(hgap, vgap, hgap, vgap);
+                span.setMargin(vgap, 0, hgap, 0);
+                span.setTextSize(DeviceUtils.dip2px(getContext(), 10));
+                span.setBackgroundColor(getResources().getColor(ver ? R.color.color_of_1c234d : R.color.color_of_ebedfa));
+                span.setTextColor(getResources().getColor(ver ? R.color.color_of_f9c57c : R.color.color_of_1c234d));
+                builder.setSpan(span, start, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
+
             tvName.setText(builder);
             tvPhone.setText(TextUtils.isEmpty(companyName) ? phone : companyName);
             ImageLoader.getLoader().loadHeaed(getContext(), imgHeard, personInfor.getLogoPath());
@@ -277,10 +289,10 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             ArouterUtils.getInstance()
                     .builder(ArouterParamFestivity.activity_festivity_home)
                     .navigation(getContext());
-        }else if (i == R.id.ll_driver_infor) {//司机认证
+        } else if (i == R.id.ll_driver_infor) {//司机认证
             ArouterUtils.getInstance()
                     .builder(ArouterParamLogin.activity_person_infor)
-                    .withInt(Param.TYPE,1)
+                    .withInt(Param.TYPE, 1)
                     .navigation(getContext());
 
 

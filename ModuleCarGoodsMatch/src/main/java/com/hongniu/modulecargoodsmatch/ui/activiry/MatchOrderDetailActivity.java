@@ -70,9 +70,14 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
     private ViewGroup card_receive;//送达凭证
     private TextView tv_receive_remark;//送达备注信息
     private RecyclerView recycler_receive;//送达凭证 图片
+
     private ViewGroup card_estimate;//司机评价
     private TextView tv_estimate;//司机评价
     private RatingBar view_start;//司机评价星级
+
+    private ViewGroup card_estimate_owner;//发货人评价
+    private TextView tv_estimate_owner;//发货人评价
+    private RatingBar view_start_owner;//发货人评价星级
 
     private TextView tv_price;//运费
     private TextView tv_price_des;//运费明细
@@ -136,6 +141,9 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
         tv_button = findViewById(R.id.tv_button);
         tv_receive_remark = findViewById(R.id.tv_receive_remark);
 
+        card_estimate_owner = findViewById(R.id.card_owner_estimate);
+        tv_estimate_owner = findViewById(R.id.tv_estimate_owner);
+        view_start_owner = findViewById(R.id.view_start_woner);
 
         dialog = new DriverDialog(mContext);
     }
@@ -256,7 +264,7 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
                                 public void onClick(View v) {
                                     //查看大图
                                     ArouterUtils.getInstance().builder(activity_img_previce)
-                                            .withInt(Param.TYPE,position)
+                                            .withInt(Param.TYPE, position)
                                             .withStringArrayList(Param.TRAN, (ArrayList<String>) arriveVoucherImages)
                                             .navigation(mContext)
                                     ;
@@ -373,13 +381,14 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
      * 评价司机
      *
      * @param id
+     * @param title
      * @param driverName
      * @param driverMobile
      */
     @Override
-    public void appraiseDriver(String id, String driverName, String driverMobile) {
+    public void appraiseDriver(String id, String title, String driverName, String driverMobile) {
         //评价司机
-
+        dialog.setTitle(title);
         dialog.setSubTitle(String.format("%s(%s)", driverName, driverMobile));
         dialog.setEntryClickListener(new DriverDialog.EntryClickListener() {
             @Override
@@ -389,8 +398,8 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
             }
         });
         dialog.builder().show(null);
-
     }
+
 
     @Override
     public void showSuccess(String msg) {
@@ -407,7 +416,6 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
      */
     @Override
     public void carLoad(Poi startPoi, Poi endPoi, AMapCarInfo guideCarInfo) {
-        ToastUtils.getInstance().show("货车导航");
         AmapNaviParams naviParams = new AmapNaviParams(startPoi, null, endPoi, AmapNaviType.DRIVER);
         naviParams.setCarInfo(guideCarInfo);
         AmapNaviPage.getInstance().showRouteActivity(getApplicationContext(), naviParams, null);
@@ -435,6 +443,48 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
     public void guideInfo(String showRoute) {
         tv_start_load.setText(showRoute == null ? "" : showRoute);
         tv_end_load.setText(showRoute == null ? "" : showRoute);
+    }
+
+    /**
+     * 确认收货
+     *
+     * @param id
+     */
+    @Override
+    public void entryReceive(final String id) {
+        CenterAlertBuilder builder = Utils.creatDialog(mContext, "确认收货", "确认收货后，运费将立即转入司机账户", "我再想想", "确认收货");
+        builder
+                .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
+                    @Override
+                    public void onRightClick(View view, DialogControl.ICenterDialog cdialog) {
+                        cdialog.dismiss();
+                        HttpMatchFactory.matchEntryReceive(id)
+                                .subscribe(new NetObserver<Object>(null) {
+                                    @Override
+                                    public void doOnSuccess(Object data) {
+                                        presenter.queryDetailInfo(MatchOrderDetailActivity.this);
+                                    }
+                                });
+
+                    }
+                })
+                .creatDialog(new CenterAlertDialog(mContext))
+                .show();
+    }
+
+    /**
+     * 是否显示发货人评价
+     *
+     * @param estimate
+     * @param estimateContent
+     * @param showEstimate
+     */
+    @Override
+    public void showOwnerEstimate(int estimate, String estimateContent, boolean showEstimate) {
+        card_estimate_owner.setVisibility(showEstimate ? View.VISIBLE : View.GONE);
+        tv_estimate_owner.setText(TextUtils.isEmpty(estimateContent) ? "" : estimateContent);
+        tv_estimate_owner.setVisibility(TextUtils.isEmpty(estimateContent) ? View.GONE : View.VISIBLE);
+        view_start_owner.setStar(estimate);
     }
 
 
