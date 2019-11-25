@@ -62,7 +62,7 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
     private ItemView itemAddressDetail;
     private ImageView imageHead;
     private Button btSave;
-    public LoginPersonInfor personInfor;
+    public LoginPersonInfor personInfor=new LoginPersonInfor();
     private OptionsPickerView pickDialog;
     public Citys areabean;//所有的区域选择
 
@@ -149,7 +149,14 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
 
     private void initInfor(LoginPersonInfor data) {
         if (data != null) {
-            personInfor = data;
+            personInfor.setCity(data.getCity());
+            personInfor.setCityId(data.getCityId());
+            personInfor.setDistrict(data.getDistrict());
+            personInfor.setDistrictId(data.getDistrictId());
+            personInfor.setProvince(data.getProvince());
+            personInfor.setProvinceId(data.getProvinceId());
+
+
             itemName.setTextCenter(data.getContact() == null ? "" : data.getContact());
             itemIdcard.setTextCenter(data.getIdnumber() == null ? "" : data.getIdnumber());
             itemEmail.setTextCenter(data.getEmail() == null ? "" : data.getEmail());
@@ -167,13 +174,13 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
             if (data.getSubAccStatus()) {
                 itemAddressDetail.getEtCenter().requestFocus();
             }
-            int status = personInfor.getIs_driver_status();
+            int status = data.getIs_driver_status();
             //初始化图片：
             if (status != 0) {
-                ImageLoader.getLoader().load(mContext, imgCard1, personInfor.getFaceDLImageUrl());
-                ImageLoader.getLoader().load(mContext, imgCard2, personInfor.getBackDLImageUrl());
-                ImageLoader.getLoader().load(mContext, imgCard3, personInfor.getFaceVImageUrl());
-                ImageLoader.getLoader().load(mContext, imgCard4, personInfor.getBackVImageUrl());
+                ImageLoader.getLoader().load(mContext, imgCard1, data.getFaceDLImageUrl());
+                ImageLoader.getLoader().load(mContext, imgCard2, data.getBackDLImageUrl());
+                ImageLoader.getLoader().load(mContext, imgCard3, data.getFaceVImageUrl());
+                ImageLoader.getLoader().load(mContext, imgCard4, data.getBackVImageUrl());
             }
             //未审核
             llCard1.setVisibility(status != 0 ? View.GONE : View.VISIBLE);
@@ -188,8 +195,6 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
                 imgCard4.setOnClickListener(null);
             }
 
-        } else {
-            personInfor = new LoginPersonInfor();
         }
     }
 
@@ -271,7 +276,7 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
         }
     }
 
-    private void getValues() {
+    private LoginPersonInfor getValues() {
         if (personInfor == null) {
             personInfor = new LoginPersonInfor();
         }
@@ -282,12 +287,14 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
         if (headMedia != null && headMedia.getState() == 1) {
             personInfor.setLogo(headMedia.getPath());
         }
+        personInfor.setIsDriver(type);
         if (type == 1) {
             personInfor.setFaceDLImageUrl(media1 == null ? null : media1.getPath());
             personInfor.setBackDLImageUrl(media2 == null ? null : media2.getPath());
             personInfor.setFaceVImageUrl(media3 == null ? null : media3.getPath());
             personInfor.setBackVImageUrl(media4 == null ? null : media4.getPath());
         }
+        return personInfor;
     }
 
 
@@ -331,7 +338,7 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
             return false;
         }
 
-        if (type == 1) {
+        if (type == 1 && personInfor.getIs_driver_status() == 0) {
             if (media1 == null) {
                 showAleart("行驶证正面尚未上传");
                 return false;
@@ -468,7 +475,7 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
             List<String> list = new ArrayList<>();
             list.add(media.getPath());
             HttpAppFactory
-                    .upImage(headMedia==media?4:12, list)
+                    .upImage(headMedia == media ? 4 : 12, list)
                     .subscribe(new NetObserver<List<UpImgData>>(null) {
                         @Override
                         public void doOnSuccess(List<UpImgData> data) {

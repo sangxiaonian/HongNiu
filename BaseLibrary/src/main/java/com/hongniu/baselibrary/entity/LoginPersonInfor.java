@@ -65,6 +65,7 @@ public class LoginPersonInfor {
    private String backDLImageUrl	;//true	string	背面驾照照片url
    private String faceVImageUrl	;//true	string	正面行驶证照片url
    private String backVImageUrl	;//true	string	背面行驶证照片url
+    private int isDriver;//	true	string	是否要认证司机 0否 1是(认证司机时驾驶证和行驶证照片必传 传入文件类型参考10.2接口)
 
 
     private String nickname;
@@ -73,6 +74,14 @@ public class LoginPersonInfor {
     private String logo;
     private String remarks;
     private boolean subAccStatus;//开户状态
+
+    public int getIsDriver() {
+        return isDriver;
+    }
+
+    public void setIsDriver(int isDriver) {
+        this.isDriver = isDriver;
+    }
 
     public String getFaceDLImageUrl() {
         return faceDLImageUrl;
