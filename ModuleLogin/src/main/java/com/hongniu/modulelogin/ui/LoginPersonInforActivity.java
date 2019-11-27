@@ -71,10 +71,10 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
     //1 2 3 4 分别代表 驾驶证正反面 主负页
     private ViewGroup llDriver1;
     private ViewGroup llDriver2;
-    private ViewGroup llCard1;
-    private ViewGroup llCard2;
-    private ViewGroup llCard3;
-    private ViewGroup llCard4;
+    private View llCard1;
+    private View llCard2;
+    private View llCard3;
+    private View llCard4;
     private ImageView imgCard1;
     private ImageView imgCard2;
     private ImageView imgCard3;

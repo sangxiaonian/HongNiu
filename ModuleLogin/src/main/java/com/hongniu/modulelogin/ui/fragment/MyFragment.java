@@ -89,17 +89,12 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     @Override
     protected void initData() {
         super.initData();
-
         SpannableStringBuilder builder = new SpannableStringBuilder("邀请好友  玩转牛贝");
         ForegroundColorSpan span = new ForegroundColorSpan(getResources().getColor(R.color.color_new_light));
         builder.setSpan(span, 5, builder.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         tvNiu.setText(builder);
-
         StatusBarCompat.setStatusBarColor(getActivity(), getResources().getColor(R.color.white), true);
         upPerson(Utils.getPersonInfor());
-
-
-
     }
 
 
@@ -125,15 +120,15 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 if (personInfor.getIsDriverStatus()==0) {
                     result="未提交审核资料";
                 }else if (personInfor.getIsDriverStatus()==1) {
-                    result = "已提交审核资料";
+                    result = "司机认证审核中";
                 }else if (personInfor.getIsDriverStatus()==2){
-                    result = "系统自动审核中";
+                    result = "司机认证审核中";
                 }else if (personInfor.getIsDriverStatus()==3){
-                    result = "人工后台审核中";
+                    result = "司机认证审核中";
                 }else if (personInfor.getIsDriverStatus()==4){
-                    result = "认证成功";
+                    result = "司机已认证";
                 }else if (personInfor.getIsDriverStatus()==5){
-                    result = "认证失败";
+                    result = "司机认证失败";
                 }
                 builder.append(result);
                 RoundedBackgroundSpan span = new RoundedBackgroundSpan(getContext());

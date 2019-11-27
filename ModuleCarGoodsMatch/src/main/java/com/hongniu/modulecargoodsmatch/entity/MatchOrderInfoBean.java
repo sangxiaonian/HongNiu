@@ -56,7 +56,60 @@ public class MatchOrderInfoBean implements Parcelable {
    private String approvedLoad;//	true	string	核定载质量
    private String plateNum;//	true	string	行驶证车牌
    private String grossMass;//	true	string	总质量
+  private String vehicleType	;//true	string	行驶证车辆类型
+  private String overallDimension	;//true	string	行驶证外廓尺寸
+  private String carLength	;//true	string	车长(单位米)
+  private String carWidth	;//true	string	车宽
+  private String carHeight	;//true	string	车高
+  private String vehicleAxleNumber	;//true	string	carInfo
 
+    public String getVehicleType() {
+        return vehicleType;
+    }
+
+    public void setVehicleType(String vehicleType) {
+        this.vehicleType = vehicleType;
+    }
+
+    public String getOverallDimension() {
+        return overallDimension;
+    }
+
+    public void setOverallDimension(String overallDimension) {
+        this.overallDimension = overallDimension;
+    }
+
+    public String getCarLength() {
+        return carLength;
+    }
+
+    public void setCarLength(String carLength) {
+        this.carLength = carLength;
+    }
+
+    public String getCarWidth() {
+        return carWidth;
+    }
+
+    public void setCarWidth(String carWidth) {
+        this.carWidth = carWidth;
+    }
+
+    public String getCarHeight() {
+        return carHeight;
+    }
+
+    public void setCarHeight(String carHeight) {
+        this.carHeight = carHeight;
+    }
+
+    public String getVehicleAxleNumber() {
+        return vehicleAxleNumber;
+    }
+
+    public void setVehicleAxleNumber(String vehicleAxleNumber) {
+        this.vehicleAxleNumber = vehicleAxleNumber;
+    }
 
     public int getIsAppraise() {
         return isAppraise;

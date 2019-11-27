@@ -2,11 +2,17 @@ package com.hongniu.modulecargoodsmatch.mode;
 
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Poi;
+import com.amap.api.navi.AmapNaviPage;
+import com.amap.api.navi.AmapNaviParams;
+import com.amap.api.navi.AmapNaviType;
 import com.amap.api.navi.model.AMapCarInfo;
+import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.baselibrary.widget.order.helper.ButtonInforBean;
 import com.hongniu.modulecargoodsmatch.control.MatchOrderDataControl;
 import com.hongniu.modulecargoodsmatch.entity.MatchOrderInfoBean;
 import com.hongniu.modulecargoodsmatch.net.HttpMatchFactory;
+import com.sang.common.utils.SharedPreferencesUtils;
 
 import java.util.List;
 
@@ -219,7 +225,7 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
      */
     @Override
     public boolean isShowEstimateDriver() {
-        return infoBean.getIsAppraiseDriver() == 1;
+        return infoBean.getIsAppraiseRecord() == 1;
     }
 
     /**
@@ -328,8 +334,7 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
      */
     @Override
     public boolean getShowRoute() {
-        // TODO 获取是否是货车导航
-        return type==1;
+        return !SharedPreferencesUtils.getInstance().getBoolean(Param.CANTRUCK);
     }
 
     /**
@@ -364,7 +369,25 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
     public AMapCarInfo getGuideCarInfo() {
         AMapCarInfo carInfo = new AMapCarInfo();
         carInfo.setCarNumber(infoBean.getPlateNum());
-        carInfo.setVehicleLoad(infoBean.getGrossMass());
+//        approvedLoad	true	string	行驶证核定载质量
+//        plateNum	true	string	行驶证车牌
+//        grossMass	true	string	行驶证总质量
+//        vehicleType	true	string	行驶证车辆类型
+//        overallDimension	true	string	行驶证外廓尺寸
+//        carLength	true	string	车长(单位米)
+//                carWidth	true	string	车宽
+//        carHeight	true	string	车高
+//        vehicleAxleNumber	true	string	carInfo
+
+        carInfo.setCarType(infoBean.getVehicleType());//设置车辆类型，0小车，1货车
+        carInfo.setCarNumber(infoBean.getPlateNum());//设置车辆的车牌号码. 如:京DFZ239,京ABZ239
+//                            aMapCarInfo.setVehicleSize("4");// * 设置货车的等级
+        carInfo.setVehicleLoad(infoBean.getApprovedLoad());//设置货车的载重，单位：吨。
+//        carInfo.setVehicleWeight(vaule.getVehicleLoad());//设置货车的自重
+        carInfo.setVehicleLength(infoBean.getCarLength());//  * 设置货车的最大长度，单位：米。
+        carInfo.setVehicleWidth(infoBean.getCarWidth());//设置货车的最大宽度，单位：米。 如:1.8，1.5等等。
+        carInfo.setVehicleHeight(infoBean.getCarHeight());//设置货车的高度，单位：米。
+        carInfo.setVehicleAxis(infoBean.getVehicleAxleNumber());//设置货车的轴数
         carInfo.setVehicleLoadSwitch(true);//设置车辆的载重是否参与算路
         carInfo.setRestriction(true);//设置是否躲避车辆限行。
         return carInfo;
@@ -383,6 +406,6 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
 
     @Override
     public boolean isShowEstimateOwner() {
-        return infoBean.getIsAppraiseRecord()==1;
+        return infoBean.getIsAppraiseDriver()==1;
     }
 }
