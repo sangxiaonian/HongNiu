@@ -14,37 +14,35 @@ import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventBean;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
-import com.hongniu.modulecargoodsmatch.net.HttpMatchFactory;
 import com.hongniu.supply.entity.PushBean;
 import com.hongniu.supply.net.HttpMainFactory;
+import com.hongniu.supply.ui.receiver.MyPlushBroadcastReceiver;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.JLog;
 import com.sang.common.utils.SharedPreferencesUtils;
 import com.sang.common.utils.errorcrushhelper.CrashHelper;
 import com.sang.thirdlibrary.chact.ChactHelper;
 import com.sang.thirdlibrary.chact.control.ChactControl;
-import com.sang.thirdlibrary.push.PushClient;
+import com.sang.thirdlibrary.push.NotificationUtils;
+import com.sang.thirdlibrary.push.client.PushClient;
+import com.sang.thirdlibrary.push.inter.PlushDealWithMessageListener;
+import com.sang.thirdlibrary.push.inter.PlushRegisterListener;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.UmengNotificationClickHandler;
 import com.umeng.message.entity.UMessage;
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
-import com.xiaomi.channel.commonutils.logger.LoggerInterface;
-import com.xiaomi.mipush.sdk.Logger;
-import com.xiaomi.mipush.sdk.MiPushClient;
 
 import org.greenrobot.eventbus.EventBus;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
 import java.io.File;
-import java.util.Map;
 
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
-import io.rong.push.platform.hms.HMSAgent;
 
 import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
 
@@ -78,85 +76,43 @@ public class AppApplication extends BaseApplication {
                     }
                 })
         ;
-
         initData();
-
-        //注册友盟
-        PushClient.getInstance()
-                .setAppKey("5b9788ecf43e4845ec000071")
-                .setMessageSecret("77a9468f91f6fd0106780654b1140e13")
-                .setNotificationClickHandler(new UmengNotificationClickHandler(){
-                    @Override
-                    public void dealWithCustomAction(Context context, UMessage uMessage) {
-                        super.dealWithCustomAction(context, uMessage);
-                        //处理自定义数据
-                        String custom = uMessage.custom;
-                        try {
-                            PushBean pushBean = new Gson().fromJson(custom, PushBean.class);
-                            dealPush(pushBean);
-                        } catch (JsonSyntaxException e) {
-                            e.printStackTrace();
-                        }
-
-
-
-                    }
-
-                    @Override
-                    public void openActivity(Context context, UMessage uMessage) {
-                        super.openActivity(context, uMessage);
-                        dealWithCustomAction(context,uMessage);
-                    }
-
-                    @Override
-                    public void launchApp(Context context, UMessage uMessage) {
-                        super.launchApp(context, uMessage);
-                        dealWithCustomAction(context,uMessage);
-
-                    }
-                })
-                .addCallback(new IUmengRegisterCallback() {
-                    @Override
-                    public void onSuccess(String s) {
-                        JLog.i("注册成功："+s);
-                        SharedPreferencesUtils.getInstance().putString(Param.UMENG,s);
-                        EventBus.getDefault().postSticky(s);
-                    }
-
-                    @Override
-                    public void onFailure(String s, String s1) {
-                        JLog.i("友盟注册失败："+s+"------->"+s1);
-                    }
-                })
-                .register(this);
-
+        registerUM();
     }
 
-    private void dealPush(PushBean pushBean) {
-        if (pushBean!=null){
-            if ("openapp".equals(pushBean.action)){
-                //打开app
-                DeviceUtils.openApp(this);
-            }else if ("opencarmatchlist".equals(pushBean.action)){
-                //打开车货匹配接单列表
-                ArouterUtils.getInstance()
-                        .builder(ArouterParamsMatch.activity_match_estimate_order)
-                        .withInt(Param.TYPE,1)
-                        .withFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        .navigation(this);
-
-            }else if ("openevaluationlist".equals(pushBean.action)){
-                //打开车货匹配我的找车
-                ArouterUtils.getInstance()
-                        .builder(ArouterParamsMatch.activity_match_my_order)
-                        .withInt(Param.TYPE,0)
-                        .withFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        .navigation(this);
-
+    public void registerUM() {
+        PushClient plushClient = PushClient.getClient();
+        plushClient.setPlush(this);
+        plushClient.setPlushRegisterListener(new PlushRegisterListener() {
+            @Override
+            public void onSuccess(String data) {
+                JLog.d("推送注册成功:" + data);
+                SharedPreferencesUtils.getInstance().putString(Param.UMENG, data);
+                EventBus.getDefault().postSticky(data);
             }
-        }
-    }
 
+            @Override
+            public void onFailure(String code, String errorReson) {
+                JLog.e("推送注册失败:" + code + " :  " + errorReson);
+            }
+        });
+        NotificationUtils.getInstance().setReceiver(MyPlushBroadcastReceiver.class);
+        plushClient.setPlushDealWithMessageListener(new PlushDealWithMessageListener() {
+            @Override
+            public void dealMessage(Context context, Object message) {
+                JLog.i("接收到推送信息：" + message.toString());
+                if (message instanceof UMessage) {
+                    try {
+                        NotificationUtils.getInstance()
+                                .showNotification(context, (UMessage) message);
+                    } catch (JsonSyntaxException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+    }
 
     //上传异常情况
     private void initData() {

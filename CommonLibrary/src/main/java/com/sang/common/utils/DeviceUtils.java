@@ -29,6 +29,24 @@ public class DeviceUtils {
         this.mContext = context;
     }
 
+    /**
+     * 判断当前App是否在运行
+     *
+     * @param context
+     * @return true 当前App是否在运行
+     */
+    public static boolean isRuning(Context context) {
+        ActivityManager manager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> processInfoList = manager.getRunningAppProcesses();
+        String packageName = context.getPackageName();
+        for (ActivityManager.RunningAppProcessInfo processInfo : processInfoList) {
+            if (processInfo.processName.equalsIgnoreCase(packageName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     /**
      * Pseudo-Unique ID, 这个在任何Android手机中都有效

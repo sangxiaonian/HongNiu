@@ -46,6 +46,11 @@
             android:name=".ui.H5Activity"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.NiuInsuranceH5Activity" />
+
+
+        <receiver android:name=".ui.receiver.MyPlushBroadcastReceiver"/>
+
+
         <activity
             android:name="com.huawei.hms.activity.BridgeActivity"
             android:configChanges="orientation|locale|screenSize|layoutDirection|fontScale"
@@ -169,5 +174,6 @@
     <uses-permission android:name="android.permission.REORDER_TASKS" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
 
 </manifest>
