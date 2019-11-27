@@ -73,7 +73,6 @@ public class LoactionUtils {
     }
 
     public void upInterval(float v) {
-        JLog.e("更改频率：" + v);
         float dis = v / 1000;
         if (dis < 10) {
             setInterval(3000);

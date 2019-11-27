@@ -185,7 +185,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 //                .beginTransaction()
 //                .add(R.id.content, messageFragment)
 //                .commit();
-        demo.setVisibility(Param.isDebug?View.VISIBLE:View.GONE);
+        demo.setVisibility(Param.isDebug ? View.VISIBLE : View.GONE);
 
         //检查版本更新
         checkVersion();
@@ -210,11 +210,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     }
 
 
-
     //连接融云服务器
     private void connectRong() {
         LoginBean infor = Utils.getLoginInfor();
-        if (infor!=null) {
+        if (infor != null) {
             ChactHelper.getHelper().connect(this, infor.getRongToken(), new RongIMClient.ConnectCallback() {
                 @Override
                 public void onTokenIncorrect() {
@@ -349,7 +348,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             public void onClick(View v) {
                 ArouterUtils.getInstance()
                         .builder(ArouterParamsMatch.activity_match_estimate_order)
-                        .withInt(Param.TYPE,1)
+                        .withInt(Param.TYPE, 1)
                         .withFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         .navigation(mContext);
 
@@ -459,11 +458,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     public void onLocationChanged(AMapLocation aMapLocation) {
         //可在其中解析amapLocation获取相应内容。
         if (aMapLocation.getErrorCode() == 0) {//定位成功
-            JLog.v("测试后台打点：" + DeviceUtils.isOpenGps(mContext)
-                    + "\n Latitude：" + aMapLocation.getLatitude()
-                    + "\n Longitude：" + aMapLocation.getLongitude()
-                    + "\n" + ConvertUtils.formatTime(aMapLocation.getTime(), "yyyy-MM-dd HH:mm:ss")
-            );
             //发送当前的定位数据
             Event.UpLoaction upLoaction = new Event.UpLoaction(aMapLocation.getLatitude(), aMapLocation.getLongitude());
             upLoaction.bearing = aMapLocation.getBearing();
@@ -484,7 +478,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void showRedDialog(String count) {
         if (!TextUtils.isEmpty(count)) {
-            RedDialog redDialog=new RedDialog(mContext);
+            RedDialog redDialog = new RedDialog(mContext);
             redDialog.setContent(count);
             redDialog.show();
         }
@@ -585,7 +579,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 tab1.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        UpLoactionEvent upLoactionEvent = new  UpLoactionEvent();
+                        UpLoactionEvent upLoactionEvent = new UpLoactionEvent();
                         upLoactionEvent.start = true;
                         upLoactionEvent.orderID = event.getOrderId();
                         upLoactionEvent.cardID = event.getCarId();
@@ -623,7 +617,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                             }
                             upLoactionUtils = new LoactionUpUtils();
                             upLoactionUtils.setOrderInfor(event.orderID, event.cardID, event.destinationLatitude, event.destinationLongitude);
-                            JLog.i("创建位置信息收集器");
                             //更新位置信息收起器
                         } else if (!upLoactionUtils.getCarID().equals(event.cardID)) {
                             upLoactionUtils.onDestroy();
@@ -632,7 +625,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                             }
                             upLoactionUtils = new LoactionUpUtils();
                             upLoactionUtils.setOrderInfor(event.orderID, event.cardID, event.destinationLatitude, event.destinationLongitude);
-                            JLog.i("更新位置信息收集器");
                         }
                     }
 
@@ -650,6 +642,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 JLog.i("停止定位");
 
             }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onReceiveUMeng(final String event) {
+        String token = SharedPreferencesUtils.getInstance().getString(Param.UMENG);
+        BusFactory.getBus().removeStickyEvent(event);
+        if (!TextUtils.isEmpty(token)) {
+            HttpMainFactory.upToken(token).subscribe(new NetObserver<Object>(null) {
+                @Override
+                public void doOnSuccess(Object data) {
+                    JLog.d("友盟token提交成功");
+                }
+            });
         }
     }
 

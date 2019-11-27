@@ -47,7 +47,7 @@ public class HttpLoginFactory {
                 .compose(RxUtils.<CommonBean<LoginBean>>getSchedulersObservableTransformer())
                 ;
     }   /**
-     * 使用验证码登录
+     * 退出登录
      *
      */
     public static Observable<CommonBean<LoginBean>> loginOut() {

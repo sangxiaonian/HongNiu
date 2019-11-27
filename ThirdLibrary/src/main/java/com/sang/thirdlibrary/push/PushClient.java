@@ -69,7 +69,6 @@ public class PushClient {
         mPushAgent.setNotificaitonOnForeground(true);
 //注册推送服务，每次调用register方法都会回调该接口
         if (notificationClickHandler!=null) {
-            JLog.i("注册回调这里了");
             mPushAgent.setNotificationClickHandler(notificationClickHandler);
         }
         mPushAgent.register(callback);

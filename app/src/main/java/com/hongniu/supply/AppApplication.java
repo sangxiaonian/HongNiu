@@ -19,6 +19,7 @@ import com.hongniu.supply.entity.PushBean;
 import com.hongniu.supply.net.HttpMainFactory;
 import com.sang.common.utils.DeviceUtils;
 import com.sang.common.utils.JLog;
+import com.sang.common.utils.SharedPreferencesUtils;
 import com.sang.common.utils.errorcrushhelper.CrashHelper;
 import com.sang.thirdlibrary.chact.ChactHelper;
 import com.sang.thirdlibrary.chact.control.ChactControl;
@@ -118,12 +119,8 @@ public class AppApplication extends BaseApplication {
                     @Override
                     public void onSuccess(String s) {
                         JLog.i("注册成功："+s);
-                        HttpMainFactory.upToken(s).subscribe(new NetObserver<Object>(null) {
-                            @Override
-                            public void doOnSuccess(Object data) {
-                                JLog.d("友盟推送注册成功");
-                            }
-                        });
+                        SharedPreferencesUtils.getInstance().putString(Param.UMENG,s);
+                        EventBus.getDefault().postSticky(s);
                     }
 
                     @Override
