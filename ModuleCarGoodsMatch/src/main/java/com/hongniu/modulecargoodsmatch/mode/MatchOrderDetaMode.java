@@ -2,13 +2,9 @@ package com.hongniu.modulecargoodsmatch.mode;
 
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Poi;
-import com.amap.api.navi.AmapNaviPage;
-import com.amap.api.navi.AmapNaviParams;
-import com.amap.api.navi.AmapNaviType;
 import com.amap.api.navi.model.AMapCarInfo;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
-import com.hongniu.baselibrary.widget.order.helper.ButtonInforBean;
 import com.hongniu.modulecargoodsmatch.control.MatchOrderDataControl;
 import com.hongniu.modulecargoodsmatch.entity.MatchOrderInfoBean;
 import com.hongniu.modulecargoodsmatch.net.HttpMatchFactory;
@@ -114,7 +110,7 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
             msg = "发货人正在等待接单....";
         } else if (status == 6) {
             msg = "您已取消找车";
-        } else if (status == 4 || status == 5 || status == 3||status==7) {
+        } else if (status == 4 || status == 5 || status == 3 || status == 7) {
             msg = "预约取货时间：" + infoBean.getDepartureTime();
         }
         return msg;
@@ -137,7 +133,7 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
             msg = "配送车辆：" + infoBean.getCartypeName();
         } else if (status == 6) {
             msg = "配送车辆：" + infoBean.getCartypeName();
-        } else if (status == 4 || status == 5 || status == 3||status==7) {
+        } else if (status == 4 || status == 5 || status == 3 || status == 7) {
             msg = String.format("配送车辆：%s（%s  %s）", infoBean.getCartypeName(), infoBean.getDriverName(), infoBean.getDriverMobile());
         }
         return msg;
@@ -259,8 +255,8 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
 //        订单状态 1:待付款 2:待接单 3:已接单 4:已送达 5:已完成 6:已取消 7 已确认收货
         int status = infoBean.getStatus();
         return (status == 2 || status == 3)
-                || (type == 0 && (status == 4 )
-                ||( infoBean.isAppraise() == 0 && (status == 6 || status == 7)));
+                || (type == 0 && (status == 4)
+                || (infoBean.isAppraise() == 0 && (status == 6 || status == 7)));
 
 
     }
@@ -281,13 +277,13 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
             msg = "我要接单";
         } else if (status == 3) {
             msg = type == 0 ? "联系司机" : "确认送达";
-        } else if (status == 4 ) {
+        } else if (status == 4) {
             //已经送达，已完成 司机不能操作
             msg = type == 1 ? "" :
                     ("确认收货");
         } else if (status == 6 || status == 7) {
             //已经送达，已完成 司机不能操作
-            msg = infoBean.isAppraise() == 0 ? (type==0?"评价司机":"评价发货人"):"";
+            msg = infoBean.isAppraise() == 0 ? (type == 0 ? "评价司机" : "评价发货人") : "";
 
         } else {
             msg = "";
@@ -355,7 +351,7 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
      */
     @Override
     public Poi getEndPoi() {
-        Poi end = new Poi(infoBean.getDestinationInfo(), new LatLng(infoBean.getDestinationLat(), infoBean.getDestinationLon()),null);
+        Poi end = new Poi(infoBean.getDestinationInfo(), new LatLng(infoBean.getDestinationLat(), infoBean.getDestinationLon()), null);
 
         return end;
     }
@@ -406,6 +402,6 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
 
     @Override
     public boolean isShowEstimateOwner() {
-        return infoBean.getIsAppraiseDriver()==1;
+        return infoBean.getIsAppraiseDriver() == 1;
     }
 }
