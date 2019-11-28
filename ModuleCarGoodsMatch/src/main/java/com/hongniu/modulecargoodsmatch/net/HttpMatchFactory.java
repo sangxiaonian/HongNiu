@@ -20,6 +20,7 @@ import com.hongniu.modulecargoodsmatch.entity.MatchMyJoinGoodsInofrBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchOrderInfoBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchQueryCountFareParam;
 import com.hongniu.modulecargoodsmatch.entity.MatchQueryGoodsInforParams;
+import com.hongniu.modulecargoodsmatch.entity.MathDriverReceiveBean;
 import com.sang.common.net.rx.RxUtils;
 
 import java.util.List;
@@ -272,12 +273,12 @@ public class HttpMatchFactory {
      * @Author PING
      * @Description 我要接单
      */
-    public static Observable<CommonBean<Object>> receiverOrder(String id) {
+    public static Observable<CommonBean<MathDriverReceiveBean>> receiverOrder(String id) {
         IDParams params = new IDParams();
         params.id = id;
         return MatchClient.getInstance().getService()
                 .receiverOrder(params)
-                .compose(RxUtils.<CommonBean<Object>>getSchedulersObservableTransformer())
+                .compose(RxUtils.<CommonBean<MathDriverReceiveBean>>getSchedulersObservableTransformer())
                 ;
     }
 

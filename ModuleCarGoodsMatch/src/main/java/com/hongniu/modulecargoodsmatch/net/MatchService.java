@@ -20,6 +20,7 @@ import com.hongniu.modulecargoodsmatch.entity.MatchMyJoinGoodsInofrBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchOrderInfoBean;
 import com.hongniu.modulecargoodsmatch.entity.MatchQueryCountFareParam;
 import com.hongniu.modulecargoodsmatch.entity.MatchQueryGoodsInforParams;
+import com.hongniu.modulecargoodsmatch.entity.MathDriverReceiveBean;
 
 import java.util.List;
 
@@ -175,7 +176,7 @@ public interface MatchService {
      * @return
      */
     @POST("hongniu/api/carGoodsOrder/orderReceive")
-    Observable<CommonBean<Object>> receiverOrder(@Body IDParams params);
+    Observable<CommonBean<MathDriverReceiveBean>> receiverOrder(@Body IDParams params);
 
     /**
      * 查询订单详情

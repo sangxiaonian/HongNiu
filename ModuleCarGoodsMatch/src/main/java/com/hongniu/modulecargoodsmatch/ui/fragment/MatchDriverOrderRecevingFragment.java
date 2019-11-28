@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
@@ -21,11 +22,13 @@ import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.pay.DialogPayUtils;
 import com.hongniu.modulecargoodsmatch.R;
 import com.hongniu.modulecargoodsmatch.entity.MatchOrderInfoBean;
+import com.hongniu.modulecargoodsmatch.entity.MathDriverReceiveBean;
 import com.hongniu.modulecargoodsmatch.net.HttpMatchFactory;
 import com.hongniu.modulecargoodsmatch.ui.holder.MatchOrderInfoHolder;
 import com.hongniu.modulecargoodsmatch.utils.MatchOrderListHelper;
 import com.hongniu.modulecargoodsmatch.widget.CancelOrderDialog;
 import com.hongniu.modulecargoodsmatch.widget.DriverDialog;
+import com.sang.common.net.error.NetException;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.utils.CommonUtils;
@@ -33,6 +36,7 @@ import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
+import com.umeng.commonsdk.debug.D;
 
 import java.util.List;
 
@@ -178,6 +182,7 @@ public class MatchDriverOrderRecevingFragment extends RefrushFragmet<MatchOrderI
             dialog = new DriverDialog(getContext());
         }
         dialog.setTitle("评价司机");
+        dialog.setHide("请对司机做个简单的评价（最多100字）");
         dialog.setSubTitle(String.format("%s(%s)", infoHolder.getDriverName(), infoHolder.getDriverMobile()));
         dialog.setEntryClickListener(new DriverDialog.EntryClickListener() {
             @Override
@@ -206,6 +211,7 @@ public class MatchDriverOrderRecevingFragment extends RefrushFragmet<MatchOrderI
             dialog = new DriverDialog(getContext());
         }
         dialog.setTitle("评价发货人");
+        dialog.setHide("请对发货人做个简单的评价（最多100字）");
         dialog.setSubTitle(String.format("%s(%s)", infoHolder.getShipperName(), infoHolder.getShipperMobile()));
         dialog.setEntryClickListener(new DriverDialog.EntryClickListener() {
             @Override
@@ -256,13 +262,50 @@ public class MatchDriverOrderRecevingFragment extends RefrushFragmet<MatchOrderI
                         cdialog.dismiss();
                         HttpMatchFactory
                                 .receiverOrder(infoHolder.getId())
-                                .subscribe(new NetObserver<Object>(MatchDriverOrderRecevingFragment.this) {
+                                .subscribe(new NetObserver<MathDriverReceiveBean>(MatchDriverOrderRecevingFragment.this) {
+
+
                                     @Override
-                                    public void doOnSuccess(Object data) {
+                                    public void onNext(CommonBean<MathDriverReceiveBean> result) {
+                                        if (result.getCode() == 500 && result.getData() != null && result.getData().getDriverStatus() == 0) {
+                                            toVer();
+                                        } else {
+                                            if (result.getCode() != 200) {
+                                                onError(new NetException(result.getCode(), result.getMsg()));
+                                            } else {
+                                                doOnSuccess(result.getData());
+                                            }
+                                        }
+
+                                    }
+
+                                    @Override
+                                    public void doOnSuccess(MathDriverReceiveBean data) {
                                         queryData(true, true);
                                     }
 
+
                                 });
+
+                    }
+                })
+                .creatDialog(new CenterAlertDialog(getContext()))
+                .show();
+    }
+
+    //未认证司机进行认证
+    private void toVer() {
+        CenterAlertBuilder builder = Utils.creatDialog(getContext(), "需要完成认证司机才能接单", "", "放弃", "去认证");
+        builder
+                .hideContent()
+                .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
+                    @Override
+                    public void onRightClick(View view, DialogControl.ICenterDialog cdialog) {
+                        cdialog.dismiss();
+                        ArouterUtils.getInstance()
+                                .builder(ArouterParamLogin.activity_person_infor)
+                                .withInt(Param.TYPE, 1)
+                                .navigation(getContext());
 
                     }
                 })

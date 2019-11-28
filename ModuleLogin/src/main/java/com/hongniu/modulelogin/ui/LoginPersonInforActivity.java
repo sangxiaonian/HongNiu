@@ -189,6 +189,10 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
             llCard3.setVisibility(status != 0 ? View.GONE : View.VISIBLE);
             llCard4.setVisibility(status != 0 ? View.GONE : View.VISIBLE);
 
+            if (type==1){
+                itemAddress.setEnabled(canChange(status));
+                itemAddressDetail.setEnabled(canChange(status));
+            }
 
         }
     }
@@ -213,22 +217,30 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
         if (i == R.id.bt_save) {
             if (check()) {
                 getValues();
-                Observable<CommonBean<String>> infor;
-                if (type == 1) {
-                    infor = HttpLoginFactory.changeDriverInfor(personInfor);
-                } else {
-                    infor = HttpLoginFactory.changePersonInfor(personInfor);
-                }
-                infor.subscribe(new NetObserver<String>(this) {
-                    @Override
-                    public void doOnSuccess(String data) {
-                        //更新个人信息
-                        ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
-                        BusFactory.getBus().post(new Event.UpPerson());
-                        setResult(2);
-                        finish();
+
+                    Observable<CommonBean<String>> infor;
+                    if (type == 1) {
+                        if (canChange(personInfor.getIsDriverStatus())) {
+                            infor = HttpLoginFactory.changeDriverInfor(personInfor);
+                        }else {
+                            finish();
+                            return;
+                        }
+                    } else {
+                        infor = HttpLoginFactory.changePersonInfor(personInfor);
+
                     }
-                });
+                    infor.subscribe(new NetObserver<String>(this) {
+                        @Override
+                        public void doOnSuccess(String data) {
+                            //更新个人信息
+                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show();
+                            BusFactory.getBus().post(new Event.UpPerson());
+                            setResult(2);
+                            finish();
+                        }
+                    });
+
             }
 
         } else if (i == R.id.item_address) {

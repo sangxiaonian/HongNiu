@@ -12,6 +12,7 @@ import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseApplication;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventBean;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
 import com.hongniu.supply.entity.PushBean;
@@ -88,7 +89,7 @@ public class AppApplication extends BaseApplication {
             public void onSuccess(String data) {
                 JLog.d("推送注册成功:" + data);
                 SharedPreferencesUtils.getInstance().putString(Param.UMENG, data);
-                EventBus.getDefault().postSticky(data);
+                EventBus.getDefault().postSticky(new Event.Umeng());
             }
 
             @Override

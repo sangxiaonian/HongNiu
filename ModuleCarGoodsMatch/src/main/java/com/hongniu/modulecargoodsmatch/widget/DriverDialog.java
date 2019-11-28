@@ -39,6 +39,7 @@ public class DriverDialog {
     private TextView tvTitle;
     private View img_cancel;
     private String title;
+    private String hide;
 
     public DriverDialog(Context context) {
         this.context = context;
@@ -81,6 +82,7 @@ public class DriverDialog {
         });
 
         setSubTitle(subTitleInfo);
+        setHide(hide);
         setTitle(title);
         ratingBar.setOnRatingChangeListener(new RatingBar.OnRatingChangeListener() {
             @Override
@@ -174,6 +176,12 @@ public class DriverDialog {
         this.subTitleInfo = subTitleInfo;
         if (tv_describe != null && subTitleInfo != null) {
             tv_describe.setText(subTitleInfo);
+        }
+    }
+    public void setHide(String hide) {
+        this.hide = hide;
+        if (etRemark != null && etRemark != null) {
+            etRemark.setHint(hide==null?"":hide);
         }
     }
 

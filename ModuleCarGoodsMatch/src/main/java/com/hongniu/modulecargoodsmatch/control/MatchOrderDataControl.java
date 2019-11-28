@@ -108,8 +108,9 @@ public class MatchOrderDataControl {
          * @param title
          * @param driverName
          * @param driverMobile
+         * @param hide
          */
-        void appraiseDriver(String id,String title, String driverName, String driverMobile);
+        void appraiseDriver(String id, String title, String driverName, String driverMobile, String hide);
 
         void showSuccess(String msg);
 

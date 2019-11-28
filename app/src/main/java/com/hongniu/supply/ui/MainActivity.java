@@ -646,7 +646,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onReceiveUMeng(final String event) {
+    public void onReceiveUMeng(final Event.Umeng event) {
         String token = SharedPreferencesUtils.getInstance().getString(Param.UMENG);
         BusFactory.getBus().removeStickyEvent(event);
         if (!TextUtils.isEmpty(token)) {

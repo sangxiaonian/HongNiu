@@ -33,7 +33,7 @@ public class NotificationUtils {
     private static NotificationUtils utils;
     public String CHANNEL_ID = "12654";
     public String CHANNEL_NORMAL_ID = "12655";
-    public String CHANNEL_NAME = "易居房友经纪";
+    public String CHANNEL_NAME = "消息通知";
 
     private Class receiver;
 

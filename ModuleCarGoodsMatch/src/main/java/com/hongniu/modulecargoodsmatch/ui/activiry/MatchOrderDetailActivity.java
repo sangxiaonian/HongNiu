@@ -17,24 +17,27 @@ import com.amap.api.navi.AmapNaviParams;
 import com.amap.api.navi.AmapNaviType;
 import com.amap.api.navi.model.AMapCarInfo;
 import com.hedgehog.ratingbar.RatingBar;
+import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.utils.BaseUtils;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.modulecargoodsmatch.R;
 import com.hongniu.modulecargoodsmatch.control.MatchOrderDataControl;
 import com.hongniu.modulecargoodsmatch.entity.MatchOrderInfoBean;
+import com.hongniu.modulecargoodsmatch.entity.MathDriverReceiveBean;
 import com.hongniu.modulecargoodsmatch.net.HttpMatchFactory;
 import com.hongniu.modulecargoodsmatch.presenter.MatchOrderDetaPresenter;
 import com.hongniu.modulecargoodsmatch.widget.DriverDialog;
 import com.sang.common.imgload.ImageLoader;
+import com.sang.common.net.error.NetException;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.utils.CommonUtils;
-import com.sang.common.utils.JLog;
 import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
@@ -359,9 +362,25 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
                         cdialog.dismiss();
                         HttpMatchFactory
                                 .receiverOrder(id)
-                                .subscribe(new NetObserver<Object>(MatchOrderDetailActivity.this) {
+                                .subscribe(new NetObserver<MathDriverReceiveBean>(MatchOrderDetailActivity.this) {
                                     @Override
-                                    public void doOnSuccess(Object data) {
+                                    public void onNext(CommonBean<MathDriverReceiveBean> result) {
+                                        if (result.getCode()==500&&result.getData()!=null&&result.getData().getDriverStatus()==0){
+                                             toVer();
+                                        }else {
+                                            if (result.getCode()!=200){
+                                                onError(new NetException(result.getCode(),result.getMsg()));
+                                            }else {
+                                                doOnSuccess(result.getData());
+                                            }
+                                        }
+
+                                    }
+
+
+                                    @Override
+                                    public void doOnSuccess(MathDriverReceiveBean data) {
+
                                     }
 
                                     @Override
@@ -378,18 +397,40 @@ public class MatchOrderDetailActivity extends BaseActivity implements MatchOrder
                 .show();
     }
 
+    //未认证司机进行认证
+    private void toVer(){
+        CenterAlertBuilder builder = Utils.creatDialog(mContext, "需要完成认证司机才能接单", "", "放弃", "去认证");
+        builder
+                .hideContent()
+                .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
+                    @Override
+                    public void onRightClick(View view, DialogControl.ICenterDialog cdialog) {
+                        cdialog.dismiss();
+                        ArouterUtils.getInstance()
+                                .builder(ArouterParamLogin.activity_person_infor)
+                                .withInt(Param.TYPE, 1)
+                                .navigation(mContext);
+
+                    }
+                })
+                .creatDialog(new CenterAlertDialog(mContext))
+                .show();
+    }
+
+
     /**
      * 评价司机
-     *
-     * @param id
+     *  @param id
      * @param title
      * @param driverName
      * @param driverMobile
+     * @param hide
      */
     @Override
-    public void appraiseDriver(String id, String title, String driverName, String driverMobile) {
+    public void appraiseDriver(String id, String title, String driverName, String driverMobile, String hide) {
         //评价司机
         dialog.setTitle(title);
+        dialog.setHide(hide);
         dialog.setSubTitle(String.format("%s(%s)", driverName, driverMobile));
         dialog.setEntryClickListener(new DriverDialog.EntryClickListener() {
             @Override

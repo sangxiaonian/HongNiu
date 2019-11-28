@@ -87,9 +87,9 @@ public class MatchOrderDetaPresenter implements MatchOrderDataControl.IMatchOrde
             //评价司机
             if (type==0){
 
-                view.appraiseDriver(mode.getInfo().getId(),"评价司机", info.getDriverName(), info.getDriverMobile());
+                view.appraiseDriver(mode.getInfo().getId(),"评价司机", info.getDriverName(), info.getDriverMobile(), "请对司机做个简单的评价（最多100字）");
             }else {
-                view.appraiseDriver(mode.getInfo().getId(),"评价发货人", info.getShipperName(), info.getShipperMobile());
+                view.appraiseDriver(mode.getInfo().getId(),"评价发货人", info.getShipperName(), info.getShipperMobile(), "请对发货人做个简单的评价（最多100字）");
             }
 
         }

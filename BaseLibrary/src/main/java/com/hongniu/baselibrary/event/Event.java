@@ -122,4 +122,8 @@ public class Event {
             this.orderID = orderID;
         }
     }
+    public static class Umeng implements IBus.IEvent {
+
+    }
+
 }
