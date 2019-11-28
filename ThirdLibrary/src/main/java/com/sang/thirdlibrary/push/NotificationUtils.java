@@ -36,6 +36,7 @@ public class NotificationUtils {
     public String CHANNEL_NAME = "消息通知";
 
     private Class receiver;
+    private int notify_sound;
 
 
     public static NotificationUtils getInstance() {
@@ -134,7 +135,7 @@ public class NotificationUtils {
     }
 
     private Uri getSound(Context context) {
-        String uri = "android.resource://" + context.getPackageName() + "/" + R.raw.notify_sound;
+        String uri = "android.resource://" + context.getPackageName() + "/" + notify_sound;
         return Uri.parse(uri);
     }
 
@@ -184,8 +185,17 @@ public class NotificationUtils {
 
 
     public boolean showVoice() {
-        return true;
+        return notify_sound!=0;
     }
 
 
+    /**
+     * 设置是否使用自定义语音
+     * @param notify_sound
+     * @return
+     */
+    public NotificationUtils setSound(int notify_sound) {
+        this.notify_sound=notify_sound;
+        return this;
+    }
 }

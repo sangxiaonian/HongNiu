@@ -6,5 +6,6 @@ package com.hongniu.supply.entity;
 public class PushBean {
 
     public String action;
+    public boolean showSound;
 
 }

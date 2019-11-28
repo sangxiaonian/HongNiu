@@ -73,6 +73,8 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.List;
 
 import com.sang.thirdlibrary.chact.ChactHelper;
+import com.sang.thirdlibrary.push.NotificationUtils;
+import com.umeng.message.entity.UMessage;
 import com.xiaomi.mipush.sdk.MiPushClient;
 
 import io.reactivex.Observable;
@@ -335,6 +337,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     }
 
 
+    private boolean show;
     @Override
     protected void initListener() {
         super.initListener();
@@ -346,11 +349,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         demo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArouterUtils.getInstance()
-                        .builder(ArouterParamsMatch.activity_match_estimate_order)
-                        .withInt(Param.TYPE, 1)
-                        .withFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        .navigation(mContext);
+                show=!show;
+                NotificationUtils.getInstance()
+                        .setSound(show?R.raw.notify_sound:0)
+                        .showNotification(mContext,ConvertUtils.getRandom(0,10000),null,null,null);
 
 //                ArouterUtils.getInstance().builder(ArouterParamsMatch.activity_match_estimate_order)
 //                        .navigation(mContext);

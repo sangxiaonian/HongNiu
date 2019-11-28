@@ -104,7 +104,15 @@ public class AppApplication extends BaseApplication {
                 JLog.i("接收到推送信息：" + message.toString());
                 if (message instanceof UMessage) {
                     try {
+                        String custom = ((UMessage) message).custom;
+                        PushBean pushBean = null;
+                        try {
+                              pushBean = new Gson().fromJson(custom, PushBean.class);
+                        } catch (JsonSyntaxException e) {
+                            e.printStackTrace();
+                        }
                         NotificationUtils.getInstance()
+                                .setSound(pushBean!=null&&pushBean.showSound?R.raw.notify_sound:0)
                                 .showNotification(context, (UMessage) message);
                     } catch (JsonSyntaxException e) {
                         e.printStackTrace();
