@@ -650,8 +650,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onReceiveUMeng(final Event.Umeng event) {
         String token = SharedPreferencesUtils.getInstance().getString(Param.UMENG);
-        BusFactory.getBus().removeStickyEvent(event);
         if (!TextUtils.isEmpty(token)) {
+            BusFactory.getBus().removeStickyEvent(event);
             HttpMainFactory.upToken(token).subscribe(new NetObserver<Object>(null) {
                 @Override
                 public void doOnSuccess(Object data) {

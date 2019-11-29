@@ -191,7 +191,7 @@ public class MatchOrderDetaMode implements MatchOrderDataControl.IMatchOrderData
      */
     @Override
     public boolean isShowArriveVoucher() {
-        return infoBean.getStatus() == 4 || infoBean.getStatus() == 5;
+        return infoBean.getStatus() == 4 || infoBean.getStatus() == 5|| infoBean.getStatus() == 7;
     }
 
     /**
