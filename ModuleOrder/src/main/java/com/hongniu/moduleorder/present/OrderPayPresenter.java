@@ -345,6 +345,8 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
             ToastUtils.getInstance().show("个人余额不足");
             mode.savePayRole(1);
             setPayType(4);
+        }else {
+            view.showHasCompanyApply(mode.showApplyCompanyPay());
         }
     }
 
@@ -362,8 +364,9 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
             ToastUtils.getInstance().show("企业余额不足");
             mode.savePayRole(2);
             setPayType(4);
+        } else {
+            view.showHasCompanyApply(mode.showApplyCompanyPay());
         }
-
 
     }
 
