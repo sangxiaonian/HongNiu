@@ -13,40 +13,36 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hongniu.baselibrary.arouter.ArouterParamFestivity;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
-import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterParamsBreakbulk;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
+import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseFragment;
+import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
-import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.H5Config;
-import com.hongniu.baselibrary.entity.WalletDetail;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventParams;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
-import com.hongniu.modulefinance.net.HttpFinanceFactory;
 import com.hongniu.supply.R;
 import com.hongniu.supply.entity.HomeADBean;
 import com.hongniu.supply.net.HttpMainFactory;
-import com.hongniu.supply.ui.holder.HomeHeader;
+import com.hongniu.supply.ui.holder.HeadImageHolder;
+import com.hongniu.supply.ui.holder.HomeNewHeader;
 import com.sang.common.imgload.ImageLoader;
-import com.sang.common.net.error.NetException;
-import com.sang.common.net.rx.BaseObserver;
 import com.sang.common.recycleview.RecycleViewScroll;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.utils.ConvertUtils;
 import com.sang.common.utils.DeviceUtils;
+import com.sang.common.utils.ToastUtils;
 import com.sang.common.widget.ColorImageView;
 import com.sang.common.widget.DrawableCircle;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
 
 import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CARGO_OWNER;
 
@@ -60,13 +56,14 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     private RecycleViewScroll rv;
     List<HomeADBean> ads;
     ColorImageView imgSearch;
-    private HomeHeader homeHeader;
+    private HomeNewHeader homeNewHeader;
     private View rlTitle;
     private XAdapter<HomeADBean> adapter;
     private View llSearch;
     private int currentColor;
     private TextView tvSearch;
     private DrawableCircle drawable;
+    private HeadImageHolder headImageHolder;
 
     @Override
     protected View initView(LayoutInflater inflater) {
@@ -139,56 +136,27 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                 };
             }
         };
-        homeHeader = new HomeHeader(getContext(), rv);
-        adapter.addHeard(homeHeader);
+        homeNewHeader = new HomeNewHeader(getContext(), rv);
+        headImageHolder = new HeadImageHolder(getContext(), rv);
+//        adapter.addHeard(homeHeader);
+        adapter.addHeard(homeNewHeader);
+        adapter.addHeard(headImageHolder);
         rv.setAdapter(adapter);
 
 
     }
 
     private void upData() {
-        Observable.concat(HttpMainFactory
-                        .queryActivity()
-
-                        .map(new Function<CommonBean<List<HomeADBean>>, CommonBean<List<HomeADBean>>>() {
-                            @Override
-                            public CommonBean<List<HomeADBean>> apply(CommonBean<List<HomeADBean>> listCommonBean) throws Exception {
-                                if (listCommonBean.getCode() == 200) {
-                                    List<HomeADBean> data = listCommonBean.getData();
-                                    ads.clear();
-                                    ads.addAll(data);
-                                    adapter.notifyDataSetChanged();
-                                }
-                                return listCommonBean;
-                            }
-                        })
-
-                , HttpFinanceFactory.queryAccountdetails()
-                        .map(new Function<CommonBean<WalletDetail>, CommonBean<WalletDetail>>() {
-                            @Override
-                            public CommonBean<WalletDetail> apply(CommonBean<WalletDetail> walletDetailCommonBean) throws Exception {
-                                if (walletDetailCommonBean.getCode() == 200) {
-                                    homeHeader.setWalletInfor(walletDetailCommonBean.getData().getAvailableBalance());
-                                }
-                                return walletDetailCommonBean;
-                            }
-                        })
-        )
-                .subscribe(new BaseObserver<Object>(isFirst ? this : null) {
+        HttpMainFactory
+                .queryActivity()
+                .subscribe(new NetObserver<List<HomeADBean>>(isFirst ? this : null) {
                     @Override
-                    public void onNext(Object result) {
-                        super.onNext(result);
-
-                        if (result instanceof CommonBean) {
-                            CommonBean bean = (CommonBean) result;
-                            if (bean.getCode() != 200) {
-                                onError(new NetException(bean.getCode(), bean.getMsg()));
-                            } else {
-
-                            }
+                    public void doOnSuccess(List<HomeADBean> data) {
+                        ads.clear();
+                        if (data != null) {
+                            ads.addAll(data);
                         }
-
-
+                        adapter.notifyDataSetChanged();
                     }
                 });
     }
@@ -229,7 +197,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     protected void initListener() {
         super.initListener();
 //        tv_balance.setOnClickListener(this);
-        homeHeader.setOnClickListener(this);
+        homeNewHeader.setOnClickListener(this);
+        headImageHolder.setOnClickListener(this);
         llSearch.setOnClickListener(this);
         rv.setOnScrollDisChangeListener(this);
     }
@@ -282,22 +251,32 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                         .navigation(getContext());
                 break;
             case R.id.card_policy:
+            case R.id.card_match:
 
                 ArouterUtils.getInstance().builder(ArouterParamsMatch.activity_match_estimate_order).navigation(getContext());
                 break;
             case R.id.card_yongjin:
+            case R.id.card_invite:
                 ArouterUtils.getInstance().builder(ArouterParamFestivity.activity_festivity_home).navigation(getContext());
                 ClickEventUtils.getInstance().onClick(ClickEventParams.首页_邀请好友);
 
                 break;
             case R.id.card_left:
-                ArouterUtils.getInstance().builder( ArouterParamsBreakbulk.activity_breakbulk_company).navigation(getContext());
+            case R.id.card_star:
+                ArouterUtils.getInstance().builder(ArouterParamsBreakbulk.activity_breakbulk_company).navigation(getContext());
                 break;
             case R.id.card_etc:
+            case R.id.card_insurance:
                 ClickEventUtils.getInstance().onClick(ClickEventParams.首页_牛人保);
                 ArouterUtils.getInstance()
                         .builder(ArouterParamOrder.activity_order_insurance_calculate)
                         .navigation(getContext());
+                break;
+            case R.id.card_goods_match:
+                ToastUtils.getInstance().show("车货匹配");
+                break;
+            case R.id.view_more:
+                ToastUtils.getInstance().show("了解更多");
                 break;
         }
     }
