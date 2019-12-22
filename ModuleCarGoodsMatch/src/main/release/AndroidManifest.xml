@@ -3,7 +3,11 @@
     package="com.hongniu.modulecargoodsmatch">
 
     <application>
-        <activity android:name=".ui.activiry.MatchEntryArriveActivity"  android:windowSoftInputMode="stateAlwaysHidden|adjustResize" ></activity>
+        <activity android:name=".ui.activiry.MatchCarGoodsCrateOrderActivity"></activity>
+        <activity android:name=".ui.activiry.MatchAllOrderListActivity" />
+        <activity
+            android:name=".ui.activiry.MatchEntryArriveActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
             android:name=".ui.activiry.MatchOrderDetailActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />

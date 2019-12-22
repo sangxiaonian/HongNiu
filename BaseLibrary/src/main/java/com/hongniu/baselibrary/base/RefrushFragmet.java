@@ -144,8 +144,13 @@ public abstract class RefrushFragmet<T> extends BaseFragment implements OnRefres
      * 显示没有更多数据了
      */
     public void showNoMore() {
+        refresh.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                refresh.loadmoreFinished(false);
 
+            }
+        },200);
 
-        refresh.loadmoreFinished(false);
     }
 }

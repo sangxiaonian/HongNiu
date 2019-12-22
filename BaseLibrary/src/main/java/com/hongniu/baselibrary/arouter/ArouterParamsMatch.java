@@ -7,7 +7,7 @@ public class ArouterParamsMatch {
     /**
      * 车货匹配
      */
-//    public final static String activity_match_car_good = "/ModuleCarGoodsMatch/activity_match_car_good";
+    public final static String activity_match_car_goods_crate_order = "/ModuleCarGoodsMatch/activity_match_car_goods_crate_order";
 
     /**
      * 车货匹配接单
@@ -30,6 +30,10 @@ public class ArouterParamsMatch {
      * 车货匹配创建订单
      */
     public final static String activity_match_creat_order = "/ModuleCarGoodsMatch/activity_match_creat_order";
+    /**
+     * 车货匹配首页
+     */
+    public final static String activity_match_all_order_list = "/ModuleCarGoodsMatch/activity_match_all_order_list";
     /**
      * 车货匹配预下单，估价界面
      */

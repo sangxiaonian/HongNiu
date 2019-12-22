@@ -20,7 +20,6 @@ import com.hongniu.modulecargoodsmatch.R;
  *
  * 车货匹配我的记录
  */
-@Deprecated
 @Route(path = ArouterParamsMatch.activity_match_my_record)
 public class MatchMyRecordActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
 

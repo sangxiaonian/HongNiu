@@ -55,7 +55,6 @@ import static com.hongniu.baselibrary.config.Param.isDebug;
  * @Author PING
  * @Description 我要接单页面
  */
-@Deprecated
 @Route(path = ArouterParamsMatch.activity_match_grap_single)
 public class MatchGrapSingleActivity extends BaseActivity implements View.OnClickListener, PayWayView.OnPayTypeChangeListener, PayDialog.OnClickPayListener, PayPasswordKeyBord.PayKeyBordListener {
 

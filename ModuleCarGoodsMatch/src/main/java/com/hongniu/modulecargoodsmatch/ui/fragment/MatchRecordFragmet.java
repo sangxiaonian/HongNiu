@@ -48,7 +48,6 @@ import io.rong.eventbus.EventBus;
  * 作者： ${PING} on 2019/5/12.
  * 我发布的车货匹配列表
  */
-@Deprecated
 @Route(path = ArouterParamsMatch.fragment_match_my_record)
 public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> implements RecordFragmentControl.OnSwitchFiltrateListener {
 

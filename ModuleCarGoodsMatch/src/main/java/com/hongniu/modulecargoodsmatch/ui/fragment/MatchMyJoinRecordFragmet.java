@@ -35,7 +35,6 @@ import io.reactivex.Observable;
  * 作者： ${PING} on 2019/5/12.
  * 我参与的车货匹配列表
  */
-@Deprecated
 @Route(path = ArouterParamsMatch.fragment_match_my_join)
 public class MatchMyJoinRecordFragmet extends RefrushFragmet<MatchMyJoinGoodsInofrBean> {
 

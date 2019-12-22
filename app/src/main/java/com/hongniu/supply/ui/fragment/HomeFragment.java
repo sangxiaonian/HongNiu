@@ -273,10 +273,14 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                         .navigation(getContext());
                 break;
             case R.id.card_goods_match:
-                ToastUtils.getInstance().show("车货匹配");
+                ArouterUtils.getInstance()
+                        .builder(ArouterParamsMatch.activity_match_all_order_list)
+                        .navigation(getContext());
                 break;
             case R.id.view_more:
-                ToastUtils.getInstance().show("了解更多");
+                H5Config h5Config = new H5Config("用户手册", Param.festivity_invity_notify, true);
+                ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5).withSerializable(Param.TRAN, h5Config).navigation(getContext());
+
                 break;
         }
     }
