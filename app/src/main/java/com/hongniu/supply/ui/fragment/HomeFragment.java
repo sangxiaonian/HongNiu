@@ -278,7 +278,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                         .navigation(getContext());
                 break;
             case R.id.view_more:
-                H5Config h5Config = new H5Config("用户手册", Param.festivity_invity_notify, true);
+                H5Config h5Config = new H5Config("用户手册", Param.hongniu_user_guide, true);
                 ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5).withSerializable(Param.TRAN, h5Config).navigation(getContext());
 
                 break;

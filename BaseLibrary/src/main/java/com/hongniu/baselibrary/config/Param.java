@@ -16,6 +16,7 @@ public class Param {
      */
     public static String hongniu_agreement;
     public static String festivity_invity_notify;
+    public static String hongniu_user_guide;//用户手册
     //保险条款
     public static String insurance_polic;
     //投保须知
@@ -33,6 +34,7 @@ public class Param {
         insurance_notify = "https://api.hongniudai.cn/" + "static/html/notice.html";
         insurance_polic = "https://api.hongniudai.cn/" + "static/html/insurance_2009.html";
         festivity_invity_notify = url + "static/index.html#/invite_rule";
+        hongniu_user_guide =   "https://api.hongniudai.cn/static/html/usermanual.html";
     }
 
 
