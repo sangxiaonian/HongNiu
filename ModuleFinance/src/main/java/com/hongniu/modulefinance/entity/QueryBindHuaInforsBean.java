@@ -19,6 +19,26 @@ public class QueryBindHuaInforsBean {
     private String othBankPayeeSubAccSetteName;
     private String othBankPayeeSubAcc;
 
+    private String transacRemark;//	true	string	转账必填交易附言
+    private String transacExplain;//	true	string	转账说明
+
+
+    public String getTransacRemark() {
+        return transacRemark;
+    }
+
+    public void setTransacRemark(String transacRemark) {
+        this.transacRemark = transacRemark;
+    }
+
+    public String getTransacExplain() {
+        return transacExplain;
+    }
+
+    public void setTransacExplain(String transacExplain) {
+        this.transacExplain = transacExplain;
+    }
+
     public String getOthBankPayeeSubAccName() {
         return othBankPayeeSubAccName;
     }

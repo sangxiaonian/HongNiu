@@ -23,7 +23,6 @@ import com.hongniu.modulefinance.widget.RechargeInforDialog;
 import com.sang.common.net.error.NetException;
 import com.sang.common.net.rx.BaseObserver;
 import com.sang.common.utils.ToastUtils;
-import com.sang.common.utils.errorcrushhelper.CrashHelper;
 
 import io.reactivex.Observable;
 
@@ -159,10 +158,15 @@ public class FinanceBalanceActivity extends BaseActivity implements View.OnClick
     }
 
     @Override
-    public void onClickEntry(String msg) {
+    public void onClickEntry(int type, String msg) {
         if (countInfor != null){
-            Utils.copyToPlate(mContext, countInfor.getOthBankPayeeSubAcc());
-            ToastUtils.getInstance().show("复制账号成功");
+            if (type==0) {
+                Utils.copyToPlate(mContext, countInfor.getOthBankPayeeSubAcc());
+                ToastUtils.getInstance().show("复制账号成功");
+            }else {
+                Utils.copyToPlate(mContext, countInfor.getTransacRemark());
+                ToastUtils.getInstance().show("复制附言成功");
+            }
         }
     }
 }
