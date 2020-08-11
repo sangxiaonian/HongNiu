@@ -18,6 +18,13 @@
         app:srcshow="true"
         app:textcenterhide=""
         app:textleft="@string/hongniu_agreement" />
+    <com.sang.common.widget.ItemView
+        android:id="@+id/item_terms_of_prvice"
+        style="@style/itemview"
+        app:editable="false"
+        app:srcshow="true"
+        app:textcenterhide=""
+        app:textleft="隐私政策" />
 
     <com.sang.common.widget.ItemView
         android:id="@+id/item_about_hongniu"

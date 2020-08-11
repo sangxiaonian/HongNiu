@@ -20,6 +20,7 @@ public class LoginAboutUsActivity extends BaseActivity implements View.OnClickLi
 
     private ItemView itemTermsOfService;
     private ItemView itemAobutHongNiu;
+    private ItemView item_terms_of_prvice;
     private TextView tvVersion;
 
     @Override
@@ -36,6 +37,7 @@ public class LoginAboutUsActivity extends BaseActivity implements View.OnClickLi
     protected void initView() {
         super.initView();
         itemTermsOfService = findViewById(R.id.item_terms_of_service);
+        item_terms_of_prvice = findViewById(R.id.item_terms_of_prvice);
         itemAobutHongNiu = findViewById(R.id.item_about_hongniu);
         tvVersion = findViewById(R.id.tv_version);
     }
@@ -55,6 +57,7 @@ public class LoginAboutUsActivity extends BaseActivity implements View.OnClickLi
         super.initListener();
         itemTermsOfService.setOnClickListener(this);
         itemAobutHongNiu.setOnClickListener(this);
+        item_terms_of_prvice.setOnClickListener(this);
 
     }
 
@@ -69,6 +72,10 @@ public class LoginAboutUsActivity extends BaseActivity implements View.OnClickLi
         if (v.getId() == R.id.item_about_hongniu) {
         } else if (v.getId() == R.id.item_terms_of_service) {
             H5Config h5Config = new H5Config(getString(R.string.hongniu_agreement), Param.hongniu_agreement, true);
+            ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5).withSerializable(Param.TRAN, h5Config).navigation(mContext);
+
+        }else if (v.getId() == R.id.item_terms_of_prvice) {
+            H5Config h5Config = new H5Config("隐私政策", Param.privacy, true);
             ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5).withSerializable(Param.TRAN, h5Config).navigation(mContext);
 
         }

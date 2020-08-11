@@ -21,11 +21,11 @@ public class Param {
     public static String insurance_polic;
     //投保须知
     public static String insurance_notify;
+    //隐私协议
+    public static String privacy="https://api.hongniudai.cn/static/html/privacy.html";
 
     static {
         if (isDebug) {
-//            url = "http://47.104.130.110:80/";
-//            url = "http://test.wxshare.hongniudai.cn/";
             url = "http://47.104.130.110:8080/";
         } else {
             url = "https://api.hongniudai.cn/";

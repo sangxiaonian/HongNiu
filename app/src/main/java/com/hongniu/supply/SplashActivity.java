@@ -15,13 +15,14 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.Utils;
+import com.hongniu.supply.weight.RuleAlertDialog;
 import com.sang.common.utils.SharedPreferencesUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
 import io.reactivex.disposables.Disposable;
 
-public class SplashActivity extends BaseActivity {
+public class SplashActivity extends BaseActivity implements RuleAlertDialog.IDialog {
 
     private Handler handler = new Handler() {
         @Override
@@ -62,6 +63,20 @@ public class SplashActivity extends BaseActivity {
 
 
         setToolbarTitle("");
+
+        boolean rule = SharedPreferencesUtils.getInstance().getBoolean("RULE");
+        if (rule){
+            jump2Next();
+        }else {
+            new RuleAlertDialog(this,this).show();
+        }
+
+
+
+
+    }
+
+    private void jump2Next() {
         if (Utils.isLogin()) {
             HttpAppFactory.getRoleType()
                     .subscribe(new NetObserver<RoleTypeBean>(null) {
@@ -97,8 +112,6 @@ public class SplashActivity extends BaseActivity {
             handler.sendEmptyMessageDelayed(0, 1500);
 
         }
-
-
     }
 
     @Override
@@ -124,5 +137,11 @@ public class SplashActivity extends BaseActivity {
 
         super.onDestroy();
 
+    }
+
+    @Override
+    public void onClickReportAlert(boolean isPositive) {
+        SharedPreferencesUtils.getInstance().putBoolean("RULE",true);
+        jump2Next();
     }
 }
