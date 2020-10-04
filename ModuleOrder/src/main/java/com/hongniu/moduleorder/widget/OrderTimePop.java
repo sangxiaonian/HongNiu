@@ -1,23 +1,17 @@
 package com.hongniu.moduleorder.widget;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hongniu.moduleorder.R;
-import com.sang.common.recycleview.adapter.XAdapter;
-import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.widget.popu.BasePopu;
 import com.sangxiaonian.xcalendar.SequenceCalendar;
 import com.sangxiaonian.xcalendar.entity.DateBean;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 作者： ${PING} on 2018/8/1.

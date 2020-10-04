@@ -7,7 +7,7 @@ import com.amap.api.maps.AMap;
 import com.amap.api.maps.MapView;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.moduleorder.R;
-import com.sang.common.utils.JLog;
+import com.fy.androidlibrary.utils.JLog;
 
 /**
  * 作者： ${PING} on 2018/8/9.

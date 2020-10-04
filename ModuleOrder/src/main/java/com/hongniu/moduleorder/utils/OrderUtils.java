@@ -10,7 +10,7 @@ import android.widget.Toast;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.config.Param;
-import com.sang.common.utils.ToastUtils;
+import com.fy.androidlibrary.toast.ToastUtils;
 
 /**
  * 作者： ${桑小年} on 2018/8/27.

@@ -3,16 +3,19 @@ package com.hongniu.supply.ui;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
+
+
+import androidx.viewpager.widget.ViewPager;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.fy.androidlibrary.utils.CollectionUtils;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.moduleorder.ui.adapter.SimpleFragmentAdapter;
 import com.hongniu.supply.R;
 import com.luck.picture.lib.widget.PreviewViewPager;
-import com.sang.common.utils.CommonUtils;
+import com.hongniu.baselibrary.entity.CommonBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +54,7 @@ public class ImagePreviceActivity extends BaseActivity implements ViewPager.OnPa
         Intent intent = getIntent();
         currentPosition = intent.getIntExtra(Param.TYPE, 0);
         ArrayList<String> extra = intent.getStringArrayListExtra(Param.TRAN);
-        if (!CommonUtils.isEmptyCollection(extra)) {
+        if (!CollectionUtils.isEmpty(extra)) {
             lists.addAll(extra);
         }
         changeIndex(currentPosition);

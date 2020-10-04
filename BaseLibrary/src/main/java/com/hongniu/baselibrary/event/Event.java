@@ -3,9 +3,8 @@ package com.hongniu.baselibrary.event;
 import com.amap.api.services.core.PoiItem;
 import com.hongniu.baselibrary.entity.CreatInsuranceBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
-import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
-import com.sang.common.event.IBus;
+import com.fy.androidlibrary.event.IBus;
 
 /**
  * 作者： ${PING} on 2018/8/27.

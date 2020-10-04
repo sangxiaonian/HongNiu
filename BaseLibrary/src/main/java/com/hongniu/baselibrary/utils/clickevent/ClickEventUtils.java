@@ -3,13 +3,13 @@ package com.hongniu.baselibrary.utils.clickevent;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.fy.androidlibrary.utils.CollectionUtils;
+import com.fy.androidlibrary.utils.CommonUtils;
+import com.fy.androidlibrary.utils.ConvertUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.sang.common.utils.CommonUtils;
-import com.sang.common.utils.ConvertUtils;
-import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.JLog;
-import com.sang.common.utils.SharedPreferencesUtils;
+import com.fy.androidlibrary.utils.DeviceUtils;
+import com.fy.androidlibrary.utils.SharedPreferencesUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -88,7 +88,7 @@ public class ClickEventUtils {
         eventBean.setSystemModel(DeviceUtils.getDeviceBrand());
         List<ItemClickEventBean> clickEvent = getClickEvent();
         eventBean.setEvents(clickEvent);
-        return CommonUtils.isEmptyCollection(clickEvent) ? null : eventBean;
+        return CollectionUtils.isEmpty(clickEvent) ? null : eventBean;
 
     }
 

@@ -5,6 +5,8 @@ import android.text.TextUtils;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
+import com.fy.androidlibrary.net.error.NetException;
+import com.fy.androidlibrary.utils.CollectionUtils;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.CreatInsuranceBean;
@@ -28,9 +30,7 @@ import com.hongniu.moduleorder.entity.PathBean;
 import com.hongniu.moduleorder.entity.QueryInsurancePriceBean;
 import com.hongniu.moduleorder.entity.QueryReceiveBean;
 import com.hongniu.moduleorder.entity.VersionBean;
-import com.sang.common.net.error.NetException;
-import com.sang.common.net.rx.RxUtils;
-import com.sang.common.utils.CommonUtils;
+import com.fy.androidlibrary.net.rx.RxUtils;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
 
 import java.io.File;
@@ -343,7 +343,7 @@ public class HttpOrderFactory {
                     @Override
                     public List<String> apply(List<UpImgData> upImgData) throws Exception {
                         List<String> list = new ArrayList<>();
-                        if (!CommonUtils.isEmptyCollection(upImgData)) {
+                        if (!CollectionUtils.isEmpty(upImgData)) {
                             for (UpImgData upImgDatum : upImgData) {
                                 if (!TextUtils.isEmpty(upImgDatum.getPath())) {
                                     list.add(upImgDatum.getPath());
@@ -364,7 +364,7 @@ public class HttpOrderFactory {
      * @return
      */
     public static Observable<List<UpImgData>> upImageUrl(final int type, final List<UpImgData> paths) {
-        if (CommonUtils.isEmptyCollection(paths)) {
+        if (CollectionUtils.isEmpty(paths)) {
             List<UpImgData> imgData = new ArrayList<>();
             return Observable.just(imgData);
         } else {

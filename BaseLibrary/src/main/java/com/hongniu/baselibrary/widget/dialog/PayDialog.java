@@ -2,7 +2,6 @@ package com.hongniu.baselibrary.widget.dialog;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -14,10 +13,12 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.fragment.app.DialogFragment;
+
+import com.fy.androidlibrary.toast.ToastUtils;
 import com.hongniu.baselibrary.R;
 import com.hongniu.baselibrary.entity.WalletDetail;
 import com.hongniu.baselibrary.widget.pay.PayWayView;
-import com.sang.common.utils.ToastUtils;
 
 /**
  * 作者： ${PING} on 2019/5/19.

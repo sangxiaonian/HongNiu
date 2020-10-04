@@ -1,7 +1,7 @@
 package com.sang.common.recycleview;
 
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * 作者： ${PING} on 2019/7/26.

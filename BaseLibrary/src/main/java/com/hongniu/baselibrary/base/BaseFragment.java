@@ -2,15 +2,16 @@ package com.hongniu.baselibrary.base;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.sang.common.event.BusFactory;
-import com.sang.common.net.listener.TaskControl;
+import com.fy.androidlibrary.event.BusFactory;
+import com.fy.androidlibrary.net.listener.TaskControl;
 
 import io.reactivex.disposables.Disposable;
 
@@ -103,7 +104,7 @@ public class BaseFragment extends Fragment implements TaskControl.OnTaskListener
     }
 
     @Override
-    public void onTaskFail(Throwable e, String code, String msg) {
+    public void onTaskFail(Throwable e, int code, String msg) {
         if (taskListener != null)
             taskListener.onTaskFail(e, code, msg);
     }

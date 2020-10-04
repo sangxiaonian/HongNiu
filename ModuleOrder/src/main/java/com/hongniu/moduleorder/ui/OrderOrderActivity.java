@@ -1,7 +1,7 @@
 package com.hongniu.moduleorder.ui;
 
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
 import android.os.Bundle;
 
 import com.alibaba.android.arouter.facade.annotation.Route;

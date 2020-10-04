@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.fy.androidlibrary.utils.CommonUtils;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
@@ -21,9 +22,9 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.H5Config;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
-import com.sang.common.utils.CommonUtils;
-import com.sang.common.utils.SharedPreferencesUtils;
-import com.sang.common.utils.ToastUtils;
+import com.hongniu.baselibrary.entity.CommonBean;
+import com.fy.androidlibrary.utils.SharedPreferencesUtils;
+import com.fy.androidlibrary.toast.ToastUtils;
 
 @Route(path = ArouterParamLogin.activity_login)
 public class LoginActivity extends BaseActivity implements View.OnClickListener {

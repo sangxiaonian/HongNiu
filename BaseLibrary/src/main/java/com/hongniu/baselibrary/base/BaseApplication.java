@@ -1,21 +1,16 @@
 package com.hongniu.baselibrary.base;
 
 import android.content.Context;
-import android.support.multidex.MultiDexApplication;
+import androidx.multidex.MultiDexApplication;
 
+import com.fy.androidlibrary.toast.ToastUtils;
+import com.fy.androidlibrary.utils.SharedPreferencesUtils;
 import com.hongniu.baselibrary.R;
 import com.hongniu.baselibrary.config.Param;
-import com.sang.common.imgload.ImageLoader;
-import com.sang.common.utils.JLog;
-import com.sang.common.utils.SharedPreferencesUtils;
-import com.sang.common.utils.ToastUtils;
-import com.sang.common.utils.errorcrushhelper.CrashHelper;
+import com.fy.androidlibrary.imgload.ImageLoader;
 import com.sang.thirdlibrary.bug.BugClient;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
-import com.umeng.commonsdk.UMConfigure;
-import com.umeng.message.IUmengRegisterCallback;
-import com.umeng.message.PushAgent;
 
 /**
  * 作者： ${桑小年} on 2018/7/30.

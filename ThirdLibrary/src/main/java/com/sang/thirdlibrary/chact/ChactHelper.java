@@ -6,10 +6,10 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.util.LruCache;
 
-import com.sang.common.net.rx.BaseObserver;
-import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.JLog;
-import com.sang.common.utils.ToastUtils;
+import com.fy.androidlibrary.net.rx.BaseObserver;
+import com.fy.androidlibrary.toast.ToastUtils;
+import com.fy.androidlibrary.utils.DeviceUtils;
+import com.fy.androidlibrary.utils.JLog;
 import com.sang.thirdlibrary.chact.control.ChactControl;
 import com.sang.thirdlibrary.chact.control.OnGetUserInforListener;
 
@@ -99,14 +99,6 @@ public class ChactHelper {
     public void connect(Context context, String token) {
         connect(context, token, new RongIMClient.ConnectCallback() {
 
-            /**
-             * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
-             *                  2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
-             */
-            @Override
-            public void onTokenIncorrect() {
-                JLog.e("初始化失败");
-            }
 
             /**
              * 连接融云成功
@@ -117,16 +109,19 @@ public class ChactHelper {
                 JLog.e("初始化成功" + userid);
             }
 
-            /**
-             * 连接融云失败
-             * @param errorCode 错误码，可到官网 查看错误码对应的注释
-             */
             @Override
-            public void onError(RongIMClient.ErrorCode errorCode) {
+            public void onError(RongIMClient.ConnectionErrorCode connectionErrorCode) {
+                JLog.e("初始化失败");
+                JLog.e("初始错误" + connectionErrorCode.getValue());
 
-                JLog.e("初始错误----------");
-                JLog.e("初始错误" + errorCode.getValue());
             }
+
+            @Override
+            public void onDatabaseOpened(RongIMClient.DatabaseOpenStatus databaseOpenStatus) {
+
+            }
+
+
         });
     }
 
@@ -138,17 +133,7 @@ public class ChactHelper {
             JLog.e("开始连接服务器");
             RongIM.connect(token, new RongIMClient.ConnectCallback() {
 
-                /**
-                 * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
-                 *                  2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
-                 */
-                @Override
-                public void onTokenIncorrect() {
-                    JLog.e("初始化失败");
-                    if (callback != null) {
-                        callback.onTokenIncorrect();
-                    }
-                }
+
 
                 /**
                  * 连接融云成功
@@ -163,22 +148,25 @@ public class ChactHelper {
                     JLog.e("初始化成功" + userid);
                 }
 
-                /**
-                 * 连接融云失败
-                 * @param errorCode 错误码，可到官网 查看错误码对应的注释
-                 */
                 @Override
-                public void onError(RongIMClient.ErrorCode errorCode) {
+                public void onError(RongIMClient.ConnectionErrorCode connectionErrorCode) {
+                    JLog.e("初始化失败");
+
                     if (callback != null) {
-                        callback.onError(errorCode);
+                        callback.onError(connectionErrorCode);
                     }
 
-                    if (errorCode.getValue() == 31010) {//不是异地登录
+                    if (connectionErrorCode.getValue() == 31010) {//不是异地登录
                         ToastUtils.getInstance().show("异地登录");
                     }
-                    JLog.e("初始错误----------");
-                    JLog.e("初始错误" + errorCode.getValue());
+                    JLog.e("初始错误" + connectionErrorCode.getValue());
                 }
+
+                @Override
+                public void onDatabaseOpened(RongIMClient.DatabaseOpenStatus databaseOpenStatus) {
+
+                }
+
             });
         }
     }
@@ -198,7 +186,7 @@ public class ChactHelper {
      * @return true 断开连接
      */
     public boolean disConnectState(){
-        return RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.DISCONNECTED);
+        return !RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED);
     }
 
 

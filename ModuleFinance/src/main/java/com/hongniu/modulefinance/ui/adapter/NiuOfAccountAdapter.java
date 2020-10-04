@@ -7,12 +7,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.fy.androidlibrary.utils.CommonUtils;
 import com.hongniu.modulefinance.R;
 import com.hongniu.modulefinance.control.OnItemClickListener;
 import com.hongniu.modulefinance.entity.NiuOfAccountBean;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
-import com.sang.common.utils.CommonUtils;
+import com.hongniu.baselibrary.entity.CommonBean;
 import com.sang.thirdlibrary.chact.ChactHelper;
 
 import java.util.List;

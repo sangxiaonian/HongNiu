@@ -3,12 +3,11 @@ package com.sang.common.widget;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.text.style.ImageSpan;
 
-import com.sang.common.utils.JLog;
+import com.fy.androidlibrary.utils.JLog;
 
 public class CenteredImageSpan extends ImageSpan {
 

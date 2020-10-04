@@ -3,7 +3,7 @@ package com.hongniu.modulefinance.widget;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 
 import com.hongniu.modulefinance.R;
-import com.sang.common.utils.DeviceUtils;
+import com.fy.androidlibrary.utils.DeviceUtils;
 import com.sang.common.widget.dialog.inter.DialogControl;
 
 /**

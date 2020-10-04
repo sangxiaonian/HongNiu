@@ -7,7 +7,7 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.text.style.ReplacementSpan;
 
-import com.sang.common.utils.DeviceUtils;
+import com.fy.androidlibrary.utils.DeviceUtils;
 
 
 public class RoundedBackgroundSpan extends ReplacementSpan {

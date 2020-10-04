@@ -1,5 +1,6 @@
 package com.hongniu.modulelogin.net;
 
+import com.fy.androidlibrary.utils.CollectionUtils;
 import com.hongniu.baselibrary.entity.CarTypeBean;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.LoginBean;
@@ -15,8 +16,8 @@ import com.hongniu.modulelogin.entity.LoginCreatInsuredBean;
 import com.hongniu.modulelogin.entity.LoginSMSParams;
 import com.hongniu.baselibrary.entity.PayInforBeans;
 import com.hongniu.modulelogin.entity.SetPayPassWord;
-import com.sang.common.net.rx.RxUtils;
-import com.sang.common.utils.CommonUtils;
+import com.fy.androidlibrary.net.rx.RxUtils;
+import com.hongniu.baselibrary.entity.CommonBean;
 
 import java.util.List;
 
@@ -226,7 +227,7 @@ public class HttpLoginFactory {
                         bean1.setMsg(listCommonBean.getMsg());
                         bean1.setCode(listCommonBean.getCode());
                         List<CarInforBean> data = listCommonBean.getData();
-                        if (!CommonUtils.isEmptyCollection(data)) {
+                        if (!CollectionUtils.isEmpty(data)) {
                             bean1.setData(data.get(0));
                         } else {
                             CarInforBean bean2 = new CarInforBean();

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <declare-styleable name="SearchTitleView">
+        <attr name="searchEditable" format="boolean" />
+        <attr name="searchTitle" format="string" />
+        <attr name="searchTitleColor" format="color" />
+        <attr name="searchTitleHind" format="string" />
+        <attr name="searchTitleHindColor" format="color" />
+        <attr name="searchBackGround" format="reference" />
+        <attr name="searchIcon" format="reference" />
+        <attr name="searchClearIcon" format="reference" />
+        <attr name="searchGravity" format="enum" >
+            <enum name="left" value="0" />
+            <enum name="center" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <!--圆形控件 CircularImageView  CirculaViewFramlayout-->
+    <declare-styleable name="CircularFrameLayout">
+        <!--是否显示边框，true 显示，false 不显示-->
+        <attr name="showBorder" format="boolean" />
+        <!--边框颜色，默认为白色-->
+        <attr name="borderColor" format="color" />
+        <!--边框宽度，默认为1dp-->
+        <attr name="borderWidth" format="dimension" />
+
+        <!--左上、右上、右下、左下圆角 半径-->
+        <attr name="radiusLeftTop" format="dimension" />
+        <attr name="radiusRightTop" format="dimension" />
+        <attr name="radiusRightBottom" format="dimension" />
+        <attr name="radiusLeftBottom" format="dimension" />
+
+        <!--四个圆角的角度，当其他四个同时存在时候，以此为准-->
+        <attr name="viewradius" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="SwitchTextLayout">
+        <attr name="openColor" format="color" />
+        <attr name="closeColor" format="color" />
+        <attr name="titleSize" format="dimension" />
+        <attr name="title" format="string" />
+        <attr name="closeIcon" format="reference" />
+        <attr name="openIcon" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="ShadowLayout">
+        <!--阴影的圆角大小-->
+        <attr name="hl_cornerRadius" format="dimension" />
+        <!--阴影的扩散范围(也可以理解为扩散程度)-->
+        <attr name="hl_shadowLimit" format="dimension" />
+        <attr name="hl_shadowColor" format="color" />
+        <attr name="hl_shadowBackColor" format="color" />
+        <!--x轴的偏移量-->
+        <attr name="hl_dx" format="dimension" />
+        <!--y轴的偏移量-->
+        <attr name="hl_dy" format="dimension" />
+        <!--左边是否显示阴影-->
+        <attr name="hl_leftShow" format="boolean" />
+        <!--右边是否显示阴影-->
+        <attr name="hl_rightShow" format="boolean" />
+        <!--上边是否显示阴影-->
+        <attr name="hl_topShow" format="boolean" />
+        <!--下面是否显示阴影-->
+        <attr name="hl_bottomShow" format="boolean" />
+
+    </declare-styleable>
+    <declare-styleable name="DashedView">
+        <!-- 虚线颜色 -->
+        <attr name="dashedColor" format="color" />
+        <!-- 方向 -->
+        <attr name="dashedOritation" >
+            <enum name="vertical" value="0" />
+            <enum name="horizontal" value="1" />
+        </attr>
+        <!-- 每段线长 -->
+        <attr name="lineLength" format="dimension"/>
+        <!-- 间隔长度 -->
+        <attr name="spaceLength" format="dimension"/>
+        <!-- 虚线粗 -->
+        <attr name="dashedWidth" format="dimension"/>
+    </declare-styleable>
+</resources>

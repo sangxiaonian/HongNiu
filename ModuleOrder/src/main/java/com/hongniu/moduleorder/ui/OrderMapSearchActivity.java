@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.poisearch.PoiSearch;
+import com.fy.androidlibrary.utils.CollectionUtils;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.base.RefrushActivity;
 import com.hongniu.baselibrary.config.Param;
@@ -23,10 +24,10 @@ import com.sang.common.recycleview.inter.OnItemClickListener;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.baselibrary.ui.adapter.MapSearchAdapter;
-import com.sang.common.event.BusFactory;
+import com.fy.androidlibrary.event.BusFactory;
 import com.sang.common.recycleview.adapter.XAdapter;
-import com.sang.common.utils.CommonUtils;
-import com.sang.common.utils.DeviceUtils;
+import com.hongniu.baselibrary.entity.CommonBean;
+import com.fy.androidlibrary.utils.DeviceUtils;
 
 import java.util.List;
 
@@ -74,7 +75,7 @@ public class OrderMapSearchActivity extends RefrushActivity<PoiItem> implements 
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     String trim = etSearch.getText().toString().trim();
-                    if (!CommonUtils.isEmptyCollection(datas)&&!TextUtils.isEmpty(trim)){
+                    if (!CollectionUtils.isEmpty(datas)&&!TextUtils.isEmpty(trim)){
                         OrderEvent.SearchPioItem searchPioItem = new OrderEvent.SearchPioItem(datas.get(0));
                         searchPioItem.key= trim;
                         BusFactory.getBus().post(searchPioItem);
@@ -141,10 +142,10 @@ public class OrderMapSearchActivity extends RefrushActivity<PoiItem> implements 
 
                     @Override
                     public void doOnSuccess(PageBean<PoiItem> data) {
-                        if (isClear && data != null && !CommonUtils.isEmptyCollection(data.getList())) {
+                        if (isClear && data != null && !CollectionUtils.isEmpty(data.getList())) {
                             datas.clear();
                         }
-                        if (data != null && !CommonUtils.isEmptyCollection(data.getList())) {
+                        if (data != null && !CollectionUtils.isEmpty(data.getList())) {
                             currentPage++;
                             datas.addAll(data.getList());
                             if (data.getList().size() < Param.PAGE_SIZE) {

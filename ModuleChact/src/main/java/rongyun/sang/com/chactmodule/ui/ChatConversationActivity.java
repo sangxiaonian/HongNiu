@@ -5,13 +5,14 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.fy.androidlibrary.utils.CommonUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.entity.LoginBean;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.Utils;
-import com.sang.common.utils.CommonUtils;
-import com.sang.common.utils.ToastUtils;
+import com.hongniu.baselibrary.entity.CommonBean;
+import com.fy.androidlibrary.toast.ToastUtils;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;

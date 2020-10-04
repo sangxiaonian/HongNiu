@@ -18,7 +18,7 @@ import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.H5Config;
 import com.hongniu.supply.R;
-import com.sang.common.utils.JLog;
+import com.fy.androidlibrary.utils.JLog;
 import com.sang.common.widget.XWebView;
 
 import java.io.Serializable;

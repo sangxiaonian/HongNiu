@@ -6,7 +6,7 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.sang.common.utils.JLog;
+import com.fy.androidlibrary.utils.JLog;
 
 /**
  * 作者：  on 2019/9/24.

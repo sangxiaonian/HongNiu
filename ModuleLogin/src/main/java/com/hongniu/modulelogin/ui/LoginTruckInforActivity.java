@@ -14,6 +14,7 @@ import com.amap.api.navi.AmapNaviType;
 import com.amap.api.navi.model.AMapCarInfo;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.fy.androidlibrary.utils.CollectionUtils;
 import com.google.gson.Gson;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.base.BaseActivity;
@@ -24,9 +25,9 @@ import com.hongniu.baselibrary.utils.PickerDialogUtils;
 import com.hongniu.modulelogin.R;
 import com.hongniu.baselibrary.entity.CarInforBean;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
-import com.sang.common.utils.CommonUtils;
-import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.SharedPreferencesUtils;
+import com.hongniu.baselibrary.entity.CommonBean;
+import com.fy.androidlibrary.utils.DeviceUtils;
+import com.fy.androidlibrary.utils.SharedPreferencesUtils;
 import com.sang.common.widget.ItemView;
 
 import java.util.List;
@@ -124,7 +125,7 @@ public class LoginTruckInforActivity extends BaseActivity implements View.OnClic
                     public void doOnSuccess(CarInforBean data) {
                         itemCarNumber.setTextCenter(data.getCarNumber());
 
-                        if (!CommonUtils.isEmptyCollection(carTypes)) {
+                        if (!CollectionUtils.isEmpty(carTypes)) {
                             for (TruckGudieSwitchBean.DataInfor carType : carTypes) {
                                 if (carType.getType().equalsIgnoreCase(data.getVehicleSize())) {
                                     itemCarType.setTextCenter(carType.getName());
@@ -132,7 +133,7 @@ public class LoginTruckInforActivity extends BaseActivity implements View.OnClic
                                 }
                             }
                         }
-                        if (!CommonUtils.isEmptyCollection(carAxles)) {
+                        if (!CollectionUtils.isEmpty(carAxles)) {
                             for (TruckGudieSwitchBean.DataInfor carType : carAxles) {
                                 if (carType.getType().equalsIgnoreCase(data.getVehicleAxis())) {
                                     itemCarAxle.setTextCenter(carType.getName());
@@ -220,7 +221,7 @@ public class LoginTruckInforActivity extends BaseActivity implements View.OnClic
     private CarInforBean getVaule() {
         CarInforBean bean = new CarInforBean();
         bean.setCarNumber(itemCarNumber.getTextCenter());
-        if (!CommonUtils.isEmptyCollection(carTypes)) {
+        if (!CollectionUtils.isEmpty(carTypes)) {
             for (TruckGudieSwitchBean.DataInfor carType : carTypes) {
                 if (carType.getName().equalsIgnoreCase(itemCarType.getTextCenter())) {
                     bean.setVehicleSize(carType.getType());
@@ -228,7 +229,7 @@ public class LoginTruckInforActivity extends BaseActivity implements View.OnClic
                 }
             }
         }
-        if (!CommonUtils.isEmptyCollection(carAxles)) {
+        if (!CollectionUtils.isEmpty(carAxles)) {
             for (TruckGudieSwitchBean.DataInfor carType : carAxles) {
                 if (carType.getName().equalsIgnoreCase(itemCarAxle.getTextCenter())) {
                     bean.setVehicleAxis(carType.getType());

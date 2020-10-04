@@ -3,19 +3,16 @@ package com.hongniu.moduleorder.widget.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.TextView;
 
-import com.hongniu.baselibrary.config.Param;
 import com.hongniu.moduleorder.R;
-import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.JLog;
+import com.fy.androidlibrary.utils.DeviceUtils;
+import com.fy.androidlibrary.utils.JLog;
 import com.sang.common.widget.XWebView;
 import com.sang.common.widget.dialog.inter.DialogControl;
 

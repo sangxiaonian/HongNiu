@@ -6,7 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -15,7 +15,7 @@ import android.view.View;
  * 作者： ${PING} on 2018/7/18.
  */
 
-public class ColorImageView extends android.support.v7.widget.AppCompatImageView {
+public class ColorImageView extends androidx.appcompat.widget.AppCompatImageView {
 
     private Paint mPaint;
     private int mCurrentColor;

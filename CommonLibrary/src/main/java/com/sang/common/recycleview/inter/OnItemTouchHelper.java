@@ -1,6 +1,6 @@
 package com.sang.common.recycleview.inter;
 
-import android.support.v7.widget.RecyclerView; /**
+import androidx.recyclerview.widget.RecyclerView; /**
  * 作者： ${桑小年} on 2018/8/5.
  * 努力，为梦长留
  *

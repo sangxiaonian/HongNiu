@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.sang.common.utils.DeviceUtils;
+import com.fy.androidlibrary.utils.DeviceUtils;
 
 /**
  * 作者： ${PING} on 2018/9/11.

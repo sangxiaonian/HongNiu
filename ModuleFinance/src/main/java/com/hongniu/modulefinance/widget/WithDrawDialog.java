@@ -4,7 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -16,12 +16,8 @@ import android.widget.TextView;
 import com.hongniu.baselibrary.widget.WithDrawProgress;
 import com.hongniu.modulefinance.R;
 import com.hongniu.modulefinance.entity.BalanceOfAccountBean;
-import com.sang.common.utils.DeviceUtils;
+import com.fy.androidlibrary.utils.DeviceUtils;
 import com.sang.common.widget.dialog.inter.DialogControl;
-
-import org.w3c.dom.Text;
-
-import java.util.Date;
 
 /**
  * 作者： ${PING} on 2018/10/9.

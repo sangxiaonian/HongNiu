@@ -9,7 +9,7 @@
     android:layout_marginRight="7dp"
     app:viewradius="4dp">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
@@ -196,7 +196,7 @@
             app:layout_constraintBottom_toBottomOf="@id/tv_price_des"
             app:layout_constraintEnd_toStartOf="@id/bt_sub"
             app:layout_constraintTop_toTopOf="@id/tv_price_des" />
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </com.sang.common.widget.CircularFramlayout>
 
 

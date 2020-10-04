@@ -16,7 +16,7 @@ import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.supply.weight.RuleAlertDialog;
-import com.sang.common.utils.SharedPreferencesUtils;
+import com.fy.androidlibrary.utils.SharedPreferencesUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -121,7 +121,7 @@ public class SplashActivity extends BaseActivity implements RuleAlertDialog.IDia
 
 
     @Override
-    public void onTaskFail(Throwable e, String code, String msg) {
+    public void onTaskFail(Throwable e, int code, String msg) {
         hideLoad();
     }
 

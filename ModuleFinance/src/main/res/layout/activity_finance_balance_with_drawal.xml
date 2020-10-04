@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/con_pay_way"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -85,10 +85,10 @@
     android:scaleType="centerCrop"
     app:srcCompat="@drawable/icon_go_999999"
     android:layout_height="20dp" />
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/con_withdrawal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -168,7 +168,7 @@
             app:layout_constraintStart_toEndOf="@id/tv_balance"
             app:layout_constraintTop_toTopOf="@id/tv_balance" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/bt_sum"
@@ -180,4 +180,4 @@
         android:text="立刻提现"
         app:layout_constraintTop_toBottomOf="@id/con_withdrawal" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

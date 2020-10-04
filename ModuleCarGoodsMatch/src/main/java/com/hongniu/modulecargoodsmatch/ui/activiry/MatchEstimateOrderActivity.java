@@ -1,8 +1,8 @@
 package com.hongniu.modulecargoodsmatch.ui.activiry;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -13,7 +13,7 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.widget.RadioIconButton;
 import com.hongniu.baselibrary.widget.RadioIconGroup;
 import com.hongniu.modulecargoodsmatch.R;
-import com.sang.common.utils.SharedPreferencesUtils;
+import com.fy.androidlibrary.utils.SharedPreferencesUtils;
 
 /**
  * @data 2019/10/26

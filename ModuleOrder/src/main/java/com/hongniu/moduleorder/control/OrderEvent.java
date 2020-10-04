@@ -1,11 +1,10 @@
 package com.hongniu.moduleorder.control;
 
-import com.amap.api.maps.model.LatLng;
 import com.amap.api.services.core.PoiItem;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.moduleorder.entity.QueryReceiveBean;
-import com.sang.common.event.IBus;
+import com.fy.androidlibrary.event.IBus;
 
 /**
  * 作者： ${PING} on 2018/8/8.

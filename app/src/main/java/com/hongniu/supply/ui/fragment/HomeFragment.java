@@ -1,7 +1,7 @@
 package com.hongniu.supply.ui.fragment;
 
 import android.graphics.Color;
-import android.support.v7.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,13 +29,12 @@ import com.hongniu.supply.entity.HomeADBean;
 import com.hongniu.supply.net.HttpMainFactory;
 import com.hongniu.supply.ui.holder.HeadImageHolder;
 import com.hongniu.supply.ui.holder.HomeNewHeader;
-import com.sang.common.imgload.ImageLoader;
+import com.fy.androidlibrary.imgload.ImageLoader;
 import com.sang.common.recycleview.RecycleViewScroll;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
-import com.sang.common.utils.ConvertUtils;
-import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.ToastUtils;
+import com.fy.androidlibrary.utils.ConvertUtils;
+import com.fy.androidlibrary.utils.DeviceUtils;
 import com.sang.common.widget.ColorImageView;
 import com.sang.common.widget.DrawableCircle;
 
@@ -171,7 +170,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     }
 
     @Override
-    public void onTaskFail(Throwable e, String code, String msg) {
+    public void onTaskFail(Throwable e, int code, String msg) {
         super.onTaskFail(e, code, msg);
 
     }

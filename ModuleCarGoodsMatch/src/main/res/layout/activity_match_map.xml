@@ -93,7 +93,7 @@
        android:layout_alignParentBottom="true"
         app:viewradius="4dp">
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -272,7 +272,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/line_phone" />
 
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </com.sang.common.widget.CircularFramlayout>
 
     <com.hongniu.baselibrary.widget.XRefreshLayout
@@ -286,7 +286,7 @@
         android:layout_below="@id/ll_tool"
         >
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

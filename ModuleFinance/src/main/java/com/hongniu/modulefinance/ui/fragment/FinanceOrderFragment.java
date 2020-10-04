@@ -3,7 +3,7 @@ package com.hongniu.modulefinance.ui.fragment;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -25,7 +25,7 @@ import com.hongniu.modulefinance.ui.adapter.FinanceExpendHeadHolder;
 import com.hongniu.modulefinance.ui.adapter.FinanceOrderAdapter;
 import com.sang.common.recycleview.RecycleViewSupportEmpty;
 import com.sang.common.recycleview.adapter.XAdapter;
-import com.sang.common.utils.ConvertUtils;
+import com.fy.androidlibrary.utils.ConvertUtils;
 import com.sang.common.widget.VistogramView;
 
 import org.greenrobot.eventbus.Subscribe;

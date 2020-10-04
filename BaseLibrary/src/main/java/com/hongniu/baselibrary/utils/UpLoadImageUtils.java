@@ -2,12 +2,13 @@ package com.hongniu.baselibrary.utils;
 
 import android.text.TextUtils;
 
+import com.fy.androidlibrary.utils.CollectionUtils;
+import com.fy.androidlibrary.utils.CommonUtils;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.UpImgData;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.sang.common.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +70,7 @@ public class UpLoadImageUtils {
 
                       @Override
                       public void doOnSuccess(List<UpImgData> data) {
-                          if (!CommonUtils.isEmptyCollection(data)){
+                          if (!CollectionUtils.isEmpty(data)){
                               finishDate.addAll(data);
                           }
                           state=1;

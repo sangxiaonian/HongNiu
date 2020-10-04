@@ -3,9 +3,9 @@ package com.hongniu.baselibrary.widget.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +13,11 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
 
+import com.fy.androidlibrary.utils.CollectionUtils;
+import com.fy.androidlibrary.utils.CommonUtils;
 import com.hongniu.baselibrary.R;
 import com.sang.common.recycleview.adapter.XAdapter;
-import com.sang.common.utils.CommonUtils;
-import com.sang.common.utils.DeviceUtils;
+import com.fy.androidlibrary.utils.DeviceUtils;
 import com.sang.common.widget.dialog.inter.DialogControl;
 
 import java.util.ArrayList;
@@ -103,7 +104,7 @@ public class AccountDialog<T> implements DialogControl.IDialog, View.OnClickList
 
     public void setData(List<T> data) {
         inforBeans.clear();
-        if (!CommonUtils.isEmptyCollection(data)) {
+        if (!CollectionUtils.isEmpty(data)) {
             inforBeans.addAll(data);
         }
         adapter.notifyDataSetChanged();

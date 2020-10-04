@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.fy.androidlibrary.net.error.NetException;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
@@ -21,7 +22,6 @@ import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
-import com.sang.common.net.error.NetException;
 import com.sang.common.widget.VericationView;
 
 import org.greenrobot.eventbus.EventBus;

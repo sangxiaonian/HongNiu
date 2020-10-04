@@ -5,13 +5,12 @@ import android.text.TextUtils;
 
 import com.alipay.sdk.app.EnvUtils;
 import com.alipay.sdk.app.PayTask;
-import com.sang.common.event.BusFactory;
-import com.sang.common.net.rx.RxUtils;
-import com.sang.common.utils.JLog;
+import com.fy.androidlibrary.event.BusFactory;
+import com.fy.androidlibrary.net.rx.RxUtils;
+import com.fy.androidlibrary.utils.JLog;
 import com.sang.thirdlibrary.pay.control.PayControl;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
 import com.sang.thirdlibrary.pay.entiy.PayResult;
-import com.sang.thirdlibrary.pay.unionpay.UnionPayClient;
 
 import java.util.Map;
 

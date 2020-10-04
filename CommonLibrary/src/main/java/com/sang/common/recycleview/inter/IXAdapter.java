@@ -1,6 +1,6 @@
 package com.sang.common.recycleview.inter;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import com.sang.common.recycleview.holder.PeakHolder;

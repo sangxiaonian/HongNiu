@@ -9,7 +9,7 @@
     android:layout_marginRight="@dimen/app_gap"
     android:background="@drawable/shape_4_stoke">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:gravity="center"
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
@@ -40,7 +40,7 @@
             app:layout_constraintStart_toEndOf="@+id/textView2"
             app:layout_constraintTop_toTopOf="@+id/textView2" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </RelativeLayout>

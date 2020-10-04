@@ -1,9 +1,8 @@
 package com.sang.common.recycleview.touchhelper;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.View;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.ItemTouchHelper;
 
 import com.sang.common.recycleview.inter.OnItemTouchHelper;
 

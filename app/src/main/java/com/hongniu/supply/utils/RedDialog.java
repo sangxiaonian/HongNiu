@@ -3,7 +3,7 @@ package com.hongniu.supply.utils;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -14,9 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hongniu.supply.R;
-import com.sang.common.utils.DeviceUtils;
-
-import java.sql.NClob;
+import com.fy.androidlibrary.utils.DeviceUtils;
 
 
 /**

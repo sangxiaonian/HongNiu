@@ -1,6 +1,6 @@
 package com.hongniu.moduleorder.utils;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.amap.api.maps.model.LatLng;
@@ -8,9 +8,9 @@ import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.moduleorder.entity.LocationBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
-import com.sang.common.net.rx.RxUtils;
-import com.sang.common.utils.ConvertUtils;
-import com.sang.common.utils.JLog;
+import com.fy.androidlibrary.net.rx.RxUtils;
+import com.fy.androidlibrary.utils.ConvertUtils;
+import com.fy.androidlibrary.utils.JLog;
 import com.sang.thirdlibrary.map.utils.MapConverUtils;
 
 import java.util.ArrayList;

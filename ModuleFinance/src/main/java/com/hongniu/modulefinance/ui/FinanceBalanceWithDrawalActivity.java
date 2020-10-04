@@ -2,7 +2,7 @@ package com.hongniu.modulefinance.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -15,6 +15,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.fy.androidlibrary.utils.CollectionUtils;
+import com.fy.androidlibrary.utils.CommonUtils;
+import com.fy.androidlibrary.widget.editext.PointLengthFilter;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
@@ -28,9 +31,7 @@ import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.PayPasswordKeyBord;
 import com.hongniu.modulefinance.R;
 import com.hongniu.modulefinance.net.HttpFinanceFactory;
-import com.sang.common.utils.CommonUtils;
-import com.sang.common.utils.PointLengthFilter;
-import com.sang.common.utils.ToastUtils;
+import com.fy.androidlibrary.toast.ToastUtils;
 import com.sang.common.widget.dialog.BottomAlertDialog;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.BottomAlertBuilder;
@@ -126,7 +127,7 @@ public class FinanceBalanceWithDrawalActivity extends BaseActivity implements Vi
                 .subscribe(new NetObserver<List<PayInforBeans>>(this) {
                     @Override
                     public void doOnSuccess(List<PayInforBeans> data) {
-                        if (!CommonUtils.isEmptyCollection(data)) {
+                        if (!CollectionUtils.isEmpty(data)) {
                             bankID = data.get(0).getId();
                             tvPayAccount.setText(data.get(0).getCardNo() + "");
                         }

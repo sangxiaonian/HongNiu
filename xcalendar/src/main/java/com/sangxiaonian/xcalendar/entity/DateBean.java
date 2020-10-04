@@ -1,6 +1,6 @@
 package com.sangxiaonian.xcalendar.entity;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 /**
  * 作者： ${PING} on 2018/10/15.

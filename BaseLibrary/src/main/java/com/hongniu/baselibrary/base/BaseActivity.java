@@ -5,29 +5,24 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.fy.androidlibrary.net.error.NetException;
+import com.fy.androidlibrary.widget.load.LoadDialog;
 import com.githang.statusbar.StatusBarCompat;
 import com.hongniu.baselibrary.R;
-import com.hongniu.baselibrary.arouter.ArouterParamOrder;
-import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CloseActivityEvent;
 import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.utils.Utils;
-import com.sang.common.event.BusFactory;
-import com.sang.common.net.error.NetException;
-import com.sang.common.net.listener.TaskControl;
-import com.sang.common.utils.DeviceUtils;
+import com.fy.androidlibrary.event.BusFactory;
+import com.fy.androidlibrary.net.listener.TaskControl;
 import com.sang.common.widget.dialog.CenterAlertDialog;
-import com.sang.common.widget.dialog.LoadDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
 import com.sang.thirdlibrary.bug.BugClient;
@@ -292,7 +287,7 @@ public class BaseActivity extends AppCompatActivity implements TaskControl.OnTas
     }
 
     @Override
-    public void onTaskFail(Throwable e, String code, String msg) {
+    public void onTaskFail(Throwable e, int code, String msg) {
         hideLoad();
         if ("401".equals(code) && e instanceof NetException) {//重新登录
             new CenterAlertBuilder()

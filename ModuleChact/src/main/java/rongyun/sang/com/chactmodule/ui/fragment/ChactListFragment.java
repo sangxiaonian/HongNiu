@@ -10,7 +10,7 @@ import com.hongniu.baselibrary.base.BaseFragment;
 import com.hongniu.baselibrary.entity.CloseActivityEvent;
 import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.widget.order.OrderDetailItem;
-import com.sang.common.utils.JLog;
+import com.fy.androidlibrary.utils.JLog;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;

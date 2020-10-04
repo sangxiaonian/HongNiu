@@ -3,8 +3,7 @@ package xiaonian.sang.com.festivitymodule.widget;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -14,7 +13,7 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.sang.common.imgload.ImageLoader;
+import com.fy.androidlibrary.imgload.ImageLoader;
 import com.sang.common.widget.dialog.inter.DialogControl;
 
 import xiaonian.sang.com.festivitymodule.R;

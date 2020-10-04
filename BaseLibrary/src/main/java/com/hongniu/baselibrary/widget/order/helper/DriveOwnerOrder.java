@@ -2,7 +2,7 @@ package com.hongniu.baselibrary.widget.order.helper;
 
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
-import com.sang.common.utils.SharedPreferencesUtils;
+import com.fy.androidlibrary.utils.SharedPreferencesUtils;
 
 import java.util.List;
 

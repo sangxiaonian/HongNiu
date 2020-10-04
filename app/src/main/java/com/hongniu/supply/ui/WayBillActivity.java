@@ -1,9 +1,9 @@
 package com.hongniu.supply.ui;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextPaint;
@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.fy.androidlibrary.utils.CommonUtils;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
@@ -24,12 +25,12 @@ import com.hongniu.baselibrary.utils.BaseUtils;
 import com.hongniu.supply.R;
 import com.hongniu.supply.entity.WayBillBean;
 import com.hongniu.supply.net.HttpMainFactory;
-import com.sang.common.imgload.ImageLoader;
+import com.fy.androidlibrary.imgload.ImageLoader;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
-import com.sang.common.utils.CommonUtils;
-import com.sang.common.utils.ConvertUtils;
-import com.sang.common.utils.ToastUtils;
+import com.hongniu.baselibrary.entity.CommonBean;
+import com.fy.androidlibrary.utils.ConvertUtils;
+import com.fy.androidlibrary.toast.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;

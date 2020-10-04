@@ -2,8 +2,8 @@ package com.sang.common.recycleview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -11,11 +11,7 @@ import android.view.View;
 import com.sang.common.R;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.EmptyHolder;
-import com.sang.common.recycleview.holder.PeakHolder;
-import com.sang.common.utils.JLog;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.fy.androidlibrary.utils.JLog;
 
 /**
  * 作者： ${桑小年} on 2018/8/18.

@@ -1,7 +1,7 @@
 package com.hongniu.modulelogin.entity;
 
 import com.hongniu.baselibrary.entity.CarInforBean;
-import com.sang.common.event.IBus;
+import com.fy.androidlibrary.event.IBus;
 
 /**
  * 作者： ${PING} on 2018/8/3.

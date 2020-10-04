@@ -1,7 +1,7 @@
 package com.hongniu.modulefinance.ui;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
+import androidx.fragment.app.FragmentTransaction;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -19,7 +19,7 @@ import com.hongniu.modulefinance.R;
 import com.hongniu.modulefinance.event.FinanceEvent;
 import com.hongniu.modulefinance.ui.fragment.FinanceExpendFragment;
 import com.hongniu.modulefinance.ui.fragment.FinanceIncomeFragment;
-import com.sang.common.event.BusFactory;
+import com.fy.androidlibrary.event.BusFactory;
 import com.sang.common.widget.SwitchTextLayout;
 
 import java.text.SimpleDateFormat;

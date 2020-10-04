@@ -6,12 +6,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.fy.androidlibrary.utils.CommonUtils;
 import com.hongniu.baselibrary.arouter.ArouterParamsBreakbulk;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.modulebreakbulk.R;
-import com.sang.common.utils.CommonUtils;
 import com.sang.modulebreakbulk.entity.BreakbulkCompanyInfoBean;
 import com.sang.thirdlibrary.chact.ChactHelper;
 

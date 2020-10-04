@@ -3,12 +3,11 @@ package com.sang.common.utils.errorcrushhelper;
 import android.content.Context;
 import android.os.Build;
 import android.os.Environment;
-import android.text.TextUtils;
 
-import com.sang.common.net.rx.RxUtils;
-import com.sang.common.utils.JLog;
+import com.fy.androidlibrary.net.rx.RxUtils;
+import com.fy.androidlibrary.utils.JLog;
 
-import org.reactivestreams.Subscriber;
+
 import org.reactivestreams.Subscription;
 
 import java.io.BufferedOutputStream;
@@ -19,14 +18,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
-import io.reactivex.functions.Predicate;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * 作者： ${PING} on 2018/12/12.
@@ -41,7 +36,7 @@ public class CrashHelper {
         private static CrashHelper helper = new CrashHelper();
     }
 
-    public static CrashHelper getInstance( ) {
+    public static CrashHelper getInstance() {
 
         return InnerClass.helper;
     }
@@ -115,7 +110,7 @@ public class CrashHelper {
 
                     @Override
                     public void onNext(File file) {
-                        JLog.i("储存异常情况完成"+file.getAbsolutePath());
+                        JLog.i("储存异常情况完成" + file.getAbsolutePath());
                     }
 
                     @Override
@@ -130,7 +125,7 @@ public class CrashHelper {
                 });
 
 
-        }
+    }
 
     //把错误信息填充进崩溃文件中
     public void writeToFile(File file, String crashInfor) {

@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.bumptech.glide.Glide;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
@@ -16,10 +15,9 @@ import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.QueryOrderStateBean;
 import com.hongniu.moduleorder.R;
-import com.hongniu.baselibrary.entity.OrderCreatBean;
 import com.hongniu.moduleorder.utils.OrderUtils;
-import com.sang.common.imgload.ImageLoader;
-import com.sang.common.utils.ToastUtils;
+import com.fy.androidlibrary.imgload.ImageLoader;
+import com.fy.androidlibrary.toast.ToastUtils;
 
 
 /**

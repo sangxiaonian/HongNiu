@@ -1,10 +1,9 @@
 package com.hongniu.baselibrary.base;
 
+import com.fy.androidlibrary.net.error.NetException;
+import com.fy.androidlibrary.net.rx.BaseObserver;
 import com.hongniu.baselibrary.entity.CommonBean;
-import com.sang.common.net.error.ExceptionEngine;
-import com.sang.common.net.error.NetException;
-import com.sang.common.net.listener.TaskControl;
-import com.sang.common.net.rx.BaseObserver;
+import com.fy.androidlibrary.net.listener.TaskControl;
 
 /**
  * 作者： ${PING} on 2018/8/13.

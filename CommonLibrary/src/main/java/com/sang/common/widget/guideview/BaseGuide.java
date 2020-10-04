@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.view.View;
 
 import com.sang.common.R;
-import com.sang.common.utils.SharedPreferencesUtils;
+import com.fy.androidlibrary.utils.SharedPreferencesUtils;
 
 
 /**

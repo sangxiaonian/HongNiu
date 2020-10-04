@@ -2,7 +2,7 @@ package com.hongniu.modulecargoodsmatch.ui.fragment;
 
 import android.content.Intent;
 import android.content.res.Resources;
-import android.support.v4.view.ViewPager;
+
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import androidx.viewpager.widget.ViewPager;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
@@ -35,9 +37,9 @@ import com.hongniu.modulecargoodsmatch.net.HttpMatchFactory;
 import com.hongniu.modulecargoodsmatch.ui.activiry.MatchCreatOrderActivity;
 import com.hongniu.modulecargoodsmatch.ui.adapter.CarPageAdapter;
 import com.hongniu.modulecargoodsmatch.ui.activiry.MatchMapActivity;
-import com.sang.common.net.rx.RxUtils;
-import com.sang.common.utils.ConvertUtils;
-import com.sang.common.utils.ToastUtils;
+import com.fy.androidlibrary.net.rx.RxUtils;
+import com.fy.androidlibrary.utils.ConvertUtils;
+import com.fy.androidlibrary.toast.ToastUtils;
 import com.sangxiaonian.xcalendar.utils.CalendarUtils;
 
 import java.util.ArrayList;

@@ -2,18 +2,12 @@ package com.hongniu.supply.wxapi;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
-import com.hongniu.baselibrary.arouter.ArouterParamOrder;
-import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
-import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CreatInsuranceBean;
 import com.hongniu.baselibrary.event.Event;
-import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.supply.R;
-import com.sang.common.event.BusFactory;
-import com.sang.common.utils.JLog;
+import com.fy.androidlibrary.event.BusFactory;
 import com.sang.thirdlibrary.pay.PayConfig;
 import com.sang.thirdlibrary.pay.entiy.PayResult;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;

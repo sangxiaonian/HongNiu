@@ -2,10 +2,9 @@ package com.hongniu.supply.ui;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,18 +14,17 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
+import com.fy.androidlibrary.utils.CommonUtils;
 import com.google.gson.Gson;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
-import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CloseActivityEvent;
 import com.hongniu.baselibrary.entity.CommonBean;
-import com.hongniu.baselibrary.entity.GrapSingleInforBean;
 import com.hongniu.baselibrary.entity.LoginBean;
 import com.hongniu.baselibrary.entity.QueryPayPassword;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
@@ -40,25 +38,18 @@ import com.hongniu.baselibrary.utils.clickevent.ClickEventBean;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventParams;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
 import com.hongniu.baselibrary.widget.dialog.UpDialog;
-import com.hongniu.baselibrary.widget.order.OrderDetailItem;
-import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
-import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.entity.VersionBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.utils.LoactionUpUtils;
 import com.hongniu.supply.R;
-import com.hongniu.supply.entity.HomeADBean;
 import com.hongniu.supply.net.HttpMainFactory;
 import com.hongniu.supply.utils.RedDialog;
-import com.sang.common.event.BusFactory;
-import com.sang.common.recycleview.holder.PeakHolder;
-import com.sang.common.utils.CommonUtils;
-import com.sang.common.utils.ConvertUtils;
-import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.JLog;
-import com.sang.common.utils.SharedPreferencesUtils;
-import com.sang.common.utils.ToastUtils;
-import com.sang.common.widget.dialog.CenterAlertDialog;
+import com.fy.androidlibrary.event.BusFactory;
+import com.hongniu.baselibrary.entity.CommonBean;
+import com.fy.androidlibrary.utils.ConvertUtils;
+import com.fy.androidlibrary.utils.DeviceUtils;
+import com.fy.androidlibrary.utils.JLog;
+import com.fy.androidlibrary.utils.SharedPreferencesUtils;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
 import com.sang.thirdlibrary.chact.UserInfor;
@@ -66,7 +57,6 @@ import com.sang.thirdlibrary.chact.control.OnGetUserInforListener;
 import com.sang.thirdlibrary.map.LoactionUtils;
 import com.sang.thirdlibrary.map.utils.MapConverUtils;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -74,19 +64,12 @@ import java.util.List;
 
 import com.sang.thirdlibrary.chact.ChactHelper;
 import com.sang.thirdlibrary.push.NotificationUtils;
-import com.umeng.message.entity.UMessage;
-import com.xiaomi.mipush.sdk.MiPushClient;
 
 import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Function;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.UserInfo;
-import io.rong.push.RongPushClient;
-import io.rong.push.common.RongException;
 import rongyun.sang.com.chactmodule.ui.fragment.ChactListFragment;
 
 @Route(path = ArouterParamsApp.activity_main)
@@ -217,10 +200,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         LoginBean infor = Utils.getLoginInfor();
         if (infor != null) {
             ChactHelper.getHelper().connect(this, infor.getRongToken(), new RongIMClient.ConnectCallback() {
-                @Override
-                public void onTokenIncorrect() {
 
-                }
 
                 @Override
                 public void onSuccess(final String s) {
@@ -252,9 +232,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 }
 
                 @Override
-                public void onError(RongIMClient.ErrorCode errorCode) {
+                public void onError(RongIMClient.ConnectionErrorCode connectionErrorCode) {
 
                 }
+
+                @Override
+                public void onDatabaseOpened(RongIMClient.DatabaseOpenStatus databaseOpenStatus) {
+
+                }
+
+
             });
         }
     }

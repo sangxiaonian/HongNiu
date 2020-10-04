@@ -7,6 +7,8 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.amap.api.services.core.PoiItem;
+import com.fy.androidlibrary.utils.SharedPreferencesUtils;
+
 import com.google.gson.Gson;
 import com.hongniu.baselibrary.R;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
@@ -14,7 +16,6 @@ import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.LoginBean;
 import com.hongniu.baselibrary.entity.LoginPersonInfor;
-import com.sang.common.utils.SharedPreferencesUtils;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 
 /**

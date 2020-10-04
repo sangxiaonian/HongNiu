@@ -5,8 +5,8 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -19,11 +19,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.fy.androidlibrary.widget.editext.PointLengthFilter;
+import com.fy.androidlibrary.widget.editext.SpaceFilter;
 import com.sang.common.R;
-import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.JLog;
-import com.sang.common.utils.PointLengthFilter;
-import com.sang.common.utils.SpaceFilter;
+import com.fy.androidlibrary.utils.DeviceUtils;
+import com.fy.androidlibrary.utils.JLog;
 
 /**
  * 作者： ${桑小年} on 2018/8/2.

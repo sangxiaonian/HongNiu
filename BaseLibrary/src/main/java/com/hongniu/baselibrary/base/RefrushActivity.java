@@ -1,16 +1,16 @@
 package com.hongniu.baselibrary.base;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.fy.androidlibrary.net.rx.BaseObserver;
+import com.fy.androidlibrary.net.rx.RxUtils;
 import com.hongniu.baselibrary.R;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.widget.XRefreshLayout;
-import com.sang.common.net.rx.BaseObserver;
-import com.sang.common.net.rx.RxUtils;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -127,7 +127,7 @@ public abstract class RefrushActivity<T> extends BaseActivity implements OnRefre
     }
 
     @Override
-    public void onTaskFail(Throwable e, String code, String msg) {
+    public void onTaskFail(Throwable e, int code, String msg) {
         super.onTaskFail(e, code, msg);
         refresh.finishLoadMore();
         refresh.finishRefresh();

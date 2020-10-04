@@ -14,7 +14,7 @@ import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
-import com.sang.common.utils.CommonUtils;
+import com.hongniu.baselibrary.entity.CommonBean;
 
 import java.util.List;
 

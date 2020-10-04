@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.SystemClock;
 import android.text.TextUtils;
-import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.github.barteksc.pdfviewer.PDFView;
@@ -15,8 +14,8 @@ import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.supply.R;
-import com.sang.common.net.download.DownloadUtil;
-import com.sang.common.utils.JLog;
+import com.fy.androidlibrary.net.download.DownloadUtil;
+import com.fy.androidlibrary.utils.JLog;
 
 import java.io.File;
 import java.util.List;

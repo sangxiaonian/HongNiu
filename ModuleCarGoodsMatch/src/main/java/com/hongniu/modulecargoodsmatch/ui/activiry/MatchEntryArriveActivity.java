@@ -3,9 +3,10 @@ package com.hongniu.modulecargoodsmatch.ui.activiry;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +14,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.fy.androidlibrary.utils.CollectionUtils;
+import com.fy.androidlibrary.utils.CommonUtils;
 import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
@@ -29,8 +32,7 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.sang.common.recycleview.holder.PeakHolder;
-import com.sang.common.utils.CommonUtils;
-import com.sang.common.utils.ToastUtils;
+import com.fy.androidlibrary.toast.ToastUtils;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
@@ -222,7 +224,7 @@ public class MatchEntryArriveActivity extends BaseActivity implements OnItemDele
         MatchEntryArriveParams params=new MatchEntryArriveParams();
         params.setId(id);
         List<String> result = imageUtils.getResult();
-        if (result.size() == 0 && CommonUtils.isEmptyCollection(pics)) {
+        if (result.size() == 0 && CollectionUtils.isEmpty(pics)) {
             result = null;
         }
         params.setImageUrls(result);

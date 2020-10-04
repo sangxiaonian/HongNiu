@@ -17,7 +17,8 @@
             android:layout_height="0dp"
             android:layout_weight="1">
 
-            <android.support.constraint.ConstraintLayout
+<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/app_gap">
@@ -44,7 +45,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="等待司机送达" />
 
-                <android.support.v7.widget.CardView
+                <androidx.cardview.widget.CardView
                     android:id="@+id/card_order_info"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -59,7 +60,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_state">
 
-                    <android.support.constraint.ConstraintLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="25dp"
@@ -67,7 +68,7 @@
                         android:layout_marginRight="25dp"
                         android:layout_marginBottom="20dp">
 
-                        <android.support.constraint.Group
+                        <androidx.constraintlayout.widget.Group
                             android:id="@+id/group"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -307,12 +308,12 @@
                         </LinearLayout>
 
 
-                    </android.support.constraint.ConstraintLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                </android.support.v7.widget.CardView>
+                </androidx.cardview.widget.CardView>
 
 
-                <android.support.v7.widget.CardView
+                <androidx.cardview.widget.CardView
                     android:id="@+id/card_receive"
 
                     android:layout_width="0dp"
@@ -345,7 +346,7 @@
                             android:textSize="17sp" />
 
 
-                        <android.support.v7.widget.RecyclerView
+                        <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/recycler_receive"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -362,9 +363,9 @@
 
                     </LinearLayout>
 
-                </android.support.v7.widget.CardView>
+                </androidx.cardview.widget.CardView>
 
-                <android.support.v7.widget.CardView
+                <androidx.cardview.widget.CardView
                     android:id="@+id/card_estimate"
 
                     android:layout_width="0dp"
@@ -423,9 +424,9 @@
 
                     </LinearLayout>
 
-                </android.support.v7.widget.CardView>
+                </androidx.cardview.widget.CardView>
 
-                <android.support.v7.widget.CardView
+                <androidx.cardview.widget.CardView
                     android:id="@+id/card_owner_estimate"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -482,10 +483,10 @@
 
                     </LinearLayout>
 
-                </android.support.v7.widget.CardView>
+                </androidx.cardview.widget.CardView>
 
 
-                <android.support.v7.widget.CardView
+                <androidx.cardview.widget.CardView
                     android:id="@+id/card_price"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -530,10 +531,10 @@
 
                     </LinearLayout>
 
-                </android.support.v7.widget.CardView>
+                </androidx.cardview.widget.CardView>
 
 
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </ScrollView>
@@ -548,7 +549,7 @@
                 android:id="@+id/img_call"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/rc_voip_phone" />
+                />
 
             <TextView
                 android:id="@+id/tv_button"

@@ -3,26 +3,24 @@ package com.hongniu.moduleorder.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.TextView;
 
+import androidx.viewpager.widget.ViewPager;
+
+import com.fy.androidlibrary.utils.CollectionUtils;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
-import com.hongniu.baselibrary.utils.PictureSelectorUtils;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.ui.adapter.SimpleFragmentAdapter;
-import com.luck.picture.lib.PictureExternalPreviewActivity;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.widget.PreviewViewPager;
-import com.sang.common.event.BusFactory;
-import com.sang.common.utils.CommonUtils;
+import com.fy.androidlibrary.event.BusFactory;
+import com.hongniu.baselibrary.entity.CommonBean;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
-import com.sang.common.widget.dialog.inter.DialogControl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -68,7 +66,7 @@ public class OrderScanReceiptActivity extends BaseActivity implements ViewPager.
         Intent intent = getIntent();
         currentPosition = intent.getIntExtra(index, 0);
         ArrayList<String> extra = intent.getStringArrayListExtra(previewList);
-        if (!CommonUtils.isEmptyCollection(extra)) {
+        if (!CollectionUtils.isEmpty(extra)) {
             lists.addAll(extra);
         }
         changeIndex(currentPosition);

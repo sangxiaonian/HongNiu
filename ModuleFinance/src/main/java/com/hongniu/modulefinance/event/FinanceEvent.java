@@ -1,6 +1,6 @@
 package com.hongniu.modulefinance.event;
 
-import com.sang.common.event.IBus;
+import com.fy.androidlibrary.event.IBus;
 
 import java.util.Date;
 

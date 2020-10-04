@@ -1,7 +1,7 @@
 package com.hongniu.modulefinance.ui.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +15,8 @@ import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.modulefinance.R;
 import com.hongniu.modulefinance.control.OnItemClickListener;
-import com.hongniu.modulefinance.entity.BalanceOfAccountBean;
 import com.hongniu.modulefinance.entity.NiuOfAccountBean;
 import com.hongniu.modulefinance.net.HttpFinanceFactory;
-import com.hongniu.modulefinance.ui.adapter.BalanceOfAccountAdapter;
 import com.hongniu.modulefinance.ui.adapter.NiuOfAccountAdapter;
 import com.sang.common.recycleview.adapter.XAdapter;
 

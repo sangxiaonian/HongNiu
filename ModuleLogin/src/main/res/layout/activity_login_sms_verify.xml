@@ -10,7 +10,7 @@
 
     <include layout="@layout/toolbar" />
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -61,7 +61,7 @@
             app:layout_constraintStart_toStartOf="@+id/vercationview"
             app:layout_constraintTop_toBottomOf="@+id/vercationview" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </LinearLayout>

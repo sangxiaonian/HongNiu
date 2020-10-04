@@ -1,18 +1,16 @@
 package com.hongniu.moduleorder.ui.adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v4.view.PagerAdapter;
+import androidx.annotation.NonNull;
+import androidx.viewpager.widget.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.hongniu.moduleorder.R;
-import com.luck.picture.lib.config.PictureMimeType;
-import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.photoview.PhotoView;
 import com.luck.picture.lib.widget.longimage.SubsamplingScaleImageView;
-import com.sang.common.imgload.ImageLoader;
+import com.fy.androidlibrary.imgload.ImageLoader;
 
 import java.util.List;
 

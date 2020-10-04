@@ -11,9 +11,10 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.Nullable;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
+import androidx.annotation.Nullable;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -108,7 +109,7 @@ public class PictureExternalPreviewActivity extends PictureBaseActivity implemen
         this.adapter = new PictureExternalPreviewActivity.SimpleFragmentAdapter();
         this.viewPager.setAdapter(this.adapter);
         this.viewPager.setCurrentItem(this.position);
-        this.viewPager.addOnPageChangeListener(new OnPageChangeListener() {
+        this.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
 

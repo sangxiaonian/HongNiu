@@ -7,7 +7,7 @@ import com.hongniu.baselibrary.entity.PayOrderInfor;
 import com.hongniu.baselibrary.entity.WalletDetail;
 import com.hongniu.baselibrary.entity.OrderInsuranceInforBean;
 import com.hongniu.moduleorder.entity.OrderInsuranceParam;
-import com.sang.common.net.listener.TaskControl;
+import com.fy.androidlibrary.net.listener.TaskControl;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
 
 import java.util.List;

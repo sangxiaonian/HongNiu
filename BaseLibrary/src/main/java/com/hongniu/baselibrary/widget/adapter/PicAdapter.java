@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import com.hongniu.baselibrary.R;
 import com.sang.common.recycleview.inter.OnItemClickListener;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.sang.common.imgload.ImageLoader;
+import com.fy.androidlibrary.imgload.ImageLoader;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 

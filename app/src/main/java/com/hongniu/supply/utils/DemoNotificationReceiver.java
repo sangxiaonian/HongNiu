@@ -2,27 +2,22 @@ package com.hongniu.supply.utils;
 
 import android.content.Context;
 
-import com.sang.common.utils.JLog;
+import com.fy.androidlibrary.utils.JLog;
 
+import io.rong.push.PushType;
 import io.rong.push.notification.PushMessageReceiver;
 import io.rong.push.notification.PushNotificationMessage;
 
 public class DemoNotificationReceiver extends PushMessageReceiver {
+
+
     @Override
-    public boolean onNotificationMessageArrived(Context context, PushNotificationMessage message) {
+    public boolean onNotificationMessageArrived(Context context, PushType pushType, PushNotificationMessage pushNotificationMessage) {
         return false;
     }
 
     @Override
-    public boolean onNotificationMessageClicked(Context context, PushNotificationMessage message) {
-        JLog.i("被点击了");
-
+    public boolean onNotificationMessageClicked(Context context, PushType pushType, PushNotificationMessage pushNotificationMessage) {
         return false;
-    }
-
-    @Override
-    public void onThirdPartyPushState(String pushType, String action, long resultCode) {
-        super.onThirdPartyPushState(pushType, action, resultCode);
-        JLog.i("第三方推送结果：" + resultCode);
     }
 }

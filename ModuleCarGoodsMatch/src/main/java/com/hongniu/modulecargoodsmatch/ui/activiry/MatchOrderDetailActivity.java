@@ -1,9 +1,10 @@
 package com.hongniu.modulecargoodsmatch.ui.activiry;
 
 import android.os.Bundle;
-import android.support.constraint.Group;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.constraintlayout.widget.Group;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import com.amap.api.navi.AmapNaviPage;
 import com.amap.api.navi.AmapNaviParams;
 import com.amap.api.navi.AmapNaviType;
 import com.amap.api.navi.model.AMapCarInfo;
+import com.fy.androidlibrary.net.error.NetException;
+import com.fy.androidlibrary.utils.CommonUtils;
 import com.hedgehog.ratingbar.RatingBar;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
@@ -33,12 +36,10 @@ import com.hongniu.modulecargoodsmatch.entity.MathDriverReceiveBean;
 import com.hongniu.modulecargoodsmatch.net.HttpMatchFactory;
 import com.hongniu.modulecargoodsmatch.presenter.MatchOrderDetaPresenter;
 import com.hongniu.modulecargoodsmatch.widget.DriverDialog;
-import com.sang.common.imgload.ImageLoader;
-import com.sang.common.net.error.NetException;
+import com.fy.androidlibrary.imgload.ImageLoader;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
-import com.sang.common.utils.CommonUtils;
-import com.sang.common.utils.ToastUtils;
+import com.fy.androidlibrary.toast.ToastUtils;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;

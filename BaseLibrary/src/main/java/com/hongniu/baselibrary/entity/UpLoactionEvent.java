@@ -1,6 +1,6 @@
 package com.hongniu.baselibrary.entity;
 
-import com.sang.common.event.IBus;
+import com.fy.androidlibrary.event.IBus;
 
 /**
  * 开始或者停止用户信息上传的数据

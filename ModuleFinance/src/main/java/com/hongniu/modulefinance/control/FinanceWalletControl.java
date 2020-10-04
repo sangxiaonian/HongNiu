@@ -1,7 +1,6 @@
 package com.hongniu.modulefinance.control;
 
-import com.hongniu.modulefinance.ui.FinanceWalletActivity;
-import com.sang.common.net.listener.TaskControl;
+import com.fy.androidlibrary.net.listener.TaskControl;
 
 /**
  * 作者： ${PING} on 2018/10/8.

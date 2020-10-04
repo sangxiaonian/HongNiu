@@ -3,14 +3,16 @@ package com.hongniu.moduleorder.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.fy.androidlibrary.utils.CollectionUtils;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
@@ -29,10 +31,10 @@ import com.hongniu.baselibrary.widget.adapter.PicAdapter;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.sang.common.event.BusFactory;
+import com.fy.androidlibrary.event.BusFactory;
 import com.sang.common.recycleview.holder.PeakHolder;
-import com.sang.common.utils.CommonUtils;
-import com.sang.common.utils.ToastUtils;
+import com.hongniu.baselibrary.entity.CommonBean;
+import com.fy.androidlibrary.toast.ToastUtils;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
@@ -156,7 +158,7 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
         if (bean != null) {
             this.bean = event.bean;
             etRemark.setText(bean.getRemark() == null ? "" : bean.getRemark());
-            if (!CommonUtils.isEmptyCollection(bean.getImages())) {
+            if (!CollectionUtils.isEmpty(bean.getImages())) {
                 for (UpImgData imagesBean : bean.getImages()) {
                     LocalMedia media = new LocalMedia();
                     media.setPath(imagesBean.getAbsolutePath());
@@ -177,7 +179,7 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
             if (imageUtils.isFinish()){
                 // 如果没有更改过图片，则不上传
                 List<String> result = imageUtils.getResult();
-                if (result.size()==0&&!CommonUtils.isEmptyCollection(pics)){
+                if (result.size()==0&&!CollectionUtils.isEmpty(pics)){
                     result=null;
                 }
                 //点击保存按钮

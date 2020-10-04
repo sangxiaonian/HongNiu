@@ -13,7 +13,7 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.base.BaseFragment;
 import com.hongniu.supply.R;
-import com.sang.common.utils.ToastUtils;
+import com.fy.androidlibrary.toast.ToastUtils;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 import io.rong.imkit.fragment.ConversationListFragment;

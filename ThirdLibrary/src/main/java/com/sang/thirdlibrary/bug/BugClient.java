@@ -2,7 +2,7 @@ package com.sang.thirdlibrary.bug;
 
 import android.content.Context;
 
-import com.sang.common.utils.DeviceUtils;
+import com.fy.androidlibrary.utils.DeviceUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 

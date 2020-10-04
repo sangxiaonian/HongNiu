@@ -1,7 +1,7 @@
 package com.sang.common.widget;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -16,7 +16,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.sang.common.R;
-import com.sang.common.utils.DeviceUtils;
+import com.fy.androidlibrary.utils.DeviceUtils;
 
 /**
  * 作者： ${PING} on 2018/1/12.

@@ -1,16 +1,9 @@
 package com.hongniu.baselibrary.widget;
 
 import android.app.Activity;
-import android.content.Context;
 
-import com.hongniu.baselibrary.base.NetObserver;
-import com.hongniu.baselibrary.entity.QueryPayPassword;
-import com.hongniu.baselibrary.net.HttpAppFactory;
-import com.hongniu.baselibrary.utils.Utils;
-import com.sang.common.net.listener.TaskControl;
-import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.ToastUtils;
-import com.sang.common.widget.dialog.LoadDialog;
+import com.fy.androidlibrary.net.listener.TaskControl;
+import com.fy.androidlibrary.toast.ToastUtils;
 import com.sang.common.widget.dialog.PasswordDialog;
 import com.sang.common.widget.dialog.inter.DialogControl;
 
@@ -135,7 +128,7 @@ public class PayPasswordKeyBord implements PasswordDialog.OnPasswordDialogListen
     }
 
     @Override
-    public void onTaskFail(Throwable e, String code, String msg) {
+    public void onTaskFail(Throwable e, int code, String msg) {
         if (taskListener != null) {
             taskListener.onTaskFail(e, code, msg);
         }

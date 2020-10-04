@@ -13,6 +13,9 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.fy.androidlibrary.net.rx.BaseObserver;
+import com.fy.androidlibrary.utils.CollectionUtils;
+import com.fy.androidlibrary.utils.CommonUtils;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
@@ -33,14 +36,13 @@ import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.sang.common.entity.Citys;
 import com.sang.common.entity.NewAreaBean;
-import com.sang.common.event.BusFactory;
-import com.sang.common.imgload.ImageLoader;
-import com.sang.common.net.rx.BaseObserver;
-import com.sang.common.net.rx.RxUtils;
-import com.sang.common.utils.CommonUtils;
-import com.sang.common.utils.DeviceUtils;
+import com.fy.androidlibrary.event.BusFactory;
+import com.fy.androidlibrary.imgload.ImageLoader;
+import com.fy.androidlibrary.net.rx.RxUtils;
+import com.hongniu.baselibrary.entity.CommonBean;
+import com.fy.androidlibrary.utils.DeviceUtils;
 import com.sang.common.utils.LoginUtils;
-import com.sang.common.utils.ToastUtils;
+import com.fy.androidlibrary.toast.ToastUtils;
 import com.sang.common.widget.ItemView;
 
 import java.util.ArrayList;
@@ -434,7 +436,7 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
         List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
         HttpMedia media = null;
         LocalMedia result = null;
-        if (!CommonUtils.isEmptyCollection(selectList)) {
+        if (!CollectionUtils.isEmpty(selectList)) {
             media = new HttpMedia();
             result = selectList.get(0);
             media.setPath(result.getPath());
@@ -486,7 +488,7 @@ public class LoginPersonInforActivity extends BaseActivity implements View.OnCli
                     .subscribe(new NetObserver<List<UpImgData>>(null) {
                         @Override
                         public void doOnSuccess(List<UpImgData> data) {
-                            if (!CommonUtils.isEmptyCollection(data)) {
+                            if (!CollectionUtils.isEmpty(data)) {
                                 media.setPath(data.get(0).getPath());
                                 media.setState(1);
                             }

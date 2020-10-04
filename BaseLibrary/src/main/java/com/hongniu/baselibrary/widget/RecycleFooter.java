@@ -2,7 +2,7 @@ package com.hongniu.baselibrary.widget;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -13,8 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hongniu.baselibrary.R;
-import com.sang.common.imgload.ImageLoader;
-import com.sang.common.utils.DeviceUtils;
+import com.fy.androidlibrary.imgload.ImageLoader;
+import com.fy.androidlibrary.utils.DeviceUtils;
 import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
     </LinearLayout>
 
 
-    <android.support.v7.widget.CardView
+    <androidx.appcompat.widget.CardView
         android:id="@+id/card_balance"
         style="@style/home_card"
         android:layout_height="115dp"
@@ -107,7 +107,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view_top_bg">
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingLeft="@dimen/app_gap"
@@ -163,11 +163,11 @@
                 android:orientation="horizontal"
                 app:layout_constraintGuide_begin="38dp" />
 
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </android.support.v7.widget.CardView>
+    </androidx.appcompat.widget.CardView>
 
-    <android.support.v7.widget.CardView
+    <androidx.appcompat.widget.CardView
         android:id="@+id/card_left"
         style="@style/home_card"
         android:layout_height="wrap_content"
@@ -213,9 +213,9 @@
                 android:src="@mipmap/lingdan" />
 
         </LinearLayout>
-    </android.support.v7.widget.CardView>
+    </androidx.appcompat.widget.CardView>
 
-    <android.support.v7.widget.CardView
+    <androidx.appcompat.widget.CardView
         android:id="@+id/card_policy"
         style="@style/home_card"
         android:layout_height="wrap_content"
@@ -261,10 +261,10 @@
         </LinearLayout>
 
 
-    </android.support.v7.widget.CardView>
+    </androidx.appcompat.widget.CardView>
 
 
-    <android.support.v7.widget.CardView
+    <androidx.appcompat.widget.CardView
         android:id="@+id/card_yongjin"
         style="@style/home_card"
         android:layout_width="0dp"
@@ -311,9 +311,9 @@
 
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
+    </androidx.appcompat.widget.CardView>
 
-    <android.support.v7.widget.CardView
+    <androidx.appcompat.widget.CardView
         android:id="@+id/card_etc"
         style="@style/home_card"
         android:layout_height="wrap_content"
@@ -359,7 +359,7 @@
 
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
+    </androidx.appcompat.widget.CardView>
 
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

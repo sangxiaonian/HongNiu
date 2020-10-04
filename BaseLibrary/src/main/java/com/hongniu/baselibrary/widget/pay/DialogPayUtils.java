@@ -2,11 +2,12 @@ package com.hongniu.baselibrary.widget.pay;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v4.app.FragmentManager;
+import androidx.fragment.app.FragmentManager;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.TextView;
 
+import com.fy.androidlibrary.toast.ToastUtils;
+import com.fy.androidlibrary.utils.ConvertUtils;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.NetObserver;
@@ -17,9 +18,7 @@ import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.PayPasswordKeyBord;
 import com.hongniu.baselibrary.widget.dialog.PayDialog;
-import com.sang.common.net.listener.TaskControl;
-import com.sang.common.utils.ConvertUtils;
-import com.sang.common.utils.ToastUtils;
+import com.fy.androidlibrary.net.listener.TaskControl;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.inter.DialogControl;
 import com.sang.thirdlibrary.pay.entiy.PayBean;

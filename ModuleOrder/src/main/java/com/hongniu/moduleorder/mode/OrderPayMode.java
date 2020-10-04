@@ -2,6 +2,7 @@ package com.hongniu.moduleorder.mode;
 
 import android.text.TextUtils;
 
+import com.fy.androidlibrary.utils.CollectionUtils;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderInsuranceInforBean;
 import com.hongniu.baselibrary.entity.PayOrderInfor;
@@ -10,8 +11,8 @@ import com.hongniu.baselibrary.entity.WalletDetail;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.moduleorder.control.OrderPayControl;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
-import com.sang.common.utils.CommonUtils;
-import com.sang.common.utils.ConvertUtils;
+import com.hongniu.baselibrary.entity.CommonBean;
+import com.fy.androidlibrary.utils.ConvertUtils;
 import com.sang.thirdlibrary.pay.PayConfig;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
 
@@ -297,7 +298,7 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
     public void saveInsruancUserInfor(List<OrderInsuranceInforBean> data) {
         this.insurancUserInfr = data;
         //如果当前没有选中，就默认选中默认数据
-        if (!CommonUtils.isEmptyCollection(insurancUserInfr) && currentInsurancInfor == null) {
+        if (!CollectionUtils.isEmpty(insurancUserInfr) && currentInsurancInfor == null) {
 
             for (OrderInsuranceInforBean orderInsuranceInforBean : insurancUserInfr) {
                 if (orderInsuranceInforBean.isIsDefault()) {

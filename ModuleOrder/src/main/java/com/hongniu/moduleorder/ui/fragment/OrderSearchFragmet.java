@@ -1,7 +1,7 @@
 package com.hongniu.moduleorder.ui.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -18,7 +18,7 @@ import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.SwitchStateListener;
 import com.sang.common.widget.popu.OrderMainPop;
 import com.hongniu.moduleorder.widget.OrderTimePop;
-import com.sang.common.utils.ConvertUtils;
+import com.fy.androidlibrary.utils.ConvertUtils;
 import com.sang.common.widget.SwitchTextLayout;
 import com.sang.common.widget.popu.BasePopu;
 import com.sang.common.widget.popu.inter.OnPopuDismissListener;

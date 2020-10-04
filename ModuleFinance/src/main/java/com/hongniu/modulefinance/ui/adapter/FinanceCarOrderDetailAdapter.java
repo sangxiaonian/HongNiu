@@ -11,7 +11,7 @@ import com.hongniu.modulefinance.control.OnItemClickListener;
 import com.hongniu.modulefinance.entity.FinanceQueryCarDetailBean;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
-import com.sang.common.utils.ConvertUtils;
+import com.fy.androidlibrary.utils.ConvertUtils;
 
 import java.util.List;
 

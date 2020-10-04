@@ -12,7 +12,7 @@ import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.H5Config;
 import com.hongniu.modulelogin.R;
-import com.sang.common.utils.DeviceUtils;
+import com.fy.androidlibrary.utils.DeviceUtils;
 import com.sang.common.widget.ItemView;
 
 @Route(path = ArouterParamLogin.activity_about_us)

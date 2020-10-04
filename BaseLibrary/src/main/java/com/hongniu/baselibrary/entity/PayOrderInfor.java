@@ -1,6 +1,6 @@
 package com.hongniu.baselibrary.entity;
 
-import com.sang.common.event.IBus;
+import com.fy.androidlibrary.event.IBus;
 
 /**
  * 作者： ${PING} on 2019/5/22.

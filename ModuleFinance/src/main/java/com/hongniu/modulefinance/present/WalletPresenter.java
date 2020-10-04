@@ -2,7 +2,7 @@ package com.hongniu.modulefinance.present;
 
 import com.hongniu.modulefinance.control.FinanceWalletControl;
 import com.hongniu.modulefinance.mode.FinanceWalletMode;
-import com.sang.common.net.listener.TaskControl;
+import com.fy.androidlibrary.net.listener.TaskControl;
 
 /**
  * 作者： ${PING} on 2018/10/8.

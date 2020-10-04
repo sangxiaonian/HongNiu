@@ -3,16 +3,13 @@ package com.hongniu.moduleorder.ui.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.text.TextUtils;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.amap.api.location.AMapLocation;
-import com.amap.api.location.AMapLocationListener;
 import com.githang.statusbar.StatusBarCompat;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
@@ -20,35 +17,20 @@ import com.hongniu.baselibrary.base.BaseFragment;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.event.Event;
-import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventParams;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.moduleorder.R;
-import com.hongniu.moduleorder.control.OrderEvent;
 import com.hongniu.moduleorder.control.OrderMainControl;
 import com.hongniu.moduleorder.control.SwitchStateListener;
-import com.hongniu.moduleorder.utils.LoactionUpUtils;
 import com.hongniu.moduleorder.widget.OrderMainTitlePop;
-import com.sang.common.event.BusFactory;
-import com.sang.common.utils.ConvertUtils;
-import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.JLog;
+import com.fy.androidlibrary.event.BusFactory;
 import com.sang.common.widget.SwitchTextLayout;
-import com.sang.common.widget.dialog.CenterAlertDialog;
-import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
-import com.sang.common.widget.dialog.inter.DialogControl;
 import com.sang.common.widget.popu.BasePopu;
 import com.sang.common.widget.popu.inter.OnPopuDismissListener;
-import com.sang.thirdlibrary.map.LoactionUtils;
-import com.sang.thirdlibrary.map.utils.MapConverUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import java.util.List;
-
-import io.rong.eventbus.EventBus;
 
 import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CARGO_OWNER;
 import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CAR_OWNER;

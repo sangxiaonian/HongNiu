@@ -1,7 +1,7 @@
 package com.hongniu.modulefinance.ui.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -22,7 +22,7 @@ import com.hongniu.modulefinance.net.HttpFinanceFactory;
 import com.hongniu.modulefinance.ui.adapter.BalanceOfAccountAdapter;
 import com.hongniu.modulefinance.widget.WithDrawDialog;
 import com.sang.common.recycleview.adapter.XAdapter;
-import com.sang.common.utils.ToastUtils;
+import com.fy.androidlibrary.toast.ToastUtils;
 import com.sang.common.widget.dialog.builder.BottomAlertBuilder;
 
 import java.util.List;

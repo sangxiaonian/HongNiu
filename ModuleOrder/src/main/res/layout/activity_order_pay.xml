@@ -21,7 +21,7 @@
             android:orientation="vertical"
             android:paddingBottom="@dimen/app_model_gap">
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -62,7 +62,7 @@
                     android:orientation="horizontal"
                     app:layout_constraintGuide_begin="80dp" />
 
-                <android.support.v7.widget.CardView
+                <androidx.cardview.widget.CardView
                     android:id="@+id/card_insurance"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/guideline2">
 
-                    <android.support.constraint.ConstraintLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/con_buy"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -144,10 +144,10 @@
                             app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/linearLayout2" />
-                    </android.support.constraint.ConstraintLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-                    <android.support.constraint.ConstraintLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/con_insurance"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -271,15 +271,15 @@
                             app:layout_constraintTop_toTopOf="@id/tv_instances_per_infor"
                             app:srcCompat="@drawable/icon_go_999999" />
 
-                    </android.support.constraint.ConstraintLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                </android.support.v7.widget.CardView>
-
-
-            </android.support.constraint.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
 
 
-            <android.support.v7.widget.CardView
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.appcompat.widget.CardView
                 android:id="@+id/rl_tran"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -426,7 +426,7 @@
                 </LinearLayout>
 
 
-            </android.support.v7.widget.CardView>
+            </androidx.appcompat.widget.CardView>
 
             <LinearLayout
                 android:id="@+id/pay_online"

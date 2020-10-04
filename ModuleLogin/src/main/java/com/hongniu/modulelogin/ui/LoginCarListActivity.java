@@ -15,7 +15,7 @@ import com.hongniu.modulelogin.R;
 import com.hongniu.baselibrary.entity.CarInforBean;
 import com.hongniu.modulelogin.entity.LoginEvent;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
-import com.sang.common.event.BusFactory;
+import com.fy.androidlibrary.event.BusFactory;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 

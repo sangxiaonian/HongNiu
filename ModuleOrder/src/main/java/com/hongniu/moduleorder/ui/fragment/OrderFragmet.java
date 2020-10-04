@@ -2,7 +2,7 @@ package com.hongniu.moduleorder.ui.fragment;
 
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +12,7 @@ import com.amap.api.maps.model.Poi;
 import com.amap.api.navi.AmapNaviPage;
 import com.amap.api.navi.AmapNaviParams;
 import com.amap.api.navi.AmapNaviType;
+import com.fy.androidlibrary.utils.CollectionUtils;
 import com.google.gson.Gson;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
@@ -48,13 +49,13 @@ import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.ui.OrderScanReceiptActivity;
 import com.hongniu.moduleorder.ui.WaitePayActivity;
 import com.hongniu.baselibrary.utils.LoactionCollectionUtils;
-import com.sang.common.event.BusFactory;
+import com.fy.androidlibrary.event.BusFactory;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
-import com.sang.common.utils.CommonUtils;
-import com.sang.common.utils.ConvertUtils;
-import com.sang.common.utils.JLog;
-import com.sang.common.utils.ToastUtils;
+import com.hongniu.baselibrary.entity.CommonBean;
+import com.fy.androidlibrary.utils.ConvertUtils;
+import com.fy.androidlibrary.utils.JLog;
+import com.fy.androidlibrary.toast.ToastUtils;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
@@ -546,7 +547,7 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
                     public void doOnSuccess(QueryReceiveBean data) {
                         final List<String> list = new ArrayList<>();
                         List<UpImgData> images = data.getImages();
-                        if (!CommonUtils.isEmptyCollection(images)) {
+                        if (!CollectionUtils.isEmpty(images)) {
                             for (UpImgData image : images) {
                                 list.add(image.getAbsolutePath());
                             }
@@ -622,7 +623,7 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
                     @Override
                     public void doOnSuccess(List<UpImgData> data) {
                         final List<String> list = new ArrayList<>();
-                        if (!CommonUtils.isEmptyCollection(data)) {
+                        if (!CollectionUtils.isEmpty(data)) {
                             for (UpImgData image : data) {
                                 list.add(image.getAbsolutePath());
                             }

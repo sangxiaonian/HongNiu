@@ -1,14 +1,14 @@
 package com.sang.common.recycleview.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+
 import android.view.ViewGroup;
 
+import androidx.recyclerview.widget.RecyclerView;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.recycleview.holder.PeakHolder;
 import com.sang.common.recycleview.inter.IXAdapter;
 import com.sang.common.recycleview.inter.OnItemTouchHelper;
-import com.sang.common.utils.JLog;
 
 import java.util.ArrayList;
 import java.util.Collections;

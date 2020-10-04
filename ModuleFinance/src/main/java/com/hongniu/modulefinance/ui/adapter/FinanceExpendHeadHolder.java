@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.modulefinance.R;
 import com.sang.common.recycleview.holder.PeakHolder;
-import com.sang.common.utils.ConvertUtils;
+import com.fy.androidlibrary.utils.ConvertUtils;
 import com.sang.common.widget.VistogramView;
 import com.sang.common.widget.guideview.BaseGuide;
 

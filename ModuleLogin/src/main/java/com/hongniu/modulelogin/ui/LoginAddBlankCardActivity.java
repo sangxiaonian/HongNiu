@@ -13,7 +13,7 @@ import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.modulelogin.R;
 import com.hongniu.baselibrary.entity.PayInforBeans;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
-import com.sang.common.utils.ToastUtils;
+import com.fy.androidlibrary.toast.ToastUtils;
 import com.sang.common.widget.ItemView;
 
 /**

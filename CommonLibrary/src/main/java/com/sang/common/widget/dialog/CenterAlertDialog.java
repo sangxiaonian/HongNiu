@@ -4,7 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -14,8 +14,8 @@ import android.view.Window;
 import android.widget.TextView;
 
 import com.sang.common.R;
-import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.JLog;
+import com.fy.androidlibrary.utils.DeviceUtils;
+import com.fy.androidlibrary.utils.JLog;
 import com.sang.common.widget.dialog.inter.DialogControl;
 
 /**

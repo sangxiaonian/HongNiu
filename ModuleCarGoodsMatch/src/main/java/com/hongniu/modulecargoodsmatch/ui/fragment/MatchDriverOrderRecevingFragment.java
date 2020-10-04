@@ -2,12 +2,14 @@ package com.hongniu.modulecargoodsmatch.ui.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.fy.androidlibrary.net.error.NetException;
+import com.fy.androidlibrary.utils.CommonUtils;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
@@ -28,15 +30,13 @@ import com.hongniu.modulecargoodsmatch.ui.holder.MatchOrderInfoHolder;
 import com.hongniu.modulecargoodsmatch.utils.MatchOrderListHelper;
 import com.hongniu.modulecargoodsmatch.widget.CancelOrderDialog;
 import com.hongniu.modulecargoodsmatch.widget.DriverDialog;
-import com.sang.common.net.error.NetException;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
-import com.sang.common.utils.CommonUtils;
+
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
-import com.umeng.commonsdk.debug.D;
 
 import java.util.List;
 

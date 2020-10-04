@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 
-import com.sang.common.net.rx.RxUtils;
+import com.fy.androidlibrary.net.rx.RxUtils;
 import com.sang.thirdlibrary.pay.PayConfig;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;

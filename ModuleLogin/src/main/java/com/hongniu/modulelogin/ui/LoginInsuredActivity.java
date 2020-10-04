@@ -11,6 +11,10 @@ import android.widget.ImageView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.fy.androidlibrary.net.error.NetException;
+import com.fy.androidlibrary.net.rx.BaseObserver;
+import com.fy.androidlibrary.utils.CollectionUtils;
+import com.fy.androidlibrary.utils.CommonUtils;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.base.BaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
@@ -30,13 +34,11 @@ import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.sang.common.imgload.ImageLoader;
-import com.sang.common.net.error.NetException;
-import com.sang.common.net.rx.BaseObserver;
-import com.sang.common.net.rx.RxUtils;
-import com.sang.common.utils.CommonUtils;
-import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.ToastUtils;
+import com.fy.androidlibrary.imgload.ImageLoader;
+import com.fy.androidlibrary.net.rx.RxUtils;
+import com.hongniu.baselibrary.entity.CommonBean;
+import com.fy.androidlibrary.utils.DeviceUtils;
+import com.fy.androidlibrary.toast.ToastUtils;
 import com.sang.common.widget.ItemView;
 
 import java.util.ArrayList;
@@ -223,7 +225,7 @@ public class LoginInsuredActivity extends BaseActivity implements View.OnClickLi
                                             .map(new Function<CommonBean<List<UpImgData>>, String>() {
                                                 @Override
                                                 public String apply(CommonBean<List<UpImgData>> listCommonBean) throws Exception {
-                                                    if (CommonUtils.isEmptyCollection(listCommonBean.getData())) {
+                                                    if (CollectionUtils.isEmpty(listCommonBean.getData())) {
                                                         return "";
                                                     } else {
                                                         return listCommonBean.getData().get(0).getPath();
@@ -410,7 +412,7 @@ public class LoginInsuredActivity extends BaseActivity implements View.OnClickLi
                 case PictureConfig.CHOOSE_REQUEST:
                     // 图片、视频、音频选择结果回调
                     List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
-                    if (!CommonUtils.isEmptyCollection(selectList)) {
+                    if (!CollectionUtils.isEmpty(selectList)) {
                         LocalMedia media = selectList.get(0);
                         headPath = media.getCompressPath();
                         ImageLoader.getLoader().skipMemoryCache().load(mContext, image, media.getPath());

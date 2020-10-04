@@ -4,17 +4,13 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.amap.api.services.core.PoiItem;
-import com.hongniu.baselibrary.arouter.ArouterParamOrder;
-import com.hongniu.baselibrary.arouter.ArouterUtils;
+import com.fy.androidlibrary.utils.CollectionUtils;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.entity.OrderCreatParamBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
-import com.hongniu.baselibrary.entity.PayOrderInfor;
 import com.hongniu.baselibrary.entity.UpImgData;
-import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.order.CommonOrderUtils;
-import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderCreatControl;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
@@ -22,16 +18,13 @@ import com.hongniu.moduleorder.entity.OrderDriverPhoneBean;
 import com.hongniu.moduleorder.entity.OrderInsuranceParam;
 import com.hongniu.moduleorder.mode.OrderCreataMode;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.sang.common.event.BusFactory;
-import com.sang.common.net.listener.TaskControl;
-import com.sang.common.utils.CommonUtils;
+import com.fy.androidlibrary.net.listener.TaskControl;
+import com.hongniu.baselibrary.entity.CommonBean;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.disposables.Disposable;
-
-import static com.unionpay.sdk.ab.mContext;
 
 /**
  * 作者： ${PING} on 2019/5/23.
@@ -178,7 +171,7 @@ public class OrderCreataPresenter implements OrderCreatControl.IOrderCreataPrese
                     public void doOnSuccess(OrderDetailBean data) {
                         mode.saveOrderInfor(data);
                         view.showInfor(mode.getInfor());
-                        if (data != null && !CommonUtils.isEmptyCollection(data.getGoodsImages())) {
+                        if (data != null && !CollectionUtils.isEmpty(data.getGoodsImages())) {
                             List<LocalMedia> imageInfors = new ArrayList<>();
                             for (UpImgData imagesBean : data.getGoodsImages()) {
                                 LocalMedia media = new LocalMedia();

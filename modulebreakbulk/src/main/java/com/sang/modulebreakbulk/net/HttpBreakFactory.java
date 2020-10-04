@@ -1,9 +1,9 @@
 package com.sang.modulebreakbulk.net;
-
+import com.fy.androidlibrary.net.rx.RxUtils;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
-import com.sang.common.net.rx.RxUtils;
+
 import com.sang.modulebreakbulk.entity.BreakbulkCompanyInfoBean;
 import com.sang.modulebreakbulk.entity.BreakbulkCompanyInfoParam;
 import com.sang.modulebreakbulk.entity.BreakbulkConsignmentCreateParams;

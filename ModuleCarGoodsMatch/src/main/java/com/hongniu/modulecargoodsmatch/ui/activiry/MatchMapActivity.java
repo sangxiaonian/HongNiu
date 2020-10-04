@@ -2,9 +2,8 @@ package com.hongniu.modulecargoodsmatch.ui.activiry;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -30,8 +29,8 @@ import com.hongniu.modulecargoodsmatch.entity.TranMapBean;
 import com.sang.common.recycleview.XAdapterDataObserver;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.inter.OnItemClickListener;
-import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.JLog;
+import com.fy.androidlibrary.utils.DeviceUtils;
+import com.fy.androidlibrary.utils.JLog;
 import com.sang.thirdlibrary.map.MapUtils;
 
 import java.util.List;

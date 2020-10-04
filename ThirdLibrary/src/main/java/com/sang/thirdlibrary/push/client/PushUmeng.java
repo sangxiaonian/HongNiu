@@ -3,7 +3,7 @@ package com.sang.thirdlibrary.push.client;
 import android.content.Context;
 
 
-import com.sang.common.utils.DeviceUtils;
+import com.fy.androidlibrary.utils.DeviceUtils;
 import com.sang.thirdlibrary.push.NotificationUtils;
 import com.sang.thirdlibrary.push.inter.PlushDealWithMessageListener;
 import com.sang.thirdlibrary.push.inter.PlushRegisterListener;

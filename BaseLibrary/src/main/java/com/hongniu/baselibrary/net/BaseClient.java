@@ -1,14 +1,14 @@
 package com.hongniu.baselibrary.net;
 
+import com.fy.androidlibrary.net.HttpClient;
+import com.fy.androidlibrary.net.OkHttp;
+import com.fy.androidlibrary.utils.ConvertUtils;
 import com.hongniu.baselibrary.base.BaseApplication;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.LoginBean;
 import com.hongniu.baselibrary.utils.Utils;
-import com.sang.common.net.HttpClient;
-import com.sang.common.net.OkHttp;
-import com.sang.common.utils.ConvertUtils;
-import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.JLog;
+import com.fy.androidlibrary.utils.DeviceUtils;
+import com.fy.androidlibrary.utils.JLog;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -35,7 +35,7 @@ public class BaseClient {
     }
 
     private BaseClient() {
-        httpClient = new HttpClient(Param.url)
+        httpClient = new HttpClient()
                 .addInterceptor(new Interceptor() {
                     @Override
                     public Response intercept(Chain chain) throws IOException {

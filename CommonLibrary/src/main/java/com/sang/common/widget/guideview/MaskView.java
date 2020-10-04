@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-import com.sang.common.utils.DeviceUtils;
+import com.fy.androidlibrary.utils.DeviceUtils;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 

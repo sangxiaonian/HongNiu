@@ -22,9 +22,9 @@ import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.entity.OrderInsuranceParam;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.widget.dialog.BuyInsuranceDialog;
-import com.sang.common.utils.CommonUtils;
-import com.sang.common.utils.ConvertUtils;
-import com.sang.common.utils.ToastUtils;
+import com.hongniu.baselibrary.entity.CommonBean;
+import com.fy.androidlibrary.utils.ConvertUtils;
+import com.fy.androidlibrary.toast.ToastUtils;
 import com.sang.common.widget.ItemView;
 
 import io.reactivex.disposables.Disposable;

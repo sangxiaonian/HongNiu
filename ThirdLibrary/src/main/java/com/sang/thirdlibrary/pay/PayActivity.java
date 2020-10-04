@@ -4,10 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
-import com.sang.common.event.BusFactory;
-import com.sang.common.utils.ToastUtils;
+import com.fy.androidlibrary.event.BusFactory;
+import com.fy.androidlibrary.toast.ToastUtils;
 import com.sang.thirdlibrary.R;
 import com.sang.thirdlibrary.pay.ali.AliPay;
 import com.sang.thirdlibrary.pay.control.PayControl;

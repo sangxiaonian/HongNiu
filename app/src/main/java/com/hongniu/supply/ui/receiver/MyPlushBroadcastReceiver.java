@@ -11,7 +11,7 @@ import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.supply.entity.PushBean;
-import com.sang.common.utils.DeviceUtils;
+import com.fy.androidlibrary.utils.DeviceUtils;
 import com.sang.thirdlibrary.push.NotificationUtils;
 import com.sang.thirdlibrary.push.config.PushConfig;
 import com.umeng.message.entity.UMessage;

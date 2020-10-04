@@ -1,16 +1,14 @@
 package com.hongniu.moduleorder.widget.dialog;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.text.Editable;
 import android.text.InputFilter;
-import android.text.PrecomputedText;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextPaint;
@@ -29,12 +27,12 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.fy.androidlibrary.widget.editext.PointLengthFilter;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
-import com.sang.common.utils.DeviceUtils;
-import com.sang.common.utils.PointLengthFilter;
-import com.sang.common.utils.ToastUtils;
+import com.fy.androidlibrary.utils.DeviceUtils;
+import com.fy.androidlibrary.toast.ToastUtils;
 
 import io.reactivex.disposables.Disposable;
 
