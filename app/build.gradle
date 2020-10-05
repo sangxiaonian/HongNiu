@@ -62,21 +62,23 @@ android {
             // 为版本名添加后缀
             versionNameSuffix "-debug"
             buildConfigField "boolean", "debugMode", "true"
-            //自定义一些清单文件数据，根据打包自动更改
-            manifestPlaceholders = [RONG_CLOUD_APP_KEY: Debug_RONG_CLOUD_APP_KEY.toString()//融云聊天key
-                                    , GAODE_KEY       : GAODE_KEY.toString()//高德地图key
-                                    , HUAWEI_KEY      : HUAWEI_KEY.toString()//HUAWEI推送key
-            ]
+            buildConfigField "String", "RONG_CLOUD_APP_KEY", "\"e0x9wycfe4enq\""
+                    //自定义一些清单文件数据，根据打包自动更改
+                    manifestPlaceholders = [RONG_CLOUD_APP_KEY: Debug_RONG_CLOUD_APP_KEY.toString()//融云聊天key
+                                            , GAODE_KEY       : GAODE_KEY.toString()//高德地图key
+                                            , HUAWEI_KEY      : HUAWEI_KEY.toString()//HUAWEI推送key
+                    ]
             signingConfig signingConfigs.release
         }
         release {
 
             minifyEnabled false
+            buildConfigField "String", "RONG_CLOUD_APP_KEY", "\"x18ywvqfxbxhc\""
             buildConfigField "boolean", "debugMode", "false"
-            manifestPlaceholders = [RONG_CLOUD_APP_KEY: Releast_RONG_CLOUD_APP_KEY.toString()//融云聊天key
-                                    , GAODE_KEY       : GAODE_KEY.toString()//高德地图key
-                                    , HUAWEI_KEY      : HUAWEI_KEY.toString()//HUAWEI推送key
-            ]
+                    manifestPlaceholders = [RONG_CLOUD_APP_KEY: Releast_RONG_CLOUD_APP_KEY.toString()//融云聊天key
+                                            , GAODE_KEY       : GAODE_KEY.toString()//高德地图key
+                                            , HUAWEI_KEY      : HUAWEI_KEY.toString()//HUAWEI推送key
+                    ]
             signingConfig signingConfigs.release
             // proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

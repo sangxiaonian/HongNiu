@@ -33,7 +33,6 @@ dependencies {
     implementation project(':CommonLibrary')
     //微信支付
     api 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
-    api files('libs/AMap3DMap_6.4.0_AMapNavi_6.2.0_AMapSearch_6.1.0_AMapLocation_4.2.0_20180814.jar')
     //友盟统计
     api 'com.umeng.sdk:analytics:7.5.0'
 
@@ -61,7 +60,14 @@ dependencies {
 //    api 'cn.rongcloud.sdk:im_kit:2.10.5'
 
 //    api project(':RCSticker')
-    api files('libs/AMap_Channel_Location_V1.4.0_20160708.jar')
     api 'com.huawei.android.hms:push:2.6.1.301'
     api files('libs/MiPush_SDK_Client_3_6_9.jar')
+//    api files('libs/AMap_Channel_Location_V1.4.0_20160708.jar')
+//    api files('libs/AMap3DMap_6.4.0_AMapNavi_6.2.0_AMapSearch_6.1.0_AMapLocation_4.2.0_20180814.jar')
+    api 'com.amap.api:search:7.3.0'
+//    api 'com.amap.api:map2d:6.0.0'
+    api 'com.amap.api:navi-3dmap:7.5.0_3dmap7.5.0'
+    api 'com.amap.api:search:7.3.0'
+    api 'com.amap.api:location:5.2.0'
+
 }

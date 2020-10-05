@@ -128,6 +128,36 @@ public class LoactionCollectionUtils implements INaviInfoCallback {
 
     }
 
+    @Override
+    public void onMapTypeChanged(int i) {
+
+    }
+
+    @Override
+    public View getCustomMiddleView() {
+        return null;
+    }
+
+    @Override
+    public void onNaviDirectionChanged(int i) {
+
+    }
+
+    @Override
+    public void onDayAndNightModeChanged(int i) {
+
+    }
+
+    @Override
+    public void onBroadcastModeChanged(int i) {
+
+    }
+
+    @Override
+    public void onScaleAutoChanged(boolean b) {
+
+    }
+
     public void setOrderInfor(OrderDetailBean orderInfor) {
         this.orderInfor = orderInfor;
     }

@@ -109,7 +109,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
 
-    <androidx.appcompat.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/card_star"
         style="@style/home_card"
         android:layout_height="wrap_content"
@@ -151,9 +151,9 @@
                 android:textSize="@dimen/text_min_12sp" />
         </LinearLayout>
 
-    </androidx.appcompat.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <androidx.appcompat.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/card_match"
         style="@style/home_card"
         android:layout_height="wrap_content"
@@ -194,10 +194,10 @@
                 android:textSize="@dimen/text_min_12sp" />
         </LinearLayout>
 
-    </androidx.appcompat.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 
-    <androidx.appcompat.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/card_goods_match"
         style="@style/home_card"
         android:layout_height="wrap_content"
@@ -239,9 +239,9 @@
                 android:textSize="@dimen/text_min_12sp" />
         </LinearLayout>
 
-    </androidx.appcompat.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <androidx.appcompat.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/card_insurance"
         style="@style/home_card"
         android:layout_height="0dp"
@@ -289,9 +289,9 @@
 
         </LinearLayout>
 
-    </androidx.appcompat.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <androidx.appcompat.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/card_invite"
         style="@style/home_card"
         android:layout_height="0dp"
@@ -338,7 +338,7 @@
 
         </LinearLayout>
 
-    </androidx.appcompat.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

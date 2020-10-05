@@ -3,6 +3,7 @@ package com.sang.thirdlibrary.chact;
 import android.app.Application;
 import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.LruCache;
 
@@ -48,7 +49,7 @@ public class ChactHelper {
      *
      * @param application
      */
-    public ChactHelper initHelper(Application application) {
+    public ChactHelper initHelper(Application application,String key) {
         String deviceBrand = DeviceUtils.getDeviceBrand();
         if (application.getApplicationInfo().packageName.equals(getCurProcessName(application))) {
             if (deviceBrand.equalsIgnoreCase("Xiaomi")){
@@ -58,8 +59,7 @@ public class ChactHelper {
                 //华为配置
                 RongPushClient.registerHWPush(application);
             }
-
-            RongIM.init(application);
+            RongIM.init(application,key);
             RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
                 @Override
                 public UserInfo getUserInfo(final String s) {

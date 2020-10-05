@@ -33,7 +33,9 @@ public class BaseClient {
     public static BaseClient getInstance() {
         return InnerLoginClient.client;
     }
-
+    public void baseUrl(String url){
+        httpClient.baseUrl(url);
+    }
     private BaseClient() {
         httpClient = new HttpClient()
                 .addInterceptor(new Interceptor() {

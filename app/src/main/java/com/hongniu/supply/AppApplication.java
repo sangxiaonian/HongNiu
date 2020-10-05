@@ -13,6 +13,7 @@ import com.hongniu.baselibrary.base.BaseApplication;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.event.Event;
+import com.hongniu.baselibrary.net.BaseClient;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventBean;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
 import com.hongniu.supply.entity.PushBean;
@@ -55,7 +56,7 @@ public class AppApplication extends BaseApplication {
 
     @Override
     public void onCreate() {
-
+        BaseClient.getInstance().baseUrl(Param.url);
         //二维码扫描
         ZXingLibrary.initDisplayOpinion(this);
         super.onCreate();
@@ -68,7 +69,7 @@ public class AppApplication extends BaseApplication {
         CrashHelper.getInstance()
                 .init(this);
         ChactHelper.getHelper()
-                .initHelper(this)
+                .initHelper(this,BuildConfig.RONG_CLOUD_APP_KEY)
                 //未读消息监听
                 .setUnReadCountListener(new ChactControl.OnReceiveUnReadCountListener() {
                     @Override
