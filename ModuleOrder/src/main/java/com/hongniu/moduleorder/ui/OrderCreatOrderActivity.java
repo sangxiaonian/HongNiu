@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -198,7 +199,7 @@ public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatC
                         if (pics.size() >= Param.IMAGECOUNT) {
                             ToastUtils.getInstance().show("已达到图片最大数量");
                         } else {
-                            PictureSelectorUtils.showPicture((Activity) mContext, pics);
+                            PictureSelectorUtils.showPicture((AppCompatActivity) mContext, pics);
                         }
                     }
                 });

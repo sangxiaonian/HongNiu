@@ -176,7 +176,8 @@ public class OrderCreataPresenter implements OrderCreatControl.IOrderCreataPrese
                             for (UpImgData imagesBean : data.getGoodsImages()) {
                                 LocalMedia media = new LocalMedia();
                                 media.setPath(imagesBean.getAbsolutePath());
-                                media.setRelativePath(imagesBean.getPath());
+                                //TODO 图片处理
+//                                media.setRelativePath(imagesBean.getPath());
                                 imageInfors.add(media);
                             }
                             view.showImageInfors(imageInfors);

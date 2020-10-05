@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -98,7 +99,7 @@ public class MatchEntryArriveActivity extends BaseActivity implements OnItemDele
                         if (pics.size() >= Param.IMAGECOUNT) {
                             ToastUtils.getInstance().show("已达到图片最大数量");
                         } else {
-                            PictureSelectorUtils.showPicture((Activity) mContext, pics);
+                            PictureSelectorUtils.showPicture((AppCompatActivity) mContext, pics);
                         }
                     }
                 });

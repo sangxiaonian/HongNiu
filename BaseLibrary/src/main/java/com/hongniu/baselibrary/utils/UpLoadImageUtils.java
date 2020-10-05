@@ -46,7 +46,8 @@ public class UpLoadImageUtils {
         finishDate.clear();
         for (LocalMedia pic : images) {
             UpImgData data = new UpImgData();
-            data.setPath(pic.getRelativePath());
+            //TODO 图片处理
+//            data.setPath(pic.getRelativePath());
             data.setAbsolutePath(TextUtils.isEmpty(pic.getCompressPath())?pic.getPath():pic.getCompressPath());
             if (data.getAbsolutePath()!=null&&data.getAbsolutePath().startsWith("http")){
                 finishDate.add(data);

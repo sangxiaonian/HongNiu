@@ -8,6 +8,7 @@ import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -32,6 +33,8 @@ public class RxPermissions {
     Lazy<RxPermissionsFragment> mRxPermissionsFragment;
 
     public RxPermissions(@NonNull final FragmentActivity activity) {
+        mRxPermissionsFragment = getLazySingleton(activity.getSupportFragmentManager());
+    } public RxPermissions(@NonNull final AppCompatActivity activity) {
         mRxPermissionsFragment = getLazySingleton(activity.getSupportFragmentManager());
     }
 

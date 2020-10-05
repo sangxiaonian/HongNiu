@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -102,7 +103,7 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
                         if (pics.size() >= Param.IMAGECOUNT) {
                             ToastUtils.getInstance().show("已达到图片最大数量");
                         } else {
-                            PictureSelectorUtils.showPicture((Activity) mContext, pics);
+                            PictureSelectorUtils.showPicture((AppCompatActivity) mContext, pics);
                         }
                     }
                 });
@@ -162,7 +163,8 @@ public class OrderUpReceiptActivity extends BaseActivity implements View.OnClick
                 for (UpImgData imagesBean : bean.getImages()) {
                     LocalMedia media = new LocalMedia();
                     media.setPath(imagesBean.getAbsolutePath());
-                    media.setRelativePath(imagesBean.getPath());
+                    //TODO 图片处理
+//                    media.setRelativePath(imagesBean.getPath());
                     pics.add(media);
                 }
             }

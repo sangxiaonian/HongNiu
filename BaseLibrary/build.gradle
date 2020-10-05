@@ -46,7 +46,9 @@ dependencies {
     api project(':pickerview')
     api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
     api 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'//没有使用特殊Header，可以不加这行
-    api project(':picture_library')
+//    api project(':picture_library')
+    //https://github.com/LuckSiege/PictureSelector 图片选择器
+
 
     //https://github.com/LuckSiege/PictureSelector 图片选择器
 //    api 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'

@@ -1,5 +1,4 @@
 include ':androidlibrary'
 include ':app', ':CommonLibrary', ':ResLibrary', ':ThirdLibrary', ':BaseLibrary', ':ModuleLogin', ':ModuleFestivity', ':ModuleChact', ':ModuleCarGoodsMatch', ':ModuleBreakbulk',
-         ':ModuleOrder', ':ModuleFinance', ':pickerview', ':wheelview',':xcalendar',':picture_library',':ucrop' ,
-          ':ModuleChact'
-//,':CallKit',':CallLib',':IMKit',':IMLib',':RCSticker'
+         ':ModuleOrder', ':ModuleFinance', ':pickerview', ':wheelview',':xcalendar' ,':ModuleChact'
+//,':CallKit',':CallLib',':IMKit',':IMLib',':RCSticker',':picture_library',':ucrop'
