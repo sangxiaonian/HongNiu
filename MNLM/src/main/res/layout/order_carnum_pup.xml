@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.fy.androidlibrary.widget.shadow.ShadowLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="143dp"
+    android:minWidth="140dp"
+    app:hl_cornerRadius="5dp"
+    app:hl_shadowBackColor="@color/color_of_ffffff"
+    app:hl_shadowColor="#2a000000"
+    app:hl_shadowLimit="5dp">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv"
+        android:layout_width="match_parent"
+        android:layout_height="143dp"
+        android:background="@color/color_of_ffffff"
+        android:minWidth="140dp" />
+
+</com.fy.androidlibrary.widget.shadow.ShadowLayout>

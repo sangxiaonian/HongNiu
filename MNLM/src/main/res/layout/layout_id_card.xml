@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/gap_app"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
+        android:text="身份证正面"
+        android:textColor="@color/color_of_666666"
+        android:textSize="14dp" />
+
+    <com.hongniu.freight.widget.ImageInforView
+        android:id="@+id/img_id_card_front"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:layout_marginLeft="@dimen/gap_app"
+        android:layout_marginRight="@dimen/gap_app" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/gap_app"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
+        android:text="身份证反面"
+        android:textColor="@color/color_of_666666"
+        android:textSize="14dp" />
+
+    <com.hongniu.freight.widget.ImageInforView
+        android:id="@+id/img_id_card_back"
+
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:layout_marginLeft="@dimen/gap_app"
+        android:layout_marginRight="@dimen/gap_app" />
+
+</LinearLayout>

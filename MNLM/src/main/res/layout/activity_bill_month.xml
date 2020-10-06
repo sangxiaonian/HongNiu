@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/color_of_ffffff"
+    tools:context=".ui.BillMonthActivity">
+
+    <include layout="@layout/toolbar"/>
+    <TextView
+        android:text="月账单"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="24dp"
+        android:textColor="@color/color_of_040000"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content">
+        <com.fy.androidlibrary.widget.autoline.AutoLineLayout
+            android:layout_width="0dp"
+            android:id="@+id/auto_layout"
+            android:layout_marginLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:id="@+id/ll_time"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_height="match_parent">
+            <ImageView
+                app:srcCompat="@drawable/filtrate_040000"
+                android:layout_width="8dp"
+                android:layout_height="8dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:textSize="13dp"
+                android:id="@+id/tv_time"
+                android:textColor="@color/color_of_040000"
+                android:text="2019-09-11"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                app:srcCompat="@drawable/icon_go_040000"
+                android:layout_width="8dp"
+                android:layout_marginRight="20dp"
+                android:layout_height="8dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:id="@+id/content"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

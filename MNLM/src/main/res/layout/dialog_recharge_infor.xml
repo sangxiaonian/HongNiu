@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_of_ffffff"
+    android:padding="@dimen/gap_app">
+
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="账户充值"
+        android:textColor="@color/color_of_040000"
+        android:textSize="19sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/img_cancel"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:src="@drawable/icon_close_gary_28"
+        app:layout_constraintBottom_toBottomOf="@id/tv1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv1" />
+
+    <TextView
+        android:id="@+id/tv_2"
+        android:layout_width="0dp"
+        android:text="请采用你绑定的银行卡****，通过网银转账或汇款方式转入华夏银行监管账户，收款账户信息如下："
+        android:textColor="#6d6d6d"
+        android:textSize="13sp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv1"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:id="@+id/tv_infor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_2"
+        android:textColor="@color/color_of_040000"
+        android:textSize="13sp"
+        android:lineSpacingExtra="5dp"
+        android:text="户名：木牛流马 \n账号：282838339399292 \n支行：上海闸北分"
+        android:layout_marginTop="@dimen/gap_app"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/bt_sum"
+        style="@style/bt_red"
+        android:layout_marginTop="125dp"
+        android:text="复制账号"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_of_ffffff"
+    android:orientation="vertical"
+    tools:context=".ui.AssignOrderActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/gap_app"
+        android:layout_marginTop="36dp"
+        android:text="填写派车信息"
+        android:textColor="@color/color_of_040000"
+        android:textSize="24dp" />
+
+    <com.fy.companylibrary.widget.ItemTextView
+        android:id="@+id/item_price"
+        android:layout_marginTop="50dp"
+        style="@style/item_edit"
+        app:centerType="number"
+        app:textcenterhide="请输入支付承运人的实际运费"
+        app:textleft="实际运费(元）" />
+
+    <com.fy.companylibrary.widget.ItemTextView
+        android:id="@+id/item_car_type"
+        style="@style/item_text"
+        app:textcenterhide="请选择车辆类型"
+        app:textleft="车辆类型" />
+
+    <com.fy.companylibrary.widget.ItemTextView
+        android:id="@+id/item_driver_name"
+        style="@style/item_edit"
+        app:textcenterhide="请输入司机姓名"
+        app:textleft="司机姓名" />
+
+    <com.fy.companylibrary.widget.ItemTextView
+        android:id="@+id/item_driver_phone"
+        style="@style/item_edit"
+        app:centerType="phone"
+        app:textcenterhide="请输入司机电话"
+        app:textleft="司机电话" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/bt_sum"
+        style="@style/bt_red"
+        android:text="确定派车" />
+</LinearLayout>

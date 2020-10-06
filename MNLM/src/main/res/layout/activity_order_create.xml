@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_of_f6f5f8"
+    android:orientation="vertical"
+    tools:context=".ui.OrderCreateActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/ovl_5_ffffff"
+                android:padding="@dimen/gap_app">
+
+
+                <TextView
+                    android:id="@+id/tv_start_flag"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/ovl_5_21222c"
+                    android:gravity="center"
+                    android:text="发"
+                    android:textColor="@color/color_of_ffffff"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_end_flag"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/ovl_5_e50000"
+                    android:gravity="center"
+                    android:text="收"
+                    android:textColor="@color/color_of_ffffff"
+                    app:layout_constraintEnd_toEndOf="@id/tv_start_flag"
+                    app:layout_constraintStart_toStartOf="@id/tv_start_flag"
+                    app:layout_constraintTop_toTopOf="@id/tv_end" />
+
+                <com.fy.androidlibrary.widget.DashedView
+                    android:layout_width="2dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    app:dashedColor="@color/color_of_eeeeee"
+                    app:dashedOritation="vertical"
+                    app:dashedWidth="2dp"
+                    app:layout_constraintBottom_toTopOf="@id/tv_end_flag"
+                    app:layout_constraintEnd_toEndOf="@id/tv_start_flag"
+                    app:layout_constraintStart_toStartOf="@id/tv_start_flag"
+                    app:layout_constraintTop_toBottomOf="@id/tv_start_flag" />
+
+                <ImageView
+                    android:id="@+id/img_start_go"
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_start"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_start"
+                    app:srcCompat="@drawable/icon_go_cccccc" />
+
+                <ImageView
+                    android:id="@+id/img_end_go"
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_end"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_end"
+                    app:srcCompat="@drawable/icon_go_cccccc" />
+
+                <TextView
+                    android:id="@+id/tv_start"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/gap_app"
+                    android:layout_marginRight="@dimen/gap_app"
+                    android:background="@color/color_of_tran"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:hint="从哪发货"
+                    android:textColor="@color/color_of_040000"
+                    android:textColorHint="@color/color_of_cccccc"
+                    android:textSize="17dp"
+                    app:layout_constraintEnd_toStartOf="@id/img_start_go"
+                    app:layout_constraintStart_toEndOf="@id/tv_start_flag"
+                    app:layout_constraintTop_toTopOf="@id/tv_start_flag" />
+
+                <TextView
+                    android:id="@+id/tv_start_contact"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/color_of_tran"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:hint="请填写发货人信息"
+                    android:textColor="@color/color_of_666666"
+                    android:textColorHint="@color/color_of_cccccc"
+                    android:textSize="14dp"
+                    app:layout_constraintEnd_toEndOf="@id/tv_start"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintStart_toStartOf="@id/tv_start"
+                    app:layout_constraintTop_toBottomOf="@id/tv_start" />
+
+
+                <TextView
+                    android:id="@+id/tv_end"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:background="@color/color_of_tran"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:hint="你要发到哪"
+                    android:textColor="@color/color_of_040000"
+                    android:textColorHint="@color/color_of_cccccc"
+                    android:textSize="17dp"
+                    app:layout_constraintEnd_toEndOf="@id/tv_start"
+                    app:layout_constraintStart_toStartOf="@id/tv_start"
+                    app:layout_constraintTop_toBottomOf="@id/tv_start_contact" />
+
+                <TextView
+                    android:id="@+id/tv_end_contact"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/color_of_tran"
+
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:hint="请填写收货人信息"
+                    android:textColor="@color/color_of_666666"
+                    android:textColorHint="@color/color_of_cccccc"
+                    android:textSize="14dp"
+                    app:layout_constraintEnd_toEndOf="@id/tv_start"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintStart_toStartOf="@id/tv_start"
+                    app:layout_constraintTop_toBottomOf="@id/tv_end" />
+
+
+                <View
+                    android:id="@+id/group_start"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_start_contact"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tv_start"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/group_end"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tv_start"
+                    app:layout_constraintTop_toTopOf="@id/tv_end" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/ovl_5_ffffff"
+
+                android:orientation="vertical"
+                android:paddingTop="@dimen/gap_app"
+                android:paddingBottom="@dimen/gap_app">
+
+                <com.fy.companylibrary.widget.ItemTextView
+                    android:id="@+id/item_start_time"
+                    style="@style/item_text"
+                    app:textcenter="立即发货"
+                    app:textcenterhide="请选择发货时间"
+                    app:textleft="发货时间" />
+
+                <com.fy.companylibrary.widget.ItemTextView
+                    android:id="@+id/item_cargo"
+                    style="@style/item_edit"
+                    app:textcenterhide="请输入货物名称"
+                    app:textleft="货物名称" />
+                <com.fy.companylibrary.widget.ItemTextView
+                    android:id="@+id/item_cargo_type"
+                    style="@style/item_text"
+                    app:textcenterhide="请选择货物分类"
+                    app:textleft="货物分类" />
+
+                <com.fy.companylibrary.widget.ItemTextView
+                    android:id="@+id/item_weight"
+                    style="@style/item_edit"
+                    app:centerType="number"
+                    app:textcenterhide="请输入货物重量"
+                    app:textleft="重量(吨)" />
+
+                <com.fy.companylibrary.widget.ItemTextView
+                    android:id="@+id/item_size"
+                    style="@style/item_edit"
+                    app:centerType="number"
+                    app:showline="false"
+                    app:textcenterhide="请输入货物体积"
+                    app:textleft="体积(m³)" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_margin="10dp"
+                android:background="@drawable/ovl_5_ffffff"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/gap_app"
+                android:paddingBottom="@dimen/gap_app">
+
+                <com.fy.companylibrary.widget.ItemTextView
+                    android:id="@+id/item_price"
+                    style="@style/item_edit"
+                    app:centerType="number"
+                    app:showline="false"
+                    app:textcenterhide="请输入运费"
+                    app:textleft="运费(元)" />
+
+                <com.fy.companylibrary.widget.ItemTextView
+                    android:id="@+id/item_pay_way"
+                    style="@style/item_text"
+                    app:showline="false"
+                    app:textcenterhide="请选择支付类型"
+                    app:textleft="支付类型" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/ovl_5_ffffff"
+                android:orientation="horizontal"
+                android:padding="@dimen/gap_app">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="下单即代表同意"
+                    android:textColor="@color/color_of_999999"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/tv_agreement"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="《木牛流马合同协议》"
+                    android:textColor="@color/color_of_3d5688"
+                    android:textSize="12dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_insurance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/ovl_5_ffffff"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/gap_app"
+                android:paddingBottom="@dimen/gap_app">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/gap_app"
+                    android:paddingRight="@dimen/gap_app">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="人保货物运输保险"
+                            android:textColor="@color/color_of_666666"
+                            android:textSize="15dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="购买保险，货运更安心"
+                            android:textColor="@color/color_of_999999"
+                            android:textSize="12dp" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/img_insurance"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:src="@mipmap/icon_wxz_36" />
+                </LinearLayout>
+
+                <com.fy.companylibrary.widget.ItemTextView
+                    android:id="@+id/item_cargo_price"
+                    style="@style/item_edit"
+                    app:centerType="number"
+                    app:colorRight="@color/color_of_e50000"
+                    app:sizeright="15dp"
+                    app:textcenterhide="请输入货物价值"
+                    app:textleft="货物价值"
+                    app:textright="保费 0 元" />
+
+                <com.fy.companylibrary.widget.ItemTextView
+                    android:id="@+id/item_insurance_name"
+                    style="@style/item_text"
+                    app:sizeright="15dp"
+                    app:textcenterhide="请选择被保险人"
+                    app:textleft="被保险人" />
+
+
+                    <TextView
+                        android:id="@+id/tv_agreement_insurance"
+                        android:layout_width="match_parent"
+                        android:background="@drawable/ovl_5_ffffff"
+                        android:padding="@dimen/gap_app"
+                        android:layout_height="wrap_content"
+                        android:text="《保险条款》"
+                        android:textColor="@color/color_of_999999"
+                        android:textSize="12dp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_of_ffffff">
+
+        <TextView
+            android:id="@+id/bt_sum"
+            style="@style/bt_red"
+            android:text="确定发货" />
+    </LinearLayout>
+</LinearLayout>

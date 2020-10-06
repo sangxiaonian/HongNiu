@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_of_f6f5f8"
+    android:orientation="vertical"
+    tools:context=".ui.PayActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/ovl_5_ffffff"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/gap_app"
+                android:paddingTop="45dp"
+                android:paddingRight="@dimen/gap_app"
+                android:paddingBottom="45dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="订单总价"
+                    android:textColor="@color/color_of_040000"
+                    android:textSize="14dp" />
+
+                <TextView
+                    android:id="@+id/tv_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/color_of_040000"
+                    android:textSize="45dp"
+                    tools:text="¥1300.08" />
+
+                <TextView
+                    android:id="@+id/tv_count_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_of_999999"
+                    android:textSize="14dp"
+                    tools:text="运费：1300元 保费：0.08元" />
+
+            </LinearLayout>
+
+            <com.hongniu.freight.widget.PayWayView
+                android:id="@+id/payview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/ovl_5_ffffff" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <TextView
+        android:id="@+id/bt_sum"
+        style="@style/bt_red"
+        android:text="支付订单" />
+</LinearLayout>

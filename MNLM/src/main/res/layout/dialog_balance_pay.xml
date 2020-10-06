@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_of_ffffff"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/gap_app"
+    android:paddingBottom="@dimen/gap_app">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="1"
+            android:text="购买保险"
+            android:textColor="@color/color_of_040000"
+            android:textSize="19sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/img_cancel"
+            android:layout_width="45dp"
+            android:layout_height="30dp"
+            android:paddingRight="15dp"
+            android:src="@mipmap/close"
+            app:layout_constraintBottom_toBottomOf="@id/tv_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_title" />
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_height"
+        android:layout_margin="@dimen/gap_app"
+        android:background="@color/line_color" />
+
+    <TextView
+        android:id="@+id/tv_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/gap_app"
+        android:paddingRight="@dimen/gap_app"
+        android:text="当前订单已支付运费：0元"
+        android:textSize="15dp"
+        android:textColor="@color/color_of_040000"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+         />
+
+    <com.fy.companylibrary.widget.ItemTextView
+        android:id="@+id/item_balance_pay"
+        style="@style/item_edit"
+        app:textcenterhide="请输入需要补款的金额"
+        app:textleft="需补款金额(元)" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/bt_sum"
+        android:text="确定提交"
+        style="@style/bt_red" />
+
+</LinearLayout>

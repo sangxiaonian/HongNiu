@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    tools:context=".ui.OrderUpReceiptActivity">
+
+    <include
+        android:id="@+id/tool"
+        layout="@layout/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:id="@+id/sc"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/bt_sum"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tool">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/color_of_ffffff"
+                android:paddingBottom="10dp"
+                android:paddingLeft="@dimen/gap_app"
+                android:paddingTop="10dp"
+                android:text="回单图片"
+                android:textColor="@color/color_of_333333"
+                android:textSize="@dimen/sight_text_size_14" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@color/color_of_ffffff"
+                android:paddingBottom="10dp"
+                android:paddingLeft="@dimen/gap_app"
+                android:paddingRight="@dimen/gap_app" />
+
+
+            <TextView
+                android:id="@+id/tv2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_of_ffffff"
+                android:paddingBottom="10dp"
+                android:paddingLeft="@dimen/gap_app"
+                android:paddingTop="10dp"
+                android:text="备注"
+                android:textColor="@color/color_of_333333"
+                android:textSize="14dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rv" />
+
+            <EditText
+                android:id="@+id/et_remark"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@color/color_of_ffffff"
+                android:gravity="start"
+                android:hint="请输入100字以内内容"
+                android:maxLength="100"
+                android:paddingBottom="10dp"
+                android:paddingLeft="@dimen/gap_app"
+                android:paddingRight="@dimen/gap_app"
+                android:textColor="@color/color_of_333333"
+                android:textColorHint="@color/line_color"
+                android:textSize="13dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv2" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/bt_sum"
+        style="@style/bt_red"
+        android:text="提交"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sc" />
+</androidx.constraintlayout.widget.ConstraintLayout>

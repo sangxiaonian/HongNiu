@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_of_f6f5f8"
+    android:orientation="vertical">
+
+
+    <include
+        android:id="@+id/tool"
+        layout="@layout/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/con_balance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_of_ffffff"
+        android:padding="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tool">
+
+        <TextView
+            android:id="@+id/tv_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/gap_app"
+            android:text="个人账户余额(元)"
+            android:textColor="@color/color_of_040000"
+            android:textSize="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_month_bill"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RelativeLayout
+            android:id="@+id/rl_balance"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@id/tv_1"
+            app:layout_constraintStart_toStartOf="@id/tv_1"
+            app:layout_constraintTop_toBottomOf="@id/tv_1">
+
+            <TextView
+                android:id="@+id/tv_balance_of_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="23dp"
+                android:text="0.0"
+                android:textColor="@color/color_of_040000"
+                android:textSize="35dp" />
+
+            <ImageView
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:layout_alignRight="@id/tv_balance_of_account"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical|end"
+                app:srcCompat="@drawable/icon_go_999999" />
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/tv_balance_of_unentry_des"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="待入账金额"
+            android:textColor="@color/color_of_999999"
+            android:textSize="14dp"
+            app:layout_constraintStart_toStartOf="@id/tv_1"
+            app:layout_constraintTop_toBottomOf="@id/rl_balance" />
+
+        <TextView
+            android:id="@+id/tv_balance_of_unentry"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="1000元"
+            android:textColor="@color/color_of_fa8c16"
+            android:textSize="14dp"
+            app:layout_constraintEnd_toEndOf="@id/tv_1"
+            app:layout_constraintStart_toEndOf="@id/tv_balance_of_unentry_des"
+            app:layout_constraintTop_toTopOf="@id/tv_balance_of_unentry_des" />
+
+        <TextView
+            android:id="@+id/tv_month_bill"
+            android:layout_width="65dp"
+            android:layout_height="25dp"
+            android:background="@drawable/ovl_5_e50000"
+            android:gravity="center"
+            android:text="月账单"
+            android:textColor="@color/color_of_ffffff"
+            android:textSize="13dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <com.fy.androidlibrary.widget.autoline.AutoLineLayout
+        android:id="@+id/auto_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/color_of_ffffff"
+        android:paddingLeft="20dp"
+        android:paddingTop="@dimen/gap_app"
+        android:paddingBottom="10dp" />
+
+
+    <FrameLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_of_ffffff">
+
+    </FrameLayout>
+
+
+</LinearLayout>

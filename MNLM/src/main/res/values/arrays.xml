@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--承运人状态-->
+    <string-array name="carrier_status">
+        <item>找车中</item>
+        <item>待发车</item>
+        <item>运输中</item>
+        <item>已到达</item>
+        <item>已收货</item>
+    </string-array>
+
+    <!--托运人状态-->
+    <string-array name="shipper_status">
+        <item>待支付</item>
+        <item>待接单</item>
+        <item>差额支付中</item>
+        <item>待派车</item>
+        <item>找车中</item>
+        <item>待发车</item>
+        <item>运输中</item>
+        <item>已到达</item>
+        <item>已收货</item>
+    </string-array>
+    <!--司机状态-->
+    <string-array name="driver_status">
+        <item>待发车</item>
+        <item>运输中</item>
+        <item>已到达</item>
+        <item>已收货</item>
+    </string-array>
+      <!--平台-->
+    <string-array name="platform_status">
+        <item>待支付</item>
+        <item>待派车</item>
+        <item>找车中</item>
+        <item>待发车</item>
+        <item>运输中</item>
+        <item>已到达</item>
+        <item>已收货</item>
+    </string-array>
+
+
+    <string-array name="roles">
+        <item>托运人</item>
+        <item>承运人</item>
+        <item>司机</item>
+    </string-array>
+
+
+    <!--被保险人身份-->
+    <string-array name="insured_type">
+        <item>个人</item>
+        <item>企业</item>
+    </string-array>
+</resources>

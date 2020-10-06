@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_of_ffffff"
+    android:orientation="vertical"
+    tools:context=".ui.AttestationSelectRoleActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/gap_app"
+        android:layout_marginTop="10dp"
+        android:text="请选择你的身份"
+        android:textColor="@color/color_of_040000"
+        android:textSize="24dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/gap_app"
+        android:layout_marginTop="5dp"
+        android:text="我们会对每种身份设定合理的服务体验"
+        android:textColor="@color/color_of_999999"
+        android:textSize="14dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/bt_sum"
+        style="@style/bt_red"
+        android:text="下一步" />
+</LinearLayout>

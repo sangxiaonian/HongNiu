@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.fy.androidlibrary.widget.shadow.ShadowLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:hl_cornerRadius="5dp"
+    app:hl_shadowBackColor="@color/color_of_ffffff"
+    app:hl_shadowColor="#2a000000"
+    app:hl_shadowLimit="5dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:paddingBottom="20dp"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/line_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/gap_app" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/line_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/gap_app" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/gap_app"
+            android:textColor="@color/color_of_040000"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/line_left"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="车辆类型" />
+
+        <View
+            android:id="@+id/view_line"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/line_height"
+            android:layout_marginTop="@dimen/gap_app"
+            android:background="@color/line_color"
+            app:layout_constraintEnd_toEndOf="@id/line_right"
+            app:layout_constraintStart_toStartOf="@id/line_left"
+            app:layout_constraintTop_toBottomOf="@id/tv_title" />
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_of_040000"
+            android:textSize="14dp"
+            android:layout_marginTop="15dp"
+            app:layout_constraintEnd_toEndOf="@id/tv_end_address"
+            app:layout_constraintStart_toStartOf="@id/tv_end_address"
+            app:layout_constraintTop_toBottomOf="@id/view_line"
+            tools:text="2020-10-11 09:20" />
+        <ImageView
+            android:id="@+id/img_time"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            app:srcCompat="@drawable/icon_time_040000"
+            app:layout_constraintBottom_toBottomOf="@id/tv_time"
+            app:layout_constraintStart_toStartOf="@id/point_start"
+            app:layout_constraintEnd_toEndOf="@id/point_start"
+            app:layout_constraintTop_toTopOf="@id/tv_time" />
+
+
+        <TextView
+            android:id="@+id/tv_start_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/gap_app"
+            android:textColor="@color/color_of_040000"
+            android:textSize="14dp"
+            android:layout_marginLeft="31dp"
+            app:layout_constraintEnd_toEndOf="@id/line_right"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_time"
+            tools:text="发车地址" />
+
+        <com.fy.androidlibrary.widget.CircularImageView
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:src="#21222C"
+            android:id="@+id/point_start"
+            app:layout_constraintBottom_toBottomOf="@id/tv_start_address"
+            app:layout_constraintStart_toStartOf="@id/line_left"
+            app:layout_constraintTop_toTopOf="@id/tv_start_address"
+            app:viewradius="3dp" />
+
+        <TextView
+            android:id="@+id/tv_end_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/gap_app"
+            android:textColor="@color/color_of_040000"
+            android:textSize="14dp"
+            app:layout_constraintEnd_toEndOf="@id/tv_start_address"
+            app:layout_constraintStart_toStartOf="@id/tv_start_address"
+            app:layout_constraintTop_toBottomOf="@id/tv_start_address"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="收货地址" />
+
+        <com.fy.androidlibrary.widget.CircularImageView
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:src="@color/color_of_e50000"
+            app:layout_constraintBottom_toBottomOf="@id/tv_end_address"
+            app:layout_constraintStart_toStartOf="@id/line_left"
+            app:layout_constraintTop_toTopOf="@id/tv_end_address"
+            app:viewradius="3dp" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.fy.androidlibrary.widget.shadow.ShadowLayout>

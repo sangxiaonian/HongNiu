@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/color_of_f5f5f5"
+    tools:context=".ui.MyOrderActivity">
+    <include layout="@layout/toolbar"/>
+    <LinearLayout
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="25dp"
+        android:layout_width="match_parent"
+        android:background="@color/color_of_ffffff"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:textColor="@color/color_of_040000"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            android:text="我的订单"
+            android:id="@+id/tv_title"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:id="@+id/ll_filtrate"
+            android:layout_width="wrap_content"
+            android:background="@drawable/ovl_5_21222c"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:gravity="center"
+            android:layout_gravity="bottom"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                tools:text="承运人"
+                android:textSize="13dp"
+                android:id="@+id/tv_role"
+                android:textColor="@color/color_of_ffffff"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                app:srcCompat="@drawable/filtrate_ffffff"
+                android:layout_width="8dp"
+                android:layout_marginLeft="3.5dp"
+                android:layout_height="8dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+    <FrameLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

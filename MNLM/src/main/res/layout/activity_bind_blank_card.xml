@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/color_of_f5f5f5"
+    tools:context=".ui.BindBlankCardActivity">
+
+    <include
+        layout="@layout/toolbar" />
+
+    <TextView
+        android:id="@+id/tv_balance_withdrawal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/gap_app"
+        android:background="#FBE0D0"
+        android:paddingLeft="@dimen/gap_app"
+        android:paddingTop="7dp"
+        android:paddingRight="@dimen/gap_app"
+        android:paddingBottom="7dp"
+        android:text="该银行卡用于在木牛流马平台充值及提现操作，一旦绑定后，暂不支持线上更换银行卡，请谨慎操作"
+        android:textColor="#F06F28"
+        android:textSize="13dp" />
+
+    <com.fy.companylibrary.widget.ItemTextView
+        android:id="@+id/item_name"
+        style="@style/item_edit"
+        app:textcenterhide="请输入姓名"
+        app:textleft="姓名" />
+
+
+    <com.fy.companylibrary.widget.ItemTextView
+        android:id="@+id/item_phone"
+        style="@style/item_edit"
+        app:centerLength="11"
+        app:centerType="phone"
+        app:textcenterhide="请输入手机号码"
+        app:textleft="手机号码" />
+
+    <com.fy.companylibrary.widget.ItemTextView
+        android:id="@+id/item_id_card_num"
+        style="@style/item_edit"
+        app:centerLength="18"
+        app:centerType="idcard"
+        app:showline="true"
+        app:textcenterhide="请输入身份证号"
+        app:textleft="身份证号" />
+
+    <com.fy.companylibrary.widget.ItemTextView
+        android:id="@+id/item_blank_card_num"
+        style="@style/item_edit"
+        app:centerLength="19"
+        app:centerType="idcard"
+        app:showline="true"
+        app:textcenterhide="请输入银行卡号"
+        app:textleft="银行卡号" />
+
+    <com.fy.companylibrary.widget.ItemTextView
+        android:id="@+id/item_blank"
+        style="@style/item_text"
+        app:showline="false"
+        app:textcenterhide="请选择开户行"
+        app:textleft="开户行" />
+    <TextView
+        android:id="@+id/tv_hua_aleart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:paddingLeft="@dimen/gap_app"
+        android:paddingTop="7dp"
+        android:paddingRight="@dimen/gap_app"
+        android:paddingBottom="7dp"
+        android:text="如需绑定华夏银行卡，必须进行授权才能完成签约操作，请慎重选择。"
+        android:textColor="@color/color_of_999999"
+        android:textSize="13dp" />
+
+    <Button
+        android:id="@+id/bt_sum"
+        style="@style/bt_red"
+        android:layout_marginTop="30dp"
+        android:text="保存" />
+
+</LinearLayout>

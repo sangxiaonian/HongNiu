@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_of_ffffff"
+    android:orientation="vertical"
+    tools:context=".ui.CarAddModifyActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/gap_app"
+                android:text="请确认承运人信息，订单完成后，实际运费将会转入承运人手机对应账户"
+                android:textColor="@color/color_of_fa8c16"
+                android:textSize="14dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/gap_app"
+                android:layout_marginTop="15dp"
+                android:text="行驶证主页"
+                android:textColor="@color/color_of_666666"
+                android:textSize="14dp" />
+
+            <com.hongniu.freight.widget.ImageInforView
+                android:id="@+id/img_positive"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginLeft="@dimen/gap_app"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="@dimen/gap_app" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/gap_app"
+                android:layout_marginTop="15dp"
+                android:text="行驶证副业"
+                android:textColor="@color/color_of_666666"
+                android:textSize="14dp" />
+
+            <com.hongniu.freight.widget.ImageInforView
+                android:id="@+id/img_minus"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginLeft="@dimen/gap_app"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="@dimen/gap_app" />
+
+            <com.fy.companylibrary.widget.ItemTextView
+                android:id="@+id/item_car_type"
+                style="@style/item_text"
+                app:textcenterhide="请选择车辆类型"
+                app:textleft="车辆类型" />
+
+            <com.fy.companylibrary.widget.ItemTextView
+                android:id="@+id/item_car_band"
+                style="@style/item_edit"
+                app:textcenterhide="请输入车型名称"
+                app:textleft="品牌车型" />
+
+            <com.fy.companylibrary.widget.ItemTextView
+                android:id="@+id/item_car_number"
+                style="@style/item_edit"
+                app:textcenterhide="请输入车牌号码"
+                app:textleft="车牌号码" />
+
+            <com.fy.companylibrary.widget.ItemTextView
+                android:id="@+id/item_car_number_color"
+                style="@style/item_text"
+                app:textcenterhide="请输入车牌颜色"
+                app:textleft="车牌颜色" />
+
+            <com.fy.companylibrary.widget.ItemTextView
+                android:id="@+id/item_car_name"
+                style="@style/item_edit"
+                app:textcenterhide="请输入承运人姓名"
+                app:textleft="承运人姓名" />
+
+            <com.fy.companylibrary.widget.ItemTextView
+                android:id="@+id/item_car_phone"
+                style="@style/item_edit"
+                app:centerType="phone"
+                app:textcenterhide="请输入承运人手机"
+                app:textleft="承运人手机" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <TextView
+        android:id="@+id/bt_sum"
+        style="@style/bt_red"
+        android:text="保存" />
+</LinearLayout>

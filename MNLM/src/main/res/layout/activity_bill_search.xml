@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_of_f5f5f5"
+    android:orientation="vertical"
+ >
+
+    <LinearLayout
+        android:background="@color/color_of_ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.fy.androidlibrary.widget.SearchTitleView
+            android:id="@+id/search"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="46dp"
+            android:background="@color/color_of_ffffff"
+            android:paddingLeft="16dp"
+            android:paddingTop="7dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="7dp"
+            app:searchBackGround="@drawable/ovl_16_f7f7f7"
+            app:searchClearIcon="@drawable/ic_search_clear_999999"
+            app:searchGravity="center"
+            app:searchIcon="@drawable/icon_search_999999"
+            app:searchTitleColor="@color/color_of_040000"
+            app:searchTitleHind="请输入车牌号码"
+            app:searchTitleHindColor="@color/color_of_999999" />
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingRight="16dp"
+            android:text="取消"
+            android:textSize="16dp" />
+    </LinearLayout>
+
+    <include layout="@layout/layout_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        />
+</LinearLayout>

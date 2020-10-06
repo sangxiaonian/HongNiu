@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="85dp"
+    android:background="@drawable/ovl_5_f6f5f8"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginBottom="20dp"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="20dp"
+        android:src="@mipmap/icon_add_skfs_28"
+        android:layout_height="20dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_marginTop="7dp"
+        android:textColor="@color/color_of_cccccc"
+        android:textSize="13dp"
+        android:text="添加车辆"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.fy.androidlibrary.widget.shadow.ShadowLayout
+        android:id="@+id/shadow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        app:hl_cornerRadius="5dp"
+        app:hl_shadowBackColor="@color/color_of_ffffff"
+        app:hl_shadowColor="#2a000000"
+        app:hl_shadowLimit="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="80dp"
+            android:paddingLeft="15dp"
+            android:paddingTop="13dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="13dp">
+
+            <TextView
+                android:id="@+id/tv_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_of_040000"
+                android:textSize="13dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="-2000" />
+
+            <TextView
+                android:id="@+id/tv_statute"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/gap_app"
+                android:textColor="@color/color_of_040000"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/tv_count"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="入账" />
+
+            <TextView
+                android:id="@+id/tv_des"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/color_of_999999"
+                android:textSize="13dp"
+                app:layout_constraintEnd_toEndOf="@id/tv_statute"
+                app:layout_constraintStart_toStartOf="@id/tv_statute"
+                app:layout_constraintTop_toBottomOf="@id/tv_statute"
+                tools:text="中国工商银行 6222" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/color_of_999999"
+                android:textSize="13dp"
+                app:layout_constraintEnd_toEndOf="@id/tv_statute"
+                app:layout_constraintStart_toStartOf="@id/tv_statute"
+                app:layout_constraintTop_toBottomOf="@id/tv_des"
+                tools:text="中国工商银行 6222" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.fy.androidlibrary.widget.shadow.ShadowLayout>
+
+</LinearLayout>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:background="@color/color_of_ffffff"
+    tools:context=".ui.BalanceActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="90dp"
+        android:text="可提现余额(元)"
+        android:textColor="@color/color_of_040000"
+        android:textSize="14dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="0"
+        android:textColor="@color/color_of_040000"
+        android:textSize="45dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_balance_pending"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="你有 0 元入账后可提现"
+        android:textColor="@color/color_of_fa8c16"
+        android:textSize="14dp"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:layout_height="0dp"/>
+    <TextView
+        android:id="@+id/tv_recharge"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="62dp"
+        android:layout_marginRight="62dp"
+        android:background="@drawable/ovl_5_e50000"
+        android:gravity="center"
+        android:text="充值"
+        android:textColor="@color/color_of_ffffff"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/tv_withdraw"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="62dp"
+        android:layout_marginRight="62dp"
+        android:background="@drawable/ovl_5_eeeeee"
+        android:gravity="center"
+        android:text="提现"
+        android:layout_marginBottom="100dp"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/color_of_040000"
+        android:textSize="18dp" />
+
+
+</LinearLayout>

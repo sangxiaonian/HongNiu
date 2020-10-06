@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_of_ffffff"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".ui.LoginActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="欢迎登录木牛流马"
+        android:textColor="@color/color_of_040000"
+        android:textSize="24dp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_phone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/color_of_tran"
+            android:digits="1234567890"
+            android:hint="请输入手机号"
+            android:maxLength="11"
+            android:inputType="phone"
+            android:maxLines="1"
+            android:paddingBottom="14dp"
+            android:textColor="@color/color_of_040000"
+            android:textColorHint="@color/color_of_cccccc"
+            android:textSize="17dp" />
+
+        <TextView
+            android:id="@+id/tv_sms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="获取验证码"
+            android:textColor="@color/color_of_999999"
+            android:textSize="14dp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_height"
+        android:background="@color/line_color" />
+
+    <EditText
+        android:id="@+id/et_sms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_of_tran"
+        android:digits="1234567890"
+        android:inputType="phone"
+        android:hint="请输入验证码"
+        android:maxLength="6"
+        android:maxLines="1"
+        android:paddingTop="14dp"
+        android:paddingBottom="14dp"
+        android:textColor="@color/color_of_040000"
+        android:textColorHint="@color/color_of_cccccc"
+        android:textSize="17dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_height"
+        android:layout_marginBottom="30dp"
+        android:background="@color/line_color" />
+
+    <TextView
+        android:id="@+id/bt_sum"
+        style="@style/bt_red"
+        android:text="登录"
+        android:layout_margin="0dp" />
+    <View
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:layout_height="0dp"/>
+   <TextView
+       android:layout_width="match_parent"
+       android:id="@+id/tv_argument"
+       android:text="进入木牛流马代表你已同意"
+       android:textSize="12dp"
+       android:gravity="center"
+       android:textColor="@color/color_of_040000"
+       android:layout_height="wrap_content"/>
+</LinearLayout>

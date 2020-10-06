@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_of_ffffff"
+    android:orientation="vertical"
+    tools:context=".ui.FaceBackActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <EditText
+        android:id="@+id/et"
+        android:background="@color/color_of_tran"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:hint="请填写10字以上的问题描述，以便我们更好地帮助你解决问题"
+        android:padding="@dimen/gap_app"
+        android:gravity="start"
+        android:textColor="@color/color_of_040000"
+        android:textColorHint="@color/color_of_cccccc"
+        android:textSize="17dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/gap_app"
+        android:id="@+id/rv"
+        />
+    <TextView
+        android:layout_marginLeft="@dimen/gap_app"
+        android:textColor="@color/color_of_999999"
+        android:textSize="13dp"
+        android:text="已添加0/4张图片"
+        android:id="@+id/tv_count"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/bt_sum"
+        style="@style/bt_red"
+        android:text="提交反馈" />
+</LinearLayout>

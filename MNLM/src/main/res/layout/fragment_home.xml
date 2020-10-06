@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_of_ffffff"
+    android:orientation="vertical">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/gap_app"
+                android:layout_marginRight="@dimen/gap_app"
+                android:paddingBottom="@dimen/gap_app"
+                android:textColor="@color/color_of_040000"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="早上好，男神" />
+
+            <View
+                android:id="@+id/search"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_marginLeft="@dimen/gap_app"
+                android:layout_marginRight="@dimen/gap_app"
+
+                android:background="@drawable/ovl_5_f7f7f7"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+            <ImageView
+                android:id="@+id/icon_search"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:layout_marginLeft="11dp"
+                app:layout_constraintBottom_toBottomOf="@id/search"
+                app:layout_constraintStart_toStartOf="@id/search"
+                app:layout_constraintTop_toTopOf="@id/search"
+                app:srcCompat="@drawable/icon_search_999999" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:text="运单状态查询"
+                android:textColor="@color/color_of_8d8d8d"
+                android:textSize="13dp"
+                app:layout_constraintBottom_toBottomOf="@id/search"
+                app:layout_constraintStart_toEndOf="@id/icon_search"
+                app:layout_constraintTop_toTopOf="@id/search" />
+
+            <ImageView
+                android:id="@+id/icon_scan"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:layout_marginLeft="11dp"
+                android:layout_marginEnd="14dp"
+                app:layout_constraintBottom_toBottomOf="@id/search"
+                app:layout_constraintEnd_toEndOf="@id/search"
+                app:layout_constraintTop_toTopOf="@id/search"
+                app:srcCompat="@drawable/icon_scan_999999" />
+
+            <com.fy.androidlibrary.widget.shadow.ShadowLayout
+                android:id="@+id/shadow"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                app:hl_cornerRadius="5dp"
+                app:hl_shadowBackColor="@color/color_of_ffffff"
+                app:hl_shadowColor="#2a000000"
+                app:hl_shadowLimit="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/search">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="80dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp">
+
+                    <TextView
+                        android:id="@+id/tv1"
+                        android:layout_width="33dp"
+                        android:layout_height="wrap_content"
+                        android:text="我的金库"
+                        android:textColor="@color/color_of_040000"
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:id="@+id/view_line"
+                        android:layout_width="@dimen/line_height"
+                        android:layout_height="0dp"
+                        android:layout_marginLeft="15dp"
+                        android:background="@color/line_color"
+                        app:layout_constraintBottom_toBottomOf="@id/tv1"
+                        app:layout_constraintStart_toEndOf="@id/tv1"
+                        app:layout_constraintTop_toTopOf="@id/tv1" />
+
+                    <TextView
+                        android:id="@+id/tv_count_des"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:text="账户余额(元)"
+                        android:textColor="@color/color_of_999999"
+                        android:textSize="12dp"
+                        app:layout_constraintEnd_toStartOf="@id/icon_eyes"
+                        app:layout_constraintStart_toEndOf="@id/view_line"
+                        app:layout_constraintTop_toTopOf="@id/view_line" />
+
+                    <TextView
+                        android:id="@+id/tv_count"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:text="******"
+                        android:textColor="@color/color_of_040000"
+                        android:textSize="24dp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toStartOf="@id/icon_eyes"
+                        app:layout_constraintStart_toEndOf="@id/view_line"
+                        app:layout_constraintTop_toBottomOf="@id/tv_count_des" />
+
+                    <ImageView
+                        android:id="@+id/icon_eyes"
+                        android:layout_width="37dp"
+                        android:layout_height="57dp"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="20dp"
+                        android:src="@mipmap/attention_forbid"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.fy.androidlibrary.widget.shadow.ShadowLayout>
+
+
+            <View
+                android:id="@+id/view_tuoyunren"
+                android:layout_width="0dp"
+                android:layout_height="140dp"
+                android:background="@mipmap/bg_chengtuoren"
+                app:layout_constraintEnd_toStartOf="@id/view_chengyunren"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/shadow" />
+
+            <TextView
+                android:id="@+id/tv_count_tyr_des"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/gap_app"
+                android:layout_marginTop="15dp"
+                android:text="托运人"
+                android:textColor="@color/color_of_ffffff"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/view_tuoyunren"
+                app:layout_constraintTop_toTopOf="@id/view_tuoyunren" />
+
+            <TextView
+                android:id="@+id/tv_count_tyr"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="0单"
+                android:textColor="@color/color_of_ffffff"
+                android:textSize="18dp"
+                app:layout_constraintStart_toStartOf="@id/tv_count_tyr_des"
+                app:layout_constraintTop_toBottomOf="@id/tv_count_tyr_des" />
+
+            <View
+                android:id="@+id/view_chengyunren"
+                android:layout_width="0dp"
+                android:layout_height="140dp"
+                android:background="@mipmap/bg_chengtuoren"
+                app:layout_constraintEnd_toStartOf="@id/view_driver"
+                app:layout_constraintStart_toEndOf="@id/view_tuoyunren"
+                app:layout_constraintTop_toBottomOf="@id/shadow" />
+
+            <TextView
+                android:id="@+id/tv_count_cyr_des"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/gap_app"
+                android:layout_marginTop="15dp"
+                android:text="承运人"
+                android:textColor="@color/color_of_ffffff"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/view_chengyunren"
+                app:layout_constraintTop_toTopOf="@id/view_chengyunren" />
+
+            <TextView
+                android:id="@+id/tv_count_cyr"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="0单"
+                android:textColor="@color/color_of_ffffff"
+                android:textSize="18dp"
+                app:layout_constraintStart_toStartOf="@id/tv_count_cyr_des"
+                app:layout_constraintTop_toBottomOf="@id/tv_count_cyr_des" />
+
+            <View
+                android:id="@+id/view_driver"
+
+                android:layout_width="0dp"
+                android:layout_height="140dp"
+                android:background="@mipmap/bg_chengtuoren"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/view_chengyunren"
+                app:layout_constraintTop_toBottomOf="@id/shadow" />
+
+            <TextView
+                android:id="@+id/tv_count_driver_des"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/gap_app"
+                android:layout_marginTop="15dp"
+                android:text="司机"
+                android:textColor="@color/color_of_ffffff"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/view_driver"
+                app:layout_constraintTop_toTopOf="@id/view_driver" />
+
+            <TextView
+                android:id="@+id/tv_count_driver"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="0单"
+                android:textColor="@color/color_of_ffffff"
+                android:textSize="18dp"
+                app:layout_constraintStart_toStartOf="@id/tv_count_driver_des"
+                app:layout_constraintTop_toBottomOf="@id/tv_count_driver_des" />
+
+
+            <LinearLayout
+                android:id="@+id/content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view_tuoyunren">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:paddingLeft="@dimen/gap_app"
+                    android:paddingRight="@dimen/gap_app">
+
+                    <TextView
+                        android:id="@+id/tv_role_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="我的送货"
+                        android:textColor="@color/color_of_040000"
+                        android:textSize="24dp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_more"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="15dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="更多"
+                            android:textColor="@color/color_of_999999" />
+
+                        <ImageView
+                            android:layout_width="9dp"
+                            android:layout_height="9dp"
+                            android:layout_marginLeft="8dp"
+                            app:srcCompat="@drawable/icon_go_999999" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:orientation="vertical" />
+            </LinearLayout>
+
+
+            <com.fy.androidlibrary.widget.shadow.ShadowLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@mipmap/bg_learn_more_home"
+                app:hl_cornerRadius="5dp"
+                app:hl_shadowBackColor="@color/color_of_ffffff"
+                app:hl_shadowColor="#2a000000"
+                app:hl_shadowLimit="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/content">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp">
+
+                    <TextView
+                        android:id="@+id/tv_bottom1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="为什么用"
+                        android:textColor="@color/color_of_e50000"
+                        android:textSize="18dp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_bottom2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/gap_app"
+                        android:text="木牛流马网络货运"
+                        android:textColor="@color/color_of_333333"
+                        android:textSize="23dp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_bottom1" />
+
+
+                    <LinearLayout
+                        android:id="@+id/ll_content_bottom"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/gap_app"
+                        android:gravity="center_vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_bottom2">
+
+                        <com.fy.androidlibrary.widget.CircularImageView
+                            android:layout_width="6dp"
+                            android:layout_height="6dp"
+                            android:src="@color/color_of_e50000"
+                            app:viewradius="3dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:textColor="@color/color_of_666666"
+                            android:textSize="14dp"
+                            app:layout_constraintStart_toEndOf="@+id/point_start"
+                            app:layout_constraintTop_toBottomOf="@id/tv_bottom2"
+                            android:text="线上交易更便捷" />
+
+                        <com.fy.androidlibrary.widget.CircularImageView
+                            android:layout_width="6dp"
+                            android:layout_height="6dp"
+                            android:layout_marginLeft="@dimen/gap_app"
+                            android:src="@color/color_of_e50000"
+                            app:viewradius="3dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:textColor="@color/color_of_666666"
+                            android:textSize="14dp"
+                            app:layout_constraintStart_toEndOf="@+id/point_start"
+                            app:layout_constraintTop_toBottomOf="@id/tv_bottom2"
+                            android:text="车货监控更安全" />
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/bt_learn_more"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/gap_app"
+                        android:background="@drawable/ovl_5_e50000"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="5dp"
+                        android:text="了解更多"
+                        android:textColor="@color/color_of_ffffff"
+                        android:textSize="14dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/ll_content_bottom" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.fy.androidlibrary.widget.shadow.ShadowLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

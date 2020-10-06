@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <com.hongniu.freight.widget.VistogramView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:id="@+id/vistorgram"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp" />
+
+    <LinearLayout
+        android:id="@+id/ll_vis_des"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:id="@+id/ll_left"
+            android:layout_height="wrap_content">
+            <com.fy.androidlibrary.widget.CircularImageView
+                app:viewradius="4dp"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:src="@color/color_of_e50000"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="线上支付"
+                android:textColor="#6d6d6d"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:id="@+id/ll_right"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <com.fy.androidlibrary.widget.CircularImageView
+                app:viewradius="4dp"
+                android:layout_width="8dp"
+                android:layout_marginLeft="@dimen/gap_app"
+                android:layout_height="8dp"
+                android:src="@color/color_of_1890ff"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="线下支付"
+                android:textColor="#6d6d6d"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_des"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="20dp"
+        android:text="运费支出明细"
+        android:textStyle="bold"
+        android:textColor="@color/color_of_040000"
+        android:textSize="19dp" />
+</LinearLayout>

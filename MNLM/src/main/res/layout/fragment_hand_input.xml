@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#dd393a3e"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <EditText
+        app:layout_constraintVertical_chainStyle="packed"
+        android:id="@+id/et"
+        android:layout_width="0dp"
+        android:layout_margin="@dimen/gap_app"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bt"
+        android:textSize="18dp"
+        android:textColor="@color/color_of_ffffff"
+        android:background="@color/transparent"
+        android:hint="请输入运单号"
+        android:padding="10dp"
+        android:textColorHint="@color/color_of_999999"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:text="查看运单状态"
+        android:id="@+id/bt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et"
+        style="@style/bt_white"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_of_ffffff"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="15dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_of_040000"
+                android:textSize="26dp"
+                tool:text="15555555555" />
+
+            <TextView
+                android:id="@+id/tv_role"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:background="@drawable/ovl_5_e50000"
+                android:paddingLeft="15dp"
+                android:paddingTop="3dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="3dp"
+                android:textColor="@color/color_of_ffffff"
+                android:textSize="12dp"
+                tool:text="司机" />
+        </LinearLayout>
+
+        <com.fy.androidlibrary.widget.CircularImageView
+            android:id="@+id/img_heard"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/icon_default_avatar_100"
+            app:borderColor="#eeeeee"
+            app:showBorder="true"
+            app:viewradius="30dp" />
+
+
+    </LinearLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingBottom="30dp"
+            android:orientation="vertical">
+
+            <com.fy.androidlibrary.widget.shadow.ShadowLayout
+                android:id="@+id/shadow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="15dp"
+                app:hl_cornerRadius="5dp"
+                app:hl_shadowBackColor="@color/color_of_ffffff"
+                app:hl_shadowColor="#2a000000"
+                app:hl_shadowLimit="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/search">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="80dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp">
+
+                    <TextView
+                        android:id="@+id/tv1"
+                        android:layout_width="33dp"
+                        android:layout_height="wrap_content"
+                        android:text="我的金库"
+                        android:textColor="@color/color_of_040000"
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:id="@+id/view_line"
+                        android:layout_width="@dimen/line_height"
+                        android:layout_height="0dp"
+                        android:layout_marginLeft="15dp"
+                        android:background="@color/line_color"
+                        app:layout_constraintBottom_toBottomOf="@id/tv1"
+                        app:layout_constraintStart_toEndOf="@id/tv1"
+                        app:layout_constraintTop_toTopOf="@id/tv1" />
+
+                    <TextView
+                        android:id="@+id/tv_count_des"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:text="账户余额(元)"
+                        android:textColor="@color/color_of_999999"
+                        android:textSize="12dp"
+                        app:layout_constraintEnd_toStartOf="@id/icon_eyes"
+                        app:layout_constraintStart_toEndOf="@id/view_line"
+                        app:layout_constraintTop_toTopOf="@id/view_line" />
+
+                    <TextView
+                        android:id="@+id/tv_count"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:text="******"
+                        android:textColor="@color/color_of_040000"
+                        android:textSize="24dp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toStartOf="@id/icon_eyes"
+                        app:layout_constraintStart_toEndOf="@id/view_line"
+                        app:layout_constraintTop_toBottomOf="@id/tv_count_des" />
+
+                    <ImageView
+                        android:id="@+id/icon_eyes"
+                        android:paddingTop="20dp"
+                        android:paddingLeft="20dp"
+                        android:paddingBottom="20dp"
+                        android:layout_width="37dp"
+                        android:layout_height="57dp"
+                        android:src="@mipmap/attention_forbid"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.fy.androidlibrary.widget.shadow.ShadowLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/color_of_f5f6fc" />
+
+            <LinearLayout
+                android:layout_marginTop="@dimen/gap_app"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:showDividers="middle">
+                <LinearLayout
+                    android:id="@+id/ll_order_center"
+                    style="@style/person_center_parent">
+
+                    <ImageView
+                        style="@style/person_center_img_left"
+                        android:src="@mipmap/icon_order_center" />
+
+                    <TextView
+                        style="@style/person_center_text"
+                        android:text="接单中心" />
+
+                    <ImageView
+                        style="@style/person_center_img_right"
+                        app:srcCompat="@drawable/icon_go_999999"
+                        />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ll_identification"
+                    style="@style/person_center_parent">
+
+                    <ImageView
+                        style="@style/person_center_img_left"
+                        android:src="@mipmap/icon_id_card" />
+
+                    <TextView
+                        style="@style/person_center_text"
+                        android:text="身份认证" />
+
+                    <ImageView
+                        style="@style/person_center_img_right"
+                        app:srcCompat="@drawable/icon_go_999999"
+                         />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_car"
+                    style="@style/person_center_parent">
+
+                    <ImageView
+                        style="@style/person_center_img_left"
+                        android:src="@mipmap/icon_car" />
+
+                    <TextView
+                        style="@style/person_center_text"
+                        android:text="我的车辆" />
+
+                    <ImageView
+                        style="@style/person_center_img_right"
+                        app:srcCompat="@drawable/icon_go_999999"
+                          />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_feedback"
+                    style="@style/person_center_parent">
+
+                    <ImageView
+                        style="@style/person_center_img_left"
+                        android:src="@mipmap/comment_fill" />
+
+                    <TextView
+                        style="@style/person_center_text"
+                        android:text="意见反馈" />
+
+                    <ImageView
+                        style="@style/person_center_img_right"
+                        app:srcCompat="@drawable/icon_go_999999"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_service"
+                    style="@style/person_center_parent">
+
+                    <ImageView
+                        style="@style/person_center_img_left"
+                        android:src="@mipmap/icon_service" />
+
+                    <TextView
+                        style="@style/person_center_text"
+                        android:text="联系客服" />
+
+                    <ImageView
+                        style="@style/person_center_img_right"
+                        app:srcCompat="@drawable/icon_go_999999"
+                          />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_about_us"
+                    style="@style/person_center_parent">
+
+                    <ImageView
+                        style="@style/person_center_img_left"
+                        android:src="@mipmap/icon_about_us" />
+
+                    <TextView
+                        style="@style/person_center_text"
+                        android:text="关于我们" />
+
+                    <ImageView
+                        style="@style/person_center_img_right"
+                        app:srcCompat="@drawable/icon_go_999999"
+                    />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_quit"
+                    style="@style/person_center_parent">
+
+                    <ImageView
+                        style="@style/person_center_img_left"
+                        android:src="@mipmap/icon_quite" />
+
+                    <TextView
+                        style="@style/person_center_text"
+                        android:text="退出账号" />
+
+                    <ImageView
+                        style="@style/person_center_img_right"
+                        app:srcCompat="@drawable/icon_go_999999"
+                       />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</LinearLayout>

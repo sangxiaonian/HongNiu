@@ -1,3 +1,4 @@
+include ':MNLM'
 include ':companylibrary'
 include ':androidlibrary'
 include ':app', ':CommonLibrary', ':ResLibrary', ':ThirdLibrary', ':BaseLibrary', ':ModuleLogin', ':ModuleFestivity', ':ModuleChact', ':ModuleCarGoodsMatch', ':ModuleBreakbulk',

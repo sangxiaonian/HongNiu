@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_of_f5f5f5"
+    android:orientation="vertical"
+    tools:context=".ui.AppraiseActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/gap_app"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="@dimen/gap_app"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/ovl_5_ffffff"
+                android:orientation="vertical"
+                android:showDividers="middle"
+                android:divider="@drawable/line_cccccc"
+                android:dividerPadding="@dimen/gap_app"
+                android:paddingLeft="@dimen/gap_app"
+                android:paddingRight="@dimen/gap_app">
+
+                <LinearLayout
+                    android:id="@+id/rl_platform"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="20dp"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="20dp">
+
+                    <com.fy.androidlibrary.widget.CircularImageView
+                        android:id="@+id/img_platform"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:scaleType="centerCrop"
+
+                        app:viewradius="30dp" />
+
+                    <LinearLayout
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:orientation="vertical"
+                        tools:layout_toRightOf="@id/img_platform">
+
+                        <TextView
+                            android:id="@+id/tv_platform"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/color_of_040000"
+                            android:textSize="13dp"
+                            tools:text="平台员工:测试人" />
+
+                        <com.hedgehog.ratingbar.RatingBar
+                            android:id="@+id/view_start_platform"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center"
+
+                            app:clickable="true"
+                            app:halfstart="false"
+                            app:starCount="5"
+                            app:starFill="@mipmap/start_fill"
+                            app:starEmpty="@mipmap/star_fill_hide"
+                            app:starImageHeight="32dp"
+                            app:starImagePadding="10dp"
+                            app:starImageWidth="32dp" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:gravity="center_vertical"
+
+                    android:id="@+id/rl_shipper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp">
+
+                    <com.fy.androidlibrary.widget.CircularImageView
+                        android:id="@+id/img_shipper"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:scaleType="centerCrop"
+
+                        app:viewradius="30dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:orientation="vertical"
+                        tools:layout_toRightOf="@id/img_shipper">
+
+                        <TextView
+                            android:id="@+id/tv_shipper"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/color_of_040000"
+                            android:textSize="13dp"
+                            tools:text="托运人:测试人" />
+
+                        <com.hedgehog.ratingbar.RatingBar
+                            android:id="@+id/view_start_shipper"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center"
+                            app:clickable="true"
+                            app:halfstart="false"
+                            app:starCount="5"
+                            app:starFill="@mipmap/start_fill"
+                            app:starEmpty="@mipmap/star_fill_hide"
+                            app:starImageHeight="32dp"
+                            app:starImagePadding="10dp"
+                            app:starImageWidth="32dp" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:gravity="center_vertical"
+
+                    android:id="@+id/rl_carrier"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp">
+
+                    <com.fy.androidlibrary.widget.CircularImageView
+                        android:id="@+id/img_carrier"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:scaleType="centerCrop"
+
+                        app:viewradius="30dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:orientation="vertical"
+                        tools:layout_toRightOf="@id/img_carrier">
+
+                        <TextView
+                            android:id="@+id/tv_carrier"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/color_of_040000"
+                            android:textSize="13dp"
+                            tools:text="承运人:测试人" />
+
+                        <com.hedgehog.ratingbar.RatingBar
+                            android:id="@+id/view_start_carrier"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center"
+
+                            app:clickable="true"
+                            app:halfstart="false"
+                            app:starCount="5"
+                            app:starFill="@mipmap/start_fill"
+                            app:starEmpty="@mipmap/star_fill_hide"
+                            app:starImageHeight="32dp"
+                            app:starImagePadding="10dp"
+                            app:starImageWidth="32dp" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:id="@+id/rl_driver"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp">
+
+                    <com.fy.androidlibrary.widget.CircularImageView
+                        android:id="@+id/img_driver"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:scaleType="centerCrop"
+
+                        app:viewradius="30dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:orientation="vertical"
+                        tools:layout_toRightOf="@id/img_driver">
+                        <TextView
+                            android:id="@+id/tv_driver"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/color_of_040000"
+                            android:textSize="13dp"
+                            tools:text="司机:测试人" />
+
+                        <com.hedgehog.ratingbar.RatingBar
+                            android:id="@+id/view_start_driver"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center"
+                            app:clickable="true"
+                            app:halfstart="false"
+                            app:starCount="5"
+                            app:starFill="@mipmap/start_fill"
+                            app:starEmpty="@mipmap/star_fill_hide"
+                            app:starImageHeight="32dp"
+                            app:starImagePadding="10dp"
+                            app:starImageWidth="32dp" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <EditText
+                android:gravity="start"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:paddingLeft="@dimen/gap_app"
+                android:paddingRight="@dimen/gap_app"
+                android:hint="简单描述下你的体验感受吧～"
+                android:textColorHint="@color/color_of_cccccc"
+                android:textColor="@color/color_of_040000"
+                android:textSize="15dp"
+                android:id="@+id/et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/gap_app"
+                android:layout_marginRight="@dimen/gap_app"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/ovl_5_ffffff"
+                android:minHeight="200dp" />
+
+
+        </LinearLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+    <TextView
+        android:id="@+id/bt_sum"
+        style="@style/bt_red"
+        android:text="评价" />
+
+</LinearLayout>

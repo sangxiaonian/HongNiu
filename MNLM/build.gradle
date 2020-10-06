@@ -1,0 +1,110 @@
+apply plugin: 'com.android.library'
+
+repositories {
+    flatDir {
+        dirs '/libs'
+    }
+}
+// 显示的时间格式，形如20171110
+static def releaseTime() {
+    return new Date().format("MM-dd-HH-mm", TimeZone.getDefault());
+}
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        flavorDimensions "versionCode"
+
+        vectorDrawables.useSupportLibrary = true
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
+
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a"
+        }
+    }
+
+
+    buildTypes {
+        debug {
+
+            buildConfigField "boolean", "IS_DEBUG", "true"
+            resValue "string", "weChatAppid", "wx10d4b234bc2e64dc"//微信APPID
+            resValue "string", "UMAppKey", "5e723107167eddb65e0001b6"//友盟推送 appkey
+            resValue "string", "UMpushSercet", "8c2ef94dbc50f6546c4ded2e45579629"//友盟推送sercet
+
+            //人脸识别测试版本
+            resValue "string", "verify_appID", "TIDAnu4f"//人脸识别
+            resValue "string", "verify_secret", "aHn2gFj33RcyNw85hx4zssTcebvalItWBcI9JyI15raogpj5rUiyUX5elumInpQO"
+            resValue "string", "verify_SDKlicense", "pYXTl8k0mN99he+yGFM+SMWNWmbReaV1gamC88dGg65hnjzZDeQDHbkZ/uBxPk8jE1WK4BfAUrS+6a08xkvBptMW6H1zwHnVAxzd6nddDrDKvgHMl+E/YDRsN2ty6UdyQYsHRclY6iu12sVRdzIeEPBN/InzEBPzQsenQOWDEo+Q5DOPtE/i4C0KokT0x5JI9/RWVioxKp4RrLSNOArr+KVIfc/a74+yfTaMhQCyAdg2onpNSuzHSeY5egtno0QBSCLLmoxTQwUB1F/bfXngRdV9dFbbmQBpOV00KNbqGYmer+s3RvR2lkrGB48MuEJHWA3hgGRquw03ncG8zf/RZg=="
+            ////////////////////////////////////////////
+
+            //网络货运
+            resValue "string", "freight_uniquie", "37103085"//企业唯一标识
+            resValue "string", "freight_secret", "5928b6bab955463a858ef0777e0e8853c7750ed293c2420f8a7942b79ef11f91"
+//安全码
+            ///////////////////////////////////////////////////
+
+
+            manifestPlaceholders = [
+                    RONG_CLOUD_APP_KEY: "k51hidwqkvxmb"//融云聊天key，测试
+                    , GAODE_MAP       : "1457998aaed653947f53734c7bd5f47a"//高德地图
+
+            ]
+        }
+        release {
+            resValue "string", "weChatAppid", "wx10d4b234bc2e64dc"//微信APPID
+            resValue "string", "UMAppKey", "5e723107167eddb65e0001b6"//友盟推送 appkey
+            resValue "string", "UMpushSercet", "8c2ef94dbc50f6546c4ded2e45579629"//友盟推送sercet
+
+            //人脸识别正式版本
+            resValue "string", "verify_appID", "IDAGnuKK"//人脸识别正式版本
+            resValue "string", "verify_secret", "9gE8cd5DgLfm3oJX3aezDUUWHq96MXb8IQuPqlQUkLxXefUndP5D5xObPECzpO6y"
+            resValue "string", "verify_SDKlicense", "pYXTl8k0mN99he+yGFM+SMWNWmbReaV1gamC88dGg65hnjzZDeQDHbkZ/uBxPk8jE1WK4BfAUrS+6a08xkvBptMW6H1zwHnVAxzd6nddDrDKvgHMl+E/YDRsN2ty6UdyQYsHRclY6iu12sVRdzIeEPBN/InzEBPzQsenQOWDEo+Q5DOPtE/i4C0KokT0x5JI9/RWVioxKp4RrLSNOArr+KVIfc/a74+yfTaMhQCyAdg2onpNSuzHSeY5egtno0QBSCLLmoxTQwUB1F/bfXngRdV9dFbbmQBpOV00KNbqGYmer+s3RvR2lkrGB48MuEJHWA3hgGRquw03ncG8zf/RZg=="
+            ////////////////////////////////////////////
+            //网络货运
+            resValue "string", "freight_uniquie", "37103085"//企业唯一标识
+            resValue "string", "freight_secret", "5928b6bab955463a858ef0777e0e8853c7750ed293c2420f8a7942b79ef11f91"
+//安全码
+            ///////////////////////////////////////////////////
+
+            manifestPlaceholders = [
+                    RONG_CLOUD_APP_KEY: "tdrvipkstno85"//融云聊天key
+                    , GAODE_MAP       : "1457998aaed653947f53734c7bd5f47a"//高德地图
+            ]
+            // proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    implementation project(path: ':companylibrary')
+    annotationProcessor 'com.alibaba:arouter-compiler:1.1.4'
+    implementation 'com.contrarywind:Android-PickerView:4.1.9'
+    implementation "androidx.dynamicanimation:dynamicanimation:1.0.0"
+    implementation project(path: ':ThirdLibrary')
+    //https://github.com/barteksc/AndroidPdfViewer pdf
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
+    //星等级评价
+    api 'com.hedgehog.ratingbar:app:1.1.2'
+    //二维码扫描
+    api 'cn.yipianfengye.android:zxing-library:2.2'
+
+
+}

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_of_ffffff"
+    android:orientation="vertical">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.fy.companylibrary.widget.ItemTextView
+                android:id="@+id/item_name"
+                style="@style/item_edit"
+                app:textcenterhide="请输入姓名"
+                app:textleft="姓名" />
+
+            <com.fy.companylibrary.widget.ItemTextView
+                android:id="@+id/item_id_card"
+                style="@style/item_edit"
+                app:centerType="idcard"
+
+                app:textcenterhide="请输入身份证号码"
+                app:textleft="身份证号码" />
+
+            <com.fy.companylibrary.widget.ItemTextView
+                android:id="@+id/item_email"
+                style="@style/item_edit"
+                app:centerType="normal"
+                app:textcenterhide="请输入邮箱"
+                app:textleft="邮箱" />
+
+            <include layout="@layout/layout_id_card" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+    <TextView
+        android:id="@+id/bt_sum"
+        style="@style/bt_red"
+        android:text="下一步" />
+
+</LinearLayout>

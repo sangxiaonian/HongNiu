@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:textSize="15sp"
+    android:textColor="@color/color_of_333333"
+    android:id="@+id/tv"
+    android:paddingLeft="@dimen/gap_app"
+    android:paddingRight="@dimen/gap_app"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:layout_height="wrap_content">
+
+</TextView>
