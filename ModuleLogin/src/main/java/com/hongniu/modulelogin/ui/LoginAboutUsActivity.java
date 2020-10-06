@@ -8,7 +8,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.H5Config;
 import com.hongniu.modulelogin.R;
@@ -16,7 +16,7 @@ import com.fy.androidlibrary.utils.DeviceUtils;
 import com.sang.common.widget.ItemView;
 
 @Route(path = ArouterParamLogin.activity_about_us)
-public class LoginAboutUsActivity extends BaseActivity implements View.OnClickListener {
+public class LoginAboutUsActivity extends ModuleBaseActivity implements View.OnClickListener {
 
     private ItemView itemTermsOfService;
     private ItemView itemAobutHongNiu;

@@ -1,0 +1,57 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="BaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/color_of_1c234d</item>
+        <item name="colorPrimaryDark">@color/color_of_1c234d</item>
+        <item name="colorAccent">@color/color_of_1c234d</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>    <!-- Base application theme. -->
+
+
+
+    <style name="tranTheme" parent="BaseTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@color/color_of_tran</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="pop_ani" parent="android:Animation">  <!--name为调用这个style动画的名字，自己设置的-->
+        <item name="android:windowExitAnimation">@anim/lib_pophidden_anim</item><!-- 退出动画-->
+        <item name="android:windowEnterAnimation">@anim/lib_popshow_anim</item>
+    </style>
+
+    <style name="dialog_ani" parent="android:Animation">  <!--name为调用这个style动画的名字，自己设置的-->
+        <!--<item name="android:windowExitAnimation">@anim/pop_exit</item>&lt;!&ndash; 退出动画&ndash;&gt;-->
+        <!--<item name="android:windowEnterAnimation">@anim/pop_in</item>-->
+        <item name="android:windowExitAnimation">@anim/actionsheet_dialog_out</item><!-- 退出动画-->
+        <item name="android:windowEnterAnimation">@anim/actionsheet_dialog_in</item>
+    </style>
+
+    <style name="dialogTransparent" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item><!--边框-->
+        <item name="android:windowIsFloating">true</item><!--是否浮现在activity之上-->
+        <item name="android:windowIsTranslucent">false</item><!--半透明-->
+        <item name="android:windowBackground">@android:color/transparent</item><!--背景透明-->
+        <item name="android:windowNoTitle">true</item><!--无标题-->
+        <item name="android:backgroundDimEnabled">false</item><!--模糊，背景透明是这个-->
+
+    </style>
+   <style name="dialog" parent="@android:style/Theme.Dialog">
+       <item name="android:windowFrame">@null</item>
+       <item name="android:windowBackground">@android:color/transparent</item>
+       <item name="android:windowNoTitle">false</item>
+
+    </style>
+
+    <style name="dialog_alpha" parent="android:Animation">  <!--name为调用这个style动画的名字，自己设置的-->
+        <item name="android:windowExitAnimation">@anim/alpha_dialog_out</item><!-- 退出动画-->
+        <item name="android:windowEnterAnimation">@anim/alpha_dialog_in</item>
+    </style>
+
+
+
+
+</resources>

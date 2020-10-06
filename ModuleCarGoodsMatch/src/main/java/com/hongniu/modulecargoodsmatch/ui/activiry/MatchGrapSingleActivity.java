@@ -17,7 +17,7 @@ import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CarInforBean;
@@ -56,7 +56,7 @@ import static com.hongniu.baselibrary.config.Param.isDebug;
  * @Description 我要接单页面
  */
 @Route(path = ArouterParamsMatch.activity_match_grap_single)
-public class MatchGrapSingleActivity extends BaseActivity implements View.OnClickListener, PayWayView.OnPayTypeChangeListener, PayDialog.OnClickPayListener, PayPasswordKeyBord.PayKeyBordListener {
+public class MatchGrapSingleActivity extends ModuleBaseActivity implements View.OnClickListener, PayWayView.OnPayTypeChangeListener, PayDialog.OnClickPayListener, PayPasswordKeyBord.PayKeyBordListener {
 
     private TextView tvCarNum;
     private TextView tvCarType;

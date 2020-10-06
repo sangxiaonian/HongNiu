@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.H5Config;
@@ -24,7 +24,7 @@ import com.hongniu.modulefinance.net.HttpFinanceFactory;
  * 牛贝账户
  */
 //@Route(path = ArouterParamsFinance.activity_finance_niu)
-public class FinanceNiuActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
+public class FinanceNiuActivity extends ModuleBaseActivity implements RadioGroup.OnCheckedChangeListener {
 
     private TextView tvNiu;
     private TextView tvNiuUnEntry;

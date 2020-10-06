@@ -23,7 +23,7 @@ import com.hedgehog.ratingbar.RatingBar;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
@@ -56,7 +56,7 @@ import static com.hongniu.baselibrary.arouter.ArouterParamsApp.activity_img_prev
  * type 0 货主 1司机
  */
 @Route(path = ArouterParamsMatch.activity_match_order_detail)
-public class MatchOrderDetailActivity extends BaseActivity implements MatchOrderDataControl.IMatchOrderDataView, View.OnClickListener {
+public class MatchOrderDetailActivity extends ModuleBaseActivity implements MatchOrderDataControl.IMatchOrderDataView, View.OnClickListener {
 
     private TextView tv_state;//订单送达状态
     private TextView tv_time;//预约取货时间

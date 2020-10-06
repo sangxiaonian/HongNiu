@@ -3,15 +3,10 @@ package com.hongniu.supply.wxapi;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
-import com.hongniu.baselibrary.arouter.ArouterParamLogin;
-import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.base.BaseActivity;
-import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.supply.R;
 import com.fy.androidlibrary.utils.DeviceUtils;
-import com.fy.androidlibrary.utils.JLog;
 import com.fy.androidlibrary.toast.ToastUtils;
 import com.sang.thirdlibrary.pay.PayConfig;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
@@ -24,7 +19,7 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import org.greenrobot.eventbus.EventBus;
 
-public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler {
+public class WXEntryActivity extends ModuleBaseActivity implements IWXAPIEventHandler {
 
     private static final int TIMELINE_SUPPORTED_VERSION = 0x21020001;
 

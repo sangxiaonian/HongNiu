@@ -11,7 +11,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.QueryOrderStateBean;
 import com.hongniu.moduleorder.R;
@@ -24,7 +24,7 @@ import com.fy.androidlibrary.toast.ToastUtils;
  * 订单创建结果 传入boolean 参数 Param.tran true 成功，false 失败
  */
 @Route(path = ArouterParamOrder.activity_insurance_creat_result)
-public class OrderInsuranceResultActivity extends BaseActivity implements View.OnClickListener {
+public class OrderInsuranceResultActivity extends ModuleBaseActivity implements View.OnClickListener {
 
     private boolean success;
     private Button btCheck,btFinish;

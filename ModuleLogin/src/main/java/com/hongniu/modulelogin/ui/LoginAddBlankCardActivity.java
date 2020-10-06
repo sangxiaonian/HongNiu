@@ -7,12 +7,11 @@ import android.widget.Button;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.modulelogin.R;
 import com.hongniu.baselibrary.entity.PayInforBeans;
-import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.fy.androidlibrary.toast.ToastUtils;
 import com.sang.common.widget.ItemView;
 
@@ -20,7 +19,7 @@ import com.sang.common.widget.ItemView;
  * 添加收款方式
  */
 @Route(path = ArouterParamLogin.activity_login_add_blank_card)
-public class LoginAddBlankCardActivity extends BaseActivity implements View.OnClickListener {
+public class LoginAddBlankCardActivity extends ModuleBaseActivity implements View.OnClickListener {
 
     ItemView itemBlankName;
     ItemView itemBlankAddress;//开户行

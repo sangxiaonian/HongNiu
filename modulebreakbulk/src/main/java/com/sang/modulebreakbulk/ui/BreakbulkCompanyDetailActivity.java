@@ -9,7 +9,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.fy.androidlibrary.utils.CommonUtils;
 import com.hongniu.baselibrary.arouter.ArouterParamsBreakbulk;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.modulebreakbulk.R;
 import com.sang.modulebreakbulk.entity.BreakbulkCompanyInfoBean;
@@ -23,7 +23,7 @@ import com.sang.thirdlibrary.chact.ChactHelper;
  *
  */
 @Route(path = ArouterParamsBreakbulk.activity_breakbulk_company_detail)
-public class BreakbulkCompanyDetailActivity extends BaseActivity implements View.OnClickListener {
+public class BreakbulkCompanyDetailActivity extends ModuleBaseActivity implements View.OnClickListener {
 
     private TextView tvName;
     private TextView tvAddress;

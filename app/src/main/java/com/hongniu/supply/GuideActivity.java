@@ -19,7 +19,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.utils.Utils;
 import com.fy.androidlibrary.imgload.ImageLoader;
 import com.fy.androidlibrary.utils.DeviceUtils;
@@ -31,7 +31,7 @@ import java.util.List;
  * 引导界面
  */
 @Route(path = ArouterParamsApp.activity_guide_activity)
-public class GuideActivity extends BaseActivity {
+public class GuideActivity extends ModuleBaseActivity {
     ViewPager vp;
     LinearLayout llIndex;
     private List<GuideBean> datas = new ArrayList<>();

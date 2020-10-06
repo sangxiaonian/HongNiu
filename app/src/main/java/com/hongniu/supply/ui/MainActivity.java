@@ -20,7 +20,7 @@ import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CloseActivityEvent;
@@ -45,7 +45,6 @@ import com.hongniu.supply.R;
 import com.hongniu.supply.net.HttpMainFactory;
 import com.hongniu.supply.utils.RedDialog;
 import com.fy.androidlibrary.event.BusFactory;
-import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.androidlibrary.utils.ConvertUtils;
 import com.fy.androidlibrary.utils.DeviceUtils;
 import com.fy.androidlibrary.utils.JLog;
@@ -73,7 +72,7 @@ import io.rong.imlib.RongIMClient;
 import rongyun.sang.com.chactmodule.ui.fragment.ChactListFragment;
 
 @Route(path = ArouterParamsApp.activity_main)
-public class MainActivity extends BaseActivity implements View.OnClickListener, AMapLocationListener {
+public class MainActivity extends ModuleBaseActivity implements View.OnClickListener, AMapLocationListener {
 
     private TextView demo;
 

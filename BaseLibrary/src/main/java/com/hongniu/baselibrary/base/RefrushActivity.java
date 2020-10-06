@@ -26,7 +26,7 @@ import io.reactivex.disposables.Disposable;
 /**
  * 作者： ${PING} on 2018/8/21.
  */
-public abstract class RefrushActivity<T> extends BaseActivity implements OnRefreshListener, OnLoadMoreListener {
+public abstract class RefrushActivity<T> extends ModuleBaseActivity implements OnRefreshListener, OnLoadMoreListener {
     protected XRefreshLayout refresh;
     protected int currentPage = 1;
     protected boolean isFirst = true;

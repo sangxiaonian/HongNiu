@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_search"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_bg"
+        android:layout_width="match_parent"
+        android:background="#ffffff"
+        android:layout_height="?android:actionBarSize"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="1"
+            android:background="@drawable/oval_search_bg"
+            android:gravity="center"
+            android:paddingLeft="20dp">
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/icon_search_gray" />
+
+            <EditText
+                android:id="@+id/et_search"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:background="@color/color_of_tran"
+                android:gravity="center_vertical"
+                android:hint="请输入搜索内容"
+                android:imeOptions="actionSearch"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="@color/color_of_3d3d3d"
+                android:textColorHint="@color/color_of_c7c7c7"
+                android:textSize="14dp" />
+
+            <FrameLayout
+                android:id="@+id/fl_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <ImageView
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/ic_search_clear_999999" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="取消"
+            android:textColor="@color/color_of_656c99"
+            android:textSize="14dp" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view_out"
+        android:layout_width="match_parent"
+        android:background="#55000000"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

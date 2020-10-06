@@ -12,7 +12,7 @@ import com.fy.androidlibrary.net.rx.BaseObserver;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.WalletDetail;
@@ -30,7 +30,7 @@ import io.reactivex.Observable;
  * 余额详情
  */
 @Route(path = ArouterParamsFinance.activity_finance_balance)
-public class FinanceBalanceActivity extends BaseActivity implements View.OnClickListener, RechargeInforDialog.OnEntryClickListener {
+public class FinanceBalanceActivity extends ModuleBaseActivity implements View.OnClickListener, RechargeInforDialog.OnEntryClickListener {
 
     private TextView tvBanlaceWithdrawal;//待入账提现
     private TextView tvBanlace;//账户余额

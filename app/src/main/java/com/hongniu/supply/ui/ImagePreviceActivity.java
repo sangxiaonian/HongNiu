@@ -10,12 +10,11 @@ import androidx.viewpager.widget.ViewPager;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.fy.androidlibrary.utils.CollectionUtils;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.moduleorder.ui.adapter.SimpleFragmentAdapter;
 import com.hongniu.supply.R;
 import com.luck.picture.lib.widget.PreviewViewPager;
-import com.hongniu.baselibrary.entity.CommonBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +23,7 @@ import java.util.List;
  * 图片预览
  */
 @Route(path = ArouterParamsApp.activity_img_previce)
-public class ImagePreviceActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
+public class ImagePreviceActivity extends ModuleBaseActivity implements ViewPager.OnPageChangeListener {
 
 
     private PreviewViewPager viewPager;

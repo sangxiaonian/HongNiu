@@ -6,7 +6,7 @@ import android.view.View;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.modulecargoodsmatch.R;
@@ -29,7 +29,7 @@ import java.util.List;
  * @Description 车货匹配首页，全部信息列表
  */
 @Route(path = ArouterParamsMatch.activity_match_all_order_list)
-public class MatchAllOrderListActivity extends BaseActivity implements SwitchTextLayout.OnSwitchListener, OnPopuDismissListener, OrderMainPop.OnPopuClickListener, View.OnClickListener {
+public class MatchAllOrderListActivity extends ModuleBaseActivity implements SwitchTextLayout.OnSwitchListener, OnPopuDismissListener, OrderMainPop.OnPopuClickListener, View.OnClickListener {
     private SwitchTextLayout switchLeft;
     private SwitchTextLayout switchRight;
     private OrderMainPop<String> orderMainPop;

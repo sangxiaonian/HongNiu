@@ -1,6 +1,5 @@
 package com.hongniu.modulecargoodsmatch.ui.activiry;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -16,9 +15,8 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.fy.androidlibrary.utils.CollectionUtils;
-import com.fy.androidlibrary.utils.CommonUtils;
 import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.utils.PictureSelectorUtils;
@@ -47,7 +45,7 @@ import java.util.List;
  * @Description 确认送达
  */
 @Route(path = ArouterParamsMatch.activity_match_entry_arrive)
-public class MatchEntryArriveActivity extends BaseActivity implements OnItemDeletedClickListener<LocalMedia>, UpLoadImageUtils.OnUpLoadListener, View.OnClickListener {
+public class MatchEntryArriveActivity extends ModuleBaseActivity implements OnItemDeletedClickListener<LocalMedia>, UpLoadImageUtils.OnUpLoadListener, View.OnClickListener {
 
     private RecyclerView recycler;
     private EditText etRemark;

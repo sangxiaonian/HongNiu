@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.moduleorder.R;
@@ -19,7 +19,7 @@ import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleSt
  * @Description 订单搜索结果页面
  */
 @Route(path = ArouterParamOrder.activity_order_search_result)
-public class OrderSearchResultActivity extends BaseActivity {
+public class OrderSearchResultActivity extends ModuleBaseActivity {
 
 
     private Fragment fragment;

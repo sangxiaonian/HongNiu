@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.WalletDetail;
@@ -28,7 +28,7 @@ import com.hongniu.modulefinance.present.WalletPresenter;
  * 我的钱包首页
  */
 @Route(path = ArouterParamsFinance.activity_finance_wallet)
-public class FinanceWalletActivity extends BaseActivity implements FinanceWalletControl.IWalletView, View.OnClickListener, RadioGroup.OnCheckedChangeListener {
+public class FinanceWalletActivity extends ModuleBaseActivity implements FinanceWalletControl.IWalletView, View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
     private FinanceWalletControl.IWalletPresent present;
     private TextView tvBalanceOfAccount;//账户余额

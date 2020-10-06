@@ -12,7 +12,7 @@ import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.fy.androidlibrary.utils.CommonUtils;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.entity.CarTypeBean;
 import com.hongniu.baselibrary.utils.PickerDialogUtils;
@@ -22,7 +22,6 @@ import com.hongniu.baselibrary.entity.CarInforBean;
 import com.hongniu.modulelogin.entity.LoginEvent;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.fy.androidlibrary.event.BusFactory;
-import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.androidlibrary.utils.DeviceUtils;
 import com.fy.androidlibrary.toast.ToastUtils;
 import com.sang.common.widget.ItemView;
@@ -42,7 +41,7 @@ import okhttp3.ResponseBody;
  * 车辆新增、修改界面
  */
 @Route(path = ArouterParamLogin.activity_car_infor)
-public class LoginCarInforActivity extends BaseActivity implements View.OnClickListener, OnOptionsSelectListener {
+public class LoginCarInforActivity extends ModuleBaseActivity implements View.OnClickListener, OnOptionsSelectListener {
 
     private ItemView itemCarType;//车辆类型
     private ItemView itemCarNum;//车牌号

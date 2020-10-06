@@ -16,13 +16,12 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.fy.androidlibrary.utils.CollectionUtils;
-import com.fy.androidlibrary.utils.CommonUtils;
 import com.fy.androidlibrary.widget.editext.PointLengthFilter;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.PayInforBeans;
@@ -44,7 +43,7 @@ import java.util.List;
  * 余额提现界面
  */
 @Route(path = ArouterParamsFinance.activity_finance_balance_with_drawal)
-public class FinanceBalanceWithDrawalActivity extends BaseActivity implements View.OnClickListener, TextWatcher, PayPasswordKeyBord.PayKeyBordListener {
+public class FinanceBalanceWithDrawalActivity extends ModuleBaseActivity implements View.OnClickListener, TextWatcher, PayPasswordKeyBord.PayKeyBordListener {
 
     private ImageView imgPayIcon;
     private TextView tvPayWay;

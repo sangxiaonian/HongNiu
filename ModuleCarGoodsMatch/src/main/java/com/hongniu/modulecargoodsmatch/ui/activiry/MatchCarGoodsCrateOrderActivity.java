@@ -15,7 +15,7 @@ import com.fy.androidlibrary.utils.ConvertUtils;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.event.Event;
@@ -43,7 +43,7 @@ import java.util.List;
  * @Description 创建车货匹配订单
  */
 @Route(path = ArouterParamsMatch.activity_match_car_goods_crate_order)
-public class MatchCarGoodsCrateOrderActivity extends BaseActivity implements View.OnClickListener, OnTimeSelectListener, OnOptionsSelectListener {
+public class MatchCarGoodsCrateOrderActivity extends ModuleBaseActivity implements View.OnClickListener, OnTimeSelectListener, OnOptionsSelectListener {
     private MatchCarPreInforBean preCarInfor;//车辆预加载信息
 
     private ItemView itemStartTime;         //发货时间

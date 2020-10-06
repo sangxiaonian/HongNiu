@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.net.HttpAppFactory;
@@ -28,7 +28,7 @@ import com.sang.common.widget.ItemView;
  * @Description 忘记/设置支付密码界面
  */
 @Route(path = ArouterParamLogin.activity_login_forget_pass)
-public class LoginForgetPassActivity extends BaseActivity implements View.OnClickListener {
+public class LoginForgetPassActivity extends ModuleBaseActivity implements View.OnClickListener {
 
     private ItemView itemPhone;
     private ItemView itemSms;

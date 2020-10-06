@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:textColor="@color/color_of_3d3d3d"
+        android:text="物业类型"
+        android:id="@+id/tv_title"
+        android:layout_marginTop="10dp"
+        android:textSize="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.fy.androidlibrary.widget.autoline.AutoLineLayout
+        android:id="@+id/auto_layout"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

@@ -10,7 +10,7 @@ import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
 import com.github.barteksc.pdfviewer.listener.OnRenderListener;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.supply.R;
@@ -21,7 +21,7 @@ import java.io.File;
 import java.util.List;
 
 @Route(path = ArouterParamsApp.activity_pdf)
-public class PDFActivity extends BaseActivity implements OnLoadCompleteListener, OnRenderListener, PermissionUtils.onApplyPermission, DownloadUtil.OnDownloadListener {
+public class PDFActivity extends ModuleBaseActivity implements OnLoadCompleteListener, OnRenderListener, PermissionUtils.onApplyPermission, DownloadUtil.OnDownloadListener {
     PDFView pdfView;
     private String pdfUrl;
 

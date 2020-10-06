@@ -15,9 +15,8 @@ import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.fy.androidlibrary.net.rx.BaseObserver;
 import com.fy.androidlibrary.utils.CollectionUtils;
-import com.fy.androidlibrary.utils.CommonUtils;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
@@ -39,7 +38,6 @@ import com.sang.common.entity.NewAreaBean;
 import com.fy.androidlibrary.event.BusFactory;
 import com.fy.androidlibrary.imgload.ImageLoader;
 import com.fy.androidlibrary.net.rx.RxUtils;
-import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.androidlibrary.utils.DeviceUtils;
 import com.sang.common.utils.LoginUtils;
 import com.fy.androidlibrary.toast.ToastUtils;
@@ -54,7 +52,7 @@ import io.reactivex.Observable;
  * 个人资料
  */
 @Route(path = ArouterParamLogin.activity_person_infor)
-public class LoginPersonInforActivity extends BaseActivity implements View.OnClickListener, OnOptionsSelectListener {
+public class LoginPersonInforActivity extends ModuleBaseActivity implements View.OnClickListener, OnOptionsSelectListener {
 
     private TextView tvAleart;
     private ItemView itemName;

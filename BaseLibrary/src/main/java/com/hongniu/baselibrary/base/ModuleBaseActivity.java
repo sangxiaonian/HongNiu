@@ -37,7 +37,7 @@ import io.reactivex.disposables.Disposable;
  * 作者： ${桑小年} on 2018/7/30.
  * 努力，为梦长留
  */
-public class BaseActivity extends AppCompatActivity implements TaskControl.OnTaskListener {
+public class ModuleBaseActivity extends AppCompatActivity implements TaskControl.OnTaskListener {
 
     protected Context mContext;
     protected FrameLayout llToolbarLeft;

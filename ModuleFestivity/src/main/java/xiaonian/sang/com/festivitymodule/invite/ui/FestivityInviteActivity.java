@@ -14,14 +14,11 @@ import com.hongniu.baselibrary.arouter.ArouterParamFestivity;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.H5Config;
-import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.dialog.ShareDialog;
-import com.fy.androidlibrary.utils.ConvertUtils;
-import com.fy.androidlibrary.toast.ToastUtils;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
 import com.sang.thirdlibrary.share.ShareClient;
@@ -37,7 +34,7 @@ import xiaonian.sang.com.festivitymodule.widget.ScanDialog;
  * @Description 邀请有礼活动
  */
 @Route(path = ArouterParamFestivity.activity_festivity_home)
-public class FestivityInviteActivity extends BaseActivity implements View.OnClickListener, ShareDialog.OnShareListener {
+public class FestivityInviteActivity extends ModuleBaseActivity implements View.OnClickListener, ShareDialog.OnShareListener {
 
     private TextView tv_invite_count;//邀请总人数
     private TextView tv_money;//赚取的佣金

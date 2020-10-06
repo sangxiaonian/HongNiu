@@ -1,6 +1,5 @@
 package com.hongniu.moduleorder.ui;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -15,7 +14,7 @@ import android.widget.EditText;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.fy.androidlibrary.utils.CollectionUtils;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.utils.PictureSelectorUtils;
@@ -34,7 +33,6 @@ import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.fy.androidlibrary.event.BusFactory;
 import com.sang.common.recycleview.holder.PeakHolder;
-import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.androidlibrary.toast.ToastUtils;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
@@ -52,7 +50,7 @@ import java.util.List;
  * @Description 上传/修改回单
  */
 @Route(path = ArouterParamOrder.activity_order_up_receipt)
-public class OrderUpReceiptActivity extends BaseActivity implements View.OnClickListener, OnItemClickListener<LocalMedia>, OnItemDeletedClickListener<LocalMedia>,UpLoadImageUtils.OnUpLoadListener {
+public class OrderUpReceiptActivity extends ModuleBaseActivity implements View.OnClickListener, OnItemClickListener<LocalMedia>, OnItemDeletedClickListener<LocalMedia>,UpLoadImageUtils.OnUpLoadListener {
 
     private RecyclerView rv;
     private EditText etRemark;

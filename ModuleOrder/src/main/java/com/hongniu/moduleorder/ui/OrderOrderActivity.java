@@ -7,7 +7,7 @@ import android.os.Bundle;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.moduleorder.R;
 
@@ -15,7 +15,7 @@ import com.hongniu.moduleorder.R;
  * 订单列表页面，此处为首页点击数据后进入的订单列表
  */
 @Route(path = ArouterParamOrder.activity_order_order)
-public class OrderOrderActivity extends BaseActivity {
+public class OrderOrderActivity extends ModuleBaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

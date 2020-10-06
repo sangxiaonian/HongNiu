@@ -5,14 +5,14 @@ import android.os.Bundle;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.MapView;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.moduleorder.R;
 import com.fy.androidlibrary.utils.JLog;
 
 /**
  * 作者： ${PING} on 2018/8/9.
  */
-public class BaseMapActivity extends BaseActivity  implements AMap.OnMyLocationChangeListener{
+public class BaseMapActivity extends ModuleBaseActivity implements AMap.OnMyLocationChangeListener{
 
     MapView mMapView = null;
 

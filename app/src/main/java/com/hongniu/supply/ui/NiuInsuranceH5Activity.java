@@ -3,28 +3,21 @@ package com.hongniu.supply.ui;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.H5Config;
 import com.hongniu.supply.R;
-import com.fy.androidlibrary.utils.JLog;
 import com.sang.common.widget.XWebView;
 
-import java.io.Serializable;
-
 @Route(path = ArouterParamsApp.activity_niu_insurance_h5)
-public class NiuInsuranceH5Activity extends BaseActivity implements XWebView.OnReceivedTitleListener, View.OnClickListener {
+public class NiuInsuranceH5Activity extends ModuleBaseActivity implements XWebView.OnReceivedTitleListener, View.OnClickListener {
 
     private XWebView webView;
     private Button btSum;

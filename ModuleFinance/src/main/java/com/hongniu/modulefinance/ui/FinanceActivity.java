@@ -12,7 +12,7 @@ import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.base.BaseFragment;
 import com.hongniu.baselibrary.utils.PickerDialogUtils;
 import com.hongniu.modulefinance.R;
@@ -29,7 +29,7 @@ import java.util.Date;
  * 财务界面
  */
 @Route(path = ArouterParamsFinance.activity_finance_activity)
-public class FinanceActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, OnTimeSelectListener, SwitchTextLayout.OnSwitchListener, OnDismissListener {
+public class FinanceActivity extends ModuleBaseActivity implements RadioGroup.OnCheckedChangeListener, OnTimeSelectListener, SwitchTextLayout.OnSwitchListener, OnDismissListener {
 
 
     private FinanceExpendFragment expendFragment;

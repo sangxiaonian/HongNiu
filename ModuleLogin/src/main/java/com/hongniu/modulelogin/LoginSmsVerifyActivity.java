@@ -11,7 +11,7 @@ import com.fy.androidlibrary.net.error.NetException;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
@@ -35,7 +35,7 @@ import io.reactivex.functions.Function;
  * 此页面目前有两种作用 由参数type决定， 传入 key Param.VERTYPE value int类型 0 登录 1设置密码
  */
 @Route(path = ArouterParamLogin.activity_sms_verify)
-public class LoginSmsVerifyActivity extends BaseActivity implements VericationView.OnCompleteListener {
+public class LoginSmsVerifyActivity extends ModuleBaseActivity implements VericationView.OnCompleteListener {
 
     private String phone;
     private TextView tvPhone;

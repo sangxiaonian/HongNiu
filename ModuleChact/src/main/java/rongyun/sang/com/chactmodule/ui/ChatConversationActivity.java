@@ -6,12 +6,11 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.fy.androidlibrary.utils.CommonUtils;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.entity.LoginBean;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.Utils;
-import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.androidlibrary.toast.ToastUtils;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
@@ -24,7 +23,7 @@ import rongyun.sang.com.chactmodule.R;
 /**
  * 单聊界面
  */
-public class ChatConversationActivity extends BaseActivity {
+public class ChatConversationActivity extends ModuleBaseActivity {
 
     private UserInfor userInfor;
 

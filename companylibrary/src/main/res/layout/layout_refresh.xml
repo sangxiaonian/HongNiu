@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.fy.baselibrary.refrush.XRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/refresh"
+    android:overScrollMode="never"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.fy.androidlibrary.widget.recycle.EmptyRecycleView
+        android:id="@+id/rv"
+        android:overScrollMode="never"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</com.fy.baselibrary.refrush.XRefreshLayout>

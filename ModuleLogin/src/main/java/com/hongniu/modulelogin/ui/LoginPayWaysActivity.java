@@ -15,7 +15,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.fy.androidlibrary.net.error.NetException;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
@@ -46,7 +46,7 @@ import io.reactivex.functions.Function;
  *
  */
 @Route(path = ArouterParamLogin.activity_pay_ways)
-public class LoginPayWaysActivity extends BaseActivity implements DialogControl.OnEntryClickListener<String> {
+public class LoginPayWaysActivity extends ModuleBaseActivity implements DialogControl.OnEntryClickListener<String> {
 
     RecyclerView recyclerView;
     private ArrayList<PayInforBeans> datas;

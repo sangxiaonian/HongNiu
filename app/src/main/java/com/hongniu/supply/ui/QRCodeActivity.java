@@ -14,7 +14,7 @@ import com.hjq.permissions.Permission;
 import com.hjq.permissions.XXPermissions;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.supply.R;
 import com.sang.common.widget.ColorImageView;
@@ -31,7 +31,7 @@ import static com.hongniu.baselibrary.arouter.ArouterParamsApp.activity_way_bill
  * @Description 二维码扫描页面
  */
 @Route(path = ArouterParamsApp.activity_qrcode)
-public class QRCodeActivity extends BaseActivity implements View.OnClickListener, CodeUtils.AnalyzeCallback {
+public class QRCodeActivity extends ModuleBaseActivity implements View.OnClickListener, CodeUtils.AnalyzeCallback {
 
     private ViewGroup llLeft;
     private ViewGroup llRight;

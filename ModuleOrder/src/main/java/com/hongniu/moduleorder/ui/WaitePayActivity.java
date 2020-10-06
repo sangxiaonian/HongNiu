@@ -8,7 +8,7 @@ import android.widget.ImageView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.entity.BreakbulkConsignmentInfoBean;
 import com.hongniu.baselibrary.entity.CommonBean;
@@ -43,7 +43,7 @@ import io.reactivex.schedulers.Schedulers;
  * @Description 支付界面
  */
 @Route(path = ArouterParamOrder.activity_waite_pay)
-public class WaitePayActivity extends BaseActivity {
+public class WaitePayActivity extends ModuleBaseActivity {
     public static final String PAYTYPE = "payType";
     public static final String PAYINFOR = "payInfor";
     public static final String ISDEUBG = "ISDEUBG";

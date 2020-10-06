@@ -18,7 +18,7 @@ import com.amap.api.trace.TraceListener;
 import com.amap.api.trace.TraceLocation;
 import com.fy.androidlibrary.net.rx.BaseObserver;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.widget.order.OrderDetailItem;
 import com.hongniu.moduleorder.R;
@@ -44,7 +44,7 @@ import io.reactivex.functions.Function;
  * 查看轨迹
  */
 @Route(path = ArouterParamOrder.activity_map_check_path)
-public class OrderMapCheckPathActivity extends BaseActivity {
+public class OrderMapCheckPathActivity extends ModuleBaseActivity {
 
 
     private MapView mapView;

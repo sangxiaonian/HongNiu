@@ -17,7 +17,7 @@ import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.fy.androidlibrary.utils.CollectionUtils;
 import com.google.gson.Gson;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.TruckGudieSwitchBean;
@@ -25,7 +25,6 @@ import com.hongniu.baselibrary.utils.PickerDialogUtils;
 import com.hongniu.modulelogin.R;
 import com.hongniu.baselibrary.entity.CarInforBean;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
-import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.androidlibrary.utils.DeviceUtils;
 import com.fy.androidlibrary.utils.SharedPreferencesUtils;
 import com.sang.common.widget.ItemView;
@@ -39,7 +38,7 @@ import java.util.List;
  * @Description 货车导航时候，需要填写修改的货车信息
  */
 @Route(path = ArouterParamLogin.activity_login_truck_infor)
-public class LoginTruckInforActivity extends BaseActivity implements View.OnClickListener, OnOptionsSelectListener {
+public class LoginTruckInforActivity extends ModuleBaseActivity implements View.OnClickListener, OnOptionsSelectListener {
 
     private ItemView itemCarNumber;   //车牌号
     private ItemView itemCarType;    //车辆类型

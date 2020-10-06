@@ -11,11 +11,10 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.fy.androidlibrary.toast.ToastUtils;
 import com.hongniu.baselibrary.arouter.ArouterParamsBreakbulk;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.modulebreakbulk.R;
-import com.fy.androidlibrary.toast.ToastUtils;
 import com.sang.common.widget.ItemView;
 import com.sang.modulebreakbulk.entity.BreakbulkConsignmentCreateParams;
 import com.sang.modulebreakbulk.net.HttpBreakFactory;
@@ -26,7 +25,7 @@ import com.sang.modulebreakbulk.net.HttpBreakFactory;
  * @Description 零担发货下单页面
  */
 @Route(path = ArouterParamsBreakbulk.activity_breakbulk_consignment_creat_activity)
-public class BreakbulkConsignmentCreatActivityActivity extends BaseActivity implements View.OnClickListener {
+public class BreakbulkConsignmentCreatActivityActivity extends ModuleBaseActivity implements View.OnClickListener {
 
 
     String id;

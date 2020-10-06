@@ -3,7 +3,7 @@ package com.hongniu.supply.wxapi;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.entity.CreatInsuranceBean;
 import com.hongniu.baselibrary.event.Event;
 import com.hongniu.supply.R;
@@ -20,7 +20,7 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandler {
+public class WXPayEntryActivity extends ModuleBaseActivity implements IWXAPIEventHandler {
 
     private static final String TAG = "MicroMsg.SDKSample.WXPayEntryActivity";
 

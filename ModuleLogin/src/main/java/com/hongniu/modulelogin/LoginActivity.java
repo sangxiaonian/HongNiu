@@ -16,18 +16,16 @@ import com.fy.androidlibrary.utils.CommonUtils;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.H5Config;
 import com.hongniu.baselibrary.net.HttpAppFactory;
-import com.hongniu.modulelogin.net.HttpLoginFactory;
-import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.androidlibrary.utils.SharedPreferencesUtils;
 import com.fy.androidlibrary.toast.ToastUtils;
 
 @Route(path = ArouterParamLogin.activity_login)
-public class LoginActivity extends BaseActivity implements View.OnClickListener {
+public class LoginActivity extends ModuleBaseActivity implements View.OnClickListener {
 
     private EditText etPhone;
     private Button bt;

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.fy.androidlibrary.widget.CircularFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="34dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:viewradius="4dp"
+    app:borderColor="@color/color_of_ededed"
+    app:borderWidth="1dp"
+    android:layout_gravity="center"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_tag"
+        android:textColor="@color/color_of_656c99"
+        tool:text="数据"
+        android:textSize="13dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</com.fy.androidlibrary.widget.CircularFrameLayout>

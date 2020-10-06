@@ -9,7 +9,7 @@ import android.widget.RadioGroup;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.modulecargoodsmatch.R;
 
@@ -19,7 +19,7 @@ import com.hongniu.modulecargoodsmatch.R;
  * @Description 我的车货匹配订单
  */
 @Route(path = ArouterParamsMatch.activity_match_my_order)
-public class MatchMyOrderActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
+public class MatchMyOrderActivity extends ModuleBaseActivity implements RadioGroup.OnCheckedChangeListener {
 
     private RadioGroup group;
     private RadioButton btLeft;

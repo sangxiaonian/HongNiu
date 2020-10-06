@@ -16,7 +16,7 @@ import com.fy.androidlibrary.utils.ConvertUtils;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.LoginPersonInfor;
@@ -47,7 +47,7 @@ import static com.hongniu.baselibrary.config.Param.isDebug;
  * @Description 创建车货匹配订单
  */
 @Route(path = ArouterParamsMatch.activity_match_creat_order)
-public class MatchCreatOrderActivity extends BaseActivity implements View.OnClickListener, DialogPayUtils.PayListener {
+public class MatchCreatOrderActivity extends ModuleBaseActivity implements View.OnClickListener, DialogPayUtils.PayListener {
 
 
     MatchCreatOrderParams creatOrderParams = new MatchCreatOrderParams();

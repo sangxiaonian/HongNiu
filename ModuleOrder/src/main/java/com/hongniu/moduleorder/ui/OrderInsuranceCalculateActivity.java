@@ -1,8 +1,6 @@
 package com.hongniu.moduleorder.ui;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -14,20 +12,14 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.base.BaseActivity;
-import com.hongniu.baselibrary.base.NetObserver;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.H5Config;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.entity.OrderInsuranceParam;
-import com.hongniu.moduleorder.net.HttpOrderFactory;
-import com.hongniu.moduleorder.widget.dialog.BuyInsuranceDialog;
-import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.androidlibrary.utils.ConvertUtils;
 import com.fy.androidlibrary.toast.ToastUtils;
 import com.sang.common.widget.ItemView;
-
-import io.reactivex.disposables.Disposable;
 
 /**
  * @data 2019/9/23
@@ -35,7 +27,7 @@ import io.reactivex.disposables.Disposable;
  * @Description 保费计算页面
  */
 @Route(path = ArouterParamOrder.activity_order_insurance_calculate)
-public class OrderInsuranceCalculateActivity extends BaseActivity implements View.OnClickListener {
+public class OrderInsuranceCalculateActivity extends ModuleBaseActivity implements View.OnClickListener {
 
     private ItemView itemName;
     private ItemView itemPrice;

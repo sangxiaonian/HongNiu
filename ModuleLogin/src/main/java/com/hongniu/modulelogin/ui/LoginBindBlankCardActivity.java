@@ -13,7 +13,7 @@ import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.H5Config;
@@ -39,7 +39,7 @@ import java.util.List;
  * @Description 绑定银行卡操作
  */
 @Route(path = ArouterParamLogin.activity_login_bind_blank_card)
-public class LoginBindBlankCardActivity extends BaseActivity implements View.OnClickListener, OnOptionsSelectListener {
+public class LoginBindBlankCardActivity extends ModuleBaseActivity implements View.OnClickListener, OnOptionsSelectListener {
     ItemView itemName;//姓名
     ItemView itemPhone;//手机号
     ItemView itemBlankCardNum;//银行卡号

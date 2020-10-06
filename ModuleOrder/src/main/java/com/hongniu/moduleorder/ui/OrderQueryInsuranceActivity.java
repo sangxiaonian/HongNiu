@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CreatInsuranceBean;
@@ -30,7 +30,7 @@ import org.greenrobot.eventbus.EventBus;
  * @Description 查询投保结果界面
  */
 @Route(path = ArouterParamOrder.activity_order_query_insurance)
-public class OrderQueryInsuranceActivity extends BaseActivity {
+public class OrderQueryInsuranceActivity extends ModuleBaseActivity {
 
     private int count = 3;
 

@@ -9,7 +9,7 @@ import android.os.SystemClock;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
@@ -22,7 +22,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import io.reactivex.disposables.Disposable;
 
-public class SplashActivity extends BaseActivity implements RuleAlertDialog.IDialog {
+public class SplashActivity extends ModuleBaseActivity implements RuleAlertDialog.IDialog {
 
     private Handler handler = new Handler() {
         @Override

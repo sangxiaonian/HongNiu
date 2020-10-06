@@ -1,6 +1,5 @@
 package com.hongniu.moduleorder.ui;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,7 +24,7 @@ import com.fy.androidlibrary.utils.CollectionUtils;
 import com.fy.androidlibrary.utils.CommonUtils;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PayOrderInfor;
@@ -52,7 +51,6 @@ import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.fy.androidlibrary.event.BusFactory;
 import com.sang.common.recycleview.holder.PeakHolder;
-import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.androidlibrary.utils.ConvertUtils;
 import com.fy.androidlibrary.utils.DeviceUtils;
 import com.fy.androidlibrary.toast.ToastUtils;
@@ -77,7 +75,7 @@ import java.util.List;
  * 创建订单
  */
 @Route(path = ArouterParamOrder.activity_order_create)
-public class OrderCreatOrderActivity extends BaseActivity implements OrderCreatControl.IOrderCreataView, View.OnClickListener, OnTimeSelectListener, CarNumPop.onItemClickListener, OnItemDeletedClickListener<LocalMedia>, OnItemClickListener<LocalMedia>, UpLoadImageUtils.OnUpLoadListener {
+public class OrderCreatOrderActivity extends ModuleBaseActivity implements OrderCreatControl.IOrderCreataView, View.OnClickListener, OnTimeSelectListener, CarNumPop.onItemClickListener, OnItemDeletedClickListener<LocalMedia>, OnItemClickListener<LocalMedia>, UpLoadImageUtils.OnUpLoadListener {
     OrderCreatControl.IOrderCreataPresenter presenter;
 
     private boolean select;//是否选中代收货款

@@ -18,7 +18,7 @@ import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CreatInsuranceBean;
 import com.hongniu.baselibrary.entity.H5Config;
@@ -64,7 +64,7 @@ import java.util.List;
  * 不购买保险，则直接显示完成订单
  */
 @Route(path = ArouterParamOrder.activity_order_pay)
-public class OrderPayActivity extends BaseActivity implements OrderPayControl.IOrderPayView, RadioGroup.OnCheckedChangeListener, View.OnClickListener, BuyInsuranceDialog.OnBuyInsuranceClickListener, PayPasswordKeyBord.PayKeyBordListener, AccountDialog.OnDialogClickListener<OrderInsuranceInforBean>, OnItemClickListener<OrderInsuranceInforBean> {
+public class OrderPayActivity extends ModuleBaseActivity implements OrderPayControl.IOrderPayView, RadioGroup.OnCheckedChangeListener, View.OnClickListener, BuyInsuranceDialog.OnBuyInsuranceClickListener, PayPasswordKeyBord.PayKeyBordListener, AccountDialog.OnDialogClickListener<OrderInsuranceInforBean>, OnItemClickListener<OrderInsuranceInforBean> {
 
     private TextView tvOrder;//订单号
     private ViewGroup btBuy;//购买保险

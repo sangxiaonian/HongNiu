@@ -8,7 +8,7 @@ import android.view.View;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.widget.RadioIconButton;
 import com.hongniu.baselibrary.widget.RadioIconGroup;
@@ -21,7 +21,7 @@ import com.fy.androidlibrary.utils.SharedPreferencesUtils;
  * @Description 车货匹配预下单，估价界面
  */
 @Route(path = ArouterParamsMatch.activity_match_estimate_order)
-public class MatchEstimateOrderActivity extends BaseActivity implements RadioIconGroup.CheckListener {
+public class MatchEstimateOrderActivity extends ModuleBaseActivity implements RadioIconGroup.CheckListener {
 
     private RadioIconButton ribLeft, ribRight;
     private RadioIconGroup iconGroup;

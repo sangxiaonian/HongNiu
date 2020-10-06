@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/color_of_ffffff"
+    android:id="@+id/tool"
+    android:layout_height="?android:actionBarSize">
+
+        <FrameLayout
+            android:id="@+id/toolbar_left"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:clickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <ImageView
+                android:scaleType="fitCenter"
+                android:layout_gravity="center"
+                android:id="@+id/toolbar_src_left"
+                app:srcCompat="@drawable/ic_back_3d3d3d"
+                android:background="@color/color_of_tran"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+        </FrameLayout>
+
+
+        <TextView
+            tools:text="标题"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textSize="16dp"
+            android:textColor="@color/color_of_333333"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:id="@+id/toolbar_title"
+            android:layout_height="match_parent" />
+
+        <FrameLayout
+            android:layout_alignParentRight="true"
+            android:id="@+id/toolbar_right"
+            android:paddingLeft="15dp"
+            android:gravity="center"
+            android:paddingRight="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <ImageView
+                android:scaleType="fitCenter"
+                android:layout_gravity="center"
+                android:id="@+id/toolbar_src_right"
+                android:background="@color/color_of_tran"
+                android:layout_width="17dp"
+                android:layout_height="17dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:textSize="16sp"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:id="@+id/tv_toolbar_right"
+                android:layout_height="wrap_content" />
+
+        </FrameLayout>
+
+</RelativeLayout>

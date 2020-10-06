@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="物业类型"
+        android:textColor="@color/color_of_3d3d3d"
+        android:textSize="16dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/et_min"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_of_tran"
+                android:gravity="center"
+                android:hint="最低价"
+                android:singleLine="true"
+                android:textColor="@color/color_of_3d3d3d"
+                android:textColorHint="@color/color_of_c7c7c7"
+                android:textSize="20dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_height"
+                android:background="@color/color_of_ebebeb" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:text="至"
+            android:textColor="@color/color_of_3d3d3d"
+            android:textSize="12dp" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/et_max"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_of_tran"
+                android:gravity="center"
+                android:hint="最高价"
+                android:singleLine="true"
+                android:textColor="@color/color_of_3d3d3d"
+                android:textColorHint="@color/color_of_c7c7c7"
+                android:textSize="20dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_height"
+                android:background="@color/color_of_ebebeb" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

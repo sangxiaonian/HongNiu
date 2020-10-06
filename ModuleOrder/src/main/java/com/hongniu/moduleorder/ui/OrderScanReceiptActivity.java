@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.fy.androidlibrary.utils.CollectionUtils;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderEvent;
@@ -19,7 +19,6 @@ import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.widget.PreviewViewPager;
 import com.fy.androidlibrary.event.BusFactory;
-import com.hongniu.baselibrary.entity.CommonBean;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 
 import java.io.Serializable;
@@ -31,7 +30,7 @@ import java.util.List;
  * <p>
  * 查看回单，查看货单 type 0 单纯的查看回单 1预览回单，有删除功能 2查看货单，有重新上传功能
  */
-public class OrderScanReceiptActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
+public class OrderScanReceiptActivity extends ModuleBaseActivity implements ViewPager.OnPageChangeListener {
 
     private final static String previewList = "previewSelectList";
     private final static String index = "position";

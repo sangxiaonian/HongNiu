@@ -14,9 +14,8 @@ import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.fy.androidlibrary.net.error.NetException;
 import com.fy.androidlibrary.net.rx.BaseObserver;
 import com.fy.androidlibrary.utils.CollectionUtils;
-import com.fy.androidlibrary.utils.CommonUtils;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
-import com.hongniu.baselibrary.base.BaseActivity;
+import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
@@ -36,7 +35,6 @@ import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.fy.androidlibrary.imgload.ImageLoader;
 import com.fy.androidlibrary.net.rx.RxUtils;
-import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.androidlibrary.utils.DeviceUtils;
 import com.fy.androidlibrary.toast.ToastUtils;
 import com.sang.common.widget.ItemView;
@@ -55,7 +53,7 @@ import io.reactivex.functions.Function;
  * 修改页面时候需要传入投保人信息参数
  */
 @Route(path = ArouterParamLogin.activity_login_insured)
-public class LoginInsuredActivity extends BaseActivity implements View.OnClickListener, OnOptionsSelectListener {
+public class LoginInsuredActivity extends ModuleBaseActivity implements View.OnClickListener, OnOptionsSelectListener {
 
     private ItemView itemType;
     private ItemView itemName;
