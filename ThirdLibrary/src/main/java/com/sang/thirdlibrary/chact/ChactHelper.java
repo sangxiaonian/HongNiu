@@ -164,7 +164,7 @@ public class ChactHelper {
 
                 @Override
                 public void onDatabaseOpened(RongIMClient.DatabaseOpenStatus databaseOpenStatus) {
-
+                    callback.onDatabaseOpened(databaseOpenStatus);
                 }
 
             });

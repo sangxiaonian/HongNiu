@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.fy.androidlibrary.utils.DeviceUtils;
 import com.fy.androidlibrary.utils.JLog;
-import com.hongniu.thirdlibrary.push.PushBroadcastReceiver;
+import com.sang.thirdlibrary.push.PushBroadcastReceiver;
 
 /**
  * 作者：  on 2019/12/16.

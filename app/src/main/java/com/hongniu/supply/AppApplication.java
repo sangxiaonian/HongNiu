@@ -16,6 +16,7 @@ import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.net.BaseClient;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventBean;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
+import com.hongniu.freight.Config;
 import com.hongniu.supply.entity.PushBean;
 import com.hongniu.supply.net.HttpMainFactory;
 import com.hongniu.supply.ui.receiver.MyPlushBroadcastReceiver;
@@ -56,6 +57,9 @@ public class AppApplication extends BaseApplication {
 
     @Override
     public void onCreate() {
+
+        Config.init(this,BuildConfig.DEBUG);
+
         BaseClient.getInstance().baseUrl(Param.url);
         //二维码扫描
         ZXingLibrary.initDisplayOpinion(this);

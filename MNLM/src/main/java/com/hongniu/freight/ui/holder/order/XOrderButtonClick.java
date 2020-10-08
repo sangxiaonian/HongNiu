@@ -15,7 +15,6 @@ import com.fy.androidlibrary.net.listener.TaskControl;
 import com.fy.androidlibrary.toast.ToastUtils;
 import com.fy.androidlibrary.utils.ConvertUtils;
 import com.fy.androidlibrary.utils.JLog;
-import com.fy.baselibrary.utils.ArouterUtils;
 import com.fy.companylibrary.config.ArouterParamApp;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.net.NetObserver;
@@ -23,6 +22,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.hdgq.locationlib.entity.ShippingNoteInfo;
 import com.hdgq.locationlib.listener.OnResultListener;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.freight.config.RoleOrder;
 import com.hongniu.freight.entity.AppInsuranceInfo;
 import com.hongniu.freight.entity.BuyInsuranceParams;
@@ -39,9 +39,9 @@ import com.hongniu.freight.widget.dialog.BalancePayDialog;
 import com.hongniu.freight.widget.dialog.InsuranceBuyDialog;
 import com.hongniu.freight.widget.dialog.InsuranceDialog;
 import com.hongniu.freight.widget.dialog.inter.DialogControl;
-import com.hongniu.thirdlibrary.map.SingleLocation;
-import com.hongniu.thirdlibrary.map.inter.OnLocationListener;
-import com.hongniu.thirdlibrary.map.utils.MapConverUtils;
+import com.sang.thirdlibrary.map.SingleLocation;
+import com.sang.thirdlibrary.map.inter.OnLocationListener;
+import com.sang.thirdlibrary.map.utils.MapConverUtils;
 
 import java.util.List;
 
@@ -93,7 +93,7 @@ public class XOrderButtonClick implements OrderButtonClickListener, InsuranceBuy
      * @param bean
      */
     @Override
-    public void onOrderCancleClick(OrderInfoBean bean) {
+    public void onOrderCancleClick(final OrderInfoBean bean) {
 //        ToastUtils.getInstance().show("取消订单");
         new DialogComment.Builder()
                 .setBtLeft("取消")
@@ -216,7 +216,7 @@ public class XOrderButtonClick implements OrderButtonClickListener, InsuranceBuy
      * @param bean
      */
     @Override
-    public void onEntryReceiveOrderClick(OrderInfoBean bean) {
+    public void onEntryReceiveOrderClick(final OrderInfoBean bean) {
 //        ToastUtils.getInstance().show("确认接单");
         new DialogComment.Builder()
                 .setBtLeft("不需要")
@@ -345,7 +345,7 @@ public class XOrderButtonClick implements OrderButtonClickListener, InsuranceBuy
      * @param bean
      */
     @Override
-    public void onStartCarClick(OrderInfoBean bean) {
+    public void onStartCarClick(final OrderInfoBean bean) {
 //        ToastUtils.getInstance().show("开始发车");
         SingleLocation location = new SingleLocation(mContext);
         location.setListener(new OnLocationListener() {
@@ -436,7 +436,7 @@ public class XOrderButtonClick implements OrderButtonClickListener, InsuranceBuy
      * @param bean
      */
     @Override
-    public void onEntryArriveClick(OrderInfoBean bean) {
+    public void onEntryArriveClick(final OrderInfoBean bean) {
 //        ToastUtils.getInstance().show("确认到达");
         SingleLocation location = new SingleLocation(mContext);
         location.setListener(new OnLocationListener() {
@@ -567,7 +567,7 @@ public class XOrderButtonClick implements OrderButtonClickListener, InsuranceBuy
      * @param bean
      */
     @Override
-    public void onCheckReceipts(OrderInfoBean bean) {
+    public void onCheckReceipts(final OrderInfoBean bean) {
         HttpAppFactory.queryReceiptInfo(bean.getId())
                 .subscribe(new NetObserver<QueryReceiveBean>(listener) {
                     @Override
@@ -588,7 +588,7 @@ public class XOrderButtonClick implements OrderButtonClickListener, InsuranceBuy
      * @param insuranceBuyDialog
      */
     @Override
-    public void onChoiceInsurance(InsuranceBuyDialog insuranceBuyDialog) {
+    public void onChoiceInsurance(final InsuranceBuyDialog insuranceBuyDialog) {
         HttpAppFactory.queryInsuranceList()
                 .subscribe(new NetObserver<List<InsuranceInfoBean>>(listener) {
                     @Override
@@ -649,7 +649,7 @@ public class XOrderButtonClick implements OrderButtonClickListener, InsuranceBuy
      * @param insuranceInfo
      */
     @Override
-    public void onEntryClick(InsuranceBuyDialog insuranceBuyDialog, String price, OrderInfoBean orderInfo, InsuranceInfoBean insuranceInfo) {
+    public void onEntryClick(InsuranceBuyDialog insuranceBuyDialog, String price, final OrderInfoBean orderInfo, InsuranceInfoBean insuranceInfo) {
         insuranceBuyDialog.dismiss();
         BuyInsuranceParams params = new BuyInsuranceParams();
         params.setGoodPrice(price);

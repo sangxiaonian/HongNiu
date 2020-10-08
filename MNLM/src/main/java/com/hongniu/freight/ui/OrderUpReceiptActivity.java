@@ -13,7 +13,8 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.fy.androidlibrary.event.BusFactory;
 import com.fy.androidlibrary.toast.ToastUtils;
 import com.fy.androidlibrary.utils.CollectionUtils;
-import com.fy.baselibrary.interceptor.FileProgressRequestBody;
+import com.sang.thirdlibrary.picture.ImageInforBean;
+import com.sang.thirdlibrary.picture.helper.interceptor.FileProgressRequestBody;
 import com.fy.companylibrary.config.ArouterParamApp;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.net.NetObserver;
@@ -22,7 +23,6 @@ import com.hongniu.freight.R;
 import com.hongniu.freight.entity.QueryReceiveBean;
 import com.hongniu.freight.entity.UpImgData;
 import com.hongniu.freight.net.HttpAppFactory;
-import com.hongniu.thirdlibrary.picture.ImageInforBean;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -87,7 +87,7 @@ public class OrderUpReceiptActivity extends BaseImageUpActivity implements View.
     }
 
     @Override
-    protected Observable<ImageInforBean> upLoadClient(String path, ImageInforBean bean, FileProgressRequestBody.ProgressListener listener) {
+    protected Observable<ImageInforBean> upLoadClient(String path, final ImageInforBean bean, FileProgressRequestBody.ProgressListener listener) {
         return HttpAppFactory.upImage(getImageType(), bean.getPath(), listener)
                 .map(new Function<UpImgData, ImageInforBean>() {
                     @Override

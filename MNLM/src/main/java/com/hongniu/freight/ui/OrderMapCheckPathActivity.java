@@ -10,9 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
@@ -22,7 +19,6 @@ import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.LatLngBounds;
 import com.amap.api.maps.model.PolylineOptions;
-import com.amap.api.trace.LBSTraceClient;
 import com.fy.androidlibrary.net.error.NetException;
 import com.fy.androidlibrary.net.rx.BaseObserver;
 import com.fy.androidlibrary.net.rx.RxUtils;
@@ -43,9 +39,8 @@ import com.hongniu.freight.entity.OrderInfoBean;
 import com.hongniu.freight.entity.PathBean;
 import com.hongniu.freight.net.HttpAppFactory;
 import com.hongniu.freight.ui.holder.EmptyHolder;
-import com.hongniu.thirdlibrary.map.MarkUtils;
+import com.sang.thirdlibrary.map.MarkUtils;
 
-import java.lang.ref.PhantomReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,7 +67,7 @@ public class OrderMapCheckPathActivity extends CompanyBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_check_path);
-        bean=getIntent().getParcelableExtra(Param.TRAN);
+        bean = getIntent().getParcelableExtra(Param.TRAN);
         initView();
         initData();
         initListener();
@@ -126,29 +121,29 @@ public class OrderMapCheckPathActivity extends CompanyBaseActivity {
 //        LinearLayoutManager manager=new LinearLayoutManager(mContext);
 //        manager.setOrientation(LinearLayoutManager.VERTICAL);
 //        rv.setLayoutManager(manager);
-        rv.setEmptyHolder(new EmptyHolder(mContext,rv));
-        stationBeans=new ArrayList<>();
+        rv.setEmptyHolder(new EmptyHolder(mContext, rv));
+        stationBeans = new ArrayList<>();
 
 //        for (int i = 0; i < 20; i++) {
 //            stationBeans.add(new AppPathStationBean());
 //
 //        }
 
-       adapter=new XAdapter<AppPathStationBean>(mContext,stationBeans) {
+        adapter = new XAdapter<AppPathStationBean>(mContext, stationBeans) {
             @Override
             public BaseHolder<AppPathStationBean> initHolder(ViewGroup parent, int viewType) {
 
-                return new BaseHolder<AppPathStationBean>(mContext,parent,R.layout.item_station){
+                return new BaseHolder<AppPathStationBean>(mContext, parent, R.layout.item_station) {
                     @Override
                     public void initView(View itemView, int position, AppPathStationBean data) {
                         super.initView(itemView, position, data);
-                        TextView tv_title=itemView.findViewById(R.id.tv_title);
-                        TextView tv_time=itemView.findViewById(R.id.tv_time);
-                        ImageView img_point=itemView.findViewById(R.id.img_point);
-                        View line_top=itemView.findViewById(R.id.line_top);
-                        line_top.setVisibility(position==0?View.GONE:View.VISIBLE);
-                        img_point.setImageDrawable(new ColorDrawable(getResources().getColor(position==0?R.color.color_of_e50000:R.color.color_of_999999)));
-                        tv_title.setText(TextUtils.isEmpty(data.getInfo())?"":data.getInfo());
+                        TextView tv_title = itemView.findViewById(R.id.tv_title);
+                        TextView tv_time = itemView.findViewById(R.id.tv_time);
+                        ImageView img_point = itemView.findViewById(R.id.img_point);
+                        View line_top = itemView.findViewById(R.id.line_top);
+                        line_top.setVisibility(position == 0 ? View.GONE : View.VISIBLE);
+                        img_point.setImageDrawable(new ColorDrawable(getResources().getColor(position == 0 ? R.color.color_of_e50000 : R.color.color_of_999999)));
+                        tv_title.setText(TextUtils.isEmpty(data.getInfo()) ? "" : data.getInfo());
                         String time = ConvertUtils.formatString(data.getTime(), "yyyy-MM-dd HH:mm:ss", "HH:mm\nyyyy-MM-dd");
                         tv_time.setText(time);
 
@@ -157,9 +152,10 @@ public class OrderMapCheckPathActivity extends CompanyBaseActivity {
             }
         };
 
-       rv.setAdapter(adapter);
+        rv.setAdapter(adapter);
 
     }
+
     /**
      * 绘制轨迹
      *
@@ -179,7 +175,7 @@ public class OrderMapCheckPathActivity extends CompanyBaseActivity {
                     @Override
                     public List<LocationBean> apply(CommonBean<PathBean> pathBeanCommonBean) throws Exception {
                         if (pathBeanCommonBean.getCode() == 200) {
-                            if (!CollectionUtils.isEmpty(pathBeanCommonBean.getData().getLogisticsList())){
+                            if (!CollectionUtils.isEmpty(pathBeanCommonBean.getData().getLogisticsList())) {
                                 stationBeans.addAll(pathBeanCommonBean.getData().getLogisticsList());
                                 adapter.notifyDataSetChanged();
                             }

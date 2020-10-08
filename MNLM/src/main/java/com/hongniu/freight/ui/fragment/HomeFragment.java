@@ -18,10 +18,10 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.fy.androidlibrary.event.BusFactory;
 import com.fy.androidlibrary.utils.CollectionUtils;
 import com.fy.androidlibrary.widget.recycle.holder.BaseHolder;
-import com.fy.baselibrary.utils.ArouterUtils;
 import com.fy.companylibrary.config.ArouterParamApp;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.ui.CompanyBaseFragment;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.freight.R;
 import com.hongniu.freight.config.Role;
 import com.hongniu.freight.config.RoleOrder;
@@ -103,7 +103,6 @@ public class HomeFragment extends CompanyBaseFragment implements HomeControl.IHo
             present.saveInfo(isLogin);
         }
         present.queryInfo(this);
-
 
 
     }
@@ -295,6 +294,7 @@ public class HomeFragment extends CompanyBaseFragment implements HomeControl.IHo
 
     /**
      * 弹出去实名认证的提示
+     *
      * @param myInfo
      */
     @Override

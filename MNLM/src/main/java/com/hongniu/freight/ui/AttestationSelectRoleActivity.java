@@ -14,7 +14,7 @@ import com.fy.androidlibrary.toast.ToastUtils;
 import com.fy.androidlibrary.utils.DeviceUtils;
 import com.fy.androidlibrary.widget.recycle.adapter.SelectAdapter;
 import com.fy.androidlibrary.widget.recycle.utils.XLineDivider;
-import com.fy.baselibrary.utils.ArouterUtils;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.fy.companylibrary.config.ArouterParamApp;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.ui.CompanyBaseActivity;

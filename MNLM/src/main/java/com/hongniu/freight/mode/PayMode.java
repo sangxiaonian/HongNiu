@@ -9,9 +9,9 @@ import com.hongniu.freight.entity.AccountDetailBean;
 import com.hongniu.freight.entity.OrderInfoBean;
 import com.hongniu.freight.entity.QueryPayInfoParams;
 import com.hongniu.freight.net.HttpAppFactory;
-import com.hongniu.thirdlibrary.pay.config.PayConfig;
-import com.hongniu.thirdlibrary.pay.entity.PayInfoBean;
-import com.hongniu.thirdlibrary.pay.wechat.WeChatAppPay;
+import com.sang.thirdlibrary.pay.PayConfig;
+import com.sang.thirdlibrary.pay.PayInfoBean;
+import com.sang.thirdlibrary.pay.wechat.WeChatAppPay;
 
 import io.reactivex.Observable;
 
@@ -199,7 +199,8 @@ public class PayMode implements PayControl.IPayMode {
         payInfoParams.setOrderId(id);
         payInfoParams.setPayType(payType.getPayType());
         payInfoParams.setOrderNum(orderInfo != null ? orderInfo.getOrderNum() : "");
-        payInfoParams.setAppid(WeChatAppPay.getInstance().getAppId());
+        //TODO appid待定
+        payInfoParams.setAppid(PayConfig.weChatAppid);
         return payInfoParams;
     }
 

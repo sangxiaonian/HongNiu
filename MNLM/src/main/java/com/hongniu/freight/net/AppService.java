@@ -45,11 +45,11 @@ import com.hongniu.freight.entity.UpImgData;
 import com.hongniu.freight.entity.VerifyCompanyParams;
 import com.hongniu.freight.entity.VerifyPersonParams;
 import com.hongniu.freight.entity.VerifyInfoBean;
-import com.hongniu.thirdlibrary.verify.VerifyTokenBeans;
 import com.hongniu.freight.entity.WayBillBean;
 import com.hongniu.freight.ui.QueryInsurancePriceParams;
-import com.hongniu.thirdlibrary.chact.UserInfor;
-import com.hongniu.thirdlibrary.pay.entity.PayInfoBean;
+import com.sang.thirdlibrary.chact.UserInfor;
+import com.sang.thirdlibrary.map.verify.VerifyTokenBeans;
+import com.sang.thirdlibrary.pay.PayInfoBean;
 
 import java.util.List;
 
@@ -645,7 +645,6 @@ public interface AppService {
     /**
      * 保存回单
      *
-     * @param id
      * @return
      */
     @POST("wlhyapi/api/deliveryOrder/saveReceiptInfo")

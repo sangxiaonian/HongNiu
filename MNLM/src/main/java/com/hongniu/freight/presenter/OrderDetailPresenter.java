@@ -1,10 +1,7 @@
 package com.hongniu.freight.presenter;
 
 import com.fy.androidlibrary.net.listener.TaskControl;
-import com.fy.androidlibrary.toast.ToastUtils;
-import com.fy.baselibrary.utils.ArouterUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
-import com.fy.companylibrary.config.Param;
+
 import com.fy.companylibrary.net.NetObserver;
 import com.hongniu.freight.config.RoleOrder;
 import com.hongniu.freight.control.OrderDetailControl;
@@ -22,7 +19,7 @@ public class OrderDetailPresenter implements OrderDetailControl.IOrderDetailPres
 
     public OrderDetailPresenter(OrderDetailControl.IOrderDetailView view) {
         this.view = view;
-        mode=new OrderDetailMode();
+        mode = new OrderDetailMode();
     }
 
     /**
@@ -33,31 +30,32 @@ public class OrderDetailPresenter implements OrderDetailControl.IOrderDetailPres
      */
     @Override
     public void initInfo(OrderInfoBean infoBean, RoleOrder roler) {
-        mode.saveInfo(infoBean,roler);
-        view.showOrderState(mode.getStatusDes() ,String.format("订单编号\t %s",infoBean.getOrderNum()));
+        mode.saveInfo(infoBean, roler);
+        view.showOrderState(mode.getStatusDes(), String.format("订单编号\t %s", infoBean.getOrderNum()));
         view.showOrderAddressInfo(infoBean);
-        view.initDriverInfo(infoBean,mode.isShowDriverInfo());
-        view.showOrderDetail(infoBean,mode.isShowCargoPrice(),mode.isShowRealePrice());
-        view.showShipperInfo(infoBean,mode.isShowCarInfo());
-        view.showCarInfo(infoBean,mode.isShowCarInfo());
-        view.showButton(roler,mode.getButtonMsg(),infoBean,mode.getStatus());
+        view.initDriverInfo(infoBean, mode.isShowDriverInfo());
+        view.showOrderDetail(infoBean, mode.isShowCargoPrice(), mode.isShowRealePrice());
+        view.showShipperInfo(infoBean, mode.isShowCarInfo());
+        view.showCarInfo(infoBean, mode.isShowCarInfo());
+        view.showButton(roler, mode.getButtonMsg(), infoBean, mode.getStatus());
     }
 
     /**
      * 查询订单详情
+     *
      * @param listener
      */
     @Override
     public void queryDetail(TaskControl.OnTaskListener listener) {
         mode.queryOrderDetail()
-            .subscribe(new NetObserver<OrderInfoBean>(listener){
-                @Override
-                public void doOnSuccess(OrderInfoBean infoBean) {
-                    super.doOnSuccess(infoBean);
-                    initInfo(infoBean, mode.getRole());
+                .subscribe(new NetObserver<OrderInfoBean>(listener) {
+                    @Override
+                    public void doOnSuccess(OrderInfoBean infoBean) {
+                        super.doOnSuccess(infoBean);
+                        initInfo(infoBean, mode.getRole());
 
-                }
-            })
+                    }
+                })
         ;
     }
 
@@ -82,7 +80,7 @@ public class OrderDetailPresenter implements OrderDetailControl.IOrderDetailPres
      */
     @Override
     public void contactCarrier() {
-        view.startChat(mode.getOrderInfo().getOwnerId(),mode.getOrderInfo().getOwnerName());
+        view.startChat(mode.getOrderInfo().getOwnerId(), mode.getOrderInfo().getOwnerName());
     }
 
     /**
@@ -90,14 +88,15 @@ public class OrderDetailPresenter implements OrderDetailControl.IOrderDetailPres
      */
     @Override
     public void contactDriver() {
-        view.startChat(mode.getOrderInfo().getDriverId(),mode.getOrderInfo().getDriverName());
+        view.startChat(mode.getOrderInfo().getDriverId(), mode.getOrderInfo().getDriverName());
     }
+
     /**
      * 联系托运人
      */
     @Override
     public void contactShipper() {
-        view.startChat(mode.getOrderInfo().getUserId(),mode.getOrderInfo().getUserName());
+        view.startChat(mode.getOrderInfo().getUserId(), mode.getOrderInfo().getUserName());
     }
 
     /**
@@ -106,16 +105,13 @@ public class OrderDetailPresenter implements OrderDetailControl.IOrderDetailPres
     @Override
     public void checkInsurance() {
         AppInsuranceInfo insurance = mode.getInsurance();
-        if (insurance!=null) {
+        if (insurance != null) {
             view.checkInsurance(insurance);
 
-        }else {
+        } else {
             view.showError("保单暂未生成,请稍后再试");
         }
     }
-
-
-
 
 
 }

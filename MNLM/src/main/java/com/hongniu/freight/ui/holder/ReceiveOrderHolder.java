@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.fy.androidlibrary.utils.CommonUtils;
 import com.fy.androidlibrary.utils.ConvertUtils;
 import com.fy.androidlibrary.widget.recycle.holder.BaseHolder;
-import com.fy.baselibrary.utils.ArouterUtils;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.fy.companylibrary.config.ArouterParamApp;
 import com.fy.companylibrary.config.Param;
 import com.hongniu.freight.R;
@@ -31,7 +31,7 @@ public class ReceiveOrderHolder extends BaseHolder<OrderInfoBean> {
     }
 
     @Override
-    public void initView(View itemView, int position, OrderInfoBean data) {
+    public void initView(View itemView, int position, final OrderInfoBean data) {
         super.initView(itemView, position, data);
         ViewGroup.LayoutParams params = itemView.getLayoutParams();
         params.height = ViewGroup.LayoutParams.WRAP_CONTENT;

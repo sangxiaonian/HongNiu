@@ -4,23 +4,17 @@ import com.fy.androidlibrary.net.error.NetException;
 import com.fy.androidlibrary.net.listener.TaskControl;
 import com.fy.androidlibrary.net.rx.BaseObserver;
 import com.fy.androidlibrary.utils.CollectionUtils;
-import com.fy.baselibrary.utils.ArouterUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
 import com.fy.companylibrary.entity.CommonBean;
 import com.fy.companylibrary.entity.PageBean;
 import com.fy.companylibrary.net.NetObserver;
 import com.hongniu.freight.config.Role;
 import com.hongniu.freight.control.HomeControl;
-import com.hongniu.freight.entity.LoginInfo;
 import com.hongniu.freight.entity.OrderNumberInfoBean;
 import com.hongniu.freight.entity.PersonInfor;
 import com.hongniu.freight.mode.HomeFragmentMode;
 import com.hongniu.freight.utils.InfoUtils;
-import com.hongniu.freight.utils.Utils;
 
 import io.reactivex.Observable;
-
-import static com.taobao.accs.init.Launcher_InitAccs.mContext;
 
 /**
  * 作者：  on 2020/2/6.
@@ -32,7 +26,7 @@ public class HomeFramentPresent implements HomeControl.IHomeFragmentPresent {
 
     public HomeFramentPresent(HomeControl.IHomeFragmentView view) {
         this.view = view;
-        mode=new HomeFragmentMode();
+        mode = new HomeFragmentMode();
     }
 
     /**
@@ -43,7 +37,7 @@ public class HomeFramentPresent implements HomeControl.IHomeFragmentPresent {
     @Override
     public void saveInfo(boolean isLogin) {
         mode.saveInfo(isLogin);
-        if (isLogin){
+        if (isLogin) {
             //如果是登录
             if (InfoUtils.getRole(InfoUtils.getLoginInfo()) == Role.UNKNOW) {
                 view.jump2SelectRole();
@@ -53,6 +47,7 @@ public class HomeFramentPresent implements HomeControl.IHomeFragmentPresent {
 
     /**
      * 初始化数据
+     *
      * @param listener
      */
     @Override
@@ -71,36 +66,34 @@ public class HomeFramentPresent implements HomeControl.IHomeFragmentPresent {
                             onError(new NetException(result.getCode(), result.getMsg()));
                         } else {
                             Object data = result.getData();
-                            if (data instanceof PersonInfor){
+                            if (data instanceof PersonInfor) {
                                 //个人数据
 
                                 mode.savePersonInfo((PersonInfor) data);
                                 PersonInfor myInfo = mode.getPersonInfo();
                                 view.showPersonInfo(myInfo);
-                                if ((!mode.isLogin()&&InfoUtils.isShowAlert())
-                                        ||(mode.isLogin()&&InfoUtils.isShowAlert()&&InfoUtils.getRole(myInfo)!=Role.UNKNOW)) {
+                                if ((!mode.isLogin() && InfoUtils.isShowAlert())
+                                        || (mode.isLogin() && InfoUtils.isShowAlert() && InfoUtils.getRole(myInfo) != Role.UNKNOW)) {
                                     //跳转到实名认证
                                     view.showAttestationAlert(myInfo);
                                 }
-                            }else if (data instanceof PageBean){
+                            } else if (data instanceof PageBean) {
                                 //订单数量数据
-                                mode.saveOrderList( ((PageBean) data).getList());
-                                view.showOrderInfo( mode.getOrderList(),mode.getRoleOrder());
-                            }else if (data instanceof OrderNumberInfoBean){
+                                mode.saveOrderList(((PageBean) data).getList());
+                                view.showOrderInfo(mode.getOrderList(), mode.getRoleOrder());
+                            } else if (data instanceof OrderNumberInfoBean) {
                                 //订单数量数据
                                 view.showOrderNum((OrderNumberInfoBean) data);
                                 if (!CollectionUtils.isEmpty(((OrderNumberInfoBean) data).getDriverTransOrderList())) {
                                     //有正在运输中的订单
                                     view.startLoaction(((OrderNumberInfoBean) data).getDriverTransOrderList().get(0));
-                                }else {
-                                    view.stopLocation(  );
+                                } else {
+                                    view.stopLocation();
                                 }
                             }
                         }
                     }
                 });
-
-
 
 
 //        mode.queryOrderList();
@@ -142,12 +135,13 @@ public class HomeFramentPresent implements HomeControl.IHomeFragmentPresent {
 
     /**
      * 更新认证状态
+     *
      * @param listener
      */
     @Override
     public void upDateState(TaskControl.OnTaskListener listener) {
         mode.queryMyInfo()
-                .subscribe(new NetObserver<PersonInfor>(listener){
+                .subscribe(new NetObserver<PersonInfor>(listener) {
                     @Override
                     public void doOnSuccess(PersonInfor personInfor) {
                         super.doOnSuccess(personInfor);
@@ -164,7 +158,7 @@ public class HomeFramentPresent implements HomeControl.IHomeFragmentPresent {
     @Override
     public void checkStateInfo() {
         //跳转到查看信息
-        view.jump2CheckState(mode.getRole(),mode.getPersonInfo());
+        view.jump2CheckState(mode.getRole(), mode.getPersonInfo());
 
     }
 
@@ -182,9 +176,9 @@ public class HomeFramentPresent implements HomeControl.IHomeFragmentPresent {
     @Override
     public void jump2Attestion() {
         PersonInfor personInfo = mode.getPersonInfo();
-        if (personInfo==null){
+        if (personInfo == null) {
             return;
         }
-         view.jump2Attestion(personInfo);
+        view.jump2Attestion(personInfo);
     }
 }

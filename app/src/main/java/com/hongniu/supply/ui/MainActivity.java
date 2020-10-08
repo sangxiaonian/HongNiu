@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
+import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
@@ -335,13 +336,14 @@ public class MainActivity extends ModuleBaseActivity implements View.OnClickList
         demo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                show=!show;
-                NotificationUtils.getInstance()
-                        .setSound(show?R.raw.notify_sound:0)
-                        .showNotification(mContext,ConvertUtils.getRandom(0,10000),null,null,null);
-
+//                show=!show;
+//                NotificationUtils.getInstance()
+//                        .setSound(show?R.raw.notify_sound:0)
+//                        .showNotification(mContext,ConvertUtils.getRandom(0,10000),null,null,null);
+//
 //                ArouterUtils.getInstance().builder(ArouterParamsMatch.activity_match_estimate_order)
 //                        .navigation(mContext);
+//                startActivity(new Intent(mContext,Sp));
             }
         });
 

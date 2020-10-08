@@ -14,7 +14,7 @@ import com.fy.androidlibrary.widget.autoline.AutoLineLayout;
 import com.fy.androidlibrary.widget.autoline.helper.AutoLayoutHelper;
 import com.fy.androidlibrary.widget.autoline.helper.AutoTagAdapter;
 import com.fy.androidlibrary.widget.autoline.inter.AutoSingleSelectListener;
-import com.fy.baselibrary.utils.ArouterUtils;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.fy.companylibrary.config.ArouterParamApp;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.net.NetObserver;

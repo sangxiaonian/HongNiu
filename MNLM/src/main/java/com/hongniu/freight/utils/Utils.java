@@ -6,7 +6,7 @@ import android.view.View;
 import com.amap.api.services.core.PoiItem;
 import com.fy.androidlibrary.utils.CollectionUtils;
 import com.fy.androidlibrary.utils.ConvertUtils;
-import com.fy.baselibrary.utils.ArouterUtils;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.fy.companylibrary.config.ArouterParamApp;
 import com.fy.companylibrary.entity.CommonBean;
 import com.fy.companylibrary.entity.PageBean;

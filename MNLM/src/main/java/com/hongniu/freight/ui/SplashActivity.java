@@ -7,7 +7,7 @@ import android.os.Message;
 import androidx.annotation.NonNull;
 
 import com.fy.androidlibrary.utils.SharedPreferencesUtils;
-import com.fy.baselibrary.utils.ArouterUtils;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.fy.companylibrary.config.ArouterParamApp;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.ui.CompanyBaseActivity;

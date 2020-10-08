@@ -6,7 +6,7 @@ import com.hongniu.freight.config.PayType;
 import com.hongniu.freight.entity.AccountDetailBean;
 import com.hongniu.freight.entity.OrderInfoBean;
 import com.hongniu.freight.entity.QueryPayInfoParams;
-import com.hongniu.thirdlibrary.pay.entity.PayInfoBean;
+import com.sang.thirdlibrary.pay.PayInfoBean;
 
 import io.reactivex.Observable;
 

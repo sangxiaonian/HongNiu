@@ -1,14 +1,14 @@
 package com.hongniu.freight.mode;
 
 import com.fy.companylibrary.entity.CommonBean;
-import com.fy.baselibrary.interceptor.FileProgressRequestBody;
+import com.sang.thirdlibrary.picture.helper.interceptor.FileProgressRequestBody;
 import com.hongniu.freight.control.CarAddModifyControl;
 import com.hongniu.freight.entity.CarInfoBean;
 import com.hongniu.freight.entity.CarTypeBean;
 import com.hongniu.freight.entity.CargoTypeAndColorBeans;
 import com.hongniu.freight.entity.UpImgData;
 import com.hongniu.freight.net.HttpAppFactory;
-import com.hongniu.thirdlibrary.picture.utils.PicUtils;
+import com.sang.thirdlibrary.picture.utils.PicUtils;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import java.util.ArrayList;

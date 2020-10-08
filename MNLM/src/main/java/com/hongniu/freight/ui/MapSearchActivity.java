@@ -36,7 +36,7 @@ import com.hongniu.freight.net.HttpAppFactory;
 import com.hongniu.freight.ui.adapter.MapSearchAdapter;
 import com.hongniu.freight.ui.fragment.MapPointFragment;
 import com.hongniu.freight.utils.Utils;
-import com.hongniu.thirdlibrary.map.MapUtils;
+import com.sang.thirdlibrary.map.MapUtils;
 
 import java.util.List;
 import java.util.Map;

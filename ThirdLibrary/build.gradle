@@ -68,8 +68,20 @@ dependencies {
 //    api 'com.amap.api:map2d:6.0.0'
     api 'com.amap.api:navi-3dmap:7.5.0_3dmap7.5.0'
     api 'com.amap.api:search:7.3.0'
-    api 'com.amap.api:location:5.2.0'
+//    api 'com.amap.api:location:5.2.0'
     api ('com.github.LuckSiege.PictureSelector:picture_library:v2.4.6'){
         exclude group:'com.github.bumptech.glide'
     }
+
+    //省网络或许所需数据
+    implementation 'com.lzy.net:okgo:3.0.4'
+    implementation 'com.alibaba:fastjson:1.2.61'
+    implementation 'org.bouncycastle:bcprov-jdk15on:1.47'
+    api files('libs/locationsdk-1.0.0.aar')
+
+
+    //疼腾讯实名认证
+    implementation files('libs\\WbCloudFaceLiveSdk-v3.1.15-33d33e4e.aar')
+    implementation files('libs\\WbCloudNormal-v4.0.10-1e5e27e.aar')
+
 }

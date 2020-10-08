@@ -23,7 +23,7 @@ import com.fy.companylibrary.ui.CompanyBaseFragment;
 import com.hongniu.freight.R;
 import com.hongniu.freight.net.HttpAppFactory;
 import com.hongniu.freight.utils.Utils;
-import com.hongniu.thirdlibrary.map.MapUtils;
+import com.sang.thirdlibrary.map.MapUtils;
 
 import io.reactivex.disposables.Disposable;
 

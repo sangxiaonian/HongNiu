@@ -5,16 +5,16 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.fy.baselibrary.utils.ArouterUtils;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.fy.companylibrary.config.ArouterParamApp;
 import com.fy.companylibrary.net.NetObserver;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
 import com.hongniu.freight.R;
 import com.hongniu.freight.utils.InfoUtils;
-import com.hongniu.thirdlibrary.verify.VerifyTokenBeans;
 import com.hongniu.freight.net.HttpAppFactory;
 import com.fy.androidlibrary.utils.permission.PermissionUtils;
-import com.hongniu.thirdlibrary.verify.VerifyClient;
+import com.sang.thirdlibrary.map.verify.VerifyClient;
+import com.sang.thirdlibrary.map.verify.VerifyTokenBeans;
 
 /**
  *@data  2020/3/1

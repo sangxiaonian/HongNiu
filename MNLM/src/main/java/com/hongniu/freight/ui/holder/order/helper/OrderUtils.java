@@ -68,7 +68,7 @@ public class OrderUtils {
         addButton(ll_bt, data, status, false, orderButtonClickListener);
     }
 
-    public static void addButton(ViewGroup ll_bt, final OrderInfoBean data, Map<String, Integer> status, boolean fill, OrderButtonClickListener orderButtonClickListener) {
+    public static void addButton(ViewGroup ll_bt, final OrderInfoBean data, Map<String, Integer> status, boolean fill, final OrderButtonClickListener orderButtonClickListener) {
         ll_bt.removeAllViews();
         if (CollectionUtils.isEmpty(status)) {
             ll_bt.setVisibility(View.GONE);

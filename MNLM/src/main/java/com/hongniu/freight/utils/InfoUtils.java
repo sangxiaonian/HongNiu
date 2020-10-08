@@ -7,7 +7,7 @@ import com.hongniu.freight.config.Role;
 import com.hongniu.freight.config.RoleOrder;
 import com.hongniu.freight.entity.LoginInfo;
 import com.hongniu.freight.entity.PersonInfor;
-import com.hongniu.thirdlibrary.chact.ChactHelper;
+import com.sang.thirdlibrary.chact.ChactHelper;
 
 /**
  * 作者：  on 2020/2/23.

@@ -20,11 +20,10 @@ import com.hongniu.freight.config.PayType;
 import com.hongniu.freight.entity.OrderStatusBean;
 import com.hongniu.freight.entity.QueryPayInfoParams;
 import com.hongniu.freight.net.HttpAppFactory;
-import com.hongniu.thirdlibrary.pay.PayClient;
-import com.hongniu.thirdlibrary.pay.ali.AliPay;
-import com.hongniu.thirdlibrary.pay.entity.PayInfoBean;
-import com.hongniu.thirdlibrary.pay.unionpay.UnionPayClient;
-import com.hongniu.thirdlibrary.pay.wechat.WeChatAppPay;
+import com.sang.thirdlibrary.pay.PayInfoBean;
+import com.sang.thirdlibrary.pay.ali.AliPay;
+import com.sang.thirdlibrary.pay.unionpay.UnionPayClient;
+import com.sang.thirdlibrary.pay.wechat.WeChatAppPay;
 
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
@@ -88,7 +87,7 @@ public class WaitePayActivity extends CompanyBaseActivity {
     private void startPay() {
         switch (payType) {
             case WEICHAT://微信支付
-                  WeChatAppPay.getInstance().pay(WaitePayActivity.this,payInfoBean);
+                new  WeChatAppPay(). pay(WaitePayActivity.this,payInfoBean);
 
                 break;
             case UNIONPAY://银联支付

@@ -6,20 +6,16 @@ import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.fy.androidlibrary.toast.ToastUtils;
-import com.fy.androidlibrary.utils.permission.PermissionUtils;
-import com.fy.baselibrary.utils.ArouterUtils;
 import com.fy.companylibrary.config.ArouterParamApp;
 import com.fy.companylibrary.net.NetObserver;
 import com.fy.companylibrary.widget.ItemTextView;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.freight.R;
-import com.hongniu.freight.entity.UpImgData;
 import com.hongniu.freight.entity.VerifyInfoBean;
 import com.hongniu.freight.entity.VerifyPersonParams;
 import com.hongniu.freight.net.HttpAppFactory;
 import com.hongniu.freight.utils.Utils;
 import com.hongniu.freight.widget.ImageInforView;
-import com.hongniu.thirdlibrary.picture.PictureClient;
-import com.luck.picture.lib.listener.OnResultCallbackListener;
 
 /**
  * 作者：  on 2020/2/24.
@@ -142,7 +138,6 @@ public class AttestationCarrierPersonalFragment extends AttestationBaseFragment 
             }
             return false;
         }
-
 
 
         Utils.setButton(bt_sum, true);

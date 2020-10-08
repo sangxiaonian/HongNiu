@@ -51,31 +51,28 @@ public class PayBean implements Parcelable {
     /*支付宝的信息*/
     private String orderInfo;
 
-    protected PayBean(Parcel in) {
-        timeStamp = in.readString();
-        nonceStr = in.readString();
-        prepay_id = in.readString();
-        signType = in.readString();
-        prePayId = in.readString();
-        partnerId = in.readString();
-        paySign = in.readString();
-        tn = in.readString();
-        code = in.readString();
-        msg = in.readString();
-        orderInfo = in.readString();
+     //------------------------微信支付相关数据---------------------------//
+    private String orderNum;//	true	string	订单号
+
+    public String getOrderNum() {
+        return orderNum;
     }
 
-    public static final Creator<PayBean> CREATOR = new Creator<PayBean>() {
-        @Override
-        public PayBean createFromParcel(Parcel in) {
-            return new PayBean(in);
-        }
+    public void setOrderNum(String orderNum) {
+        this.orderNum = orderNum;
+    }
 
-        @Override
-        public PayBean[] newArray(int size) {
-            return new PayBean[size];
-        }
-    };
+    public String getFlowid() {
+        return flowid;
+    }
+
+    public void setFlowid(String flowid) {
+        this.flowid = flowid;
+    }
+
+    //------------------------密码支付---------------------------//
+    private String flowid;//	true	string	流水号flowid
+
 
     public String getOrderInfo() {
         return orderInfo;
@@ -165,24 +162,57 @@ public class PayBean implements Parcelable {
         this.paySign = paySign;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
     }
 
-
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(timeStamp);
-        dest.writeString(nonceStr);
-        dest.writeString(prepay_id);
-        dest.writeString(signType);
-        dest.writeString(prePayId);
-        dest.writeString(partnerId);
-        dest.writeString(paySign);
-        dest.writeString(tn);
-        dest.writeString(code);
-        dest.writeString(msg);
-        dest.writeString(orderInfo);
+        dest.writeString(this.timeStamp);
+        dest.writeString(this.nonceStr);
+        dest.writeString(this.prepay_id);
+        dest.writeString(this.signType);
+        dest.writeString(this.prePayId);
+        dest.writeString(this.partnerId);
+        dest.writeString(this.paySign);
+        dest.writeString(this.tn);
+        dest.writeString(this.code);
+        dest.writeString(this.msg);
+        dest.writeString(this.orderInfo);
+        dest.writeString(this.orderNum);
+        dest.writeString(this.flowid);
     }
+
+    public PayBean() {
+    }
+
+    protected PayBean(Parcel in) {
+        this.timeStamp = in.readString();
+        this.nonceStr = in.readString();
+        this.prepay_id = in.readString();
+        this.signType = in.readString();
+        this.prePayId = in.readString();
+        this.partnerId = in.readString();
+        this.paySign = in.readString();
+        this.tn = in.readString();
+        this.code = in.readString();
+        this.msg = in.readString();
+        this.orderInfo = in.readString();
+        this.orderNum = in.readString();
+        this.flowid = in.readString();
+    }
+
+    public static final Creator<PayBean> CREATOR = new Creator<PayBean>() {
+        @Override
+        public PayBean createFromParcel(Parcel source) {
+            return new PayBean(source);
+        }
+
+        @Override
+        public PayBean[] newArray(int size) {
+            return new PayBean[size];
+        }
+    };
 }

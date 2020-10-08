@@ -11,7 +11,7 @@ import com.hongniu.freight.entity.AccountDetailBean;
 import com.hongniu.freight.entity.OrderInfoBean;
 import com.hongniu.freight.mode.PayMode;
 import com.hongniu.freight.utils.InfoUtils;
-import com.hongniu.thirdlibrary.pay.entity.PayInfoBean;
+import com.sang.thirdlibrary.pay.PayInfoBean;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.BiFunction;

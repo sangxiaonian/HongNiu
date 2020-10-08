@@ -18,7 +18,7 @@ import com.fy.androidlibrary.toast.ToastUtils;
 import com.fy.androidlibrary.utils.CollectionUtils;
 import com.fy.androidlibrary.utils.ConvertUtils;
 import com.fy.androidlibrary.widget.editext.PointLengthFilter;
-import com.fy.baselibrary.utils.ArouterUtils;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.fy.companylibrary.config.ArouterParamApp;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.entity.CommonBean;
@@ -30,7 +30,7 @@ import com.hongniu.freight.entity.PayInforBeans;
 import com.hongniu.freight.net.HttpAppFactory;
 import com.hongniu.freight.utils.Utils;
 import com.hongniu.freight.widget.DialogComment;
-import com.hongniu.thirdlibrary.pay.person.PasswordDialog;
+import com.sang.thirdlibrary.pay.PasswordDialog;
 
 import java.util.List;
 

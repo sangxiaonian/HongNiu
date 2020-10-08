@@ -16,14 +16,14 @@ import com.fy.androidlibrary.widget.editext.SearchTextWatcher;
 import com.fy.androidlibrary.widget.recycle.utils.XAdapterDataObserver;
 import com.fy.companylibrary.config.ArouterParamApp;
 import com.fy.companylibrary.net.NetObserver;
-import com.fy.baselibrary.interceptor.FileProgressRequestBody;
+import com.sang.thirdlibrary.picture.ImageInforBean;
+import com.sang.thirdlibrary.picture.helper.interceptor.FileProgressRequestBody;
 import com.hongniu.freight.R;
 import com.hongniu.freight.entity.FaceBackParams;
 import com.hongniu.freight.entity.UpImgData;
 import com.hongniu.freight.net.HttpAppFactory;
 import com.hongniu.freight.utils.Utils;
 import com.fy.companylibrary.ui.BaseImageUpActivity;
-import com.hongniu.thirdlibrary.picture.ImageInforBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,7 +99,7 @@ public class FaceBackActivity extends BaseImageUpActivity implements SearchTextW
     }
 
     @Override
-    protected Observable<ImageInforBean> upLoadClient(String path, ImageInforBean bean, FileProgressRequestBody.ProgressListener listener) {
+    protected Observable<ImageInforBean> upLoadClient(String path, final ImageInforBean bean, FileProgressRequestBody.ProgressListener listener) {
         return HttpAppFactory.upImage(getImageType(),bean.getPath(),listener)
                     .map(new Function<UpImgData, ImageInforBean>() {
                         @Override

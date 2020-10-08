@@ -26,8 +26,8 @@ import com.hongniu.freight.utils.PickerDialogUtils;
 import com.hongniu.freight.utils.Utils;
 import com.hongniu.freight.widget.DialogComment;
 import com.hongniu.freight.widget.ImageInforView;
-import com.hongniu.thirdlibrary.picture.PictureClient;
-import com.hongniu.thirdlibrary.picture.utils.PicUtils;
+import com.sang.thirdlibrary.picture.PictureClient;
+import com.sang.thirdlibrary.picture.utils.PicUtils;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.listener.OnResultCallbackListener;
 

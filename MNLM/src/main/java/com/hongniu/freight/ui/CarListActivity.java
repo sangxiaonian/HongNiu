@@ -15,7 +15,7 @@ import com.fy.androidlibrary.widget.recycle.adapter.XAdapter;
 import com.fy.androidlibrary.widget.recycle.holder.BaseHolder;
 import com.fy.androidlibrary.widget.recycle.holder.PeakHolder;
 import com.fy.androidlibrary.widget.span.RoundedBackgroundSpan;
-import com.fy.baselibrary.utils.ArouterUtils;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.fy.companylibrary.config.ArouterParamApp;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.entity.CommonBean;
@@ -98,7 +98,7 @@ public class CarListActivity extends RefrushActivity<CarInfoBean> {
             public BaseHolder<CarInfoBean> initHolder(ViewGroup parent, int viewType) {
                 return new BaseHolder<CarInfoBean>(context, parent, R.layout.item_car) {
                     @Override
-                    public void initView(View itemView, int position, CarInfoBean data) {
+                    public void initView(View itemView, int position, final CarInfoBean data) {
                         super.initView(itemView, position, data);
                         TextView tv_title = itemView.findViewById(R.id.tv_title);
                         TextView tv_car_type = itemView.findViewById(R.id.tv_car_type);

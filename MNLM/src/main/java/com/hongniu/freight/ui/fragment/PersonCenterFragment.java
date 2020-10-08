@@ -15,7 +15,7 @@ import com.fy.androidlibrary.toast.ToastUtils;
 import com.fy.androidlibrary.utils.CollectionUtils;
 import com.fy.androidlibrary.utils.CommonUtils;
 import com.fy.androidlibrary.utils.permission.PermissionUtils;
-import com.fy.baselibrary.utils.ArouterUtils;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.fy.companylibrary.config.ArouterParamApp;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.net.NetObserver;
@@ -29,8 +29,8 @@ import com.hongniu.freight.net.HttpAppFactory;
 import com.hongniu.freight.utils.InfoUtils;
 import com.hongniu.freight.utils.Utils;
 import com.hongniu.freight.widget.DialogComment;
-import com.hongniu.thirdlibrary.picture.PictureClient;
-import com.hongniu.thirdlibrary.picture.utils.PicUtils;
+import com.sang.thirdlibrary.picture.PictureClient;
+import com.sang.thirdlibrary.picture.utils.PicUtils;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.listener.OnResultCallbackListener;
 
@@ -170,7 +170,7 @@ public class PersonCenterFragment extends CompanyBaseFragment implements View.On
                                 @Override
                                 public void onResult(List<LocalMedia> result) {
                                     if (!CollectionUtils.isEmpty(result)) {
-                                        String path = PicUtils.getPath(result.get(0));
+                                        final String path = PicUtils.getPath(result.get(0));
                                         HttpAppFactory.upImage(4, path, null)
                                                 .subscribe(new BaseObserver<UpImgData>(PersonCenterFragment.this) {
                                                     @Override

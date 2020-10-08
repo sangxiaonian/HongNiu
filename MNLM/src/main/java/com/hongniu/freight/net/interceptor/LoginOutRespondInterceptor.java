@@ -3,13 +3,11 @@ package com.hongniu.freight.net.interceptor;
 import android.content.Context;
 import android.content.Intent;
 
-import com.fy.baselibrary.utils.ArouterUtils;
 import com.fy.companylibrary.config.ArouterParamApp;
 import com.fy.companylibrary.config.Param;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.hongniu.freight.App;
 import com.hongniu.freight.utils.InfoUtils;
 
 import java.io.IOException;

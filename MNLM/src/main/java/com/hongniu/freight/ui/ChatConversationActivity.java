@@ -15,9 +15,8 @@ import com.hongniu.freight.entity.LoginInfo;
 import com.hongniu.freight.net.HttpAppFactory;
 import com.hongniu.freight.utils.InfoUtils;
 import com.hongniu.freight.widget.DialogComment;
-import com.hongniu.freight.widget.dialog.inter.DialogControl;
-import com.hongniu.thirdlibrary.chact.ChactHelper;
-import com.hongniu.thirdlibrary.chact.UserInfor;
+import com.sang.thirdlibrary.chact.ChactHelper;
+import com.sang.thirdlibrary.chact.UserInfor;
 
 
 /**

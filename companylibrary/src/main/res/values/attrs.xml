@@ -2,51 +2,86 @@
 <resources>
 
 
+    <attr name="textleft" format="string" />
+    <attr name="textcenter" format="string" />
+    <attr name="textcenterhide" format="string" />
+    <attr name="textright" format="string" />
+    <attr name="editable" format="boolean" />
+    <attr name="centerLength" format="integer" />
+    <attr name="showline" format="boolean" />
+    <attr name="srcLeft" format="reference" />
+    <attr name="srcRight" format="reference" />
+    <attr name="srcshow" format="boolean" />
+    <attr name="srcLeftshow" format="enum" >
+        <enum name="show" value="2" />
+        <enum name="gone" value="0" />
+        <enum name="hide" value="1" />
+    </attr>
+    <attr name="isSingleLine" format="boolean" />
+    <attr name="colorRight" format="color" />
+    <attr name="colorCenter" format="color" />
+    <attr name="colorCenterHide" format="color" />
+    <attr name="colorLeft" format="color" />
+    <attr name="centerType" format="enum">
+        <enum name="normal" value="0" />
+        <enum name="phone" value="1" />
+        <enum name="idcard" value="2" />
+        <enum name="number" value="3" />
+        <enum name="password" value="4" />
+    </attr>
+
+    <declare-styleable name="ItemView">
+        <attr name="textleft" />
+        <attr name="textcenter" />
+        <attr name="textcenterhide" />
+        <attr name="textright" />
+        <attr name="editable" />
+        <attr name="centerLength" />
+        <attr name="showline" />
+        <attr name="srcLeft" />
+        <attr name="srcRight" />
+        <attr name="srcshow" />
+        <attr name="srcLeftshow" />
+        <attr name="isSingleLine"  />
+        <attr name="colorRight"  />
+        <attr name="colorCenter"  />
+        <attr name="colorCenterHide"  />
+        <attr name="colorLeft"  />
+        <attr name="centerType"/>
+    </declare-styleable>
 
 
 
     <declare-styleable name="ItemTextView">
-        <attr name="textleft" format="string" />
-        <attr name="textcenter" format="string" />
-        <attr name="textcenterhide" format="string" />
-        <attr name="textright" format="string" />
+        <attr name="textleft" />
+        <attr name="textcenter" />
+        <attr name="textcenterhide" />
+        <attr name="textright" />
+        <attr name="editable" />
+        <attr name="centerLength" />
+        <attr name="showline" />
+        <attr name="srcLeft" />
+        <attr name="srcRight" />
+        <attr name="srcshow" />
+        <attr name="srcLeftshow" />
+        <attr name="isSingleLine"  />
+        <attr name="colorRight"  />
+        <attr name="colorCenter"  />
+        <attr name="colorCenterHide"  />
+        <attr name="colorLeft"  />
+        <attr name="centerType"/>
         <attr name="sizeleft" format="dimension" />
         <attr name="sizecenter" format="dimension" />
         <attr name="sizeright" format="dimension" />
-        <attr name="editable" format="boolean" />
-        <attr name="centerLength" format="integer" />
-        <attr name="showline" format="boolean" />
-        <attr name="srcLeft" format="reference" />
-        <attr name="srcRight" format="reference" />
         <attr name="srcRightSize" format="dimension" />
-        <attr name="srcshow" format="boolean" />
-        <attr name="srcLeftshow" format="enum" >
-            <enum name="show" value="2" />
-            <enum name="gone" value="0" />
-            <enum name="hide" value="1" />
-        </attr>
         <!--输入文案是否加粗-->
         <attr name="centerBold" format="boolean" />
-
-
-        <attr name="isSingleLine" format="boolean" />
-        <attr name="colorRight" format="color" />
-        <attr name="colorCenter" format="color" />
-        <attr name="colorCenterHide" format="color" />
-        <attr name="colorLeft" format="color" />
         <attr name="centerGravity" format="enum">
             <enum name="left" value="0" />
             <enum name="right" value="1" />
             <enum name="center" value="2" />
             <enum name="top" value="3" />
             <enum name="bottom" value="4" />
-        </attr>
-        <attr name="centerType" format="enum">
-            <enum name="normal" value="0" />
-            <enum name="phone" value="1" />
-            <enum name="idcard" value="2" />
-            <enum name="number" value="3" />
-            <enum name="password" value="4" />
         </attr>
     </declare-styleable>
 

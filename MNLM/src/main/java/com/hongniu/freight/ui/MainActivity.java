@@ -20,7 +20,6 @@ import com.fy.androidlibrary.utils.DeviceUtils;
 import com.fy.androidlibrary.utils.JLog;
 import com.fy.androidlibrary.utils.SharedPreferencesUtils;
 import com.fy.androidlibrary.utils.permission.PermissionUtils;
-import com.fy.baselibrary.utils.ArouterUtils;
 import com.fy.companylibrary.config.ArouterParamApp;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.entity.CommonBean;
@@ -28,6 +27,7 @@ import com.fy.companylibrary.net.NetObserver;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
 import com.fy.companylibrary.ui.CompanyBaseFragment;
 import com.hdgq.locationlib.listener.OnResultListener;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.freight.BuildConfig;
 import com.hongniu.freight.R;
 import com.hongniu.freight.entity.Event;
@@ -41,11 +41,11 @@ import com.hongniu.freight.utils.InfoUtils;
 import com.hongniu.freight.utils.LoactionUpUtils;
 import com.hongniu.freight.utils.Utils;
 import com.hongniu.freight.widget.DialogComment;
-import com.hongniu.thirdlibrary.chact.ChactHelper;
-import com.hongniu.thirdlibrary.chact.UserInfor;
-import com.hongniu.thirdlibrary.chact.control.ChactControl;
-import com.hongniu.thirdlibrary.chact.control.OnGetUserInforListener;
-import com.hongniu.thirdlibrary.map.LoactionUtils;
+import com.sang.thirdlibrary.chact.ChactHelper;
+import com.sang.thirdlibrary.chact.UserInfor;
+import com.sang.thirdlibrary.chact.control.ChactControl;
+import com.sang.thirdlibrary.chact.control.OnGetUserInforListener;
+import com.sang.thirdlibrary.map.LoactionUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -53,9 +53,10 @@ import org.greenrobot.eventbus.ThreadMode;
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 
 @Route(path = ArouterParamApp.activity_main)
-public class MainActivity extends CompanyBaseActivity implements View.OnClickListener, ChactControl.OnConnectListener, AMapLocationListener, ChactControl.OnReceiveUnReadCountListener {
+public class MainActivity extends CompanyBaseActivity implements View.OnClickListener,   AMapLocationListener, ChactControl.OnReceiveUnReadCountListener {
 
     private TextView demo;
 
@@ -101,7 +102,6 @@ public class MainActivity extends CompanyBaseActivity implements View.OnClickLis
         loaction.setListener(this);
 
         //初始化网络获取数据
-        //TODO 为了测试，强制使用测试环境
         FreightClient.getClient().initSdk(MainActivity.this, getPackageName(),
                 getString(R.string.freight_secret),
                 getString(R.string.freight_uniquie),
@@ -183,7 +183,47 @@ public class MainActivity extends CompanyBaseActivity implements View.OnClickLis
         super.onStart();
         if (ChactHelper.getHelper().disConnectState()) {
             String rongToken = InfoUtils.getLoginInfo().getRongToken();
-            ChactHelper.getHelper().connect(mContext, rongToken, this);
+            ChactHelper.getHelper().connect(mContext, rongToken, new RongIMClient.ConnectCallback() {
+                @Override
+                public void onSuccess(final String userID) {
+                    ChactHelper.getHelper().setUseInfor(new OnGetUserInforListener() {
+                        @Override
+                        public Observable<UserInfor> onGetUserInfor(String usrID) {
+                            return HttpAppFactory.queryRongInfor(usrID)
+                                    .map(new Function<CommonBean<UserInfor>, UserInfor>() {
+                                        @Override
+                                        public UserInfor apply(CommonBean<UserInfor> userInforCommonBean) throws Exception {
+                                            return userInforCommonBean.getData();
+                                        }
+                                    })
+                                    ;
+                        }
+                    });
+                    HttpAppFactory.queryRongInfor(userID)
+                            .subscribe(new NetObserver<UserInfor>(null) {
+                                @Override
+                                public void doOnSuccess(UserInfor data) {
+
+                                    ChactHelper.getHelper().refreshUserInfoCache(userID, data);
+                                }
+                            });
+
+                    RongIM.getInstance().setMessageAttachedUserInfo(true);
+                    BusFactory.getBus().post(new Event.UpChactFragment());
+                }
+
+                @Override
+                public void onError(RongIMClient.ConnectionErrorCode connectionErrorCode) {
+                    if (connectionErrorCode.getValue() == 31010) {//不是异地登录
+                        ToastUtils.getInstance().show("异地登录");
+                    }
+                }
+
+                @Override
+                public void onDatabaseOpened(RongIMClient.DatabaseOpenStatus databaseOpenStatus) {
+
+                }
+            });
             ChactHelper.getHelper().setUnReadCountListener(this);
         }
     }
@@ -195,25 +235,19 @@ public class MainActivity extends CompanyBaseActivity implements View.OnClickLis
      */
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-
-            case R.id.tab1:
-            case R.id.tab2:
-            case R.id.tab4:
-            case R.id.tab5:
-                changeTabeState(v.getId());
-                break;
-            case R.id.tab3:
-                if (InfoUtils.getState(InfoUtils.getMyInfo()) == 4) {
-                    ArouterUtils.getInstance().builder(ArouterParamApp.activity_order_create)
-                            .navigation();
-                } else if (InfoUtils.isShowAlert()) {
-                    dialogAttes.show();
-                } else {
-                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER)
-                            .show("身份认证审核中");
-                }
-                break;
+        int id = v.getId();
+        if (id == R.id.tab1 || id == R.id.tab2 || id == R.id.tab4 || id == R.id.tab5) {
+            changeTabeState(v.getId());
+        } else if (id == R.id.tab3) {
+            if (InfoUtils.getState(InfoUtils.getMyInfo()) == 4) {
+                ArouterUtils.getInstance().builder(ArouterParamApp.activity_order_create)
+                        .navigation();
+            } else if (InfoUtils.isShowAlert()) {
+                dialogAttes.show();
+            } else {
+                ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER)
+                        .show("身份认证审核中");
+            }
         }
     }
 
@@ -237,54 +271,43 @@ public class MainActivity extends CompanyBaseActivity implements View.OnClickLis
         if (currentFragment != null) {
             fragmentTransaction.hide(currentFragment);
         }
-        switch (id) {
-            case R.id.tab1:
+        if (id == R.id.tab1) {
+            if (homeFragment == null) {
+                homeFragment = new HomeFragment();
+                Bundle bundle = new Bundle();
+                bundle.putBoolean(Param.TRAN, isLogin);
+                homeFragment.setBundle(bundle);
+                fragmentTransaction.add(R.id.content, homeFragment);
+            } else {
+                fragmentTransaction.show(homeFragment);
+            }
+            currentFragment = homeFragment;
+        } else if (id == R.id.tab2) {
+            if (orderFragment == null) {
+                orderFragment = (CompanyBaseFragment) ArouterUtils.getInstance().builder(ArouterParamApp.fragment_order_home).navigation(mContext);
+                fragmentTransaction.add(R.id.content, orderFragment);
+            } else {
+                fragmentTransaction.show(orderFragment);
+            }
+            currentFragment = orderFragment;
+        } else if (id == R.id.tab4) {
+            if (messageFragment == null) {
+                messageFragment = new ChactListFragment();
+                fragmentTransaction.add(R.id.content, messageFragment);
+            } else {
+                fragmentTransaction.show(messageFragment);
+            }
 
-                if (homeFragment == null) {
-                    homeFragment = new HomeFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putBoolean(Param.TRAN, isLogin);
-                    homeFragment.setBundle(bundle);
-                    fragmentTransaction.add(R.id.content, homeFragment);
-                } else {
-                    fragmentTransaction.show(homeFragment);
-                }
-                currentFragment = homeFragment;
-                break;
-            case R.id.tab2:
-                if (orderFragment == null) {
-                    orderFragment = (CompanyBaseFragment) ArouterUtils.getInstance().builder(ArouterParamApp.fragment_order_home).navigation(mContext);
-                    fragmentTransaction.add(R.id.content, orderFragment);
-                } else {
-                    fragmentTransaction.show(orderFragment);
-                }
-                currentFragment = orderFragment;
-                break;
+            currentFragment = messageFragment;
+        } else if (id == R.id.tab5) {
+            if (meFragment == null) {
+                meFragment = (CompanyBaseFragment) ArouterUtils.getInstance().builder(ArouterParamApp.fragment_person_center).navigation(mContext);
+                fragmentTransaction.add(R.id.content, meFragment);
+            } else {
+                fragmentTransaction.show(meFragment);
+            }
 
-            case R.id.tab4:
-
-                if (messageFragment == null) {
-                    messageFragment = new ChactListFragment();
-                    fragmentTransaction.add(R.id.content, messageFragment);
-                } else {
-                    fragmentTransaction.show(messageFragment);
-                }
-
-                currentFragment = messageFragment;
-
-                break;
-            case R.id.tab5:
-                if (meFragment == null) {
-                    meFragment = (CompanyBaseFragment) ArouterUtils.getInstance().builder(ArouterParamApp.fragment_person_center).navigation(mContext);
-                    fragmentTransaction.add(R.id.content, meFragment);
-                } else {
-                    fragmentTransaction.show(meFragment);
-                }
-
-                currentFragment = meFragment;
-
-                break;
-
+            currentFragment = meFragment;
         }
 
         fragmentTransaction.commitAllowingStateLoss();
@@ -293,51 +316,9 @@ public class MainActivity extends CompanyBaseActivity implements View.OnClickLis
     }
 
 
-    /**
-     * 连接成功
-     *
-     * @param userID
-     */
-    @Override
-    public void onConnectSuccess(String userID) {
-        ChactHelper.getHelper().setUseInfor(new OnGetUserInforListener() {
-            @Override
-            public Observable<UserInfor> onGetUserInfor(String usrID) {
-                return HttpAppFactory.queryRongInfor(usrID)
-                        .map(new Function<CommonBean<UserInfor>, UserInfor>() {
-                            @Override
-                            public UserInfor apply(CommonBean<UserInfor> userInforCommonBean) throws Exception {
-                                return userInforCommonBean.getData();
-                            }
-                        })
-                        ;
-            }
-        });
-        HttpAppFactory.queryRongInfor(userID)
-                .subscribe(new NetObserver<UserInfor>(null) {
-                    @Override
-                    public void doOnSuccess(UserInfor data) {
 
-                        ChactHelper.getHelper().refreshUserInfoCache(userID, data);
-                    }
-                });
 
-        RongIM.getInstance().setMessageAttachedUserInfo(true);
-        BusFactory.getBus().post(new Event.UpChactFragment());
-    }
 
-    /**
-     * 连接错误
-     *
-     * @param errorCode
-     * @param errorMsg
-     */
-    @Override
-    public void onConnectError(int errorCode, String errorMsg) {
-        if (errorCode == 31010) {//不是异地登录
-            ToastUtils.getInstance().show("异地登录");
-        }
-    }
 
     @Override
     public void onBackPressed() {

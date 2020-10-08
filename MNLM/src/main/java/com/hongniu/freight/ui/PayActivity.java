@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.fy.androidlibrary.toast.ToastUtils;
 import com.fy.androidlibrary.utils.ConvertUtils;
-import com.fy.baselibrary.utils.ArouterUtils;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.fy.companylibrary.config.ArouterParamApp;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
@@ -25,8 +25,8 @@ import com.hongniu.freight.entity.QueryPayInfoParams;
 import com.hongniu.freight.presenter.PayPresenter;
 import com.hongniu.freight.widget.DialogComment;
 import com.hongniu.freight.widget.PayWayView;
-import com.hongniu.thirdlibrary.pay.entity.PayInfoBean;
-import com.hongniu.thirdlibrary.pay.person.PasswordDialog;
+import com.sang.thirdlibrary.pay.PasswordDialog;
+import com.sang.thirdlibrary.pay.PayInfoBean;
 
 /**
  * @data 2020/3/5

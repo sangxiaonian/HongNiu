@@ -20,7 +20,7 @@ import com.fy.androidlibrary.utils.CommonUtils;
 import com.fy.androidlibrary.utils.ConvertUtils;
 import com.fy.androidlibrary.widget.span.CenterAlignImageSpan;
 import com.fy.androidlibrary.widget.span.XClickableSpan;
-import com.fy.baselibrary.utils.ArouterUtils;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.fy.companylibrary.config.ArouterParamApp;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
@@ -35,7 +35,7 @@ import com.hongniu.freight.presenter.OrderDetailPresenter;
 import com.hongniu.freight.ui.holder.order.CustomOrderButtonClick;
 import com.hongniu.freight.ui.holder.order.XOrderButtonClick;
 import com.hongniu.freight.ui.holder.order.helper.OrderUtils;
-import com.hongniu.thirdlibrary.chact.ChactHelper;
+import com.sang.thirdlibrary.chact.ChactHelper;
 
 import java.util.Map;
 

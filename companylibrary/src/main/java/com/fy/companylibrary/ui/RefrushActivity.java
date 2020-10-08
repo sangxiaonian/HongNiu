@@ -17,8 +17,8 @@ import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.entity.CommonBean;
 import com.fy.companylibrary.entity.PageBean;
 
-import com.fy.baselibrary.refrush.XRefreshLayout;
 import com.fy.companylibrary.net.NetObserver;
+import com.hongniu.baselibrary.widget.XRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;

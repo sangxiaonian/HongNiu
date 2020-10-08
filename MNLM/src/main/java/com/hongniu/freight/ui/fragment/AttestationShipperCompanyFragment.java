@@ -3,33 +3,19 @@ package com.hongniu.freight.ui.fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.fy.androidlibrary.imgload.ImageLoader;
-import com.fy.androidlibrary.net.rx.BaseObserver;
 import com.fy.androidlibrary.toast.ToastUtils;
-import com.fy.androidlibrary.utils.CollectionUtils;
-import com.fy.baselibrary.utils.ArouterUtils;
 import com.fy.companylibrary.config.ArouterParamApp;
 import com.fy.companylibrary.net.NetObserver;
-import com.fy.androidlibrary.utils.permission.PermissionUtils;
 import com.fy.companylibrary.widget.ItemTextView;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.freight.R;
-import com.hongniu.freight.entity.UpImgData;
 import com.hongniu.freight.entity.VerifyCompanyParams;
 import com.hongniu.freight.entity.VerifyInfoBean;
 import com.hongniu.freight.net.HttpAppFactory;
 import com.hongniu.freight.utils.Utils;
 import com.hongniu.freight.widget.ImageInforView;
-import com.hongniu.thirdlibrary.picture.PictureClient;
-import com.hongniu.thirdlibrary.picture.utils.PicUtils;
-import com.luck.picture.lib.entity.LocalMedia;
-import com.luck.picture.lib.listener.OnResultCallbackListener;
-
-import java.util.List;
-
-import io.reactivex.disposables.Disposable;
 
 /**
  * 作者：  on 2020/2/24.

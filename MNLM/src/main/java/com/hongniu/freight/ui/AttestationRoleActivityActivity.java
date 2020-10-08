@@ -2,17 +2,14 @@ package com.hongniu.freight.ui;
 
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
-
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.fy.baselibrary.utils.ArouterUtils;
 import com.fy.companylibrary.config.ArouterParamApp;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
 import com.fy.companylibrary.ui.CompanyBaseFragment;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.freight.R;
 import com.hongniu.freight.config.Role;
-import com.hongniu.freight.utils.InfoUtils;
 
 /**
  * @data 2020/2/24

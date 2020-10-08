@@ -9,7 +9,6 @@ import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.entity.CommonBean;
 import com.fy.companylibrary.entity.PageBean;
 import com.fy.companylibrary.net.CompanyClient;
-import com.fy.baselibrary.interceptor.FileProgressRequestBody;
 import com.google.gson.JsonObject;
 import com.hongniu.freight.entity.AccountDetailBean;
 import com.hongniu.freight.entity.AccountFlowParams;
@@ -53,12 +52,13 @@ import com.hongniu.freight.entity.UpImgData;
 import com.hongniu.freight.entity.VerifyCompanyParams;
 import com.hongniu.freight.entity.VerifyInfoBean;
 import com.hongniu.freight.entity.VerifyPersonParams;
-import com.hongniu.thirdlibrary.verify.VerifyTokenBeans;
 import com.hongniu.freight.entity.WayBillBean;
 import com.hongniu.freight.ui.QueryInsurancePriceParams;
 import com.hongniu.freight.utils.InfoUtils;
-import com.hongniu.thirdlibrary.chact.UserInfor;
-import com.hongniu.thirdlibrary.pay.entity.PayInfoBean;
+import com.sang.thirdlibrary.chact.UserInfor;
+import com.sang.thirdlibrary.map.verify.VerifyTokenBeans;
+import com.sang.thirdlibrary.pay.PayInfoBean;
+import com.sang.thirdlibrary.picture.helper.interceptor.FileProgressRequestBody;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -153,7 +153,7 @@ public class HttpAppFactory {
         object.addProperty("userLogo", userLogo);
         return CompanyClient.getInstance().creatService(AppService.class)
                 .upDateLogo(object)
-                .compose(RxUtils.getSchedulersObservableTransformer());
+                .compose(RxUtils.<ResponseBody>getSchedulersObservableTransformer());
 
     }
 
@@ -371,7 +371,7 @@ public class HttpAppFactory {
         json.addProperty("type", type);
         return CompanyClient.getInstance().creatService(AppService.class)
                 .queryCargoType(json)
-                .compose(RxUtils.getSchedulersObservableTransformer())
+                .compose(RxUtils.<CommonBean<List<CargoTypeAndColorBeans>>>getSchedulersObservableTransformer())
                 ;
     }
 
@@ -397,7 +397,7 @@ public class HttpAppFactory {
         json.addProperty("id", id);
         return CompanyClient.getInstance().creatService(AppService.class)
                 .queryOrderDetail(json)
-                .compose(RxUtils.getSchedulersObservableTransformer())
+                .compose(RxUtils.<CommonBean<OrderInfoBean>>getSchedulersObservableTransformer())
                 ;
     }
 
@@ -412,7 +412,7 @@ public class HttpAppFactory {
         json.setPageSize(pageSize);
         return CompanyClient.getInstance().creatService(AppService.class)
                 .queryOwnerOrderList(json)
-                .compose(RxUtils.getSchedulersObservableTransformer())
+                .compose(RxUtils.<CommonBean<PageBean<OrderInfoBean>>>getSchedulersObservableTransformer())
                 ;
     }
 
@@ -426,7 +426,7 @@ public class HttpAppFactory {
         json.addProperty("id", id);
         return CompanyClient.getInstance().creatService(AppService.class)
                 .queryAppraise(json)
-                .compose(RxUtils.getSchedulersObservableTransformer())
+                .compose(RxUtils.<CommonBean<QueryAppraiseInfo>>getSchedulersObservableTransformer())
                 ;
     }
 
@@ -439,7 +439,7 @@ public class HttpAppFactory {
 
         return CompanyClient.getInstance().creatService(AppService.class)
                 .appraise(params)
-                .compose(RxUtils.getSchedulersObservableTransformer())
+                .compose(RxUtils.<CommonBean<Object>>getSchedulersObservableTransformer())
                 ;
     }
 
@@ -453,7 +453,7 @@ public class HttpAppFactory {
         json.addProperty("id", id);
         return CompanyClient.getInstance().creatService(AppService.class)
                 .queryOrderDetail(json)
-                .compose(RxUtils.getSchedulersObservableTransformer())
+                .compose(RxUtils.<CommonBean<OrderInfoBean>>getSchedulersObservableTransformer())
                 ;
     }
 
@@ -467,7 +467,7 @@ public class HttpAppFactory {
         json.addProperty("id", id);
         return CompanyClient.getInstance().creatService(AppService.class)
                 .queryOrderStatus(json)
-                .compose(RxUtils.getSchedulersObservableTransformer())
+                .compose(RxUtils.<CommonBean<OrderStatusBean>>getSchedulersObservableTransformer())
                 ;
     }
 
@@ -481,7 +481,7 @@ public class HttpAppFactory {
         json.addProperty("id", id);
         return CompanyClient.getInstance().creatService(AppService.class)
                 .orderCancel(json)
-                .compose(RxUtils.getSchedulersObservableTransformer())
+                .compose(RxUtils.<CommonBean<Object>>getSchedulersObservableTransformer())
                 ;
     }
 
@@ -495,7 +495,7 @@ public class HttpAppFactory {
         json.addProperty("id", id);
         return CompanyClient.getInstance().creatService(AppService.class)
                 .orderReceivePlatform(json)
-                .compose(RxUtils.getSchedulersObservableTransformer())
+                .compose(RxUtils.<CommonBean<Object>>getSchedulersObservableTransformer())
                 ;
     }
 
@@ -507,7 +507,7 @@ public class HttpAppFactory {
     public static Observable<CommonBean<Object>> orderFindCarInfo(OrderFindCarParams params) {
         return CompanyClient.getInstance().creatService(AppService.class)
                 .orderFindCarInfo(params)
-                .compose(RxUtils.getSchedulersObservableTransformer())
+                .compose(RxUtils.<CommonBean<Object>>getSchedulersObservableTransformer())
                 ;
     }
 
@@ -519,7 +519,7 @@ public class HttpAppFactory {
     public static Observable<CommonBean<Object>> orderDispathCar(OrderDispathCarParams params) {
         return CompanyClient.getInstance().creatService(AppService.class)
                 .orderDispathCar(params)
-                .compose(RxUtils.getSchedulersObservableTransformer())
+                .compose(RxUtils.<CommonBean<Object>>getSchedulersObservableTransformer())
                 ;
     }
 
@@ -533,7 +533,7 @@ public class HttpAppFactory {
         bean.setDriverName(name);
         return CompanyClient.getInstance().creatService(AppService.class)
                 .getDriverPhone(bean)
-                .compose(RxUtils.getSchedulersObservableTransformer())
+                .compose(RxUtils.<CommonBean<List<OrderDriverPhoneBean>>>getSchedulersObservableTransformer())
                 ;
     }
 
@@ -545,7 +545,7 @@ public class HttpAppFactory {
     public static Observable<CommonBean<Object>> orderReceive(OrderDispathCarParams params) {
         return CompanyClient.getInstance().creatService(AppService.class)
                 .orderReceive(params)
-                .compose(RxUtils.getSchedulersObservableTransformer())
+                .compose(RxUtils.<CommonBean<Object>>getSchedulersObservableTransformer())
                 ;
     }
 
@@ -560,7 +560,7 @@ public class HttpAppFactory {
         object.addProperty("balanceMoney", price);
         return CompanyClient.getInstance().creatService(AppService.class)
                 .updateFare(object)
-                .compose(RxUtils.getSchedulersObservableTransformer())
+                .compose(RxUtils.<CommonBean<Object>>getSchedulersObservableTransformer())
                 ;
     }
 
@@ -574,7 +574,7 @@ public class HttpAppFactory {
         json.addProperty("id", id);
         return CompanyClient.getInstance().creatService(AppService.class)
                 .orderStart(json)
-                .compose(RxUtils.getSchedulersObservableTransformer())
+                .compose(RxUtils.<CommonBean<Object>>getSchedulersObservableTransformer())
                 ;
     }
 
@@ -588,7 +588,7 @@ public class HttpAppFactory {
         json.addProperty("id", id);
         return CompanyClient.getInstance().creatService(AppService.class)
                 .orderEnd(json)
-                .compose(RxUtils.getSchedulersObservableTransformer())
+                .compose(RxUtils.<CommonBean<Object>>getSchedulersObservableTransformer())
                 ;
     }
 
@@ -602,7 +602,7 @@ public class HttpAppFactory {
         json.addProperty("id", id);
         return CompanyClient.getInstance().creatService(AppService.class)
                 .orderEntryReceive(json)
-                .compose(RxUtils.getSchedulersObservableTransformer())
+                .compose(RxUtils.<CommonBean<Object>>getSchedulersObservableTransformer())
                 ;
     }
 
@@ -615,7 +615,7 @@ public class HttpAppFactory {
 
         return CompanyClient.getInstance().creatService(AppService.class)
                 .buyInsurance(params)
-                .compose(RxUtils.getSchedulersObservableTransformer())
+                .compose(RxUtils.<CommonBean<Object>>getSchedulersObservableTransformer())
                 ;
     }
 
@@ -628,7 +628,7 @@ public class HttpAppFactory {
     public static Observable<CommonBean<String>> queryInstancePrice(QueryInsurancePriceParams params) {
         return CompanyClient.getInstance().creatService(AppService.class)
                 .queryInstancePrice(params)
-                .compose(RxUtils.getSchedulersObservableTransformer())
+                .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer())
                 ;
     }
 
@@ -700,7 +700,7 @@ public class HttpAppFactory {
         return CompanyClient.getInstance().creatService(AppService.class)
                 .upLoadImage(builder.build())
 
-                .compose(RxUtils.getSchedulersObservableTransformer())
+                .compose(RxUtils.<CommonBean<List<UpImgData>>>getSchedulersObservableTransformer())
                 ;
     }
 
@@ -710,7 +710,7 @@ public class HttpAppFactory {
     public static Observable<CommonBean<PageBean<CarInfoBean>>> queryCarList(PageSearchParams param) {
         return CompanyClient.getInstance().creatService(AppService.class)
                 .queryCarList(param)
-                .compose(RxUtils.getSchedulersObservableTransformer());
+                .compose(RxUtils.<CommonBean<PageBean<CarInfoBean>>>getSchedulersObservableTransformer());
     }
 
     /**
@@ -722,7 +722,7 @@ public class HttpAppFactory {
         param.setSearchText(searchText);
         return CompanyClient.getInstance().creatService(AppService.class)
                 .queryAllCarList(param)
-                .compose(RxUtils.getSchedulersObservableTransformer());
+                .compose(RxUtils.<CommonBean<PageBean<CarInfoBean>>>getSchedulersObservableTransformer());
     }
 
     /**
@@ -734,7 +734,7 @@ public class HttpAppFactory {
 
         return CompanyClient.getInstance().creatService(AppService.class)
                 .queryCarTypeList()
-                .compose(RxUtils.getSchedulersObservableTransformer());
+                .compose(RxUtils.<CommonBean<List<CarTypeBean>>>getSchedulersObservableTransformer());
     }
 
     /**
@@ -745,7 +745,7 @@ public class HttpAppFactory {
     public static Observable<CommonBean<Object>> createCar(CarInfoBean infoBean) {
         return CompanyClient.getInstance().creatService(AppService.class)
                 .createCar(infoBean)
-                .compose(RxUtils.getSchedulersObservableTransformer());
+                .compose(RxUtils.<CommonBean<Object>>getSchedulersObservableTransformer());
     }
 
     /**
@@ -758,7 +758,7 @@ public class HttpAppFactory {
         object.addProperty("id", id);
         return CompanyClient.getInstance().creatService(AppService.class)
                 .deletedCar(object)
-                .compose(RxUtils.getSchedulersObservableTransformer());
+                .compose(RxUtils.<CommonBean<Object>>getSchedulersObservableTransformer());
     }
 
     /**
@@ -770,7 +770,7 @@ public class HttpAppFactory {
     public static Observable<CommonBean<AccountDetailBean>> queryAccountDetails() {
         return CompanyClient.getInstance().creatService(AppService.class)
                 .queryAccountDetails()
-                .compose(RxUtils.getSchedulersObservableTransformer());
+                .compose(RxUtils.<CommonBean<AccountDetailBean>>getSchedulersObservableTransformer());
     }
 
     /**
@@ -782,7 +782,7 @@ public class HttpAppFactory {
     public static Observable<CommonBean<QueryBindHuaInforsBean>> queryRechargeInfo() {
         return CompanyClient.getInstance().creatService(AppService.class)
                 .queryRechargeInfo()
-                .compose(RxUtils.getSchedulersObservableTransformer());
+                .compose(RxUtils.<CommonBean<QueryBindHuaInforsBean>>getSchedulersObservableTransformer());
     }
 
     /**
@@ -794,7 +794,7 @@ public class HttpAppFactory {
     public static Observable<CommonBean<QueryVeriBean>> querySubAcc() {
         return CompanyClient.getInstance().creatService(AppService.class)
                 .querySubAcc()
-                .compose(RxUtils.getSchedulersObservableTransformer());
+                .compose(RxUtils.<CommonBean<QueryVeriBean>>getSchedulersObservableTransformer());
     }
 
     /**
@@ -832,7 +832,7 @@ public class HttpAppFactory {
 
         return CompanyClient.getInstance().creatService(AppService.class)
                 .queryMyCards(new Object())
-                .compose(RxUtils.getSchedulersObservableTransformer());
+                .compose(RxUtils.<CommonBean<List<PayInforBeans>>>getSchedulersObservableTransformer());
 
     }
 
@@ -846,7 +846,7 @@ public class HttpAppFactory {
         object.addProperty("id", id);
         return CompanyClient.getInstance().creatService(AppService.class)
                 .deleadCard(object)
-                .compose(RxUtils.getSchedulersObservableTransformer());
+                .compose(RxUtils.<CommonBean<Object>>getSchedulersObservableTransformer());
 
     }
 
@@ -860,7 +860,7 @@ public class HttpAppFactory {
     public static Observable<CommonBean<BillInfoBean>> searchAccountList(BillInfoSearchParams params) {
         return CompanyClient.getInstance().creatService(AppService.class)
                 .searchAccountList(params)
-                .compose(RxUtils.getSchedulersObservableTransformer());
+                .compose(RxUtils.<CommonBean<BillInfoBean>>getSchedulersObservableTransformer());
     }
 
     /**
@@ -873,7 +873,7 @@ public class HttpAppFactory {
     public static Observable<CommonBean<PageBean<BillInfoListBean>>> queryAccountFlows(AccountFlowParams params) {
         return CompanyClient.getInstance().creatService(AppService.class)
                 .queryAccountFlows(params)
-                .compose(RxUtils.getSchedulersObservableTransformer());
+                .compose(RxUtils.<CommonBean<PageBean<BillInfoListBean>>>getSchedulersObservableTransformer());
     }
 
     /**
@@ -937,7 +937,7 @@ public class HttpAppFactory {
     public static Observable<CommonBean<PayInfoBean>> queryPayInfo(QueryPayInfoParams payInfoParams) {
         return CompanyClient.getInstance().creatService(AppService.class)
                 .queryPayInfo(payInfoParams)
-                .compose(RxUtils.getSchedulersObservableTransformer());
+                .compose(RxUtils.<CommonBean<PayInfoBean>>getSchedulersObservableTransformer());
     }
 
     /**
@@ -950,7 +950,7 @@ public class HttpAppFactory {
     public static Observable<CommonBean<Object>> faceBack(FaceBackParams payInfoParams) {
         return CompanyClient.getInstance().creatService(AppService.class)
                 .faceBack(payInfoParams)
-                .compose(RxUtils.getSchedulersObservableTransformer());
+                .compose(RxUtils.<CommonBean<Object>>getSchedulersObservableTransformer());
     }
 
 
@@ -967,7 +967,7 @@ public class HttpAppFactory {
         json.addProperty("checkCode", code);
         return CompanyClient.getInstance().creatService(AppService.class)
                 .upPass(json)
-                .compose(RxUtils.getSchedulersObservableTransformer());
+                .compose(RxUtils.<CommonBean<Object>>getSchedulersObservableTransformer());
     }
 
     /**
@@ -981,7 +981,7 @@ public class HttpAppFactory {
         json.addProperty("orderId", id);
         return CompanyClient.getInstance().creatService(AppService.class)
                 .getPath(json)
-                .compose(RxUtils.getSchedulersObservableTransformer());
+                .compose(RxUtils.<CommonBean<PathBean>>getSchedulersObservableTransformer());
     }
 
     /**
@@ -992,7 +992,7 @@ public class HttpAppFactory {
         bean.setId(id);
         return CompanyClient.getInstance().creatService(AppService.class)
                 .deletedInsuredInfor(bean)
-                .compose(RxUtils.getSchedulersObservableTransformer());
+                .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
     }
 
     /**
@@ -1036,7 +1036,7 @@ public class HttpAppFactory {
     public static Observable<CommonBean<String>> upLoaction(List<LocationBean> datas) {
         return CompanyClient.getInstance().creatService(AppService.class)
                 .upLoaction(datas)
-                .compose(RxUtils.getSchedulersObservableTransformer())
+                .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer())
                 ;
     }
 
@@ -1068,7 +1068,7 @@ public class HttpAppFactory {
         json.addProperty("deviceTokens", token);
         return CompanyClient.getInstance().creatService(AppService.class)
                 .upDateToken(json)
-                .compose(RxUtils.getSchedulersObservableTransformer());
+                .compose(RxUtils.<CommonBean<Object>>getSchedulersObservableTransformer());
     }
 
 
@@ -1082,7 +1082,7 @@ public class HttpAppFactory {
         json.addProperty("orderId", id);
         return CompanyClient.getInstance().creatService(AppService.class)
                 .queryReceiptInfo(json)
-                .compose(RxUtils.getSchedulersObservableTransformer());
+                .compose(RxUtils.<CommonBean<QueryReceiveBean>>getSchedulersObservableTransformer());
     }
     /**
      * 保存回单
@@ -1092,6 +1092,6 @@ public class HttpAppFactory {
     public static Observable<CommonBean<String>> saveReceiptInfo(QueryReceiveBean bean) {
         return CompanyClient.getInstance().creatService(AppService.class)
                 .saveReceiptInfo(bean)
-                .compose(RxUtils.getSchedulersObservableTransformer());
+                .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
     }
 }
