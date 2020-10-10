@@ -11,8 +11,6 @@ import androidx.annotation.Nullable;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.fy.androidlibrary.utils.CollectionUtils;
 import com.fy.androidlibrary.utils.CommonUtils;
-import com.fy.androidlibrary.utils.ConvertUtils;
-import com.fy.androidlibrary.utils.JLog;
 import com.fy.androidlibrary.widget.recycle.adapter.XAdapter;
 import com.fy.androidlibrary.widget.recycle.holder.BaseHolder;
 import com.fy.androidlibrary.widget.recycle.holder.PeakHolder;
@@ -32,9 +30,7 @@ import com.hongniu.freight.ui.holder.BillHolder;
 import com.hongniu.freight.ui.holder.EmptyHolder;
 import com.hongniu.freight.widget.VistogramView;
 
-import java.lang.annotation.ElementType;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -79,7 +75,7 @@ public class BillMonthChildFragment extends RefrushFragmet<BillInfoListBean> {
 
     @Override
     protected View initView(LayoutInflater inflater) {
-        View inflate = inflater.inflate(R.layout.fragment_bill_month_child, null);
+        View inflate = inflater.inflate(R.layout.mnlm_fragment_bill_month_child, null);
         return inflate;
 
     }

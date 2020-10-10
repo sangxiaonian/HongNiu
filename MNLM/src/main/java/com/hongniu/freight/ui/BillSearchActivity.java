@@ -24,7 +24,6 @@ import com.hongniu.freight.net.HttpAppFactory;
 import com.hongniu.freight.ui.holder.BillHolder;
 import com.hongniu.freight.ui.holder.EmptyHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -44,7 +43,7 @@ public class BillSearchActivity extends RefrushActivity<BillInfoListBean> implem
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bill_search);
+        setContentView(R.layout.mnlm_activity_bill_search);
         setWhitToolBar("");
         params=getIntent() .getParcelableExtra(Param.TRAN);
         initView();

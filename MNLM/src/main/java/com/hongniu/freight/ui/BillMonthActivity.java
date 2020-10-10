@@ -49,7 +49,7 @@ public class BillMonthActivity extends CompanyBaseActivity implements AutoSingle
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bill_month);
+        setContentView(R.layout.mnlm_activity_bill_month);
         setWhitToolBar("");
         setToolbarSrcRight(R.drawable.icon_search_434445);
         setToolbarRightClick(new View.OnClickListener() {

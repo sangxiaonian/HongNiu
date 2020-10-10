@@ -65,7 +65,7 @@ public class PersonCenterFragment extends CompanyBaseFragment implements View.On
 
     @Override
     protected View initView(LayoutInflater inflater) {
-        View inflate = inflater.inflate(R.layout.fragment_person_center, null);
+        View inflate = inflater.inflate(R.layout.mnlm_fragment_person_center, null);
         img_heard = inflate.findViewById(R.id.img_heard);
         icon_eyes = inflate.findViewById(R.id.icon_eyes);
         tv_name = inflate.findViewById(R.id.tv_name);

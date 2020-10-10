@@ -25,7 +25,7 @@ public class AttestationRoleActivityActivity extends CompanyBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_attestation_role_activity);
+        setContentView(R.layout.mnlm_activity_attestation_role_activity);
         role = (Role) getIntent().getSerializableExtra(Param.TRAN);
         canNext = getIntent().getBooleanExtra(Param.TYPE, true);
         setWhitToolBar(getTitle(role));

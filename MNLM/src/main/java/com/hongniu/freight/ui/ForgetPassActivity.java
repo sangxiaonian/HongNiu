@@ -62,7 +62,7 @@ public class ForgetPassActivity extends CompanyBaseActivity implements View.OnCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_forget_pass);
+        setContentView(R.layout.mnlm_activity_forget_pass);
         type = getIntent().getIntExtra(Param.TRAN, 0);
         initView();
         initData();

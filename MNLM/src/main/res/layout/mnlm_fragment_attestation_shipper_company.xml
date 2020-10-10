@@ -71,7 +71,7 @@
                 android:layout_marginLeft="@dimen/gap_app"
                 android:layout_marginRight="@dimen/gap_app"/>
 
-            <include layout="@layout/layout_id_card"/>
+            <include layout="@layout/mnlm_layout_id_card"/>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

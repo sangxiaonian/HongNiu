@@ -60,7 +60,7 @@ public class AppraiseActivity extends CompanyBaseActivity implements View.OnClic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_appraise);
+        setContentView(R.layout.mnlm_activity_appraise);
         setWhitToolBar("评价");
         id = getIntent().getStringExtra(Param.TRAN);
         role = (RoleOrder) getIntent().getSerializableExtra(Param.TYPE);

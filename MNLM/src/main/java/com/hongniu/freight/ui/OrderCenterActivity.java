@@ -17,9 +17,7 @@ import com.hongniu.freight.config.RoleOrder;
 import com.hongniu.freight.entity.OrderInfoBean;
 import com.hongniu.freight.net.HttpAppFactory;
 import com.hongniu.freight.ui.holder.ReceiveOrderHolder;
-import com.hongniu.freight.ui.holder.order.OrderHolderBuider;
 import com.hongniu.freight.ui.holder.order.XOrderButtonClick;
-import com.hongniu.freight.utils.Utils;
 
 import java.util.List;
 
@@ -36,7 +34,7 @@ public class OrderCenterActivity extends RefrushActivity<OrderInfoBean> implemen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_center);
+        setContentView(R.layout.mnlm_activity_order_center);
         setWhitToolBar("我要接单");
         initView();
         initData();

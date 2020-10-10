@@ -22,41 +22,11 @@ public class OkHttp {
 
     private OkHttpClient.Builder builder;
 
-    private static class InnerClass {
-        private static OkHttp okHttp = new OkHttp();
-    }
 
-    public static OkHttp getOkHttp() {
-        return InnerClass.okHttp;
-    }
 
-    private OkHttp() {
+    public OkHttp() {
         builder = new OkHttpClient.Builder();
-        //Android 4.4及以下的系统默认不支持TLS协议，进行适配
-//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-//            try {
-//                // 自定义一个信任所有证书的TrustManager，添加SSLSocketFactory的时候要用到
-//                final X509TrustManager trustAllCert =
-//                        new X509TrustManager() {
-//                            @Override
-//                            public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
-//                            }
-//
-//                            @Override
-//                            public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
-//                            }
-//
-//                            @Override
-//                            public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-//                                return new java.security.cert.X509Certificate[0];
-//                            }
-//                        };
-//                final SSLSocketFactory sslSocketFactory = new SSLSocketFactoryCompat(trustAllCert);
-//                builder.sslSocketFactory(sslSocketFactory, trustAllCert);
-//            } catch (Exception e) {
-//                throw new RuntimeException(e);
-//            }
-//        }
+
         builder.connectTimeout(60, TimeUnit.SECONDS)
                 .readTimeout(60, TimeUnit.SECONDS)
                 .writeTimeout(60, TimeUnit.SECONDS)

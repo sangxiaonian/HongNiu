@@ -15,7 +15,6 @@ import com.fy.companylibrary.config.ArouterParamApp;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.ui.CompanyBaseFragment;
 import com.hongniu.freight.R;
-import com.hongniu.freight.config.Role;
 import com.hongniu.freight.config.RoleOrder;
 import com.hongniu.freight.utils.InfoUtils;
 import com.hongniu.freight.utils.PickerDialogUtils;
@@ -43,7 +42,7 @@ public class HomeOrderFragment extends CompanyBaseFragment implements OnOptionsS
 
     @Override
     protected View initView(LayoutInflater inflater) {
-        View inflate = inflater.inflate(R.layout.fragment_order_home, null);
+        View inflate = inflater.inflate(R.layout.mnlm_fragment_order_home, null);
         tvTitle = inflate.findViewById(R.id.tv_title);
         tvRole = inflate.findViewById(R.id.tv_role);
         ll_filtrate = inflate.findViewById(R.id.ll_filtrate);

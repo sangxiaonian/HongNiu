@@ -1,6 +1,5 @@
 package com.hongniu.freight.ui;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -14,10 +13,8 @@ import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
 import com.hongniu.freight.R;
 import com.hongniu.freight.ui.adapter.SimpleFragmentAdapter;
-import com.luck.picture.lib.PictureExternalPreviewActivity;
 import com.luck.picture.lib.widget.PreviewViewPager;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +40,7 @@ public class PreviewImageActivity extends CompanyBaseActivity implements ViewPag
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_preview_image);
+        setContentView(R.layout.mnlm_activity_preview_image);
         initView();
         initData();
         initListener();

@@ -14,10 +14,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.fy.androidlibrary.imgload.ImageLoader;
-import com.fy.androidlibrary.net.HttpClient;
 import com.fy.androidlibrary.net.rx.BaseObserver;
 import com.fy.androidlibrary.utils.CollectionUtils;
-import com.fy.companylibrary.net.NetObserver;
 import com.hongniu.freight.R;
 import com.hongniu.freight.entity.UpImgData;
 import com.hongniu.freight.net.HttpAppFactory;
@@ -28,7 +26,6 @@ import com.luck.picture.lib.listener.OnResultCallbackListener;
 
 import java.util.List;
 
-import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
 /**
@@ -61,7 +58,7 @@ public class ImageInforView extends LinearLayout implements View.OnClickListener
     }
 
     private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
-        View inflate = LayoutInflater.from(context).inflate(R.layout.item_image_camera, this, false);
+        View inflate = LayoutInflater.from(context).inflate(R.layout.mnlm_item_image_camera, this, false);
         img = inflate.findViewById(R.id.img);
         bt_img = inflate.findViewById(R.id.bt_img);
         addView(inflate);

@@ -46,7 +46,7 @@ public class FaceBackActivity extends BaseImageUpActivity implements SearchTextW
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_face_back);
+        setContentView(R.layout.mnlm_activity_face_back);
         setWhitToolBar("意见反馈");
         initView();
         initData();

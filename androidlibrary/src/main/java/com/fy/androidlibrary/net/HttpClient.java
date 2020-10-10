@@ -25,7 +25,7 @@ public class HttpClient {
 
 
     public HttpClient() {
-        builder = OkHttp.getOkHttp();
+        builder = new OkHttp();
         retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

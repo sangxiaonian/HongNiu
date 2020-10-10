@@ -41,7 +41,7 @@ public class DialogComment extends Dialog implements View.OnClickListener {
     }
 
     private void initView(Context context) {
-        View inflate = LayoutInflater.from(context).inflate(R.layout.dialog_alert, null);
+        View inflate = LayoutInflater.from(context).inflate(R.layout.mnlm_dialog_alert, null);
         btLeft = inflate.findViewById(R.id.btn_left);
         btRight = inflate.findViewById(R.id.btn_right);
         tvTitle = inflate.findViewById(R.id.tv_title);

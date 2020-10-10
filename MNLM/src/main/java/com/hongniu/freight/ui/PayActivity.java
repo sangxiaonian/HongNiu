@@ -46,7 +46,7 @@ public class PayActivity extends CompanyBaseActivity implements PayControl.IPayV
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pay);
+        setContentView(R.layout.mnlm_activity_pay);
         String id = getIntent().getStringExtra(Param.TRAN);
         int type = getIntent().getIntExtra(Param.TYPE,1);
         setWhitToolBar("订单支付");

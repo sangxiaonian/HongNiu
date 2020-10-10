@@ -14,8 +14,6 @@ import com.fy.companylibrary.config.Param;
 import com.hongniu.freight.R;
 import com.hongniu.freight.config.RoleOrder;
 import com.hongniu.freight.entity.OrderInfoBean;
-import com.hongniu.freight.ui.holder.order.helper.OrderHelper;
-import com.hongniu.freight.ui.holder.order.helper.control.HelperControl;
 
 /**
  * 作者：  on 2020/3/14.
@@ -26,7 +24,7 @@ public class ReceiveOrderHolder extends BaseHolder<OrderInfoBean> {
     private RoleOrder role;
 
     public ReceiveOrderHolder(Context context, ViewGroup parent, RoleOrder order) {
-        super(context, parent, R.layout.item_receive_order);
+        super(context, parent, R.layout.mnlm_item_receive_order);
         this.role = order;
     }
 

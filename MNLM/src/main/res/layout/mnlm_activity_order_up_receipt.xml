@@ -39,7 +39,7 @@
                 android:paddingTop="10dp"
                 android:text="回单图片"
                 android:textColor="@color/color_of_333333"
-                android:textSize="@dimen/sight_text_size_14" />
+                android:textSize="14sp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv"

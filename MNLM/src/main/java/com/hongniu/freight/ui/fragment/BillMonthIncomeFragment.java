@@ -33,7 +33,7 @@ public class BillMonthIncomeFragment extends CompanyBaseFragment implements Bill
 
     @Override
     protected View initView(LayoutInflater inflater) {
-        View inflate = inflater.inflate(R.layout.fragment_bill_month_income, null);
+        View inflate = inflater.inflate(R.layout.mnlm_fragment_bill_month_income, null);
         tvExpendNumber = inflate.findViewById(R.id.tv_expend_number);
         tvCount = inflate.findViewById(R.id.tv_count);
         return inflate;

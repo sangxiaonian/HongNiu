@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.fy.androidlibrary.event.BusFactory;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.fy.companylibrary.config.ArouterParamApp;
 import com.fy.companylibrary.config.Param;
@@ -44,7 +43,7 @@ public class RuleAlertDialog extends Dialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_dialog_alert_rule);
+        setContentView(R.layout.mnlm_layout_dialog_alert_rule);
         //按空白处不能取消动画
         setCanceledOnTouchOutside(false);
         setCancelable(false);

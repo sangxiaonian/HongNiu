@@ -52,7 +52,7 @@ public class MyOrderFragment extends RefrushFragmet<OrderInfoBean> implements XO
 
     @Override
     protected View initView(LayoutInflater inflater) {
-        View inflate = inflater.inflate(R.layout.fragment_my_order, null);
+        View inflate = inflater.inflate(R.layout.mnlm_fragment_my_order, null);
         rvTitle = inflate.findViewById(R.id.rv_title);
         return inflate;
     }
@@ -138,7 +138,7 @@ public class MyOrderFragment extends RefrushFragmet<OrderInfoBean> implements XO
             selectAdapter.setCanEmpty(false);
             selectAdapter.setSingle(true);
             selectAdapter.setSingleSelectedListener(this);
-            selectAdapter.setItemLayoutID(R.layout.item_title);
+            selectAdapter.setItemLayoutID(R.layout.mnlm_item_title);
             rvTitle.setAdapter(selectAdapter);
             XLineDivider tagLine = new XLineDivider()
                     .setmOrientation(LinearLayoutManager.HORIZONTAL)

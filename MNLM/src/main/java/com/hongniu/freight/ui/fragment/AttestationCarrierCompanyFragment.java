@@ -40,7 +40,7 @@ public class AttestationCarrierCompanyFragment extends AttestationBaseFragment i
 
     @Override
     protected View initView(LayoutInflater inflater) {
-        View inflate = inflater.inflate(R.layout.fragment_attestation_carrier_company, null);
+        View inflate = inflater.inflate(R.layout.mnlm_fragment_attestation_carrier_company, null);
         img_id_card_front = inflate.findViewById(R.id.img_id_card_front);
         img_id_card_back = inflate.findViewById(R.id.img_id_card_back);
         item_company_name = inflate.findViewById(R.id.item_company_name);

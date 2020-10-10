@@ -15,7 +15,6 @@ import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
 import com.fy.companylibrary.ui.CompanyBaseFragment;
 import com.hongniu.freight.R;
-import com.hongniu.freight.config.Role;
 import com.hongniu.freight.config.RoleOrder;
 import com.hongniu.freight.utils.PickerDialogUtils;
 
@@ -42,7 +41,7 @@ public class MyOrderActivity extends CompanyBaseActivity implements OnOptionsSel
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_order);
+        setContentView(R.layout.mnlm_activity_my_order);
         role = (RoleOrder) getIntent().getSerializableExtra(Param.TRAN);
         if (role==null){
             role=RoleOrder.SHIPPER;

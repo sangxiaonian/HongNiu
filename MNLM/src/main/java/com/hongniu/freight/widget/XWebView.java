@@ -1,22 +1,18 @@
 package com.hongniu.freight.widget;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.net.http.SslError;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
-import android.webkit.WebResourceError;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
-import com.fy.androidlibrary.utils.JLog;
 import com.hongniu.freight.R;
 
 
@@ -49,7 +45,7 @@ public class XWebView extends LinearLayout {
         setOrientation(VERTICAL);
 
         mProgressBar = (ProgressBar) LayoutInflater.from(getContext()).inflate(
-                R.layout.progress_horizontal, null);
+                R.layout.mnlm_progress_horizontal, null);
         mProgressBar.setMax(100);
         mProgressBar.setProgress(0);
         try {

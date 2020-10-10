@@ -50,7 +50,7 @@ public class MapPointFragment extends CompanyBaseFragment implements MapUtils.On
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View inflate = inflater.inflate(R.layout.frament_map_point, null, false);
+        View inflate = inflater.inflate(R.layout.mnlm_frament_map_point, null, false);
         mMapView = inflate.findViewById(R.id.map);
         llMarkDes = inflate.findViewById(R.id.ll);
         tv_title = inflate.findViewById(R.id.tv_title);

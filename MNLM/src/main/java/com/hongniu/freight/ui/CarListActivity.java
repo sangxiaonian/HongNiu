@@ -41,7 +41,7 @@ public class CarListActivity extends RefrushActivity<CarInfoBean> {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_car_list);
+        setContentView(R.layout.mnlm_activity_my_car_list);
         setWhitToolBar("我的车辆");
         initView();
         initData();
@@ -58,7 +58,7 @@ public class CarListActivity extends RefrushActivity<CarInfoBean> {
     @Override
     protected void initData() {
         super.initData();
-        adapter.addHeard(new PeakHolder(mContext, rv, R.layout.item_car_foot) {
+        adapter.addHeard(new PeakHolder(mContext, rv, R.layout.mnlm_item_car_foot) {
             @Override
             public void initView(View itemView, int position) {
                 super.initView(itemView, position);
@@ -96,7 +96,7 @@ public class CarListActivity extends RefrushActivity<CarInfoBean> {
         return new XAdapter<CarInfoBean>(mContext, datas) {
             @Override
             public BaseHolder<CarInfoBean> initHolder(ViewGroup parent, int viewType) {
-                return new BaseHolder<CarInfoBean>(context, parent, R.layout.item_car) {
+                return new BaseHolder<CarInfoBean>(context, parent, R.layout.mnlm_item_car) {
                     @Override
                     public void initView(View itemView, int position, final CarInfoBean data) {
                         super.initView(itemView, position, data);

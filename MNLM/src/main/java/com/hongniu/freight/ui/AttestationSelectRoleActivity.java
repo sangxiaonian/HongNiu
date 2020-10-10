@@ -41,7 +41,7 @@ public class AttestationSelectRoleActivity extends CompanyBaseActivity implement
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_attestation_select_role);
+        setContentView(R.layout.mnlm_activity_attestation_select_role);
         setWhitToolBar("");
         initView();
         initData();
@@ -85,7 +85,7 @@ public class AttestationSelectRoleActivity extends CompanyBaseActivity implement
 
 
         selectAdapter.setSingleSelectedListener(this);
-        selectAdapter.setItemLayoutID(R.layout.item_attesstaiton_role);
+        selectAdapter.setItemLayoutID(R.layout.mnlm_item_attesstaiton_role);
         rv.setAdapter(selectAdapter);
         XLineDivider tagLine = new XLineDivider()
                 .setmOrientation(LinearLayoutManager.VERTICAL)

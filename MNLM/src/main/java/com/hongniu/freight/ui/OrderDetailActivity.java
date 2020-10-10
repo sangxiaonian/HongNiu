@@ -32,7 +32,6 @@ import com.hongniu.freight.entity.AppInsuranceInfo;
 import com.hongniu.freight.entity.H5Config;
 import com.hongniu.freight.entity.OrderInfoBean;
 import com.hongniu.freight.presenter.OrderDetailPresenter;
-import com.hongniu.freight.ui.holder.order.CustomOrderButtonClick;
 import com.hongniu.freight.ui.holder.order.XOrderButtonClick;
 import com.hongniu.freight.ui.holder.order.helper.OrderUtils;
 import com.sang.thirdlibrary.chact.ChactHelper;
@@ -68,7 +67,7 @@ public class OrderDetailActivity extends CompanyBaseActivity implements OrderDet
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_detail);
+        setContentView(R.layout.mnlm_activity_order_detail);
         setWhitToolBar("订单详情");
         initView();
         initData();

@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.fy.androidlibrary.toast.ToastUtils;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.fy.companylibrary.config.ArouterParamApp;
 import com.fy.companylibrary.config.Param;
@@ -27,7 +26,7 @@ public class PayResultActivity extends CompanyBaseActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setWhitToolBar("");
-        setContentView(R.layout.activity_pay_result);
+        setContentView(R.layout.mnlm_activity_pay_result);
         bean=getIntent().getParcelableExtra(Param.TRAN);
         initView();
         initData();

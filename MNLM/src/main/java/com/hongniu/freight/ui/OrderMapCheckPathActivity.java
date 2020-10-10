@@ -66,7 +66,7 @@ public class OrderMapCheckPathActivity extends CompanyBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map_check_path);
+        setContentView(R.layout.mnlm_activity_map_check_path);
         bean = getIntent().getParcelableExtra(Param.TRAN);
         initView();
         initData();
@@ -133,7 +133,7 @@ public class OrderMapCheckPathActivity extends CompanyBaseActivity {
             @Override
             public BaseHolder<AppPathStationBean> initHolder(ViewGroup parent, int viewType) {
 
-                return new BaseHolder<AppPathStationBean>(mContext, parent, R.layout.item_station) {
+                return new BaseHolder<AppPathStationBean>(mContext, parent, R.layout.mnlm_item_station) {
                     @Override
                     public void initView(View itemView, int position, AppPathStationBean data) {
                         super.initView(itemView, position, data);

@@ -59,7 +59,7 @@ public class CarAddModifyActivity extends CompanyBaseActivity implements View.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_car_add_modify);
+        setContentView(R.layout.mnlm_activity_car_add_modify);
         CarInfoBean infoBean = getIntent().getParcelableExtra(Param.TRAN);
         if (infoBean == null) {
             setWhitToolBar("填写车辆信息");

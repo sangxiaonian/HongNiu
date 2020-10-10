@@ -45,7 +45,7 @@ public class OrderFindCarActivity extends CompanyBaseActivity implements View.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_find_car);
+        setContentView(R.layout.mnlm_activity_order_find_car);
         orderId=getIntent().getStringExtra(Param.TRAN);
         setWhitToolBar("");
         initView();

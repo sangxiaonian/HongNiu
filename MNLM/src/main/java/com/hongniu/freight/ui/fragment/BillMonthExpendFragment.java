@@ -1,7 +1,6 @@
 package com.hongniu.freight.ui.fragment;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.fy.androidlibrary.toast.ToastUtils;
 import com.fy.androidlibrary.utils.ConvertUtils;
 import com.fy.androidlibrary.utils.DeviceUtils;
 import com.fy.androidlibrary.widget.autoline.AutoLineLayout;
@@ -45,7 +43,7 @@ public class BillMonthExpendFragment extends CompanyBaseFragment implements Auto
 
     @Override
     protected View initView(LayoutInflater inflater) {
-        View inflate = inflater.inflate(R.layout.fragment_bill_month_expend, null);
+        View inflate = inflater.inflate(R.layout.mnlm_fragment_bill_month_expend, null);
         autoLineLayout = inflate.findViewById(R.id.auto_layout);
         tvExpendNumber = inflate.findViewById(R.id.tv_expend_number);
         tvCount = inflate.findViewById(R.id.tv_count);

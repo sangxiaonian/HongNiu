@@ -55,7 +55,7 @@ public class OrderReceivingCenterActivity extends RefrushActivity<OrderInfoBean>
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_receiving);
+        setContentView(R.layout.mnlm_activity_order_receiving);
         role = RoleOrder.PLATFORM;
         setWhitToolBar("");
         setToolbarSrcRight(R.drawable.icon_search_434445);
@@ -107,7 +107,7 @@ public class OrderReceivingCenterActivity extends RefrushActivity<OrderInfoBean>
             selectAdapter.setCanEmpty(false);
             selectAdapter.setSingle(true);
             selectAdapter.setSingleSelectedListener(this);
-            selectAdapter.setItemLayoutID(R.layout.item_title);
+            selectAdapter.setItemLayoutID(R.layout.mnlm_item_title);
             rvTitle.setAdapter(selectAdapter);
             XLineDivider tagLine = new XLineDivider()
                     .setmOrientation(LinearLayoutManager.HORIZONTAL)

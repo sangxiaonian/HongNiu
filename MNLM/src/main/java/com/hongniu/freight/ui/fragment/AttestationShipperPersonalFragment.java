@@ -12,7 +12,6 @@ import com.fy.companylibrary.net.NetObserver;
 import com.fy.companylibrary.widget.ItemTextView;
 import com.hongniu.freight.R;
 import com.hongniu.freight.entity.VerifyPersonParams;
-import com.hongniu.freight.entity.VerifyIdNumIdentityBean;
 import com.hongniu.freight.entity.VerifyInfoBean;
 import com.hongniu.freight.net.HttpAppFactory;
 import com.hongniu.freight.utils.Utils;
@@ -35,7 +34,7 @@ public class AttestationShipperPersonalFragment  extends AttestationBaseFragment
 
     @Override
     protected View initView(LayoutInflater inflater) {
-        View inflate = inflater.inflate(R.layout.fragment_attestation_shipper_personal, null);
+        View inflate = inflater.inflate(R.layout.mnlm_fragment_attestation_shipper_personal, null);
         root = inflate;
         item_name = inflate.findViewById(R.id.item_name);
         item_id_card = inflate.findViewById(R.id.item_id_card);

@@ -51,7 +51,7 @@ public class AccountDialog<T> implements DialogControl.IDialog, View.OnClickList
     }
 
     protected void initView(Context context, int themeResId) {
-        View inflate = LayoutInflater.from(context).inflate(R.layout.dialog_account, null);
+        View inflate = LayoutInflater.from(context).inflate(R.layout.mnlm_dialog_account, null);
         imgCancel = inflate.findViewById(R.id.img_cancel);
         imgCancel.setOnClickListener(this);
         rv = inflate.findViewById(R.id.rv);

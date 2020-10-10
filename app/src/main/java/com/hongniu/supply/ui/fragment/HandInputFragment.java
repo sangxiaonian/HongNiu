@@ -1,7 +1,6 @@
 package com.hongniu.supply.ui.fragment;
 
 import android.content.Context;
-import android.net.Uri;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,15 +8,11 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.githang.statusbar.StatusBarCompat;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.base.BaseFragment;
 import com.hongniu.supply.R;
 import com.fy.androidlibrary.toast.ToastUtils;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
-
-import io.rong.imkit.fragment.ConversationListFragment;
-import io.rong.imlib.model.Conversation;
 
 /**
  *@data  2019/8/23
@@ -36,7 +31,7 @@ public class HandInputFragment extends BaseFragment implements View.OnClickListe
 
     @Override
     protected View initView(LayoutInflater inflater) {
-        View inflate = inflater.inflate(R.layout.fragment_hand_input, null);
+        View inflate = inflater.inflate(R.layout.mnlm_fragment_hand_input, null);
         et=inflate.findViewById(R.id.et);
         bt=inflate.findViewById(R.id.bt);
         return inflate;

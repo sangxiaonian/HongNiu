@@ -7,7 +7,6 @@ import android.widget.TextView;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.fy.androidlibrary.net.rx.BaseObserver;
 import com.fy.androidlibrary.utils.ConvertUtils;
 import com.fy.androidlibrary.utils.DeviceUtils;
 import com.fy.androidlibrary.widget.autoline.AutoLineLayout;
@@ -22,16 +21,11 @@ import com.fy.companylibrary.ui.CompanyBaseActivity;
 import com.fy.companylibrary.ui.CompanyBaseFragment;
 import com.hongniu.freight.R;
 import com.hongniu.freight.entity.AccountDetailBean;
-import com.hongniu.freight.entity.CoffersInfoBean;
 import com.hongniu.freight.net.HttpAppFactory;
 import com.hongniu.freight.ui.adapter.AutoTagSingleAdapter;
 
-import org.apache.http.params.HttpParams;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import io.reactivex.Observable;
 
 /**
  * @data 2020/2/12
@@ -51,7 +45,7 @@ public class MyCoffersActivity extends CompanyBaseActivity implements AutoSingle
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_coffers);
+        setContentView(R.layout.mnlm_activity_my_coffers);
         setWhitToolBar("我的金库");
         initView();
         initData();

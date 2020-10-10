@@ -58,7 +58,7 @@ public class AppApplication extends BaseApplication {
     @Override
     public void onCreate() {
 
-        Config.init(this,BuildConfig.DEBUG);
+        Config.getInstance().init(this,BuildConfig.DEBUG);
 
         BaseClient.getInstance().baseUrl(Param.url);
         //二维码扫描

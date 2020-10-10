@@ -1,7 +1,5 @@
 package com.hongniu.freight.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -28,7 +26,7 @@ public class AboutUsActivity extends CompanyBaseActivity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about_us);
+        setContentView(R.layout.mnlm_activity_about_us);
         setWhitToolBar("关于我们");
         initView();
         initData();

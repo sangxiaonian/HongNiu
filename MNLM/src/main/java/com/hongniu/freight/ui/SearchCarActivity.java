@@ -41,7 +41,7 @@ public class SearchCarActivity extends RefrushActivity<CarInfoBean> implements S
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_car);
+        setContentView(R.layout.mnlm_activity_search_car);
         setWhitToolBar("选择派送车辆");
           type = getIntent().getIntExtra(Param.TYPE, 0);
         initView();
@@ -92,7 +92,7 @@ public class SearchCarActivity extends RefrushActivity<CarInfoBean> implements S
         return new XAdapter<CarInfoBean>(mContext, datas) {
             @Override
             public BaseHolder<CarInfoBean> initHolder(ViewGroup parent, int viewType) {
-                return new BaseHolder<CarInfoBean>(context, parent, R.layout.item_search_car) {
+                return new BaseHolder<CarInfoBean>(context, parent, R.layout.mnlm_item_search_car) {
                     @Override
                     public void initView(View itemView, int position, final CarInfoBean data) {
                         super.initView(itemView, position, data);

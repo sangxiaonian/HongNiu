@@ -2,7 +2,6 @@ package com.hongniu.freight.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.os.SystemClock;
 import android.widget.ImageView;
 
@@ -52,7 +51,7 @@ public class WaitePayActivity extends CompanyBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_waite_pay);
+        setContentView(R.layout.mnlm_activity_waite_pay);
         setWhitToolBar("等待付款");
         initView();
         initData();

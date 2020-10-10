@@ -9,11 +9,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.amap.api.maps.AMap;
-import com.amap.api.maps.MapView;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.fy.androidlibrary.toast.ToastUtils;
@@ -39,7 +35,6 @@ import com.hongniu.freight.utils.Utils;
 import com.sang.thirdlibrary.map.MapUtils;
 
 import java.util.List;
-import java.util.Map;
 
 import io.reactivex.Observable;
 
@@ -67,7 +62,7 @@ public class MapSearchActivity extends RefrushActivity<PoiItem> implements View.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map_search);
+        setContentView(R.layout.mnlm_activity_map_search);
         StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.color_of_tran), true);
         StatusBarCompat.setTranslucent(getWindow(), true);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);

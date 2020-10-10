@@ -29,7 +29,7 @@ public class ChactListFragment extends CompanyBaseFragment {
 
     @Override
     protected View initView(LayoutInflater inflater) {
-        View inflate = inflater.inflate(R.layout.fragment_chatlist, null);
+        View inflate = inflater.inflate(R.layout.mnlm_fragment_chatlist, null);
 
         return inflate;
     }

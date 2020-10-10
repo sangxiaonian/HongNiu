@@ -19,7 +19,6 @@ import com.google.gson.Gson;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
-import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.base.NetObserver;
@@ -32,6 +31,7 @@ import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.entity.TruckGudieSwitchBean;
 import com.hongniu.baselibrary.entity.UpLoactionEvent;
 import com.hongniu.baselibrary.event.Event;
+import com.hongniu.baselibrary.net.BaseClient;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.utils.Utils;
@@ -39,6 +39,8 @@ import com.hongniu.baselibrary.utils.clickevent.ClickEventBean;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventParams;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
 import com.hongniu.baselibrary.widget.dialog.UpDialog;
+import com.hongniu.freight.Config;
+import com.hongniu.freight.ui.SplashActivity;
 import com.hongniu.moduleorder.entity.VersionBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.utils.LoactionUpUtils;
@@ -46,7 +48,6 @@ import com.hongniu.supply.R;
 import com.hongniu.supply.net.HttpMainFactory;
 import com.hongniu.supply.utils.RedDialog;
 import com.fy.androidlibrary.event.BusFactory;
-import com.fy.androidlibrary.utils.ConvertUtils;
 import com.fy.androidlibrary.utils.DeviceUtils;
 import com.fy.androidlibrary.utils.JLog;
 import com.fy.androidlibrary.utils.SharedPreferencesUtils;
@@ -63,7 +64,6 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.List;
 
 import com.sang.thirdlibrary.chact.ChactHelper;
-import com.sang.thirdlibrary.push.NotificationUtils;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.Action;
@@ -106,7 +106,7 @@ public class MainActivity extends ModuleBaseActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.mnlm_activity_main);
         initView();
         initData();
         initListener();
@@ -121,11 +121,21 @@ public class MainActivity extends ModuleBaseActivity implements View.OnClickList
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        //切换url
+        BaseClient.getInstance().baseUrl(Param.url);
+
+
         String extra = intent.getStringExtra(Param.TRAN);
         if (extra != null && extra.equals(Param.LOGIN_OUT)) {
             ArouterUtils.getInstance().builder(ArouterParamLogin.activity_login).navigation(mContext);
             finish();
         }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        BaseClient.getInstance().baseUrl(Param.url);
     }
 
     @Override
@@ -343,7 +353,7 @@ public class MainActivity extends ModuleBaseActivity implements View.OnClickList
 //
 //                ArouterUtils.getInstance().builder(ArouterParamsMatch.activity_match_estimate_order)
 //                        .navigation(mContext);
-//                startActivity(new Intent(mContext,Sp));
+                startActivity(new Intent(mContext, SplashActivity.class));
             }
         });
 

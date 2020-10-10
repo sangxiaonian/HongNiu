@@ -45,7 +45,7 @@ public class SearchOrderActivity extends RefrushActivity<OrderInfoBean> implemen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_order);
+        setContentView(R.layout.mnlm_activity_search_order);
         setWhitToolBar("");
         role= (RoleOrder) getIntent().getSerializableExtra(Param.TRAN);
         initView();

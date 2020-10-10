@@ -76,7 +76,7 @@ public class InsureanceInfodActivity extends CompanyBaseActivity implements View
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_insured_info);
+        setContentView(R.layout.mnlm_activity_insured_info);
         setWhitToolBar("被保险人信息");
         initView();
         initData();

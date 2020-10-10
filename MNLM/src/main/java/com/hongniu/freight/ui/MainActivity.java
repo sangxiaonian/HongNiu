@@ -90,7 +90,7 @@ public class MainActivity extends CompanyBaseActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.mnlm_activity_main);
         setWhitToolBar("");
         isLogin = getIntent().getBooleanExtra(Param.TRAN, false);
         initView();

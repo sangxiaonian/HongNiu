@@ -46,7 +46,7 @@ public class AutoTagSingleAdapter extends AutoTagAdapter<String> {
 
     @Override
     public View onCreateView(@NonNull ViewGroup parent, int viewType) {
-        View inflate = LayoutInflater.from(mContext).inflate(R.layout.item_title, parent, false);
+        View inflate = LayoutInflater.from(mContext).inflate(R.layout.mnlm_item_title, parent, false);
         return inflate;
     }
 

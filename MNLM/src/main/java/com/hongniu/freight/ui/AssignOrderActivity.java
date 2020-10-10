@@ -64,7 +64,7 @@ public class AssignOrderActivity extends CompanyBaseActivity implements View.OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_assign_order);
+        setContentView(R.layout.mnlm_activity_assign_order);
         orderID = getIntent().getStringExtra(Param.TRAN);
         setWhitToolBar("");
         initView();

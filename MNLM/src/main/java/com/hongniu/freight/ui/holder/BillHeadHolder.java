@@ -28,7 +28,7 @@ public class BillHeadHolder extends PeakHolder {
 
 
     public BillHeadHolder(Context context, ViewGroup parent) {
-        super(context, parent, R.layout.bill_item_head_expend);
+        super(context, parent, R.layout.mnlm_bill_item_head_expend);
         datas = new ArrayList<>();
 
     }

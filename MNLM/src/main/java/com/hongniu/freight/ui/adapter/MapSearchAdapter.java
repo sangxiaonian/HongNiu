@@ -3,7 +3,6 @@ package com.hongniu.freight.ui.adapter;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amap.api.services.core.PoiItem;
@@ -34,7 +33,7 @@ public class MapSearchAdapter extends XAdapter<PoiItem> {
 
     @Override
     public BaseHolder<PoiItem> initHolder(ViewGroup parent, int viewType) {
-        return new BaseHolder<PoiItem>(context, parent, R.layout.map_select_item) {
+        return new BaseHolder<PoiItem>(context, parent, R.layout.mnlm_map_select_item) {
             @Override
             public void initView(View itemView, final int position, final PoiItem data) {
                 super.initView(itemView, position, data);

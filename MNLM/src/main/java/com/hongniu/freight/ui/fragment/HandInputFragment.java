@@ -32,7 +32,7 @@ public class HandInputFragment extends CompanyBaseFragment implements View.OnCli
 
     @Override
     protected View initView(LayoutInflater inflater) {
-        View inflate = inflater.inflate(R.layout.fragment_hand_input, null);
+        View inflate = inflater.inflate(R.layout.mnlm_fragment_hand_input, null);
         et=inflate.findViewById(R.id.et);
         bt=inflate.findViewById(R.id.bt);
         return inflate;

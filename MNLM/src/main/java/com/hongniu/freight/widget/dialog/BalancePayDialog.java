@@ -14,17 +14,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.fy.androidlibrary.toast.ToastUtils;
-import com.fy.androidlibrary.utils.ConvertUtils;
 import com.fy.androidlibrary.utils.DeviceUtils;
-import com.fy.androidlibrary.widget.editext.SearchTextWatcher;
-import com.fy.companylibrary.config.Param;
-import com.fy.companylibrary.net.NetObserver;
 import com.fy.companylibrary.widget.ItemTextView;
 import com.hongniu.freight.R;
-import com.hongniu.freight.entity.InsuranceInfoBean;
-import com.hongniu.freight.entity.OrderInfoBean;
-import com.hongniu.freight.net.HttpAppFactory;
-import com.hongniu.freight.ui.QueryInsurancePriceParams;
 import com.hongniu.freight.widget.dialog.inter.DialogControl;
 
 
@@ -41,7 +33,7 @@ public class BalancePayDialog implements DialogControl.IDialog, View.OnClickList
     OnBalancePayListener onBalancePayListener;
 
     public BalancePayDialog(@NonNull Context context) {
-        View inflate = LayoutInflater.from(context).inflate(R.layout.dialog_balance_pay, null);
+        View inflate = LayoutInflater.from(context).inflate(R.layout.mnlm_dialog_balance_pay, null);
         imgCancel = inflate.findViewById(R.id.img_cancel);
         tv_price = inflate.findViewById(R.id.tv_price);
         item_balance_pay = inflate.findViewById(R.id.item_balance_pay);

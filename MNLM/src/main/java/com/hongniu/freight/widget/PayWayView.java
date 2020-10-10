@@ -55,7 +55,7 @@ public class PayWayView extends LinearLayout {
     }
 
     private void addView(PayWayInfo info) {
-        View inflate = LayoutInflater.from(getContext()).inflate(R.layout.item_pay_way, this, false);
+        View inflate = LayoutInflater.from(getContext()).inflate(R.layout.mnlm_item_pay_way, this, false);
         inflate.setTag(info);
         inflate.setOnClickListener(new OnClickListener() {
             @Override

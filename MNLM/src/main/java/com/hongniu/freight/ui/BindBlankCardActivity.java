@@ -28,9 +28,7 @@ import com.hongniu.freight.entity.QueryBlankInforsBean;
 import com.hongniu.freight.net.HttpAppFactory;
 import com.hongniu.freight.utils.InfoUtils;
 import com.hongniu.freight.utils.PickerDialogUtils;
-import com.hongniu.freight.utils.Utils;
 import com.hongniu.freight.widget.DialogComment;
-import com.hongniu.freight.widget.dialog.inter.DialogControl;
 
 import java.util.List;
 
@@ -57,7 +55,7 @@ public class BindBlankCardActivity extends CompanyBaseActivity implements View.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bind_blank_card);
+        setContentView(R.layout.mnlm_activity_bind_blank_card);
         setWhitToolBar("绑定银行卡");
         initView();
         initData();

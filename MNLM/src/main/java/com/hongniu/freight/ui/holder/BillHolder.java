@@ -16,7 +16,7 @@ import com.hongniu.freight.entity.BillInfoListBean;
 public class BillHolder extends BaseHolder<BillInfoListBean> {
 
     public BillHolder(Context context, ViewGroup parent ) {
-        super(context, parent, R.layout.item_bill);
+        super(context, parent, R.layout.mnlm_item_bill);
 
     }
 

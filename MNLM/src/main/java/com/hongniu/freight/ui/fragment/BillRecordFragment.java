@@ -19,18 +19,14 @@ import com.fy.companylibrary.entity.CommonBean;
 import com.fy.companylibrary.entity.PageBean;
 import com.fy.companylibrary.ui.RefrushFragmet;
 import com.hongniu.freight.R;
-import com.hongniu.freight.entity.AccountDetailBean;
 import com.hongniu.freight.entity.AccountFlowParams;
 import com.hongniu.freight.entity.BillInfoListBean;
 import com.hongniu.freight.net.HttpAppFactory;
-import com.hongniu.freight.ui.holder.BillHolder;
 import com.hongniu.freight.ui.holder.EmptyHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.functions.Function;
 
 /**
  * 作者：  on 2020/2/12.
@@ -51,7 +47,7 @@ public class BillRecordFragment extends RefrushFragmet<BillInfoListBean> {
 
     @Override
     protected View initView(LayoutInflater inflater) {
-        View inflate = inflater.inflate(R.layout.fragment_bill_month, null);
+        View inflate = inflater.inflate(R.layout.mnlm_fragment_bill_month, null);
         return inflate;
 
     }
@@ -81,7 +77,7 @@ public class BillRecordFragment extends RefrushFragmet<BillInfoListBean> {
         return new XAdapter<BillInfoListBean>(mContext, datas) {
             @Override
             public BaseHolder<BillInfoListBean> initHolder(ViewGroup parent, int viewType) {
-                return new BaseHolder<BillInfoListBean>(context, parent, R.layout.item_bill) {
+                return new BaseHolder<BillInfoListBean>(context, parent, R.layout.mnlm_item_bill) {
                     @Override
                     public void initView(View itemView, int position, BillInfoListBean data) {
                         super.initView(itemView, position, data);

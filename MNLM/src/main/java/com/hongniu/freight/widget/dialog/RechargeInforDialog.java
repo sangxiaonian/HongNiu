@@ -54,7 +54,7 @@ public class RechargeInforDialog implements DialogControl.IDialog, View.OnClickL
     }
 
     private void initView(Context context, int themeResId) {
-        View inflate = LayoutInflater.from(context).inflate(R.layout.dialog_recharge_infor, null);
+        View inflate = LayoutInflater.from(context).inflate(R.layout.mnlm_dialog_recharge_infor, null);
         imgCancel = inflate.findViewById(R.id.img_cancel);
 
         tvInfor = inflate.findViewById(R.id.tv_infor);

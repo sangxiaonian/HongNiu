@@ -1,7 +1,6 @@
 package com.hongniu.freight.ui;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -65,7 +64,7 @@ public class OrderReceiveActivity extends CompanyBaseActivity implements View.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_receive);
+        setContentView(R.layout.mnlm_activity_order_receive);
         orderID=getIntent().getStringExtra(Param.TRAN);
         setWhitToolBar("");
         initView();

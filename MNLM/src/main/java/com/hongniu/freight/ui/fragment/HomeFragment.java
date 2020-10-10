@@ -68,7 +68,7 @@ public class HomeFragment extends CompanyBaseFragment implements HomeControl.IHo
 
     @Override
     protected View initView(LayoutInflater inflater) {
-        View inflate = inflater.inflate(R.layout.fragment_home, null);
+        View inflate = inflater.inflate(R.layout.mnlm_fragment_home, null);
         tv_title = inflate.findViewById(R.id.tv_title);
         tv_role_title = inflate.findViewById(R.id.tv_role_title);
         ll_content = inflate.findViewById(R.id.ll_content);

@@ -17,7 +17,6 @@ import com.fy.androidlibrary.utils.ConvertUtils;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.fy.companylibrary.config.ArouterParamApp;
 import com.fy.companylibrary.entity.CommonBean;
-import com.fy.companylibrary.net.NetObserver;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
 import com.hongniu.freight.R;
 import com.hongniu.freight.entity.AccountDetailBean;
@@ -27,7 +26,6 @@ import com.hongniu.freight.net.HttpAppFactory;
 import com.hongniu.freight.widget.dialog.RechargeInforDialog;
 
 import io.reactivex.Observable;
-import io.reactivex.functions.BiFunction;
 
 /**
  * @data 2020/2/13
@@ -49,7 +47,7 @@ public class BalanceActivity extends CompanyBaseActivity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_balance);
+        setContentView(R.layout.mnlm_activity_balance);
         setWhitToolBar("账户余额");
         initView();
         initData();

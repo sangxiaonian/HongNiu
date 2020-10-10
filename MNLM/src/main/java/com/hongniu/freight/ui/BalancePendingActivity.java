@@ -28,7 +28,6 @@ import com.hongniu.freight.R;
 import com.hongniu.freight.entity.AccountDetailBean;
 import com.hongniu.freight.entity.PayInforBeans;
 import com.hongniu.freight.net.HttpAppFactory;
-import com.hongniu.freight.utils.Utils;
 import com.hongniu.freight.widget.DialogComment;
 import com.sang.thirdlibrary.pay.PasswordDialog;
 
@@ -59,7 +58,7 @@ public class BalancePendingActivity extends CompanyBaseActivity implements View.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_balance_pending);
+        setContentView(R.layout.mnlm_activity_balance_pending);
         setWhitToolBar("余额提现");
         initView();
         initData();

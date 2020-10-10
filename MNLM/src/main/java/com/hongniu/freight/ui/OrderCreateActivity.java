@@ -82,7 +82,7 @@ public class OrderCreateActivity extends CompanyBaseActivity implements View.OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_create);
+        setContentView(R.layout.mnlm_activity_order_create);
         setWhitToolBar("我要发货");
         initView();
         initData();

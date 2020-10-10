@@ -52,7 +52,7 @@ public class OrderUpReceiptActivity extends BaseImageUpActivity implements View.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_up_receipt);
+        setContentView(R.layout.mnlm_activity_order_up_receipt);
         setWhitToolBar("上传回单");
         initView();
         initData();

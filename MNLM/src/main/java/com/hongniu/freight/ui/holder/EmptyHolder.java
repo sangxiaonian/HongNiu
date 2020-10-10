@@ -14,7 +14,7 @@ import com.hongniu.freight.R;
  */
 public class EmptyHolder extends PeakHolder {
     public EmptyHolder(Context context, ViewGroup parent) {
-        super(context, parent, R.layout.item_empty);
+        super(context, parent, R.layout.mnlm_item_empty);
     }
 
     private int emptyImg;

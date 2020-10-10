@@ -37,7 +37,7 @@
                 app:textcenterhide="请输入邮箱"
                 app:textleft="邮箱" />
 
-            <include layout="@layout/layout_id_card" />
+            <include layout="@layout/mnlm_layout_id_card" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

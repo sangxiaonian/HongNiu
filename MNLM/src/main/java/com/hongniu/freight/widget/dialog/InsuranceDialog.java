@@ -35,7 +35,7 @@ public class InsuranceDialog extends AccountDialog<InsuranceInfoBean> {
     protected void initData(Context context) {
         super.initData(context);
         setTitle("选择被保险人");
-        adapter.addFoot(new PeakHolder(context, rv, R.layout.item_order_insuranc_foot) {
+        adapter.addFoot(new PeakHolder(context, rv, R.layout.mnlm_item_order_insuranc_foot) {
             @Override
             public void initView(View itemView, int position) {
                 super.initView(itemView, position);
@@ -68,7 +68,7 @@ public class InsuranceDialog extends AccountDialog<InsuranceInfoBean> {
         return new XAdapter<InsuranceInfoBean>(context, InsuranceDialog.this.inforBeans) {
             @Override
             public BaseHolder<InsuranceInfoBean> initHolder(ViewGroup parent, int viewType) {
-                return new BaseHolder<InsuranceInfoBean>(context, parent, R.layout.item_order_insuranc) {
+                return new BaseHolder<InsuranceInfoBean>(context, parent, R.layout.mnlm_item_order_insuranc) {
                     @Override
                     public void initView(View itemView, final int position, final InsuranceInfoBean def) {
                         super.initView(itemView, position, def);

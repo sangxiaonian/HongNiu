@@ -15,6 +15,7 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.Utils;
+import com.hongniu.freight.Config;
 import com.hongniu.supply.weight.RuleAlertDialog;
 import com.fy.androidlibrary.utils.SharedPreferencesUtils;
 
@@ -52,7 +53,9 @@ public class SplashActivity extends ModuleBaseActivity implements RuleAlertDialo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+        setContentView(R.layout.mnlm_activity_splash);
+        //切换url
+        Config.getInstance().intNetClient();
 
         if (getIntent() != null) {
             if ((getIntent().getFlags() & Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT) != 0) {

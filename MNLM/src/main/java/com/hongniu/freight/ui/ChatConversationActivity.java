@@ -29,7 +29,7 @@ public class ChatConversationActivity extends CompanyBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat_conversation);
+        setContentView(R.layout.mnlm_activity_chat_conversation);
         setToolbarSrcRight(R.mipmap.phone);
         setToolbarRightClick(new View.OnClickListener() {
             @Override

@@ -27,7 +27,7 @@ class OrderTYRHolder extends OrderBaseHolder {
 
 
     public OrderTYRHolder(Context context, ViewGroup parent) {
-        super(context, parent, R.layout.item_tyr_order);
+        super(context, parent, R.layout.mnlm_item_tyr_order);
     }
 
     @Override

@@ -31,7 +31,7 @@ public class AttestationFaceActivity extends CompanyBaseActivity implements View
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_attestation_face);
+        setContentView(R.layout.mnlm_activity_attestation_face);
         setWhitToolBar("人脸识别 ");
         initView();
         initData();

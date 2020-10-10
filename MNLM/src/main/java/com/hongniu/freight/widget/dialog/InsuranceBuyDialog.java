@@ -51,7 +51,7 @@ public class InsuranceBuyDialog implements DialogControl.IDialog, View.OnClickLi
 
     public InsuranceBuyDialog(@NonNull Context context) {
         params = new QueryInsurancePriceParams();
-        View inflate = LayoutInflater.from(context).inflate(R.layout.dialog_insurance_buy, null);
+        View inflate = LayoutInflater.from(context).inflate(R.layout.mnlm_dialog_insurance_buy, null);
         imgCancel = inflate.findViewById(R.id.img_cancel);
         item_cargo_price = inflate.findViewById(R.id.item_cargo_price);
         item_insurance_name = inflate.findViewById(R.id.item_insurance_name);

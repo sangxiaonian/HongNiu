@@ -59,7 +59,7 @@ public class CarNumPop<T> {
     }
 
     private void setContentView(Context context) {
-        View inflate = LayoutInflater.from(context).inflate(R.layout.order_carnum_pup, null);
+        View inflate = LayoutInflater.from(context).inflate(R.layout.mnlm_order_carnum_pup, null);
         rv = inflate.findViewById(R.id.rv);
         pop.setContentView(inflate);
         pop.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -81,7 +81,7 @@ public class CarNumPop<T> {
         adapter = new XAdapter<T>(context, datas) {
             @Override
             public BaseHolder<T> initHolder(ViewGroup parent, int viewType) {
-                return new BaseHolder<T>(context, parent, R.layout.order_item_carnum_item) {
+                return new BaseHolder<T>(context, parent, R.layout.mnlm_order_item_carnum_item) {
                     @Override
                     public void initView(View itemView, final int position, final T data) {
                         super.initView(itemView, position, data);

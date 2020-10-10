@@ -38,7 +38,7 @@ public class AttestationCarrierPersonalFragment extends AttestationBaseFragment 
 
     @Override
     protected View initView(LayoutInflater inflater) {
-        View inflate = inflater.inflate(R.layout.fragment_attestation_carrier_personal, null);
+        View inflate = inflater.inflate(R.layout.mnlm_fragment_attestation_carrier_personal, null);
         root = inflate;
         item_name = inflate.findViewById(R.id.item_name);
         item_id_card = inflate.findViewById(R.id.item_id_card);

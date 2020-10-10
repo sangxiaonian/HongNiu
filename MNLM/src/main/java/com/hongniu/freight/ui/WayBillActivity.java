@@ -54,7 +54,7 @@ public class WayBillActivity extends CompanyBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_way_bill);
+        setContentView(R.layout.mnlm_activity_way_bill);
         setWhitToolBar("运单状态信息");
         initView();
         initData();
@@ -76,7 +76,7 @@ public class WayBillActivity extends CompanyBaseActivity {
         adapter = new XAdapter<WayBillBean>(mContext, datas) {
             @Override
             public BaseHolder<WayBillBean> initHolder(ViewGroup parent, int viewType) {
-                return new BaseHolder<WayBillBean>(mContext, parent, R.layout.item_waybill) {
+                return new BaseHolder<WayBillBean>(mContext, parent, R.layout.mnlm_item_waybill) {
                     @Override
                     public void initView(View itemView, int position, WayBillBean data) {
                         super.initView(itemView, position, data);

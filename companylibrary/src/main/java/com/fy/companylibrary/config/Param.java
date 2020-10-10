@@ -6,8 +6,9 @@ package com.fy.companylibrary.config;
 public class Param {
 
 
-    public static final String debugUrl = "http://47.104.130.110:9080/";
+//    public static final String debugUrl = "http://47.104.130.110:9080/";
     public static final String releaseUrl = "https://wlhyapi.xn--yh-0h3f6pk58c0xd.com/";
+    public static final String debugUrl = "https://wlhyapi.xn--yh-0h3f6pk58c0xd.com/";
     public static final long IMAGESIZE = 1024 * 1024 * 5;
     public static final float INSURANCE = 0.00015f;//保费计算费率
     public static final String UMENGTOKEN = "UMENGTOKEN";

@@ -36,7 +36,7 @@ public class AttestationDriverFragment extends AttestationBaseFragment implement
 
     @Override
     protected View initView(LayoutInflater inflater) {
-        View inflate = inflater.inflate(R.layout.fragment_attestation_driver, null);
+        View inflate = inflater.inflate(R.layout.mnlm_fragment_attestation_driver, null);
         item_name = inflate.findViewById(R.id.item_name);
         img_driver1 = inflate.findViewById(R.id.img_driver1);
         item_id_card = inflate.findViewById(R.id.item_id_card);
