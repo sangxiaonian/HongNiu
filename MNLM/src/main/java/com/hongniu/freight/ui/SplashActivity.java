@@ -10,6 +10,7 @@ import com.fy.androidlibrary.utils.SharedPreferencesUtils;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.fy.companylibrary.config.ArouterParamApp;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
+import com.hongniu.freight.Config;
 import com.hongniu.freight.R;
 import com.hongniu.freight.entity.LoginInfo;
 import com.hongniu.freight.entity.PersonInfor;
@@ -39,6 +40,8 @@ public class SplashActivity extends CompanyBaseActivity implements RuleAlertDial
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mnlm_activity_splash);
+        //切换url
+        Config.getInstance().intNetClient();
         setWhitToolBar("");
         boolean rule = SharedPreferencesUtils.getInstance().getBoolean("RULE");
         if (rule){
