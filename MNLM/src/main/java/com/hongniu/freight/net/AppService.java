@@ -49,7 +49,7 @@ import com.hongniu.freight.entity.WayBillBean;
 import com.hongniu.freight.ui.QueryInsurancePriceParams;
 import com.sang.thirdlibrary.chact.UserInfor;
 import com.sang.thirdlibrary.map.verify.VerifyTokenBeans;
-import com.sang.thirdlibrary.pay.PayInfoBean;
+import com.sang.thirdlibrary.pay.entiy.PayBean;
 
 import java.util.List;
 
@@ -58,7 +58,6 @@ import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
-import retrofit2.http.Query;
 
 /**
  * 作者：  on 2020/2/23.
@@ -551,7 +550,7 @@ public interface AppService {
      * @return
      */
     @POST("wlhyapi//api/account/pay")
-    Observable<CommonBean<PayInfoBean>> queryPayInfo(@Body QueryPayInfoParams payInfoParams);
+    Observable<CommonBean<PayBean>> queryPayInfo(@Body QueryPayInfoParams payInfoParams);
 
     /**
      * 意见反馈

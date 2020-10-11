@@ -11,7 +11,7 @@ import com.hongniu.freight.entity.AccountDetailBean;
 import com.hongniu.freight.entity.OrderInfoBean;
 import com.hongniu.freight.mode.PayMode;
 import com.hongniu.freight.utils.InfoUtils;
-import com.sang.thirdlibrary.pay.PayInfoBean;
+import com.sang.thirdlibrary.pay.entiy.PayBean;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.BiFunction;
@@ -96,9 +96,9 @@ public class PayPresenter implements PayControl.IPayPresenter {
             }
         } else {
             mode.queryPayInfo(null)
-                    .subscribe(new NetObserver<PayInfoBean>(listener) {
+                    .subscribe(new NetObserver<PayBean>(listener) {
                         @Override
-                        public void doOnSuccess(PayInfoBean payInfoBean) {
+                        public void doOnSuccess(PayBean payInfoBean) {
                             super.doOnSuccess(payInfoBean);
                             view.startPay(mode.getPayInfo(), payInfoBean);
                         }
@@ -116,9 +116,9 @@ public class PayPresenter implements PayControl.IPayPresenter {
     @Override
     public void balancePay(String passWord, TaskControl.OnTaskListener listener) {
         mode.queryPayInfo(passWord)
-                .subscribe(new NetObserver<PayInfoBean>(listener) {
+                .subscribe(new NetObserver<PayBean>(listener) {
                     @Override
-                    public void doOnSuccess(PayInfoBean payInfoBean) {
+                    public void doOnSuccess(PayBean payInfoBean) {
                         super.doOnSuccess(payInfoBean);
                         view.startPay(mode.getPayInfo(),payInfoBean);
                     }

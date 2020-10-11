@@ -26,7 +26,7 @@ import com.hongniu.freight.presenter.PayPresenter;
 import com.hongniu.freight.widget.DialogComment;
 import com.hongniu.freight.widget.PayWayView;
 import com.sang.thirdlibrary.pay.PasswordDialog;
-import com.sang.thirdlibrary.pay.PayInfoBean;
+import com.sang.thirdlibrary.pay.entiy.PayBean;
 
 /**
  * @data 2020/3/5
@@ -126,7 +126,7 @@ public class PayActivity extends CompanyBaseActivity implements PayControl.IPayV
      * @param payInfoBean
      */
     @Override
-    public void startPay(QueryPayInfoParams payWay, PayInfoBean payInfoBean) {
+    public void startPay(QueryPayInfoParams payWay, PayBean payInfoBean) {
 
         ArouterUtils.getInstance().builder(ArouterParamApp.activity_waite_pay)
                 .withParcelable(Param.TRAN, payWay)

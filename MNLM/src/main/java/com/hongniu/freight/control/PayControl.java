@@ -6,7 +6,7 @@ import com.hongniu.freight.config.PayType;
 import com.hongniu.freight.entity.AccountDetailBean;
 import com.hongniu.freight.entity.OrderInfoBean;
 import com.hongniu.freight.entity.QueryPayInfoParams;
-import com.sang.thirdlibrary.pay.PayInfoBean;
+import com.sang.thirdlibrary.pay.entiy.PayBean;
 
 import io.reactivex.Observable;
 
@@ -41,7 +41,7 @@ public class PayControl {
          * @param payWay 支付方式
          * @param payInfoBean
          */
-        void startPay(QueryPayInfoParams payWay, PayInfoBean payInfoBean);
+        void startPay(QueryPayInfoParams payWay, PayBean payInfoBean);
 
         /**
          * 余额支付时弹出密码弹窗
@@ -179,7 +179,7 @@ public class PayControl {
          * @return
          * @param passWord
          */
-        Observable<CommonBean<PayInfoBean>> queryPayInfo(String passWord);
+        Observable<CommonBean< PayBean>> queryPayInfo(String passWord);
 
 
         /**

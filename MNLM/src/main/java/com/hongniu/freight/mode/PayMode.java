@@ -1,7 +1,6 @@
 package com.hongniu.freight.mode;
 
 import com.fy.androidlibrary.utils.ConvertUtils;
-import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.entity.CommonBean;
 import com.hongniu.freight.config.PayType;
 import com.hongniu.freight.control.PayControl;
@@ -10,8 +9,7 @@ import com.hongniu.freight.entity.OrderInfoBean;
 import com.hongniu.freight.entity.QueryPayInfoParams;
 import com.hongniu.freight.net.HttpAppFactory;
 import com.sang.thirdlibrary.pay.PayConfig;
-import com.sang.thirdlibrary.pay.PayInfoBean;
-import com.sang.thirdlibrary.pay.wechat.WeChatAppPay;
+import com.sang.thirdlibrary.pay.entiy.PayBean;
 
 import io.reactivex.Observable;
 
@@ -177,7 +175,7 @@ public class PayMode implements PayControl.IPayMode {
      * @return
      */
     @Override
-    public Observable<CommonBean<PayInfoBean>> queryPayInfo(String passWord) {
+    public Observable<CommonBean<PayBean>> queryPayInfo(String passWord) {
         QueryPayInfoParams payInfoParams = getPayInfo();
 
         if (passWord != null) {

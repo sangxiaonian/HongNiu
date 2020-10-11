@@ -19,8 +19,8 @@ import com.hongniu.freight.config.PayType;
 import com.hongniu.freight.entity.OrderStatusBean;
 import com.hongniu.freight.entity.QueryPayInfoParams;
 import com.hongniu.freight.net.HttpAppFactory;
-import com.sang.thirdlibrary.pay.PayInfoBean;
 import com.sang.thirdlibrary.pay.ali.AliPay;
+import com.sang.thirdlibrary.pay.entiy.PayBean;
 import com.sang.thirdlibrary.pay.unionpay.UnionPayClient;
 import com.sang.thirdlibrary.pay.wechat.WeChatAppPay;
 
@@ -46,7 +46,7 @@ public class WaitePayActivity extends CompanyBaseActivity {
     QueryPayInfoParams payInfoParams;//支付信息
     private PayType payType;//当前支付类型
     private int type;//付款类型  	支付业务类型(1订单支付2补款运费支付3补购保险支付)
-    private PayInfoBean payInfoBean;
+    private PayBean payInfoBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,13 +70,13 @@ public class WaitePayActivity extends CompanyBaseActivity {
         super.initData();
 
         payInfoParams = getIntent().getParcelableExtra(Param.TRAN);
-         payInfoBean = getIntent().getParcelableExtra(Param.TYPE);
+        payInfoBean = getIntent().getParcelableExtra(Param.TYPE);
         if (payInfoParams == null) {
             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("未获取到支付信息");
             finish();
             return;
         }
-        type=payInfoParams.getPaybusiness();
+        type = payInfoParams.getPaybusiness();
 
         payType = payInfoParams.getType();
 //      开始支付
@@ -86,15 +86,15 @@ public class WaitePayActivity extends CompanyBaseActivity {
     private void startPay() {
         switch (payType) {
             case WEICHAT://微信支付
-                new  WeChatAppPay(). pay(WaitePayActivity.this,payInfoBean);
+                new WeChatAppPay().pay(WaitePayActivity.this, payInfoBean);
 
                 break;
             case UNIONPAY://银联支付
-                new UnionPayClient().pay(WaitePayActivity.this,payInfoBean);
+                new UnionPayClient().pay(WaitePayActivity.this, payInfoBean);
 
                 break;
             case ALIPAY://支付宝支付
-                new AliPay().pay(WaitePayActivity.this,payInfoBean);
+                new AliPay().pay(WaitePayActivity.this, payInfoBean);
 
                 break;
 
@@ -190,22 +190,22 @@ public class WaitePayActivity extends CompanyBaseActivity {
 
                     @Override
                     public void doOnSuccess(OrderStatusBean data) {
-                        boolean success=false;
-                        if (type==1){
+                        boolean success = false;
+                        if (type == 1) {
                             //运费支付
-                          success=data.getFreightStatus() == 1;
-                        }else if (type==2){
+                            success = data.getFreightStatus() == 1;
+                        } else if (type == 2) {
                             //补差额
-                            success=data.getBalanceFreightStatus()==1;
-                        }else if (type==3){
-                            success=data.getPayPolicyState()==1;
+                            success = data.getBalanceFreightStatus() == 1;
+                        } else if (type == 3) {
+                            success = data.getPayPolicyState() == 1;
                         }
-                        if (success){
+                        if (success) {
                             //订单支付成功
                             // 设置结果，并进行传送
                             setResult(Activity.RESULT_OK);
                             finish();
-                        }else {
+                        } else {
                             sub.request(1);
                         }
 

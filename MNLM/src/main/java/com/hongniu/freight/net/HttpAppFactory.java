@@ -57,7 +57,7 @@ import com.hongniu.freight.ui.QueryInsurancePriceParams;
 import com.hongniu.freight.utils.InfoUtils;
 import com.sang.thirdlibrary.chact.UserInfor;
 import com.sang.thirdlibrary.map.verify.VerifyTokenBeans;
-import com.sang.thirdlibrary.pay.PayInfoBean;
+import com.sang.thirdlibrary.pay.entiy.PayBean;
 import com.sang.thirdlibrary.picture.helper.interceptor.FileProgressRequestBody;
 
 import java.io.File;
@@ -934,10 +934,10 @@ public class HttpAppFactory {
      * @Author PING
      * @Description 查询账户详情数据
      */
-    public static Observable<CommonBean<PayInfoBean>> queryPayInfo(QueryPayInfoParams payInfoParams) {
+    public static Observable<CommonBean<PayBean>> queryPayInfo(QueryPayInfoParams payInfoParams) {
         return CompanyClient.getInstance().creatService(AppService.class)
                 .queryPayInfo(payInfoParams)
-                .compose(RxUtils.<CommonBean<PayInfoBean>>getSchedulersObservableTransformer());
+                .compose(RxUtils.<CommonBean<PayBean>>getSchedulersObservableTransformer());
     }
 
     /**
