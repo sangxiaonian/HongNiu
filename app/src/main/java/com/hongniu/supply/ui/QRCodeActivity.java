@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.fy.androidlibrary.widget.ColorImageView;
 import com.githang.statusbar.StatusBarCompat;
 import com.hjq.permissions.OnPermission;
 import com.hjq.permissions.Permission;
@@ -17,7 +18,6 @@ import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.supply.R;
-import com.sang.common.widget.ColorImageView;
 import com.uuzuche.lib_zxing.activity.CaptureFragment;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 

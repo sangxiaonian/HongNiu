@@ -1,7 +1,9 @@
 package com.hongniu.supply.ui.fragment;
 
 import android.graphics.Color;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
+
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.fy.androidlibrary.toast.ToastUtils;
 import com.githang.statusbar.StatusBarCompat;
 import com.hongniu.baselibrary.arouter.ArouterParamFestivity;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
@@ -35,7 +38,7 @@ import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.fy.androidlibrary.utils.ConvertUtils;
 import com.fy.androidlibrary.utils.DeviceUtils;
-import com.sang.common.widget.ColorImageView;
+import com.fy.androidlibrary.widget.ColorImageView;
 import com.sang.common.widget.DrawableCircle;
 
 import java.util.ArrayList;
@@ -81,10 +84,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     @Override
     protected void initData() {
         super.initData();
-        currentColor = getResources().getColor(R.color.color_new_light);
+        currentColor = getResources().getColor(R.color.color_fd5712);
         drawable = new DrawableCircle();
-        drawable.setColor(Color.parseColor("#ea492c"))
-                .setRadius(DeviceUtils.dip2px(getContext(), 2))
+        drawable.setColor(Color.parseColor("#ffffff"))
+                .setRadius(DeviceUtils.dip2px(getContext(), 15))
                 .flush();
         llSearch.post(new Runnable() {
             @Override
@@ -281,6 +284,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                 ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5).withSerializable(Param.TRAN, h5Config).navigation(getContext());
 
                 break;
+            case R.id.ll_net_owner:
+                //网络货运
+                ToastUtils.getInstance().show("网络货运");
+                break;
         }
     }
 
@@ -298,17 +305,13 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
             percentY = 1;
         }
         if (percentY >= 0 && percentY <= 1) {
-            currentColor = ConvertUtils.evaluateColor(percentY, getResources().getColor(R.color.color_new_light), Color.WHITE);
+            currentColor = ConvertUtils.evaluateColor(percentY, getResources().getColor(R.color.color_fd5712), Color.WHITE);
             rlTitle.setBackgroundColor(currentColor);
             setToolBarColor(currentColor);
-            final int contentColor = ConvertUtils.evaluateColor(percentY, getResources().getColor(R.color.color_home_search), getResources().getColor(R.color.color_et_hide));
-            tvSearch.setTextColor(contentColor);
-            imgSearch.setCurrentColor(contentColor);
 
 
-            int searchBgColor = ConvertUtils.evaluateColor(percentY, Color.parseColor("#ea492c"), getResources().getColor(R.color.color_bg_dark));
+            int searchBgColor = ConvertUtils.evaluateColor(percentY, Color.parseColor("#ffffff"), getResources().getColor(R.color.color_bg_dark));
             drawable.setColor(searchBgColor).flush();
-//            llSearch.setBackgroundColor(searchBgColor);
 
         }
     }

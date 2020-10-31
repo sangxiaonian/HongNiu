@@ -21,24 +21,24 @@
             android:layout_width="match_parent"
             android:layout_height="31dp"
             android:layout_margin="@dimen/app_gap"
-            android:background="@drawable/shape_2_19ffffff"
+            android:background="@drawable/shape_round_ffffff"
             android:gravity="center"
             android:orientation="horizontal"
             >
 
-            <com.sang.common.widget.ColorImageView
+            <com.fy.androidlibrary.widget.ColorImageView
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:id="@+id/img_search"
                 android:layout_marginEnd="@dimen/app_model_gap"
-                app:srcCompat="@drawable/ic_icon_sm_50" />
+                app:srcCompat="@drawable/icon_search_c8c8c8" />
 
             <TextView
                 android:id="@+id/tv_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="运单状态查询"
-                android:textColor="@color/color_home_search"
+                android:text="发车编号、车牌号、货物、订单号"
+                android:textColor="@color/color_of_c8c8c8"
                 android:textSize="@dimen/text_small" />
         </LinearLayout>
     </RelativeLayout>

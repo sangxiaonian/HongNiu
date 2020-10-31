@@ -22,6 +22,7 @@ public class HomeNewHeader extends PeakHolder implements View.OnClickListener {
     ViewGroup ll_cargo;
     ViewGroup ll_car;
     ViewGroup ll_driver;
+    ViewGroup ll_net_owner;
 
     ViewGroup card_star;
     ViewGroup card_match;
@@ -52,6 +53,7 @@ public class HomeNewHeader extends PeakHolder implements View.OnClickListener {
         super.initView(position);
 
         ll_cargo = itemView.findViewById(R.id.ll_cargo);
+        ll_net_owner = itemView.findViewById(R.id.ll_net_owner);
         ll_car = itemView.findViewById(R.id.ll_car);
         ll_driver = itemView.findViewById(R.id.ll_driver);
         card_star=itemView.findViewById(R.id.card_star);
@@ -74,6 +76,7 @@ public class HomeNewHeader extends PeakHolder implements View.OnClickListener {
 
 
         ll_cargo.setOnClickListener(this);
+        ll_net_owner.setOnClickListener(this);
         ll_car.setOnClickListener(this);
         ll_driver.setOnClickListener(this);
         card_star.setOnClickListener(this);
