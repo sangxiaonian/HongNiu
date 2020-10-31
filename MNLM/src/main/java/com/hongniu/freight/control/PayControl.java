@@ -1,7 +1,7 @@
 package com.hongniu.freight.control;
 
 import com.fy.androidlibrary.net.listener.TaskControl;
-import com.fy.companylibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.freight.config.PayType;
 import com.hongniu.freight.entity.AccountDetailBean;
 import com.hongniu.freight.entity.OrderInfoBean;

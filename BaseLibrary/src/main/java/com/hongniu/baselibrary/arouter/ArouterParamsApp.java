@@ -49,6 +49,10 @@ public class ArouterParamsApp {
      * 手动输入运单号
      */
     public final static String activity_way_bill = "/app/activity_way_bill";
+  /**
+     * 切换网络货运公司
+     */
+    public final static String activity_switch_company = "/app/activity_switch_company";
 
 
 }

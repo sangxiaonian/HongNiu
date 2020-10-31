@@ -1,7 +1,7 @@
 package com.hongniu.freight.control;
 
 import com.fy.androidlibrary.net.listener.TaskControl;
-import com.fy.companylibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.freight.entity.CargoTypeAndColorBeans;
 import com.hongniu.freight.entity.OrderCrateParams;
 import com.hongniu.freight.entity.InsuranceInfoBean;

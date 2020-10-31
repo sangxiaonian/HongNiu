@@ -32,7 +32,6 @@ import com.hongniu.baselibrary.widget.RoundedBackgroundSpan;
 import com.hongniu.modulelogin.R;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.fy.androidlibrary.imgload.ImageLoader;
-import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.androidlibrary.utils.DeviceUtils;
 import com.fy.androidlibrary.utils.SharedPreferencesUtils;
 import com.sang.common.widget.dialog.BottomAlertDialog;

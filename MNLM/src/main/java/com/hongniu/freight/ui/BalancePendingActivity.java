@@ -21,7 +21,7 @@ import com.fy.androidlibrary.widget.editext.PointLengthFilter;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.fy.companylibrary.config.ArouterParamApp;
 import com.fy.companylibrary.config.Param;
-import com.fy.companylibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.companylibrary.net.NetObserver;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
 import com.hongniu.freight.R;

@@ -4,7 +4,7 @@ import com.fy.androidlibrary.net.error.NetException;
 import com.fy.androidlibrary.net.listener.TaskControl;
 import com.fy.androidlibrary.net.rx.BaseObserver;
 import com.fy.androidlibrary.utils.CollectionUtils;
-import com.fy.companylibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.companylibrary.entity.PageBean;
 import com.fy.companylibrary.net.NetObserver;
 import com.hongniu.freight.config.Role;

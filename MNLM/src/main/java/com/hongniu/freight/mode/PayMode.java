@@ -1,7 +1,7 @@
 package com.hongniu.freight.mode;
 
 import com.fy.androidlibrary.utils.ConvertUtils;
-import com.fy.companylibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.freight.config.PayType;
 import com.hongniu.freight.control.PayControl;
 import com.hongniu.freight.entity.AccountDetailBean;

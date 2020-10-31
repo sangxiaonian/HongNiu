@@ -1,6 +1,6 @@
 package com.hongniu.freight.mode;
 
-import com.fy.companylibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.CommonBean;
 import com.sang.thirdlibrary.picture.helper.interceptor.FileProgressRequestBody;
 import com.hongniu.freight.control.CarAddModifyControl;
 import com.hongniu.freight.entity.CarInfoBean;
@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.functions.Function;
 
 /**
  * 作者：  on 2020/3/3.

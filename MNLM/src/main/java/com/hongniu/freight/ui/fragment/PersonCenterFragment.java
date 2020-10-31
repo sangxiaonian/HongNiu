@@ -229,9 +229,6 @@ public class PersonCenterFragment extends CompanyBaseFragment implements View.On
                         public void onRightClick(View view, Dialog dialog) {
                             dialog.dismiss();
                             InfoUtils.loginOut();
-                            ArouterUtils.getInstance().builder(ArouterParamApp.activity_login)
-                                    .navigation(mContext);
-                            getActivity().finish();
                         }
                     })
                     .creatDialog(mContext)

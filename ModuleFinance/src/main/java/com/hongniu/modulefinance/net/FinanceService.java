@@ -3,7 +3,6 @@ package com.hongniu.modulefinance.net;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
-import com.hongniu.baselibrary.entity.PayInforBeans;
 import com.hongniu.baselibrary.entity.WalletDetail;
 import com.hongniu.modulefinance.entity.AccountFloowParamBean;
 import com.hongniu.modulefinance.entity.BalanceOfAccountBean;

@@ -1,7 +1,7 @@
 package com.hongniu.freight.mode;
 
 import com.fy.androidlibrary.utils.ConvertUtils;
-import com.fy.companylibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.CommonBean;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.hongniu.freight.config.RoleOrder;

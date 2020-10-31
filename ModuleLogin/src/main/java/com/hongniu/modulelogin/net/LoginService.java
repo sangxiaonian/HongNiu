@@ -4,8 +4,6 @@ import com.hongniu.baselibrary.entity.CarTypeBean;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.LoginBean;
 import com.hongniu.baselibrary.entity.LoginPersonInfor;
-import com.hongniu.baselibrary.entity.PageBean;
-import com.hongniu.baselibrary.entity.PagerParambean;
 import com.hongniu.baselibrary.entity.QueryBlankInforsBean;
 import com.hongniu.modulelogin.entity.LoginBlindBlankParams;
 import com.hongniu.baselibrary.entity.CarInforBean;

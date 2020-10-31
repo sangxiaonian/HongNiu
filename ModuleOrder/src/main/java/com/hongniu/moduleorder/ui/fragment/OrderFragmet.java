@@ -52,7 +52,6 @@ import com.hongniu.baselibrary.utils.LoactionCollectionUtils;
 import com.fy.androidlibrary.event.BusFactory;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
-import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.androidlibrary.utils.ConvertUtils;
 import com.fy.androidlibrary.utils.JLog;
 import com.fy.androidlibrary.toast.ToastUtils;

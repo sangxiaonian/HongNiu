@@ -11,7 +11,6 @@ import com.hongniu.baselibrary.entity.WalletDetail;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.moduleorder.control.OrderPayControl;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
-import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.androidlibrary.utils.ConvertUtils;
 import com.sang.thirdlibrary.pay.PayConfig;
 import com.sang.thirdlibrary.pay.entiy.PayBean;

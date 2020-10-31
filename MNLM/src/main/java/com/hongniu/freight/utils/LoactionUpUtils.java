@@ -6,7 +6,7 @@ import com.amap.api.maps.model.LatLng;
 import com.fy.androidlibrary.net.rx.RxUtils;
 import com.fy.androidlibrary.utils.ConvertUtils;
 import com.fy.androidlibrary.utils.JLog;
-import com.fy.companylibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.companylibrary.net.NetObserver;
 import com.hongniu.freight.entity.LocationBean;
 import com.hongniu.freight.net.HttpAppFactory;

@@ -13,10 +13,7 @@ import com.hongniu.modulefinance.entity.FinanceQueryCarDetailBean;
 import com.hongniu.modulefinance.net.HttpFinanceFactory;
 import com.hongniu.modulefinance.ui.adapter.FinanceCarOrderDetailAdapter;
 import com.sang.common.recycleview.adapter.XAdapter;
-import com.fy.androidlibrary.utils.ConvertUtils;
-import com.sang.common.widget.SwitchTextLayout;
 
-import java.util.Date;
 import java.util.List;
 
 import io.reactivex.Observable;

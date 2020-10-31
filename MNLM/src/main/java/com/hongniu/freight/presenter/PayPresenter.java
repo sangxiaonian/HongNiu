@@ -2,7 +2,7 @@ package com.hongniu.freight.presenter;
 
 import com.fy.androidlibrary.net.listener.TaskControl;
 import com.fy.companylibrary.config.Param;
-import com.fy.companylibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.companylibrary.net.NetObserver;
 import com.hongniu.freight.config.PayType;
 import com.hongniu.freight.config.Role;

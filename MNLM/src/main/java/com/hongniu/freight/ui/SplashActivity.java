@@ -41,7 +41,6 @@ public class SplashActivity extends CompanyBaseActivity implements RuleAlertDial
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mnlm_activity_splash);
         //切换url
-        Config.getInstance().intNetClient();
         setWhitToolBar("");
         boolean rule = SharedPreferencesUtils.getInstance().getBoolean("RULE");
         if (rule){

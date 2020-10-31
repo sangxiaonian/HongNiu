@@ -3,7 +3,6 @@ package com.hongniu.moduleorder.net;
 import android.text.TextUtils;
 
 import com.amap.api.services.core.PoiItem;
-import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.fy.androidlibrary.net.error.NetException;
 import com.fy.androidlibrary.utils.CollectionUtils;

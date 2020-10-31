@@ -1,6 +1,6 @@
 package com.hongniu.freight.net;
 
-import com.fy.companylibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.companylibrary.entity.PageBean;
 import com.google.gson.JsonObject;
 import com.hongniu.freight.entity.AccountDetailBean;
@@ -70,7 +70,7 @@ public interface AppService {
      * @param params
      * @return
      */
-    @POST("wlhyapi/api/login/getcheckcode")
+    @POST("api/login/getcheckcode")
     Observable<CommonBean<String>> getSmsCode(@Body QuerySmsParams params);
 
     /**
@@ -79,7 +79,7 @@ public interface AppService {
      * @param params
      * @return
      */
-    @POST("wlhyapi/api/login/login")
+    @POST("api/login/login")
     Observable<CommonBean<LoginInfo>> login(@Body QuerySmsParams params);
 
     /**
@@ -88,7 +88,7 @@ public interface AppService {
      * @param o
      * @return
      */
-    @POST("wlhyapi/api/user/finduserinfo")
+    @POST("api/user/finduserinfo")
     Observable<CommonBean<PersonInfor>> queryMyInfo(@Body Object o);
 
     /**
@@ -97,7 +97,7 @@ public interface AppService {
      * @param o
      * @return
      */
-    @POST("wlhyapi/api/user/updateUserLogo")
+    @POST("api/user/updateUserLogo")
     Observable<ResponseBody> upDateLogo(@Body JsonObject o);
 
     /**
@@ -105,7 +105,7 @@ public interface AppService {
      *
      * @return
      */
-    @POST("wlhyapi/api/user/finduserinfo")
+    @POST("api/user/finduserinfo")
     Observable<CommonBean<PersonInfor>> queryIdentityCert();
 
     /**
@@ -113,7 +113,7 @@ public interface AppService {
      *
      * @return
      */
-    @POST("wlhyapi/api/tencentFaceIdr/getVerifyInfo")
+    @POST("api/tencentFaceIdr/getVerifyInfo")
     Observable<CommonBean<VerifyTokenBeans>> getVerifyToken();
 
     /**
@@ -122,7 +122,7 @@ public interface AppService {
      * @param json
      * @return
      */
-    @POST("wlhyapi/api/aliRPBasic/uploadResult")
+    @POST("api/aliRPBasic/uploadResult")
     Observable<CommonBean<Object>> uploadResult(@Body JsonObject json);
 
     /**
@@ -131,7 +131,7 @@ public interface AppService {
      * @param params
      * @return
      */
-    @POST("wlhyapi/api/identityAuthen/personCarrierAuth")
+    @POST("api/identityAuthen/personCarrierAuth")
     Observable<CommonBean<String>> verifyCarrierPerson(@Body VerifyPersonParams params);
 
     /**
@@ -140,7 +140,7 @@ public interface AppService {
      * @param params
      * @return
      */
-    @POST("wlhyapi/api/identityAuthen/companyCarrierAuth")
+    @POST("api/identityAuthen/companyCarrierAuth")
     Observable<CommonBean<String>> verifyCarrierCompany(@Body VerifyCompanyParams params);
 
     /**
@@ -149,7 +149,7 @@ public interface AppService {
      * @param params
      * @return
      */
-    @POST("wlhyapi/api/identityAuthen/companyShipperAuth")
+    @POST("api/identityAuthen/companyShipperAuth")
     Observable<CommonBean<String>> verifyShipperCompany(@Body VerifyCompanyParams params);
 
     /**
@@ -158,7 +158,7 @@ public interface AppService {
      * @param params
      * @return
      */
-    @POST("wlhyapi/api/identityAuthen/personShipperAuth")
+    @POST("api/identityAuthen/personShipperAuth")
     Observable<CommonBean<String>> verifyShipperPersonal(@Body VerifyPersonParams params);
 
     /**
@@ -167,7 +167,7 @@ public interface AppService {
      * @param params
      * @return
      */
-    @POST("wlhyapi/api/identityAuthen/driverAuth")
+    @POST("api/identityAuthen/driverAuth")
     Observable<CommonBean<String>> verifyDriver(@Body VerifyPersonParams params);
 
     /**
@@ -175,7 +175,7 @@ public interface AppService {
      *
      * @return
      */
-    @POST("wlhyapi/api/identityAuthen/identityDetail")
+    @POST("api/identityAuthen/identityDetail")
     Observable<CommonBean<VerifyInfoBean>> queryVerifyCarrierPerson();
 
     /**
@@ -183,7 +183,7 @@ public interface AppService {
      *
      * @return
      */
-    @POST("wlhyapi/api/userinsured/list")
+    @POST("api/userinsured/list")
     Observable<CommonBean<List<InsuranceInfoBean>>> queryInsuranceList();
 
     /**
@@ -191,7 +191,7 @@ public interface AppService {
      *
      * @return
      */
-    @POST("wlhyapi/api/deliveryOrder/myOrderNum")
+    @POST("api/deliveryOrder/myOrderNum")
     Observable<CommonBean<OrderNumberInfoBean>> queryOrderNumber();
 
     /**
@@ -199,7 +199,7 @@ public interface AppService {
      *
      * @return
      */
-    @POST("wlhyapi/api/deliveryOrder/add")
+    @POST("api/deliveryOrder/add")
     Observable<CommonBean<OrderInfoBean>> createOrder(@Body OrderCrateParams params);
 
     /**
@@ -207,7 +207,7 @@ public interface AppService {
      *
      * @return
      */
-    @POST("wlhyapi/api/deliveryOrder/update")
+    @POST("api/deliveryOrder/update")
     Observable<CommonBean<OrderInfoBean>> modifyOrder(@Body OrderCrateParams params);
 
     /**
@@ -215,7 +215,7 @@ public interface AppService {
      *
      * @return
      */
-    @POST("wlhyapi/api/deliveryOrder/queryPage")
+    @POST("api/deliveryOrder/queryPage")
     Observable<CommonBean<PageBean<OrderInfoBean>>> queryOrderList(@Body QueryOrderListBean params);
 
     /**
@@ -224,7 +224,7 @@ public interface AppService {
      * @return
      * @param params
      */
-    @POST("wlhyapi/api/codeSet/getByType")
+    @POST("api/codeSet/getByType")
     Observable<CommonBean<List<CargoTypeAndColorBeans>>> queryCargoType(@Body JsonObject params);
 
     /**
@@ -232,7 +232,7 @@ public interface AppService {
      *
      * @return
      */
-    @POST("wlhyapi/api/deliveryOrder/platformOrderList")
+    @POST("api/deliveryOrder/platformOrderList")
     Observable<CommonBean<PageBean<OrderInfoBean>>> queryPlatformOrderList(@Body QueryOrderListBean params);
 
     /**
@@ -240,7 +240,7 @@ public interface AppService {
      *
      * @return
      */
-    @POST("wlhyapi/api/deliveryOrder/detail")
+    @POST("api/deliveryOrder/detail")
     Observable<CommonBean<OrderInfoBean>> queryOrderDetail(@Body JsonObject params);
 
     /**
@@ -248,7 +248,7 @@ public interface AppService {
      *
      * @return
      */
-    @POST("wlhyapi/api/deliveryOrder/ownerOrderList")
+    @POST("api/deliveryOrder/ownerOrderList")
     Observable<CommonBean<PageBean<OrderInfoBean>>> queryOwnerOrderList(@Body PageParams params);
 
     /**
@@ -256,7 +256,7 @@ public interface AppService {
      *
      * @return
      */
-    @POST("wlhyapi/api/deliveryOrder/searchOrderUserInfo")
+    @POST("api/deliveryOrder/searchOrderUserInfo")
     Observable<CommonBean<QueryAppraiseInfo>> queryAppraise(@Body JsonObject params);
 
     /**
@@ -264,7 +264,7 @@ public interface AppService {
      *
      * @return
      */
-    @POST("wlhyapi/api/deliveryOrder/evaluate")
+    @POST("api/deliveryOrder/evaluate")
     Observable<CommonBean<Object>> appraise(@Body AppraiseParams params);
 
     /**
@@ -272,7 +272,7 @@ public interface AppService {
      *
      * @return
      */
-    @POST("wlhyapi/api/deliveryOrder/cancel")
+    @POST("api/deliveryOrder/cancel")
     Observable<CommonBean<Object>> orderCancel(@Body JsonObject params);
 
     /**
@@ -280,7 +280,7 @@ public interface AppService {
      *
      * @return
      */
-    @POST("wlhyapi/api/deliveryOrder/platformAcceptOrder")
+    @POST("api/deliveryOrder/platformAcceptOrder")
     Observable<CommonBean<Object>> orderReceivePlatform(@Body JsonObject params);
 
     /**
@@ -289,7 +289,7 @@ public interface AppService {
      * @param params
      * @return
      */
-    @POST("wlhyapi/api/deliveryOrder/findCarInfo/add")
+    @POST("api/deliveryOrder/findCarInfo/add")
     Observable<CommonBean<Object>> orderFindCarInfo(@Body OrderFindCarParams params);
 
     /**
@@ -298,7 +298,7 @@ public interface AppService {
      * @param params
      * @return
      */
-    @POST("wlhyapi/api/deliveryOrder/dispatch")
+    @POST("api/deliveryOrder/dispatch")
     Observable<CommonBean<Object>> orderDispathCar(@Body OrderDispathCarParams params);
 
     /**
@@ -310,7 +310,7 @@ public interface AppService {
      *
      * @return
      */
-    @POST("wlhyapi/api/user/querydriver")
+    @POST("api/user/querydriver")
     Observable<CommonBean<List<OrderDriverPhoneBean>>> getDriverPhone(@Body OrderDriverPhoneBean infor);
 
     /**
@@ -319,7 +319,7 @@ public interface AppService {
      * @param params
      * @return
      */
-    @POST("wlhyapi/api/deliveryOrder/ownerOrders")
+    @POST("api/deliveryOrder/ownerOrders")
     Observable<CommonBean<Object>> orderReceive(@Body OrderDispathCarParams params);
 
     /**
@@ -328,7 +328,7 @@ public interface AppService {
      * @param params
      * @return
      */
-    @POST("wlhyapi/api/deliveryOrder/updateFare")
+    @POST("api/deliveryOrder/updateFare")
     Observable<CommonBean<Object>> updateFare(@Body JsonObject params);
 
     /**
@@ -337,7 +337,7 @@ public interface AppService {
      * @param params
      * @return
      */
-    @POST("wlhyapi/api/deliveryOrder/start")
+    @POST("api/deliveryOrder/start")
     Observable<CommonBean<Object>> orderStart(@Body JsonObject params);
 
     /**
@@ -346,7 +346,7 @@ public interface AppService {
      * @param params
      * @return
      */
-    @POST("wlhyapi//api/deliveryOrder/endSend")
+    @POST("/api/deliveryOrder/endSend")
     Observable<CommonBean<Object>> orderEnd(@Body JsonObject params);
 
     /**
@@ -355,7 +355,7 @@ public interface AppService {
      * @param params
      * @return
      */
-    @POST("wlhyapi/api/deliveryOrder/receive")
+    @POST("api/deliveryOrder/receive")
     Observable<CommonBean<Object>> orderEntryReceive(@Body JsonObject params);
 
     /**
@@ -364,7 +364,7 @@ public interface AppService {
      * @param params
      * @return
      */
-    @POST("wlhyapi/api/deliveryOrder/buyInsurance")
+    @POST("api/deliveryOrder/buyInsurance")
     Observable<CommonBean<Object>> buyInsurance(@Body BuyInsuranceParams params);
 
     /**
@@ -373,7 +373,7 @@ public interface AppService {
      * @param params
      * @return
      */
-    @POST("wlhyapi/api/deliveryOrder/premiumCalculate")
+    @POST("api/deliveryOrder/premiumCalculate")
     Observable<CommonBean<String>> queryInstancePrice(@Body QueryInsurancePriceParams params);
 
     /**
@@ -381,7 +381,7 @@ public interface AppService {
      *
      * @return
      */
-    @POST("wlhyapi/api/deliveryOrder/queryStatus")
+    @POST("api/deliveryOrder/queryStatus")
     Observable<CommonBean<OrderStatusBean>> queryOrderStatus(@Body JsonObject params);
 
 
@@ -390,7 +390,7 @@ public interface AppService {
      *
      * @return
      */
-    @POST("wlhyapi/api/file/uploadFiles")
+    @POST("api/file/uploadFiles")
     Observable<CommonBean<List<UpImgData>>> upLoadImage(@Body MultipartBody multipartBody);
 
     /**
@@ -398,7 +398,7 @@ public interface AppService {
      *
      * @return
      */
-    @POST("wlhyapi/api/car/selectpagecar")
+    @POST("api/car/selectpagecar")
     Observable<CommonBean<PageBean<CarInfoBean>>> queryCarList(@Body PageParams pageParams);
 
     /**
@@ -406,7 +406,7 @@ public interface AppService {
      *
      * @return
      */
-    @POST("wlhyapi/api/car/selectpagecar/all")
+    @POST("api/car/selectpagecar/all")
     Observable<CommonBean<PageBean<CarInfoBean>>> queryAllCarList(@Body PageSearchParams pageParams);
 
     /**
@@ -414,7 +414,7 @@ public interface AppService {
      *
      * @return
      */
-    @POST("wlhyapi/api/car/vehicletype")
+    @POST("api/car/vehicletype")
     Observable<CommonBean<List<CarTypeBean>>> queryCarTypeList();
 
     /**
@@ -422,7 +422,7 @@ public interface AppService {
      *
      * @return
      */
-    @POST("wlhyapi/api/car/savecar")
+    @POST("api/car/savecar")
     Observable<CommonBean<Object>> createCar(@Body CarInfoBean infoBean);
 
     /**
@@ -430,7 +430,7 @@ public interface AppService {
      *
      * @return
      */
-    @POST("wlhyapi/api/car/deletebyid")
+    @POST("api/car/deletebyid")
     Observable<CommonBean<Object>> deletedCar(@Body JsonObject infoBean);
 
     /**
@@ -438,7 +438,7 @@ public interface AppService {
      *
      * @return
      */
-    @POST("wlhyapi/api/account/accountdetails")
+    @POST("api/account/accountdetails")
     Observable<CommonBean<AccountDetailBean>> queryAccountDetails();
 
     /**
@@ -446,7 +446,7 @@ public interface AppService {
      *
      * @return
      */
-    @POST("wlhyapi/api/hxbaccount/rechargeInfo")
+    @POST("api/hxbaccount/rechargeInfo")
     Observable<CommonBean<QueryBindHuaInforsBean>> queryRechargeInfo();
 
     /**
@@ -454,7 +454,7 @@ public interface AppService {
      *
      * @return
      */
-    @POST("wlhyapi/api/hxbaccount/querySubAcc")
+    @POST("api/hxbaccount/querySubAcc")
     Observable<CommonBean<QueryVeriBean>> querySubAcc();
 
     /**
@@ -462,7 +462,7 @@ public interface AppService {
      *
      * @return
      */
-    @POST("wlhyapi/api/refund/bankList")
+    @POST("api/refund/bankList")
     Observable<CommonBean<List<QueryBlankInforsBean>>> queryBlanks();
 
     /**
@@ -470,7 +470,7 @@ public interface AppService {
      *
      * @return
      */
-    @POST("wlhyapi/api/refund/add")
+    @POST("api/refund/add")
     Observable<CommonBean<String>> bindBlank(@Body BindBlankParams params);
 
     /**
@@ -479,7 +479,7 @@ public interface AppService {
      * @param o
      * @return
      */
-    @POST("wlhyapi/api/refund/queryMyCards")
+    @POST("api/refund/queryMyCards")
     Observable<CommonBean<List<PayInforBeans>>> queryMyCards(@Body Object o);
 
     /**
@@ -488,7 +488,7 @@ public interface AppService {
      * @param blankID
      * @return
      */
-    @POST("wlhyapi/api/refund/remove")
+    @POST("api/refund/remove")
     Observable<CommonBean<Object>> deleadCard(@Body JsonObject blankID);
 
 
@@ -497,7 +497,7 @@ public interface AppService {
      *
      * @return
      */
-    @POST("wlhyapi/api/finance/search")
+    @POST("api/finance/search")
     Observable<CommonBean<BillInfoBean>> searchAccountList(@Body BillInfoSearchParams params);
 
     /**
@@ -505,7 +505,7 @@ public interface AppService {
      *
      * @return
      */
-    @POST("wlhyapi/api/finance/getExpressCost")
+    @POST("api/finance/getExpressCost")
     Observable<CommonBean<List<QueryExpendResultBean>>> queryExpendVistogramTran(@Body BillInfoSearchParams infor);
 
     /**
@@ -513,7 +513,7 @@ public interface AppService {
      *
      * @return
      */
-    @POST("wlhyapi//api/finance/getInsuranceCost")
+    @POST("/api/finance/getInsuranceCost")
     Observable<CommonBean<List<QueryExpendResultBean>>> queryExpendVistogramInsurance(@Body BillInfoSearchParams infor);
 
     /**
@@ -521,7 +521,7 @@ public interface AppService {
      *
      * @return
      */
-    @POST("wlhyapi/api/finance/getExpressIncome")
+    @POST("api/finance/getExpressIncome")
     Observable<CommonBean<List<QueryExpendResultBean>>> queryInComeVistogram(@Body BillInfoSearchParams infor);
 
 
@@ -531,7 +531,7 @@ public interface AppService {
      * @param params
      * @return
      */
-    @POST("wlhyapi/api/account/accountflows")
+    @POST("api/account/accountflows")
     Observable<CommonBean<PageBean<BillInfoListBean>>> queryAccountFlows(@Body AccountFlowParams params);
 
     /**
@@ -540,7 +540,7 @@ public interface AppService {
      * @param bean
      * @return
      */
-    @POST("wlhyapi//api/account/withdraw")
+    @POST("/api/account/withdraw")
     Observable<CommonBean<String>> withdraw(@Body BalanceWithDrawBean bean);
 
     /**
@@ -549,7 +549,7 @@ public interface AppService {
      * @param payInfoParams
      * @return
      */
-    @POST("wlhyapi//api/account/pay")
+    @POST("/api/account/pay")
     Observable<CommonBean<PayBean>> queryPayInfo(@Body QueryPayInfoParams payInfoParams);
 
     /**
@@ -558,7 +558,7 @@ public interface AppService {
      * @param payInfoParams
      * @return
      */
-    @POST("wlhyapi/api/user/insertFeedback")
+    @POST("api/user/insertFeedback")
     Observable<CommonBean<Object>> faceBack(@Body FaceBackParams payInfoParams);
 
     /**
@@ -567,13 +567,13 @@ public interface AppService {
      * @param payInfoParams
      * @return
      */
-    @POST("wlhyapi/api/account/updatepass")
+    @POST("api/account/updatepass")
     Observable<CommonBean<Object>> upPass(@Body JsonObject payInfoParams);
 
     /**
      * 获取指定订单所有位置信息
      */
-    @POST("wlhyapi/api/position/list")
+    @POST("api/position/list")
     Observable<CommonBean<PathBean>> getPath(@Body JsonObject infor);
 
     /**
@@ -582,7 +582,7 @@ public interface AppService {
      * @param beans
      * @return
      */
-    @POST("wlhyapi/api/userinsured/delete")
+    @POST("api/userinsured/delete")
     Observable<CommonBean<String>> deletedInsuredInfor(@Body LoginCreatInsuredBean beans);
 
     /**
@@ -591,7 +591,7 @@ public interface AppService {
      * @param beans
      * @return
      */
-    @POST("wlhyapi/api/userinsured/add")
+    @POST("api/userinsured/add")
     Observable<CommonBean<LoginCreatInsuredBean>> creatInsuredInfor(@Body LoginCreatInsuredBean beans);
 
 
@@ -601,19 +601,19 @@ public interface AppService {
      * @param beans
      * @return
      */
-    @POST("wlhyapi/api/userinsured/update")
+    @POST("api/userinsured/update")
     Observable<CommonBean<LoginCreatInsuredBean>> upInsuredInfor(@Body LoginCreatInsuredBean beans);
 
     /**
      * 跟进userID 获取融云指定用户信息
      */
-    @POST("wlhyapi/api/user/finduserinfo")
+    @POST("api/user/finduserinfo")
     Observable<CommonBean<UserInfor>> queryRongInfor(@Body JsonObject params);
 
     /**
      * 上传所有位置信息
      */
-    @POST("wlhyapi/api/position/save")
+    @POST("api/position/save")
     Observable<CommonBean<String>> upLoaction(@Body List<LocationBean> locationBeans);
 
     /**
@@ -622,7 +622,7 @@ public interface AppService {
      * @param eventParams
      * @return
      */
-    @POST("wlhyapi/api/waybill/show")
+    @POST("api/waybill/show")
     Observable<CommonBean<List<WayBillBean>>> queryWaybill(@Body JsonObject eventParams);
 
     /**
@@ -630,7 +630,7 @@ public interface AppService {
      *
      * @return
      */
-    @POST("wlhyapi/api/user/updateDevice")
+    @POST("api/user/updateDevice")
     Observable<CommonBean<Object>> upDateToken(@Body JsonObject formVals);
 
     /**
@@ -638,7 +638,7 @@ public interface AppService {
      *
      * @return
      */
-    @POST("wlhyapi/api/deliveryOrder/queryReceiptInfo")
+    @POST("api/deliveryOrder/queryReceiptInfo")
     Observable<CommonBean<QueryReceiveBean>> queryReceiptInfo(@Body JsonObject formVals);
 
     /**
@@ -646,7 +646,16 @@ public interface AppService {
      *
      * @return
      */
-    @POST("wlhyapi/api/deliveryOrder/saveReceiptInfo")
+    @POST("api/deliveryOrder/saveReceiptInfo")
     Observable<CommonBean<String>> saveReceiptInfo(@Body QueryReceiveBean bean);
 
+
+
+    /**
+     * 获取子平台登录token
+     *
+     * @return
+     */
+    @POST("api/login/tokenlogin")
+    Observable<CommonBean<LoginInfo>> loginWithToken(@Body JsonObject object);
 }

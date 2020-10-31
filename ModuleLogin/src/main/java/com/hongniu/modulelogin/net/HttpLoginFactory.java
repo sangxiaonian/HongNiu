@@ -6,7 +6,6 @@ import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.LoginBean;
 import com.hongniu.baselibrary.entity.LoginPersonInfor;
 import com.hongniu.baselibrary.entity.PageBean;
-import com.hongniu.baselibrary.entity.PagerParambean;
 import com.hongniu.baselibrary.entity.QueryBlankInforsBean;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.Utils;
@@ -17,7 +16,6 @@ import com.hongniu.modulelogin.entity.LoginSMSParams;
 import com.hongniu.baselibrary.entity.PayInforBeans;
 import com.hongniu.modulelogin.entity.SetPayPassWord;
 import com.fy.androidlibrary.net.rx.RxUtils;
-import com.hongniu.baselibrary.entity.CommonBean;
 
 import java.util.List;
 

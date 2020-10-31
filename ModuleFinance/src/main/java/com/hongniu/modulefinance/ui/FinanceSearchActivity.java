@@ -2,8 +2,6 @@ package com.hongniu.modulefinance.ui;
 
 import android.os.Bundle;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -24,10 +22,7 @@ import com.hongniu.modulefinance.entity.QueryExpendBean;
 import com.hongniu.modulefinance.net.HttpFinanceFactory;
 import com.hongniu.modulefinance.ui.adapter.FinanceOrderAdapter;
 import com.sang.common.recycleview.adapter.XAdapter;
-import com.fy.androidlibrary.utils.ConvertUtils;
 import com.fy.androidlibrary.utils.DeviceUtils;
-import com.fy.androidlibrary.utils.JLog;
-import com.fy.androidlibrary.toast.ToastUtils;
 
 import java.util.List;
 

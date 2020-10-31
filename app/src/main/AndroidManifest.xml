@@ -3,6 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.hongniu.supply">
 
+    <permission
+        android:name="com.hongniu.supply.permission.MIPUSH_RECEIVE"
+        android:protectionLevel="signature" /> <!-- 小米推送配置 -->
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="com.hongniu.supply.permission.MIPUSH_RECEIVE" />
+    <uses-permission android:name="android.permission.REORDER_TASKS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 融云 -->
+    <meta-data
+        android:name="RONG_CLOUD_APP_KEY"
+        android:value="${RONG_CLOUD_APP_KEY}" />
+
     <application
         android:name=".AppApplication"
         android:allowBackup="true"
@@ -13,7 +24,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme,android:networkSecurityConfig,android:allowBackup">
-        <activity android:name=".ui.WayBillActivity"></activity>
+        <activity android:name=".ui.SwitchCompanyActivity"></activity>
+        <activity android:name=".ui.WayBillActivity" />
         <activity android:name=".ui.QRCodeActivity" />
         <activity
             android:name=".SplashActivity"
@@ -49,18 +61,12 @@
             android:screenOrientation="portrait" />
         <activity android:name=".ui.NiuInsuranceH5Activity" />
 
-
-        <receiver android:name=".ui.receiver.MyPlushBroadcastReceiver"/>
-
-
-         <!-- 小米 配置开始 < -->
+        <receiver android:name=".ui.receiver.MyPlushBroadcastReceiver" /> <!-- 小米 配置开始 < -->
         <activity android:name=".ui.ImagePreviceActivity" />
 
         <meta-data
             android:name="com.huawei.hms.client.appid"
             android:value="${HUAWEI_KEY}" />
-
-
 
         <receiver
             android:name="com.xiaomi.push.service.receivers.NetworkStatusReceiver"
@@ -77,8 +83,7 @@
             <intent-filter>
                 <action android:name="com.xiaomi.push.PING_TIMER" />
             </intent-filter>
-        </receiver>
-        <!-- 华为离线推送开始 -->
+        </receiver> <!-- 华为离线推送开始 -->
         <receiver android:name="com.huawei.hms.support.api.push.PushEventReceiver">
             <intent-filter>
 
@@ -117,19 +122,4 @@
             android:required="false" />
     </application>
 
-    <permission
-        android:name="com.hongniu.supply.permission.MIPUSH_RECEIVE"
-        android:protectionLevel="signature" /> <!-- 小米推送配置 -->
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="com.hongniu.supply.permission.MIPUSH_RECEIVE" />
-    <uses-permission android:name="android.permission.REORDER_TASKS" />
-
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-
-
-    <!--融云-->
-    <meta-data
-        android:name="RONG_CLOUD_APP_KEY"
-        android:value="${RONG_CLOUD_APP_KEY}" />
 </manifest>

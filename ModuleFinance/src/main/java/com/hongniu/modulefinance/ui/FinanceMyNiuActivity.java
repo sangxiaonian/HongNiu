@@ -27,7 +27,6 @@ import com.hongniu.modulefinance.entity.NiuOfAccountBean;
 import com.hongniu.modulefinance.net.HttpFinanceFactory;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
-import com.hongniu.baselibrary.entity.CommonBean;
 import com.sang.common.widget.dialog.inter.DialogControl;
 import com.sang.thirdlibrary.chact.ChactHelper;
 

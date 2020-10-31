@@ -1,5 +1,6 @@
 package com.hongniu.supply.ui.fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -27,6 +28,7 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.H5Config;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventParams;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
+import com.hongniu.freight.ui.SplashActivity;
 import com.hongniu.supply.R;
 import com.hongniu.supply.entity.HomeADBean;
 import com.hongniu.supply.net.HttpMainFactory;
@@ -286,7 +288,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                 break;
             case R.id.ll_net_owner:
                 //网络货运
-                ToastUtils.getInstance().show("网络货运");
+                ArouterUtils.getInstance().builder(ArouterParamsApp.activity_switch_company) .navigation(getContext());
+
                 break;
         }
     }

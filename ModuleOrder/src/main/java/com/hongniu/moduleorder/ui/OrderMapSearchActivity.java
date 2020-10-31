@@ -26,7 +26,6 @@ import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.baselibrary.ui.adapter.MapSearchAdapter;
 import com.fy.androidlibrary.event.BusFactory;
 import com.sang.common.recycleview.adapter.XAdapter;
-import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.androidlibrary.utils.DeviceUtils;
 
 import java.util.List;

@@ -19,7 +19,6 @@ import com.hongniu.moduleorder.entity.OrderInsuranceParam;
 import com.hongniu.moduleorder.mode.OrderCreataMode;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.fy.androidlibrary.net.listener.TaskControl;
-import com.hongniu.baselibrary.entity.CommonBean;
 
 import java.util.ArrayList;
 import java.util.List;

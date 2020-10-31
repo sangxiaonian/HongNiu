@@ -39,8 +39,6 @@ import com.hongniu.baselibrary.utils.clickevent.ClickEventBean;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventParams;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
 import com.hongniu.baselibrary.widget.dialog.UpDialog;
-import com.hongniu.freight.Config;
-import com.hongniu.freight.ui.SplashActivity;
 import com.hongniu.moduleorder.entity.VersionBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.utils.LoactionUpUtils;
@@ -353,7 +351,10 @@ public class MainActivity extends ModuleBaseActivity implements View.OnClickList
 //
 //                ArouterUtils.getInstance().builder(ArouterParamsMatch.activity_match_estimate_order)
 //                        .navigation(mContext);
-                startActivity(new Intent(mContext, SplashActivity.class));
+//                startActivity(new Intent(mContext, SplashActivity.class));
+
+
+
             }
         });
 

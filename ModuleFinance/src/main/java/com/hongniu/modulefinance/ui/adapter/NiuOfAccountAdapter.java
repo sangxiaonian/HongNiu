@@ -13,7 +13,6 @@ import com.hongniu.modulefinance.control.OnItemClickListener;
 import com.hongniu.modulefinance.entity.NiuOfAccountBean;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
-import com.hongniu.baselibrary.entity.CommonBean;
 import com.sang.thirdlibrary.chact.ChactHelper;
 
 import java.util.List;

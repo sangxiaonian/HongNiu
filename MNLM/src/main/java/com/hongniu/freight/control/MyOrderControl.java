@@ -1,6 +1,6 @@
 package com.hongniu.freight.control;
 
-import com.fy.companylibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.companylibrary.entity.PageBean;
 import com.hongniu.freight.config.RoleOrder;
 import com.hongniu.freight.config.Status;

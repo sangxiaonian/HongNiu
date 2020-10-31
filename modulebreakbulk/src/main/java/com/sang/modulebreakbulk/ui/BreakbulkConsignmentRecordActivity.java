@@ -30,7 +30,6 @@ import com.hongniu.baselibrary.widget.dialog.PayDialog;
 import com.hongniu.modulebreakbulk.R;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
-import com.fy.androidlibrary.toast.ToastUtils;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.inter.DialogControl;
 import com.sang.modulebreakbulk.entity.BreakbulkConsignmentInfoBean;

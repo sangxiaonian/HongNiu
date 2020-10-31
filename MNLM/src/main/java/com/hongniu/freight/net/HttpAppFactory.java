@@ -6,7 +6,7 @@ import com.amap.api.services.poisearch.PoiSearch;
 import com.fy.androidlibrary.net.rx.RxUtils;
 import com.fy.androidlibrary.utils.ConvertUtils;
 import com.fy.companylibrary.config.Param;
-import com.fy.companylibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.companylibrary.entity.PageBean;
 import com.fy.companylibrary.net.CompanyClient;
 import com.google.gson.JsonObject;
@@ -1093,5 +1093,19 @@ public class HttpAppFactory {
         return CompanyClient.getInstance().creatService(AppService.class)
                 .saveReceiptInfo(bean)
                 .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
+    }
+
+    /**
+     * 根据运单号查询运单信息
+     */
+    public static Observable<CommonBean<LoginInfo>> loginWithToken(String token, String mobile) {
+
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("token", token);
+        jsonObject.addProperty("mobile", mobile);
+        return CompanyClient.getInstance().creatService(AppService.class)
+                .loginWithToken(jsonObject)
+                .compose(RxUtils.<CommonBean<LoginInfo>>getSchedulersObservableTransformer())
+                ;
     }
 }

@@ -1,15 +1,12 @@
 package com.hongniu.freight.mode;
 
-import android.text.TextUtils;
-
 import com.fy.companylibrary.config.Param;
-import com.fy.companylibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.companylibrary.entity.PageBean;
 import com.hongniu.freight.config.RoleOrder;
 import com.hongniu.freight.config.Status;
 import com.hongniu.freight.control.MyOrderControl;
 import com.hongniu.freight.entity.OrderInfoBean;
-import com.hongniu.freight.entity.OrderStatusBean;
 import com.hongniu.freight.entity.QueryOrderListBean;
 import com.hongniu.freight.net.HttpAppFactory;
 

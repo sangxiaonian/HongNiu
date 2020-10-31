@@ -3,6 +3,8 @@ package com.hongniu.freight.utils;
 import com.fy.androidlibrary.utils.SharedPreferencesUtils;
 import com.fy.companylibrary.config.Param;
 import com.google.gson.Gson;
+import com.hongniu.baselibrary.arouter.ArouterParamsApp;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.freight.config.Role;
 import com.hongniu.freight.config.RoleOrder;
 import com.hongniu.freight.entity.LoginInfo;
@@ -74,6 +76,9 @@ public class InfoUtils {
     public static void loginOut() {
         SharedPreferencesUtils.getInstance().clear();
         ChactHelper.getHelper().disConnect();
+        SharedPreferencesUtils.getInstance().remove(com.hongniu.baselibrary.config.Param.LOGIN_ONFOR);
+        SharedPreferencesUtils.getInstance().remove(com.hongniu.baselibrary.config.Param.PERSON_ONFOR);
+        ArouterUtils.getInstance().builder(ArouterParamsApp.activity_main).withString(com.hongniu.baselibrary.config.Param.TRAN, com.hongniu.baselibrary.config.Param.LOGIN_OUT).navigation();
     }
 
 

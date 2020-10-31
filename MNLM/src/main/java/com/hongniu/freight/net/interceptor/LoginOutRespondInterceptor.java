@@ -3,11 +3,14 @@ package com.hongniu.freight.net.interceptor;
 import android.content.Context;
 import android.content.Intent;
 
+import com.fy.androidlibrary.utils.SharedPreferencesUtils;
 import com.fy.companylibrary.config.ArouterParamApp;
-import com.fy.companylibrary.config.Param;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.hongniu.baselibrary.arouter.ArouterParamsApp;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
+import com.hongniu.baselibrary.config.Param;
 import com.hongniu.freight.utils.InfoUtils;
 
 import java.io.IOException;
@@ -54,13 +57,14 @@ public class LoginOutRespondInterceptor implements Interceptor {
                     if (code == 401 && currentTime - lastTime > 500) {
                         //500ms内只能跳转一次
                         //登陆已失效
-                        Intent intent = new Intent();
-                        intent.setAction(context.getPackageName() + action);
-                        intent.addCategory(Intent.CATEGORY_DEFAULT);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(intent);
+//                        Intent intent = new Intent();
+//                        intent.setAction(context.getPackageName() + action);
+//                        intent.addCategory(Intent.CATEGORY_DEFAULT);
+//                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                        context.startActivity(intent);
                         lastTime = currentTime;
                         InfoUtils.loginOut();
+
                     }
                 }
 
