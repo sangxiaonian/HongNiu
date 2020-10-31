@@ -104,7 +104,7 @@ public class SwitchCompanyActivity extends RefrushActivity<CompanyInfoBean>    {
                         itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                jump2ChoiseCompany(data.getSubAppCode(),data.getApiUrl());
+                                jump2ChoiseCompany(data ,data.getApiUrl());
 
                             }
                         });
@@ -115,8 +115,8 @@ public class SwitchCompanyActivity extends RefrushActivity<CompanyInfoBean>    {
         };
     }
 
-    private void jump2ChoiseCompany(String subAppCode, String apiUrl) {
-        HttpMainFactory.queryCompanyLoginInfo(subAppCode)
+    private void jump2ChoiseCompany(CompanyInfoBean data, String apiUrl) {
+        HttpMainFactory.queryCompanyLoginInfo(data.getSubAppCode())
                 .filter(new Predicate<CommonBean<CompanyTokenInfoBean>>() {
                     @Override
                     public boolean test(@NonNull CommonBean<CompanyTokenInfoBean> stringCommonBean) throws Exception {
@@ -127,7 +127,8 @@ public class SwitchCompanyActivity extends RefrushActivity<CompanyInfoBean>    {
                     @Override
                     public ObservableSource<CommonBean<LoginInfo>> apply(@NonNull CommonBean<CompanyTokenInfoBean> stringCommonBean) throws Exception {
 
-                        Config.getInstance().intNetClient(apiUrl);
+                        Config.getInstance().intNetClient(data.getApiUrl());
+                        Config.getInstance().setCurrentPackageName(data.getAndroidPackage());
                         return HttpMainFactory.loginWithToken(stringCommonBean.getData().getToken(),stringCommonBean.getData().getMobile());
                     }
                 })

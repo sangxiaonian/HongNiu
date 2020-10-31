@@ -28,6 +28,7 @@ import com.fy.companylibrary.ui.CompanyBaseFragment;
 import com.hdgq.locationlib.listener.OnResultListener;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.freight.BuildConfig;
+import com.hongniu.freight.Config;
 import com.hongniu.freight.R;
 import com.hongniu.freight.entity.Event;
 import com.hongniu.freight.entity.PersonInfor;
@@ -100,22 +101,9 @@ public class MainActivity extends CompanyBaseActivity implements View.OnClickLis
         loaction.init(this);
         loaction.setListener(this);
 
-        //初始化网络获取数据
-        FreightClient.getClient().initSdk(MainActivity.this, getPackageName(),
-                getString(R.string.freight_secret),
-                getString(R.string.freight_uniquie),
-                true, new OnResultListener() {
-                    @Override
-                    public void onSuccess() {
-                        JLog.i("初始化成功");
-                    }
+        Config.getInstance().initFreight(this);
 
-                    @Override
-                    public void onFailure(String s, String s1) {
-                        JLog.e("初始化失败：" + s + "  " + s1);
 
-                    }
-                });
 
     }
 
