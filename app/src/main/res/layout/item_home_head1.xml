@@ -281,7 +281,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="发货"
+                            android:text="零担发货"
                             android:textColor="@color/color_title_dark"
                             android:textSize="14sp" />
 

@@ -25,9 +25,16 @@ public class Config {
 
 
     //人脸识别正式版本
-    String verify_appID="IDAGnuKK";//人脸识别正式版本
-    String verify_secret="9gE8cd5DgLfm3oJX3aezDUUWHq96MXb8IQuPqlQUkLxXefUndP5D5xObPECzpO6y";
-    String verify_SDKlicense="pYXTl8k0mN99he+yGFM+SMWNWmbReaV1gamC88dGg65hnjzZDeQDHbkZ/uBxPk8jE1WK4BfAUrS+6a08xkvBptMW6H1zwHnVAxzd6nddDrDKvgHMl+E/YDRsN2ty6UdyQYsHRclY6iu12sVRdzIeEPBN/InzEBPzQsenQOWDEo+Q5DOPtE/i4C0KokT0x5JI9/RWVioxKp4RrLSNOArr+KVIfc/a74+yfTaMhQCyAdg2onpNSuzHSeY5egtno0QBSCLLmoxTQwUB1F/bfXngRdV9dFbbmQBpOV00KNbqGYmer+s3RvR2lkrGB48MuEJHWA3hgGRquw03ncG8zf/RZg==";
+//    String verify_appID="IDAGnuKK";//人脸识别正式版本
+//    String verify_secret="9gE8cd5DgLfm3oJX3aezDUUWHq96MXb8IQuPqlQUkLxXefUndP5D5xObPECzpO6y";
+//    String verify_SDKlicense="pYXTl8k0mN99he+yGFM+SMWNWmbReaV1gamC88dGg65hnjzZDeQDHbkZ/uBxPk8jE1WK4BfAUrS+6a08xkvBptMW6H1zwHnVAxzd6nddDrDKvgHMl+E/YDRsN2ty6UdyQYsHRclY6iu12sVRdzIeEPBN/InzEBPzQsenQOWDEo+Q5DOPtE/i4C0KokT0x5JI9/RWVioxKp4RrLSNOArr+KVIfc/a74+yfTaMhQCyAdg2onpNSuzHSeY5egtno0QBSCLLmoxTQwUB1F/bfXngRdV9dFbbmQBpOV00KNbqGYmer+s3RvR2lkrGB48MuEJHWA3hgGRquw03ncG8zf/RZg==";
+  String verify_appID="IDAOczat";//人脸识别正式版本
+    String verify_secret="9iL7CJ3WLob3tyt0S4MnE319wqKOPad8iMzBYfjuq5xHdv0lNyTnNiAocbR5KQvn";
+    String verify_SDKlicense="uUIYZYlnFqOhA/QJH9qWifrjM6bOz0ouRvDGYIr9Ec0mTMqMqgkoCNhVlp/NGXVXEQ/wQHt5Aw45tsEJn4SAY5HaP/0xZfKdPAizDgQE1a/0kZK6SYmra0BdqOAkglxYP8d/xzAKU2InNXv2i1lmW1gwGjF9gOXi3w8SBDqjG2YEbmgGFSym7uo+3nZF0iqmAss5fFEuKkzk1kTncUTNLzWXYxOZMCLYviy8tzMSMLkptYRm1Fcp3fLhU0vrdVVO7kwmqdOxNoI/NTPtitJajK4CC4XgXNkR33FcYKOw/+COY8dDatw6jONr06RCJQI7Rqx0AM+7fFwVVFkQULSSBg==";
+
+    String verify_appID_debug="TIDAVBoi";//人脸识别正式版本
+    String verify_secret_debug="CjJXtRZAx2dAsU1yJRIhqgvBlOh6HWXLHK3H8LBUdmn24HNGJ21YKyZqVPYHZzkz";
+    String verify_SDKlicense_debug="uUIYZYlnFqOhA/QJH9qWifrjM6bOz0ouRvDGYIr9Ec0mTMqMqgkoCNhVlp/NGXVXEQ/wQHt5Aw45tsEJn4SAY5HaP/0xZfKdPAizDgQE1a/0kZK6SYmra0BdqOAkglxYP8d/xzAKU2InNXv2i1lmW1gwGjF9gOXi3w8SBDqjG2aIi5DV2uAzdpK5LFqGeRQmWuIRXQRE45dL5/wSNmQjguve3GxMpEVqD3a08mV+1xLPRrYCHZOEHxzoiYhqNn+/e+S0Wsxlohhbi5PQwkf62iLGIFmYpWWrVfOnqh8njWFTSZ5bnxx8olyzYri29hCmnud6nl3cAUl338sIc1q4Jg==";
 
     //网络货运
   public static String   freight_uniquie= "37103085";//企业唯一标识
