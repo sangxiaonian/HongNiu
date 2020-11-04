@@ -11,7 +11,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.ui.CompanyBaseFragment;
 import com.hongniu.freight.R;
@@ -27,7 +27,7 @@ import java.util.Arrays;
  * @Author PING
  * @Description 我的订单页面
  */
-@Route(path = ArouterParamApp.fragment_order_home)
+@Route(path = ArouterParamMNLM.fragment_order_home)
 public class HomeOrderFragment extends CompanyBaseFragment implements OnOptionsSelectListener, View.OnClickListener {
 
     private RoleOrder role  ;
@@ -107,7 +107,7 @@ public class HomeOrderFragment extends CompanyBaseFragment implements OnOptionsS
         }
         if (role==RoleOrder.SHIPPER ){
             if (shipperFragment==null){
-                shipperFragment= (CompanyBaseFragment) ArouterUtils.getInstance().builder(ArouterParamApp.fragment_my_order).navigation();
+                shipperFragment= (CompanyBaseFragment) ArouterUtils.getInstance().builder(ArouterParamMNLM.fragment_my_order).navigation();
                 Bundle bundle=new Bundle();
                 bundle.putSerializable(Param.TRAN,role);
                 shipperFragment.setBundle(bundle);
@@ -119,7 +119,7 @@ public class HomeOrderFragment extends CompanyBaseFragment implements OnOptionsS
 
         }else if (role==RoleOrder.CARRIER ){
             if (carrierFragment==null){
-                carrierFragment= (CompanyBaseFragment) ArouterUtils.getInstance().builder(ArouterParamApp.fragment_my_order).navigation();
+                carrierFragment= (CompanyBaseFragment) ArouterUtils.getInstance().builder(ArouterParamMNLM.fragment_my_order).navigation();
                 Bundle bundle=new Bundle();
                 bundle.putSerializable(Param.TRAN,role);
                 carrierFragment.setBundle(bundle);
@@ -130,7 +130,7 @@ public class HomeOrderFragment extends CompanyBaseFragment implements OnOptionsS
             currentFragment=carrierFragment;
         }else if (role==RoleOrder.DRIVER){
             if (driverFragment==null){
-                driverFragment= (CompanyBaseFragment) ArouterUtils.getInstance().builder(ArouterParamApp.fragment_my_order).navigation();
+                driverFragment= (CompanyBaseFragment) ArouterUtils.getInstance().builder(ArouterParamMNLM.fragment_my_order).navigation();
                 Bundle bundle=new Bundle();
                 bundle.putSerializable(Param.TRAN,role);
                 driverFragment.setBundle(bundle);
@@ -153,7 +153,7 @@ public class HomeOrderFragment extends CompanyBaseFragment implements OnOptionsS
         if (v.getId()==R.id.ll_filtrate){
             pickerView.show();
         }else if (v.getId()==R.id.search){
-            ArouterUtils.getInstance().builder(ArouterParamApp.activity_search_order)
+            ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_search_order)
                     .withSerializable(Param.TRAN,role)
                     .navigation(mContext);
         }

@@ -10,7 +10,7 @@ import android.widget.EditText;
 import com.alibaba.android.arouter.facade.annotation.Route;
 
 import com.fy.androidlibrary.toast.ToastUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.ui.CompanyBaseFragment;
 import com.hongniu.freight.R;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
@@ -22,7 +22,7 @@ import com.uuzuche.lib_zxing.activity.CodeUtils;
  * 手动输入订单号
  *
  */
-@Route(path = ArouterParamApp.fragment_hand_input)
+@Route(path = ArouterParamMNLM.fragment_hand_input)
 public class HandInputFragment extends CompanyBaseFragment implements View.OnClickListener {
     private EditText et;
     private Button bt;

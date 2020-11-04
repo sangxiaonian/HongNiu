@@ -19,7 +19,7 @@ import com.fy.androidlibrary.widget.recycle.adapter.XAdapter;
 import com.fy.androidlibrary.widget.recycle.control.RecycleControl;
 import com.fy.androidlibrary.widget.recycle.holder.PeakHolder;
 import com.fy.androidlibrary.widget.recycle.utils.XAdapterDataObserver;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.companylibrary.entity.PageBean;
@@ -43,7 +43,7 @@ import io.reactivex.Observable;
  * @Author PING
  * @Description 下单页面发货和收货信息
  */
-@Route(path = ArouterParamApp.activity_map_search)
+@Route(path = ArouterParamMNLM.activity_map_search)
 public class MapSearchActivity extends RefrushActivity<PoiItem> implements View.OnClickListener, MapPointFragment.OnMapPointChangeListener, SearchTextWatcher.SearchTextChangeListener, RecycleControl.OnItemClickListener<PoiItem>, MapUtils.OnMapChangeListener, ItemTextView.OnCenterChangeListener {
     private MapPointFragment frament;
     private EditText etSearch;

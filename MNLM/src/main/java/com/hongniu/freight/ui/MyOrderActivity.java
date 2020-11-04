@@ -10,7 +10,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
 import com.fy.companylibrary.ui.CompanyBaseFragment;
@@ -26,7 +26,7 @@ import java.util.Arrays;
  * @Author PING
  * @Description 我的订单页面
  */
-@Route(path = ArouterParamApp.activity_my_order)
+@Route(path = ArouterParamMNLM.activity_my_order)
 public class MyOrderActivity extends CompanyBaseActivity implements OnOptionsSelectListener, View.OnClickListener {
 
     private RoleOrder role;
@@ -51,7 +51,7 @@ public class MyOrderActivity extends CompanyBaseActivity implements OnOptionsSel
         setToolbarRightClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               ArouterUtils.getInstance().builder(ArouterParamApp.activity_search_order)
+               ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_search_order)
                        .withSerializable(Param.TRAN,role)
                        .navigation(mContext);
             }
@@ -115,7 +115,7 @@ public class MyOrderActivity extends CompanyBaseActivity implements OnOptionsSel
         }
         if (role==RoleOrder.SHIPPER ){
             if (shipperFragment==null){
-                shipperFragment= (CompanyBaseFragment) ArouterUtils.getInstance().builder(ArouterParamApp.fragment_my_order).navigation();
+                shipperFragment= (CompanyBaseFragment) ArouterUtils.getInstance().builder(ArouterParamMNLM.fragment_my_order).navigation();
                 Bundle bundle=new Bundle();
                 bundle.putSerializable(Param.TRAN,role);
                 shipperFragment.setBundle(bundle);
@@ -127,7 +127,7 @@ public class MyOrderActivity extends CompanyBaseActivity implements OnOptionsSel
 
         }else if (role==RoleOrder.CARRIER ){
             if (carrierFragment==null){
-                carrierFragment= (CompanyBaseFragment) ArouterUtils.getInstance().builder(ArouterParamApp.fragment_my_order).navigation();
+                carrierFragment= (CompanyBaseFragment) ArouterUtils.getInstance().builder(ArouterParamMNLM.fragment_my_order).navigation();
                 Bundle bundle=new Bundle();
                 bundle.putSerializable(Param.TRAN,role);
                 carrierFragment.setBundle(bundle);
@@ -138,7 +138,7 @@ public class MyOrderActivity extends CompanyBaseActivity implements OnOptionsSel
             currentFragment=carrierFragment;
         }else if (role==RoleOrder.DRIVER){
             if (driverFragment==null){
-                driverFragment= (CompanyBaseFragment) ArouterUtils.getInstance().builder(ArouterParamApp.fragment_my_order).navigation();
+                driverFragment= (CompanyBaseFragment) ArouterUtils.getInstance().builder(ArouterParamMNLM.fragment_my_order).navigation();
                 Bundle bundle=new Bundle();
                 bundle.putSerializable(Param.TRAN,role);
                 driverFragment.setBundle(bundle);

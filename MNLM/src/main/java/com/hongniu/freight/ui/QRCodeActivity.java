@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.fy.androidlibrary.widget.ColorImageView;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
 import com.fy.companylibrary.ui.CompanyBaseFragment;
@@ -27,7 +27,7 @@ import com.uuzuche.lib_zxing.activity.CodeUtils;
  * @Author PING
  * @Description 二维码扫描页面
  */
-@Route(path = ArouterParamApp.activity_qrcode)
+@Route(path = ArouterParamMNLM.activity_qrcode)
 public class QRCodeActivity extends CompanyBaseActivity implements View.OnClickListener, CodeUtils.AnalyzeCallback {
 
     private ViewGroup llLeft;
@@ -105,7 +105,7 @@ public class QRCodeActivity extends CompanyBaseActivity implements View.OnClickL
             changeState(type);
         } else if (v.getId() == R.id.ll_right && type != 2) {
             type = 2;
-            CompanyBaseFragment handFragment = (CompanyBaseFragment) ArouterUtils.getInstance().builder(ArouterParamApp.fragment_hand_input).navigation(mContext);
+            CompanyBaseFragment handFragment = (CompanyBaseFragment) ArouterUtils.getInstance().builder(ArouterParamMNLM.fragment_hand_input).navigation(mContext);
             getSupportFragmentManager().beginTransaction().replace(R.id.fl_my_container, handFragment).commit();
             changeState(type);
         }
@@ -120,7 +120,7 @@ public class QRCodeActivity extends CompanyBaseActivity implements View.OnClickL
 
     @Override
     public void onAnalyzeSuccess(Bitmap mBitmap, String result) {
-         ArouterUtils.getInstance().builder(ArouterParamApp.activity_way_bill).withString(Param.TRAN,result).navigation(this);
+         ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_way_bill).withString(Param.TRAN,result).navigation(this);
          finish();
     }
 

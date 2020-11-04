@@ -18,7 +18,7 @@ import com.fy.androidlibrary.toast.ToastUtils;
 import com.fy.androidlibrary.widget.editext.SearchTextWatcher;
 import com.fy.androidlibrary.widget.span.XClickableSpan;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.net.NetObserver;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
@@ -38,7 +38,7 @@ import io.reactivex.disposables.Disposable;
  * @Author PING
  * @Description 登录页面
  */
-@Route(path = ArouterParamApp.activity_login)
+@Route(path = ArouterParamMNLM.activity_login)
 public class LoginActivity extends CompanyBaseActivity implements View.OnClickListener {
     private final static int time = 60;
     private boolean isRetry;
@@ -101,7 +101,7 @@ public class LoginActivity extends CompanyBaseActivity implements View.OnClickLi
             @Override
             public void onClick(@NonNull View widget) {
                 H5Config h5Config = new H5Config("许可协议", Param.agreement, true);
-                ArouterUtils.getInstance().builder(ArouterParamApp.activity_h5).withSerializable(Param.TRAN, h5Config).navigation(mContext);
+                ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_h5).withSerializable(Param.TRAN, h5Config).navigation(mContext);
 
             }
         };
@@ -202,7 +202,7 @@ public class LoginActivity extends CompanyBaseActivity implements View.OnClickLi
                             public void doOnSuccess(LoginInfo loginInfo) {
                                 super.doOnSuccess(loginInfo);
                                 ArouterUtils.getInstance()
-                                        .builder(ArouterParamApp.activity_main)
+                                        .builder(ArouterParamMNLM.activity_main)
                                         .withBoolean(Param.TRAN, true)
                                         .navigation(mContext);
                                 EventBus.getDefault().postSticky(new UmenToken());

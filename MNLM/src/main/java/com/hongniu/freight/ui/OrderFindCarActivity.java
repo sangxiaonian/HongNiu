@@ -11,7 +11,7 @@ import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.fy.androidlibrary.toast.ToastUtils;
 import com.fy.androidlibrary.utils.CollectionUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.net.NetObserver;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
@@ -31,7 +31,7 @@ import java.util.List;
  * @Author PING
  * @Description 发布找车
  */
-@Route(path = ArouterParamApp.activity_order_find_car)
+@Route(path = ArouterParamMNLM.activity_order_find_car)
 public class OrderFindCarActivity extends CompanyBaseActivity implements View.OnClickListener, OnOptionsSelectListener, ItemTextView.OnCenterChangeListener {
 
     private ItemTextView item_car_type;

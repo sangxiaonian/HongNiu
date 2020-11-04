@@ -13,7 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.fy.androidlibrary.utils.ConvertUtils;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.ui.CompanyBaseFragment;
 import com.hongniu.freight.R;
@@ -23,7 +23,7 @@ import com.hongniu.freight.entity.BillInfoSearchParams;
  * 作者：  on 2020/2/12.
  * 月账单收入数据
  */
-@Route(path = ArouterParamApp.fragment_bill_month_income)
+@Route(path = ArouterParamMNLM.fragment_bill_month_income)
 public class BillMonthIncomeFragment extends CompanyBaseFragment implements BillMonthChildFragment.OnBillListener {
     private TextView tvExpendNumber;
     private TextView tvCount;
@@ -46,7 +46,7 @@ public class BillMonthIncomeFragment extends CompanyBaseFragment implements Bill
         tvCount.setText("0");
         tvExpendNumber.setText(getNumberSpan("0"));
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        trackFragment = (BillMonthChildFragment) ArouterUtils.getInstance().builder(ArouterParamApp.fragment_bill_month_child).navigation();
+        trackFragment = (BillMonthChildFragment) ArouterUtils.getInstance().builder(ArouterParamMNLM.fragment_bill_month_child).navigation();
         transaction.add(R.id.content, trackFragment);
         transaction.commit();
         upDate();

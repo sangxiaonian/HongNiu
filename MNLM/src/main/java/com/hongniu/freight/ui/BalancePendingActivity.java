@@ -19,7 +19,7 @@ import com.fy.androidlibrary.utils.CollectionUtils;
 import com.fy.androidlibrary.utils.ConvertUtils;
 import com.fy.androidlibrary.widget.editext.PointLengthFilter;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.companylibrary.net.NetObserver;
@@ -40,7 +40,7 @@ import io.reactivex.Observable;
  * @Author PING
  * @Description 余额提现
  */
-@Route(path = ArouterParamApp.activity_balance_pending)
+@Route(path = ArouterParamMNLM.activity_balance_pending)
 public class BalancePendingActivity extends CompanyBaseActivity implements View.OnClickListener, PasswordDialog.OnPasswordDialogListener {
 
     private TextView tv_blank;//银行卡信息
@@ -165,7 +165,7 @@ public class BalancePendingActivity extends CompanyBaseActivity implements View.
                                 @Override
                                 public void onRightClick(View view, Dialog dialog) {
                                     dialog.dismiss();
-                                    ArouterUtils.getInstance().builder(ArouterParamApp.activity_forget_pass)
+                                    ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_forget_pass)
                                             .withInt(Param.TRAN, 0)
                                             .navigation((Activity) mContext, 2);
                                 }
@@ -205,7 +205,7 @@ public class BalancePendingActivity extends CompanyBaseActivity implements View.
             @Override
             public void doOnSuccess(Object data) {
                 ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show("解绑成功");
-                ArouterUtils.getInstance().builder(ArouterParamApp.activity_main).navigation(mContext);
+                ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_main).navigation(mContext);
             }
         });
     }
@@ -251,7 +251,7 @@ public class BalancePendingActivity extends CompanyBaseActivity implements View.
     @Override
     public void onForgetPassowrd(Dialog dialog) {
         dialog.dismiss();
-        ArouterUtils.getInstance().builder(ArouterParamApp.activity_forget_pass)
+        ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_forget_pass)
                 .withInt(Param.TRAN, 1)
                 .navigation(this, 2);
     }

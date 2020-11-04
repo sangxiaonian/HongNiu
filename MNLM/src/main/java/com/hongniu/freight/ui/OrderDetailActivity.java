@@ -21,7 +21,7 @@ import com.fy.androidlibrary.utils.ConvertUtils;
 import com.fy.androidlibrary.widget.span.CenterAlignImageSpan;
 import com.fy.androidlibrary.widget.span.XClickableSpan;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
 import com.hongniu.freight.R;
@@ -43,7 +43,7 @@ import java.util.Map;
  * @Author PING
  * @Description 订单详情页
  */
-@Route(path = ArouterParamApp.activity_order_detail)
+@Route(path = ArouterParamMNLM.activity_order_detail)
 public class OrderDetailActivity extends CompanyBaseActivity implements OrderDetailControl.IOrderDetailView, View.OnClickListener, XOrderButtonClick.NextStepListener {
 
     private TextView tv_statute;//订单状态
@@ -366,7 +366,7 @@ public class OrderDetailActivity extends CompanyBaseActivity implements OrderDet
     @Override
     public void checkInsurance(AppInsuranceInfo insurance) {
         H5Config h5Config = new H5Config("查看保单", insurance.getDownloadUrl(), false);
-        ArouterUtils.getInstance().builder(ArouterParamApp.activity_h5)
+        ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_h5)
                 .withSerializable(Param.TRAN, h5Config)
                 .navigation(mContext);
     }

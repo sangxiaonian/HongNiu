@@ -14,7 +14,7 @@ import com.fy.androidlibrary.widget.autoline.helper.AutoLayoutHelper;
 import com.fy.androidlibrary.widget.autoline.helper.AutoTagAdapter;
 import com.fy.androidlibrary.widget.autoline.inter.AutoSingleSelectListener;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.net.NetObserver;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
@@ -32,7 +32,7 @@ import java.util.List;
  * @Author PING
  * @Description 我的金库
  */
-@Route(path = ArouterParamApp.activity_my_coffers)
+@Route(path = ArouterParamMNLM.activity_my_coffers)
 public class MyCoffersActivity extends CompanyBaseActivity implements AutoSingleSelectListener<String>, View.OnClickListener {
     AutoLineLayout autoLineLayout;//标签
     TextView tv_balance_of_account;//余额
@@ -126,7 +126,7 @@ public class MyCoffersActivity extends CompanyBaseActivity implements AutoSingle
         }
         if (position == 0) {
             if (balanceFragment == null) {
-                balanceFragment = (CompanyBaseFragment) ArouterUtils.getInstance().builder(ArouterParamApp.fragment_bill_month).navigation();
+                balanceFragment = (CompanyBaseFragment) ArouterUtils.getInstance().builder(ArouterParamMNLM.fragment_bill_month).navigation();
                 transaction.add(R.id.content, balanceFragment);
                 Bundle bundle = new Bundle();
                 bundle.putInt(Param.TYPE, 1);
@@ -138,7 +138,7 @@ public class MyCoffersActivity extends CompanyBaseActivity implements AutoSingle
             currentFragment = balanceFragment;
         } else {
             if (waiteFragment == null) {
-                waiteFragment = (CompanyBaseFragment) ArouterUtils.getInstance().builder(ArouterParamApp.fragment_bill_month).navigation();
+                waiteFragment = (CompanyBaseFragment) ArouterUtils.getInstance().builder(ArouterParamMNLM.fragment_bill_month).navigation();
                 transaction.add(R.id.content, waiteFragment);
                 Bundle bundle = new Bundle();
                 bundle.putInt(Param.TYPE, 2);
@@ -161,10 +161,10 @@ public class MyCoffersActivity extends CompanyBaseActivity implements AutoSingle
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.tv_month_bill) {
-            ArouterUtils.getInstance().builder(ArouterParamApp.activity_bill_month)
+            ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_bill_month)
                     .navigation(mContext);
         } else if (v.getId() == R.id.tv_balance_of_account) {
-            ArouterUtils.getInstance().builder(ArouterParamApp.activity_balance)
+            ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_balance)
                     .navigation(mContext);
 
         }

@@ -16,7 +16,7 @@ import com.fy.androidlibrary.widget.autoline.AutoLineLayout;
 import com.fy.androidlibrary.widget.autoline.helper.AutoLayoutHelper;
 import com.fy.androidlibrary.widget.autoline.inter.AutoSingleSelectListener;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
 import com.fy.companylibrary.ui.CompanyBaseFragment;
@@ -35,7 +35,7 @@ import java.util.List;
  * @Author PING
  * @Description 月账单
  */
-@Route(path = ArouterParamApp.activity_bill_month)
+@Route(path = ArouterParamMNLM.activity_bill_month)
 public class BillMonthActivity extends CompanyBaseActivity implements AutoSingleSelectListener<String>, OnTimeSelectListener, View.OnClickListener {
 
     private AutoTagSingleAdapter tagAdapter;
@@ -56,7 +56,7 @@ public class BillMonthActivity extends CompanyBaseActivity implements AutoSingle
             @Override
             public void onClick(View v) {
                 ArouterUtils.getInstance()
-                        .builder(ArouterParamApp.activity_bill_search)
+                        .builder(ArouterParamMNLM.activity_bill_search)
                         .withParcelable(Param.TRAN,params)
                         .navigation();
             }
@@ -118,7 +118,7 @@ public class BillMonthActivity extends CompanyBaseActivity implements AutoSingle
         if (position == 0) {
             if (expendFragment == null) {
                 params.setFeeType(1);
-                expendFragment = (CompanyBaseFragment) ArouterUtils.getInstance().builder(ArouterParamApp.fragment_bill_month_expend).navigation();
+                expendFragment = (CompanyBaseFragment) ArouterUtils.getInstance().builder(ArouterParamMNLM.fragment_bill_month_expend).navigation();
                 Bundle bundle = new Bundle();
                 bundle.putParcelable(Param.TRAN, params);
                 expendFragment.setBundle(bundle);
@@ -131,7 +131,7 @@ public class BillMonthActivity extends CompanyBaseActivity implements AutoSingle
         } else {
             if (incomeFragment == null) {
                 params.setFeeType(2);
-                incomeFragment = (CompanyBaseFragment) ArouterUtils.getInstance().builder(ArouterParamApp.fragment_bill_month_income).navigation();
+                incomeFragment = (CompanyBaseFragment) ArouterUtils.getInstance().builder(ArouterParamMNLM.fragment_bill_month_income).navigation();
                 Bundle bundle = new Bundle();
                 bundle.putParcelable(Param.TRAN, params);
                 incomeFragment.setBundle(bundle);

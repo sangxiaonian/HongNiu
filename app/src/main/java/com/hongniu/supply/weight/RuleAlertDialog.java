@@ -43,7 +43,7 @@ public class RuleAlertDialog extends Dialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.mnlm_layout_dialog_alert_rule);
+        setContentView(R.layout.layout_dialog_alert_rule);
         //按空白处不能取消动画
         setCanceledOnTouchOutside(false);
         setCancelable(false);

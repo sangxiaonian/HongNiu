@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.fy.androidlibrary.imgload.ImageLoader;
 import com.fy.androidlibrary.toast.ToastUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.net.NetObserver;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
@@ -31,7 +31,7 @@ import com.hongniu.freight.utils.Utils;
  * @Author PING
  * @Description 评价
  */
-@Route(path = ArouterParamApp.activity_appraise)
+@Route(path = ArouterParamMNLM.activity_appraise)
 public class AppraiseActivity extends CompanyBaseActivity implements View.OnClickListener {
 
     String id;

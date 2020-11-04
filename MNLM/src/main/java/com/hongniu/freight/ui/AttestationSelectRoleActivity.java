@@ -15,7 +15,7 @@ import com.fy.androidlibrary.utils.DeviceUtils;
 import com.fy.androidlibrary.widget.recycle.adapter.SelectAdapter;
 import com.fy.androidlibrary.widget.recycle.utils.XLineDivider;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
 import com.hongniu.freight.R;
@@ -29,7 +29,7 @@ import java.util.List;
  * @Author PING
  * @Description 选择认证的角色身份
  */
-@Route(path = ArouterParamApp.activity_attestation_select_role)
+@Route(path = ArouterParamMNLM.activity_attestation_select_role)
 public class AttestationSelectRoleActivity extends CompanyBaseActivity implements SelectAdapter.SingleSelectedListener<AttestationSelectRoleActivity.ItemInfo>, View.OnClickListener {
 
     private TextView btSum;
@@ -124,7 +124,7 @@ public class AttestationSelectRoleActivity extends CompanyBaseActivity implement
     public void onClick(View v) {
         if (v.getId()==R.id.bt_sum){
             if (role!=null) {
-                ArouterUtils.getInstance().builder(ArouterParamApp.activity_attestation_role_activity)
+                ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_attestation_role_activity)
                         .withSerializable(Param.TRAN,role)
                         .navigation(mContext);
             }else {

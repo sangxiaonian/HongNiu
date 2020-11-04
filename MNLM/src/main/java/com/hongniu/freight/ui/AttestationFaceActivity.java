@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.net.NetObserver;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
 import com.hongniu.freight.R;
@@ -23,7 +23,7 @@ import com.sang.thirdlibrary.map.verify.VerifyTokenBeans;
  * 人脸识别
  *
  */
-@Route(path = ArouterParamApp.activity_attestation_face)
+@Route(path = ArouterParamMNLM.activity_attestation_face)
 public class AttestationFaceActivity extends CompanyBaseActivity implements View.OnClickListener, PermissionUtils.onApplyPermission, VerifyClient.OnVerifyListener {
 
     private TextView btSum;
@@ -72,7 +72,7 @@ public class AttestationFaceActivity extends CompanyBaseActivity implements View
                     public void doOnSuccess(VerifyTokenBeans verifyTokenBeans) {
                         super.doOnSuccess(verifyTokenBeans);
                         if (verifyTokenBeans.getIsAuthen()==1){
-                            ArouterUtils.getInstance().builder(ArouterParamApp.activity_main)
+                            ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_main)
                                     .navigation(mContext);
                         }else {
                             verifyTokenBeans.setUserID(InfoUtils.getLoginInfo().getId());
@@ -98,7 +98,7 @@ public class AttestationFaceActivity extends CompanyBaseActivity implements View
                     @Override
                     public void doOnSuccess(Object o) {
                         super.doOnSuccess(o);
-                        ArouterUtils.getInstance().builder(ArouterParamApp.activity_main)
+                        ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_main)
                                 .navigation(mContext);
                     }
                 });
@@ -115,7 +115,7 @@ public class AttestationFaceActivity extends CompanyBaseActivity implements View
                     @Override
                     public void doOnSuccess(Object o) {
                         super.doOnSuccess(o);
-                        ArouterUtils.getInstance().builder(ArouterParamApp.activity_main)
+                        ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_main)
                                 .navigation(mContext);
                     }
                 });

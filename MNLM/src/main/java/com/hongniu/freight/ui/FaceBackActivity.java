@@ -14,7 +14,7 @@ import com.fy.androidlibrary.toast.ToastUtils;
 import com.fy.androidlibrary.utils.CollectionUtils;
 import com.fy.androidlibrary.widget.editext.SearchTextWatcher;
 import com.fy.androidlibrary.widget.recycle.utils.XAdapterDataObserver;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.net.NetObserver;
 import com.sang.thirdlibrary.picture.ImageInforBean;
 import com.sang.thirdlibrary.picture.helper.interceptor.FileProgressRequestBody;
@@ -36,7 +36,7 @@ import io.reactivex.functions.Function;
  * @Author PING
  * @Description 意见反馈页面
  */
-@Route(path = ArouterParamApp.activity_face_back)
+@Route(path = ArouterParamMNLM.activity_face_back)
 public class FaceBackActivity extends BaseImageUpActivity implements SearchTextWatcher.SearchTextChangeListener, View.OnClickListener {
 
     private RecyclerView recyclerView;

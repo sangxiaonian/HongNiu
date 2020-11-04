@@ -201,4 +201,13 @@
         android:layout_marginBottom="80dp"
         android:layout_marginRight="20dp"
         android:layout_height="wrap_content" />
+
+    <ImageView
+        android:layout_width="70dp"
+        android:id="@+id/img_back"
+        android:src="@mipmap/mnlm_icon_img_home_back"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="113dp"
+        android:layout_height="27dp"/>
+
 </RelativeLayout>

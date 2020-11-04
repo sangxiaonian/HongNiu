@@ -13,7 +13,7 @@ import com.fy.androidlibrary.utils.CommonUtils;
 import com.fy.androidlibrary.widget.recycle.adapter.XAdapter;
 import com.fy.androidlibrary.widget.recycle.holder.BaseHolder;
 import com.fy.androidlibrary.widget.recycle.holder.PeakHolder;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.companylibrary.entity.PageBean;
@@ -33,7 +33,7 @@ import io.reactivex.Observable;
  * <p>
  * 账单余额明细和带入张明细数据
  */
-@Route(path = ArouterParamApp.fragment_bill_month)
+@Route(path = ArouterParamMNLM.fragment_bill_month)
 public class BillRecordFragment extends RefrushFragmet<BillInfoListBean> {
 
     private int type;

@@ -22,7 +22,7 @@ public class H5Activity extends ModuleBaseActivity implements XWebView.OnReceive
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.mnlm_activity_h5);
+        setContentView(R.layout.activity_h5);
         setToolbarTitle("");
         setToolBarLeftClick(new View.OnClickListener() {
             @Override

@@ -17,7 +17,7 @@ import com.fy.androidlibrary.widget.autoline.AutoLineLayout;
 import com.fy.androidlibrary.widget.autoline.helper.AutoLayoutHelper;
 import com.fy.androidlibrary.widget.autoline.inter.AutoSingleSelectListener;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.ui.CompanyBaseFragment;
 import com.hongniu.freight.R;
@@ -31,7 +31,7 @@ import java.util.List;
  * 作者：  on 2020/2/12.
  * 月账单支出数据
  */
-@Route(path = ArouterParamApp.fragment_bill_month_expend)
+@Route(path = ArouterParamMNLM.fragment_bill_month_expend)
 public class BillMonthExpendFragment extends CompanyBaseFragment implements AutoSingleSelectListener<String>, BillMonthChildFragment.OnBillListener {
     private AutoLineLayout autoLineLayout;
     private TextView tvExpendNumber;
@@ -137,7 +137,7 @@ public class BillMonthExpendFragment extends CompanyBaseFragment implements Auto
         }
         if (position == 0) {
             if (trackFragment == null) {
-                trackFragment = (BillMonthChildFragment) ArouterUtils.getInstance().builder(ArouterParamApp.fragment_bill_month_child).navigation();
+                trackFragment = (BillMonthChildFragment) ArouterUtils.getInstance().builder(ArouterParamMNLM.fragment_bill_month_child).navigation();
                 trackFragment.setBillListener(this);
                 transaction.add(R.id.content, trackFragment);
 
@@ -151,7 +151,7 @@ public class BillMonthExpendFragment extends CompanyBaseFragment implements Auto
             currentFragment = trackFragment;
         } else {
             if (insuranceFragment == null) {
-                insuranceFragment = (BillMonthChildFragment) ArouterUtils.getInstance().builder(ArouterParamApp.fragment_bill_month_child).navigation();
+                insuranceFragment = (BillMonthChildFragment) ArouterUtils.getInstance().builder(ArouterParamMNLM.fragment_bill_month_child).navigation();
                 insuranceFragment.setBillListener(this);
                 transaction.add(R.id.content, insuranceFragment);
 

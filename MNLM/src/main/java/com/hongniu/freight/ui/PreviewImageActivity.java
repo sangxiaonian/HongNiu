@@ -8,7 +8,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.fy.androidlibrary.utils.CollectionUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
 import com.hongniu.freight.R;
@@ -23,7 +23,7 @@ import java.util.List;
  * <p>
  * 查看回单，查看货单 type 0 单纯的查看回单 1预览回单，有删除功能 2查看货单，有重新上传功能
  */
-@Route(path = ArouterParamApp.activity_preview_image)
+@Route(path = ArouterParamMNLM.activity_preview_image)
 
 public class PreviewImageActivity extends CompanyBaseActivity implements ViewPager.OnPageChangeListener {
 

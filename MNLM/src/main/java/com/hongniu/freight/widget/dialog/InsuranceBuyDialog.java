@@ -18,7 +18,7 @@ import com.fy.androidlibrary.utils.ConvertUtils;
 import com.fy.androidlibrary.utils.DeviceUtils;
 import com.fy.androidlibrary.widget.editext.SearchTextWatcher;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.net.NetObserver;
 import com.fy.companylibrary.widget.ItemTextView;
@@ -97,7 +97,7 @@ public class InsuranceBuyDialog implements DialogControl.IDialog, View.OnClickLi
 
         }else if (v.getId() == R.id.tv_agreement_insurance) {
             H5Config h5Config = new H5Config("木牛流马(远恒)货运综合险", Param.insurance_notify, true);
-            ArouterUtils.getInstance().builder(ArouterParamApp.activity_h5).withSerializable(Param.TRAN, h5Config).navigation();
+            ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_h5).withSerializable(Param.TRAN, h5Config).navigation();
         } else if (v.getId() == R.id.bt_sum) {
             if (TextUtils.isEmpty(item_cargo_price.getTextCenter())) {
                 ToastUtils.getInstance().show("请输入货物价值");

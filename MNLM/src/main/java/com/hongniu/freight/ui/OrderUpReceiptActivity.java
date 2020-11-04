@@ -15,7 +15,7 @@ import com.fy.androidlibrary.toast.ToastUtils;
 import com.fy.androidlibrary.utils.CollectionUtils;
 import com.sang.thirdlibrary.picture.ImageInforBean;
 import com.sang.thirdlibrary.picture.helper.interceptor.FileProgressRequestBody;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.net.NetObserver;
 import com.fy.companylibrary.ui.BaseImageUpActivity;
@@ -38,7 +38,7 @@ import io.reactivex.functions.Function;
  * @Author PING
  * @Description 上传/修改回单
  */
-@Route(path = ArouterParamApp.activity_order_up_receipt)
+@Route(path = ArouterParamMNLM.activity_order_up_receipt)
 public class OrderUpReceiptActivity extends BaseImageUpActivity implements View.OnClickListener  {
 
     private RecyclerView rv;

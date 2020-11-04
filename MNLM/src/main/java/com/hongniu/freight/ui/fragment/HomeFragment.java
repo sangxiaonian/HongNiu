@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
-import android.text.TextUtils;
 import android.text.style.AbsoluteSizeSpan;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +17,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.fy.androidlibrary.event.BusFactory;
 import com.fy.androidlibrary.utils.CollectionUtils;
 import com.fy.androidlibrary.widget.recycle.holder.BaseHolder;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.ui.CompanyBaseFragment;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
@@ -44,7 +43,7 @@ import java.util.List;
 /**
  * 作者：  on 2020/2/5.
  */
-@Route(path = ArouterParamApp.fragment_home)
+@Route(path = ArouterParamMNLM.fragment_home)
 public class HomeFragment extends CompanyBaseFragment implements HomeControl.IHomeFragmentView, View.OnClickListener, XOrderButtonClick.NextStepListener {
     private TextView tv_title;//标题
     private TextView tv_role_title;//标题
@@ -207,11 +206,11 @@ public class HomeFragment extends CompanyBaseFragment implements HomeControl.IHo
     @Override
     public void showPersonInfo(PersonInfor personInfo) {
         //
-        if (personInfo != null) {
-            String name = TextUtils.isEmpty(personInfo.getContact()) ? "" : personInfo.getContact();
-            name = TextUtils.isEmpty(name) ? personInfo.getMobile() : name;
-            tv_title.setText(String.format("%s好，%s", Utils.getTitleTime(), name));
-        }
+//        if (personInfo != null) {
+//            String name = TextUtils.isEmpty(personInfo.getContact()) ? "" : personInfo.getContact();
+//            name = TextUtils.isEmpty(name) ? personInfo.getMobile() : name;
+//            tv_title.setText(String.format("%s好，%s", Utils.getTitleTime(), name));
+//        }
 
     }
 
@@ -236,7 +235,7 @@ public class HomeFragment extends CompanyBaseFragment implements HomeControl.IHo
     @Override
     public void jump2CheckState(Role role, PersonInfor personInfo) {
 
-        ArouterUtils.getInstance().builder(ArouterParamApp.activity_attestation_role_activity)
+        ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_attestation_role_activity)
                 .withSerializable(Param.TRAN, role)
                 .withBoolean(Param.TYPE, InfoUtils.getState(personInfo) == 5 || InfoUtils.getState(personInfo) == 0)
                 .navigation(mContext);
@@ -246,10 +245,10 @@ public class HomeFragment extends CompanyBaseFragment implements HomeControl.IHo
     public void clickMore(RoleOrder roleOrder) {
         if (roleOrder == RoleOrder.CARRIER) {
             ArouterUtils.getInstance()
-                    .builder(ArouterParamApp.activity_order_center)
+                    .builder(ArouterParamMNLM.activity_order_center)
                     .navigation(mContext);
         } else {
-            ArouterUtils.getInstance().builder(ArouterParamApp.activity_my_order)
+            ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_my_order)
                     .withSerializable(Param.TRAN, roleOrder)
                     .navigation(mContext);
         }
@@ -286,7 +285,7 @@ public class HomeFragment extends CompanyBaseFragment implements HomeControl.IHo
      */
     @Override
     public void jump2SelectRole() {
-        ArouterUtils.getInstance().builder(ArouterParamApp.activity_attestation_select_role)
+        ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_attestation_select_role)
                 .navigation(mContext);
     }
 
@@ -335,34 +334,34 @@ public class HomeFragment extends CompanyBaseFragment implements HomeControl.IHo
     public void onClick(View v) {
         if (v.getId() == R.id.bt_learn_more) {
             H5Config h5Config = new H5Config("网络货运", Param.insurance_polic, true);
-            ArouterUtils.getInstance().builder(ArouterParamApp.activity_h5)
+            ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_h5)
                     .withSerializable(Param.TRAN, h5Config)
                     .navigation(mContext);
         } else if (v.getId() == R.id.view_chengyunren) {
-            ArouterUtils.getInstance().builder(ArouterParamApp.activity_my_order)
+            ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_my_order)
                     .withSerializable(Param.TRAN, RoleOrder.CARRIER)
                     .navigation(mContext);
         } else if (v.getId() == R.id.view_tuoyunren) {
             //托运人
-            ArouterUtils.getInstance().builder(ArouterParamApp.activity_my_order)
+            ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_my_order)
                     .withSerializable(Param.TRAN, RoleOrder.SHIPPER)
                     .navigation(mContext);
         } else if (v.getId() == R.id.view_driver) {
-            ArouterUtils.getInstance().builder(ArouterParamApp.activity_my_order)
+            ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_my_order)
                     .withSerializable(Param.TRAN, RoleOrder.DRIVER)
                     .navigation(mContext);
         } else if (v.getId() == R.id.icon_eyes) {
             present.switchBalance();
         } else if (v.getId() == R.id.shadow) {
             ArouterUtils.getInstance()
-                    .builder(ArouterParamApp.activity_my_coffers)
+                    .builder(ArouterParamMNLM.activity_my_coffers)
                     .navigation(mContext);
         } else if (v.getId() == R.id.ll_more) {
             present.clickMore();
 
         } else if (v.getId() == R.id.search) {
             ArouterUtils.getInstance()
-                    .builder(ArouterParamApp.activity_qrcode)
+                    .builder(ArouterParamMNLM.activity_qrcode)
                     .navigation(getContext());
 
         }

@@ -19,13 +19,13 @@ import com.fy.androidlibrary.utils.DeviceUtils;
 import com.fy.androidlibrary.utils.JLog;
 import com.fy.androidlibrary.utils.SharedPreferencesUtils;
 import com.fy.androidlibrary.utils.permission.PermissionUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
+import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.companylibrary.net.NetObserver;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
 import com.fy.companylibrary.ui.CompanyBaseFragment;
-import com.hdgq.locationlib.listener.OnResultListener;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.freight.BuildConfig;
 import com.hongniu.freight.Config;
@@ -33,7 +33,6 @@ import com.hongniu.freight.R;
 import com.hongniu.freight.entity.Event;
 import com.hongniu.freight.entity.PersonInfor;
 import com.hongniu.freight.entity.UmenToken;
-import com.hongniu.freight.huoyun.FreightClient;
 import com.hongniu.freight.net.HttpAppFactory;
 import com.hongniu.freight.ui.fragment.ChactListFragment;
 import com.hongniu.freight.ui.fragment.HomeFragment;
@@ -55,7 +54,7 @@ import io.reactivex.functions.Function;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 
-@Route(path = ArouterParamApp.activity_main)
+@Route(path = ArouterParamMNLM.activity_main)
 public class MainActivity extends CompanyBaseActivity implements View.OnClickListener,   AMapLocationListener, ChactControl.OnReceiveUnReadCountListener {
 
     private TextView demo;
@@ -79,6 +78,8 @@ public class MainActivity extends CompanyBaseActivity implements View.OnClickLis
     ImageView img3;
     ImageView img4;
     ImageView img5;
+
+    ImageView img_back;
 
 
     CompanyBaseFragment homeFragment, orderFragment, messageFragment, meFragment, currentFragment;
@@ -127,6 +128,7 @@ public class MainActivity extends CompanyBaseActivity implements View.OnClickLis
         img4 = findViewById(R.id.img4);
         img5 = findViewById(R.id.img5);
         demo = findViewById(R.id.demo);
+        img_back = findViewById(R.id.img_back);
         dialogAttes = Utils.dialogAttes(mContext, new DialogComment.OnButtonRightClickListener() {
             @Override
             public void onRightClick(View view, Dialog dialog) {
@@ -156,6 +158,7 @@ public class MainActivity extends CompanyBaseActivity implements View.OnClickLis
         tab3.setOnClickListener(this);
         tab4.setOnClickListener(this);
         tab5.setOnClickListener(this);
+        img_back.setOnClickListener(this);
         demo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -227,7 +230,7 @@ public class MainActivity extends CompanyBaseActivity implements View.OnClickLis
             changeTabeState(v.getId());
         } else if (id == R.id.tab3) {
             if (InfoUtils.getState(InfoUtils.getMyInfo()) == 4) {
-                ArouterUtils.getInstance().builder(ArouterParamApp.activity_order_create)
+                ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_order_create)
                         .navigation();
             } else if (InfoUtils.isShowAlert()) {
                 dialogAttes.show();
@@ -235,6 +238,9 @@ public class MainActivity extends CompanyBaseActivity implements View.OnClickLis
                 ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER)
                         .show("身份认证审核中");
             }
+        }else if (id == R.id.img_back) {
+            ArouterUtils.getInstance().builder(ArouterParamsApp.activity_main)
+                    .navigation();
         }
     }
 
@@ -271,7 +277,7 @@ public class MainActivity extends CompanyBaseActivity implements View.OnClickLis
             currentFragment = homeFragment;
         } else if (id == R.id.tab2) {
             if (orderFragment == null) {
-                orderFragment = (CompanyBaseFragment) ArouterUtils.getInstance().builder(ArouterParamApp.fragment_order_home).navigation(mContext);
+                orderFragment = (CompanyBaseFragment) ArouterUtils.getInstance().builder(ArouterParamMNLM.fragment_order_home).navigation(mContext);
                 fragmentTransaction.add(R.id.content, orderFragment);
             } else {
                 fragmentTransaction.show(orderFragment);
@@ -288,7 +294,7 @@ public class MainActivity extends CompanyBaseActivity implements View.OnClickLis
             currentFragment = messageFragment;
         } else if (id == R.id.tab5) {
             if (meFragment == null) {
-                meFragment = (CompanyBaseFragment) ArouterUtils.getInstance().builder(ArouterParamApp.fragment_person_center).navigation(mContext);
+                meFragment = (CompanyBaseFragment) ArouterUtils.getInstance().builder(ArouterParamMNLM.fragment_person_center).navigation(mContext);
                 fragmentTransaction.add(R.id.content, meFragment);
             } else {
                 fragmentTransaction.show(meFragment);

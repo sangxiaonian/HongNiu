@@ -10,7 +10,7 @@ import com.fy.androidlibrary.event.BusFactory;
 import com.fy.androidlibrary.event.IBus;
 import com.fy.androidlibrary.imgload.ImageLoader;
 import com.fy.androidlibrary.toast.ToastUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.net.NetObserver;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
@@ -38,7 +38,7 @@ import io.reactivex.schedulers.Schedulers;
  * @Author PING
  * @Description 支付界面
  */
-@Route(path = ArouterParamApp.activity_waite_pay)
+@Route(path = ArouterParamMNLM.activity_waite_pay)
 public class WaitePayActivity extends CompanyBaseActivity {
 
     private ImageView img;

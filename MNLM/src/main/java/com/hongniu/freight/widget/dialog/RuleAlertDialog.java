@@ -16,7 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.hongniu.freight.R;
 import com.hongniu.freight.entity.H5Config;
@@ -139,7 +139,7 @@ public class RuleAlertDialog extends Dialog {
             @Override
             public void onClick(View widget) {
                 H5Config h5Config = new H5Config("许可协议", Param.hongniu_privacy, true);
-                ArouterUtils.getInstance().builder(ArouterParamApp.activity_h5).withSerializable(Param.TRAN, h5Config).navigation(getContext());
+                ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_h5).withSerializable(Param.TRAN, h5Config).navigation(getContext());
 
             }
 
@@ -154,7 +154,7 @@ public class RuleAlertDialog extends Dialog {
             @Override
             public void onClick(View widget) {
                 H5Config h5Config = new H5Config("许可协议", Param.agreement, true);
-                ArouterUtils.getInstance().builder(ArouterParamApp.activity_h5).withSerializable(Param.TRAN, h5Config).navigation(getContext());
+                ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_h5).withSerializable(Param.TRAN, h5Config).navigation(getContext());
 
             }
 

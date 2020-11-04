@@ -53,7 +53,7 @@ public class SplashActivity extends ModuleBaseActivity implements RuleAlertDialo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.mnlm_activity_splash);
+        setContentView(R.layout.activity_splash);
 
 
         if (getIntent() != null) {

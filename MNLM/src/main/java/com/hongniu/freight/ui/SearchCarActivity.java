@@ -13,7 +13,7 @@ import com.fy.androidlibrary.widget.editext.SearchTextWatcher;
 import com.fy.androidlibrary.widget.recycle.adapter.XAdapter;
 import com.fy.androidlibrary.widget.recycle.holder.BaseHolder;
 import com.fy.androidlibrary.widget.recycle.holder.PeakHolder;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.companylibrary.entity.PageBean;
@@ -32,7 +32,7 @@ import io.reactivex.Observable;
  * @Author PING
  * @Description 搜索车辆信息 type=1 自己的车辆
  */
-@Route(path = ArouterParamApp.activity_search_car)
+@Route(path = ArouterParamMNLM.activity_search_car)
 public class SearchCarActivity extends RefrushActivity<CarInfoBean> implements SearchTextWatcher.SearchTextChangeListener {
 
     private SearchTitleView searchTitleView;

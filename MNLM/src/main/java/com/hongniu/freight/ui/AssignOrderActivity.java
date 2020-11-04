@@ -18,7 +18,7 @@ import com.fy.androidlibrary.toast.ToastUtils;
 import com.fy.androidlibrary.widget.editext.SearchTextWatcher;
 import com.fy.androidlibrary.widget.span.CenterAlignImageSpan;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.net.NetObserver;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
@@ -38,7 +38,7 @@ import java.util.List;
  * @Author PING
  * @Description 立即派车
  */
-@Route(path = ArouterParamApp.activity_assign_order)
+@Route(path = ArouterParamMNLM.activity_assign_order)
 public class AssignOrderActivity extends CompanyBaseActivity implements View.OnClickListener, ItemTextView.OnCenterChangeListener, SearchTextWatcher.SearchTextChangeListener, CarNumPop.onItemClickListener<OrderDriverPhoneBean> {
     private TextView bt_sum;
     private ItemTextView item_price;
@@ -155,7 +155,7 @@ public class AssignOrderActivity extends CompanyBaseActivity implements View.OnC
 
             }
         } else if (v.getId() == R.id.item_car_type) {
-            ArouterUtils.getInstance().builder(ArouterParamApp.activity_search_car)
+            ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_search_car)
                     .navigation((Activity) mContext, 1);
         }
 

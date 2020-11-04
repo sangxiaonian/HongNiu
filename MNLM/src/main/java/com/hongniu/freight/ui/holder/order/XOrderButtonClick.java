@@ -15,7 +15,7 @@ import com.fy.androidlibrary.net.listener.TaskControl;
 import com.fy.androidlibrary.toast.ToastUtils;
 import com.fy.androidlibrary.utils.ConvertUtils;
 import com.fy.androidlibrary.utils.JLog;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.net.NetObserver;
 import com.google.gson.Gson;
@@ -81,7 +81,7 @@ public class XOrderButtonClick implements OrderButtonClickListener, InsuranceBuy
     @Override
     public void onPayClick(OrderInfoBean bean) {
         ArouterUtils.getInstance()
-                .builder(ArouterParamApp.activity_pay)
+                .builder(ArouterParamMNLM.activity_pay)
                 .withString(Param.TRAN, bean.getId())
                 .withInt(Param.TYPE, 1)
                 .navigation(mContext);
@@ -132,7 +132,7 @@ public class XOrderButtonClick implements OrderButtonClickListener, InsuranceBuy
 //        ToastUtils.getInstance().show("差额支付");
 //  差额支付
         ArouterUtils.getInstance()
-                .builder(ArouterParamApp.activity_pay)
+                .builder(ArouterParamMNLM.activity_pay)
                 .withString(Param.TRAN, bean.getId())
                 .withInt(Param.TYPE, 2)
                 .navigation(mContext);
@@ -169,7 +169,7 @@ public class XOrderButtonClick implements OrderButtonClickListener, InsuranceBuy
         }
         if (orderCreatBean != null) {
             H5Config h5Config = new H5Config("查看保单", orderCreatBean.getDownloadUrl(), false);
-            ArouterUtils.getInstance().builder(ArouterParamApp.activity_h5)
+            ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_h5)
                     .withSerializable(Param.TRAN, h5Config)
                     .navigation(mContext);
         } else {
@@ -185,7 +185,7 @@ public class XOrderButtonClick implements OrderButtonClickListener, InsuranceBuy
     @Override
     public void onCheckTrackClick(OrderInfoBean bean) {
 //        ToastUtils.getInstance().show("查看轨迹");
-        ArouterUtils.getInstance().builder(ArouterParamApp.activity_map_check_path)
+        ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_map_check_path)
                 .withParcelable(Param.TRAN, bean)
                 .navigation((Activity) mContext, 1);
     }
@@ -279,7 +279,7 @@ public class XOrderButtonClick implements OrderButtonClickListener, InsuranceBuy
      */
     @Override
     public void onEvaluateClick(OrderInfoBean bean) {
-        ArouterUtils.getInstance().builder(ArouterParamApp.activity_appraise)
+        ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_appraise)
                 .withString(Param.TRAN, bean.getId())
                 .withSerializable(Param.TYPE, type)
                 .navigation((Activity) mContext, 1);
@@ -293,7 +293,7 @@ public class XOrderButtonClick implements OrderButtonClickListener, InsuranceBuy
     @Override
     public void onSendOrderClick(OrderInfoBean bean) {
 //        ToastUtils.getInstance().show("立即派车");
-        ArouterUtils.getInstance().builder(ArouterParamApp.activity_assign_order)
+        ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_assign_order)
                 .withString(Param.TRAN, bean.getId())
                 .navigation(mContext);
     }
@@ -307,7 +307,7 @@ public class XOrderButtonClick implements OrderButtonClickListener, InsuranceBuy
     public void onFindCarClick(OrderInfoBean bean) {
 //        ToastUtils.getInstance().show("发布找车");
         ArouterUtils.getInstance()
-                .builder(ArouterParamApp.activity_order_find_car)
+                .builder(ArouterParamMNLM.activity_order_find_car)
                 .withString(Param.TRAN, bean.getId())
                 .navigation(mContext);
 
@@ -321,7 +321,7 @@ public class XOrderButtonClick implements OrderButtonClickListener, InsuranceBuy
     @Override
     public void onReSendOrderClick(OrderInfoBean bean) {
 //        ToastUtils.getInstance().show("重新派单");
-        ArouterUtils.getInstance().builder(ArouterParamApp.activity_assign_order)
+        ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_assign_order)
                 .withString(Param.TRAN, bean.getId())
                 .navigation(mContext);
     }
@@ -334,7 +334,7 @@ public class XOrderButtonClick implements OrderButtonClickListener, InsuranceBuy
     @Override
     public void onReceiveOrderClick(OrderInfoBean bean) {
 //        ToastUtils.getInstance().show("我要接单");
-        ArouterUtils.getInstance().builder(ArouterParamApp.activity_order_receive)
+        ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_order_receive)
                 .withString(Param.TRAN, bean.getId())
                 .navigation(mContext);
     }
@@ -544,7 +544,7 @@ public class XOrderButtonClick implements OrderButtonClickListener, InsuranceBuy
     @Override
     public void onOrderModify(OrderInfoBean bean) {
 
-        ArouterUtils.getInstance().builder(ArouterParamApp.activity_order_create)
+        ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_order_create)
                 .withParcelable(Param.TRAN,bean)
                 .navigation();
     }
@@ -556,7 +556,7 @@ public class XOrderButtonClick implements OrderButtonClickListener, InsuranceBuy
      */
     @Override
     public void onUpLoadReceipts(OrderInfoBean bean) {
-        ArouterUtils.getInstance().builder(ArouterParamApp.activity_order_up_receipt)
+        ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_order_up_receipt)
                 .withString(Param.TRAN, bean.getId()).navigation(mContext);
 
     }
@@ -573,7 +573,7 @@ public class XOrderButtonClick implements OrderButtonClickListener, InsuranceBuy
                     @Override
                     public void doOnSuccess(QueryReceiveBean queryReceiveBean) {
                         super.doOnSuccess(queryReceiveBean);
-                        ArouterUtils.getInstance().builder(ArouterParamApp.activity_order_up_receipt)
+                        ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_order_up_receipt)
                                 .withString(Param.TRAN, bean.getId()).navigation(mContext);
                         BusFactory.getBus().postSticky(queryReceiveBean);
 
@@ -607,7 +607,7 @@ public class XOrderButtonClick implements OrderButtonClickListener, InsuranceBuy
                             public void onClickEdite(DialogControl.IDialog dialog, int position, InsuranceInfoBean def) {
                                 dialog.dismiss();
                                 ArouterUtils.getInstance()
-                                        .builder(ArouterParamApp.activity_insured_info)
+                                        .builder(ArouterParamMNLM.activity_insured_info)
                                         .withInt(Param.TYPE, 1)
                                         .withParcelable(Param.TRAN, def)
                                         .navigation((Activity) mContext, 100);
@@ -622,7 +622,7 @@ public class XOrderButtonClick implements OrderButtonClickListener, InsuranceBuy
                             public void onClickAdd(DialogControl.IDialog dialog) {
                                 dialog.dismiss();
                                 ArouterUtils.getInstance()
-                                        .builder(ArouterParamApp.activity_insured_info)
+                                        .builder(ArouterParamMNLM.activity_insured_info)
                                         .withInt(Param.TYPE, 0)
                                         .navigation((Activity) mContext, 100);
 
@@ -664,7 +664,7 @@ public class XOrderButtonClick implements OrderButtonClickListener, InsuranceBuy
                             nextStepListener.doUpdate();
                         }
                         ArouterUtils.getInstance()
-                                .builder(ArouterParamApp.activity_pay)
+                                .builder(ArouterParamMNLM.activity_pay)
                                 .withString(Param.TRAN, orderInfo.getId())
                                 .withInt(Param.TYPE, 3)
                                 .navigation(mContext);

@@ -13,7 +13,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.fy.androidlibrary.toast.ToastUtils;
 import com.fy.androidlibrary.utils.ConvertUtils;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
 import com.hongniu.freight.R;
@@ -34,7 +34,7 @@ import com.sang.thirdlibrary.pay.entiy.PayBean;
  * @Description 支付页面
  * 支付业务类型(1订单支付2补款运费支付3补购保险支付)
  */
-@Route(path = ArouterParamApp.activity_pay)
+@Route(path = ArouterParamMNLM.activity_pay)
 public class PayActivity extends CompanyBaseActivity implements PayControl.IPayView, View.OnClickListener, PayWayView.PayWayChangeListener, PasswordDialog.OnPasswordDialogListener {
 
     private TextView tv_count;
@@ -128,7 +128,7 @@ public class PayActivity extends CompanyBaseActivity implements PayControl.IPayV
     @Override
     public void startPay(QueryPayInfoParams payWay, PayBean payInfoBean) {
 
-        ArouterUtils.getInstance().builder(ArouterParamApp.activity_waite_pay)
+        ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_waite_pay)
                 .withParcelable(Param.TRAN, payWay)
                 .withParcelable(Param.TYPE, payInfoBean)
                 .navigation((Activity) mContext, 1)
@@ -166,7 +166,7 @@ public class PayActivity extends CompanyBaseActivity implements PayControl.IPayV
                     @Override
                     public void onRightClick(View view, Dialog dialog) {
                         dialog.dismiss();
-                        ArouterUtils.getInstance().builder(ArouterParamApp.activity_forget_pass)
+                        ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_forget_pass)
                                 .withInt(Param.TRAN, 0)
                                 .navigation((Activity) mContext, 2);
                     }
@@ -185,7 +185,7 @@ public class PayActivity extends CompanyBaseActivity implements PayControl.IPayV
      */
     @Override
     public void jump2Succes(OrderInfoBean orderInfo) {
-        ArouterUtils.getInstance().builder(ArouterParamApp.activity_pay_result)
+        ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_pay_result)
                 .withParcelable(Param.TRAN, orderInfo)
                 .navigation(mContext);
        finishWithSuccess();
@@ -253,7 +253,7 @@ public class PayActivity extends CompanyBaseActivity implements PayControl.IPayV
     @Override
     public void onForgetPassowrd(Dialog dialog) {
         dialog.dismiss();
-        ArouterUtils.getInstance().builder(ArouterParamApp.activity_forget_pass)
+        ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_forget_pass)
                 .withInt(Param.TRAN, 1)
                 .navigation(this, 2);
     }

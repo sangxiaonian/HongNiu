@@ -17,7 +17,7 @@ import com.fy.androidlibrary.net.rx.RxUtils;
 import com.fy.androidlibrary.toast.ToastUtils;
 import com.fy.androidlibrary.utils.CollectionUtils;
 import com.fy.androidlibrary.utils.DeviceUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.companylibrary.net.NetObserver;
@@ -50,7 +50,7 @@ import io.reactivex.functions.Function;
  * 此页面有新增修改两种类型 参数type决定 0 新增，1修改
  * 修改页面时候需要传入投保人信息参数
  */
-@Route(path = ArouterParamApp.activity_insured_info)
+@Route(path = ArouterParamMNLM.activity_insured_info)
 public class InsureanceInfodActivity extends CompanyBaseActivity implements View.OnClickListener, OnOptionsSelectListener {
 
     private ItemTextView itemType;

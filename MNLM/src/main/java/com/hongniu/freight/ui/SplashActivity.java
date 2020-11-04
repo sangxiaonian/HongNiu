@@ -8,9 +8,8 @@ import androidx.annotation.NonNull;
 
 import com.fy.androidlibrary.utils.SharedPreferencesUtils;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
-import com.hongniu.freight.Config;
 import com.hongniu.freight.R;
 import com.hongniu.freight.entity.LoginInfo;
 import com.hongniu.freight.entity.PersonInfor;
@@ -26,10 +25,10 @@ public class SplashActivity extends CompanyBaseActivity implements RuleAlertDial
             LoginInfo loginInfo = InfoUtils.getLoginInfo();
             PersonInfor myInfo = InfoUtils.getMyInfo();
             if (loginInfo != null) {
-                ArouterUtils.getInstance().builder(ArouterParamApp.activity_main)
+                ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_main)
                         .navigation(mContext);
             } else {
-                ArouterUtils.getInstance().builder(ArouterParamApp.activity_login)
+                ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_login)
                         .navigation(mContext);
             }
             finish();

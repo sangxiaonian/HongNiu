@@ -10,7 +10,7 @@ import com.fy.androidlibrary.widget.SearchTitleView;
 import com.fy.androidlibrary.widget.recycle.adapter.XAdapter;
 import com.fy.androidlibrary.widget.recycle.holder.BaseHolder;
 import com.fy.androidlibrary.widget.recycle.holder.PeakHolder;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.companylibrary.entity.PageBean;
@@ -36,7 +36,7 @@ import io.reactivex.Observable;
  * 订单搜索
  *
  */
-@Route(path = ArouterParamApp.activity_search_order)
+@Route(path = ArouterParamMNLM.activity_search_order)
 public class SearchOrderActivity extends RefrushActivity<OrderInfoBean> implements XOrderButtonClick.NextStepListener, View.OnClickListener, SearchTitleView.OnSearchClickListener {
 
     private RoleOrder role;

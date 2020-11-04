@@ -42,7 +42,7 @@ public class QRCodeActivity extends ModuleBaseActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.mnlm_activity_qrcode);
+        setContentView(R.layout.activity_qrcode);
         init("运单状态查询");
         initView();
         initData();
@@ -95,7 +95,7 @@ public class QRCodeActivity extends ModuleBaseActivity implements View.OnClickLi
                         public void hasPermission(List<String> granted, boolean isAll) {
                             CaptureFragment captureFragment = new CaptureFragment();
                             // 为二维码扫描界面设置定制化界面
-                            CodeUtils.setFragmentArgs(captureFragment, R.layout.mnlm_fragment_scan);
+                            CodeUtils.setFragmentArgs(captureFragment, R.layout.fragment_scan);
                             captureFragment.setAnalyzeCallback(QRCodeActivity.this);
                             getSupportFragmentManager().beginTransaction().replace(R.id.fl_my_container, captureFragment).commit();
 

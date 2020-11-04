@@ -8,7 +8,7 @@ import android.view.View;
 import com.fy.androidlibrary.utils.CollectionUtils;
 import com.fy.androidlibrary.widget.dialog.CenterDialog;
 import com.fy.androidlibrary.widget.recycle.control.RecycleControl;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 
@@ -116,7 +116,7 @@ public abstract class BaseImageUpActivity extends CompanyBaseActivity implements
             for (ImageInforBean data : datas) {
                 result.add(TextUtils.isEmpty(data.getPathOriginal())?data.getPath():data.getPathOriginal());
             }
-            ArouterUtils.getInstance().builder(ArouterParamApp.activity_preview_image)
+            ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_preview_image)
                     .withStringArrayList(Param.TRAN,result)
                     .withInt(Param.TYPE,position)
                     .navigation();

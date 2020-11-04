@@ -11,7 +11,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.fy.androidlibrary.toast.ToastUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
 import com.fy.companylibrary.widget.ItemTextView;
@@ -38,7 +38,7 @@ import java.util.List;
  * @Author PING
  * @Description 新增修改车辆信息
  */
-@Route(path = ArouterParamApp.activity_car_add_modify)
+@Route(path = ArouterParamMNLM.activity_car_add_modify)
 public class CarAddModifyActivity extends CompanyBaseActivity implements View.OnClickListener, CarAddModifyControl.ICarAddModifyView, OnOptionsSelectListener, ItemTextView.OnCenterChangeListener {
 
     private TextView btSum;

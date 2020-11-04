@@ -6,7 +6,7 @@ import android.view.View;
 import android.webkit.WebView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
 import com.hongniu.freight.R;
@@ -14,7 +14,7 @@ import com.hongniu.freight.entity.H5Config;
 import com.hongniu.freight.widget.XWebView;
 
 
-@Route(path = ArouterParamApp.activity_h5)
+@Route(path = ArouterParamMNLM.activity_h5)
 public class H5Activity extends CompanyBaseActivity implements XWebView.OnReceivedTitleListener {
 
     private XWebView webView;

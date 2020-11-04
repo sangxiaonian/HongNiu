@@ -16,7 +16,7 @@ import com.fy.androidlibrary.utils.CollectionUtils;
 import com.fy.androidlibrary.utils.CommonUtils;
 import com.fy.androidlibrary.utils.permission.PermissionUtils;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.net.NetObserver;
 import com.fy.companylibrary.ui.CompanyBaseFragment;
@@ -43,7 +43,7 @@ import okhttp3.ResponseBody;
  * 作者：  on 2020/2/10.
  * 个人中心
  */
-@Route(path = ArouterParamApp.fragment_person_center)
+@Route(path = ArouterParamMNLM.fragment_person_center)
 public class PersonCenterFragment extends CompanyBaseFragment implements View.OnClickListener {
 
     private ImageView img_heard;//头像
@@ -154,13 +154,13 @@ public class PersonCenterFragment extends CompanyBaseFragment implements View.On
                     }
                 }).show();
             } else {
-                ArouterUtils.getInstance().builder(ArouterParamApp.activity_attestation_role_activity)
+                ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_attestation_role_activity)
                         .withSerializable(Param.TRAN, InfoUtils.getRole(InfoUtils.getMyInfo()))
                         .withBoolean(Param.TYPE, false)
                         .navigation(mContext);
             }
         } else if (v.getId() == R.id.ll_car) {
-            ArouterUtils.getInstance().builder(ArouterParamApp.activity_my_car_list).navigation(mContext);
+            ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_my_car_list).navigation(mContext);
         } else if (v.getId() == R.id.img_heard) {
             PermissionUtils.applyCamera(getActivity(), new PermissionUtils.onApplyPermission() {
                 @Override
@@ -200,7 +200,7 @@ public class PersonCenterFragment extends CompanyBaseFragment implements View.On
                 }
             });
         } else if (v.getId() == R.id.ll_feedback) {
-            ArouterUtils.getInstance().builder(ArouterParamApp.activity_face_back).navigation(mContext);
+            ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_face_back).navigation(mContext);
         } else if (v.getId() == R.id.ll_service) {
             new DialogComment.Builder()
                     .setBtLeft("取消")
@@ -217,7 +217,7 @@ public class PersonCenterFragment extends CompanyBaseFragment implements View.On
                     .show();
 
         } else if (v.getId() == R.id.ll_about_us) {
-            ArouterUtils.getInstance().builder(ArouterParamApp.activity_about_us).navigation(mContext);
+            ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_about_us).navigation(mContext);
 
         } else if (v.getId() == R.id.ll_quit) {
             new DialogComment.Builder()
@@ -235,13 +235,13 @@ public class PersonCenterFragment extends CompanyBaseFragment implements View.On
                     .show();
         } else if (v.getId() == R.id.ll_order_center) {
             ArouterUtils.getInstance()
-                    .builder(ArouterParamApp.activity_order_receiving)
+                    .builder(ArouterParamMNLM.activity_order_receiving)
                     .withSerializable(Param.TRAN, RoleOrder.PLATFORM)
                     .navigation(mContext);
 
         } else if (v.getId() == R.id.shadow) {
             ArouterUtils.getInstance()
-                    .builder(ArouterParamApp.activity_my_coffers)
+                    .builder(ArouterParamMNLM.activity_my_coffers)
                     .navigation(mContext);
 
         }

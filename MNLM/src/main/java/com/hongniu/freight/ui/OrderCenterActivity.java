@@ -7,7 +7,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.fy.androidlibrary.widget.recycle.adapter.XAdapter;
 import com.fy.androidlibrary.widget.recycle.holder.BaseHolder;
 import com.fy.androidlibrary.widget.recycle.holder.PeakHolder;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.companylibrary.entity.PageBean;
@@ -28,7 +28,7 @@ import io.reactivex.Observable;
  * @Author PING
  * @Description 我要接单
  */
-@Route(path = ArouterParamApp.activity_order_center)
+@Route(path = ArouterParamMNLM.activity_order_center)
 public class OrderCenterActivity extends RefrushActivity<OrderInfoBean> implements XOrderButtonClick.NextStepListener {
 
     @Override

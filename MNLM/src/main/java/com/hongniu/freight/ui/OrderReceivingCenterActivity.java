@@ -18,7 +18,7 @@ import com.fy.androidlibrary.widget.recycle.holder.BaseHolder;
 import com.fy.androidlibrary.widget.recycle.holder.PeakHolder;
 import com.fy.androidlibrary.widget.recycle.utils.XLineDivider;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.companylibrary.entity.PageBean;
@@ -44,7 +44,7 @@ import io.reactivex.Observable;
  * @Author PING
  * @Description 接单中心
  */
-@Route(path = ArouterParamApp.activity_order_receiving)
+@Route(path = ArouterParamMNLM.activity_order_receiving)
 public class OrderReceivingCenterActivity extends RefrushActivity<OrderInfoBean> implements XOrderButtonClick.NextStepListener,SelectAdapter.SingleSelectedListener<Status> {
 
     private RoleOrder role;
@@ -62,7 +62,7 @@ public class OrderReceivingCenterActivity extends RefrushActivity<OrderInfoBean>
         setToolbarRightClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArouterUtils.getInstance().builder(ArouterParamApp.activity_search_order)
+                ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_search_order)
                         .withSerializable(Param.TRAN, role)
                         .navigation(mContext);
             }

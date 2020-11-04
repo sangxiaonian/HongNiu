@@ -9,7 +9,7 @@ import com.fy.androidlibrary.utils.CommonUtils;
 import com.fy.androidlibrary.utils.ConvertUtils;
 import com.fy.androidlibrary.widget.recycle.holder.BaseHolder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.hongniu.freight.R;
 import com.hongniu.freight.config.RoleOrder;
@@ -46,7 +46,7 @@ public class ReceiveOrderHolder extends BaseHolder<OrderInfoBean> {
             @Override
             public void onClick(View v) {
 
-                ArouterUtils.getInstance().builder(ArouterParamApp.activity_order_detail)
+                ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_order_detail)
                         .withParcelable(Param.TRAN, data)
                         .withSerializable(Param.TYPE, role)
                         .navigation(mContext);

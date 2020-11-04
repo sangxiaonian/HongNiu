@@ -1,22 +1,15 @@
 package com.hongniu.freight.net.interceptor;
 
 import android.content.Context;
-import android.content.Intent;
 
-import com.fy.androidlibrary.utils.SharedPreferencesUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.hongniu.baselibrary.arouter.ArouterParamsApp;
-import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.config.Param;
 import com.hongniu.freight.utils.InfoUtils;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
 
-import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;

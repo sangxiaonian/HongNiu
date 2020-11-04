@@ -25,7 +25,7 @@ import com.fy.androidlibrary.utils.CommonUtils;
 import com.fy.androidlibrary.utils.ConvertUtils;
 import com.fy.androidlibrary.widget.recycle.adapter.XAdapter;
 import com.fy.androidlibrary.widget.recycle.holder.BaseHolder;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.net.NetObserver;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
@@ -43,7 +43,7 @@ import java.util.regex.Pattern;
  * @Author PING
  * @Description 运单状态界面
  */
-@Route(path = ArouterParamApp.activity_way_bill)
+@Route(path = ArouterParamMNLM.activity_way_bill)
 public class WayBillActivity extends CompanyBaseActivity {
 
     private RecyclerView recyclerView;

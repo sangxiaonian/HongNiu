@@ -28,7 +28,7 @@ import com.fy.androidlibrary.utils.DeviceUtils;
 import com.fy.androidlibrary.widget.recycle.EmptyRecycleView;
 import com.fy.androidlibrary.widget.recycle.adapter.XAdapter;
 import com.fy.androidlibrary.widget.recycle.holder.BaseHolder;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
@@ -49,7 +49,7 @@ import io.reactivex.functions.Function;
 /**
  * 查看轨迹
  */
-@Route(path = ArouterParamApp.activity_map_check_path)
+@Route(path = ArouterParamMNLM.activity_map_check_path)
 public class OrderMapCheckPathActivity extends CompanyBaseActivity {
 
 

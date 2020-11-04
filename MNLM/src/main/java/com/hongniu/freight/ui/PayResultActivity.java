@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
 import com.hongniu.freight.R;
@@ -17,7 +17,7 @@ import com.hongniu.freight.entity.OrderInfoBean;
  * @Author PING
  * @Description 平台员工支付成功
  */
-@Route(path = ArouterParamApp.activity_pay_result)
+@Route(path = ArouterParamMNLM.activity_pay_result)
 public class PayResultActivity extends CompanyBaseActivity implements View.OnClickListener {
     private TextView bt1;
     private TextView bt2;
@@ -55,13 +55,13 @@ public class PayResultActivity extends CompanyBaseActivity implements View.OnCli
     @Override
     public void onClick(View v) {
         if (R.id.bt1 == v.getId()) {
-            ArouterUtils.getInstance().builder(ArouterParamApp.activity_assign_order)
+            ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_assign_order)
                     .withString(Param.TRAN, bean.getId())
                     .navigation(mContext);
             finish();
         } else if (R.id.bt2 == v.getId()) {
             ArouterUtils.getInstance()
-                    .builder(ArouterParamApp.activity_order_find_car)
+                    .builder(ArouterParamMNLM.activity_order_find_car)
                     .withString(Param.TRAN, bean.getId())
                     .navigation(mContext);
             finish();

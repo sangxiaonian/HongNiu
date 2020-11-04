@@ -96,15 +96,13 @@ public class MainActivity extends ModuleBaseActivity implements View.OnClickList
     ImageView img3;
     ImageView img4;
     ImageView img5;
-
-
     Fragment homeFragment, orderFragment, messageFragment, meFragment, currentFragment;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.mnlm_activity_main);
+        setContentView(R.layout.activity_main);
         initView();
         initData();
         initListener();

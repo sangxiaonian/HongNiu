@@ -15,7 +15,7 @@ import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.fy.androidlibrary.toast.ToastUtils;
 import com.fy.androidlibrary.utils.DeviceUtils;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.net.NetObserver;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
@@ -38,7 +38,7 @@ import java.util.List;
  * @Author PING
  * @Description 绑定银行卡操作
  */
-@Route(path = ArouterParamApp.activity_bind_blank_card)
+@Route(path = ArouterParamMNLM.activity_bind_blank_card)
 public class BindBlankCardActivity extends CompanyBaseActivity implements View.OnClickListener, OnOptionsSelectListener {
     ItemTextView itemName;//姓名
     ItemTextView itemPhone;//手机号
@@ -146,7 +146,7 @@ public class BindBlankCardActivity extends CompanyBaseActivity implements View.O
                                         public void onRightClick(View view, Dialog dialog) {
                                             dialog.dismiss();
                                             H5Config h5Config = new H5Config("签约流程", Param.HUAXIA, true);
-                                            ArouterUtils.getInstance().builder(ArouterParamApp.activity_h5).withSerializable(Param.TRAN, h5Config).navigation(mContext);
+                                            ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_h5).withSerializable(Param.TRAN, h5Config).navigation(mContext);
                                             setResult(Activity.RESULT_OK);
                                             finish();
                                         }

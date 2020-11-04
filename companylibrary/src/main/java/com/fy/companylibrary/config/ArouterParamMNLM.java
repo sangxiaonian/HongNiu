@@ -10,7 +10,7 @@ package com.fy.companylibrary.config;
  * <p>
  * 新建Module时候，需要重新创建一个配置，要求和此配置类似
  */
-public class ArouterParamApp {
+public class ArouterParamMNLM {
 
     public static final String activity_login = "/mnlm/mnlm_activity_login";
     /**

@@ -24,7 +24,7 @@ import com.fy.androidlibrary.utils.ConvertUtils;
 import com.fy.androidlibrary.widget.editext.SearchTextWatcher;
 import com.fy.androidlibrary.widget.span.XClickableSpan;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
 import com.fy.companylibrary.widget.ItemTextView;
@@ -50,7 +50,7 @@ import java.util.List;
  * @Author PING
  * @Description 创建/修改订单
  */
-@Route(path = ArouterParamApp.activity_order_create)
+@Route(path = ArouterParamMNLM.activity_order_create)
 public class OrderCreateActivity extends CompanyBaseActivity implements View.OnClickListener, OrderCreateControl.IOrderCreateView, OnOptionsSelectListener, ItemTextView.OnCenterChangeListener, InsuranceDialog.OnInsuranceDialogListener {
     private View group_start;//选择发货信息
     private View group_end;//选择收货信息s
@@ -138,7 +138,7 @@ public class OrderCreateActivity extends CompanyBaseActivity implements View.OnC
             @Override
             public void onClick(@NonNull View widget) {
                 H5Config h5Config = new H5Config("保险条款", Param.h_insurance_polic, true);
-                ArouterUtils.getInstance().builder(ArouterParamApp.activity_h5).withSerializable(Param.TRAN, h5Config).navigation(mContext);
+                ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_h5).withSerializable(Param.TRAN, h5Config).navigation(mContext);
 
             }
         };
@@ -157,7 +157,7 @@ public class OrderCreateActivity extends CompanyBaseActivity implements View.OnC
             @Override
             public void onClick(@NonNull View widget) {
                 H5Config h5Config = new H5Config("投保须知", Param.h_insurance_notify, true);
-                ArouterUtils.getInstance().builder(ArouterParamApp.activity_h5).withSerializable(Param.TRAN, h5Config).navigation(mContext);
+                ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_h5).withSerializable(Param.TRAN, h5Config).navigation(mContext);
 
             }
         };
@@ -212,7 +212,7 @@ public class OrderCreateActivity extends CompanyBaseActivity implements View.OnC
             PermissionUtils.applyMap(this, new PermissionUtils.onApplyPermission() {
                 @Override
                 public void hasPermission() {
-                    ArouterUtils.getInstance().builder(ArouterParamApp.activity_map_search)
+                    ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_map_search)
                             .withBoolean(Param.TRAN, false)
                             .navigation((Activity) mContext, 1);
                 }
@@ -226,7 +226,7 @@ public class OrderCreateActivity extends CompanyBaseActivity implements View.OnC
             PermissionUtils.applyMap(this, new PermissionUtils.onApplyPermission() {
                 @Override
                 public void hasPermission() {
-                    ArouterUtils.getInstance().builder(ArouterParamApp.activity_map_search)
+                    ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_map_search)
                             .withBoolean(Param.TRAN, true)
                             .navigation((Activity) mContext, 2);
 
@@ -248,7 +248,7 @@ public class OrderCreateActivity extends CompanyBaseActivity implements View.OnC
             presenter.onSwitchIsInsurance();
         } else if (R.id.tv_agreement == v.getId()) {
             H5Config h5Config = new H5Config("木牛流马合同协议", Param.hongniu_agreement, true);
-            ArouterUtils.getInstance().builder(ArouterParamApp.activity_h5).withSerializable(Param.TRAN, h5Config).navigation(mContext);
+            ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_h5).withSerializable(Param.TRAN, h5Config).navigation(mContext);
 
         } else if (R.id.item_insurance_name == v.getId()) {
 //            ToastUtils.getInstance().show("选择被保险人");
@@ -434,7 +434,7 @@ public class OrderCreateActivity extends CompanyBaseActivity implements View.OnC
     @Override
     public void finishSuccess(OrderInfoBean o) {
         ToastUtils.getInstance().makeToast(ToastUtils.ToastType.SUCCESS).show("下单成功");
-        ArouterUtils.getInstance().builder(ArouterParamApp.activity_pay)
+        ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_pay)
                 .withString(Param.TRAN, o.getId())
                 .withInt(Param.TYPE, 1)
                 .navigation((Activity) mContext, 1);
@@ -577,7 +577,7 @@ public class OrderCreateActivity extends CompanyBaseActivity implements View.OnC
     public void onClickEdite(DialogControl.IDialog dialog, int position, InsuranceInfoBean def) {
         dialog.dismiss();
         ArouterUtils.getInstance()
-                .builder(ArouterParamApp.activity_insured_info)
+                .builder(ArouterParamMNLM.activity_insured_info)
                 .withInt(Param.TYPE, 1)
                 .withParcelable(Param.TRAN, def)
                 .navigation((Activity) mContext, 100);
@@ -592,7 +592,7 @@ public class OrderCreateActivity extends CompanyBaseActivity implements View.OnC
     public void onClickAdd(DialogControl.IDialog dialog) {
         dialog.dismiss();
         ArouterUtils.getInstance()
-                .builder(ArouterParamApp.activity_insured_info)
+                .builder(ArouterParamMNLM.activity_insured_info)
                 .withInt(Param.TYPE, 0)
                 .navigation((Activity) mContext, 100);
 

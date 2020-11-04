@@ -11,7 +11,7 @@ import com.fy.androidlibrary.widget.SearchTitleView;
 import com.fy.androidlibrary.widget.recycle.adapter.XAdapter;
 import com.fy.androidlibrary.widget.recycle.holder.BaseHolder;
 import com.fy.androidlibrary.widget.recycle.holder.PeakHolder;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.companylibrary.entity.PageBean;
@@ -35,7 +35,7 @@ import io.reactivex.functions.Function;
  * @Author PING
  * @Description 账单搜索
  */
-@Route(path = ArouterParamApp.activity_bill_search)
+@Route(path = ArouterParamMNLM.activity_bill_search)
 public class BillSearchActivity extends RefrushActivity<BillInfoListBean> implements View.OnClickListener, SearchTitleView.OnSearchClickListener {
     private SearchTitleView searchTitleView;
     private TextView tv_cancel;

@@ -6,7 +6,7 @@ import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.fy.androidlibrary.toast.ToastUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.net.NetObserver;
 import com.fy.companylibrary.widget.ItemTextView;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
@@ -21,7 +21,7 @@ import com.hongniu.freight.widget.ImageInforView;
  * 作者：  on 2020/2/24.
  * 个人承运人身份认证第二部
  */
-@Route(path = ArouterParamApp.fragment_attestation_carrier_personal)
+@Route(path = ArouterParamMNLM.fragment_attestation_carrier_personal)
 public class AttestationCarrierPersonalFragment extends AttestationBaseFragment implements ItemTextView.OnCenterChangeListener, View.OnClickListener {
 
     private ItemTextView item_name;//姓名
@@ -181,7 +181,7 @@ public class AttestationCarrierPersonalFragment extends AttestationBaseFragment 
                             @Override
                             public void doOnSuccess(String s) {
                                 super.doOnSuccess(s);
-                                ArouterUtils.getInstance().builder(ArouterParamApp.activity_attestation_face)
+                                ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_attestation_face)
                                         .navigation(getContext());
                             }
                         });

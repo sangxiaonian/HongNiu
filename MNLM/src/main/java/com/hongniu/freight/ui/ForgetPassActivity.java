@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.fy.androidlibrary.toast.ToastUtils;
 import com.fy.androidlibrary.utils.ConvertUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.net.NetObserver;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
@@ -27,7 +27,7 @@ import com.hongniu.freight.utils.InfoUtils;
  * @Author PING
  * @Description 忘记/设置支付密码界面
  */
-@Route(path = ArouterParamApp.activity_forget_pass)
+@Route(path = ArouterParamMNLM.activity_forget_pass)
 public class ForgetPassActivity extends CompanyBaseActivity implements View.OnClickListener {
 
     private final static int time = 60;

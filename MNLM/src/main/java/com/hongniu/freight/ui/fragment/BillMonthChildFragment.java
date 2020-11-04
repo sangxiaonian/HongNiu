@@ -14,7 +14,7 @@ import com.fy.androidlibrary.utils.CommonUtils;
 import com.fy.androidlibrary.widget.recycle.adapter.XAdapter;
 import com.fy.androidlibrary.widget.recycle.holder.BaseHolder;
 import com.fy.androidlibrary.widget.recycle.holder.PeakHolder;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.companylibrary.entity.PageBean;
@@ -41,7 +41,7 @@ import io.reactivex.functions.Predicate;
 /**
  * 作者：  on 2020/2/12.
  */
-@Route(path = ArouterParamApp.fragment_bill_month_child)
+@Route(path = ArouterParamMNLM.fragment_bill_month_child)
 public class BillMonthChildFragment extends RefrushFragmet<BillInfoListBean> {
 
     private int type;

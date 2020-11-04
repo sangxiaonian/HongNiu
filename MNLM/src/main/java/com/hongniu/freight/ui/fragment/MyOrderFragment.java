@@ -19,7 +19,7 @@ import com.fy.androidlibrary.widget.recycle.adapter.XAdapter;
 import com.fy.androidlibrary.widget.recycle.holder.BaseHolder;
 import com.fy.androidlibrary.widget.recycle.holder.PeakHolder;
 import com.fy.androidlibrary.widget.recycle.utils.XLineDivider;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.companylibrary.entity.PageBean;
@@ -43,7 +43,7 @@ import io.reactivex.Observable;
  * @Author PING
  * @Description 我的订单页面
  */
-@Route(path = ArouterParamApp.fragment_my_order)
+@Route(path = ArouterParamMNLM.fragment_my_order)
 public class MyOrderFragment extends RefrushFragmet<OrderInfoBean> implements XOrderButtonClick.NextStepListener,MyOrderControl.IMyOrderView, SelectAdapter.SingleSelectedListener<Status> {
 
     private RecyclerView rvTitle;

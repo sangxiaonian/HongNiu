@@ -7,7 +7,7 @@ import com.amap.api.services.core.PoiItem;
 import com.fy.androidlibrary.utils.CollectionUtils;
 import com.fy.androidlibrary.utils.ConvertUtils;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.companylibrary.entity.PageBean;
 import com.google.gson.Gson;
@@ -282,10 +282,10 @@ public class Utils {
     public static void jump2Attestation(Context mContext,PersonInfor personInfo) {
         if (InfoUtils.getRole(personInfo)== Role.UNKNOW||InfoUtils.getState(personInfo)==5) {
             //跳转到实名认证选角色
-            ArouterUtils.getInstance().builder(ArouterParamApp.activity_attestation_select_role)
+            ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_attestation_select_role)
                     .navigation(mContext);
         }  else if ( personInfo.getIsRealname() != 1) {
-            ArouterUtils.getInstance().builder(ArouterParamApp.activity_attestation_face)
+            ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_attestation_face)
                     .navigation(mContext);
         }
 

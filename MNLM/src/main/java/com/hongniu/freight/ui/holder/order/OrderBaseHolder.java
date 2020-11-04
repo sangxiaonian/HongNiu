@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.fy.androidlibrary.widget.recycle.holder.BaseHolder;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.freight.config.RoleOrder;
@@ -41,7 +41,7 @@ public class OrderBaseHolder extends BaseHolder<OrderInfoBean> {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArouterUtils.getInstance().builder(ArouterParamApp.activity_order_detail)
+                ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_order_detail)
                         .withParcelable(Param.TRAN, data)
                         .withSerializable(Param.TYPE, role)
                         .navigation(mContext);

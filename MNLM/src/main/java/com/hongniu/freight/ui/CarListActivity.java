@@ -16,7 +16,7 @@ import com.fy.androidlibrary.widget.recycle.holder.BaseHolder;
 import com.fy.androidlibrary.widget.recycle.holder.PeakHolder;
 import com.fy.androidlibrary.widget.span.RoundedBackgroundSpan;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.companylibrary.entity.PageBean;
@@ -35,7 +35,7 @@ import io.reactivex.Observable;
  * @Author PING
  * @Description 我的车辆
  */
-@Route(path = ArouterParamApp.activity_my_car_list)
+@Route(path = ArouterParamMNLM.activity_my_car_list)
 public class CarListActivity extends RefrushActivity<CarInfoBean> {
 
     @Override
@@ -65,7 +65,7 @@ public class CarListActivity extends RefrushActivity<CarInfoBean> {
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ArouterUtils.getInstance().builder(ArouterParamApp.activity_car_add_modify)
+                        ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_car_add_modify)
                                 .navigation(mContext);
                     }
                 });
@@ -139,7 +139,7 @@ public class CarListActivity extends RefrushActivity<CarInfoBean> {
                             public void onClick(View v) {
 //                                ToastUtils.getInstance().show("测试信息");
                                 ArouterUtils.getInstance()
-                                        .builder(ArouterParamApp.activity_car_add_modify)
+                                        .builder(ArouterParamMNLM.activity_car_add_modify)
                                         .withParcelable(Param.TRAN,data)
                                         .navigation(mContext);
                             }

@@ -15,7 +15,7 @@ import com.fy.androidlibrary.toast.ToastUtils;
 import com.fy.androidlibrary.utils.CommonUtils;
 import com.fy.androidlibrary.utils.ConvertUtils;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.fy.companylibrary.config.ArouterParamApp;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
 import com.hongniu.freight.R;
@@ -32,7 +32,7 @@ import io.reactivex.Observable;
  * @Author PING
  * @Description 余额
  */
-@Route(path = ArouterParamApp.activity_balance)
+@Route(path = ArouterParamMNLM.activity_balance)
 public class BalanceActivity extends CompanyBaseActivity implements View.OnClickListener, RechargeInforDialog.OnEntryClickListener {
 
     private TextView tv_balance;
@@ -140,7 +140,7 @@ public class BalanceActivity extends CompanyBaseActivity implements View.OnClick
 
         } else if (R.id.tv_withdraw == v.getId()) {
             if (check()){
-                ArouterUtils.getInstance().builder(ArouterParamApp.activity_balance_pending)
+                ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_balance_pending)
                         .navigation(mContext);
             }
         }
@@ -153,7 +153,7 @@ public class BalanceActivity extends CompanyBaseActivity implements View.OnClick
                 //跳转到绑卡
                 ArouterUtils
                         .getInstance()
-                        .builder(ArouterParamApp.activity_bind_blank_card)
+                        .builder(ArouterParamMNLM.activity_bind_blank_card)
                         .navigation(this,1);
             }else {
                 result=true;
