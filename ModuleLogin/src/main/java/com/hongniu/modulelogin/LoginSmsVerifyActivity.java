@@ -168,8 +168,9 @@ public class LoginSmsVerifyActivity extends ModuleBaseActivity implements Verica
                                         } else {
                                             throw new NetException(loginPersonInforCommonBean.getCode(), loginPersonInforCommonBean.getMsg());
                                         }
-
-                                        return new CommonBean<String>();
+                                        CommonBean<String> commonBean = new CommonBean<>();
+                                        commonBean.setCode(200);
+                                        return commonBean;
                                     }
                                 }
 
