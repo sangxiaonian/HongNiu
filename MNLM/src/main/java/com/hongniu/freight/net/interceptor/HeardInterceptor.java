@@ -20,9 +20,14 @@ import okhttp3.Response;
 public class HeardInterceptor implements Interceptor {
 
     private Context context;
+    private String subAppCode;
 
     public HeardInterceptor(Context context) {
         this.context = context;
+    }
+
+    public void setSubAppCode(String subAppCode) {
+        this.subAppCode = subAppCode;
     }
 
     @Override
@@ -48,6 +53,7 @@ public class HeardInterceptor implements Interceptor {
                 .addHeader("codetype", "token")
                 .addHeader("hn_app_key", Param.AppKey)
                 .addHeader("appVersion", DeviceUtils.getVersionName(context))
+                .addHeader("subAppCode", subAppCode)
         ;
         Request newRequest = requestBuilder.build();
         return chain.proceed(newRequest);

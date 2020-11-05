@@ -127,7 +127,7 @@ public class SwitchCompanyActivity extends RefrushActivity<CompanyInfoBean>    {
                     @Override
                     public ObservableSource<CommonBean<LoginInfo>> apply(@NonNull CommonBean<CompanyTokenInfoBean> stringCommonBean) throws Exception {
 
-                        Config.getInstance().intNetClient(data.getApiUrl());
+                        Config.getInstance().intNetClient(data.getApiUrl(),data.getSubAppCode());
                         Config.getInstance().setCurrentPackageName(data.getAndroidPackage());
                         return HttpMainFactory.loginWithToken(stringCommonBean.getData().getToken(),stringCommonBean.getData().getMobile());
                     }

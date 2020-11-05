@@ -148,7 +148,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="在线沟通快速发货"
+                    android:text="切换到您的网络货运平台"
                     android:textColor="@color/color_content_light"
                     android:textSize="@dimen/text_min_12sp" />
 
@@ -252,7 +252,7 @@
                         android:layout_width="61dp"
                         android:layout_height="52dp"
                         android:layout_centerVertical="true"
-                        android:src="@mipmap/icon_match" />
+                        android:src="@mipmap/icon_car_match" />
 
 
                 </LinearLayout>
@@ -297,7 +297,7 @@
                         android:layout_width="61dp"
                         android:layout_height="52dp"
                         android:layout_centerVertical="true"
-                        android:src="@mipmap/icon_match" />
+                        android:src="@mipmap/icon_start_cargo" />
 
 
                 </LinearLayout>

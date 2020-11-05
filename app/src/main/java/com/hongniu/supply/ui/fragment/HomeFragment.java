@@ -216,11 +216,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     public void onClick(View v) {
         switch (v.getId()) {
 
-            case R.id.bt_wallet:
-                ArouterUtils.getInstance().builder(ArouterParamsFinance.activity_finance_wallet).navigation(getContext());
-                ClickEventUtils.getInstance().onClick(ClickEventParams.首页_我的钱包);
-
-                break;
             case R.id.ll_search:
                 ClickEventUtils.getInstance().onClick(ClickEventParams.首页_搜索);
                 ArouterUtils.getInstance()
@@ -254,22 +249,18 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                         .withInt(Param.TRAN, 2)
                         .navigation(getContext());
                 break;
-            case R.id.card_policy:
             case R.id.card_match:
 
                 ArouterUtils.getInstance().builder(ArouterParamsMatch.activity_match_estimate_order).navigation(getContext());
                 break;
-            case R.id.card_yongjin:
             case R.id.card_invite:
                 ArouterUtils.getInstance().builder(ArouterParamFestivity.activity_festivity_home).navigation(getContext());
                 ClickEventUtils.getInstance().onClick(ClickEventParams.首页_邀请好友);
 
                 break;
-            case R.id.card_left:
             case R.id.card_star:
                 ArouterUtils.getInstance().builder(ArouterParamsBreakbulk.activity_breakbulk_company).navigation(getContext());
                 break;
-            case R.id.card_etc:
             case R.id.card_insurance:
                 ClickEventUtils.getInstance().onClick(ClickEventParams.首页_牛人保);
                 ArouterUtils.getInstance()
