@@ -51,15 +51,14 @@ public class LoadDialog extends Dialog {
     }
 
     private void initView(Context context) {
-        int size = DeviceUtils.dip2px(context, 65);
-        final int parentSize = DeviceUtils.dip2px(context, 80);
+        int size = DeviceUtils.dip2px(context, 60);
+        final int parentSize = DeviceUtils.dip2px(context, 90);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         parent = new ShadowLayout(context);
         parent.setmCornerRadius(parentSize / 2);
         FrameLayout.LayoutParams parengParams = new FrameLayout.LayoutParams(parentSize, parentSize);
         parengParams.gravity = Gravity.CENTER;
         parent.setLayoutParams(parengParams);
-
         img = new ImageView(context);
         img.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         CardView.LayoutParams params = new CardView.LayoutParams(size, size);
@@ -74,18 +73,13 @@ public class LoadDialog extends Dialog {
 //        getWindow().setDimAmount(0);
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        parent.post(new Runnable() {
-            @Override
-            public void run() {
-                parent.setRightShow(true);
-                parent.setLeftShow(true);
-                parent.setTopShow(true);
-                parent.setBottomShow(true);
-                parent.setmShadowColor(Color.parseColor("#2a000000"));
-                parent.setmShadowLimit(DeviceUtils.dip2px(getContext(), 5));
-                parent.setmCornerRadius(parentSize / 2);
-            }
-        });
+        parent.setRightShow(true);
+        parent.setLeftShow(true);
+        parent.setTopShow(true);
+        parent.setBottomShow(true);
+        parent.setmShadowColor(Color.parseColor("#2a000000"));
+        parent.setmShadowLimit(DeviceUtils.dip2px(getContext(), 5));
+        parent.setmCornerRadius(parentSize);
 
     }
 

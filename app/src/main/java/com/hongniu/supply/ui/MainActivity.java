@@ -342,6 +342,7 @@ public class MainActivity extends ModuleBaseActivity implements View.OnClickList
         demo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                showLoad();
 //                show=!show;
 //                NotificationUtils.getInstance()
 //                        .setSound(show?R.raw.notify_sound:0)
