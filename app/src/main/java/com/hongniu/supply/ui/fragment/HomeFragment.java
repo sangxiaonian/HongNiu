@@ -279,7 +279,15 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                 break;
             case R.id.ll_net_owner:
                 //网络货运
-                ArouterUtils.getInstance().builder(ArouterParamsApp.activity_switch_company) .navigation(getContext());
+                ArouterUtils.getInstance().builder(ArouterParamsApp.activity_switch_company).navigation(getContext());
+
+                break;
+            case R.id.view_top_bg:
+                //网络货运
+                ArouterUtils.getInstance()
+                        .builder(ArouterParamsApp.activity_h5)
+                        .withSerializable(Param.TRAN,  new H5Config("网络货运", Param.home_top_bg, false))
+                        .navigation(getContext());
 
                 break;
         }

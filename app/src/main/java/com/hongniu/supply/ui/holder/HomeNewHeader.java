@@ -23,6 +23,7 @@ public class HomeNewHeader extends PeakHolder implements View.OnClickListener {
     ViewGroup ll_car;
     ViewGroup ll_driver;
     ViewGroup ll_net_owner;
+    View view_top_bg;
 
     ViewGroup card_star;
     ViewGroup card_match;
@@ -62,6 +63,7 @@ public class HomeNewHeader extends PeakHolder implements View.OnClickListener {
         card_insurance=itemView.findViewById(R.id.card_insurance);
         card_invite=itemView.findViewById(R.id.card_invite);
         tv_insurance=itemView.findViewById(R.id.tv_insurance);
+        view_top_bg=itemView.findViewById(R.id.view_top_bg);
 
         SpannableStringBuilder builder=new SpannableStringBuilder("货运险牛人保");
         AbsoluteSizeSpan ab=new AbsoluteSizeSpan(11,true);
@@ -84,6 +86,7 @@ public class HomeNewHeader extends PeakHolder implements View.OnClickListener {
         card_goods_match.setOnClickListener(this);
         card_insurance.setOnClickListener(this);
         card_invite.setOnClickListener(this);
+        view_top_bg.setOnClickListener(this);
 
 
     }
