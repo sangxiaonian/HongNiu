@@ -8,6 +8,7 @@ import com.fy.androidlibrary.utils.JLog;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.net.CompanyClient;
 import com.hdgq.locationlib.listener.OnResultListener;
+import com.hongniu.baselibrary.entity.CompanyInfoBean;
 import com.hongniu.freight.huoyun.FreightClient;
 import com.hongniu.freight.net.interceptor.HeardInterceptor;
 import com.hongniu.freight.net.interceptor.LoginOutRespondInterceptor;
@@ -48,7 +49,7 @@ public class Config {
 
     private String currentPackageName;
     private HeardInterceptor heardInterceptor;
-
+    CompanyInfoBean companyInfoBean;
 
     private static class Inner {
         private static Config config = new Config();
@@ -59,6 +60,16 @@ public class Config {
     }
 
     private Config() {
+    }
+
+    //设置当前公司信息
+    public void setCompanyInfoBean(CompanyInfoBean companyInfoBean) {
+        this.companyInfoBean = companyInfoBean;
+        currentPackageName=companyInfoBean.getAndroidPackage();
+    }
+
+    public CompanyInfoBean getCompanyInfoBean() {
+        return companyInfoBean;
     }
 
     public void init(Application context, boolean isDebug) {

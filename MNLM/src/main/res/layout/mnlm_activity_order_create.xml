@@ -270,7 +270,7 @@
                     android:id="@+id/tv_agreement"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="《木牛流马合同协议》"
+                    android:text="《网络货运运输协议》"
                     android:textColor="@color/color_of_3d5688"
                     android:textSize="12dp" />
             </LinearLayout>

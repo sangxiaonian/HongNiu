@@ -247,7 +247,7 @@ public class OrderCreateActivity extends CompanyBaseActivity implements View.OnC
 //            ToastUtils.getInstance().show("是否购买保险");
             presenter.onSwitchIsInsurance();
         } else if (R.id.tv_agreement == v.getId()) {
-            H5Config h5Config = new H5Config("木牛流马合同协议", Param.hongniu_agreement, true);
+            H5Config h5Config = new H5Config("网络货运运输协议", Param.hongniu_agreement, true);
             ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_h5).withSerializable(Param.TRAN, h5Config).navigation(mContext);
 
         } else if (R.id.item_insurance_name == v.getId()) {

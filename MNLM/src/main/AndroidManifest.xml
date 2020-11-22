@@ -65,7 +65,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data
-                    android:host="${applicationId}"
+                    android:host="com.hongniu.freight"
                     android:pathPrefix="/conversation/"
                     android:scheme="rong" />
             </intent-filter>

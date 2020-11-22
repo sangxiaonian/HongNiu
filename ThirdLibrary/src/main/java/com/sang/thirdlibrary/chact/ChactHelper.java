@@ -2,6 +2,7 @@ package com.sang.thirdlibrary.chact;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.text.TextUtils;
@@ -14,8 +15,11 @@ import com.fy.androidlibrary.utils.JLog;
 import com.sang.thirdlibrary.chact.control.ChactControl;
 import com.sang.thirdlibrary.chact.control.OnGetUserInforListener;
 
+import java.util.Locale;
 import java.util.Objects;
 
+import io.rong.common.RLog;
+import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.manager.IUnReadMessageObserver;
 import io.rong.imlib.RongIMClient;
@@ -52,13 +56,13 @@ public class ChactHelper {
     public ChactHelper initHelper(Application application,String key) {
         String deviceBrand = DeviceUtils.getDeviceBrand();
         if (application.getApplicationInfo().packageName.equals(getCurProcessName(application))) {
-            if (deviceBrand.equalsIgnoreCase("Xiaomi")){
-                //小米推送配置
-                RongPushClient.registerMiPush(application, "2882303761517871354", "5731787151354");
-            }else if (deviceBrand.equalsIgnoreCase("huawei")){
-                //华为配置
-                RongPushClient.registerHWPush(application);
-            }
+//            if (deviceBrand.equalsIgnoreCase("Xiaomi")){
+//                //小米推送配置
+//                RongPushClient.registerMiPush(application, "2882303761517871354", "5731787151354");
+//            }else if (deviceBrand.equalsIgnoreCase("huawei")){
+//                //华为配置
+//                RongPushClient.registerHWPush(application);
+//            }
             RongIM.init(application,key);
             RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
                 @Override
@@ -202,13 +206,35 @@ public class ChactHelper {
             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("您不能和自己对话");
         } else {
             if (userID!=null){
-                RongIM.getInstance().startPrivateChat(context, userID, title == null ? "聊天" : title);
+                startPrivateChat(context, userID, title == null ? "聊天" : title, context.getApplicationInfo().packageName);
+
             }else {
                 ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("用户ID为空");
             }
         }
 
     }
+
+    public void startPrivateChat(Context context, String targetUserId, String title,String packageName) {
+        if (context != null && !TextUtils.isEmpty(targetUserId)) {
+            if (RongContext.getInstance() == null) {
+                JLog.e( "startPrivateChat. RongIM SDK not init, please do after init.");
+            } else {
+                if (TextUtils.isEmpty(packageName)) {
+                    packageName = context.getApplicationInfo().packageName;
+                }
+                Uri uri = Uri.parse("rong://" + packageName).buildUpon().appendPath("conversation").appendPath(Conversation.ConversationType.PRIVATE.getName().toLowerCase(Locale.US)).appendQueryParameter("targetId", targetUserId).appendQueryParameter("title", title).build();
+                Intent intent = new Intent("android.intent.action.VIEW", uri);
+                intent.setPackage(packageName);
+                context.startActivity(intent);
+            }
+        } else {
+            JLog.e(  "startPrivateChat. context or targetUserId can not be empty!!!");
+        }
+    }
+
+
+
 
     /**
      * 设置获取用户信息

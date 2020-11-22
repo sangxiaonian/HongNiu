@@ -20,7 +20,7 @@ import com.hongniu.freight.entity.LoginInfo;
 import com.hongniu.freight.ui.SplashActivity;
 import com.hongniu.freight.utils.InfoUtils;
 import com.hongniu.supply.R;
-import com.hongniu.supply.entity.CompanyInfoBean;
+import com.hongniu.baselibrary.entity.CompanyInfoBean;
 import com.hongniu.supply.entity.CompanyTokenInfoBean;
 import com.hongniu.supply.net.HttpMainFactory;
 import com.sang.common.recycleview.adapter.XAdapter;
@@ -127,6 +127,7 @@ public class SwitchCompanyActivity extends RefrushActivity<CompanyInfoBean>    {
                     @Override
                     public ObservableSource<CommonBean<LoginInfo>> apply(@NonNull CommonBean<CompanyTokenInfoBean> stringCommonBean) throws Exception {
 
+                        Config.getInstance().setCompanyInfoBean( data);
                         Config.getInstance().intNetClient(data.getApiUrl(),data.getSubAppCode());
                         Config.getInstance().setCurrentPackageName(data.getAndroidPackage());
                         return HttpMainFactory.loginWithToken(stringCommonBean.getData().getToken(),stringCommonBean.getData().getMobile());

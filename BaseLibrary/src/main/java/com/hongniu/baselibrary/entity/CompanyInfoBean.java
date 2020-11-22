@@ -1,4 +1,4 @@
-package com.hongniu.supply.entity;
+package com.hongniu.baselibrary.entity;
 
 /**
  * 作者：  on 2020/10/31.

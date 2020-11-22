@@ -29,7 +29,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:text="木牛流马" />
+                tools:text="木牛流马" />
 
             <View
                 android:id="@+id/search"

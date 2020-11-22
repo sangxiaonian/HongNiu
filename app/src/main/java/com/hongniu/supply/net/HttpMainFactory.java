@@ -6,7 +6,7 @@ import com.hongniu.baselibrary.utils.clickevent.ClickEventBean;
 import com.hongniu.freight.entity.LoginInfo;
 import com.hongniu.freight.net.HttpAppFactory;
 import com.hongniu.supply.entity.AppToken;
-import com.hongniu.supply.entity.CompanyInfoBean;
+import com.hongniu.baselibrary.entity.CompanyInfoBean;
 import com.hongniu.supply.entity.CompanyTokenInfoBean;
 import com.hongniu.supply.entity.HomeADBean;
 import com.hongniu.supply.entity.WayBillBean;

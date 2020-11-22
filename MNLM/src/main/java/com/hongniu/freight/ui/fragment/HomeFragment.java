@@ -21,6 +21,7 @@ import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.ui.CompanyBaseFragment;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
+import com.hongniu.freight.Config;
 import com.hongniu.freight.R;
 import com.hongniu.freight.config.Role;
 import com.hongniu.freight.config.RoleOrder;
@@ -102,8 +103,7 @@ public class HomeFragment extends CompanyBaseFragment implements HomeControl.IHo
             present.saveInfo(isLogin);
         }
         present.queryInfo(this);
-
-
+        tv_title.setText(Config.getInstance().getCompanyInfoBean().getName());
     }
 
     @Override
