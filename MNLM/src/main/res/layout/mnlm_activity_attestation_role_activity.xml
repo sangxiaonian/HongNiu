@@ -65,19 +65,7 @@
             app:layout_constraintStart_toStartOf="@id/tv2"
             app:layout_constraintTop_toTopOf="@id/tv_index_1" />
 
-        <TextView
-            android:id="@+id/tv_index_3"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:background="@drawable/ovl_50_cccccc"
-            android:gravity="center"
-            android:text="3"
-            android:textColor="@color/color_of_ffffff"
-            android:textSize="13dp"
-            app:layout_constraintBottom_toBottomOf="@id/tv_index_1"
-            app:layout_constraintEnd_toEndOf="@id/tv3"
-            app:layout_constraintStart_toStartOf="@id/tv3"
-            app:layout_constraintTop_toTopOf="@id/tv_index_1" />
+
 
         <TextView
             android:id="@+id/tv1"
@@ -105,12 +93,28 @@
             app:layout_constraintTop_toTopOf="@id/tv1" />
 
         <TextView
+            android:id="@+id/tv_index_3"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/ovl_50_cccccc"
+            android:gravity="center"
+            android:text="3"
+            android:textColor="@color/color_of_ffffff"
+            android:textSize="13dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/tv_index_1"
+            app:layout_constraintEnd_toEndOf="@id/tv3"
+            app:layout_constraintStart_toStartOf="@id/tv3"
+            app:layout_constraintTop_toTopOf="@id/tv_index_1" />
+
+        <TextView
             android:id="@+id/tv3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="人脸识别"
             android:textColor="@color/color_of_999999"
             android:textSize="13dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/tv1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv2"

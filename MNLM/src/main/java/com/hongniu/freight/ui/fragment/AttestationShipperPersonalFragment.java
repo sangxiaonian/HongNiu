@@ -141,8 +141,7 @@ public class AttestationShipperPersonalFragment  extends AttestationBaseFragment
                             @Override
                             public void doOnSuccess(String s) {
                                 super.doOnSuccess(s);
-                                ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_attestation_face)
-                                        .navigation(getContext());
+                                Utils.jump2FaceAttestation(getContext());
                             }
                         })
                 ;
