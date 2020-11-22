@@ -10,7 +10,9 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.fy.androidlibrary.imgload.ImageLoader;
 import com.fy.androidlibrary.utils.CommonUtils;
+import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
+import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.base.RefrushActivity;
 import com.hongniu.baselibrary.entity.CommonBean;
@@ -137,8 +139,9 @@ public class SwitchCompanyActivity extends RefrushActivity<CompanyInfoBean>    {
                     @Override
                     public void doOnSuccess(LoginInfo data) {
                         InfoUtils.saveLoginInfo(data);
-
-                        startActivity(new Intent(mContext, SplashActivity.class));
+                        ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_main)
+                                .navigation(mContext);
+//                        startActivity(new Intent(mContext, SplashActivity.class));
                     }
                 });
     }
