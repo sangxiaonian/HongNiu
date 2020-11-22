@@ -26,16 +26,6 @@
             app:layout_constraintStart_toStartOf="@id/tv_index_1"
             app:layout_constraintTop_toTopOf="@id/tv_index_1" />
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="2dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@color/color_of_cccccc"
-            app:layout_constraintBottom_toBottomOf="@id/tv_index_1"
-            app:layout_constraintEnd_toEndOf="@id/tv_index_3"
-            app:layout_constraintStart_toStartOf="@id/tv_index_2"
-            app:layout_constraintTop_toTopOf="@id/tv_index_1" />
 
         <TextView
             android:id="@+id/tv_index_1"
@@ -119,6 +109,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv2"
             app:layout_constraintTop_toTopOf="@id/tv1" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/color_of_cccccc"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/tv_index_1"
+            app:layout_constraintEnd_toEndOf="@id/tv_index_3"
+            app:layout_constraintStart_toStartOf="@id/tv_index_2"
+            app:layout_constraintTop_toTopOf="@id/tv_index_1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
