@@ -13,7 +13,7 @@ public class CompanyInfoBean {
      * companyName : 山东远恒供应链管理有限公司
      * iOSPackage : com.hongniu.huoyun
      * logoUrl : https://statichongniu.oss-cn-qingdao.aliyuncs.com/mnlmlogo.png
-     * name : 木牛流马
+     * name :
      * subAppCode : mnlm
      */
 

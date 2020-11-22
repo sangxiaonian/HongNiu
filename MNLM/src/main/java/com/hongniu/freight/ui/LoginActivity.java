@@ -88,9 +88,9 @@ public class LoginActivity extends CompanyBaseActivity implements View.OnClickLi
     @Override
     protected void initData() {
         super.initData();
-        SpannableStringBuilder builder = new SpannableStringBuilder("进入木牛流马代表你已同意");
+        SpannableStringBuilder builder = new SpannableStringBuilder("进入代表你已同意");
         int start = builder.length();
-        builder.append("《木牛流马许可协议》");
+        builder.append("《许可协议》");
         int end = builder.length();
         XClickableSpan xClickableSpan = new XClickableSpan() {
             /**

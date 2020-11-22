@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
-        android:text="欢迎登录木牛流马"
+        android:text="欢迎登录"
         android:textColor="@color/color_of_040000"
         android:textSize="24dp"
         android:textStyle="bold" />
@@ -88,7 +88,7 @@
    <TextView
        android:layout_width="match_parent"
        android:id="@+id/tv_argument"
-       android:text="进入木牛流马代表你已同意"
+       android:text="进入代表你已同意"
        android:textSize="12dp"
        android:gravity="center"
        android:textColor="@color/color_of_040000"

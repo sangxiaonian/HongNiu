@@ -21,7 +21,7 @@
         android:paddingTop="7dp"
         android:paddingRight="@dimen/gap_app"
         android:paddingBottom="7dp"
-        android:text="该银行卡用于在木牛流马平台充值及提现操作，一旦绑定后，暂不支持线上更换银行卡，请谨慎操作"
+        android:text="该银行卡用于在平台充值及提现操作，一旦绑定后，暂不支持线上更换银行卡，请谨慎操作"
         android:textColor="#F06F28"
         android:textSize="13dp" />
 

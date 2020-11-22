@@ -8,7 +8,7 @@ public class QueryBindHuaInforsBean {
 
 
     /**
-     * othBankPayeeSubAccName : 上海木牛流马管理有限公司
+     * othBankPayeeSubAccName : 上海管理有限公司
      * bankCardNum : 6222226446646646446
      * othBankPayeeSubAccSetteName : 华夏银行北京分行
      * othBankPayeeSubAcc : 99110250001001723572

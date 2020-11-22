@@ -86,7 +86,7 @@ public class ForgetPassActivity extends CompanyBaseActivity implements View.OnCl
         super.initData();
         itemPhone.setTextCenter(InfoUtils.getMyInfo().getMobile());
         itemPhone.setEnabled(false);
-        setWhitToolBar(type == 0 ? "忘记支付/提现密码" : "设置木牛流马支付/提现密码");
+        setWhitToolBar(type == 0 ? "忘记支付/提现密码" : "设置支付/提现密码");
         itemPass.setTextCenterHide("请输入六位数字新密码");
         itemNewPass.setTextCenterHide("请再次输入六位数字密码");
 

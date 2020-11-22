@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
-        android:text="木牛流马网络货运"
+        android:text="网络货运"
         android:textColor="@color/color_of_040000"
         android:textSize="24dp"
         android:textStyle="bold" />
@@ -30,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="木牛流马网络货运"
+        android:text="网络货运"
         android:textColor="@color/color_of_999999"
         android:textSize="13dp"
         android:textStyle="bold" />
@@ -49,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="45dp"
-            android:text="《木牛流马许可协议》"
+            android:text="《许可协议》"
             android:textColor="@color/color_of_3d59ae"
             android:textSize="12dp" />
 

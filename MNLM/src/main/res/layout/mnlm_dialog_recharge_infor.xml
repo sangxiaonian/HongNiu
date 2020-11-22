@@ -46,7 +46,7 @@
         android:textColor="@color/color_of_040000"
         android:textSize="13sp"
         android:lineSpacingExtra="5dp"
-        android:text="户名：木牛流马 \n账号：282838339399292 \n支行：上海闸北分"
+        android:text="户名： \n账号：282838339399292 \n支行：上海闸北分"
         android:layout_marginTop="@dimen/gap_app"
         android:layout_height="wrap_content" />
 

@@ -159,7 +159,7 @@ public class BalancePendingActivity extends CompanyBaseActivity implements View.
                     new DialogComment.Builder()
                             .setBtLeft("取消")
                             .setBtRight("去设置")
-                            .setDialogTitle(" 使用余额支付前，必须设置木牛流马支付密码")
+                            .setDialogTitle(" 使用余额支付前，必须设置支付密码")
                             .hideContent()
                             .setRightClickListener(new DialogComment.OnButtonRightClickListener() {
                                 @Override

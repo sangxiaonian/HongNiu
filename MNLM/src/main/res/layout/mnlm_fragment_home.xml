@@ -29,7 +29,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                tools:text="木牛流马" />
+                tools:text="" />
 
             <View
                 android:id="@+id/search"
@@ -358,7 +358,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/gap_app"
-                        android:text="木牛流马网络货运"
+                        android:text="网络货运"
                         android:textColor="@color/color_of_333333"
                         android:textSize="23dp"
                         android:textStyle="bold"

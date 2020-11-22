@@ -109,14 +109,14 @@ public class RuleAlertDialog extends Dialog {
         titleTv.setVisibility(View.VISIBLE);
         contentTv.setVisibility(View.VISIBLE);
         negtiveBn.setVisibility(View.VISIBLE);
-        titleTv.setText("欢迎使用木牛流马");
+        titleTv.setText("欢迎使用");
         positiveBn.setText("同意");
         negtiveBn.setText("不同意");
 
 
         final SpannableStringBuilder style = new SpannableStringBuilder();
         //设置文字
-        String str1 = "木牛流马非常重视您的隐私保护和个人信息保护，在您使用木牛流马APP前，请认真阅读以下条款：";
+        String str1 = "非常重视您的隐私保护和个人信息保护，在您使用APP前，请认真阅读以下条款：";
         String str2 = "《隐私权政策》";
         String str3 = "和";
         String str4 = "《用户协议》";
