@@ -181,7 +181,9 @@ public class AttestationDriverFragment extends AttestationBaseFragment implement
                 params.setInputQcNum(item_number.getTextCenter());
                 params.setFaceDLImageUrl(img_driver.getImgInfo().getPath());
                 params.setBackDLImageUrl(img_driver1.getImgInfo().getPath());
-                params.setQualificationCertificateImageUrl(img_qualification.getImgInfo().getPath());
+                if (img_qualification.getImgInfo()!=null) {
+                    params.setQualificationCertificateImageUrl(img_qualification.getImgInfo().getPath());
+                }
                 params.setIdnumberFaceImageUrl(img_id_card_front.getImgInfo().getPath());
                 params.setIdnumberBackImageUrl(img_id_card_back.getImgInfo().getPath());
 
