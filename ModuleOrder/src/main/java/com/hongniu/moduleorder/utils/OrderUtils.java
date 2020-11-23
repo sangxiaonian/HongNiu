@@ -24,13 +24,9 @@ public class OrderUtils {
         }else {
             try {
 
-                ArouterUtils.getInstance().builder(ArouterParamsApp.activity_pdf)
+                ArouterUtils.getInstance().builder(ArouterParamsApp.activity_pdf_order)
                         .withString(Param.TRAN,url)
                         .navigation(activity);
-
-//                Uri uri = Uri.parse(url);
-//                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-//                activity.startActivity(intent);
             } catch (Exception e) {
                 e.printStackTrace();
             }

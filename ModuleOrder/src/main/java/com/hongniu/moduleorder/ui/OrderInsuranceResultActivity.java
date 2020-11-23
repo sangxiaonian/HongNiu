@@ -96,7 +96,6 @@ public class OrderInsuranceResultActivity extends ModuleBaseActivity implements 
         if (i == R.id.bt_finish) {
             ArouterUtils.getInstance().builder(ArouterParamsApp.activity_main).navigation(mContext);
         } else if (i == R.id.bt_check) {
-            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("查看保单");
             OrderUtils.scanPDf(this,insurance.getDownloadUrl());
         }
     }

@@ -41,8 +41,8 @@
                 style="@style/item_edit"
                 app:centerType="normal"
                 android:id="@+id/item_number"
-                app:textcenterhide="请输入从业资格证编号"
-                app:textleft="从业资格证编号" />
+                app:textcenterhide="请输入从业资格证编号(选填)"
+                app:textleft="从业资格证编号(选填)" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -85,7 +85,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="10dp"
 
-                android:text="从业资格证"
+                android:text="从业资格证(选填)"
                 android:textColor="@color/color_of_666666"
                 android:textSize="14dp" />
             <com.hongniu.freight.widget.ImageInforView
@@ -104,5 +104,5 @@
     <TextView
         android:id="@+id/bt_sum"
         style="@style/bt_red"
-        android:text="下一步" />
+        android:text="提交" />
 </LinearLayout>

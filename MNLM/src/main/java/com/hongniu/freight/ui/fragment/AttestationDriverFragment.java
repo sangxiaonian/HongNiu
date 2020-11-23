@@ -22,7 +22,7 @@ import com.hongniu.freight.widget.ImageInforView;
  * 司机身份认证
  */
 @Route(path = ArouterParamMNLM.fragment_attestation_driver)
-public class AttestationDriverFragment extends AttestationBaseFragment implements ItemTextView.OnCenterChangeListener, View.OnClickListener {
+public class AttestationDriverFragment extends AttestationBaseFragment implements ItemTextView.OnCenterChangeListener, View.OnClickListener, ImageInforView.UpLoadFinishListener {
     private ItemTextView item_name;//姓名
     private ItemTextView item_id_card;//身份证号码
     private ItemTextView item_email;//邮箱
@@ -60,6 +60,11 @@ public class AttestationDriverFragment extends AttestationBaseFragment implement
         img_qualification.setAttached(this);
         img_id_card_front.setAttached(this);
         img_id_card_back.setAttached(this);
+  img_driver.setUpLoadFinishListener(this);
+        img_driver1.setUpLoadFinishListener(this);
+        img_qualification.setUpLoadFinishListener(this);
+        img_id_card_front.setUpLoadFinishListener(this);
+        img_id_card_back.setUpLoadFinishListener(this);
 
         img_driver.setType(12);
         img_driver1.setType(12);
@@ -208,4 +213,8 @@ public class AttestationDriverFragment extends AttestationBaseFragment implement
     }
 
 
+    @Override
+    public void onLoadFinish() {
+        check(false);
+    }
 }

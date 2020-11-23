@@ -22,7 +22,7 @@ import com.hongniu.freight.widget.ImageInforView;
  * 公司承运人身份认证第二部
  */
 @Route(path = ArouterParamMNLM.fragment_attestation_carrier_company)
-public class AttestationCarrierCompanyFragment extends AttestationBaseFragment implements View.OnClickListener, ItemTextView.OnCenterChangeListener {
+public class AttestationCarrierCompanyFragment extends AttestationBaseFragment implements View.OnClickListener, ItemTextView.OnCenterChangeListener, ImageInforView.UpLoadFinishListener {
 
     private ItemTextView item_company_name;//姓名
     private ItemTextView item_company_address;//姓名
@@ -69,6 +69,11 @@ public class AttestationCarrierCompanyFragment extends AttestationBaseFragment i
         img_id_card_back.setAttached(this);
         img_driver.setAttached(this);
         img_business_license.setAttached(this);
+
+        img_id_card_front.setUpLoadFinishListener(this);
+        img_id_card_back.setUpLoadFinishListener(this);
+        img_driver.setUpLoadFinishListener(this);
+        img_business_license.setUpLoadFinishListener(this);
         check(false);
 
 
@@ -219,4 +224,8 @@ public class AttestationCarrierCompanyFragment extends AttestationBaseFragment i
     }
 
 
+    @Override
+    public void onLoadFinish() {
+        check(false);
+    }
 }

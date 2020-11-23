@@ -87,5 +87,5 @@
     <TextView
         android:id="@+id/bt_sum"
         style="@style/bt_red"
-        android:text="下一步" />
+        android:text="提交" />
 </LinearLayout>

@@ -6,6 +6,8 @@ import android.os.SystemClock;
 import android.text.TextUtils;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.fy.androidlibrary.net.download.DownloadUtil;
+import com.fy.androidlibrary.utils.JLog;
 import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
 import com.github.barteksc.pdfviewer.listener.OnRenderListener;
@@ -14,26 +16,20 @@ import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.supply.R;
-import com.fy.androidlibrary.net.download.DownloadUtil;
-import com.fy.androidlibrary.utils.JLog;
 
 import java.io.File;
 import java.util.List;
 
-@Route(path = ArouterParamsApp.activity_pdf)
-public class PDFActivity extends ModuleBaseActivity implements OnLoadCompleteListener, OnRenderListener, PermissionUtils.onApplyPermission, DownloadUtil.OnDownloadListener {
+@Route(path = ArouterParamsApp.activity_pdf_order)
+public class PDFOrderActivity extends ModuleBaseActivity implements OnLoadCompleteListener, OnRenderListener, PermissionUtils.onApplyPermission, DownloadUtil.OnDownloadListener {
     PDFView pdfView;
     private String pdfUrl;
-    private String title;
-    private String fileName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pdf);
-        title=getIntent().getStringExtra(Param.TITLE);
-        title=getIntent().getStringExtra(Param.TRAN);
-        setToolbarTitle(title);
+        setToolbarTitle("查看保单");
         initView();
         initData();
     }
@@ -51,7 +47,7 @@ public class PDFActivity extends ModuleBaseActivity implements OnLoadCompleteLis
         if (!TextUtils.isEmpty(pdfUrl)) {
             PermissionUtils.applyStorage(this, this);
         }else {
-            showAleart("文件地址不存在，请返回重试");
+            showAleart("保单地址不存在，请返回重试");
         }
     }
 

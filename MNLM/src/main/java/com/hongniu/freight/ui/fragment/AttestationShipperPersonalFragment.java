@@ -22,7 +22,7 @@ import com.hongniu.freight.widget.ImageInforView;
  * 个人托运人身份认证第二部
  */
 @Route(path = ArouterParamMNLM.fragment_attestation_shipper_personal)
-public class AttestationShipperPersonalFragment  extends AttestationBaseFragment implements View.OnClickListener, ItemTextView.OnCenterChangeListener {
+public class AttestationShipperPersonalFragment extends AttestationBaseFragment implements View.OnClickListener, ItemTextView.OnCenterChangeListener, ImageInforView.UpLoadFinishListener {
 
 
     private ItemTextView item_name;//姓名
@@ -53,6 +53,8 @@ public class AttestationShipperPersonalFragment  extends AttestationBaseFragment
 
         img_id_card_front.setAttached(this);
         img_id_card_back.setAttached(this);
+        img_id_card_front.setUpLoadFinishListener(this);
+        img_id_card_back.setUpLoadFinishListener(this);
 
         check(false);
 
@@ -152,6 +154,11 @@ public class AttestationShipperPersonalFragment  extends AttestationBaseFragment
 
     @Override
     public void onCenterChange(String msg) {
+        check(false);
+    }
+
+    @Override
+    public void onLoadFinish() {
         check(false);
     }
 }
