@@ -289,7 +289,7 @@ public class ModuleBaseActivity extends AppCompatActivity implements TaskControl
     @Override
     public void onTaskFail(Throwable e, int code, String msg) {
         hideLoad();
-        if ("401".equals(code) && e instanceof NetException) {//重新登录
+        if (401==code && e instanceof NetException) {//重新登录
             new CenterAlertBuilder()
                     .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
                         @Override

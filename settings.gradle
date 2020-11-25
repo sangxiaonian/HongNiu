@@ -2,5 +2,5 @@ include ':MNLM'
 include ':companylibrary'
 include ':androidlibrary'
 include ':app', ':CommonLibrary', ':ResLibrary', ':ThirdLibrary', ':BaseLibrary', ':ModuleLogin', ':ModuleFestivity', ':ModuleChact', ':ModuleCarGoodsMatch', ':ModuleBreakbulk',
-         ':ModuleOrder', ':ModuleFinance', ':pickerview', ':wheelview',':xcalendar' ,':ModuleChact'
+         ':ModuleOrder', ':ModuleFinance',  ':wheelview',':xcalendar' ,':ModuleChact'
 //,':CallKit',':CallLib',':IMKit',':IMLib',':RCSticker',':picture_library',':ucrop'
