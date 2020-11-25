@@ -76,7 +76,7 @@ android {
         }
         release {
 
-            minifyEnabled false
+            //minifyEnabled false
             buildConfigField "String", "RONG_CLOUD_APP_KEY", "\"x18ywvqfxbxhc\""
             buildConfigField "boolean", "debugMode", "false"
                     manifestPlaceholders = [RONG_CLOUD_APP_KEY: Releast_RONG_CLOUD_APP_KEY.toString()//融云聊天key
