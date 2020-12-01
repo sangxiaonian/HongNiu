@@ -16,13 +16,33 @@
         android:layout_height="365dp" />
 
 
-    <ImageView
-        android:layout_width="@dimen/splash_img_width"
-        android:src="@mipmap/logo_qdy"
+
+    <LinearLayout
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/splash_img_bottom"
-        android:layout_height="@dimen/splash_img_height" />
-    
+        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:layout_marginBottom="35dp"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="35dp"
+            android:layout_height="41dp"
+            android:src="@mipmap/ic_launcher"
+
+            />
+
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="@color/color_of_999999"
+            android:textSize="23dp"
+            android:layout_marginLeft="10dp"
+            />
+    </LinearLayout>
+
+
 
 </RelativeLayout>

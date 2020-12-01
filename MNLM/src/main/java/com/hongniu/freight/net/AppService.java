@@ -346,7 +346,7 @@ public interface AppService {
      * @param params
      * @return
      */
-    @POST("/api/deliveryOrder/endSend")
+    @POST("api/deliveryOrder/endSend")
     Observable<CommonBean<Object>> orderEnd(@Body JsonObject params);
 
     /**
@@ -513,7 +513,7 @@ public interface AppService {
      *
      * @return
      */
-    @POST("/api/finance/getInsuranceCost")
+    @POST("api/finance/getInsuranceCost")
     Observable<CommonBean<List<QueryExpendResultBean>>> queryExpendVistogramInsurance(@Body BillInfoSearchParams infor);
 
     /**
@@ -540,7 +540,7 @@ public interface AppService {
      * @param bean
      * @return
      */
-    @POST("/api/account/withdraw")
+    @POST("api/account/withdraw")
     Observable<CommonBean<String>> withdraw(@Body BalanceWithDrawBean bean);
 
     /**
@@ -549,7 +549,7 @@ public interface AppService {
      * @param payInfoParams
      * @return
      */
-    @POST("/api/account/pay")
+    @POST("api/account/pay")
     Observable<CommonBean<PayBean>> queryPayInfo(@Body QueryPayInfoParams payInfoParams);
 
     /**

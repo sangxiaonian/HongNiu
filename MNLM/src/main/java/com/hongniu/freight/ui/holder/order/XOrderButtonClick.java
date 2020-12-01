@@ -378,22 +378,22 @@ public class XOrderButtonClick implements OrderButtonClickListener, InsuranceBuy
                                         nextStepListener.doUpdate();
                                     }
 
-                                    ShippingNoteInfo noteInfo=new ShippingNoteInfo();
-                                    noteInfo.setShippingNoteNumber(bean.getOrderNum());
-                                    noteInfo.setSerialNumber("0000");
-                                    noteInfo.setStartCountrySubdivisionCode(bean.getStartCountrySubdivisionCode());
-                                    noteInfo.setEndCountrySubdivisionCode(bean.getEndCountrySubdivisionCode());
-                                    FreightClient.getClient().start(mContext, new OnResultListener() {
-                                        @Override
-                                        public void onSuccess() {
-                                            JLog.i("--------开始发车--------");
-                                        }
-
-                                        @Override
-                                        public void onFailure(String s, String s1) {
-                                            JLog.i("开始发车记录失败: "+s+ ": "+s1);
-                                        }
-                                    },noteInfo);
+//                                    ShippingNoteInfo noteInfo=new ShippingNoteInfo();
+//                                    noteInfo.setShippingNoteNumber(bean.getOrderNum());
+//                                    noteInfo.setSerialNumber("0000");
+//                                    noteInfo.setStartCountrySubdivisionCode(bean.getStartCountrySubdivisionCode());
+//                                    noteInfo.setEndCountrySubdivisionCode(bean.getEndCountrySubdivisionCode());
+//                                    FreightClient.getClient().start(mContext, new OnResultListener() {
+//                                        @Override
+//                                        public void onSuccess() {
+//                                            JLog.i("--------开始发车--------");
+//                                        }
+//
+//                                        @Override
+//                                        public void onFailure(String s, String s1) {
+//                                            JLog.i("开始发车记录失败: "+s+ ": "+s1);
+//                                        }
+//                                    },noteInfo);
 
 
                                 }
@@ -468,23 +468,22 @@ public class XOrderButtonClick implements OrderButtonClickListener, InsuranceBuy
                                     if (nextStepListener != null) {
                                         nextStepListener.doUpdate();
                                     }
-
-                                    ShippingNoteInfo noteInfo=new ShippingNoteInfo();
-                                    noteInfo.setShippingNoteNumber(bean.getOrderNum());
-                                    noteInfo.setSerialNumber("0000");
-                                    noteInfo.setStartCountrySubdivisionCode(bean.getStartCountrySubdivisionCode());
-                                    noteInfo.setEndCountrySubdivisionCode(bean.getEndCountrySubdivisionCode());
-                                    FreightClient.getClient().stop(mContext, new OnResultListener() {
-                                        @Override
-                                        public void onSuccess() {
-                                            JLog.i("--------停止记录轨迹--------");
-                                        }
-
-                                        @Override
-                                        public void onFailure(String s, String s1) {
-                                            JLog.i("开始发车记录失败: "+s+": "+s1);
-                                        }
-                                    },noteInfo);
+//                                    ShippingNoteInfo noteInfo=new ShippingNoteInfo();
+//                                    noteInfo.setShippingNoteNumber(bean.getOrderNum());
+//                                    noteInfo.setSerialNumber("0000");
+//                                    noteInfo.setStartCountrySubdivisionCode(bean.getStartCountrySubdivisionCode());
+//                                    noteInfo.setEndCountrySubdivisionCode(bean.getEndCountrySubdivisionCode());
+//                                    FreightClient.getClient().stop(mContext, new OnResultListener() {
+//                                        @Override
+//                                        public void onSuccess() {
+//                                            JLog.i("--------停止记录轨迹--------");
+//                                        }
+//
+//                                        @Override
+//                                        public void onFailure(String s, String s1) {
+//                                            JLog.i("开始发车记录失败: "+s+": "+s1);
+//                                        }
+//                                    },noteInfo);
 
                                 }
 
