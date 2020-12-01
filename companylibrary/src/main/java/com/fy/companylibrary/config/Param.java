@@ -44,7 +44,7 @@ public class Param {
     //隐私协议
     public static final String  hongniu_privacy = "https://api.hongniudai.cn/static/wlhyprotocol.html";
     //网络货运介绍
-    public static final String  insurance_polic = "https://api.hongniudai.cn/static/wlhyservice.html";
+    public static final String  insurance_polic = "https://api.hongniudai.cn/static/wlhydemoservice.html";
 
     /**
      * 确认到达时候，距离目的地的最小距离 单位 千米
