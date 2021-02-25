@@ -2,6 +2,7 @@ package com.fy.androidlibrary.net.download;
 
 
 import com.fy.androidlibrary.net.OkHttp;
+import com.fy.androidlibrary.utils.JLog;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -51,15 +52,12 @@ public class DownloadUtil {
         Request request = new Request.Builder()
                 .url(url)
                 .build();
+        File file=new File(destFileDir);
+        if (!file.exists()||!file.isDirectory()){
 
-//        OkHttpClient client = new OkHttpClient();
-
-        //同步请求
-//        try {
-//            Response response = client.newCall(request).execute();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+            boolean mkdirs = file.mkdirs();
+            JLog.i("创建文件夹："+mkdirs);
+        }
 
         //异步请求
         okHttpClient.newCall(request).enqueue(new Callback() {

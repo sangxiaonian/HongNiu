@@ -10,6 +10,7 @@
     <uses-permission android:name="com.hongniu.supply.permission.MIPUSH_RECEIVE" />
     <uses-permission android:name="android.permission.REORDER_TASKS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 融云 -->
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" /> <!-- 融云 -->
     <meta-data
         android:name="RONG_CLOUD_APP_KEY"
         android:value="${RONG_CLOUD_APP_KEY}" />
@@ -22,6 +23,7 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme,android:networkSecurityConfig,android:allowBackup">
         <activity android:name=".ui.SwitchCompanyActivity"></activity>
@@ -63,6 +65,7 @@
 
         <receiver android:name=".ui.receiver.MyPlushBroadcastReceiver" /> <!-- 小米 配置开始 < -->
         <activity android:name=".ui.ImagePreviceActivity" />
+        <activity android:name=".ui.PDFOrderActivity" />
 
         <meta-data
             android:name="com.huawei.hms.client.appid"

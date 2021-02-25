@@ -2,12 +2,9 @@ package com.hongniu.baselibrary.utils;
 
 import android.app.Activity;
 
-import com.hjq.permissions.OnPermission;
+import com.hjq.permissions.OnPermissionCallback;
 import com.hjq.permissions.Permission;
 import com.hjq.permissions.XXPermissions;
-import com.hongniu.baselibrary.arouter.ArouterParamOrder;
-import com.hongniu.baselibrary.arouter.ArouterUtils;
-import com.hongniu.baselibrary.config.Param;
 
 import java.util.List;
 
@@ -32,18 +29,21 @@ public class PermissionUtils {
         XXPermissions.with(activity)
                 //.constantRequest() //可设置被拒绝后继续申请，直到用户授权或者永久拒绝
 //                .permission(Permission.WRITE_EXTERNAL_STORAGE, Permission.ACCESS_COARSE_LOCATION)
-                .permission(Permission.Group.STORAGE,Permission.Group.LOCATION,new String[]{Permission.READ_PHONE_STATE} ) //支持多个权限组进行请求，不指定则默以清单文件中的危险权限进行请求
-                .request(new OnPermission() {
+//                .permission(Permission.MANAGE_EXTERNAL_STORAGE)
+                .permission(new String[]{Permission.MANAGE_EXTERNAL_STORAGE,
+                        Permission.ACCESS_FINE_LOCATION,
+                        Permission.ACCESS_COARSE_LOCATION,
+                        Permission.READ_PHONE_STATE}) //支持多个权限组进行请求，不指定则默以清单文件中的危险权限进行请求
+                .request(new OnPermissionCallback() {
 
                     @Override
-                    public void hasPermission(List<String> granted, boolean isAll) {
-                        permission.hasPermission(granted,isAll);
-
+                    public void onGranted(List<String> permissions, boolean all) {
+                        permission.hasPermission(permissions, all);
                     }
 
                     @Override
-                    public void noPermission(List<String> denied, boolean quick) {
-                        permission.noPermission(denied,quick);
+                    public void onDenied(List<String> permissions, boolean never) {
+                        permission.noPermission(permissions, never);
                     }
                 });
 
@@ -56,22 +56,42 @@ public class PermissionUtils {
      */
     public static void applyStorage(Activity activity, final onApplyPermission permission) {
         XXPermissions.with(activity)
-                //.constantRequest() //可设置被拒绝后继续申请，直到用户授权或者永久拒绝
-                .permission(Permission.WRITE_EXTERNAL_STORAGE) //支持请求安装权限和悬浮窗权限
-                .permission(Permission.Group.STORAGE) //支持多个权限组进行请求，不指定则默以清单文件中的危险权限进行请求
-                .request(new OnPermission() {
-
+                .permission(Permission.MANAGE_EXTERNAL_STORAGE) //支持多个权限组进行请求，不指定则默以清单文件中的危险权限进行请求
+                .request(new OnPermissionCallback() {
                     @Override
-                    public void hasPermission(List<String> granted, boolean isAll) {
-                        permission.hasPermission(granted,isAll);
-
+                    public void onGranted(List<String> permissions, boolean all) {
+                        permission.hasPermission(permissions, all);
                     }
 
                     @Override
-                    public void noPermission(List<String> denied, boolean quick) {
-                        permission.noPermission(denied,quick);
+                    public void onDenied(List<String> permissions, boolean never) {
+                        permission.noPermission(permissions, never);
                     }
-                });
+                })
+        ;
+
+    }
+
+    /**
+     * 申请储存相关权限
+     *
+     * @param activity
+     */
+    public static void apply(Activity activity,String permission, final onApplyPermission applyPermission) {
+        XXPermissions.with(activity)
+                .permission(permission) //支持多个权限组进行请求，不指定则默以清单文件中的危险权限进行请求
+                .request(new OnPermissionCallback() {
+                    @Override
+                    public void onGranted(List<String> permissions, boolean all) {
+                        applyPermission.hasPermission(permissions, all);
+                    }
+
+                    @Override
+                    public void onDenied(List<String> permissions, boolean never) {
+                        applyPermission.noPermission(permissions, never);
+                    }
+                })
+        ;
 
     }
 

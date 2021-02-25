@@ -42,6 +42,7 @@ import com.hongniu.baselibrary.widget.dialog.UpDialog;
 import com.hongniu.moduleorder.entity.VersionBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.utils.LoactionUpUtils;
+import com.hongniu.moduleorder.utils.OrderUtils;
 import com.hongniu.supply.R;
 import com.hongniu.supply.net.HttpMainFactory;
 import com.hongniu.supply.utils.RedDialog;
@@ -342,18 +343,7 @@ public class MainActivity extends ModuleBaseActivity implements View.OnClickList
         demo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showLoad();
-//                show=!show;
-//                NotificationUtils.getInstance()
-//                        .setSound(show?R.raw.notify_sound:0)
-//                        .showNotification(mContext,ConvertUtils.getRandom(0,10000),null,null,null);
-//
-//                ArouterUtils.getInstance().builder(ArouterParamsMatch.activity_match_estimate_order)
-//                        .navigation(mContext);
-//                startActivity(new Intent(mContext, SplashActivity.class));
-
-
-
+                OrderUtils.scanPDf(MainActivity.this,"http://www.epicc.com.cn/ecooperation/policydownload/downloadurl.do?platfromcodes=CPI000458&policyNo=5A485D6E8057FEB82CE1F4815EE91F05AE72C63D102424554ACEC1F922F8ECAF&insuredID=C8C59A9E3DF95808B2EFA6E00A1D435CC4B439DB03EB115FE16C4D7666F0A33B&flag=Y");
             }
         });
 

@@ -4,9 +4,9 @@ ext {
 
     compileSdkVersion = 29
     minSdkVersion = 21
-    targetSdkVersion = 29
-    versionCode = 290
-    versionName = "2.9.0"
+    targetSdkVersion = 30
+    versionCode = 291
+    versionName = "2.9.1"
 
 
     Arouter_Complier = "1.1.4"

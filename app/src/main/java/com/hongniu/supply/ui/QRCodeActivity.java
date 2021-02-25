@@ -10,13 +10,13 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.fy.androidlibrary.widget.ColorImageView;
 import com.githang.statusbar.StatusBarCompat;
-import com.hjq.permissions.OnPermission;
 import com.hjq.permissions.Permission;
 import com.hjq.permissions.XXPermissions;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.ModuleBaseActivity;
 import com.hongniu.baselibrary.config.Param;
+import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.supply.R;
 import com.uuzuche.lib_zxing.activity.CaptureFragment;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
@@ -88,24 +88,23 @@ public class QRCodeActivity extends ModuleBaseActivity implements View.OnClickLi
     public void onClick(View v) {
         if (v.getId() == R.id.ll_left && type != 1) {
             type = 1;
-            XXPermissions.with(this)
-                    .permission(Permission.CAMERA) //支持请求安装权限和悬浮窗权限
-                    .request(new OnPermission() {
-                        @Override
-                        public void hasPermission(List<String> granted, boolean isAll) {
-                            CaptureFragment captureFragment = new CaptureFragment();
-                            // 为二维码扫描界面设置定制化界面
-                            CodeUtils.setFragmentArgs(captureFragment, R.layout.fragment_scan);
-                            captureFragment.setAnalyzeCallback(QRCodeActivity.this);
-                            getSupportFragmentManager().beginTransaction().replace(R.id.fl_my_container, captureFragment).commit();
+            PermissionUtils.apply(this, Permission.CAMERA, new PermissionUtils.onApplyPermission() {
+                @Override
+                public void hasPermission(List<String> granted, boolean isAll) {
+                    CaptureFragment captureFragment = new CaptureFragment();
+                    // 为二维码扫描界面设置定制化界面
+                    CodeUtils.setFragmentArgs(captureFragment, R.layout.fragment_scan);
+                    captureFragment.setAnalyzeCallback(QRCodeActivity.this);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fl_my_container, captureFragment).commit();
 
-                        }
+                }
 
-                        @Override
-                        public void noPermission(List<String> denied, boolean quick) {
-                            llRight.performClick();
-                        }
-                    });
+                @Override
+                public void noPermission(List<String> denied, boolean quick) {
+                    llRight.performClick();
+
+                }
+            });
             changeState(type);
         } else if (v.getId() == R.id.ll_right && type != 2) {
             type = 2;
