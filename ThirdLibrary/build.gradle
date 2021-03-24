@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -83,5 +84,10 @@ dependencies {
     //疼腾讯实名认证
     implementation files('libs\\WbCloudFaceLiveSdk-v3.1.15-33d33e4e.aar')
     implementation files('libs\\WbCloudNormal-v4.0.10-1e5e27e.aar')
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
+}
+repositories {
+    mavenCentral()
 }

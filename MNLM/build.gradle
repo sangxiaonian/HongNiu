@@ -1,9 +1,11 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 repositories {
     flatDir {
         dirs '/libs'
     }
+    mavenCentral()
 }
 // 显示的时间格式，形如20171110
 static def releaseTime() {
@@ -106,6 +108,8 @@ dependencies {
     api 'com.hedgehog.ratingbar:app:1.1.2'
     //二维码扫描
     api 'cn.yipianfengye.android:zxing-library:2.2'
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
 
 }

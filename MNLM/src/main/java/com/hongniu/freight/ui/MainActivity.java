@@ -239,6 +239,8 @@ public class MainActivity extends CompanyBaseActivity implements View.OnClickLis
                         .show("身份认证审核中");
             }
         }else if (id == R.id.img_back) {
+            //退出聊天
+            ChactHelper.getHelper().disConnect();
             ArouterUtils.getInstance().builder(ArouterParamsApp.activity_main)
                     .navigation();
         }

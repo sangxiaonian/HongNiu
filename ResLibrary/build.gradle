@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 28
@@ -48,6 +49,11 @@ dependencies {
     api 'com.github.barteksc:android-pdf-viewer:2.8.2'
     api 'cn.yipianfengye.android:zxing-library:2.2'
     api 'com.hedgehog.ratingbar:app:1.1.2'
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
 
+}
+repositories {
+    mavenCentral()
 }

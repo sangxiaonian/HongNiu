@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 // 显示的时间格式，形如20171110
 def releaseTime() {
@@ -24,6 +25,10 @@ android {
         }
         ndk {
             abiFilters "armeabi-v7a", "x86"
+        }
+
+        viewBinding {
+            enabled = true
         }
 
     }
@@ -117,4 +122,9 @@ dependencies {
     implementation project(':ModuleChact')
 
     api project(path: ':xcalendar')
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }

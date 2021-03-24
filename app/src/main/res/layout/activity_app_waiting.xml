@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".ui.AppWaitingActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <ImageView
+        android:id="@+id/img_logo"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="150dp"
+        android:scaleType="fitCenter"
+        tools:src="@mipmap/icon_start_cargo" />
+
+    <TextView
+        android:id="@+id/tv_company_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/color_of_3d3d3d"
+        android:textSize="18dp"
+        tools:text="测试公司名称" />
+
+    <TextView
+        android:id="@+id/tv_contact_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/color_of_3d3d3d"
+        android:textSize="15dp"
+        tools:text="联系人。。。" />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <ImageView
+        android:layout_width="160dp"
+        android:layout_height="110dp"
+        android:layout_marginBottom="10dp"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/icon_empty" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:textColor="@color/color_of_999999"
+        android:textSize="15dp"
+        android:text="正在对接申请中，敬请期待..." />
+</LinearLayout>

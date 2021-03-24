@@ -258,6 +258,9 @@ public class ChactHelper {
      * @param infor
      */
     public void refreshUserInfoCache(String userID, UserInfor infor) {
+        if (infor==null){
+            return;
+        }
         StringBuilder builder = new StringBuilder();
         if (!TextUtils.isEmpty(infor.getContact())) {
             builder.append(infor.getContact()).append("\t\t");

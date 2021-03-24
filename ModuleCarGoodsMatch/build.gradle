@@ -54,4 +54,10 @@ dependencies {
     annotationProcessor 'com.alibaba:arouter-compiler:1.1.4'
     implementation project(':BaseLibrary')
     compile project(path: ':xcalendar')
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+apply plugin: 'kotlin-android'
+repositories {
+    mavenCentral()
 }
