@@ -201,20 +201,20 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                     break;
                 case CAR_OWNER:
                     setContent(data.getDepartNum(), data.getCarNum(), "货主：", data.getUserName(), data.getUserMobile(), data.getUserRongId()
-                            , data.getGoodName(), "司机：", data.getDriverName(), data.getDriverMobile(), data.getDriveRongId()
+                            , data.getGoodName(), "司机：", data.getDriverName(), data.getDriverMobile(), data.getDriverRongId()
                     );
                     break;
                 case CARGO_OWNER:
                 case CARGO_RECEIVE:
                 default:
                     setContent(data.getDepartNum(), data.getCarNum(), "车主：", data.getOwnerName(), data.getOwnerMobile(), data.getOwnerRongId()
-                            , data.getGoodName(), "司机：", data.getDriverName(), data.getDriverMobile(), data.getDriveRongId()
+                            , data.getGoodName(), "司机：", data.getDriverName(), data.getDriverMobile(), data.getDriverRongId()
                     );
                     break;
             }
         } else {
             setContent(data.getDepartNum(), data.getCarNum(), "车主：", data.getOwnerName(), data.getOwnerMobile(), data.getOwnerRongId()
-                    , data.getGoodName(), "司机：", data.getDriverName(), data.getDriverMobile(), data.getDriveRongId()
+                    , data.getGoodName(), "司机：", data.getDriverName(), data.getDriverMobile(), data.getDriverRongId()
             );
         }
 

@@ -109,7 +109,7 @@ public class OrderDetailBean {
     /**
      * true string 司机的聊天id
      */
-    private String driveRongId;
+    private String driverRongId;
     /**
      * true string 司机的姓名
      */
@@ -565,12 +565,12 @@ public class OrderDetailBean {
         this.ownerMobile = ownerMobile;
     }
 
-    public String getDriveRongId() {
-        return driveRongId;
+    public String getDriverRongId() {
+        return driverRongId;
     }
 
-    public void setDriveRongId(String driveRongId) {
-        this.driveRongId = driveRongId;
+    public void setDriverRongId(String driverRongId) {
+        this.driverRongId = driverRongId;
     }
 
     public String getDriverName() {
