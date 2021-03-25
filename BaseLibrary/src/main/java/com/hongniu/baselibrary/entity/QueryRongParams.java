@@ -5,6 +5,7 @@ package com.hongniu.baselibrary.entity;
  */
 public class QueryRongParams {
     private String userId;
+    private String rongId;
 
     public String getUserId() {
         return userId;
@@ -12,5 +13,13 @@ public class QueryRongParams {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getRongId() {
+        return rongId;
+    }
+
+    public void setRongId(String rongId) {
+        this.rongId = rongId;
     }
 }

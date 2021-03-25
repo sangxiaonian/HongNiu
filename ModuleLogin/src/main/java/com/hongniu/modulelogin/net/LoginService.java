@@ -5,6 +5,7 @@ import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.LoginBean;
 import com.hongniu.baselibrary.entity.LoginPersonInfor;
 import com.hongniu.baselibrary.entity.QueryBlankInforsBean;
+import com.hongniu.baselibrary.entity.QueryRongParams;
 import com.hongniu.modulelogin.entity.LoginBlindBlankParams;
 import com.hongniu.baselibrary.entity.CarInforBean;
 import com.hongniu.modulelogin.entity.LoginCreatInsuredBean;
@@ -54,7 +55,7 @@ public interface LoginService {
      * 获取个人信息
      */
     @POST("hongniu/api/user/finduserinfo")
-    Observable<CommonBean<LoginPersonInfor>> getPersonInfor();
+    Observable<CommonBean<LoginPersonInfor>> getPersonInfor(@Body QueryRongParams params);
 
     /**
      * 更改个人信息,即为实名认证

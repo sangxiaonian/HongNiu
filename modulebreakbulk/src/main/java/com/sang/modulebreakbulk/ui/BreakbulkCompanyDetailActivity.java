@@ -98,7 +98,7 @@ public class BreakbulkCompanyDetailActivity extends ModuleBaseActivity implement
             }
         }else if (v.getId()==R.id.tv_chat){
             if (infoBean!=null) {
-                ChactHelper.getHelper().startPriver(mContext, infoBean.getUserId(), infoBean.getCompanyname());
+                ChactHelper.getHelper().startPriver(mContext, infoBean.getRongId(), infoBean.getCompanyname());
             }
         }else if (v.getId()==R.id.tv_send){
             ArouterUtils.getInstance()

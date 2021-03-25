@@ -216,7 +216,7 @@ public class MatchRecordFragmet extends RefrushFragmet<GoodsOwnerInforBean> impl
 
     private void onClickButton(final int position, String btName, final GoodsOwnerInforBean data) {
         if ("联系货主".equals(btName)){
-            ChactHelper.getHelper().startPriver(getContext(), data.userId, data.userName);
+            ChactHelper.getHelper().startPriver(getContext(), data.rongId, data.userName);
 
         }else if ("我要接单".equals(btName)){
             ArouterUtils.getInstance()

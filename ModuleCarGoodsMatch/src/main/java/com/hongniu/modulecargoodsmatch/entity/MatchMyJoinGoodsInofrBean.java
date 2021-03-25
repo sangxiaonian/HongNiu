@@ -14,6 +14,8 @@ public class MatchMyJoinGoodsInofrBean {
    public String creationTime;//	true	string	创建时间
    public String payTime;//	true	string	保证金支付时间
    public String goodsUserId;//	true	string	货源下单人id
+   public String goodsRongId;//	true	string	货源下单人融云id
+   public String userRongId;//	true	string	用户融云id
    public String goodsUserName;//	true	string	货源下单人名字
    public String goodsUserMobile;//	true	string	货源下单人手机号
    public String startTime;//	true	string	货源发货时间

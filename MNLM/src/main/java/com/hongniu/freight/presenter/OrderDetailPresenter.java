@@ -6,7 +6,6 @@ import com.fy.companylibrary.net.NetObserver;
 import com.hongniu.freight.config.RoleOrder;
 import com.hongniu.freight.control.OrderDetailControl;
 import com.hongniu.freight.entity.AppInsuranceInfo;
-import com.hongniu.freight.entity.H5Config;
 import com.hongniu.freight.entity.OrderInfoBean;
 import com.hongniu.freight.mode.OrderDetailMode;
 
@@ -80,7 +79,7 @@ public class OrderDetailPresenter implements OrderDetailControl.IOrderDetailPres
      */
     @Override
     public void contactCarrier() {
-        view.startChat(mode.getOrderInfo().getOwnerId(), mode.getOrderInfo().getOwnerName());
+        view.startChat(mode.getOrderInfo().getOwnerRongId(), mode.getOrderInfo().getOwnerName());
     }
 
     /**
@@ -88,7 +87,7 @@ public class OrderDetailPresenter implements OrderDetailControl.IOrderDetailPres
      */
     @Override
     public void contactDriver() {
-        view.startChat(mode.getOrderInfo().getDriverId(), mode.getOrderInfo().getDriverName());
+        view.startChat(mode.getOrderInfo().getDriverRongId(), mode.getOrderInfo().getDriverName());
     }
 
     /**
@@ -96,7 +95,7 @@ public class OrderDetailPresenter implements OrderDetailControl.IOrderDetailPres
      */
     @Override
     public void contactShipper() {
-        view.startChat(mode.getOrderInfo().getUserId(), mode.getOrderInfo().getUserName());
+        view.startChat(mode.getOrderInfo().getUserRongId(), mode.getOrderInfo().getUserName());
     }
 
     /**

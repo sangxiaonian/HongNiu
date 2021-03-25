@@ -21,6 +21,7 @@ public class NiuOfAccountBean implements Parcelable {
 
     private String contact;
     private String id;
+    private String rongId;
     private String integralStr;
     private String mobile;
     private String name;
@@ -53,6 +54,14 @@ public class NiuOfAccountBean implements Parcelable {
             return new NiuOfAccountBean[size];
         }
     };
+
+    public String getRongId() {
+        return rongId;
+    }
+
+    public void setRongId(String rongId) {
+        this.rongId = rongId;
+    }
 
     public String getTotalAmt() {
         return totalAmt;

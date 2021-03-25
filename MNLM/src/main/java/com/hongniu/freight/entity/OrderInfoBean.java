@@ -40,11 +40,11 @@ public class OrderInfoBean implements Parcelable {
     private String policyInfo;//	false	string	保单信息
     private String cartype;//	false	string	车辆类型
     private double realMoney;//": 实际运费
-    private String driverId;//": null,司机id
+    private String driverRongId;//": null,司机id
     private String driverName;//": null,司机名
     private String driverMobile;//": null,司机手机号
 
-   private String userrId;//	true	number	托运人id
+   private String userRongId;//	true	number	托运人id
    private String userName;//	true	number	托运人姓名
    private String userMobile;//	true	number	托运人手机号
     private int userEvaluateState;//": 托运人评价状态 1:已评价 0:未评价
@@ -56,7 +56,6 @@ public class OrderInfoBean implements Parcelable {
     private String   cargoTypeClassificationCode;//":起点行政区划代码
 
 
-    private String userId;//": 268,
     private double startPlaceLon;//": 121.40225,
     private double startPlaceLat;//": 31.311806,
     private double destinationLon;//": 121.401128,
@@ -72,7 +71,9 @@ public class OrderInfoBean implements Parcelable {
     private String insuranceUserId;//": //被保险人id,
     private String isDel;//": 0,
     private String companyAccountId;//": null,
-    private String ownerId;//": null,
+
+    //
+    private String ownerRongId;//": 承运人融云id,
 
     private String verifyUserId;//": null,
     private String verifyFailCause;//": null,
@@ -85,6 +86,170 @@ public class OrderInfoBean implements Parcelable {
     private String receiptTime;//": null,
     private String longitude;//": null,
     private String latitude;//": null,
+
+    protected OrderInfoBean(Parcel in) {
+        status = in.readInt();
+        id = in.readString();
+        orderNum = in.readString();
+        createTime = in.readLong();
+        startPlaceInfo = in.readString();
+        destinationInfo = in.readString();
+        shipperName = in.readString();
+        shipperMobile = in.readString();
+        receiverName = in.readString();
+        receiverMobile = in.readString();
+        departureTime = in.readString();
+        goodName = in.readString();
+        goodVolume = in.readString();
+        goodWeight = in.readString();
+        money = in.readDouble();
+        insurance = in.readInt();
+        payPolicyState = in.readInt();
+        hasReceiptImage = in.readInt();
+        policyMoney = in.readDouble();
+        insureUsername = in.readString();
+        insureIdnumber = in.readString();
+        carNum = in.readString();
+        ownerName = in.readString();
+        ownerMobile = in.readString();
+        balanceMoney = in.readDouble();
+        policyNum = in.readString();
+        companyName = in.readString();
+        policyInfo = in.readString();
+        cartype = in.readString();
+        realMoney = in.readDouble();
+        driverRongId = in.readString();
+        driverName = in.readString();
+        driverMobile = in.readString();
+        userRongId = in.readString();
+        userName = in.readString();
+        userMobile = in.readString();
+        userEvaluateState = in.readInt();
+        owenrEvaluateState = in.readInt();
+        driverEvaluateState = in.readInt();
+        endCountrySubdivisionCode = in.readString();
+        startCountrySubdivisionCode = in.readString();
+        cargoTypeClassificationInfo = in.readString();
+        cargoTypeClassificationCode = in.readString();
+        startPlaceLon = in.readDouble();
+        startPlaceLat = in.readDouble();
+        destinationLon = in.readDouble();
+        destinationLat = in.readDouble();
+        remark = in.readString();
+        totalMoney = in.readDouble();
+        payTime = in.readString();
+        payWay = in.readString();
+        isRefundRecord = in.readString();
+        hasFreight = in.readString();
+        freightPayClass = in.readString();
+        goodPrice = in.readString();
+        insuranceUserId = in.readString();
+        isDel = in.readString();
+        companyAccountId = in.readString();
+        ownerRongId = in.readString();
+        verifyUserId = in.readString();
+        verifyFailCause = in.readString();
+        orderTakingUserId = in.readString();
+        orderTakingTime = in.readString();
+        carId = in.readString();
+        carInfo = in.readString();
+        departTime = in.readString();
+        arrivedTime = in.readString();
+        receiptTime = in.readString();
+        longitude = in.readString();
+        latitude = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(status);
+        dest.writeString(id);
+        dest.writeString(orderNum);
+        dest.writeLong(createTime);
+        dest.writeString(startPlaceInfo);
+        dest.writeString(destinationInfo);
+        dest.writeString(shipperName);
+        dest.writeString(shipperMobile);
+        dest.writeString(receiverName);
+        dest.writeString(receiverMobile);
+        dest.writeString(departureTime);
+        dest.writeString(goodName);
+        dest.writeString(goodVolume);
+        dest.writeString(goodWeight);
+        dest.writeDouble(money);
+        dest.writeInt(insurance);
+        dest.writeInt(payPolicyState);
+        dest.writeInt(hasReceiptImage);
+        dest.writeDouble(policyMoney);
+        dest.writeString(insureUsername);
+        dest.writeString(insureIdnumber);
+        dest.writeString(carNum);
+        dest.writeString(ownerName);
+        dest.writeString(ownerMobile);
+        dest.writeDouble(balanceMoney);
+        dest.writeString(policyNum);
+        dest.writeString(companyName);
+        dest.writeString(policyInfo);
+        dest.writeString(cartype);
+        dest.writeDouble(realMoney);
+        dest.writeString(driverRongId);
+        dest.writeString(driverName);
+        dest.writeString(driverMobile);
+        dest.writeString(userRongId);
+        dest.writeString(userName);
+        dest.writeString(userMobile);
+        dest.writeInt(userEvaluateState);
+        dest.writeInt(owenrEvaluateState);
+        dest.writeInt(driverEvaluateState);
+        dest.writeString(endCountrySubdivisionCode);
+        dest.writeString(startCountrySubdivisionCode);
+        dest.writeString(cargoTypeClassificationInfo);
+        dest.writeString(cargoTypeClassificationCode);
+        dest.writeDouble(startPlaceLon);
+        dest.writeDouble(startPlaceLat);
+        dest.writeDouble(destinationLon);
+        dest.writeDouble(destinationLat);
+        dest.writeString(remark);
+        dest.writeDouble(totalMoney);
+        dest.writeString(payTime);
+        dest.writeString(payWay);
+        dest.writeString(isRefundRecord);
+        dest.writeString(hasFreight);
+        dest.writeString(freightPayClass);
+        dest.writeString(goodPrice);
+        dest.writeString(insuranceUserId);
+        dest.writeString(isDel);
+        dest.writeString(companyAccountId);
+        dest.writeString(ownerRongId);
+        dest.writeString(verifyUserId);
+        dest.writeString(verifyFailCause);
+        dest.writeString(orderTakingUserId);
+        dest.writeString(orderTakingTime);
+        dest.writeString(carId);
+        dest.writeString(carInfo);
+        dest.writeString(departTime);
+        dest.writeString(arrivedTime);
+        dest.writeString(receiptTime);
+        dest.writeString(longitude);
+        dest.writeString(latitude);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<OrderInfoBean> CREATOR = new Creator<OrderInfoBean>() {
+        @Override
+        public OrderInfoBean createFromParcel(Parcel in) {
+            return new OrderInfoBean(in);
+        }
+
+        @Override
+        public OrderInfoBean[] newArray(int size) {
+            return new OrderInfoBean[size];
+        }
+    };
 
     public String getCargoTypeClassificationInfo() {
         return cargoTypeClassificationInfo;
@@ -110,13 +275,6 @@ public class OrderInfoBean implements Parcelable {
         this.hasReceiptImage = hasReceiptImage;
     }
 
-    public String getUserrId() {
-        return userrId;
-    }
-
-    public void setUserrId(String userrId) {
-        this.userrId = userrId;
-    }
 
     public String getUserName() {
         return userName;
@@ -195,12 +353,12 @@ public class OrderInfoBean implements Parcelable {
         this.cartype = cartype;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getUserRongId() {
+        return userRongId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserRongId(String userRongId) {
+        this.userRongId = userRongId;
     }
 
     public double getStartPlaceLon() {
@@ -331,20 +489,20 @@ public class OrderInfoBean implements Parcelable {
         this.companyAccountId = companyAccountId;
     }
 
-    public String getOwnerId() {
-        return ownerId;
+    public String getOwnerRongId() {
+        return ownerRongId;
     }
 
-    public void setOwnerId(String ownerId) {
-        this.ownerId = ownerId;
+    public void setOwnerRongId(String ownerRongId) {
+        this.ownerRongId = ownerRongId;
     }
 
-    public String getDriverId() {
-        return driverId;
+    public String getDriverRongId() {
+        return driverRongId;
     }
 
-    public void setDriverId(String driverId) {
-        this.driverId = driverId;
+    public void setDriverRongId(String driverRongId) {
+        this.driverRongId = driverRongId;
     }
 
     public String getDriverName() {
@@ -661,169 +819,4 @@ public class OrderInfoBean implements Parcelable {
     public OrderInfoBean() {
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.status);
-        dest.writeString(this.id);
-        dest.writeString(this.orderNum);
-        dest.writeLong(this.createTime);
-        dest.writeString(this.startPlaceInfo);
-        dest.writeString(this.destinationInfo);
-        dest.writeString(this.shipperName);
-        dest.writeString(this.shipperMobile);
-        dest.writeString(this.receiverName);
-        dest.writeString(this.receiverMobile);
-        dest.writeString(this.departureTime);
-        dest.writeString(this.goodName);
-        dest.writeString(this.goodVolume);
-        dest.writeString(this.goodWeight);
-        dest.writeDouble(this.money);
-        dest.writeInt(this.insurance);
-        dest.writeInt(this.payPolicyState);
-        dest.writeInt(this.hasReceiptImage);
-        dest.writeDouble(this.policyMoney);
-        dest.writeString(this.insureUsername);
-        dest.writeString(this.insureIdnumber);
-        dest.writeString(this.carNum);
-        dest.writeString(this.ownerName);
-        dest.writeString(this.ownerMobile);
-        dest.writeDouble(this.balanceMoney);
-        dest.writeString(this.policyNum);
-        dest.writeString(this.companyName);
-        dest.writeString(this.policyInfo);
-        dest.writeString(this.cartype);
-        dest.writeDouble(this.realMoney);
-        dest.writeString(this.driverId);
-        dest.writeString(this.driverName);
-        dest.writeString(this.driverMobile);
-        dest.writeString(this.userrId);
-        dest.writeString(this.userName);
-        dest.writeString(this.userMobile);
-        dest.writeInt(this.userEvaluateState);
-        dest.writeInt(this.owenrEvaluateState);
-        dest.writeInt(this.driverEvaluateState);
-        dest.writeString(this.endCountrySubdivisionCode);
-        dest.writeString(this.startCountrySubdivisionCode);
-        dest.writeString(this.cargoTypeClassificationInfo);
-        dest.writeString(this.cargoTypeClassificationCode);
-        dest.writeString(this.userId);
-        dest.writeDouble(this.startPlaceLon);
-        dest.writeDouble(this.startPlaceLat);
-        dest.writeDouble(this.destinationLon);
-        dest.writeDouble(this.destinationLat);
-        dest.writeString(this.remark);
-        dest.writeDouble(this.totalMoney);
-        dest.writeString(this.payTime);
-        dest.writeString(this.payWay);
-        dest.writeString(this.isRefundRecord);
-        dest.writeString(this.hasFreight);
-        dest.writeString(this.freightPayClass);
-        dest.writeString(this.goodPrice);
-        dest.writeString(this.insuranceUserId);
-        dest.writeString(this.isDel);
-        dest.writeString(this.companyAccountId);
-        dest.writeString(this.ownerId);
-        dest.writeString(this.verifyUserId);
-        dest.writeString(this.verifyFailCause);
-        dest.writeString(this.orderTakingUserId);
-        dest.writeString(this.orderTakingTime);
-        dest.writeString(this.carId);
-        dest.writeString(this.carInfo);
-        dest.writeString(this.departTime);
-        dest.writeString(this.arrivedTime);
-        dest.writeString(this.receiptTime);
-        dest.writeString(this.longitude);
-        dest.writeString(this.latitude);
-    }
-
-    protected OrderInfoBean(Parcel in) {
-        this.status = in.readInt();
-        this.id = in.readString();
-        this.orderNum = in.readString();
-        this.createTime = in.readLong();
-        this.startPlaceInfo = in.readString();
-        this.destinationInfo = in.readString();
-        this.shipperName = in.readString();
-        this.shipperMobile = in.readString();
-        this.receiverName = in.readString();
-        this.receiverMobile = in.readString();
-        this.departureTime = in.readString();
-        this.goodName = in.readString();
-        this.goodVolume = in.readString();
-        this.goodWeight = in.readString();
-        this.money = in.readDouble();
-        this.insurance = in.readInt();
-        this.payPolicyState = in.readInt();
-        this.hasReceiptImage = in.readInt();
-        this.policyMoney = in.readDouble();
-        this.insureUsername = in.readString();
-        this.insureIdnumber = in.readString();
-        this.carNum = in.readString();
-        this.ownerName = in.readString();
-        this.ownerMobile = in.readString();
-        this.balanceMoney = in.readDouble();
-        this.policyNum = in.readString();
-        this.companyName = in.readString();
-        this.policyInfo = in.readString();
-        this.cartype = in.readString();
-        this.realMoney = in.readDouble();
-        this.driverId = in.readString();
-        this.driverName = in.readString();
-        this.driverMobile = in.readString();
-        this.userrId = in.readString();
-        this.userName = in.readString();
-        this.userMobile = in.readString();
-        this.userEvaluateState = in.readInt();
-        this.owenrEvaluateState = in.readInt();
-        this.driverEvaluateState = in.readInt();
-        this.endCountrySubdivisionCode = in.readString();
-        this.startCountrySubdivisionCode = in.readString();
-        this.cargoTypeClassificationInfo = in.readString();
-        this.cargoTypeClassificationCode = in.readString();
-        this.userId = in.readString();
-        this.startPlaceLon = in.readDouble();
-        this.startPlaceLat = in.readDouble();
-        this.destinationLon = in.readDouble();
-        this.destinationLat = in.readDouble();
-        this.remark = in.readString();
-        this.totalMoney = in.readDouble();
-        this.payTime = in.readString();
-        this.payWay = in.readString();
-        this.isRefundRecord = in.readString();
-        this.hasFreight = in.readString();
-        this.freightPayClass = in.readString();
-        this.goodPrice = in.readString();
-        this.insuranceUserId = in.readString();
-        this.isDel = in.readString();
-        this.companyAccountId = in.readString();
-        this.ownerId = in.readString();
-        this.verifyUserId = in.readString();
-        this.verifyFailCause = in.readString();
-        this.orderTakingUserId = in.readString();
-        this.orderTakingTime = in.readString();
-        this.carId = in.readString();
-        this.carInfo = in.readString();
-        this.departTime = in.readString();
-        this.arrivedTime = in.readString();
-        this.receiptTime = in.readString();
-        this.longitude = in.readString();
-        this.latitude = in.readString();
-    }
-
-    public static final Creator<OrderInfoBean> CREATOR = new Creator<OrderInfoBean>() {
-        @Override
-        public OrderInfoBean createFromParcel(Parcel source) {
-            return new OrderInfoBean(source);
-        }
-
-        @Override
-        public OrderInfoBean[] newArray(int size) {
-            return new OrderInfoBean[size];
-        }
-    };
 }

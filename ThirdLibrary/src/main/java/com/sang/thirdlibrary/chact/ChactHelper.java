@@ -254,10 +254,10 @@ public class ChactHelper {
     /**
      * 刷新用户头像信息
      *
-     * @param userID
+     * @param rongID
      * @param infor
      */
-    public void refreshUserInfoCache(String userID, UserInfor infor) {
+    public void refreshUserInfoCache(String rongID, UserInfor infor) {
         if (infor==null){
             return;
         }
@@ -269,7 +269,7 @@ public class ChactHelper {
         builder.append(infor.getMobile());
         final String name = builder.toString();
         final Uri head = TextUtils.isEmpty(infor.getLogoPath()) ? null : Uri.parse(infor.getLogoPath());
-        RongIM.getInstance().refreshUserInfoCache(new UserInfo(userID, name, head));
+        RongIM.getInstance().refreshUserInfoCache(new UserInfo(rongID, name, head));
     }
 
 

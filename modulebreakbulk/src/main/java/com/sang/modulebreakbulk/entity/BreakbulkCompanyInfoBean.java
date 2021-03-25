@@ -99,7 +99,136 @@ public class BreakbulkCompanyInfoBean implements Parcelable {
     private int sortNum;
     private String userId;
     private String rongToken;
+    //聊天使用的ID
+    private String rongId;
 
+    protected BreakbulkCompanyInfoBean(Parcel in) {
+        ref1 = in.readString();
+        companyname = in.readString();
+        workaddress = in.readString();
+        longitude = in.readString();
+        latitude = in.readString();
+        contactPhone = in.readString();
+        transportLine = in.readString();
+        id = in.readString();
+        companycode = in.readString();
+        companyabbreviation = in.readString();
+        tel = in.readString();
+        fax = in.readString();
+        legalname = in.readString();
+        legalid = in.readString();
+        legalmobile = in.readString();
+        email = in.readString();
+        webaddress = in.readString();
+        industry = in.readString();
+        industrycode = in.readString();
+        unifiedcode = in.readString();
+        taxpayerid = in.readString();
+        organizationcode = in.readString();
+        companytype = in.readString();
+        operatingperiodstart = in.readString();
+        operatingperiodstend = in.readString();
+        companyaddress = in.readString();
+        businessscope = in.readString();
+        registertime = in.readLong();
+        fileoperating = in.readString();
+        filelegal = in.readString();
+        registway = in.readString();
+        registoperator = in.readString();
+        companyauditstatus = in.readString();
+        auditoperator = in.readString();
+        auditotime = in.readLong();
+        contact = in.readString();
+        remark = in.readString();
+        ref2 = in.readString();
+        ref3 = in.readString();
+        ref4 = in.readString();
+        ref5 = in.readString();
+        ref6 = in.readString();
+        chargeDirections = in.readString();
+        orderMark = in.readInt();
+        sortNum = in.readInt();
+        userId = in.readString();
+        rongToken = in.readString();
+        rongId = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(ref1);
+        dest.writeString(companyname);
+        dest.writeString(workaddress);
+        dest.writeString(longitude);
+        dest.writeString(latitude);
+        dest.writeString(contactPhone);
+        dest.writeString(transportLine);
+        dest.writeString(id);
+        dest.writeString(companycode);
+        dest.writeString(companyabbreviation);
+        dest.writeString(tel);
+        dest.writeString(fax);
+        dest.writeString(legalname);
+        dest.writeString(legalid);
+        dest.writeString(legalmobile);
+        dest.writeString(email);
+        dest.writeString(webaddress);
+        dest.writeString(industry);
+        dest.writeString(industrycode);
+        dest.writeString(unifiedcode);
+        dest.writeString(taxpayerid);
+        dest.writeString(organizationcode);
+        dest.writeString(companytype);
+        dest.writeString(operatingperiodstart);
+        dest.writeString(operatingperiodstend);
+        dest.writeString(companyaddress);
+        dest.writeString(businessscope);
+        dest.writeLong(registertime);
+        dest.writeString(fileoperating);
+        dest.writeString(filelegal);
+        dest.writeString(registway);
+        dest.writeString(registoperator);
+        dest.writeString(companyauditstatus);
+        dest.writeString(auditoperator);
+        dest.writeLong(auditotime);
+        dest.writeString(contact);
+        dest.writeString(remark);
+        dest.writeString(ref2);
+        dest.writeString(ref3);
+        dest.writeString(ref4);
+        dest.writeString(ref5);
+        dest.writeString(ref6);
+        dest.writeString(chargeDirections);
+        dest.writeInt(orderMark);
+        dest.writeInt(sortNum);
+        dest.writeString(userId);
+        dest.writeString(rongToken);
+        dest.writeString(rongId);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<BreakbulkCompanyInfoBean> CREATOR = new Creator<BreakbulkCompanyInfoBean>() {
+        @Override
+        public BreakbulkCompanyInfoBean createFromParcel(Parcel in) {
+            return new BreakbulkCompanyInfoBean(in);
+        }
+
+        @Override
+        public BreakbulkCompanyInfoBean[] newArray(int size) {
+            return new BreakbulkCompanyInfoBean[size];
+        }
+    };
+
+    public String getRongId() {
+        return rongId;
+    }
+
+    public void setRongId(String rongId) {
+        this.rongId = rongId;
+    }
 
     public String getUserId() {
         return userId;
@@ -482,121 +611,4 @@ public class BreakbulkCompanyInfoBean implements Parcelable {
     public BreakbulkCompanyInfoBean() {
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.ref1);
-        dest.writeString(this.companyname);
-        dest.writeString(this.workaddress);
-        dest.writeString(this.longitude);
-        dest.writeString(this.latitude);
-        dest.writeString(this.contactPhone);
-        dest.writeString(this.transportLine);
-        dest.writeString(this.id);
-        dest.writeString(this.companycode);
-        dest.writeString(this.companyabbreviation);
-        dest.writeString(this.tel);
-        dest.writeString(this.fax);
-        dest.writeString(this.legalname);
-        dest.writeString(this.legalid);
-        dest.writeString(this.legalmobile);
-        dest.writeString(this.email);
-        dest.writeString(this.webaddress);
-        dest.writeString(this.industry);
-        dest.writeString(this.industrycode);
-        dest.writeString(this.unifiedcode);
-        dest.writeString(this.taxpayerid);
-        dest.writeString(this.organizationcode);
-        dest.writeString(this.companytype);
-        dest.writeString(this.operatingperiodstart);
-        dest.writeString(this.operatingperiodstend);
-        dest.writeString(this.companyaddress);
-        dest.writeString(this.businessscope);
-        dest.writeLong(this.registertime);
-        dest.writeString(this.fileoperating);
-        dest.writeString(this.filelegal);
-        dest.writeString(this.registway);
-        dest.writeString(this.registoperator);
-        dest.writeString(this.companyauditstatus);
-        dest.writeString(this.auditoperator);
-        dest.writeLong(this.auditotime);
-        dest.writeString(this.contact);
-        dest.writeString(this.remark);
-        dest.writeString(this.ref2);
-        dest.writeString(this.ref3);
-        dest.writeString(this.ref4);
-        dest.writeString(this.ref5);
-        dest.writeString(this.ref6);
-        dest.writeString(this.chargeDirections);
-        dest.writeInt(this.orderMark);
-        dest.writeInt(this.sortNum);
-        dest.writeString(this.userId);
-        dest.writeString(this.rongToken);
-    }
-
-    protected BreakbulkCompanyInfoBean(Parcel in) {
-        this.ref1 = in.readString();
-        this.companyname = in.readString();
-        this.workaddress = in.readString();
-        this.longitude = in.readString();
-        this.latitude = in.readString();
-        this.contactPhone = in.readString();
-        this.transportLine = in.readString();
-        this.id = in.readString();
-        this.companycode = in.readString();
-        this.companyabbreviation = in.readString();
-        this.tel = in.readString();
-        this.fax = in.readString();
-        this.legalname = in.readString();
-        this.legalid = in.readString();
-        this.legalmobile = in.readString();
-        this.email = in.readString();
-        this.webaddress = in.readString();
-        this.industry = in.readString();
-        this.industrycode = in.readString();
-        this.unifiedcode = in.readString();
-        this.taxpayerid = in.readString();
-        this.organizationcode = in.readString();
-        this.companytype = in.readString();
-        this.operatingperiodstart = in.readString();
-        this.operatingperiodstend = in.readString();
-        this.companyaddress = in.readString();
-        this.businessscope = in.readString();
-        this.registertime = in.readLong();
-        this.fileoperating = in.readString();
-        this.filelegal = in.readString();
-        this.registway = in.readString();
-        this.registoperator = in.readString();
-        this.companyauditstatus = in.readString();
-        this.auditoperator = in.readString();
-        this.auditotime = in.readLong();
-        this.contact = in.readString();
-        this.remark = in.readString();
-        this.ref2 = in.readString();
-        this.ref3 = in.readString();
-        this.ref4 = in.readString();
-        this.ref5 = in.readString();
-        this.ref6 = in.readString();
-        this.chargeDirections = in.readString();
-        this.orderMark = in.readInt();
-        this.sortNum = in.readInt();
-        this.userId = in.readString();
-        this.rongToken = in.readString();
-    }
-
-    public static final Creator<BreakbulkCompanyInfoBean> CREATOR = new Creator<BreakbulkCompanyInfoBean>() {
-        @Override
-        public BreakbulkCompanyInfoBean createFromParcel(Parcel source) {
-            return new BreakbulkCompanyInfoBean(source);
-        }
-
-        @Override
-        public BreakbulkCompanyInfoBean[] newArray(int size) {
-            return new BreakbulkCompanyInfoBean[size];
-        }
-    };
 }

@@ -76,7 +76,7 @@ public abstract class ListBottomDialog<T> {
     public ListBottomDialog<T> builder() {
         // 获取Dialog布局
         final View view = LayoutInflater.from(context).inflate(
-                R.layout.dialog_list, null);
+                R.layout.dialog_list_bottom, null);
 
         rv = (RecyclerView) view.findViewById(R.id.rv);
         // 定义Dialog布局和参数

@@ -4,7 +4,6 @@ import com.google.gson.annotations.SerializedName;
 import com.hongniu.baselibrary.widget.order.CommonOrderUtils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 
-import java.security.PublicKey;
 import java.util.List;
 
 /**
@@ -87,7 +86,7 @@ public class OrderDetailBean {
     /**
      * 货主聊天ID
      */
-    private String userId;
+    private String userRongId;
 
 
     /**
@@ -104,13 +103,13 @@ public class OrderDetailBean {
     /**
      * 车主聊天ID
      */
-    private String ownerId;
+    private String ownerRongId;
 
 
     /**
      * true string 司机的聊天id
      */
-    private String driverId;
+    private String driveRongId;
     /**
      * true string 司机的姓名
      */
@@ -120,6 +119,7 @@ public class OrderDetailBean {
      * true string 司机的手机号
      */
     private String driverMobile;
+
 
 
     /**
@@ -287,12 +287,12 @@ public class OrderDetailBean {
         return status;
     }
 
-    public String getOwnerId() {
-        return ownerId;
+    public String getOwnerRongId() {
+        return ownerRongId;
     }
 
-    public void setOwnerId(String ownerId) {
-        this.ownerId = ownerId;
+    public void setOwnerRongId(String ownerRongId) {
+        this.ownerRongId = ownerRongId;
     }
 
     public List<UpImgData> getGoodsImages() {
@@ -541,12 +541,12 @@ public class OrderDetailBean {
         this.endTime = endTime;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getUserRongId() {
+        return userRongId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserRongId(String userRongId) {
+        this.userRongId = userRongId;
     }
 
     public String getOwnerName() {
@@ -565,12 +565,12 @@ public class OrderDetailBean {
         this.ownerMobile = ownerMobile;
     }
 
-    public String getDriverId() {
-        return driverId;
+    public String getDriveRongId() {
+        return driveRongId;
     }
 
-    public void setDriverId(String driverId) {
-        this.driverId = driverId;
+    public void setDriveRongId(String driveRongId) {
+        this.driveRongId = driveRongId;
     }
 
     public String getDriverName() {

@@ -10,6 +10,15 @@ public class UserInfor {
     private String contact;
     private String mobile;
     private String rongToken;
+    private String rongId;
+
+    public String getRongId() {
+        return rongId;
+    }
+
+    public void setRongId(String rongId) {
+        this.rongId = rongId;
+    }
 
     public String getLogoPath() {
         return logoPath;

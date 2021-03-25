@@ -194,31 +194,27 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
             switch (roleState) {
                 case DRIVER:
 
-                    setContent(data.getDepartNum(), data.getCarNum(), "货主：", data.getUserName(), data.getUserMobile(), data.getUserId()
-                            , data.getGoodName(), "车主：", data.getOwnerName(), data.getOwnerMobile(), data.getOwnerId()
+                    setContent(data.getDepartNum(), data.getCarNum(), "货主：", data.getUserName(), data.getUserMobile(), data.getUserRongId()
+                            , data.getGoodName(), "车主：", data.getOwnerName(), data.getOwnerMobile(), data.getOwnerRongId()
 
                     );
                     break;
                 case CAR_OWNER:
-                    setContent(data.getDepartNum(), data.getCarNum(), "货主：", data.getUserName(), data.getUserMobile(), data.getUserId()
-                            , data.getGoodName(), "司机：", data.getDriverName(), data.getDriverMobile(), data.getDriverId()
+                    setContent(data.getDepartNum(), data.getCarNum(), "货主：", data.getUserName(), data.getUserMobile(), data.getUserRongId()
+                            , data.getGoodName(), "司机：", data.getDriverName(), data.getDriverMobile(), data.getDriveRongId()
                     );
                     break;
                 case CARGO_OWNER:
                 case CARGO_RECEIVE:
-                    setContent(data.getDepartNum(), data.getCarNum(), "车主：", data.getOwnerName(), data.getOwnerMobile(), data.getOwnerId()
-                            , data.getGoodName(), "司机：", data.getDriverName(), data.getDriverMobile(), data.getDriverId()
-                    );
-                    break;
                 default:
-                    setContent(data.getDepartNum(), data.getCarNum(), "车主：", data.getOwnerName(), data.getOwnerMobile(), data.getOwnerId()
-                            , data.getGoodName(), "司机：", data.getDriverName(), data.getDriverMobile(), data.getDriverId()
+                    setContent(data.getDepartNum(), data.getCarNum(), "车主：", data.getOwnerName(), data.getOwnerMobile(), data.getOwnerRongId()
+                            , data.getGoodName(), "司机：", data.getDriverName(), data.getDriverMobile(), data.getDriveRongId()
                     );
                     break;
             }
         } else {
-            setContent(data.getDepartNum(), data.getCarNum(), "车主：", data.getOwnerName(), data.getOwnerMobile(), data.getOwnerId()
-                    , data.getGoodName(), "司机：", data.getDriverName(), data.getDriverMobile(), data.getDriverId()
+            setContent(data.getDepartNum(), data.getCarNum(), "车主：", data.getOwnerName(), data.getOwnerMobile(), data.getOwnerRongId()
+                    , data.getGoodName(), "司机：", data.getDriverName(), data.getDriverMobile(), data.getDriveRongId()
             );
         }
 

@@ -39,7 +39,7 @@ public class ListDialog<T> extends DialogFragment implements View.OnClickListene
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View inflate = inflater.inflate(R.layout.dialog_list, null);
+        View inflate = inflater.inflate(R.layout.dialog_list_bottom, null);
         imgCancel = inflate.findViewById(R.id.img_cancel);
         tvTitle = inflate.findViewById(R.id.tv_title);
         tvDescribe = inflate.findViewById(R.id.tv_describe);

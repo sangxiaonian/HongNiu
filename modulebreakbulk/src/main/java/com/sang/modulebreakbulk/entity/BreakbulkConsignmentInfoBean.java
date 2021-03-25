@@ -40,8 +40,109 @@ public class BreakbulkConsignmentInfoBean implements Parcelable {
     private String logisticsCompanyTel;//物流公司企业联系电话
     private String logisticsCompanyCP;//物流公司联系人手机号码
     private String userId;
+    private String rongId;//聊天ID
     private String rongTokenUserId;
 
+
+    protected BreakbulkConsignmentInfoBean(Parcel in) {
+        id = in.readString();
+        ltlGoodsNum = in.readString();
+        ownerId = in.readString();
+        ownerName = in.readString();
+        ownerMobile = in.readString();
+        sendUserName = in.readString();
+        sendMobile = in.readString();
+        startPlaceInfo = in.readString();
+        receiptUserName = in.readString();
+        receiptMobile = in.readString();
+        destinationInfo = in.readString();
+        goodsName = in.readString();
+        goodsVolume = in.readString();
+        goodsWeight = in.readString();
+        isToDoor = in.readInt();
+        estimateFare = in.readString();
+        actualFare = in.readString();
+        balanceFare = in.readString();
+        estimateFareIsPay = in.readInt();
+        estimateFarePayNum = in.readString();
+        actualFareIsPay = in.readInt();
+        actualFarePayNum = in.readString();
+        logisticsCompanyId = in.readString();
+        logisticsCompanyName = in.readString();
+        waybillNum = in.readString();
+        remark = in.readString();
+        createTime = in.readString();
+        isDel = in.readInt();
+        ltlStatus = in.readInt();
+        logisticsCompanyTel = in.readString();
+        logisticsCompanyCP = in.readString();
+        userId = in.readString();
+        rongId = in.readString();
+        rongTokenUserId = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(ltlGoodsNum);
+        dest.writeString(ownerId);
+        dest.writeString(ownerName);
+        dest.writeString(ownerMobile);
+        dest.writeString(sendUserName);
+        dest.writeString(sendMobile);
+        dest.writeString(startPlaceInfo);
+        dest.writeString(receiptUserName);
+        dest.writeString(receiptMobile);
+        dest.writeString(destinationInfo);
+        dest.writeString(goodsName);
+        dest.writeString(goodsVolume);
+        dest.writeString(goodsWeight);
+        dest.writeInt(isToDoor);
+        dest.writeString(estimateFare);
+        dest.writeString(actualFare);
+        dest.writeString(balanceFare);
+        dest.writeInt(estimateFareIsPay);
+        dest.writeString(estimateFarePayNum);
+        dest.writeInt(actualFareIsPay);
+        dest.writeString(actualFarePayNum);
+        dest.writeString(logisticsCompanyId);
+        dest.writeString(logisticsCompanyName);
+        dest.writeString(waybillNum);
+        dest.writeString(remark);
+        dest.writeString(createTime);
+        dest.writeInt(isDel);
+        dest.writeInt(ltlStatus);
+        dest.writeString(logisticsCompanyTel);
+        dest.writeString(logisticsCompanyCP);
+        dest.writeString(userId);
+        dest.writeString(rongId);
+        dest.writeString(rongTokenUserId);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<BreakbulkConsignmentInfoBean> CREATOR = new Creator<BreakbulkConsignmentInfoBean>() {
+        @Override
+        public BreakbulkConsignmentInfoBean createFromParcel(Parcel in) {
+            return new BreakbulkConsignmentInfoBean(in);
+        }
+
+        @Override
+        public BreakbulkConsignmentInfoBean[] newArray(int size) {
+            return new BreakbulkConsignmentInfoBean[size];
+        }
+    };
+
+    public String getRongId() {
+        return rongId;
+    }
+
+    public void setRongId(String rongId) {
+        this.rongId = rongId;
+    }
 
     public String getUserId() {
         return userId;
@@ -309,96 +410,7 @@ public class BreakbulkConsignmentInfoBean implements Parcelable {
         this.isDel = isDel;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
-        dest.writeString(this.ltlGoodsNum);
-        dest.writeString(this.ownerId);
-        dest.writeString(this.ownerName);
-        dest.writeString(this.ownerMobile);
-        dest.writeString(this.sendUserName);
-        dest.writeString(this.sendMobile);
-        dest.writeString(this.startPlaceInfo);
-        dest.writeString(this.receiptUserName);
-        dest.writeString(this.receiptMobile);
-        dest.writeString(this.destinationInfo);
-        dest.writeString(this.goodsName);
-        dest.writeString(this.goodsVolume);
-        dest.writeString(this.goodsWeight);
-        dest.writeInt(this.isToDoor);
-        dest.writeString(this.estimateFare);
-        dest.writeString(this.actualFare);
-        dest.writeString(this.balanceFare);
-        dest.writeInt(this.estimateFareIsPay);
-        dest.writeString(this.estimateFarePayNum);
-        dest.writeInt(this.actualFareIsPay);
-        dest.writeString(this.actualFarePayNum);
-        dest.writeString(this.logisticsCompanyId);
-        dest.writeString(this.logisticsCompanyName);
-        dest.writeString(this.waybillNum);
-        dest.writeString(this.remark);
-        dest.writeString(this.createTime);
-        dest.writeInt(this.isDel);
-        dest.writeInt(this.ltlStatus);
-        dest.writeString(this.logisticsCompanyTel);
-        dest.writeString(this.logisticsCompanyCP);
-        dest.writeString(this.userId);
-        dest.writeString(this.rongTokenUserId);
-    }
-
     public BreakbulkConsignmentInfoBean() {
     }
 
-    protected BreakbulkConsignmentInfoBean(Parcel in) {
-        this.id = in.readString();
-        this.ltlGoodsNum = in.readString();
-        this.ownerId = in.readString();
-        this.ownerName = in.readString();
-        this.ownerMobile = in.readString();
-        this.sendUserName = in.readString();
-        this.sendMobile = in.readString();
-        this.startPlaceInfo = in.readString();
-        this.receiptUserName = in.readString();
-        this.receiptMobile = in.readString();
-        this.destinationInfo = in.readString();
-        this.goodsName = in.readString();
-        this.goodsVolume = in.readString();
-        this.goodsWeight = in.readString();
-        this.isToDoor = in.readInt();
-        this.estimateFare = in.readString();
-        this.actualFare = in.readString();
-        this.balanceFare = in.readString();
-        this.estimateFareIsPay = in.readInt();
-        this.estimateFarePayNum = in.readString();
-        this.actualFareIsPay = in.readInt();
-        this.actualFarePayNum = in.readString();
-        this.logisticsCompanyId = in.readString();
-        this.logisticsCompanyName = in.readString();
-        this.waybillNum = in.readString();
-        this.remark = in.readString();
-        this.createTime = in.readString();
-        this.isDel = in.readInt();
-        this.ltlStatus = in.readInt();
-        this.logisticsCompanyTel = in.readString();
-        this.logisticsCompanyCP = in.readString();
-        this.userId = in.readString();
-        this.rongTokenUserId = in.readString();
-    }
-
-    public static final Parcelable.Creator<BreakbulkConsignmentInfoBean> CREATOR = new Parcelable.Creator<BreakbulkConsignmentInfoBean>() {
-        @Override
-        public BreakbulkConsignmentInfoBean createFromParcel(Parcel source) {
-            return new BreakbulkConsignmentInfoBean(source);
-        }
-
-        @Override
-        public BreakbulkConsignmentInfoBean[] newArray(int size) {
-            return new BreakbulkConsignmentInfoBean[size];
-        }
-    };
 }

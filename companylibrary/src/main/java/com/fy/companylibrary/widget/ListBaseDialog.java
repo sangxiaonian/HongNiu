@@ -1,6 +1,5 @@
 package com.fy.companylibrary.widget;
 
-import android.app.ActionBar;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -74,7 +73,7 @@ public abstract class ListBaseDialog<T> {
     public ListBaseDialog<T> builder() {
         // 获取Dialog布局
         final View view = LayoutInflater.from(context).inflate(
-                R.layout.dialog_list, null);
+                R.layout.dialog_list_base, null);
 
         rv = view.findViewById(R.id.rv);
         // 定义Dialog布局和参数

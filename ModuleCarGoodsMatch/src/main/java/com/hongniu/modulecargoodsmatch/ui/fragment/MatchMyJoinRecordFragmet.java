@@ -143,8 +143,7 @@ public class MatchMyJoinRecordFragmet extends RefrushFragmet<MatchMyJoinGoodsIno
                         bt_right.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-
-                                ChactHelper.getHelper().startPriver(mContext, data.goodsUserId, data.goodsUserName);
+                                ChactHelper.getHelper().startPriver(mContext, data.goodsRongId, data.goodsUserName);
                             }
                         });
 

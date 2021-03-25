@@ -62,7 +62,9 @@ public class NiuOfAccountAdapter extends XAdapter<NiuOfAccountBean> {
                 img_chact.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ChactHelper.getHelper().startPriver(context, data.getId(), name);
+
+                        //TODO 牛贝相关数据
+                        ChactHelper.getHelper().startPriver(context, data.getRongId(), name);
 
                     }
                 });

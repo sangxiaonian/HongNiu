@@ -268,10 +268,10 @@ public class HttpAppFactory {
     /**
      * 根据userID查询用户数据
      */
-    public static Observable<CommonBean<UserInfor>> queryRongInfor(String userId) {
+    public static Observable<CommonBean<UserInfor>> queryRongInfor(String rongId) {
 
         QueryRongParams bean = new QueryRongParams();
-        bean.setUserId(userId);
+        bean.setRongId(rongId);
         return AppClient.getInstance()
                 .getService()
                 .queryRongInfor(bean)

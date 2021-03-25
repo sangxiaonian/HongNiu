@@ -170,8 +170,7 @@ public class BreakbulkConsignmentRecordActivity extends RefrushActivity<Breakbul
                         img_chat.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                ChactHelper.getHelper().startPriver(mContext, data.getUserId(), data.getLogisticsCompanyName());
-//                                ChactHelper.getHelper().startPriver(mContext, data.getLogisticsCompanyId(), data.getLogisticsCompanyName());
+                                ChactHelper.getHelper().startPriver(mContext, data.getRongId(), data.getLogisticsCompanyName());
                             }
                         });
 

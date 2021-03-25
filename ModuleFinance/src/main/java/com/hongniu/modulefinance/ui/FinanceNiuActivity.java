@@ -1,8 +1,10 @@
 package com.hongniu.modulefinance.ui;
 
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -21,9 +23,10 @@ import com.hongniu.baselibrary.entity.WalletDetail;
 import com.hongniu.modulefinance.net.HttpFinanceFactory;
 
 /**
- * 牛贝账户
+ * 牛贝账户,已经废弃
  */
 //@Route(path = ArouterParamsFinance.activity_finance_niu)
+@Deprecated
 public class FinanceNiuActivity extends ModuleBaseActivity implements RadioGroup.OnCheckedChangeListener {
 
     private TextView tvNiu;
@@ -72,19 +75,19 @@ public class FinanceNiuActivity extends ModuleBaseActivity implements RadioGroup
             }
         });
 
-        if (walletHomeDetail==null){
+        if (walletHomeDetail == null) {
             HttpFinanceFactory.queryAccountdetails()
                     .subscribe(new NetObserver<WalletDetail>(this) {
                         @Override
                         public void doOnSuccess(WalletDetail data) {
                             Utils.setPassword(data.isSetPassWord());
-                            walletHomeDetail=data;
+                            walletHomeDetail = data;
                             tvNiu.setText(String.format(getResources().getString(R.string.wallet_niu_of_account), walletHomeDetail == null ? "0" : walletHomeDetail.getAvailableIntegral()));
                             tvNiuUnEntry.setText(String.format(getResources().getString(R.string.wallet_niu_unentry_count), walletHomeDetail == null ? "0" : walletHomeDetail.getTobeCreditedIntegral()));
 
                         }
                     });
-        }else {
+        } else {
             tvNiu.setText(String.format(getResources().getString(R.string.wallet_niu_of_account), walletHomeDetail == null ? "0" : walletHomeDetail.getAvailableIntegral()));
             tvNiuUnEntry.setText(String.format(getResources().getString(R.string.wallet_niu_unentry_count), walletHomeDetail == null ? "0" : walletHomeDetail.getTobeCreditedIntegral()));
 

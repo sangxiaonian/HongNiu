@@ -7,6 +7,7 @@ import com.hongniu.baselibrary.entity.LoginBean;
 import com.hongniu.baselibrary.entity.LoginPersonInfor;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.QueryBlankInforsBean;
+import com.hongniu.baselibrary.entity.QueryRongParams;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.modulelogin.entity.LoginBlindBlankParams;
@@ -101,9 +102,9 @@ public class HttpLoginFactory {
      * 获取个人信息
      */
     public static Observable<CommonBean<LoginPersonInfor>> getPersonInfor() {
-
+        QueryRongParams bean = new QueryRongParams();
         return LoginClient.getInstance().getLoginService()
-                .getPersonInfor()
+                .getPersonInfor(bean)
                 .map(new Function<CommonBean<LoginPersonInfor>, CommonBean<LoginPersonInfor>>() {
                     @Override
                     public CommonBean<LoginPersonInfor> apply(CommonBean<LoginPersonInfor> loginPersonInforCommonBean) throws Exception {

@@ -160,7 +160,7 @@ public class FinanceMyNiuActivity extends RefrushActivity<NiuOfAccountBean> {
                                     public void onEntryClick(Dialog dialog, int position, String item) {
                                         dialog.dismiss();
                                         if (position==0){
-                                            ChactHelper.getHelper().startPriver(context, data.getId(), name);
+                                            ChactHelper.getHelper().startPriver(context, data.getRongId(), name);
                                         }else if (position==1){
                                             CommonUtils.call(context, data.getMobile());
                                         }

@@ -28,6 +28,7 @@ public class GoodsOwnerInforBean implements Parcelable {
   public String carType;//	true	string	车辆类型名称
   public String carLength;//	true	string	车辆长度
   public String userId;//	true	string	创建用户id
+  public String rongId;//	true	string	聊天融云ID
   public String userName;//	true	string	创建用户名
   public String userMobile;//	true	string	创建用户手机号
   public int status;//	true	货源状态(0待接单 1待确认 2已下单 3运输中 4已完成 5已失效)
@@ -41,70 +42,72 @@ public class GoodsOwnerInforBean implements Parcelable {
   public GoodsOwnerInforBean() {
   }
 
+  protected GoodsOwnerInforBean(Parcel in) {
+    id = in.readString();
+    gsNum = in.readString();
+    startTime = in.readString();
+    creationTime = in.readString();
+    startPlaceInfo = in.readString();
+    startPlaceX = in.readString();
+    startPlaceY = in.readString();
+    destinationInfo = in.readString();
+    destinationX = in.readString();
+    destinationY = in.readString();
+    departNum = in.readString();
+    goodName = in.readString();
+    goodVolume = in.readString();
+    goodWeight = in.readString();
+    freightAmount = in.readString();
+    carTypeId = in.readString();
+    carType = in.readString();
+    carLength = in.readString();
+    userId = in.readString();
+    rongId = in.readString();
+    userName = in.readString();
+    userMobile = in.readString();
+    status = in.readInt();
+    goodsSourceDetail = in.readString();
+    remark = in.readString();
+  }
+
+  @Override
+  public void writeToParcel(Parcel dest, int flags) {
+    dest.writeString(id);
+    dest.writeString(gsNum);
+    dest.writeString(startTime);
+    dest.writeString(creationTime);
+    dest.writeString(startPlaceInfo);
+    dest.writeString(startPlaceX);
+    dest.writeString(startPlaceY);
+    dest.writeString(destinationInfo);
+    dest.writeString(destinationX);
+    dest.writeString(destinationY);
+    dest.writeString(departNum);
+    dest.writeString(goodName);
+    dest.writeString(goodVolume);
+    dest.writeString(goodWeight);
+    dest.writeString(freightAmount);
+    dest.writeString(carTypeId);
+    dest.writeString(carType);
+    dest.writeString(carLength);
+    dest.writeString(userId);
+    dest.writeString(rongId);
+    dest.writeString(userName);
+    dest.writeString(userMobile);
+    dest.writeInt(status);
+    dest.writeString(goodsSourceDetail);
+    dest.writeString(remark);
+  }
+
   @Override
   public int describeContents() {
     return 0;
   }
 
-  @Override
-  public void writeToParcel(Parcel dest, int flags) {
-    dest.writeString(this.id);
-    dest.writeString(this.gsNum);
-    dest.writeString(this.startTime);
-    dest.writeString(this.creationTime);
-    dest.writeString(this.startPlaceInfo);
-    dest.writeString(this.startPlaceX);
-    dest.writeString(this.startPlaceY);
-    dest.writeString(this.destinationInfo);
-    dest.writeString(this.destinationX);
-    dest.writeString(this.destinationY);
-    dest.writeString(this.departNum);
-    dest.writeString(this.goodName);
-    dest.writeString(this.goodVolume);
-    dest.writeString(this.goodWeight);
-    dest.writeString(this.freightAmount);
-    dest.writeString(this.carTypeId);
-    dest.writeString(this.carType);
-    dest.writeString(this.carLength);
-    dest.writeString(this.userId);
-    dest.writeString(this.userName);
-    dest.writeString(this.userMobile);
-    dest.writeInt(this.status);
-    dest.writeString(this.goodsSourceDetail);
-    dest.writeString(this.remark);
-  }
-
-  protected GoodsOwnerInforBean(Parcel in) {
-    this.id = in.readString();
-    this.gsNum = in.readString();
-    this.startTime = in.readString();
-    this.creationTime = in.readString();
-    this.startPlaceInfo = in.readString();
-    this.startPlaceX = in.readString();
-    this.startPlaceY = in.readString();
-    this.destinationInfo = in.readString();
-    this.destinationX = in.readString();
-    this.destinationY = in.readString();
-    this.departNum = in.readString();
-    this.goodName = in.readString();
-    this.goodVolume = in.readString();
-    this.goodWeight = in.readString();
-    this.freightAmount = in.readString();
-    this.carTypeId = in.readString();
-    this.carType = in.readString();
-    this.carLength = in.readString();
-    this.userId = in.readString();
-    this.userName = in.readString();
-    this.userMobile = in.readString();
-    this.status = in.readInt();
-    this.goodsSourceDetail = in.readString();
-    this.remark = in.readString();
-  }
-
   public static final Creator<GoodsOwnerInforBean> CREATOR = new Creator<GoodsOwnerInforBean>() {
     @Override
-    public GoodsOwnerInforBean createFromParcel(Parcel source) {
-      return new GoodsOwnerInforBean(source);
+    public GoodsOwnerInforBean createFromParcel(Parcel in) {
+      return new GoodsOwnerInforBean(in);
     }
 
     @Override
