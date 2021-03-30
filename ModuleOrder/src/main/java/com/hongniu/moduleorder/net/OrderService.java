@@ -41,7 +41,7 @@ public interface OrderService {
      * @param infor
      * @return
      */
-    @POST("hongniu/api/app/getVersion")
+    @POST("api/app/getVersion")
     Observable<CommonBean<VersionBean>> checkVersion(@Body VersionBean infor);
 
     /**
@@ -49,7 +49,7 @@ public interface OrderService {
      *
      * @return
      */
-    @POST("hongniu/api/order/add")
+    @POST("api/order/add")
     Observable<CommonBean<OrderDetailBean>> creatOrder(@Body OrderCreatParamBean infor);
 
     /**
@@ -57,7 +57,7 @@ public interface OrderService {
      *
      * @return
      */
-    @POST("hongniu//api/order/updateOrder")
+    @POST("api/order/updateOrder")
     Observable<CommonBean<OrderDetailBean>> changeOrder(@Body OrderCreatParamBean infor);
 
 
@@ -70,7 +70,7 @@ public interface OrderService {
      *
      * @return
      */
-    @POST("hongniu/api/car/querynumber")
+    @POST("api/car/querynumber")
     Observable<CommonBean<List<OrderCarNumbean>>> getCarNum(@Body OrderCarNumbean infor);
 
     /**
@@ -82,7 +82,7 @@ public interface OrderService {
      *
      * @return
      */
-    @POST("hongniu/api/user/querydriver")
+    @POST("api/user/querydriver")
     Observable<CommonBean<List<OrderDriverPhoneBean>>> getDriverPhone(@Body OrderDriverPhoneBean infor);
 
     /**
@@ -96,7 +96,7 @@ public interface OrderService {
      *
      * @return
      */
-    @POST("hongniu/api/carowner/savecar")
+    @POST("api/carowner/savecar")
     Observable<CommonBean<OrderCarNumbean>> addCarNum(@Body OrderCarNumbean infor);
 
     /**
@@ -110,7 +110,7 @@ public interface OrderService {
      *
      * @return
      */
-    @POST("hongniu/api/order/queryPage")
+    @POST("api/order/queryPage")
     Observable<CommonBean<PageBean<OrderDetailBean>>> queryOrder(@Body OrderMainQueryBean infor);
 
     /**
@@ -119,7 +119,7 @@ public interface OrderService {
      * @param infor 订单ID
      * @return
      */
-    @POST("hongniu/api/order/cancel")
+    @POST("api/order/cancel")
     Observable<CommonBean<OrderDetailBean>> cancleOrder(@Body OrderIdBean infor);
 
     /**
@@ -127,7 +127,7 @@ public interface OrderService {
      * orderNum	true	string	订单编号
      * goodsValue	true	number	货物价值
      */
-    @POST("hongniu/api/policy/create")
+    @POST("api/policy/create")
     Observable<CommonBean<OrderCreatBean>> creatInsurance(@Body CreatInsuranceBean infor);
 
     /**
@@ -135,85 +135,85 @@ public interface OrderService {
      * orderId	true	number	订单id
      * goodPrice	true	number	货物价值，单位元，不能超过200万
      */
-    @POST("hongniu/api/order/updategoodprice")
+    @POST("api/order/updategoodprice")
     Observable<CommonBean<String>> queryInstancePrice(@Body QueryInsurancePriceBean infor);
 
     /**
      * 司机开始发车
      * id	true	number	订单id
      */
-    @POST("hongniu/api/order/start")
+    @POST("api/order/start")
     Observable<CommonBean<String>> driverStart(@Body OrderIdBean infor);
 
     /**
      * 确认到达
      * id	true	number	订单id
      */
-    @POST("hongniu/api/order/endSend")
+    @POST("api/order/endSend")
     Observable<CommonBean<String>> entryArrive(@Body OrderIdBean infor);
 
     /**
      * 确认收货
      * id	true	number	订单id
      */
-    @POST("hongniu//api/order/receive")
+    @POST("api/order/receive")
     Observable<CommonBean<OrderDetailBean>> entryReceiveCargo(@Body OrderIdBean infor);
 
 
     /**
      * 上传所有位置信息
      */
-    @POST("hongniu/api/position/save")
+    @POST("api/position/save")
     Observable<CommonBean<String>> upLoaction(@Body List<LocationBean> locationBeans);
 
     /**
      * 获取指定订单所有位置信息
      */
-    @POST("hongniu/api/position/list")
+    @POST("api/position/list")
     Observable<CommonBean<PathBean>> getPath(@Body OrderIdBean infor);
 
     /**
      * 查询订单历史搜索记录
      */
-    @POST("hongniu/api/user/querySearchHistory")
+    @POST("api/user/querySearchHistory")
     Observable<CommonBean<List<OrderSearchBean>>> querySearchHistory();
 
     /**
      * 上传图片
      */
     @Multipart
-    @POST("hongniu/api/file/upload")
+    @POST("api/file/upload")
     Observable<CommonBean<UpImgData>> uploadMultipleTypeFile(@Part("classify") int type,
                                                              @Part MultipartBody.Part image);
 
     /**
      * 上传回单
      */
-    @POST("hongniu/api/order/saveReceiptInfo")
+    @POST("api/order/saveReceiptInfo")
     Observable<CommonBean<String>> upReceiver(@Body UpReceiverBean infor);
 
     /**
      * 查看回单信息
      */
-    @POST("hongniu/api/order/queryReceiptInfo")
+    @POST("api/order/queryReceiptInfo")
     Observable<CommonBean<QueryReceiveBean>> queryReceiptInfo(@Body UpReceiverBean infor);
 
     /**
      * 查看货单信息
      */
-    @POST("hongniu/api/order/queryGoodsImages")
+    @POST("api/order/queryGoodsImages")
     Observable<CommonBean<List<UpImgData>>> queryCargotInfo(@Body UpReceiverBean infor);
 
     /**
      * 删除指定回单ID
      */
-    @POST("hongniu/api/order/deleteReceiptImage")
+    @POST("api/order/deleteReceiptImage")
     Observable<CommonBean<String>> deleteReceiptImage(@Body UpReceiverBean infor);
 
     /**
      * 查询被保险人列表
      */
-    @POST("hongniu/api/userinsured/list")
+    @POST("api/userinsured/list")
     Observable<CommonBean<List<OrderInsuranceInforBean>>> querInsruancUserInfor();
 
 

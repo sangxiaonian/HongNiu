@@ -26,10 +26,10 @@ import retrofit2.http.POST;
 public interface LoginService {
 
 
-    @POST("hongniu/api/login/login")
+    @POST("api/login/login")
     Observable<CommonBean<LoginBean>> loginBySms(@Body LoginSMSParams params);
 
-    @POST("hongniu/api/user/appLogout")
+    @POST("api/user/appLogout")
     Observable<CommonBean<LoginBean>> loginOut( );
 
     /**
@@ -37,7 +37,7 @@ public interface LoginService {
      *
      * @return
      */
-    @POST("hongniu/api/refund/bankList")
+    @POST("api/refund/bankList")
     Observable<CommonBean<List<QueryBlankInforsBean>>> queryBlanks();
 
     /**
@@ -45,45 +45,45 @@ public interface LoginService {
      *
      * @return
      */
-    @POST("hongniu/api/refund/add")
+    @POST("api/refund/add")
     Observable<CommonBean<String>> bindBlank(@Body LoginBlindBlankParams params);
 
-    @POST("hongniu/api/login/ckeckcode")
+    @POST("api/login/ckeckcode")
     Observable<CommonBean<String>> ckeckcode(@Body LoginSMSParams params);
 
     /**
      * 获取个人信息
      */
-    @POST("hongniu/api/user/finduserinfo")
+    @POST("api/user/finduserinfo")
     Observable<CommonBean<LoginPersonInfor>> getPersonInfor(@Body QueryRongParams params);
 
     /**
      * 更改个人信息,即为实名认证
      */
-    @POST("hongniu/api/hxbaccount/certification")
+    @POST("api/hxbaccount/certification")
     Observable<CommonBean<String>> changePersonInfor(@Body LoginPersonInfor infor);
  /**
      * 司机实名认证
      */
-    @POST("hongniu/api/hxbaccount/certificationDriver")
+    @POST("api/hxbaccount/certificationDriver")
     Observable<CommonBean<String>> changeDriverInfor(@Body LoginPersonInfor infor);
 
     /**
      * 新增车辆信息
      */
-    @POST("hongniu/api/car/savecar")
+    @POST("api/car/savecar")
     Observable<CommonBean<ResponseBody>> addCar(@Body CarInforBean infor);
 
     /**
      * 修改车辆信息
      */
-    @POST("hongniu/api/car/updatecar")
+    @POST("api/car/updatecar")
     Observable<CommonBean<String>> upDataCar(@Body CarInforBean infor);
 
     /**
      * 删除车辆信息
      */
-    @POST("hongniu/api/car/deletebyid")
+    @POST("api/car/deletebyid")
     Observable<CommonBean<String>> deletedCar(@Body CarInforBean infor);
 
 
@@ -92,7 +92,7 @@ public interface LoginService {
      *
      * @return
      */
-    @POST("hongniu/api/car/querynumber")
+    @POST("api/car/querynumber")
     Observable<CommonBean<List<CarInforBean>>> queyCarDetailInfor(@Body CarInforBean parambean);
 
     /**
@@ -100,7 +100,7 @@ public interface LoginService {
      *
      * @return
      */
-    @POST("hongniu/api/car/vehicletype")
+    @POST("api/car/vehicletype")
     Observable<CommonBean<List<CarTypeBean>>> queyTruckTypes();
 
     /**
@@ -108,7 +108,7 @@ public interface LoginService {
      *
      * @return
      */
-    @POST("hongniu/api/car/updatenavigationcar")
+    @POST("api/car/updatenavigationcar")
     Observable<CommonBean<String>> upTruckInfor(@Body CarInforBean bean);
 
     /**
@@ -116,7 +116,7 @@ public interface LoginService {
      *
      * @return
      */
-    @POST("hongniu/api/refund/queryMyCards")
+    @POST("api/refund/queryMyCards")
     Observable<CommonBean<List<PayInforBeans>>> queryMyPayInforList(@Body PayInforBeans beans);
 
     /**
@@ -124,7 +124,7 @@ public interface LoginService {
      *
      * @return
      */
-    @POST("hongniu/api/refund/modifyDefault")
+    @POST("api/refund/modifyDefault")
     Observable<CommonBean<String>> changeDefaultPayWay(@Body PayInforBeans beans);
 
     /**
@@ -132,7 +132,7 @@ public interface LoginService {
      *
      * @return
      */
-    @POST("hongniu/api/refund/add")
+    @POST("api/refund/add")
     Observable<CommonBean<String>> addBlankCard(@Body PayInforBeans beans);
 
     /**
@@ -141,7 +141,7 @@ public interface LoginService {
      * @param beans
      * @return
      */
-    @POST("hongniu//api/account/updatepass")
+    @POST("api/account/updatepass")
     Observable<CommonBean<String>> setPayPassword(@Body SetPayPassWord beans);
 
     /**
@@ -150,7 +150,7 @@ public interface LoginService {
      * @param beans
      * @return
      */
-    @POST("hongniu/api/userinsured/add")
+    @POST("api/userinsured/add")
     Observable<CommonBean<LoginCreatInsuredBean>> creatInsuredInfor(@Body LoginCreatInsuredBean beans);
 
 
@@ -160,7 +160,7 @@ public interface LoginService {
      * @param beans
      * @return
      */
-    @POST("hongniu/api/userinsured/update")
+    @POST("api/userinsured/update")
     Observable<CommonBean<LoginCreatInsuredBean>> upInsuredInfor(@Body LoginCreatInsuredBean beans);
 
     /**
@@ -169,7 +169,7 @@ public interface LoginService {
      * @param beans
      * @return
      */
-    @POST("hongniu/api/userinsured/delete")
+    @POST("api/userinsured/delete")
     Observable<CommonBean<String>> deletedInsuredInfor(@Body LoginCreatInsuredBean beans);
 
 

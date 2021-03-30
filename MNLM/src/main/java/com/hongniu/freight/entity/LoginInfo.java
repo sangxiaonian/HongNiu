@@ -1,5 +1,7 @@
 package com.hongniu.freight.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * 作者：  on 2020/2/23.
  */
@@ -17,7 +19,9 @@ public class LoginInfo {
     private String nickname;//false	用户的微信昵称
     private int gender;//false	性别,1男,2女,0未知
     private String remark;//false	备注
+    @SerializedName("rongNewtoken")
     private String rongToken;//true	融云token
+    private String rongId;//true	融云token
     private String logoPath;//true	绝对路径用于显示
     protected int isDriver;//true	司机身份1:是 0:否
     protected int isPersonCarrier;//true	个人承运人身份 1:是 0:否
@@ -31,6 +35,14 @@ public class LoginInfo {
     protected int isCompanyShipperStatus;//true	认证公司托运人状态 0未提交审核资料 1已提交审核资料 2系统自动审核中 3人工后台审核中 4认证成功 5认证失败
     protected int isCompanyCarrierStatus;//true	认证公司承运人状态 0未提交审核资料 1已提交审核资料 2系统自动审核中 3人工后台审核中 4认证成功 5认证失败
     protected int isRealname;//true	int	是否实名 0未实名 1已实名
+
+    public String getRongId() {
+        return rongId;
+    }
+
+    public void setRongId(String rongId) {
+        this.rongId = rongId;
+    }
 
     public int getIsRealname() {
         return isRealname;

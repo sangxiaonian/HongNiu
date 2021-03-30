@@ -1020,7 +1020,7 @@ public class HttpAppFactory {
     public static Observable<CommonBean<UserInfor>> queryRongInfor(String userId) {
 
         JsonObject bean = new JsonObject();
-        bean.addProperty("userId", userId);
+        bean.addProperty("rongId", userId);
         return CompanyClient.getInstance().creatService(AppService.class)
                 .queryRongInfor(bean)
                 .compose(RxUtils.<CommonBean<UserInfor>>getSchedulersObservableTransformer())

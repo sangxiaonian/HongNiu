@@ -22,7 +22,7 @@ public interface FestivityService {
      *
      * @return
      */
-    @POST("hongniu//api/user/queryInvitedInfo")
+    @POST("api/user/queryInvitedInfo")
     Observable<CommonBean<QueryInvitedInfo>> queryInvitedInfo();
 
     /**
@@ -31,7 +31,7 @@ public interface FestivityService {
      * @param bean
      * @return
      */
-    @POST("hongniu/api/user/queryInvitedUsers")
+    @POST("api/user/queryInvitedUsers")
     Observable<CommonBean<PageBean<InviteDetailBean>>> getInviteDetails(@Body PagerParambean bean);
 
     /**
@@ -40,7 +40,7 @@ public interface FestivityService {
      * @param bean
      * @return
      */
-    @POST("hongniu/api/account/rebateFlows")
+    @POST("api/account/rebateFlows")
     Observable<CommonBean<PageBean<BrokerageDetailsBean>>> getRebateFlows(@Body PagerParambean bean);
 
 }

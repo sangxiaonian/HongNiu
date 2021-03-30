@@ -1,5 +1,7 @@
 package com.hongniu.baselibrary.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * 作者： ${PING} on 2018/8/14.
  * 登录后返回的个人信息
@@ -33,6 +35,8 @@ public class LoginBean {
     private String nickname;//昵称
     private String gender;//性别
     private String remarks;//备注
+
+    @SerializedName("rongNewtoken")
     private String rongToken;//备注
     private String logoPath;//备注
 

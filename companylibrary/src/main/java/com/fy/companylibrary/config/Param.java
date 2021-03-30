@@ -53,5 +53,8 @@ public class Param {
     public static String LOGIN="login";//登录信息
     public static String MY="my";//个人信息
 
+    public static String LOGIN_MNLM="login_mnlm";//登录信息
+    public static String MY_MNLM="my_mnlm";//个人信息
+
     public static String ID ="ID";
 }

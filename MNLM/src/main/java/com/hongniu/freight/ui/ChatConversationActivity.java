@@ -20,7 +20,7 @@ import com.sang.thirdlibrary.chact.UserInfor;
 
 
 /**
- * 单聊界面
+ * 木牛流马单聊界面
  */
 public class ChatConversationActivity extends CompanyBaseActivity {
 
@@ -91,7 +91,7 @@ public class ChatConversationActivity extends CompanyBaseActivity {
         LoginInfo loginInfor = InfoUtils.getLoginInfo();
         if (loginInfor != null && loginInfor.getId() != null) {
             final String id = loginInfor.getId();
-            HttpAppFactory.queryRongInfor(loginInfor.getId())
+            HttpAppFactory.queryRongInfor(loginInfor.getRongId())
                     .subscribe(new NetObserver<UserInfor>(null) {
                         @Override
                         public void doOnSuccess(UserInfor data) {

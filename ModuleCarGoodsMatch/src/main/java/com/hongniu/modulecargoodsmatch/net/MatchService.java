@@ -41,7 +41,7 @@ public interface MatchService {
      *
      * @return
      */
-    @POST("hongniu/api/goodsSource/add")
+    @POST("api/goodsSource/add")
     Observable<CommonBean<Object>> creatGoodSour(@Body MatchCreatGoodsSourceParams params);
 
     /**
@@ -49,7 +49,7 @@ public interface MatchService {
      *
      * @return
      */
-    @POST("hongniu/api/goodsSource/queryPage")
+    @POST("api/goodsSource/queryPage")
     Observable<CommonBean<PageBean<GoodsOwnerInforBean>>> queryMatchGoodsInfor(@Body MatchQueryGoodsInforParams params);
 
     /**
@@ -57,7 +57,7 @@ public interface MatchService {
      *
      * @return
      */
-    @POST("hongniu/api/robOrder/myJoin")
+    @POST("api/robOrder/myJoin")
     Observable<CommonBean<PageBean<MatchMyJoinGoodsInofrBean>>> queryMatchMyJoinGoodsInfor(@Body PagerParambean params);
 
     /**
@@ -65,7 +65,7 @@ public interface MatchService {
      *
      * @return
      */
-    @POST("hongniu/api/goodsSource/delete")
+    @POST("api/goodsSource/delete")
     Observable<CommonBean<Object>> deleteMatchGoods(@Body IDParams params);
 
     /**
@@ -73,7 +73,7 @@ public interface MatchService {
      *
      * @return
      */
-    @POST("hongniu/api/robOrder/queryPage")
+    @POST("api/robOrder/queryPage")
     Observable<CommonBean<PageBean<MatchGrapSingleDetailBean>>> queryGraoDetail(@Body MatchGrapDetailParams params);
 
     /**
@@ -81,7 +81,7 @@ public interface MatchService {
      *
      * @return
      */
-    @POST("hongniu/api/robOrder/add")
+    @POST("api/robOrder/add")
     Observable<CommonBean<GoodsOwnerInforBean>> grapMatch(@Body MatchGrapDetailParams params);
 
     /**
@@ -89,7 +89,7 @@ public interface MatchService {
      *
      * @return
      */
-    @POST("hongniu/api/robOrder/cancel")
+    @POST("api/robOrder/cancel")
     Observable<CommonBean<Object>> cancleParticipation(@Body MatchGrapDetailParams params);
 
     /**
@@ -97,7 +97,7 @@ public interface MatchService {
      *
      * @return
      */
-    @POST("hongniu/api/robOrder/choose")
+    @POST("api/robOrder/choose")
     Observable<CommonBean<MatchChooseGrapBean>> chooseGrap(@Body MatchGrapDetailParams params);
 
     /**
@@ -105,7 +105,7 @@ public interface MatchService {
      *
      * @return
      */
-    @POST("hongniu/api/robOrder/reset")
+    @POST("api/robOrder/reset")
     Observable<CommonBean<Object>> resetDriver(@Body MatchGrapDetailParams params);
 
     /**
@@ -113,7 +113,7 @@ public interface MatchService {
      *
      * @return
      */
-    @POST("hongniu/api/goodsSource/preload")
+    @POST("api/goodsSource/preload")
     Observable<CommonBean<MatchCarPreInforBean>> queryGoodCarInfor();
 
     /**
@@ -121,7 +121,7 @@ public interface MatchService {
      *
      * @return
      */
-    @POST("hongniu/api/car/newCarTypeList")
+    @POST("api/car/newCarTypeList")
     Observable<CommonBean<List<MatchCarTypeInfoBean>>> queryCarTypeInfo();
 
     /**
@@ -130,7 +130,7 @@ public interface MatchService {
      * @param params
      * @return
      */
-    @POST("hongniu/api/carGoodsOrder/countFare")
+    @POST("api/carGoodsOrder/countFare")
     Observable<CommonBean<MatchCountFareBean>> queryCountFare(@Body MatchQueryCountFareParam params);
 
     /**
@@ -139,7 +139,7 @@ public interface MatchService {
      * @param params
      * @return
      */
-    @POST("hongniu//api/carGoodsOrder/add")
+    @POST("api/carGoodsOrder/add")
     Observable<CommonBean<MatchCreateInfoBean>> matchCreatOrder(@Body MatchCreatOrderParams params);
 
     /**
@@ -148,7 +148,7 @@ public interface MatchService {
      * @param params
      * @return
      */
-    @POST("hongniu/api/carGoodsOrder/myOrders")
+    @POST("api/carGoodsOrder/myOrders")
     Observable<CommonBean<PageBean<MatchOrderInfoBean>>> queryMyOrder(@Body PagerParambean params);
 
     /**
@@ -157,7 +157,7 @@ public interface MatchService {
      * @param params
      * @return
      */
-    @POST("hongniu/api/carGoodsOrder/queryPage")
+    @POST("api/carGoodsOrder/queryPage")
     Observable<CommonBean<PageBean<MatchOrderInfoBean>>> queryDriverOrder(@Body PagerParambean params);
 
     /**
@@ -166,7 +166,7 @@ public interface MatchService {
      * @param params
      * @return
      */
-    @POST("hongniu/api/carGoodsOrder/cancel")
+    @POST("api/carGoodsOrder/cancel")
     Observable<CommonBean<Object>> cancleCar(@Body MatchCancelOrderParams params);
 
     /**
@@ -175,7 +175,7 @@ public interface MatchService {
      * @param params
      * @return
      */
-    @POST("hongniu/api/carGoodsOrder/orderReceive")
+    @POST("api/carGoodsOrder/orderReceive")
     Observable<CommonBean<MathDriverReceiveBean>> receiverOrder(@Body IDParams params);
 
     /**
@@ -184,7 +184,7 @@ public interface MatchService {
      * @param params
      * @return
      */
-    @POST("hongniu/api/carGoodsOrder/detail")
+    @POST("api/carGoodsOrder/detail")
     Observable<CommonBean<MatchOrderInfoBean>> queryMatchOrderDetail(@Body IDParams params);
 
     /**
@@ -193,7 +193,7 @@ public interface MatchService {
      * @param params
      * @return
      */
-    @POST("hongniu/api/carGoodsOrder/arrived")
+    @POST("api/carGoodsOrder/arrived")
     Observable<CommonBean<Object>> matchEntryArrive(@Body MatchEntryArriveParams params);
     /**
      * 确认收货
@@ -201,7 +201,7 @@ public interface MatchService {
      * @param params
      * @return
      */
-    @POST("hongniu/api/carGoodsOrder/receipt")
+    @POST("api/carGoodsOrder/receipt")
     Observable<CommonBean<Object>> matchEntryReceive(@Body IDParams params);
 
     /**
@@ -210,7 +210,7 @@ public interface MatchService {
      * @param params
      * @return
      */
-    @POST("hongniu/api/carGoodsOrder/appraise")
+    @POST("api/carGoodsOrder/appraise")
     Observable<CommonBean<Object>> appraiseDrive(@Body MatchEntryArriveParams params);
 
 

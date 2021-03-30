@@ -27,9 +27,9 @@ public class Param {
 
     static {
         if (isDebug) {
-            url = "http://47.104.130.110:8030/";
+            url = "http://47.104.130.110:8030/hongniu/";
         } else {
-            url = "https://api.hongniudai.cn/";
+            url = "https://api.hongniudai.cn/hongniu/";
         }
         hongniu_agreement = "https://api.hongniudai.cn/" + "static/html/service.html";
         insurance_notify = "https://api.hongniudai.cn/" + "static/html/notice.html";

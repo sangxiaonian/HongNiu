@@ -27,7 +27,7 @@ public interface BreabulkService {
      *
      * @return
      */
-    @POST("hongniu/api/companyAccount/list")
+    @POST("api/companyAccount/list")
     Observable<CommonBean<List<BreakbulkCompanyInfoBean>>> queryBreakbulkCompany(@Body BreakbulkCompanyInfoParam params);
     /**
      * 车货匹配列表信息
@@ -35,7 +35,7 @@ public interface BreabulkService {
      * @return
      * @param params
      */
-    @POST("hongniu//api/ltl/queryPage")
+    @POST("api/ltl/queryPage")
     Observable<CommonBean<PageBean<BreakbulkConsignmentInfoBean>>> queryBreakbulkConsignmentRecord(@Body PagerParambean params);
 
    /**
@@ -44,7 +44,7 @@ public interface BreabulkService {
      * @return
     * @param params
      */
-    @POST("hongniu/api/ltl/addGoods")
+    @POST("api/ltl/addGoods")
     Observable<CommonBean<Object>> creatBreakbulkConsignment(@Body BreakbulkConsignmentCreateParams params);
 
 }

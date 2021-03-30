@@ -34,7 +34,7 @@ public interface FinanceService {
      *
      * @return
      */
-    @POST("hongniu/api/finance/getExpressCost")
+    @POST("api/finance/getExpressCost")
     Observable<CommonBean<List<QueryExpendResultBean>>> queryExpendVistogramTran(@Body QueryExpendBean infor);
 
     /**
@@ -42,7 +42,7 @@ public interface FinanceService {
      *
      * @return
      */
-    @POST("hongniu//api/finance/getInsuranceCost")
+    @POST("api/finance/getInsuranceCost")
     Observable<CommonBean<List<QueryExpendResultBean>>> queryExpendVistogramInsurance(@Body QueryExpendBean infor);
 
     /**
@@ -50,7 +50,7 @@ public interface FinanceService {
      *
      * @return
      */
-    @POST("hongniu/api/finance/getExpressIncome")
+    @POST("api/finance/getExpressIncome")
     Observable<CommonBean<List<QueryExpendResultBean>>> queryInComeVistogram(@Body QueryExpendBean infor);
 
     /**
@@ -64,7 +64,7 @@ public interface FinanceService {
      *
      * @return
      */
-    @POST("hongniu/api/finance/search")
+    @POST("api/finance/search")
     Observable<CommonBean<PageBean<OrderDetailBean>>> queryFinance(@Body QueryExpendBean infor);
 
 
@@ -74,7 +74,7 @@ public interface FinanceService {
      * @param bean
      * @return
      */
-    @POST("hongniu/api/account/accountflows")
+    @POST("api/account/accountflows")
     Observable<CommonBean<PageBean<BalanceOfAccountBean>>> queryAccountFllows(@Body AccountFloowParamBean bean);
 
     /**
@@ -83,7 +83,7 @@ public interface FinanceService {
      * @param bean
      * @return
      */
-    @POST("hongniu/api/account/accountintegralflows")
+    @POST("api/account/accountintegralflows")
     Observable<CommonBean<PageBean<NiuOfAccountBean>>> queryNiuAccountFllows(@Body AccountFloowParamBean bean);
 
     /**
@@ -92,7 +92,7 @@ public interface FinanceService {
      * @param bean
      * @return
      */
-    @POST("hongniu/api/account/userOrderdetails")
+    @POST("api/account/userOrderdetails")
     Observable<CommonBean<List<FinanceQueryNiuDetailBean>>> queryNiurDetails(@Body CareNumPageBean bean);
 
     /**
@@ -101,7 +101,7 @@ public interface FinanceService {
      * @param bean
      * @return
      */
-    @POST("hongniu/api/account/userOrderdetails")
+    @POST("api/account/userOrderdetails")
     Observable<CommonBean<List<FinanceQueryCarDetailMap>>> queryCarOrderDetails(@Body CareNumPageBean bean);
 
     /**
@@ -109,14 +109,14 @@ public interface FinanceService {
      *
      * @return
      */
-    @POST("hongniu/api/refund/queryMyCards")
+    @POST("api/refund/queryMyCards")
     Observable<CommonBean<WalletDetail>> queryMyCards();
    /**
      * 解绑支付方式
      *
      * @return
      */
-    @POST("hongniu/api/refund/remove")
+    @POST("api/refund/remove")
     Observable<CommonBean<Object>> deleadCard(@Body BlankInfor blankID);
 
 
@@ -126,7 +126,7 @@ public interface FinanceService {
      * @param bean
      * @return
      */
-    @POST("hongniu//api/account/withdraw")
+    @POST("api/account/withdraw")
     Observable<CommonBean<String>> withdraw(@Body BalanceWithDrawBean bean);
 
     /**
@@ -134,7 +134,7 @@ public interface FinanceService {
      *
      * @return
      */
-    @POST("hongniu/api/hxbaccount/querySubAcc")
+    @POST("api/hxbaccount/querySubAcc")
     Observable<CommonBean<QuerySubAccStateBean>> querySubAcc();
 
     /**
@@ -142,7 +142,7 @@ public interface FinanceService {
      *
      * @return
      */
-    @POST("hongniu/api/hxbaccount/rechargeInfo")
+    @POST("api/hxbaccount/rechargeInfo")
     Observable<CommonBean<QueryBindHuaInforsBean>> queryHuaCards( );
 
 

@@ -21,7 +21,7 @@ import com.sang.thirdlibrary.chact.UserInfor;
 import rongyun.sang.com.chactmodule.R;
 
 /**
- * 单聊界面
+ * 泓牛单聊界面
  */
 public class ChatConversationActivity extends ModuleBaseActivity {
 
@@ -95,7 +95,9 @@ public class ChatConversationActivity extends ModuleBaseActivity {
                 .subscribe(new NetObserver<UserInfor>(null) {
                     @Override
                     public void doOnSuccess(UserInfor data) {
-                        ChactHelper.getHelper().refreshUserInfoCache(data.getRongId(), data);
+                        if (data!=null) {
+                            ChactHelper.getHelper().refreshUserInfoCache(data.getRongId(), data);
+                        }
                     }
                 });
     }

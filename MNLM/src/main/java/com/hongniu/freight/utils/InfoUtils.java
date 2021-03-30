@@ -22,7 +22,7 @@ public class InfoUtils {
      * @return
      */
     public static LoginInfo getLoginInfo() {
-        String string = SharedPreferencesUtils.getInstance().getString(Param.LOGIN);
+        String string = SharedPreferencesUtils.getInstance().getString(Param.LOGIN_MNLM);
         LoginInfo loginInfo = null;
         try {
             loginInfo = new Gson().fromJson(string, LoginInfo.class);
@@ -39,7 +39,7 @@ public class InfoUtils {
         if (loginInfo == null) {
             return;
         }
-        SharedPreferencesUtils.getInstance().putString(Param.LOGIN, new Gson().toJson(loginInfo));
+        SharedPreferencesUtils.getInstance().putString(Param.LOGIN_MNLM, new Gson().toJson(loginInfo));
 
     }
 
@@ -50,7 +50,7 @@ public class InfoUtils {
         if (loginInfo == null) {
             return;
         }
-        SharedPreferencesUtils.getInstance().putString(Param.MY, new Gson().toJson(loginInfo));
+        SharedPreferencesUtils.getInstance().putString(Param.MY_MNLM, new Gson().toJson(loginInfo));
 
     }
 
@@ -60,7 +60,7 @@ public class InfoUtils {
      * @return
      */
     public static PersonInfor getMyInfo() {
-        String string = SharedPreferencesUtils.getInstance().getString(Param.MY);
+        String string = SharedPreferencesUtils.getInstance().getString(Param.MY_MNLM);
         PersonInfor myInfo = null;
         try {
             myInfo = new Gson().fromJson(string, PersonInfor.class);
@@ -76,8 +76,6 @@ public class InfoUtils {
     public static void loginOut() {
         SharedPreferencesUtils.getInstance().clear();
         ChactHelper.getHelper().disConnect();
-        SharedPreferencesUtils.getInstance().remove(com.hongniu.baselibrary.config.Param.LOGIN_ONFOR);
-        SharedPreferencesUtils.getInstance().remove(com.hongniu.baselibrary.config.Param.PERSON_ONFOR);
         ArouterUtils.getInstance().builder(ArouterParamsApp.activity_main).withString(com.hongniu.baselibrary.config.Param.TRAN, com.hongniu.baselibrary.config.Param.LOGIN_OUT).navigation();
     }
 

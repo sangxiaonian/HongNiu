@@ -28,7 +28,7 @@ public interface MainService {
      *
      * @return
      */
-    @POST("hongniu/api/activity/list")
+    @POST("api/activity/list")
     Observable<CommonBean<List<HomeADBean>>> queryActivity();
 
     /**
@@ -36,7 +36,7 @@ public interface MainService {
      *
      * @return
      */
-    @POST("hongniu/api/account/eventtpye")
+    @POST("api/account/eventtpye")
     Observable<CommonBean<List<HomeADBean>>> queryClickEvent();
 
     /**
@@ -45,7 +45,7 @@ public interface MainService {
      * @return
      * @param eventParams
      */
-    @POST("hongniu/api/account/eventupload")
+    @POST("api/account/eventupload")
     Observable<CommonBean<String>> upClickEvent(@Body ClickEventBean eventParams);
 
     /**
@@ -54,7 +54,7 @@ public interface MainService {
      * @return
      * @param eventParams
      */
-    @POST("hongniu/api/waybill/show")
+    @POST("api/waybill/show")
     Observable<CommonBean<List<WayBillBean>>>queryWaybill(@Body WayBillParams eventParams);
    /**
      *上传友盟token
@@ -62,14 +62,14 @@ public interface MainService {
      * @return
     * @param eventParams
     */
-    @POST("hongniu/api/user/updateDevice")
+    @POST("api/user/updateDevice")
     Observable<CommonBean<Object>>upToken(@Body AppToken eventParams);
     /**
      * 查询所有子平台信息列表
      *
      * @return
      */
-    @POST("hongniu/api/app/getsubinfo")
+    @POST("api/app/getsubinfo")
     Observable<CommonBean<List<CompanyInfoBean>>> queryCompanyInfo( );
 
     /**
@@ -77,7 +77,7 @@ public interface MainService {
      *
      * @return
      */
-    @POST("hongniu/api/app/getsubtoken")
+    @POST("api/app/getsubtoken")
     Observable<CommonBean<CompanyTokenInfoBean>> queryCompanyLoginToken(@Body JsonObject object);
 
     /**

@@ -74,6 +74,7 @@ public class BaseClient {
     }
 
     public <T> T creatService(Class<T> t) {
+        JLog.i("登录数据：BaseClient");
         return httpClient.creatService(t);
     }
 
