@@ -267,7 +267,7 @@ public class Utils {
     public static DialogComment dialogAttes(Context mContext, DialogComment.OnButtonRightClickListener rightClickListener) {
         return new DialogComment.Builder()
                     .setBtLeft("暂不认证")
-                    .setDialogTitle("未完成实名认证或实名认证")
+                    .setDialogTitle("未完成实名认证")
                     .setBtRight("去认证")
                     .hideContent()
                     .setCancelable(false)
