@@ -5,6 +5,8 @@ import com.fy.companylibrary.entity.PageBean;
 import com.google.gson.JsonObject;
 import com.hongniu.freight.entity.AccountDetailBean;
 import com.hongniu.freight.entity.AccountFlowParams;
+import com.hongniu.freight.entity.AppAddressListBean;
+import com.hongniu.freight.entity.AppAddressListParam;
 import com.hongniu.freight.entity.AppraiseParams;
 import com.hongniu.freight.entity.BalanceWithDrawBean;
 import com.hongniu.freight.entity.BillInfoBean;
@@ -26,6 +28,8 @@ import com.hongniu.freight.entity.OrderDriverPhoneBean;
 import com.hongniu.freight.entity.OrderFindCarParams;
 import com.hongniu.freight.entity.OrderInfoBean;
 import com.hongniu.freight.entity.OrderNumberInfoBean;
+import com.hongniu.freight.entity.OrderSelectDriverInfoBean;
+import com.hongniu.freight.entity.OrderSelectOwnerInfoBean;
 import com.hongniu.freight.entity.OrderStatusBean;
 import com.hongniu.freight.entity.PageParams;
 import com.hongniu.freight.entity.PageSearchParams;
@@ -658,4 +662,29 @@ public interface AppService {
      */
     @POST("api/login/tokenlogin")
     Observable<CommonBean<LoginInfo>> loginWithToken(@Body JsonObject object);
+
+    /**
+     * 查询司机
+     *
+     * @return
+     */
+    @POST("api/user/fuzzyquerydriver")
+    Observable<CommonBean<List<OrderSelectDriverInfoBean>>> querySelectDriverInfo(@Body PageSearchParams bean);
+
+    /**
+     * 查询承运人
+     *
+     * @return
+     */
+    @POST("api/car/selectcarbycarnumber")
+    Observable<CommonBean<List<OrderSelectOwnerInfoBean>>> querySelectOwnerInfo(@Body PageSearchParams bean);
+
+    /**
+     * 查询常用地址
+     *
+     * @return
+     */
+    @POST("api/address/queryAddress")
+    Observable<CommonBean<PageBean<AppAddressListBean>>> queryAddressList(@Body AppAddressListParam bean);
+
 }

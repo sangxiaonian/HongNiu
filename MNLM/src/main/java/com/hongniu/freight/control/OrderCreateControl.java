@@ -2,10 +2,13 @@ package com.hongniu.freight.control;
 
 import com.fy.androidlibrary.net.listener.TaskControl;
 import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.freight.entity.AppAddressListBean;
 import com.hongniu.freight.entity.CargoTypeAndColorBeans;
 import com.hongniu.freight.entity.OrderCrateParams;
 import com.hongniu.freight.entity.InsuranceInfoBean;
 import com.hongniu.freight.entity.OrderInfoBean;
+import com.hongniu.freight.entity.OrderSelectDriverInfoBean;
+import com.hongniu.freight.entity.OrderSelectOwnerInfoBean;
 import com.hongniu.freight.entity.TranMapBean;
 
 import java.util.List;
@@ -114,6 +117,16 @@ public class OrderCreateControl {
 
         void switchCargoType(CargoTypeAndColorBeans cargoTypeAndColorBeans);
 
+        /**
+         * 初始化承运人信息
+         * @param result
+         */
+        void initOwnerInfo(OrderSelectOwnerInfoBean result);
+        /**
+         * 初始化司机信息
+         * @param result
+         */
+        void initDriverInfo(OrderSelectDriverInfoBean result);
     }
 
     ;
@@ -130,12 +143,12 @@ public class OrderCreateControl {
         /**
          * @param result 发货地址
          */
-        void saveStartInfo(TranMapBean result);
+        void saveStartInfo(AppAddressListBean result);
 
         /**
          * @param result 收货地址
          */
-        void saveEndInfo(TranMapBean result);
+        void saveEndInfo(AppAddressListBean result);
 
         /**
          * 显示发货时间
@@ -212,6 +225,12 @@ public class OrderCreateControl {
          * @param options1
          */
         void switchCargoType(int options1);
+
+        void saveDriverInfo(OrderSelectDriverInfoBean result);
+
+        void saveOwnerInfo(OrderSelectOwnerInfoBean result);
+
+        OrderSelectOwnerInfoBean getOwnerInfo();
     }
 
     ;
@@ -331,14 +350,17 @@ public class OrderCreateControl {
          *
          * @return
          */
-         List<CargoTypeAndColorBeans>  getCargoType();
+        List<CargoTypeAndColorBeans>  getCargoType();
 
         /**
          * 更新当前选中的货物代码
          * @param cargoTypeAndColorBeans
          */
         void switchCargoType(CargoTypeAndColorBeans cargoTypeAndColorBeans);
+        void saveDriverInfo(OrderSelectDriverInfoBean result);
 
+        void saveOwnerInfo(OrderSelectOwnerInfoBean result);
+        OrderSelectOwnerInfoBean getOwnerInfo();
     }
 
     ;

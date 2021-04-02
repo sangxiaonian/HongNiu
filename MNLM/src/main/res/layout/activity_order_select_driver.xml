@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.OrderSelectDriverActivity">
+    <include layout="@layout/toolbar" />
+    <com.fy.androidlibrary.widget.SearchTitleView
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:background="@color/color_of_ffffff"
+        android:paddingLeft="16dp"
+        android:paddingTop="7dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="7dp"
+        app:searchBackGround="@drawable/ovl_16_f7f7f7"
+        app:searchClearIcon="@drawable/ic_search_clear_999999"
+        app:searchGravity="center"
+        app:searchIcon="@drawable/icon_search_999999"
+        app:searchTitleColor="@color/color_of_040000"
+        app:searchTitleHind="请输入司机姓名/手机号"
+        app:searchTitleHindColor="@color/color_of_999999" />
+
+    <include layout="@layout/layout_refresh"/>
+</LinearLayout>

@@ -40,13 +40,13 @@ public class OrderInfoBean implements Parcelable {
     private String policyInfo;//	false	string	保单信息
     private String cartype;//	false	string	车辆类型
     private double realMoney;//": 实际运费
-    private String driverRongId;//": null,司机id
+    private String driverId;//": null,司机id
     private String driverName;//": null,司机名
     private String driverMobile;//": null,司机手机号
 
-   private String userRongId;//	true	number	托运人id
-   private String userName;//	true	number	托运人姓名
-   private String userMobile;//	true	number	托运人手机号
+    private String userrId;//	true	number	托运人id
+    private String userName;//	true	number	托运人姓名
+    private String userMobile;//	true	number	托运人手机号
     private int userEvaluateState;//": 托运人评价状态 1:已评价 0:未评价
     private int owenrEvaluateState;//": 承运人评价状态 1:已评价 0:未评价
     private int driverEvaluateState;//":司机评价状态 1:已评价 0:未评价
@@ -54,8 +54,11 @@ public class OrderInfoBean implements Parcelable {
     private String   startCountrySubdivisionCode;//":起点行政区划代码
     private String   cargoTypeClassificationInfo;//":起点行政区划代码
     private String   cargoTypeClassificationCode;//":起点行政区划代码
+    private String isdirect;//		添加承运人司机一起下单1表示是 0或空表示否
+    private String ownerCompanyAccountId;//	承运人企业帐号id（4.15查询信息
+    private String carInfo;//": null,
 
-
+    private String userId;//": 268,
     private double startPlaceLon;//": 121.40225,
     private double startPlaceLat;//": 31.311806,
     private double destinationLon;//": 121.401128,
@@ -71,21 +74,23 @@ public class OrderInfoBean implements Parcelable {
     private String insuranceUserId;//": //被保险人id,
     private String isDel;//": 0,
     private String companyAccountId;//": null,
-
-    //
-    private String ownerRongId;//": 承运人融云id,
+    private String ownerId;//": null,
 
     private String verifyUserId;//": null,
     private String verifyFailCause;//": null,
     private String orderTakingUserId;//": null,
     private String orderTakingTime;//": null,
     private String carId;//": null,
-    private String carInfo;//": null,
     private String departTime;//": null,
     private String arrivedTime;//": null,
     private String receiptTime;//": null,
     private String longitude;//": null,
     private String latitude;//": null,
+
+    private String userRongId;//	false	string	托运人融云id
+    private String ownerRongId;//	false	string	车主融云id
+    private String driverRongId;//	false	string	司机融云id
+
 
     protected OrderInfoBean(Parcel in) {
         status = in.readInt();
@@ -118,10 +123,10 @@ public class OrderInfoBean implements Parcelable {
         policyInfo = in.readString();
         cartype = in.readString();
         realMoney = in.readDouble();
-        driverRongId = in.readString();
+        driverId = in.readString();
         driverName = in.readString();
         driverMobile = in.readString();
-        userRongId = in.readString();
+        userrId = in.readString();
         userName = in.readString();
         userMobile = in.readString();
         userEvaluateState = in.readInt();
@@ -131,6 +136,10 @@ public class OrderInfoBean implements Parcelable {
         startCountrySubdivisionCode = in.readString();
         cargoTypeClassificationInfo = in.readString();
         cargoTypeClassificationCode = in.readString();
+        isdirect = in.readString();
+        ownerCompanyAccountId = in.readString();
+        carInfo = in.readString();
+        userId = in.readString();
         startPlaceLon = in.readDouble();
         startPlaceLat = in.readDouble();
         destinationLon = in.readDouble();
@@ -146,18 +155,20 @@ public class OrderInfoBean implements Parcelable {
         insuranceUserId = in.readString();
         isDel = in.readString();
         companyAccountId = in.readString();
-        ownerRongId = in.readString();
+        ownerId = in.readString();
         verifyUserId = in.readString();
         verifyFailCause = in.readString();
         orderTakingUserId = in.readString();
         orderTakingTime = in.readString();
         carId = in.readString();
-        carInfo = in.readString();
         departTime = in.readString();
         arrivedTime = in.readString();
         receiptTime = in.readString();
         longitude = in.readString();
         latitude = in.readString();
+        userRongId = in.readString();
+        ownerRongId = in.readString();
+        driverRongId = in.readString();
     }
 
     @Override
@@ -192,10 +203,10 @@ public class OrderInfoBean implements Parcelable {
         dest.writeString(policyInfo);
         dest.writeString(cartype);
         dest.writeDouble(realMoney);
-        dest.writeString(driverRongId);
+        dest.writeString(driverId);
         dest.writeString(driverName);
         dest.writeString(driverMobile);
-        dest.writeString(userRongId);
+        dest.writeString(userrId);
         dest.writeString(userName);
         dest.writeString(userMobile);
         dest.writeInt(userEvaluateState);
@@ -205,6 +216,10 @@ public class OrderInfoBean implements Parcelable {
         dest.writeString(startCountrySubdivisionCode);
         dest.writeString(cargoTypeClassificationInfo);
         dest.writeString(cargoTypeClassificationCode);
+        dest.writeString(isdirect);
+        dest.writeString(ownerCompanyAccountId);
+        dest.writeString(carInfo);
+        dest.writeString(userId);
         dest.writeDouble(startPlaceLon);
         dest.writeDouble(startPlaceLat);
         dest.writeDouble(destinationLon);
@@ -220,18 +235,20 @@ public class OrderInfoBean implements Parcelable {
         dest.writeString(insuranceUserId);
         dest.writeString(isDel);
         dest.writeString(companyAccountId);
-        dest.writeString(ownerRongId);
+        dest.writeString(ownerId);
         dest.writeString(verifyUserId);
         dest.writeString(verifyFailCause);
         dest.writeString(orderTakingUserId);
         dest.writeString(orderTakingTime);
         dest.writeString(carId);
-        dest.writeString(carInfo);
         dest.writeString(departTime);
         dest.writeString(arrivedTime);
         dest.writeString(receiptTime);
         dest.writeString(longitude);
         dest.writeString(latitude);
+        dest.writeString(userRongId);
+        dest.writeString(ownerRongId);
+        dest.writeString(driverRongId);
     }
 
     @Override
@@ -251,6 +268,22 @@ public class OrderInfoBean implements Parcelable {
         }
     };
 
+    public String getIsdirect() {
+        return isdirect;
+    }
+
+    public void setIsdirect(String isdirect) {
+        this.isdirect = isdirect;
+    }
+
+    public String getOwnerCompanyAccountId() {
+        return ownerCompanyAccountId;
+    }
+
+    public void setOwnerCompanyAccountId(String ownerCompanyAccountId) {
+        this.ownerCompanyAccountId = ownerCompanyAccountId;
+    }
+
     public String getCargoTypeClassificationInfo() {
         return cargoTypeClassificationInfo;
     }
@@ -267,6 +300,30 @@ public class OrderInfoBean implements Parcelable {
         this.cargoTypeClassificationCode = cargoTypeClassificationCode;
     }
 
+    public String getUserRongId() {
+        return userRongId;
+    }
+
+    public void setUserRongId(String userRongId) {
+        this.userRongId = userRongId;
+    }
+
+    public String getOwnerRongId() {
+        return ownerRongId;
+    }
+
+    public void setOwnerRongId(String ownerRongId) {
+        this.ownerRongId = ownerRongId;
+    }
+
+    public String getDriverRongId() {
+        return driverRongId;
+    }
+
+    public void setDriverRongId(String driverRongId) {
+        this.driverRongId = driverRongId;
+    }
+
     public int getHasReceiptImage() {
         return hasReceiptImage;
     }
@@ -275,6 +332,13 @@ public class OrderInfoBean implements Parcelable {
         this.hasReceiptImage = hasReceiptImage;
     }
 
+    public String getUserrId() {
+        return userrId;
+    }
+
+    public void setUserrId(String userrId) {
+        this.userrId = userrId;
+    }
 
     public String getUserName() {
         return userName;
@@ -353,12 +417,12 @@ public class OrderInfoBean implements Parcelable {
         this.cartype = cartype;
     }
 
-    public String getUserRongId() {
-        return userRongId;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUserRongId(String userRongId) {
-        this.userRongId = userRongId;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public double getStartPlaceLon() {
@@ -489,20 +553,20 @@ public class OrderInfoBean implements Parcelable {
         this.companyAccountId = companyAccountId;
     }
 
-    public String getOwnerRongId() {
-        return ownerRongId;
+    public String getOwnerId() {
+        return ownerId;
     }
 
-    public void setOwnerRongId(String ownerRongId) {
-        this.ownerRongId = ownerRongId;
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
     }
 
-    public String getDriverRongId() {
-        return driverRongId;
+    public String getDriverId() {
+        return driverId;
     }
 
-    public void setDriverRongId(String driverRongId) {
-        this.driverRongId = driverRongId;
+    public void setDriverId(String driverId) {
+        this.driverId = driverId;
     }
 
     public String getDriverName() {

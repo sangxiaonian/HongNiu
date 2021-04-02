@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.fy.androidlibrary.widget.shadow.ShadowLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        app:hl_cornerRadius="5dp"
+        app:hl_shadowBackColor="@color/color_of_ffffff"
+        app:hl_shadowColor="#2a000000"
+        app:hl_shadowLimit="5dp"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:id="@+id/ll_item"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:padding="@dimen/gap_app"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="0dp"
+                android:textSize="17dp"
+                android:id="@+id/tv_title"
+                android:textColor="@color/color_of_040000"
+                tools:text="李四 15515872882"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:id="@+id/img_call"
+                android:src="@mipmap/phone"
+                android:layout_height="24dp"/>
+        </LinearLayout>
+
+    </com.fy.androidlibrary.widget.shadow.ShadowLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

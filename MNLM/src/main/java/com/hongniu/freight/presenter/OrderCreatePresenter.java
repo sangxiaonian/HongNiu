@@ -9,13 +9,17 @@ import com.fy.androidlibrary.net.rx.BaseObserver;
 import com.fy.androidlibrary.utils.CollectionUtils;
 import com.fy.companylibrary.net.NetObserver;
 import com.hongniu.freight.control.OrderCreateControl;
+import com.hongniu.freight.entity.AppAddressListBean;
 import com.hongniu.freight.entity.CargoTypeAndColorBeans;
 import com.hongniu.freight.entity.InsuranceInfoBean;
 import com.hongniu.freight.entity.OrderInfoBean;
+import com.hongniu.freight.entity.OrderSelectDriverInfoBean;
+import com.hongniu.freight.entity.OrderSelectOwnerInfoBean;
 import com.hongniu.freight.entity.TranMapBean;
 import com.hongniu.freight.mode.OrderCreateMode;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 作者：  on 2020/2/17.
@@ -47,7 +51,8 @@ public class OrderCreatePresenter implements OrderCreateControl.IOrderCreatePres
             startInfor.setPoiItem(startPio);
             startInfor.setName(orderInfoBean.getShipperName());
             startInfor.setPhone(orderInfoBean.getShipperMobile());
-            saveStartInfo(startInfor);
+            mode.saveStartInfo(startInfor);
+            view.showStartInfo(startInfor);
 
             //收货地址
             TranMapBean endInfor = new TranMapBean();
@@ -58,19 +63,20 @@ public class OrderCreatePresenter implements OrderCreateControl.IOrderCreatePres
             endInfor.setPoiItem(endPio);
             endInfor.setName(orderInfoBean.getReceiverName());
             endInfor.setPhone(orderInfoBean.getReceiverMobile());
-            saveEndInfo( endInfor);
+            mode.saveEndInfo(endInfor);
+            view.showEndInfo(endInfor);
 
             //更改保险数据
             mode.saveIsInsurance(orderInfoBean.getInsurance() == 1);
             view.switchInsurance(mode.getIsInsurance());
-            if (mode.getIsInsurance()){
-                InsuranceInfoBean insuranceInfoBean=new InsuranceInfoBean();
+            if (mode.getIsInsurance()) {
+                InsuranceInfoBean insuranceInfoBean = new InsuranceInfoBean();
                 insuranceInfoBean.setId(orderInfoBean.getInsuranceUserId());
                 insuranceInfoBean.setUsername(orderInfoBean.getInsureUsername());
                 insuranceInfoBean.setIdnumber(orderInfoBean.getInsureIdnumber());
-                mode.onChangeInsuranceInfo(0,insuranceInfoBean);
+                mode.onChangeInsuranceInfo(0, insuranceInfoBean);
                 //初始化保险信息
-                view.initInsuranceInfo( orderInfoBean.getGoodPrice(),orderInfoBean.getInsureUsername());
+                view.initInsuranceInfo(orderInfoBean.getGoodPrice(), orderInfoBean.getInsureUsername());
             }
             //发货时间
             mode.saveStartTime(orderInfoBean.getDepartureTime());
@@ -80,10 +86,32 @@ public class OrderCreatePresenter implements OrderCreateControl.IOrderCreatePres
             cargoTypeAndColorBeans.setName(orderInfoBean.getCargoTypeClassificationInfo());
             mode.switchCargoType(cargoTypeAndColorBeans);
             view.switchCargoType(cargoTypeAndColorBeans);
-            view.showTime(TextUtils.isEmpty(orderInfoBean.getDepartureTime())?"立即发货":orderInfoBean.getDepartureTime());
+            view.showTime(TextUtils.isEmpty(orderInfoBean.getDepartureTime()) ? "立即发货" : orderInfoBean.getDepartureTime());
             view.initOrderUIInfo(orderInfoBean);
-        }else {
-           view.switchInsurance(false);
+
+
+            if ("1".equals(orderInfoBean.getIsdirect())) {
+                OrderSelectOwnerInfoBean infoBean = new OrderSelectOwnerInfoBean();
+                infoBean.setOwnerCompanyAccountId(orderInfoBean.getOwnerCompanyAccountId());
+                infoBean.setOwnerId(orderInfoBean.getOwnerId());
+                infoBean.setOwnerMobile(orderInfoBean.getOwnerMobile());
+                infoBean.setOwnerName(orderInfoBean.getOwnerName());
+                infoBean.setCarNumber(orderInfoBean.getCarNum());
+                infoBean.setCarid(orderInfoBean.getCarId());
+                infoBean.setVehicleType(orderInfoBean.getCarInfo());
+                infoBean.setModel(orderInfoBean.getCartype());
+                mode.saveOwnerInfo(infoBean);
+
+                OrderSelectDriverInfoBean driverInfoBean = new OrderSelectDriverInfoBean();
+                driverInfoBean.setId(orderInfoBean.getDriverId());
+                driverInfoBean.setContact(orderInfoBean.getDriverName());
+                driverInfoBean.setMobile(orderInfoBean.getDriverMobile());
+                mode.saveDriverInfo(driverInfoBean);
+                view.initDriverInfo(driverInfoBean);
+                view.initOwnerInfo(infoBean);
+            }
+        } else {
+            view.switchInsurance(false);
 
         }
     }
@@ -92,19 +120,37 @@ public class OrderCreatePresenter implements OrderCreateControl.IOrderCreatePres
      * @param result 发货地址
      */
     @Override
-    public void saveStartInfo(TranMapBean result) {
-        mode.saveStartInfo(result);
-        view.showStartInfo(result);
+    public void saveStartInfo(AppAddressListBean result) {
+
+        TranMapBean bean=new TranMapBean();
+        bean.setAddressDetail(result.getStartPlaceInfo());
+        bean.setAddress(result.getStartPlaceInfo());
+        bean.setName(result.getShipperName());
+        bean.setPhone(result.getShipperMobile());
+        PoiItem poiItem =new PoiItem("",new LatLonPoint(result.getStartPlaceLat(),result.getStartPlaceLon()),"","");
+        bean.setPoiItem(poiItem);
+        mode.saveStartInfo(bean);
+        view.showStartInfo(bean);
+
 
     }
 
     /**
-     * @param result 收货地址
+     * @param bean 收货地址
      */
     @Override
-    public void saveEndInfo(TranMapBean result) {
-        mode.saveEndInfo(result);
-        view.showEndInfo(result);
+    public void saveEndInfo(AppAddressListBean result) {
+
+        TranMapBean bean=new TranMapBean();
+        bean.setAddressDetail(result.getDestinationInfo());
+        bean.setAddress(result.getDestinationInfo());
+        bean.setName(result.getReceiverName());
+        bean.setPhone(result.getReceiverMobile());
+        PoiItem poiItem =new PoiItem("",new LatLonPoint(result.getDestinationLat(),result.getDestinationLon()),"","");
+        bean.setPoiItem(poiItem);
+
+        mode.saveEndInfo(bean);
+        view.showEndInfo(bean);
 
     }
 
@@ -258,21 +304,22 @@ public class OrderCreatePresenter implements OrderCreateControl.IOrderCreatePres
 
     /**
      * 显示货物种类弹窗
+     *
      * @param listener
      */
     @Override
     public void showCargoType(TaskControl.OnTaskListener listener) {
-        if (!CollectionUtils.isEmpty(mode.getCargoType())){
+        if (!CollectionUtils.isEmpty(mode.getCargoType())) {
             view.showCargoTypes(mode.getCargoType());
-        }else {
+        } else {
             mode.queryCargoType()
-                .subscribe(new NetObserver<List<CargoTypeAndColorBeans>>(listener){
-                    @Override
-                    public void doOnSuccess(List<CargoTypeAndColorBeans> cargoTypeAndColorBeans) {
-                        super.doOnSuccess(cargoTypeAndColorBeans);
-                        view.showCargoTypes(cargoTypeAndColorBeans);
-                    }
-                });
+                    .subscribe(new NetObserver<List<CargoTypeAndColorBeans>>(listener) {
+                        @Override
+                        public void doOnSuccess(List<CargoTypeAndColorBeans> cargoTypeAndColorBeans) {
+                            super.doOnSuccess(cargoTypeAndColorBeans);
+                            view.showCargoTypes(cargoTypeAndColorBeans);
+                        }
+                    });
             ;
         }
     }
@@ -288,6 +335,32 @@ public class OrderCreatePresenter implements OrderCreateControl.IOrderCreatePres
         CargoTypeAndColorBeans cargoTypeAndColorBeans = cargoType.get(options1);
         mode.switchCargoType(cargoTypeAndColorBeans);
         view.switchCargoType(cargoTypeAndColorBeans);
+    }
+
+    @Override
+    public void saveDriverInfo(OrderSelectDriverInfoBean result) {
+        mode.saveDriverInfo(result);
+        view.initDriverInfo(result);
+    }
+
+    @Override
+    public void saveOwnerInfo(OrderSelectOwnerInfoBean result) {
+        mode.saveOwnerInfo(result);
+        view.initOwnerInfo(result);
+
+        if (Objects.equals(result.isDriver(), "是")) {
+            OrderSelectDriverInfoBean driverInfoBean = new OrderSelectDriverInfoBean();
+            driverInfoBean.setMobile(result.getOwnerMobile());
+            driverInfoBean.setContact(result.getOwnerName());
+            driverInfoBean.setId(result.getOwnerId());
+            saveDriverInfo(driverInfoBean);
+        }
+
+    }
+
+    @Override
+    public OrderSelectOwnerInfoBean getOwnerInfo() {
+        return mode.getOwnerInfo();
     }
 
 }

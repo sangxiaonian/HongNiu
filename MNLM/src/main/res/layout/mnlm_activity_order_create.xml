@@ -223,6 +223,57 @@
                     app:textleft="体积(m³)" />
 
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/ovl_5_ffffff"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/gap_app"
+                android:paddingBottom="@dimen/gap_app">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="选填项"
+                    android:layout_marginLeft="15dp"
+                    android:textSize="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:textColor="@color/color_of_040000" />
+                <View
+                    android:layout_width="match_parent"
+                    android:background="@color/line_color"
+                    android:layout_marginLeft="@dimen/gap_app"
+                    android:layout_height="@dimen/line_height"/>
+
+
+                <com.fy.companylibrary.widget.ItemTextView
+                    style="@style/item_text"
+                    android:id="@+id/item_owner"
+                    app:centerType="number"
+                    app:showline="true"
+                    app:srcLeftshow="show"
+                    app:srcLeftSize="24dp"
+                    app:srcLeft="@mipmap/icon_detail_owner"
+                    app:textcenterhide="请选择实际承运人（运费收款人）"
+                    app:textleft="" />
+
+
+
+                <com.fy.companylibrary.widget.ItemTextView
+                    style="@style/item_text"
+                    app:showline="false"
+                    app:srcLeftshow="show"
+                    app:srcLeftSize="24dp"
+                    app:srcLeft="@mipmap/icon_detail_driver"
+                    android:id="@+id/item_driver"
+                    app:textcenterhide="请选择司机（驾驶员）"
+                    app:textleft="" />
+
+
+
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

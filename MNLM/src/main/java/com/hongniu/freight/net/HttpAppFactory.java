@@ -12,6 +12,8 @@ import com.fy.companylibrary.net.CompanyClient;
 import com.google.gson.JsonObject;
 import com.hongniu.freight.entity.AccountDetailBean;
 import com.hongniu.freight.entity.AccountFlowParams;
+import com.hongniu.freight.entity.AppAddressListBean;
+import com.hongniu.freight.entity.AppAddressListParam;
 import com.hongniu.freight.entity.AppraiseParams;
 import com.hongniu.freight.entity.BalanceWithDrawBean;
 import com.hongniu.freight.entity.BillInfoBean;
@@ -33,6 +35,8 @@ import com.hongniu.freight.entity.OrderDriverPhoneBean;
 import com.hongniu.freight.entity.OrderFindCarParams;
 import com.hongniu.freight.entity.OrderInfoBean;
 import com.hongniu.freight.entity.OrderNumberInfoBean;
+import com.hongniu.freight.entity.OrderSelectDriverInfoBean;
+import com.hongniu.freight.entity.OrderSelectOwnerInfoBean;
 import com.hongniu.freight.entity.OrderStatusBean;
 import com.hongniu.freight.entity.PageParams;
 import com.hongniu.freight.entity.PageSearchParams;
@@ -59,6 +63,8 @@ import com.sang.thirdlibrary.chact.UserInfor;
 import com.sang.thirdlibrary.map.verify.VerifyTokenBeans;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
 import com.sang.thirdlibrary.picture.helper.interceptor.FileProgressRequestBody;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -1107,5 +1113,43 @@ public class HttpAppFactory {
                 .loginWithToken(jsonObject)
                 .compose(RxUtils.<CommonBean<LoginInfo>>getSchedulersObservableTransformer())
                 ;
+    }
+
+    /**
+     * 保存回单
+     *
+     * @return
+     */
+    public static Observable<CommonBean<List<OrderSelectDriverInfoBean>>> querySelectDriverInfo(String searchText) {
+        PageSearchParams bean = new PageSearchParams();
+        bean.setSearchText(searchText);
+        return CompanyClient.getInstance().creatService(AppService.class)
+                .querySelectDriverInfo(bean)
+                .compose(RxUtils.<CommonBean<List<OrderSelectDriverInfoBean>>>getSchedulersObservableTransformer());
+    }
+
+    /**
+     * 保存回单
+     *
+     * @return
+     */
+    public static Observable<CommonBean<List<OrderSelectOwnerInfoBean>>> querySelectOwnerInfo(String searchText) {
+        PageSearchParams bean = new PageSearchParams();
+        bean.setSearchText(searchText);
+        return CompanyClient.getInstance().creatService(AppService.class)
+                .querySelectOwnerInfo(bean)
+
+                .compose(RxUtils.<CommonBean<List<OrderSelectOwnerInfoBean>>>getSchedulersObservableTransformer());
+    }
+
+    /**
+     * 查询常用地址列表
+     * @return
+     */
+    @NotNull
+    public static Observable<CommonBean<PageBean<AppAddressListBean>>> queryAddressList(AppAddressListParam params) {
+        return CompanyClient.getInstance().creatService(AppService.class)
+                .queryAddressList(params)
+                .compose(RxUtils.<CommonBean<PageBean<AppAddressListBean>>>getSchedulersObservableTransformer());
     }
 }

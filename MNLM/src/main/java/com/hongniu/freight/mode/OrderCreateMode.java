@@ -3,6 +3,7 @@ package com.hongniu.freight.mode;
 import com.amap.api.services.core.LatLonPoint;
 import com.fy.androidlibrary.net.rx.RxUtils;
 import com.fy.androidlibrary.utils.CollectionUtils;
+import com.fy.androidlibrary.utils.CommonUtils;
 import com.fy.companylibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.freight.control.OrderCreateControl;
@@ -10,6 +11,8 @@ import com.hongniu.freight.entity.CargoTypeAndColorBeans;
 import com.hongniu.freight.entity.InsuranceInfoBean;
 import com.hongniu.freight.entity.OrderCrateParams;
 import com.hongniu.freight.entity.OrderInfoBean;
+import com.hongniu.freight.entity.OrderSelectDriverInfoBean;
+import com.hongniu.freight.entity.OrderSelectOwnerInfoBean;
 import com.hongniu.freight.entity.TranMapBean;
 import com.hongniu.freight.net.HttpAppFactory;
 import com.hongniu.freight.ui.QueryInsurancePriceParams;
@@ -42,6 +45,8 @@ public class OrderCreateMode implements OrderCreateControl.IOrderCreateMode {
     private OrderInfoBean orderInfoBean;//从订单页面传入的订单详情数据,只有修改订单时候会有数据
     private List<CargoTypeAndColorBeans> cargoTypes;
     private CargoTypeAndColorBeans cargoTypeAndColorBeans;//货物分类
+    private OrderSelectOwnerInfoBean ownerInfo;
+    private OrderSelectDriverInfoBean driverInfo;
 
     public OrderCreateMode() {
         params = new OrderCrateParams();
@@ -270,6 +275,22 @@ public class OrderCreateMode implements OrderCreateControl.IOrderCreateMode {
             params.setInsuranceUserId(null);
         }
 
+        params.setIsdirect((driverInfo!=null&&ownerInfo!=null)?"1":"0");
+        if (driverInfo!=null){
+            params.setDriverId(driverInfo.getId());
+            params.setDriverMobile(driverInfo.getMobile());
+            params.setDriverName(driverInfo.getContact());
+        }
+        if (ownerInfo!=null){
+            params.setOwnerCompanyAccountId(CommonUtils.getText(ownerInfo.getOwnerCompanyAccountId(),"0"));
+            params.setOwnerId(ownerInfo.getOwnerId());
+            params.setOwnerName(ownerInfo.getOwnerName());
+            params.setOwnerMobile(ownerInfo.getOwnerMobile());
+            params.setCarId(ownerInfo.getCarid());
+            params.setCarInfo(ownerInfo.getVehicleType());
+            params.setCarNum(ownerInfo.getCarNumber());
+        }
+
         if (orderInfoBean != null) {
             //修改订单
             params.setId(orderInfoBean.getId());
@@ -346,6 +367,21 @@ public class OrderCreateMode implements OrderCreateControl.IOrderCreateMode {
     @Override
     public void switchCargoType(CargoTypeAndColorBeans cargoTypeAndColorBeans) {
         this.cargoTypeAndColorBeans=cargoTypeAndColorBeans;
+    }
+
+    @Override
+    public void saveDriverInfo(OrderSelectDriverInfoBean result) {
+        this.driverInfo=result;
+    }
+
+    @Override
+    public void saveOwnerInfo(OrderSelectOwnerInfoBean result) {
+        this.ownerInfo=result;
+    }
+
+    @Override
+    public OrderSelectOwnerInfoBean getOwnerInfo() {
+        return ownerInfo;
     }
 
 

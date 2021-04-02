@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/color_of_ffffff"
+    tools:context=".ui.OrderSelectDriverActivity">
+    <include layout="@layout/toolbar" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="12dp"
+            android:text="!"
+            android:textColor="@color/color_of_ffffff"
+            android:gravity="center"
+            android:layout_marginLeft="27dp"
+            android:textSize="8dp"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/ovl_50_e50000"
+            android:layout_height="12dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:textSize="12dp"
+                android:textColor="@color/color_of_e50000"
+                android:text="实际承运人即为运费收款人，请谨慎选择"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <com.fy.androidlibrary.widget.SearchTitleView
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:background="@color/color_of_ffffff"
+        android:paddingLeft="16dp"
+        android:paddingTop="7dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="7dp"
+        app:searchBackGround="@drawable/ovl_16_f7f7f7"
+        app:searchClearIcon="@drawable/ic_search_clear_999999"
+        app:searchGravity="center"
+        app:searchIcon="@drawable/icon_search_999999"
+        app:searchTitleColor="@color/color_of_040000"
+        app:searchTitleHind="请输入车牌号/承运人姓名/手机号"
+        app:searchTitleHindColor="@color/color_of_999999" />
+
+    <include layout="@layout/layout_refresh"/>
+</LinearLayout>

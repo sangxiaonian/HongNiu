@@ -71,6 +71,7 @@
         <attr name="colorLeft"  />
         <attr name="centerType"/>
         <attr name="sizeleft" format="dimension" />
+        <attr name="srcLeftSize" format="dimension" />
         <attr name="sizecenter" format="dimension" />
         <attr name="sizeright" format="dimension" />
         <attr name="srcRightSize" format="dimension" />

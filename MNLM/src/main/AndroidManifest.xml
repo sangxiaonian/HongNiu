@@ -74,6 +74,9 @@
         <activity android:name=".ui.QRCodeActivity" />
         <activity android:name=".ui.OrderUpReceiptActivity" />
         <activity android:name=".ui.PreviewImageActivity" />
+        <activity android:name=".ui.OrderSelectDriverActivity" />
+        <activity android:name=".ui.OrderSelectOwnerActivity" />
+        <activity android:name=".ui.AppAddressListActivity" />
 
         <receiver android:name=".receiver.MyPushReceiver"
             tools:ignore="Instantiatable" />

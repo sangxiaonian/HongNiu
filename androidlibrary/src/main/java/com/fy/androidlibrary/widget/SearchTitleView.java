@@ -201,6 +201,11 @@ public class SearchTitleView extends FrameLayout implements SearchTextWatcher.Se
         return title;
     }
 
+    public void getFocus(){
+
+        etSearch.requestFocus();
+    }
+
     @Override
     public void onSearchTextChange(String msg) {
         if (searchTextChangeListener!=null){
@@ -229,7 +234,7 @@ public class SearchTitleView extends FrameLayout implements SearchTextWatcher.Se
 
     @Override
     public void setOnClickListener(@Nullable OnClickListener l) {
-      this.clickListener=l;
+        this.clickListener=l;
     }
 
     /**
