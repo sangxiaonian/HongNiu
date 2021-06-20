@@ -15,9 +15,12 @@ import com.hongniu.baselibrary.entity.OrderIdBean;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.UpImgData;
 import com.hongniu.baselibrary.entity.UpReceiverBean;
+import com.hongniu.baselibrary.net.AppService;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.moduleorder.entity.LocationBean;
+import com.hongniu.moduleorder.entity.OrderAddressListBean;
+import com.hongniu.moduleorder.entity.OrderAddressListParam;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
 import com.hongniu.baselibrary.entity.OrderCreatParamBean;
 import com.hongniu.moduleorder.entity.OrderDriverPhoneBean;
@@ -31,6 +34,8 @@ import com.hongniu.moduleorder.entity.QueryReceiveBean;
 import com.hongniu.moduleorder.entity.VersionBean;
 import com.fy.androidlibrary.net.rx.RxUtils;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -488,6 +493,16 @@ public class HttpOrderFactory {
 
         return OrderClient.getInstance().getService().querInsruancUserInfor()
                 .compose(RxUtils.<CommonBean<List<OrderInsuranceInforBean>>>getSchedulersObservableTransformer());
+    }
+    /**
+     * 查询常用地址列表
+     * @return
+     */
+    @NotNull
+    public static Observable<CommonBean<PageBean<OrderAddressListBean>>> queryAddressList(OrderAddressListParam params) {
+        return OrderClient.getInstance().getService()
+                .queryAddressList(params)
+                .compose(RxUtils.<CommonBean<PageBean<OrderAddressListBean>>>getSchedulersObservableTransformer());
     }
 
 }

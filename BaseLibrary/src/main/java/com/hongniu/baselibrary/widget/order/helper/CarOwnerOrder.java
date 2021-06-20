@@ -14,9 +14,9 @@ import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_
 /**
  * 作者： ${PING} on 2018/8/2.
  * 车主订单
- *
+ * <p>
  * 2019/5/31 去除查看货单入口 setHasGoodsImage 值强制更改为false
- * */
+ */
 public class CarOwnerOrder extends OwnerOrder {
 
 
@@ -28,11 +28,13 @@ public class CarOwnerOrder extends OwnerOrder {
     public String getOrderState() {
         return state == null ? OrderDetailItemControl.OrderState.UNKNOW.getDes() : state.getDes();
     }
+
     @Override
     public OrderDetailItemControl.IOrderItemHelper setHasGoodsImage(boolean hasGoodsImage) {
-        this. hasGoodsImage=false;
+        this.hasGoodsImage = false;
         return this;
     }
+
     /**
      * 获取要显示的按钮类型
      */
@@ -68,29 +70,20 @@ public class CarOwnerOrder extends OwnerOrder {
                 break;
             case HAS_ARRIVED://已到达
             case WAITE_CHECK://到付待审核
-
-                if (hasGoodsImage) {//如果存在货单
-                    buttonInfors.add(new ButtonInforBean(ORDER_CHECK_GOODS));//查看货单
-                }
-
-                if (hasReceiptImage) {//如果存在回单
-                    buttonInfors.add(new ButtonInforBean(ORDER_CHECK_RECEIPT));//查看回单
-                }
-
-                if (insurance) {//如果已经购买保险
-                    buttonInfors.add(new ButtonInforBean(ORDER_CHECK_INSURANCE));//查看保单
-                }
-                break;
             case RECEIPT://已收货
+
                 if (hasGoodsImage) {//如果存在货单
                     buttonInfors.add(new ButtonInforBean(ORDER_CHECK_GOODS));//查看货单
                 }
+
                 if (hasReceiptImage) {//如果存在回单
                     buttonInfors.add(new ButtonInforBean(ORDER_CHECK_RECEIPT));//查看回单
                 }
+
                 if (insurance) {//如果已经购买保险
                     buttonInfors.add(new ButtonInforBean(ORDER_CHECK_INSURANCE));//查看保单
                 }
+                buttonInfors.add(new ButtonInforBean(ORDER_CHECK_PATH));//查看看轨迹
                 break;
             case REFUND://退款
             case UNKNOW://未知状态

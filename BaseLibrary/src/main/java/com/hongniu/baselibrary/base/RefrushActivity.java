@@ -1,5 +1,7 @@
 package com.hongniu.baselibrary.base;
 
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -51,7 +53,20 @@ public abstract class RefrushActivity<T> extends ModuleBaseActivity implements O
 
     }
 
-
+    @Override
+    public void setContentView(View view) {
+        super.setContentView(view);
+        refresh = findViewById(R.id.refresh);
+        rv = findViewById(R.id.rv);
+        LinearLayoutManager manager = new LinearLayoutManager(mContext);
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        rv.setLayoutManager(manager);
+        if (refresh != null) {
+            refresh.setOnRefreshListener(this);
+            refresh.setOnLoadMoreListener(this);
+        }
+        rv.setAdapter(adapter = getAdapter(datas));
+    }
 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {

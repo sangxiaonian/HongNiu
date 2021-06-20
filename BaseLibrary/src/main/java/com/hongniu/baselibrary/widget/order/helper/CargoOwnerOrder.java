@@ -1,7 +1,5 @@
 package com.hongniu.baselibrary.widget.order.helper;
 
-import com.autonavi.ae.route.model.JamSegment;
-import com.hongniu.baselibrary.widget.order.CommonOrderUtils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 
 import java.util.List;
@@ -33,7 +31,7 @@ public class CargoOwnerOrder extends OwnerOrder implements OrderDetailItemContro
 
     @Override
     public String getOrderState() {
-        return state==null?OrderDetailItemControl.OrderState.UNKNOW.getDes():state.getDes();
+        return state == null ? OrderDetailItemControl.OrderState.UNKNOW.getDes() : state.getDes();
     }
 
     /**
@@ -87,6 +85,8 @@ public class CargoOwnerOrder extends OwnerOrder implements OrderDetailItemContro
                 if (hasPay) {
                     buttonInfors.add(new ButtonInforBean(1, ORDER_ENTRY_ORDER));//确认收货
                 }
+                buttonInfors.add(new ButtonInforBean(ORDER_CHECK_PATH));//查看看轨迹
+
                 break;
             case RECEIPT://已收货
                 if (hasGoodsImage) {//如果存在货单
@@ -106,6 +106,7 @@ public class CargoOwnerOrder extends OwnerOrder implements OrderDetailItemContro
                 if (hasReceiptImage) {//如果存在回单
                     buttonInfors.add(new ButtonInforBean(ORDER_CHECK_RECEIPT));//查看回单
                 }
+                buttonInfors.add(new ButtonInforBean(ORDER_CHECK_PATH));//查看看轨迹
 
                 break;
             case PAY_REFUSE://企业支付申请被拒绝

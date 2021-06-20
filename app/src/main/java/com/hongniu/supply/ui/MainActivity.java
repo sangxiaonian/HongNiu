@@ -343,7 +343,8 @@ public class MainActivity extends ModuleBaseActivity implements View.OnClickList
         demo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OrderUtils.scanPDf(MainActivity.this,"http://www.epicc.com.cn/ecooperation/policydownload/downloadurl.do?platfromcodes=CPI000458&policyNo=5A485D6E8057FEB82CE1F4815EE91F05AE72C63D102424554ACEC1F922F8ECAF&insuredID=C8C59A9E3DF95808B2EFA6E00A1D435CC4B439DB03EB115FE16C4D7666F0A33B&flag=Y");
+                ArouterUtils.getInstance().builder( ArouterParamOrder.activity_order_address_list)
+                        .navigation();
             }
         });
 

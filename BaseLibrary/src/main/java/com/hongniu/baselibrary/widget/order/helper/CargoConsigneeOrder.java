@@ -4,18 +4,12 @@ import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 
 import java.util.List;
 
-import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_BUY_INSURANCE;
-import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CANCLE;
-import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHANGE;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_GOODS;
-import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_INSURANCE;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_PATH;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_RECEIPT;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_ENTRY_AND_PAY_ORDER;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_ENTRY_ORDER;
-import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_PAY;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_PAY_REFUSE;
-import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_START_CAR;
 
 
 /**
@@ -72,16 +66,9 @@ public class CargoConsigneeOrder extends OwnerOrder implements OrderDetailItemCo
                 } else {
                     buttonInfors.add(new ButtonInforBean(1, ORDER_ENTRY_AND_PAY_ORDER));//确认收货,并支付订单
                 }
+                buttonInfors.add(new ButtonInforBean(ORDER_CHECK_PATH));
                 break;
             case WAITE_CHECK://到付待审核
-                if (hasGoodsImage) {//如果存在货单
-                    buttonInfors.add(new ButtonInforBean(ORDER_CHECK_GOODS));//查看货单
-                }
-                if (hasReceiptImage) {//如果存在回单
-                    buttonInfors.add(new ButtonInforBean(ORDER_CHECK_RECEIPT));//查看回单
-                }
-
-                break;
             case RECEIPT://已收货
                 if (hasGoodsImage) {//如果存在货单
                     buttonInfors.add(new ButtonInforBean(ORDER_CHECK_GOODS));//查看货单
@@ -89,7 +76,7 @@ public class CargoConsigneeOrder extends OwnerOrder implements OrderDetailItemCo
                 if (hasReceiptImage) {//如果存在回单
                     buttonInfors.add(new ButtonInforBean(ORDER_CHECK_RECEIPT));//查看回单
                 }
-
+                buttonInfors.add(new ButtonInforBean(ORDER_CHECK_PATH));
                 break;
             case PAY_REFUSE://企业支付申请被拒绝
             case WAITE_CHECK_FAIL://企业支付申请被拒绝

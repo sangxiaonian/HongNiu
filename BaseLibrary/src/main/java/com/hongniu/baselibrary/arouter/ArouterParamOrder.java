@@ -74,5 +74,9 @@ public class ArouterParamOrder {
      * 保险中间过渡页面
      */
     public static final String activity_order_insurance_calculate = "/order/activity_order_insurance_calculate";
+  /**
+     * 保险中间过渡页面
+     */
+    public static final String activity_order_address_list = "/order/activity_order_address_list";
 
 }

@@ -10,6 +10,8 @@ import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.UpImgData;
 import com.hongniu.baselibrary.entity.UpReceiverBean;
 import com.hongniu.moduleorder.entity.LocationBean;
+import com.hongniu.moduleorder.entity.OrderAddressListBean;
+import com.hongniu.moduleorder.entity.OrderAddressListParam;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
 import com.hongniu.baselibrary.entity.OrderCreatParamBean;
 import com.hongniu.moduleorder.entity.OrderDriverPhoneBean;
@@ -216,5 +218,12 @@ public interface OrderService {
     @POST("api/userinsured/list")
     Observable<CommonBean<List<OrderInsuranceInforBean>>> querInsruancUserInfor();
 
+    /**
+     * 查询常用地址
+     *
+     * @return
+     */
+    @POST("api/address/queryAddress")
+    Observable<CommonBean<PageBean<OrderAddressListBean>>> queryAddressList(@Body OrderAddressListParam bean);
 
 }
