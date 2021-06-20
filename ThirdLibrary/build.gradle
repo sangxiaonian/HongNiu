@@ -55,8 +55,8 @@ dependencies {
 
     //融云聊天
 
-    api 'cn.rongcloud.sdk:im_lib:4.0.0.1'
-    api 'cn.rongcloud.sdk:im_kit:4.0.0.1'
+    api 'cn.rongcloud.sdk:im_lib:4.0.0'
+    api 'cn.rongcloud.sdk:im_kit:4.0.0'
 //    api 'cn.rongcloud.sdk:im_lib:2.10.5'
 //    api 'cn.rongcloud.sdk:im_kit:2.10.5'
 

@@ -19,7 +19,6 @@ import com.webank.normal.net.BaseResponse;
 
 import java.io.Serializable;
 
-import static io.rong.imkit.fragment.ConversationListFragment.TAG;
 
 /**
  * 作者：  on 2020/3/1.
@@ -30,6 +29,7 @@ public class VerifyClient {
     private String appID;// = "IDAGnuKK";
     private String secret ;//= "9gE8cd5DgLfm3oJX3aezDUUWHq96MXb8IQuPqlQUkLxXefUndP5D5xObPECzpO6y";
     private String SDKlicense;// = "pYXTl8k0mN99he+yGFM+SMWNWmbReaV1gamC88dGg65hnjzZDeQDHbkZ/uBxPk8jE1WK4BfAUrS+6a08xkvBptMW6H1zwHnVAxzd6nddDrDKvgHMl+E/YDRsN2ty6UdyQYsHRclY6iu12sVRdzIeEPBN/InzEBPzQsenQOWDEo+Q5DOPtE/i4C0KokT0x5JI9/RWVioxKp4RrLSNOArr+KVIfc/a74+yfTaMhQCyAdg2onpNSuzHSeY5egtno0QBSCLLmoxTQwUB1F/bfXngRdV9dFbbmQBpOV00KNbqGYmer+s3RvR2lkrGB48MuEJHWA3hgGRquw03ncG8zf/RZg==";
+    private String TAG="VerifyClient";
 
 
     private static class InnerClass {

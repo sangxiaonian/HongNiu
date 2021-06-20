@@ -39,7 +39,7 @@
         android:id="@+id/img_cancle"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginTop="@dimen/rc_dimen_size_40"
+        android:layout_marginTop="40dp"
         android:src="@mipmap/img_cancle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
