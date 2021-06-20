@@ -101,7 +101,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
         initView(context);
     }
 
-    private void initView(Context context) {
+    private void initView(final Context context) {
 
         spanSize = DeviceUtils.dip2px(getContext(), 18);
         gap = "正正正";
@@ -119,6 +119,16 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
         llBottom = itemView.findViewById(R.id.ll_bottom);//右侧按钮
         lineBottom = itemView.findViewById(R.id.line_bottom);//右侧按钮
         progress = itemView.findViewById(R.id.progress);//右侧按钮
+
+
+        tv_order.setOnLongClickListener(new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                CommonUtils.copy(context,tv_order.getText().toString());
+                ToastUtils.getInstance().show("复制成功");
+                return true;
+            }
+        });
 
         addView(itemView);
     }
