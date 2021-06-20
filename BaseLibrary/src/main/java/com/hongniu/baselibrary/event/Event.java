@@ -14,7 +14,18 @@ public class Event {
 
     public static class StartLoactionEvent implements IBus.IEvent {
         public PoiItem t;
-
+        /**
+         * true	string	开始地点描述
+         */
+        public String placeInfo;
+        /**
+         * true	string	目的地x坐标
+         */
+        public String destinationLatitude;
+        /**
+         * true	string	目的地y坐标
+         */
+        public String destinationLongitude;
         public StartLoactionEvent(PoiItem t) {
             this.t = t;
         }
@@ -22,7 +33,18 @@ public class Event {
 
     public static class EndLoactionEvent implements IBus.IEvent {
         public PoiItem t;
-
+        /**
+         * true	string	开始地点描述
+         */
+        public String placeInfo;
+        /**
+         * true	string	目的地x坐标
+         */
+        public String destinationLatitude;
+        /**
+         * true	string	目的地y坐标
+         */
+        public String destinationLongitude;
         public EndLoactionEvent(PoiItem t) {
             this.t = t;
         }

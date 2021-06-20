@@ -2,10 +2,10 @@ package com.hongniu.moduleorder.control;
 
 import android.content.Context;
 
-import com.amap.api.services.core.PoiItem;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderCreatParamBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
+import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
 import com.hongniu.moduleorder.entity.OrderDriverPhoneBean;
@@ -149,14 +149,14 @@ public class OrderCreatControl {
          *
          * @param t
          */
-        void changeStartPlaceInfor(PoiItem t);
+        void changeStartPlaceInfor(Event.StartLoactionEvent t);
 
         /**
          * 更改设置目的地
          *
          * @param t
          */
-        void changeEndPlaceInfor(PoiItem t);
+        void changeEndPlaceInfor(Event.EndLoactionEvent t);
 
         /**
          * 点击返回按钮

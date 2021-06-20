@@ -37,7 +37,7 @@
             android:name=".ui.OrderMapCheckPathActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.OrderMapSearchActivity"
+            android:name=".ui.OrderPersonMapSearchActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.OrderSearchHistoryActivity"

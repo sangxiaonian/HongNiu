@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -305,7 +306,14 @@ public class OrderCreatOrderActivity extends ModuleBaseActivity implements Order
             PermissionUtils.applyMap(this, new PermissionUtils.onApplyPermission() {
                 @Override
                 public void hasPermission(List<String> granted, boolean isAll) {
-                    ArouterUtils.getInstance().builder(ArouterParamOrder.activity_map_loaction).withBoolean(Param.TRAN, true).navigation(mContext);
+//                    ArouterUtils.getInstance().builder(ArouterParamOrder.activity_map_loaction).withBoolean(Param.TRAN, true).navigation(mContext);
+                    ArouterUtils.getInstance()
+                            .builder(ArouterParamOrder.activity_order_address_list)
+                            .withBoolean(Param.TRAN, true).navigation(mContext);
+
+//                    Intent intent = new Intent(this, AppAddressListActivity.class);
+//                    intent.putExtra(com.fy.companylibrary.config.Param.TRAN, true);
+//                    startActivityForResult(intent, 1);
                 }
 
                 @Override
@@ -316,7 +324,10 @@ public class OrderCreatOrderActivity extends ModuleBaseActivity implements Order
             PermissionUtils.applyMap(this, new PermissionUtils.onApplyPermission() {
                 @Override
                 public void hasPermission(List<String> granted, boolean isAll) {
-                    ArouterUtils.getInstance().builder(ArouterParamOrder.activity_map_loaction).withBoolean(Param.TRAN, false).navigation(mContext);
+//                    ArouterUtils.getInstance().builder(ArouterParamOrder.activity_map_loaction).withBoolean(Param.TRAN, false).navigation(mContext);
+                    ArouterUtils.getInstance()
+                            .builder(ArouterParamOrder.activity_order_address_list)
+                            .withBoolean(Param.TRAN, false).navigation(mContext);
                 }
 
                 @Override
@@ -501,10 +512,15 @@ public class OrderCreatOrderActivity extends ModuleBaseActivity implements Order
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onStartEvent(Event.StartLoactionEvent startLoactionEvent) {
-        if (startLoactionEvent != null && startLoactionEvent.t != null) {
-            String title = Utils.dealPioPlace(startLoactionEvent.t);
-            itemStartLocation.setTextCenter(title);
-            presenter.changeStartPlaceInfor(startLoactionEvent.t);
+        if (startLoactionEvent != null) {
+            if (startLoactionEvent.t != null) {
+                String title = Utils.dealPioPlace(startLoactionEvent.t);
+                itemStartLocation.setTextCenter(title);
+            } else {
+                itemStartLocation.setTextCenter(startLoactionEvent.placeInfo);
+
+            }
+            presenter.changeStartPlaceInfor(startLoactionEvent);
 
         }
     }
@@ -512,10 +528,14 @@ public class OrderCreatOrderActivity extends ModuleBaseActivity implements Order
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEndEvent(Event.EndLoactionEvent endLoactionEvent) {
-        if (endLoactionEvent != null && endLoactionEvent.t != null) {
-            String title = Utils.dealPioPlace(endLoactionEvent.t);
-            itemEndLocation.setTextCenter(title);
-            presenter.changeEndPlaceInfor(endLoactionEvent.t);
+        if (endLoactionEvent != null) {
+            if (endLoactionEvent.t != null) {
+                String title = Utils.dealPioPlace(endLoactionEvent.t);
+                itemEndLocation.setTextCenter(title);
+            } else {
+                itemEndLocation.setTextCenter(endLoactionEvent.placeInfo);
+            }
+            presenter.changeEndPlaceInfor(endLoactionEvent);
 
         }
     }
@@ -950,7 +970,7 @@ public class OrderCreatOrderActivity extends ModuleBaseActivity implements Order
                     .builder(ArouterParamOrder.activity_order_pay)
                     .navigation(mContext);
             BusFactory.getBus().postSticky(new Event.UpRoale(OrderDetailItemControl.RoleState.CARGO_OWNER));
-            if ( insuranceInfo != null) {
+            if (insuranceInfo != null) {
                 //对于牛人保
                 BusFactory.getBus().postSticky(insuranceInfo);
             }

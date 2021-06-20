@@ -3,12 +3,13 @@ package com.hongniu.moduleorder.present;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.amap.api.services.core.PoiItem;
+import com.fy.androidlibrary.net.listener.TaskControl;
 import com.fy.androidlibrary.utils.CollectionUtils;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.entity.OrderCreatParamBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.UpImgData;
+import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.order.CommonOrderUtils;
 import com.hongniu.moduleorder.R;
@@ -18,7 +19,6 @@ import com.hongniu.moduleorder.entity.OrderDriverPhoneBean;
 import com.hongniu.moduleorder.entity.OrderInsuranceParam;
 import com.hongniu.moduleorder.mode.OrderCreataMode;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.fy.androidlibrary.net.listener.TaskControl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,6 +84,7 @@ public class OrderCreataPresenter implements OrderCreatControl.IOrderCreataPrese
                     public void doOnSuccess(List<OrderDriverPhoneBean> data) {
                         view.showDriverPop(data);
                     }
+
                     @Override
                     public void onSubscribe(Disposable d) {
                         super.onSubscribe(d);
@@ -94,6 +95,7 @@ public class OrderCreataPresenter implements OrderCreatControl.IOrderCreataPrese
                 });
 
     }
+
     /**
      * 查询收货人
      *
@@ -113,6 +115,7 @@ public class OrderCreataPresenter implements OrderCreatControl.IOrderCreataPrese
                     public void doOnSuccess(List<OrderDriverPhoneBean> data) {
                         view.showConsigneePop(data);
                     }
+
                     @Override
                     public void onSubscribe(Disposable d) {
                         super.onSubscribe(d);
@@ -130,14 +133,15 @@ public class OrderCreataPresenter implements OrderCreatControl.IOrderCreataPrese
      */
     @Override
     public void saveInsuranceInfo(OrderInsuranceParam insuranceParam) {
-        if (insuranceParam!=null) {
+        if (insuranceParam != null) {
             mode.saveInsuranceInfo(insuranceParam);
-            view.showCargoName(insuranceParam.getCargoName(),insuranceParam.getPrice());
+            view.showCargoName(insuranceParam.getCargoName(), insuranceParam.getPrice());
         }
     }
 
     /**
      * 填写完数据之后点击提交按钮
+     *
      * @param result
      * @param listener
      */
@@ -147,12 +151,12 @@ public class OrderCreataPresenter implements OrderCreatControl.IOrderCreataPrese
         OrderCreatParamBean infor = mode.getInfor();
         view.getValue(infor);
         mode.submit(result)
-            .subscribe(new NetObserver<OrderDetailBean>(listener) {
-                @Override
-                public void doOnSuccess(OrderDetailBean data) {
-                    view.finishSuccess(data,mode.getType(),mode.getInsuranceInfo());
-                }
-            })
+                .subscribe(new NetObserver<OrderDetailBean>(listener) {
+                    @Override
+                    public void doOnSuccess(OrderDetailBean data) {
+                        view.finishSuccess(data, mode.getType(), mode.getInsuranceInfo());
+                    }
+                })
         ;
     }
 
@@ -202,7 +206,7 @@ public class OrderCreataPresenter implements OrderCreatControl.IOrderCreataPrese
             view.changeTitle(context.getString(R.string.order_create_order), "确定下单");
         } else if (type == 1) {
             view.changeTitle(context.getString(R.string.order_change), context.getString(R.string.order_entry_change));
-        }else if (type == 3) {
+        } else if (type == 3) {
             view.changeTitle("完善信息", "确定下单");
         }
     }
@@ -224,12 +228,25 @@ public class OrderCreataPresenter implements OrderCreatControl.IOrderCreataPrese
      * @param t
      */
     @Override
-    public void changeStartPlaceInfor(PoiItem t) {
-        OrderCreatParamBean infor = mode.getInfor();
-        if (t!=null) {
-            String title = Utils.dealPioPlace( t);
-            infor.setStartLatitude(t.getLatLonPoint().getLatitude() + "");
-            infor.setStartLongitude(t.getLatLonPoint().getLongitude() + "");
+    public void changeStartPlaceInfor(Event.StartLoactionEvent t) {
+        if (t != null) {
+            OrderCreatParamBean infor = mode.getInfor();
+            String title = "";
+            String lat = "";
+            String lon = "";
+            if (t.t != null) {
+                title = Utils.dealPioPlace(t.t);
+                lat = t.t.getLatLonPoint().getLatitude() + "";
+                lon = t.t.getLatLonPoint().getLongitude() + "";
+
+            } else {
+                title = t.placeInfo;
+                lat = t.destinationLatitude;
+                lon = t.destinationLongitude;
+
+            }
+            infor.setStartLatitude(lat);
+            infor.setStartLongitude(lon);
             infor.setStartPlaceInfo(title);
         }
     }
@@ -240,12 +257,24 @@ public class OrderCreataPresenter implements OrderCreatControl.IOrderCreataPrese
      * @param t
      */
     @Override
-    public void changeEndPlaceInfor(PoiItem t) {
-        OrderCreatParamBean infor = mode.getInfor();
-        if (t!=null) {
-            String title = Utils.dealPioPlace( t);
-            infor.setDestinationLatitude( t.getLatLonPoint().getLatitude() + "");
-            infor.setDestinationLongitude( t.getLatLonPoint().getLongitude() + "");
+    public void changeEndPlaceInfor(Event.EndLoactionEvent t) {
+        if (t != null) {
+            OrderCreatParamBean infor = mode.getInfor();
+            String title = "";
+            String lat = "";
+            String lon = "";
+            if (t.t != null) {
+                title = Utils.dealPioPlace(t.t);
+                lat = t.t.getLatLonPoint().getLatitude() + "";
+                lon = t.t.getLatLonPoint().getLongitude() + "";
+
+            } else {
+                title = t.placeInfo;
+                lat = t.destinationLatitude;
+                lon = t.destinationLongitude;
+            }
+            infor.setDestinationLatitude(lat);
+            infor.setDestinationLongitude(lon);
             infor.setDestinationInfo(title);
         }
     }

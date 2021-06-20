@@ -6,14 +6,19 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.fy.androidlibrary.event.BusFactory
+import com.fy.androidlibrary.event.IBus.IEvent
 import com.fy.androidlibrary.utils.permission.PermissionUtils
 import com.fy.androidlibrary.utils.permission.PermissionUtils.onApplyPermission
 import com.fy.androidlibrary.widget.SearchTitleView
 import com.hongniu.baselibrary.arouter.ArouterParamOrder
+import com.hongniu.baselibrary.arouter.ArouterUtils
 import com.hongniu.baselibrary.base.RefrushActivity
 import com.hongniu.baselibrary.config.Param
 import com.hongniu.baselibrary.entity.CommonBean
 import com.hongniu.baselibrary.entity.PageBean
+import com.hongniu.baselibrary.event.Event.EndLoactionEvent
+import com.hongniu.baselibrary.event.Event.StartLoactionEvent
 import com.hongniu.moduleorder.R
 import com.hongniu.moduleorder.databinding.ActivityOrderAddressListBinding
 import com.hongniu.moduleorder.databinding.ItemOrderAddressBinding
@@ -74,9 +79,11 @@ class OrderAddressListActivity : RefrushActivity<OrderAddressListBean>(), Search
     private fun jump2Add() {
         PermissionUtils.applyMap(this, object : onApplyPermission {
             override fun hasPermission() {
-//                ArouterUtils.getInstance().builder(ArouterParamOrder.activity_map_search)
-//                        .withBoolean(Param.TRAN, !start)
-//                        .navigation(mContext as Activity, 2)
+                ArouterUtils.getInstance().builder(ArouterParamOrder.activity_order_person_map_search)
+                        .withBoolean(Param.TRAN, !start)
+                        .navigation(mContext as Activity, 2)
+
+
             }
 
             override fun noPermission() {}
@@ -111,6 +118,14 @@ class OrderAddressListActivity : RefrushActivity<OrderAddressListBean>(), Search
                         } else {
                             data.receiverName + "\t\t" + data.receiverMobile
                         }
+                        holderBinding.tvTitle.visibility = if ((start && data.shipperName.isNullOrEmpty() && data.shipperMobile.isNullOrEmpty())
+                                || (!start && data.receiverMobile.isNullOrEmpty() && data.receiverMobile.isNullOrEmpty())
+
+                        ) {
+                            View.GONE
+                        } else {
+                            View.VISIBLE
+                        }
                         holderBinding.tvAddress.text = if (start) {
                             data.startPlaceInfo
                         } else {
@@ -118,10 +133,27 @@ class OrderAddressListActivity : RefrushActivity<OrderAddressListBean>(), Search
                         }
                         holderBinding.root.setOnClickListener {
 
-                            val intent = Intent()
-                            intent.putExtra(Param.TRAN, data)
-                            setResult(Activity.RESULT_OK, intent)
-                            finish()
+//                            val intent = Intent()
+//                            intent.putExtra(Param.TRAN, data)
+//                            setResult(Activity.RESULT_OK, intent)
+//                            finish()
+
+
+                            if (start) {
+                                StartLoactionEvent(null).also {
+                                    it.destinationLatitude = data.startPlaceLat.toString()
+                                    it.destinationLongitude = data.startPlaceLon.toString()
+                                    it.placeInfo = data.startPlaceInfo
+                                }
+                            } else {
+                                EndLoactionEvent(null).also {
+                                    it.destinationLatitude = data.destinationLat.toString()
+                                    it.destinationLongitude = data.destinationLon.toString()
+                                    it.placeInfo = data.destinationInfo
+                                }
+                            }.let {
+                                onSelect(it)
+                            }
                         }
 
 
@@ -145,28 +177,47 @@ class OrderAddressListActivity : RefrushActivity<OrderAddressListBean>(), Search
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val result = data?.getParcelableExtra<OrderTranMapBean>(Param.TRAN)
+        val result = data?.getParcelableExtra<OrderTranMapBean>(Param.TRAN)?.poiItem?.let {
+            onSelect(if (start) {
+                StartLoactionEvent(it)
+            } else {
+                EndLoactionEvent(it)
+            })
+        }
         if (result != null) {
-            val bean = OrderAddressListBean(
-                    "",
-                    "",
-                    result.addressDetail,
-                    result.poiItem.latLonPoint.longitude,
-                    result.poiItem.latLonPoint.latitude,
-                    result.addressDetail,
-                    result.poiItem.latLonPoint.longitude,
-                    result.poiItem.latLonPoint.latitude,
-                    "",
-                    result.name,
-                    result.phone,
-                    result.name,
-                    result.phone,
 
-                    )
-            val intent = Intent()
-            intent.putExtra(Param.TRAN, bean)
-            setResult(Activity.RESULT_OK, intent)
-            finish()
+
+//            val bean = OrderAddressListBean(
+//                    "",
+//                    "",
+//                    result.addressDetail,
+//                    result.poiItem.latLonPoint.longitude,
+//                    result.poiItem.latLonPoint.latitude,
+//                    result.addressDetail,
+//                    result.poiItem.latLonPoint.longitude,
+//                    result.poiItem.latLonPoint.latitude,
+//                    "",
+//                    result.name,
+//                    result.phone,
+//                    result.name,
+//                    result.phone,
+//
+//                    )
+//            val intent = Intent()
+//            intent.putExtra(Param.TRAN, bean)
+//            setResult(Activity.RESULT_OK, intent)
+//            finish()
+
+
         }
     }
+
+    private fun onSelect(event: IEvent) {
+
+
+        BusFactory.getBus().post(event)
+        finish()
+    }
+
+
 }
