@@ -1,65 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:background="@color/color_bg"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/tool"
-    android:layout_height="50dp">
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@color/color_bg">
 
-        <FrameLayout
-            android:id="@+id/toolbar_left"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:clickable="true"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
-            <ImageView
-                android:scaleType="fitCenter"
-                android:layout_gravity="center"
-                android:id="@+id/toolbar_src_left"
-                android:src="@mipmap/icon_back_36"
-                android:background="@color/color_tran"
-                android:layout_width="20dp"
-                android:layout_height="20dp" />
-        </FrameLayout>
+    <FrameLayout
+        android:id="@+id/toolbar_left"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
 
+        <ImageView
+            android:id="@+id/toolbar_src_left"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:background="@color/color_tran"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/icon_back_36" />
+    </FrameLayout>
+
+
+    <TextView
+        android:id="@+id/toolbar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textColor="@color/color_title_dark"
+        android:textSize="@dimen/text_toolbar_title" />
+
+    <LinearLayout
+        android:id="@+id/toolbar_right"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <ImageView
+            android:id="@+id/toolbar_src_right"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@color/color_tran"
+            android:scaleType="fitCenter"
+            tools:background="@color/color_of_1c234d" />
 
         <TextView
-            android:gravity="center"
-            android:singleLine="true"
-            android:textSize="@dimen/text_toolbar_title"
-            android:textColor="@color/color_title_dark"
-            android:layout_centerInParent="true"
+            android:id="@+id/tv_toolbar_right"
             android:layout_width="wrap_content"
-            android:id="@+id/toolbar_title"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@string/app_name"
+            android:textSize="16sp"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
-        <FrameLayout
-            android:layout_alignParentRight="true"
-            android:id="@+id/toolbar_right"
-            android:paddingLeft="15dp"
-            android:gravity="center"
-            android:paddingRight="15dp"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
-            <ImageView
-                android:scaleType="fitCenter"
-                android:layout_gravity="center"
-                android:id="@+id/toolbar_src_right"
-                android:background="@color/color_tran"
-                android:layout_width="20dp"
-                android:layout_height="20dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:textSize="16sp"
-                android:layout_gravity="center"
-                android:visibility="gone"
-                android:id="@+id/tv_toolbar_right"
-                android:layout_height="wrap_content" />
-
-        </FrameLayout>
-
-
+    </LinearLayout>
 
 
 </RelativeLayout>

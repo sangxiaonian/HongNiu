@@ -26,12 +26,39 @@ import rongyun.sang.com.chactmodule.R;
 public class ChatConversationActivity extends ModuleBaseActivity {
 
     private UserInfor userInfor;
+    private Uri data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_conversation);
         setToolbarSrcRight(R.mipmap.phone);
+
+        tvToolbarRight.setText("举报");
+        tvToolbarRight.setVisibility(View.VISIBLE);
+        tvToolbarRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new CenterAlertBuilder()
+                        .setDialogTitle("举报")
+                        .setDialogContent("您确定要举报该用户？")
+                        .setBtLeft("取消")
+                        .setBtRight("举报")
+                        .setBtLeftColor(getResources().getColor(R.color.color_007aff))
+                        .setBtRightColor(getResources().getColor(R.color.color_007aff))
+                        .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
+                            @Override
+                            public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
+                                dialog.dismiss();
+                                ToastUtils.getInstance().show("举报成功，我们将在个工作日进行处理");
+                                queryInfo(data);
+                            }
+                        })
+                        .creatDialog(new CenterAlertDialog(mContext))
+                        .show();
+            }
+        });
+
         setToolbarRightClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,7 +86,7 @@ public class ChatConversationActivity extends ModuleBaseActivity {
         });
 
 
-        Uri data = getIntent().getData();
+          data = getIntent().getData();
         String title = data.getQueryParameter("title");
         if (data != null && !TextUtils.isEmpty(title)) {
             setToolbarTitle(title);
@@ -67,6 +94,24 @@ public class ChatConversationActivity extends ModuleBaseActivity {
             setToolbarTitle(data.getQueryParameter("聊天"));
         }
 
+        queryInfo(data);
+
+
+        HttpAppFactory.queryRongInfor(null)
+                .subscribe(new NetObserver<UserInfor>(null) {
+                    @Override
+                    public void doOnSuccess(UserInfor data) {
+                        if (data!=null) {
+                            ChactHelper.getHelper().refreshUserInfoCache(data.getRongId(), data);
+                        }
+                    }
+                });
+    }
+
+    private void queryInfo(Uri data) {
+        if (data==null){
+            return;
+        }
         final String userId = data.getQueryParameter("targetId");
         if (userId != null) {
             HttpAppFactory.queryRongInfor(userId)
@@ -89,16 +134,5 @@ public class ChatConversationActivity extends ModuleBaseActivity {
                     });
 
         }
-
-
-        HttpAppFactory.queryRongInfor(null)
-                .subscribe(new NetObserver<UserInfor>(null) {
-                    @Override
-                    public void doOnSuccess(UserInfor data) {
-                        if (data!=null) {
-                            ChactHelper.getHelper().refreshUserInfoCache(data.getRongId(), data);
-                        }
-                    }
-                });
     }
 }

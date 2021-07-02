@@ -23,7 +23,7 @@
       app:searchGravity="center"
       app:searchIcon="@drawable/icon_search_999999"
       app:searchTitleColor="#040000"
-      app:searchTitleHind="请输入姓名、手机号、公司名称"
+      app:searchTitleHind="请输入地址"
       app:searchTitleHindColor="@color/color_content_light" />
 
   <LinearLayout

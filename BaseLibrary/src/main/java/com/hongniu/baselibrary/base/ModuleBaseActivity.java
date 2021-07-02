@@ -5,23 +5,25 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.fy.androidlibrary.event.BusFactory;
 import com.fy.androidlibrary.net.error.NetException;
+import com.fy.androidlibrary.net.listener.TaskControl;
 import com.fy.androidlibrary.widget.load.LoadDialog;
 import com.githang.statusbar.StatusBarCompat;
 import com.hongniu.baselibrary.R;
 import com.hongniu.baselibrary.entity.CloseActivityEvent;
 import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.utils.Utils;
-import com.fy.androidlibrary.event.BusFactory;
-import com.fy.androidlibrary.net.listener.TaskControl;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
@@ -41,7 +43,7 @@ public class ModuleBaseActivity extends AppCompatActivity implements TaskControl
 
     protected Context mContext;
     protected FrameLayout llToolbarLeft;
-    protected FrameLayout llToolbarRight;
+    protected ViewGroup llToolbarRight;
     protected ImageView imgToolbarLeft;
     protected ImageView imgToolbarRight;
     protected TextView tvToolbarTitle;
@@ -132,7 +134,9 @@ public class ModuleBaseActivity extends AppCompatActivity implements TaskControl
                 }
             });
         }
-    }   @Override
+    }
+
+    @Override
     public void setContentView(View layoutResID) {
         super.setContentView(layoutResID);
         llToolbarLeft = findViewById(R.id.toolbar_left);
@@ -155,7 +159,7 @@ public class ModuleBaseActivity extends AppCompatActivity implements TaskControl
 
     protected void setToolbarTitle(String title) {
         if (tvToolbarTitle != null) {
-            tvToolbarTitle.setText(title==null?"":title);
+            tvToolbarTitle.setText(title == null ? "" : title);
         }
         StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.color_bg), true);
     }
@@ -169,10 +173,10 @@ public class ModuleBaseActivity extends AppCompatActivity implements TaskControl
             if (imgToolbarLeft != null) {
                 imgToolbarLeft.setImageResource(R.mipmap.icon_back_w_36);
             }
-            tvToolbarTitle.setText(title==null?"":title);
+            tvToolbarTitle.setText(title == null ? "" : title);
         }
 
-        if (tvToolbarRight!=null){
+        if (tvToolbarRight != null) {
             tvToolbarRight.setTextColor(Color.WHITE);
         }
 
@@ -180,6 +184,7 @@ public class ModuleBaseActivity extends AppCompatActivity implements TaskControl
 
 
     }
+
     protected void setToolbarRedTitle(String title) {
         if (tvToolbarTitle != null) {
             if (tool != null) {
@@ -189,10 +194,10 @@ public class ModuleBaseActivity extends AppCompatActivity implements TaskControl
             if (imgToolbarLeft != null) {
                 imgToolbarLeft.setImageResource(R.mipmap.icon_back_w_36);
             }
-            tvToolbarTitle.setText(title==null?"":title);
+            tvToolbarTitle.setText(title == null ? "" : title);
         }
 
-        if (tvToolbarRight!=null){
+        if (tvToolbarRight != null) {
             tvToolbarRight.setTextColor(Color.WHITE);
         }
 
@@ -253,11 +258,11 @@ public class ModuleBaseActivity extends AppCompatActivity implements TaskControl
 
 
     protected void showAleart(String msg) {
-        showAleart(msg,null);
+        showAleart(msg, null);
     }
 
     protected void showAleart(String msg, final DialogControl.OnButtonRightClickListener listener) {
-        if (alertDialog==null){
+        if (alertDialog == null) {
             alertDialog = new CenterAlertDialog(mContext);
 
         }
@@ -265,8 +270,8 @@ public class ModuleBaseActivity extends AppCompatActivity implements TaskControl
                 .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
                     @Override
                     public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
-                        if (listener!=null){
-                            listener.onRightClick(view,dialog);
+                        if (listener != null) {
+                            listener.onRightClick(view, dialog);
                         }
                         dialog.dismiss();
                     }
@@ -308,7 +313,7 @@ public class ModuleBaseActivity extends AppCompatActivity implements TaskControl
     @Override
     public void onTaskFail(Throwable e, int code, String msg) {
         hideLoad();
-        if (401==code && e instanceof NetException) {//重新登录
+        if (401 == code && e instanceof NetException) {//重新登录
             new CenterAlertBuilder()
                     .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
                         @Override
@@ -323,8 +328,8 @@ public class ModuleBaseActivity extends AppCompatActivity implements TaskControl
                     .creatDialog(new CenterAlertDialog(mContext))
                     .show();
         } else {
-            if (msg!=null&&msg.equalsIgnoreCase("timeout")) {
-                msg="网络异常，请稍后再试";
+            if (msg != null && msg.equalsIgnoreCase("timeout")) {
+                msg = "网络异常，请稍后再试";
             }
             showAleart(msg);
         }
