@@ -124,6 +124,13 @@
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
+
+
     </application>
+    <queries>
+        <package android:name="com.tencent.mm" />
+        <package android:name="com.eg.android.AlipayGphone" />
+        <package android:name="com.unionpay" />
+    </queries>
 
 </manifest>
