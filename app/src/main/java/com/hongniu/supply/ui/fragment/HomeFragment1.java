@@ -1,10 +1,8 @@
 package com.hongniu.supply.ui.fragment;
 
-import android.content.Intent;
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CARGO_OWNER;
+
 import android.graphics.Color;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,14 +10,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.fy.androidlibrary.toast.ToastUtils;
+import com.fy.androidlibrary.imgload.ImageLoader;
+import com.fy.androidlibrary.utils.ConvertUtils;
+import com.fy.androidlibrary.utils.DeviceUtils;
+import com.fy.androidlibrary.widget.ColorImageView;
 import com.githang.statusbar.StatusBarCompat;
 import com.hongniu.baselibrary.arouter.ArouterParamFestivity;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterParamsBreakbulk;
-import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseFragment;
@@ -28,19 +30,14 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.H5Config;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventParams;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
-import com.hongniu.freight.ui.SplashActivity;
 import com.hongniu.supply.R;
 import com.hongniu.supply.entity.HomeADBean;
 import com.hongniu.supply.net.HttpMainFactory;
 import com.hongniu.supply.ui.holder.HeadImageHolder;
 import com.hongniu.supply.ui.holder.HomeNewHeader;
-import com.fy.androidlibrary.imgload.ImageLoader;
 import com.sang.common.recycleview.RecycleViewScroll;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
-import com.fy.androidlibrary.utils.ConvertUtils;
-import com.fy.androidlibrary.utils.DeviceUtils;
-import com.fy.androidlibrary.widget.ColorImageView;
 import com.sang.common.widget.DrawableCircle;
 
 import java.util.ArrayList;
@@ -48,24 +45,22 @@ import java.util.List;
 
 import io.reactivex.disposables.Disposable;
 
-import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CARGO_OWNER;
-
 /**
  * 作者： ${PING} on 2018/11/23.
  */
 @Route(path = ArouterParamsApp.fragment_home_fragment)
-public class HomeFragment extends BaseFragment implements View.OnClickListener, RecycleViewScroll.OnScrollDisChangeListener {
+public class HomeFragment1 extends BaseFragment implements View.OnClickListener, RecycleViewScroll.OnScrollDisChangeListener {
 
 
     private RecycleViewScroll rv;
     List<HomeADBean> ads;
-//    ColorImageView imgSearch;
+    ColorImageView imgSearch;
     private HomeNewHeader homeNewHeader;
-//    private View rlTitle;
+    private View rlTitle;
     private XAdapter<HomeADBean> adapter;
-//    private View llSearch;
-//    private int currentColor;
-//    private TextView tvSearch;
+    private View llSearch;
+    private int currentColor;
+    private TextView tvSearch;
     private DrawableCircle drawable;
     private HeadImageHolder headImageHolder;
 
@@ -74,10 +69,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
 
         View inflate = inflater.inflate(R.layout.fragment_home_fragment, null);
         rv = inflate.findViewById(R.id.rv);
-//        llSearch = inflate.findViewById(R.id.ll_search);
-//        rlTitle = inflate.findViewById(R.id.rl_title);
-//        imgSearch = inflate.findViewById(R.id.img_search);
-//        tvSearch = inflate.findViewById(R.id.tv_search);
+        llSearch = inflate.findViewById(R.id.ll_search);
+        rlTitle = inflate.findViewById(R.id.rl_title);
+        imgSearch = inflate.findViewById(R.id.img_search);
+        tvSearch = inflate.findViewById(R.id.tv_search);
 
 
         return inflate;
@@ -86,14 +81,23 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     @Override
     protected void initData() {
         super.initData();
-        StatusBarCompat.setStatusBarColor(getActivity(), Color.WHITE, true);
+        currentColor = getResources().getColor(R.color.color_fd5712);
         drawable = new DrawableCircle();
         drawable.setColor(Color.parseColor("#ffffff"))
                 .setRadius(DeviceUtils.dip2px(getContext(), 15))
                 .flush();
+        llSearch.post(new Runnable() {
+            @Override
+            public void run() {
+                drawable.setSize(llSearch.getWidth(), llSearch.getHeight())
+                        .flush();
+                llSearch.setBackground(drawable);
+
+            }
+        });
 
 
-
+        setToolBarColor(currentColor);
         ads = new ArrayList<>();
         rv.setMaxY(DeviceUtils.dip2px(getContext(), 140));
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
@@ -133,6 +137,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         };
         homeNewHeader = new HomeNewHeader(getContext(), rv);
         headImageHolder = new HeadImageHolder(getContext(), rv);
+//        adapter.addHeard(homeHeader);
         adapter.addHeard(homeNewHeader);
         adapter.addHeard(headImageHolder);
         rv.setAdapter(adapter);
@@ -174,7 +179,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
-            setToolBarColor(Color.WHITE);
+            setToolBarColor(currentColor);
             upData();
 
         }
@@ -193,6 +198,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
 //        tv_balance.setOnClickListener(this);
         homeNewHeader.setOnClickListener(this);
         headImageHolder.setOnClickListener(this);
+        llSearch.setOnClickListener(this);
         rv.setOnScrollDisChangeListener(this);
     }
 
@@ -296,6 +302,13 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
             percentY = 1;
         }
         if (percentY >= 0 && percentY <= 1) {
+            currentColor = ConvertUtils.evaluateColor(percentY, getResources().getColor(R.color.color_fd5712), Color.WHITE);
+            rlTitle.setBackgroundColor(currentColor);
+            setToolBarColor(currentColor);
+
+
+            int searchBgColor = ConvertUtils.evaluateColor(percentY, Color.parseColor("#ffffff"), getResources().getColor(R.color.color_bg_dark));
+            drawable.setColor(searchBgColor).flush();
 
         }
     }

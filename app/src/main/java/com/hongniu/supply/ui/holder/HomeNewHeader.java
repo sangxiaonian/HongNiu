@@ -6,7 +6,6 @@ import android.text.Spanned;
 import android.text.style.AbsoluteSizeSpan;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.hongniu.baselibrary.utils.Utils;
@@ -19,11 +18,11 @@ import com.sang.common.recycleview.holder.PeakHolder;
 public class HomeNewHeader extends PeakHolder implements View.OnClickListener {
 
 
-    ViewGroup ll_cargo;
-    ViewGroup ll_car;
-    ViewGroup ll_driver;
+//    ViewGroup ll_cargo;
+//    ViewGroup ll_car;
+//    ViewGroup ll_driver;
     ViewGroup ll_net_owner;
-    View view_top_bg;
+    ViewGroup ll_search;
 
     ViewGroup card_star;
     ViewGroup card_match;
@@ -45,48 +44,42 @@ public class HomeNewHeader extends PeakHolder implements View.OnClickListener {
     public HomeNewHeader(Context context, ViewGroup parent, int layoutID) {
         super(context, parent, layoutID);
     }
-    public HomeNewHeader(Context context, ViewGroup parent ) {
-        super(context, parent, R.layout.item_home_head1);
+
+    public HomeNewHeader(Context context, ViewGroup parent) {
+        super(context, parent, R.layout.item_home_head);
     }
 
     @Override
     public void initView(int position) {
         super.initView(position);
 
-        ll_cargo = itemView.findViewById(R.id.ll_cargo);
         ll_net_owner = itemView.findViewById(R.id.ll_net_owner);
-        ll_car = itemView.findViewById(R.id.ll_car);
-        ll_driver = itemView.findViewById(R.id.ll_driver);
-        card_star=itemView.findViewById(R.id.card_star);
-        card_match=itemView.findViewById(R.id.card_match);
-        card_goods_match=itemView.findViewById(R.id.card_goods_match);
-        card_insurance=itemView.findViewById(R.id.card_insurance);
-        card_invite=itemView.findViewById(R.id.card_invite);
-        tv_insurance=itemView.findViewById(R.id.tv_insurance);
-        view_top_bg=itemView.findViewById(R.id.view_top_bg);
+        card_star = itemView.findViewById(R.id.card_star);
+        card_match = itemView.findViewById(R.id.card_match);
+        card_goods_match = itemView.findViewById(R.id.card_goods_match);
+        card_insurance = itemView.findViewById(R.id.card_insurance);
+        card_invite = itemView.findViewById(R.id.card_invite);
+        tv_insurance = itemView.findViewById(R.id.tv_insurance);
+        ll_search = itemView.findViewById(R.id.ll_search);
 
-        SpannableStringBuilder builder=new SpannableStringBuilder("货运险牛人保");
-        AbsoluteSizeSpan ab=new AbsoluteSizeSpan(11,true);
+        SpannableStringBuilder builder = new SpannableStringBuilder("货运险牛人保");
+        AbsoluteSizeSpan ab = new AbsoluteSizeSpan(11, true);
         //文本字体绝对的大小
-        builder.setSpan(ab,3,6, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        builder.setSpan(ab, 3, 6, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         tv_insurance.setText(builder);
 
 
-
         //进行隐藏
-        card_insurance.setVisibility(Utils.showInscance()?View.VISIBLE:View.GONE);
+        card_insurance.setVisibility(Utils.showInscance() ? View.VISIBLE : View.GONE);
 
 
-        ll_cargo.setOnClickListener(this);
         ll_net_owner.setOnClickListener(this);
-        ll_car.setOnClickListener(this);
-        ll_driver.setOnClickListener(this);
         card_star.setOnClickListener(this);
         card_match.setOnClickListener(this);
         card_goods_match.setOnClickListener(this);
         card_insurance.setOnClickListener(this);
         card_invite.setOnClickListener(this);
-        view_top_bg.setOnClickListener(this);
+        ll_search.setOnClickListener(this);
 
 
     }
@@ -98,7 +91,7 @@ public class HomeNewHeader extends PeakHolder implements View.OnClickListener {
      */
     @Override
     public void onClick(View v) {
-        if (onClickListener!=null){
+        if (onClickListener != null) {
             onClickListener.onClick(v);
         }
     }
