@@ -47,71 +47,32 @@
         </LinearLayout>
     </com.fy.androidlibrary.widget.shadow.ShadowLayout>
 
-    <LinearLayout
+    <ImageView
         android:id="@+id/ll_net_owner"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="15dp"
         android:layout_marginRight="20dp"
-        android:background="@color/color_of_d5d8e6"
-        android:orientation="vertical"
-        android:paddingLeft="20dp"
-        android:paddingTop="30dp"
+        android:background="@mipmap/home_icon_huoyun"
         app:layout_constraintDimensionRatio="335:120"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view_search">
+        app:layout_constraintTop_toBottomOf="@id/view_search" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="网络货运"
-            android:textColor="@color/white"
-            android:textSize="18dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="切换到您的网络货运平台"
-            android:textColor="@color/white"
-            android:textSize="12dp" />
-
-    </LinearLayout>
-
-    <LinearLayout
+    <ImageView
         android:id="@+id/ll_contact"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
-        android:background="@color/color_of_d5d8e6"
-        android:orientation="vertical"
-        android:paddingLeft="20dp"
-        android:paddingTop="30dp"
+        android:background="@mipmap/home_icon_hetong"
         app:layout_constraintDimensionRatio="335:120"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ll_net_owner">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="合同物流"
-            android:textColor="@color/white"
-            android:textSize="18dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="切换到您的网络货运平台"
-            android:textColor="@color/white"
-            android:textSize="12dp" />
-
-    </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@id/ll_net_owner" />
 
 
     <com.fy.androidlibrary.widget.shadow.ShadowLayout

@@ -28,6 +28,7 @@ public class CommonOrderUtils {
     public static final String ORDER_CHECK_RECEIPT = "查看回单";
     public static final String ORDER_UP_RECEIPT = "上传回单";
     public static final String ORDER_CHANGE_RECEIPT = "修改回单";
+    public static final String ORDER_PROMOTE = "完成提送";
 
 
     /**

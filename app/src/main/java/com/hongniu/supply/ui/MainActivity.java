@@ -331,7 +331,6 @@ public class MainActivity extends ModuleBaseActivity implements View.OnClickList
     }
 
 
-    private boolean show;
     @Override
     protected void initListener() {
         super.initListener();

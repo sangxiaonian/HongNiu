@@ -29,6 +29,9 @@ public class OrderDetailItemControl {
         WAITE_CHECK(8,"支付待审核"),//企业支付，支付被拒绝
         WAITE_CHECK_FAIL(9,"支付审核失败"),//企业支付，支付被拒绝
 
+        WAITE_PROMOTE(10,"未提送"),//未提送
+        HAS_PROMOTE(11,"已提送"),//已提送
+
         ARRIVED_PAY(99,"收货人已支付"),//到达后收货人已支付
         ARRIVED_WAITE_PAY(100,"收货人待支付"),//到达后收货人待支付
 
@@ -241,6 +244,11 @@ public class OrderDetailItemControl {
          * @param orderBean
          */
         void onEntryAndPay(OrderDetailBean orderBean);
+        /**
+         * ORDER_PROMOTE 完成提送
+         * @param orderBean
+         */
+        void onEntryPromote(OrderDetailBean orderBean);
     }
 
 

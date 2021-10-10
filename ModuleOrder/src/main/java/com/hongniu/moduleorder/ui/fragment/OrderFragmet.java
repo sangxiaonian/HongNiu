@@ -1,18 +1,26 @@
 package com.hongniu.moduleorder.ui.fragment;
 
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CARGO_OWNER;
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.DRIVER;
+
 import android.os.Bundle;
 import android.os.SystemClock;
-import androidx.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.Nullable;
 
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Poi;
 import com.amap.api.navi.AmapNaviPage;
 import com.amap.api.navi.AmapNaviParams;
 import com.amap.api.navi.AmapNaviType;
+import com.fy.androidlibrary.event.BusFactory;
+import com.fy.androidlibrary.toast.ToastUtils;
 import com.fy.androidlibrary.utils.CollectionUtils;
+import com.fy.androidlibrary.utils.ConvertUtils;
+import com.fy.androidlibrary.utils.JLog;
 import com.google.gson.Gson;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
@@ -34,6 +42,7 @@ import com.hongniu.baselibrary.entity.UpLoactionEvent;
 import com.hongniu.baselibrary.entity.WalletDetail;
 import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.net.HttpAppFactory;
+import com.hongniu.baselibrary.utils.LoactionCollectionUtils;
 import com.hongniu.baselibrary.utils.PermissionUtils;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.widget.PayPasswordKeyBord;
@@ -48,13 +57,8 @@ import com.hongniu.moduleorder.entity.QueryReceiveBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.ui.OrderScanReceiptActivity;
 import com.hongniu.moduleorder.ui.WaitePayActivity;
-import com.hongniu.baselibrary.utils.LoactionCollectionUtils;
-import com.fy.androidlibrary.event.BusFactory;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
-import com.fy.androidlibrary.utils.ConvertUtils;
-import com.fy.androidlibrary.utils.JLog;
-import com.fy.androidlibrary.toast.ToastUtils;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
@@ -74,9 +78,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
-
-import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CARGO_OWNER;
-import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.DRIVER;
 
 /**
  * 订单列表Fragment
@@ -351,7 +352,7 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
                                     .map(new Function<Integer, Integer>() {
                                         @Override
                                         public Integer apply(Integer integer) throws Exception {
-                                             UpLoactionEvent upLoactionEvent = new  UpLoactionEvent();
+                                            UpLoactionEvent upLoactionEvent = new UpLoactionEvent();
                                             upLoactionEvent.start = true;
                                             BusFactory.getBus().post(upLoactionEvent);
                                             return integer;
@@ -376,7 +377,7 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
                                         @Override
                                         public boolean test(Double aDouble) throws Exception {
                                             JLog.i(Thread.currentThread().getName());
-                                             UpLoactionEvent upLoactionEvent = new  UpLoactionEvent();
+                                            UpLoactionEvent upLoactionEvent = new UpLoactionEvent();
                                             upLoactionEvent.start = false;
                                             BusFactory.getBus().post(upLoactionEvent);
                                             if (aDouble > Param.ENTRY_MIN) {
@@ -507,7 +508,7 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
                                 , orderBean.getDestinationLatitude(), orderBean.getDestinationLongitude());
                         dialog.dismiss();
                         if (latLng.latitude == 0 || latLng.longitude == 0) {
-                            UpLoactionEvent upLoactionEvent = new  UpLoactionEvent();
+                            UpLoactionEvent upLoactionEvent = new UpLoactionEvent();
                             upLoactionEvent.start = true;
                             BusFactory.getBus().post(upLoactionEvent);
                             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("正在获取当前位置，请稍后再试");
@@ -518,7 +519,7 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
                                     .subscribe(new NetObserver<String>(taskListener) {
                                         @Override
                                         public void doOnSuccess(String data) {
-                                            BusFactory.getBus().post(new  UpLoactionEvent());
+                                            BusFactory.getBus().post(new UpLoactionEvent());
                                         }
 
                                         @Override
@@ -694,6 +695,28 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
                 });
 
 
+    }
+
+    /**
+     * ORDER_PROMOTE 完成提送
+     *
+     * @param orderBean
+     */
+    @Override
+    public void onEntryPromote(OrderDetailBean orderBean) {
+        HttpOrderFactory.driverPromote(orderBean.getId())
+                .subscribe(new NetObserver<String>(taskListener) {
+                    @Override
+                    public void doOnSuccess(String data) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        super.onComplete();
+                        BusFactory.getBus().post(new OrderEvent.OrderUpdate(roleState));
+                    }
+                });
     }
 
     protected CenterAlertBuilder creatDialog(String title, String content, String btleft, String

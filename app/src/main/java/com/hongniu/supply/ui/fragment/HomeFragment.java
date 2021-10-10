@@ -1,10 +1,8 @@
 package com.hongniu.supply.ui.fragment;
 
-import android.content.Intent;
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CARGO_OWNER;
+
 import android.graphics.Color;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,14 +10,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.fy.androidlibrary.toast.ToastUtils;
+import com.fy.androidlibrary.imgload.ImageLoader;
+import com.fy.androidlibrary.utils.DeviceUtils;
 import com.githang.statusbar.StatusBarCompat;
 import com.hongniu.baselibrary.arouter.ArouterParamFestivity;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterParamsBreakbulk;
-import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseFragment;
@@ -28,27 +28,20 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.H5Config;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventParams;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
-import com.hongniu.freight.ui.SplashActivity;
 import com.hongniu.supply.R;
 import com.hongniu.supply.entity.HomeADBean;
 import com.hongniu.supply.net.HttpMainFactory;
 import com.hongniu.supply.ui.holder.HeadImageHolder;
 import com.hongniu.supply.ui.holder.HomeNewHeader;
-import com.fy.androidlibrary.imgload.ImageLoader;
 import com.sang.common.recycleview.RecycleViewScroll;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
-import com.fy.androidlibrary.utils.ConvertUtils;
-import com.fy.androidlibrary.utils.DeviceUtils;
-import com.fy.androidlibrary.widget.ColorImageView;
 import com.sang.common.widget.DrawableCircle;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.disposables.Disposable;
-
-import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CARGO_OWNER;
 
 /**
  * 作者： ${PING} on 2018/11/23.
@@ -59,11 +52,11 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
 
     private RecycleViewScroll rv;
     List<HomeADBean> ads;
-//    ColorImageView imgSearch;
+    //    ColorImageView imgSearch;
     private HomeNewHeader homeNewHeader;
-//    private View rlTitle;
+    //    private View rlTitle;
     private XAdapter<HomeADBean> adapter;
-//    private View llSearch;
+    //    private View llSearch;
 //    private int currentColor;
 //    private TextView tvSearch;
     private DrawableCircle drawable;
@@ -91,7 +84,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         drawable.setColor(Color.parseColor("#ffffff"))
                 .setRadius(DeviceUtils.dip2px(getContext(), 15))
                 .flush();
-
 
 
         ads = new ArrayList<>();
@@ -214,30 +206,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                         .navigation(getContext());
 //                ToastUtils.getInstance().show("搜索");
                 break;
-            case R.id.ll_cargo:
-                ClickEventUtils.getInstance().onClick(ClickEventParams.首页_货主);
-//                ToastUtils.getInstance().show("货主");
-                ArouterUtils.getInstance()
-                        .builder(ArouterParamOrder.activity_order_order)
-                        .withInt(Param.TRAN, 3)
-                        .navigation(getContext());
-                break;
-            case R.id.ll_car:
-                ClickEventUtils.getInstance().onClick(ClickEventParams.首页_车主);
-//                ToastUtils.getInstance().show("车主");
-                ArouterUtils.getInstance()
-                        .builder(ArouterParamOrder.activity_order_order)
-                        .withInt(Param.TRAN, 1)
-                        .navigation(getContext());
-                break;
-            case R.id.ll_driver:
-                ClickEventUtils.getInstance().onClick(ClickEventParams.首页_司机);
-//                ToastUtils.getInstance().show("司机");
-                ArouterUtils.getInstance()
-                        .builder(ArouterParamOrder.activity_order_order)
-                        .withInt(Param.TRAN, 2)
-                        .navigation(getContext());
-                break;
+
             case R.id.card_match:
 
                 ArouterUtils.getInstance().builder(ArouterParamsMatch.activity_match_estimate_order).navigation(getContext());
@@ -269,15 +238,12 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
             case R.id.ll_net_owner:
                 //网络货运
                 ArouterUtils.getInstance().builder(ArouterParamsApp.activity_switch_company).navigation(getContext());
-
                 break;
-            case R.id.view_top_bg:
-                //网络货运
+            case R.id.ll_contact:
+                //合同
                 ArouterUtils.getInstance()
-                        .builder(ArouterParamsApp.activity_h5)
-                        .withSerializable(Param.TRAN,  new H5Config("网络货运", Param.home_top_bg, false))
+                        .builder(ArouterParamOrder.activity_order_order)
                         .navigation(getContext());
-
                 break;
         }
     }

@@ -146,6 +146,12 @@ public interface OrderService {
      */
     @POST("api/order/start")
     Observable<CommonBean<String>> driverStart(@Body OrderIdBean infor);
+ /**
+     * 司机开始发车
+     * id	true	number	订单id
+     */
+    @POST("api/order/updateDeliveryOrder")
+    Observable<CommonBean<String>> driverPromote(@Body OrderIdBean infor);
 
     /**
      * 确认到达

@@ -1,9 +1,26 @@
 package com.hongniu.baselibrary.widget.order;
 
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_BUY_INSURANCE;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CANCLE;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHANGE;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHANGE_RECEIPT;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_GOODS;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_INSURANCE;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_PATH;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_RECEIPT;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_ROUT;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_ENTRY_AND_PAY_ORDER;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_ENTRY_ARRIVE;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_ENTRY_ORDER;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_PAY;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_PAY_REFUSE;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_PROMOTE;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_START_CAR;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_TRUCK_GUIDE;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_UP_RECEIPT;
+
 import android.content.Context;
 import android.graphics.Color;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -19,9 +36,13 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.fy.androidlibrary.toast.ToastUtils;
 import com.fy.androidlibrary.utils.CommonUtils;
 import com.fy.androidlibrary.utils.ConvertUtils;
+import com.fy.androidlibrary.utils.DeviceUtils;
 import com.hongniu.baselibrary.R;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.utils.Utils;
@@ -30,30 +51,11 @@ import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
 import com.hongniu.baselibrary.widget.OrderProgress;
 import com.hongniu.baselibrary.widget.order.helper.ButtonInforBean;
 import com.hongniu.baselibrary.widget.order.helper.OrderItemHelper;
-import com.fy.androidlibrary.utils.DeviceUtils;
 import com.sang.common.widget.CenteredImageSpan;
 import com.sang.thirdlibrary.chact.ChactHelper;
 import com.sang.thirdlibrary.map.utils.MapConverUtils;
 
 import java.util.List;
-
-import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_BUY_INSURANCE;
-import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CANCLE;
-import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHANGE;
-import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHANGE_RECEIPT;
-import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_GOODS;
-import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_INSURANCE;
-import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_PATH;
-import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_RECEIPT;
-import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_ROUT;
-import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_ENTRY_AND_PAY_ORDER;
-import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_ENTRY_ARRIVE;
-import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_ENTRY_ORDER;
-import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_PAY;
-import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_PAY_REFUSE;
-import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_START_CAR;
-import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_TRUCK_GUIDE;
-import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_UP_RECEIPT;
 
 /**
  * 作者： ${PING} on 2018/8/7.
@@ -124,7 +126,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
         tv_order.setOnLongClickListener(new OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                CommonUtils.copy(context,tv_order.getText().toString());
+                CommonUtils.copy(context, tv_order.getText().toString());
                 ToastUtils.getInstance().show("复制成功");
                 return true;
             }
@@ -146,7 +148,7 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
         }
         StringBuilder builder = new StringBuilder();
         String s = TextUtils.isEmpty(data.freightPayWayStr) ? "" : ("(" + data.freightPayWayStr + ")");
-        if (data.getMoney()>0){
+        if (data.getMoney() > 0) {
             builder.append("运费：").append(data.getMoney()).append(s).append("  ");
         }
         if (data.getPaymentAmount() > 0) {
@@ -164,14 +166,14 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
         setPrice(builder.toString());
 
         //订单状态进行设置
-        if (data.getOrderState().getState()==4&&data.getUserType()==2&&data.getReplaceState()==1){//
+        if (data.getOrderState().getState() == 4 && data.getUserType() == 2 && data.getReplaceState() == 1) {//
 //            已到达，如果是司机，并且代收货款
-            if (data.freightStatus==1&&data.paymentStatus==1){
+            if (data.freightStatus == 1 && data.paymentStatus == 1) {
                 setOrderState(OrderDetailItemControl.OrderState.ARRIVED_PAY);
-            }else {
+            } else {
                 setOrderState(OrderDetailItemControl.OrderState.ARRIVED_WAITE_PAY);
             }
-        }else {
+        } else {
             setOrderState(data.getOrderState());
         }
         if (data.getOrderState() == OrderDetailItemControl.OrderState.IN_TRANSIT) {//正在运输中
@@ -367,16 +369,24 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
         int secondChat = -1;
 
         SpannableStringBuilder builder = new SpannableStringBuilder();
-        builder
-                .append("发车编号：")
-                .append(startNum == null ? "" : startNum).append("\n")
-                .append("车牌号：")
-                .append(carNum == null ? "" : carNum).append("\n");
+        if (!TextUtils.isEmpty(startNum)) {
+            builder
+                    .append("发车编号：")
+                    .append(startNum == null ? "" : startNum).append("\n");
+        }
 
-        builder.append(roleTop)
-                .append(carOwnerName == null ? "" : carOwnerName)
-                .append(" ")
-        ;
+        if (!TextUtils.isEmpty(carNum)) {
+            builder
+                    .append("车牌号：")
+                    .append(carNum == null ? "" : carNum).append("\n");
+        }
+
+        if (!TextUtils.isEmpty(carOwnerName)) {
+            builder.append(roleTop)
+                    .append(carOwnerName == null ? "" : carOwnerName)
+                    .append(" ")
+            ;
+        }
 
         if (!TextUtils.isEmpty(carOwnerPhone)) {//如果司机电话不为空，则拼接司机电话
             builder.append(carOwnerPhone)
@@ -396,10 +406,13 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                 .append("货物：")
                 .append(cargo == null ? "" : cargo)
 //                .append(hasInsurance ? ("（已支付" + insuranceMoney + "元保险费）") : "")
-                .append("\n")
-                .append(roleBottom)
-                .append(driverName == null ? "" : driverName).append(" ")
-                .append(driverPhone == null ? "" : driverPhone)
+        ;
+        if (!TextUtils.isEmpty(driverName) || !TextUtils.isEmpty(driverPhone)) {
+            builder.append("\n")
+                    .append(roleBottom)
+                    .append(driverName == null ? "" : driverName).append(" ")
+                    .append(driverPhone == null ? "" : driverPhone);
+        }
 
         ;
 
@@ -514,6 +527,8 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
 
     }
 
+
+
     private void creatPhoneSpan(int startPoint, SpannableStringBuilder builder, ClickableSpan clickableSpan) {
         CenteredImageSpan imageSpan2 = new CenteredImageSpan(getContext(), R.mipmap.icon_call_30);
         imageSpan2.setSpanSize(spanSize, spanSize);
@@ -546,17 +561,17 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                 .setHasGoodsImage(data.isHasGoodsImage())
                 .setHasReceiptImage(data.isHasReceiptImage());
 
-        if (data.getUserType()==3){//发货人
+        if (data.getUserType() == 3) {//发货人
             //        由 货主（发货人） 确认收货按钮 的情况：
 //        1、	无收货人；
 //        2、	有收货人，但是代收货款为0，且运费支付方式非到付。
             helper.setHasPay(TextUtils.isEmpty(data.getReceiptName())
-                    || (data.getPaymentAmount() <= 0 && !TextUtils.isEmpty(data.getPayWay())&&!"2".equals(data.getPayWay())));
+                    || (data.getPaymentAmount() <= 0 && !TextUtils.isEmpty(data.getPayWay()) && !"2".equals(data.getPayWay())));
             ;
-        }else if (data.getUserType()==4){//收货人
-            helper.setHasPay((data.freightStatus==1&&data.paymentStatus==1)||(data.freightStatus==3&&data.paymentStatus==3));
-        }else if (data.getUserType()==2){//对于司机
-            helper.setHasPay((data.freightStatus==1&&data.paymentStatus==1)||(data.freightStatus==3&&data.paymentStatus==3));
+        } else if (data.getUserType() == 4) {//收货人
+            helper.setHasPay((data.freightStatus == 1 && data.paymentStatus == 1) || (data.freightStatus == 3 && data.paymentStatus == 3));
+        } else if (data.getUserType() == 2) {//对于司机
+            helper.setHasPay((data.freightStatus == 1 && data.paymentStatus == 1) || (data.freightStatus == 3 && data.paymentStatus == 3));
         }
 
         List<ButtonInforBean> infors = helper.getButtonInfors();
@@ -912,6 +927,13 @@ public class OrderDetailItem extends FrameLayout implements View.OnClickListener
                     case CARGO_OWNER:
 
                         break;
+                }
+                break;
+                case ORDER_PROMOTE://完成提送;
+                if (listener != null) {
+                    listener.onEntryPromote(orderBean);
+                } else {
+                    ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show(ORDER_PROMOTE);
                 }
                 break;
         }

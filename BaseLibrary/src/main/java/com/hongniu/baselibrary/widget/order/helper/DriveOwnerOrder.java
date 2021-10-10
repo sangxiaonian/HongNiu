@@ -11,6 +11,7 @@ import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_RECEIPT;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_CHECK_ROUT;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_ENTRY_ARRIVE;
+import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_PROMOTE;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_START_CAR;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_TRUCK_GUIDE;
 import static com.hongniu.baselibrary.widget.order.CommonOrderUtils.ORDER_UP_RECEIPT;
@@ -92,6 +93,10 @@ public class DriveOwnerOrder extends OwnerOrder implements OrderDetailItemContro
                     buttonInfors.add(new ButtonInforBean(ORDER_CHECK_RECEIPT));//查看回单
                 }
                 break;
+            case WAITE_PROMOTE://未提送
+                buttonInfors.add(new ButtonInforBean(1,ORDER_PROMOTE));//查看回单
+                break;
+            case HAS_PROMOTE://已提送
             case REFUND://退款
             case UNKNOW://未知状态
                 break;

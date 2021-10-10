@@ -5,34 +5,33 @@ import android.text.TextUtils;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.fy.androidlibrary.net.error.NetException;
+import com.fy.androidlibrary.net.rx.RxUtils;
 import com.fy.androidlibrary.utils.CollectionUtils;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.CreatInsuranceBean;
 import com.hongniu.baselibrary.entity.OrderCreatBean;
+import com.hongniu.baselibrary.entity.OrderCreatParamBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.OrderIdBean;
+import com.hongniu.baselibrary.entity.OrderInsuranceInforBean;
 import com.hongniu.baselibrary.entity.PageBean;
+import com.hongniu.baselibrary.entity.PayParam;
 import com.hongniu.baselibrary.entity.UpImgData;
 import com.hongniu.baselibrary.entity.UpReceiverBean;
-import com.hongniu.baselibrary.net.AppService;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.moduleorder.entity.LocationBean;
 import com.hongniu.moduleorder.entity.OrderAddressListBean;
 import com.hongniu.moduleorder.entity.OrderAddressListParam;
 import com.hongniu.moduleorder.entity.OrderCarNumbean;
-import com.hongniu.baselibrary.entity.OrderCreatParamBean;
 import com.hongniu.moduleorder.entity.OrderDriverPhoneBean;
-import com.hongniu.baselibrary.entity.OrderInsuranceInforBean;
 import com.hongniu.moduleorder.entity.OrderMainQueryBean;
-import com.hongniu.baselibrary.entity.PayParam;
 import com.hongniu.moduleorder.entity.OrderSearchBean;
 import com.hongniu.moduleorder.entity.PathBean;
 import com.hongniu.moduleorder.entity.QueryInsurancePriceBean;
 import com.hongniu.moduleorder.entity.QueryReceiveBean;
 import com.hongniu.moduleorder.entity.VersionBean;
-import com.fy.androidlibrary.net.rx.RxUtils;
 import com.sang.thirdlibrary.pay.entiy.PayBean;
 
 import org.jetbrains.annotations.NotNull;
@@ -106,7 +105,7 @@ public class HttpOrderFactory {
      */
     public static Observable<CommonBean<OrderDetailBean>> queryOrderDetail(String orderID) {
 
-        return HttpAppFactory.queryOrderDetail(orderID,null,null);
+        return HttpAppFactory.queryOrderDetail(orderID, null, null);
 
     }
 
@@ -183,7 +182,7 @@ public class HttpOrderFactory {
      */
     public static Observable<CommonBean<PayBean>> payOrderOffLine(PayParam bean) {
         //支付方式
-         return HttpAppFactory.pay(bean);
+        return HttpAppFactory.pay(bean);
 
 
     }
@@ -226,6 +225,20 @@ public class HttpOrderFactory {
         return OrderClient.getInstance()
                 .getService()
                 .driverStart(bean)
+                .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
+    }
+
+    /**
+     * 完成提送
+     *
+     * @param orderId
+     */
+    public static Observable<CommonBean<String>> driverPromote(String orderId) {
+        OrderIdBean bean = new OrderIdBean();
+        bean.setId(orderId);
+        return OrderClient.getInstance()
+                .getService()
+                .driverPromote(bean)
                 .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
     }
 
@@ -455,7 +468,9 @@ public class HttpOrderFactory {
                 .compose(RxUtils.<CommonBean<QueryReceiveBean>>getSchedulersObservableTransformer());
 
 
-    }/**
+    }
+
+    /**
      * 查看货单
      *
      * @return
@@ -494,8 +509,10 @@ public class HttpOrderFactory {
         return OrderClient.getInstance().getService().querInsruancUserInfor()
                 .compose(RxUtils.<CommonBean<List<OrderInsuranceInforBean>>>getSchedulersObservableTransformer());
     }
+
     /**
      * 查询常用地址列表
+     *
      * @return
      */
     @NotNull
