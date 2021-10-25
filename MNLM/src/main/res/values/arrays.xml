@@ -28,6 +28,8 @@
         <item>运输中</item>
         <item>已到达</item>
         <item>已收货</item>
+        <item>未提送</item>
+        <item>已完成提送</item>
     </string-array>
       <!--平台-->
     <string-array name="platform_status">

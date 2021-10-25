@@ -26,6 +26,9 @@ import com.hongniu.baselibrary.base.BaseFragment;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.H5Config;
+import com.hongniu.baselibrary.entity.RoleTypeBean;
+import com.hongniu.baselibrary.net.HttpAppFactory;
+import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventParams;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
 import com.hongniu.supply.R;
@@ -37,6 +40,8 @@ import com.sang.common.recycleview.RecycleViewScroll;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.widget.DrawableCircle;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -145,6 +150,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                         adapter.notifyDataSetChanged();
                     }
                 });
+        queryRole();
     }
 
     private boolean isFirst = true;
@@ -241,8 +247,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                 break;
             case R.id.ll_contact:
                 //合同
+
                 ArouterUtils.getInstance()
                         .builder(ArouterParamOrder.activity_order_order)
+                        .withInt(Param.TRAN,role.getRoleId())
                         .navigation(getContext());
                 break;
         }
@@ -272,4 +280,19 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     }
 
 
+    private void queryRole() {
+        if (Utils.isLogin()) {
+            HttpAppFactory.getRoleType()
+                    .subscribe(new NetObserver<RoleTypeBean>(null) {
+                        @Override
+                        public void doOnSuccess(RoleTypeBean data) {
+                            role=data;
+                        }
+
+
+                    });
+        }
+    }
+
+    private RoleTypeBean role=new RoleTypeBean();
 }

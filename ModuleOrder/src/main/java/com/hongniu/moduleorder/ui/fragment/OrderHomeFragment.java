@@ -1,15 +1,21 @@
 package com.hongniu.moduleorder.ui.fragment;
 
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CARGO_OWNER;
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CAR_OWNER;
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.DRIVER;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.fy.androidlibrary.event.BusFactory;
 import com.githang.statusbar.StatusBarCompat;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
@@ -24,17 +30,12 @@ import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.OrderMainControl;
 import com.hongniu.moduleorder.control.SwitchStateListener;
 import com.hongniu.moduleorder.widget.OrderMainTitlePop;
-import com.fy.androidlibrary.event.BusFactory;
 import com.sang.common.widget.SwitchTextLayout;
 import com.sang.common.widget.popu.BasePopu;
 import com.sang.common.widget.popu.inter.OnPopuDismissListener;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CARGO_OWNER;
-import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CAR_OWNER;
-import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.DRIVER;
 
 /**
  * 订单中心主页
@@ -55,7 +56,7 @@ public class OrderHomeFragment extends BaseFragment implements OrderMainControl.
 
     private OrderDetailItemControl.RoleState roleState = CARGO_OWNER;
     private Context mContext;
-    private int type=3;
+    private int type = 3;
     private View back;
     private boolean showBack;
 
@@ -77,7 +78,7 @@ public class OrderHomeFragment extends BaseFragment implements OrderMainControl.
         switchTitle = inflate.findViewById(R.id.switch_title);
         back = inflate.findViewById(R.id.toolbar_left);
         titlePop = new OrderMainTitlePop(getContext());
-        back.setVisibility(showBack?View.VISIBLE:View.GONE);
+        back.setVisibility(showBack ? View.VISIBLE : View.GONE);
         return inflate;
 
     }
@@ -110,6 +111,7 @@ public class OrderHomeFragment extends BaseFragment implements OrderMainControl.
         super.initData();
         StatusBarCompat.setStatusBarColor(getActivity(), getResources().getColor(R.color.white), true);
     }
+
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
@@ -129,7 +131,6 @@ public class OrderHomeFragment extends BaseFragment implements OrderMainControl.
     }
 
 
-
     @Override
     public void onStop() {
         super.onStop();
@@ -143,15 +144,15 @@ public class OrderHomeFragment extends BaseFragment implements OrderMainControl.
 
 
 
-    //进入首页时候，根据获取到的数据切换当前角色
-    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(final RoleTypeBean event) {
-        if (event != null) {
-            changeStaff(event.getRoleId());//此处接收到用户类型
-
-        }
-        BusFactory.getBus().removeStickyEvent(RoleTypeBean.class);
-    }
+//    //进入首页时候，根据获取到的数据切换当前角色
+//    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+//    public void onMessageEvent(final RoleTypeBean event) {
+//        if (event != null) {
+//            changeStaff(event.getRoleId());//此处接收到用户类型
+//
+//        }
+//        BusFactory.getBus().removeStickyEvent(RoleTypeBean.class);
+//    }
 
     @Override
     public void onAttach(Context context) {
@@ -319,7 +320,6 @@ public class OrderHomeFragment extends BaseFragment implements OrderMainControl.
     public void onClose(SwitchTextLayout switchTextLayout, View view) {
         titlePop.dismiss();
     }
-
 
 
 }

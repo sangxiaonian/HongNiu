@@ -1,5 +1,8 @@
 package com.hongniu.moduleorder.ui.fragment;
 
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CARGO_OWNER;
+import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.DRIVER;
+
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -8,16 +11,14 @@ import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
 import com.hongniu.baselibrary.widget.order.OrderDetailItemControl;
 import com.hongniu.moduleorder.R;
 import com.hongniu.moduleorder.control.SwitchStateListener;
-import com.sang.common.widget.popu.OrderMainPop;
 import com.sang.common.widget.SwitchTextLayout;
 import com.sang.common.widget.popu.BasePopu;
+import com.sang.common.widget.popu.OrderMainPop;
 import com.sang.common.widget.popu.inter.OnPopuDismissListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CARGO_OWNER;
 
 /**
  * 订单列表Fragment
@@ -55,9 +56,15 @@ public class OrderMainFragmet extends OrderFragmet implements SwitchStateListene
         for (String s : stringArray) {
             if (roleState != CARGO_OWNER) {
                 if (s.equals("待支付")
-                        ||s.equals("支付审核中")
-                        ||s.equals("审核被拒")
-                ){
+                        || s.equals("支付审核中")
+                        || s.equals("审核被拒")
+                ) {
+                    continue;
+                }
+            } else if (roleState != DRIVER) {
+                if (s.equals("完成提送")
+                        || s.equals("未提送")
+                ) {
                     continue;
                 }
             }
@@ -79,7 +86,6 @@ public class OrderMainFragmet extends OrderFragmet implements SwitchStateListene
         orderMainPop.setListener(this);
 
     }
-
 
 
     @Override
@@ -127,6 +133,10 @@ public class OrderMainFragmet extends OrderFragmet implements SwitchStateListene
                 queryBean.setQueryStatus(null);
             } else if (position == 1 && roleState == CARGO_OWNER) {//待支付状态
                 queryBean.setQueryStatus("0");
+            } else if (position == 5 && roleState == DRIVER) {//未提送
+                queryBean.setQueryStatus("10");
+            } else if (position == 6 && roleState == DRIVER) {//已完成提送
+                queryBean.setQueryStatus("11");
             } else {
                 if (roleState == CARGO_OWNER) {
                     queryBean.setQueryStatus((position) + "");

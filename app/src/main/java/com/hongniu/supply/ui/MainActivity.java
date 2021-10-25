@@ -3,8 +3,10 @@ package com.hongniu.supply.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,7 +76,6 @@ import rongyun.sang.com.chactmodule.ui.fragment.ChactListFragment;
 @Route(path = ArouterParamsApp.activity_main)
 public class MainActivity extends ModuleBaseActivity implements View.OnClickListener, AMapLocationListener {
 
-    private TextView demo;
 
     private LoactionUtils loaction;
     private LoactionUpUtils upLoactionUtils;//上传位置信息
@@ -164,7 +165,6 @@ public class MainActivity extends ModuleBaseActivity implements View.OnClickList
         img3 = findViewById(R.id.img3);
         img4 = findViewById(R.id.img4);
         img5 = findViewById(R.id.img5);
-        demo = findViewById(R.id.demo);
 
     }
 
@@ -177,7 +177,6 @@ public class MainActivity extends ModuleBaseActivity implements View.OnClickList
 //                .beginTransaction()
 //                .add(R.id.content, messageFragment)
 //                .commit();
-        demo.setVisibility(Param.isDebug ? View.VISIBLE : View.GONE);
 
         //检查版本更新
         checkVersion();
@@ -339,13 +338,7 @@ public class MainActivity extends ModuleBaseActivity implements View.OnClickList
         tab3.setOnClickListener(this);
         tab4.setOnClickListener(this);
         tab5.setOnClickListener(this);
-        demo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ArouterUtils.getInstance().builder( ArouterParamOrder.activity_order_address_list)
-                        .navigation();
-            }
-        });
+
 
     }
 

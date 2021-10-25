@@ -703,20 +703,45 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
      * @param orderBean
      */
     @Override
-    public void onEntryPromote(OrderDetailBean orderBean) {
-        HttpOrderFactory.driverPromote(orderBean.getId())
-                .subscribe(new NetObserver<String>(taskListener) {
+    public void onEntryPromote(final OrderDetailBean orderBean) {
+        creatDialog("确认完成提送？", "感谢您的辛苦付出", "返回订单", "完成提送")
+                .setRightClickListener(new DialogControl.OnButtonRightClickListener() {
                     @Override
-                    public void doOnSuccess(String data) {
+                    public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
+                        dialog.dismiss();
+
+                        double v = MapConverUtils.caculeDis(latLng.latitude
+                                , latLng.longitude
+                                , orderBean.getDestinationLatitude(), orderBean.getDestinationLongitude());
+                        dialog.dismiss();
+                        if (latLng.latitude == 0 || latLng.longitude == 0) {
+                            UpLoactionEvent upLoactionEvent = new UpLoactionEvent();
+                            upLoactionEvent.start = true;
+                            BusFactory.getBus().post(upLoactionEvent);
+                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("正在获取当前位置，请稍后再试");
+                        } else if (v > Param.ENTRY_MIN) {//距离过大，超过确认订单的最大距离
+                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("距离收货地点还有" + ConvertUtils.changeFloat(v / 1000, 1) + "公里，无法确认到达");
+                        } else {
+                            HttpOrderFactory.driverPromote(orderBean.getId())
+                                    .subscribe(new NetObserver<String>(taskListener) {
+                                        @Override
+                                        public void doOnSuccess(String data) {
+
+                                        }
+
+                                        @Override
+                                        public void onComplete() {
+                                            super.onComplete();
+                                            BusFactory.getBus().post(new OrderEvent.OrderUpdate(roleState));
+                                        }
+                                    });
+                        }
+
 
                     }
+                }).creatDialog(new CenterAlertDialog(getContext()))
+                .show();
 
-                    @Override
-                    public void onComplete() {
-                        super.onComplete();
-                        BusFactory.getBus().post(new OrderEvent.OrderUpdate(roleState));
-                    }
-                });
     }
 
     protected CenterAlertBuilder creatDialog(String title, String content, String btleft, String
