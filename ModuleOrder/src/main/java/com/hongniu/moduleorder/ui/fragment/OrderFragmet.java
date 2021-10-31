@@ -710,32 +710,42 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
                     public void onRightClick(View view, DialogControl.ICenterDialog dialog) {
                         dialog.dismiss();
 
-                        double v = MapConverUtils.caculeDis(latLng.latitude
-                                , latLng.longitude
-                                , orderBean.getDestinationLatitude(), orderBean.getDestinationLongitude());
-                        dialog.dismiss();
-                        if (latLng.latitude == 0 || latLng.longitude == 0) {
-                            UpLoactionEvent upLoactionEvent = new UpLoactionEvent();
-                            upLoactionEvent.start = true;
-                            BusFactory.getBus().post(upLoactionEvent);
-                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("正在获取当前位置，请稍后再试");
-                        } else if (v > Param.ENTRY_MIN) {//距离过大，超过确认订单的最大距离
-                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("距离收货地点还有" + ConvertUtils.changeFloat(v / 1000, 1) + "公里，无法确认到达");
-                        } else {
-                            HttpOrderFactory.driverPromote(orderBean.getId())
-                                    .subscribe(new NetObserver<String>(taskListener) {
-                                        @Override
-                                        public void doOnSuccess(String data) {
+                        PermissionUtils.applyMap(getActivity(),
+                                new PermissionUtils.onApplyPermission() {
+                                    @Override
+                                    public void hasPermission(List<String> granted, boolean isAll) {
+                                        double v = MapConverUtils.caculeDis(latLng.latitude
+                                                , latLng.longitude
+                                                , orderBean.getDestinationLatitude(), orderBean.getDestinationLongitude());
+                                        if (latLng.latitude == 0 || latLng.longitude == 0) {
+                                            UpLoactionEvent upLoactionEvent = new UpLoactionEvent();
+                                            upLoactionEvent.start = true;
+                                            BusFactory.getBus().post(upLoactionEvent);
+                                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("正在获取当前位置，请稍后再试");
+                                        } else if (v > Param.ENTRY_MIN) {//距离过大，超过确认订单的最大距离
+                                            ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("距离提送地点还有" + ConvertUtils.changeFloat(v / 1000, 1) + "公里，无法完成提送");
+                                        } else {
+                                            HttpOrderFactory.driverPromote(orderBean.getId())
+                                                    .subscribe(new NetObserver<String>(taskListener) {
+                                                        @Override
+                                                        public void doOnSuccess(String data) {
 
+                                                        }
+
+                                                        @Override
+                                                        public void onComplete() {
+                                                            super.onComplete();
+                                                            BusFactory.getBus().post(new OrderEvent.OrderUpdate(roleState));
+                                                        }
+                                                    });
                                         }
 
-                                        @Override
-                                        public void onComplete() {
-                                            super.onComplete();
-                                            BusFactory.getBus().post(new OrderEvent.OrderUpdate(roleState));
-                                        }
-                                    });
-                        }
+                                    }
+
+                                    @Override
+                                    public void noPermission(List<String> denied, boolean quick) {
+                                    }
+                                });
 
 
                     }
