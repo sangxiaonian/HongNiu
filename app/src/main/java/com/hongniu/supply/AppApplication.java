@@ -1,41 +1,23 @@
 package com.hongniu.supply;
 
-import android.content.Context;
-import android.content.Intent;
+import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
+
 import android.text.TextUtils;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
-import com.hongniu.baselibrary.arouter.ArouterParamsMatch;
-import com.hongniu.baselibrary.arouter.ArouterUtils;
+import com.fy.androidlibrary.utils.DeviceUtils;
+import com.fy.androidlibrary.utils.JLog;
 import com.hongniu.baselibrary.base.BaseApplication;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.config.Param;
-import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.net.BaseClient;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventBean;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
-import com.hongniu.freight.Config;
-import com.hongniu.supply.entity.PushBean;
+import com.hongniu.supply.manager.ThirdManager;
 import com.hongniu.supply.net.HttpMainFactory;
-import com.hongniu.supply.ui.receiver.MyPlushBroadcastReceiver;
-import com.fy.androidlibrary.utils.DeviceUtils;
-import com.fy.androidlibrary.utils.JLog;
-import com.fy.androidlibrary.utils.SharedPreferencesUtils;
 import com.sang.common.utils.errorcrushhelper.CrashHelper;
-import com.sang.thirdlibrary.chact.ChactHelper;
-import com.sang.thirdlibrary.chact.control.ChactControl;
-import com.sang.thirdlibrary.push.NotificationUtils;
-import com.sang.thirdlibrary.push.client.PushClient;
-import com.sang.thirdlibrary.push.inter.PlushDealWithMessageListener;
-import com.sang.thirdlibrary.push.inter.PlushRegisterListener;
-import com.umeng.message.IUmengRegisterCallback;
-import com.umeng.message.UmengNotificationClickHandler;
-import com.umeng.message.entity.UMessage;
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
-import org.greenrobot.eventbus.EventBus;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
@@ -47,8 +29,6 @@ import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 
-import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
-
 /**
  * 作者： ${PING} on 2018/10/8.
  */
@@ -57,9 +37,6 @@ public class AppApplication extends BaseApplication {
 
     @Override
     public void onCreate() {
-
-        Config.getInstance().init(this,BuildConfig.DEBUG);
-
         BaseClient.getInstance().baseUrl(Param.url);
         //二维码扫描
         ZXingLibrary.initDisplayOpinion(this);
@@ -68,65 +45,14 @@ public class AppApplication extends BaseApplication {
             ARouter.openLog();     // 打印日志
             ARouter.openDebug();   // 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
         }
-
         ARouter.init(this); // 尽可能早，推荐在Application中初始化
         CrashHelper.getInstance()
                 .init(this);
-        ChactHelper.getHelper()
-                .initHelper(this,BuildConfig.RONG_CLOUD_APP_KEY)
-                //未读消息监听
-                .setUnReadCountListener(new ChactControl.OnReceiveUnReadCountListener() {
-                    @Override
-                    public void onReceiveUnRead(int count) {
-                        EventBus.getDefault().postSticky(count);
-                    }
-                })
-        ;
+
         initData();
-        registerUM();
+        ThirdManager.INSTANCE.init(this, BuildConfig.DEBUG);
     }
 
-    public void registerUM() {
-        PushClient plushClient = PushClient.getClient();
-        plushClient.setPlush(this);
-        plushClient.setPlushRegisterListener(new PlushRegisterListener() {
-            @Override
-            public void onSuccess(String data) {
-                JLog.d("推送注册成功:" + data);
-                SharedPreferencesUtils.getInstance().putString(Param.UMENG, data);
-                EventBus.getDefault().postSticky(new Event.Umeng());
-            }
-
-            @Override
-            public void onFailure(String code, String errorReson) {
-                JLog.e("推送注册失败:" + code + " :  " + errorReson);
-            }
-        });
-        NotificationUtils.getInstance().setReceiver(MyPlushBroadcastReceiver.class);
-        plushClient.setPlushDealWithMessageListener(new PlushDealWithMessageListener() {
-            @Override
-            public void dealMessage(Context context, Object message) {
-                JLog.i("接收到推送信息：" + message.toString());
-                if (message instanceof UMessage) {
-                    try {
-                        String custom = ((UMessage) message).custom;
-                        PushBean pushBean = null;
-                        try {
-                              pushBean = new Gson().fromJson(custom, PushBean.class);
-                        } catch (JsonSyntaxException e) {
-                            e.printStackTrace();
-                        }
-                        NotificationUtils.getInstance()
-                                .setSound(pushBean!=null&&pushBean.showSound?R.raw.notify_sound:0)
-                                .showNotification(context, (UMessage) message);
-                    } catch (JsonSyntaxException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-
-    }
 
     //上传异常情况
     private void initData() {

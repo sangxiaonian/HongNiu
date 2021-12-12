@@ -27,7 +27,6 @@ import com.hongniu.baselibrary.utils.Utils;
 import com.sang.common.widget.dialog.CenterAlertDialog;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
-import com.sang.thirdlibrary.bug.BugClient;
 import com.umeng.message.PushAgent;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -75,7 +74,6 @@ public class ModuleBaseActivity extends AppCompatActivity implements TaskControl
     @Override
     protected void onResume() {
         super.onResume();
-        BugClient.getInstance().onResume(this);
     }
 
     @Override
@@ -87,7 +85,6 @@ public class ModuleBaseActivity extends AppCompatActivity implements TaskControl
     @Override
     protected void onPause() {
         super.onPause();
-        BugClient.getInstance().onPause(this);
 
     }
 

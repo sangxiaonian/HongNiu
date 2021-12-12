@@ -33,36 +33,34 @@ dependencies {
     api project(':ResLibrary')
     implementation project(':CommonLibrary')
     //微信支付
-    api 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+    api 'com.tencent.mm.opensdk:wechat-sdk-android:6.8.0'
+
+
     //友盟统计
-    api 'com.umeng.sdk:analytics:7.5.0'
+    api 'com.umeng.umsdk:apm:1.5.2'
 
-
-    //PushSDK必须依赖基础组件库，所以需要加入对应依赖
-    api 'com.umeng.umsdk:common:1.5.4'
-//PushSDK必须依赖utdid库，所以需要加入对应依赖
-    api 'com.umeng.umsdk:utdid:1.1.5.3'
-//PushSDK
-    api 'com.umeng.umsdk:push:6.0.1'
+    //友盟基础库依赖（必须）
+    api 'com.umeng.umsdk:common:9.4.4'
+    api 'com.umeng.umsdk:asms:1.4.1'
+    //友盟Push依赖
+    api 'com.umeng.umsdk:push:6.4.7'
 
 
     api files('libs/UPPayPluginExPro.jar')
     api files('libs/UPPayAssistEx.jar')
     api files('libs/alipaySdk-20180601.jar')
     //融云聊天
-//    api project(':IMKit')
-//    api project(':CallKit')
 
     //融云聊天
 
-    api 'cn.rongcloud.sdk:im_lib:4.0.0'
-    api 'cn.rongcloud.sdk:im_kit:4.0.0'
+    api 'cn.rongcloud.sdk:im_kit:4.0.3.14'
+    api 'cn.rongcloud.sdk:im_lib:4.0.3.14'
 //    api 'cn.rongcloud.sdk:im_lib:2.10.5'
 //    api 'cn.rongcloud.sdk:im_kit:2.10.5'
 
 //    api project(':RCSticker')
-    api 'com.huawei.android.hms:push:2.6.1.301'
-    api files('libs/MiPush_SDK_Client_3_6_9.jar')
+//    api 'com.huawei.android.hms:push:2.6.1.301'
+//    api files('libs/MiPush_SDK_Client_3_6_9.jar')
 //    api files('libs/AMap_Channel_Location_V1.4.0_20160708.jar')
 //    api files('libs/AMap3DMap_6.4.0_AMapNavi_6.2.0_AMapSearch_6.1.0_AMapLocation_4.2.0_20180814.jar')
     api 'com.amap.api:search:7.3.0'

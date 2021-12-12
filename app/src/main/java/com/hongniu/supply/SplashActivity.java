@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 
+import com.fy.androidlibrary.utils.SharedPreferencesUtils;
+import com.fy.companylibrary.manager.PrivacyManger;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
@@ -15,9 +17,8 @@ import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.Utils;
-import com.hongniu.freight.Config;
+import com.hongniu.supply.manager.ThirdManager;
 import com.hongniu.supply.weight.RuleAlertDialog;
-import com.fy.androidlibrary.utils.SharedPreferencesUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -54,26 +55,19 @@ public class SplashActivity extends ModuleBaseActivity implements RuleAlertDialo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
-
         if (getIntent() != null) {
             if ((getIntent().getFlags() & Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT) != 0) {
                 finish();
                 return;
             }
         }
-
-
         setToolbarTitle("");
-
-        boolean rule = SharedPreferencesUtils.getInstance().getBoolean("RULE");
-        if (rule){
+        boolean rule = PrivacyManger.INSTANCE.isAgreePrivacy();
+        if (rule) {
             jump2Next();
-        }else {
-            new RuleAlertDialog(this,this).show();
+        } else {
+            new RuleAlertDialog(this, this).show();
         }
-
-
 
 
     }
@@ -143,7 +137,8 @@ public class SplashActivity extends ModuleBaseActivity implements RuleAlertDialo
 
     @Override
     public void onClickReportAlert(boolean isPositive) {
-        SharedPreferencesUtils.getInstance().putBoolean("RULE",true);
+        PrivacyManger.INSTANCE.setAgreePrivacy(true);
+        ThirdManager.INSTANCE.init(this, BuildConfig.DEBUG);
         jump2Next();
     }
 }

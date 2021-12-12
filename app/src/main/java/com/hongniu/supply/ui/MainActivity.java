@@ -3,20 +3,23 @@ package com.hongniu.supply.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
+import com.fy.androidlibrary.event.BusFactory;
 import com.fy.androidlibrary.utils.CommonUtils;
+import com.fy.androidlibrary.utils.DeviceUtils;
+import com.fy.androidlibrary.utils.JLog;
+import com.fy.androidlibrary.utils.SharedPreferencesUtils;
 import com.google.gson.Gson;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
@@ -44,27 +47,22 @@ import com.hongniu.baselibrary.widget.dialog.UpDialog;
 import com.hongniu.moduleorder.entity.VersionBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.utils.LoactionUpUtils;
-import com.hongniu.moduleorder.utils.OrderUtils;
 import com.hongniu.supply.R;
 import com.hongniu.supply.net.HttpMainFactory;
 import com.hongniu.supply.utils.RedDialog;
-import com.fy.androidlibrary.event.BusFactory;
-import com.fy.androidlibrary.utils.DeviceUtils;
-import com.fy.androidlibrary.utils.JLog;
-import com.fy.androidlibrary.utils.SharedPreferencesUtils;
 import com.sang.common.widget.dialog.builder.CenterAlertBuilder;
 import com.sang.common.widget.dialog.inter.DialogControl;
+import com.sang.thirdlibrary.chact.ChactHelper;
 import com.sang.thirdlibrary.chact.UserInfor;
 import com.sang.thirdlibrary.chact.control.OnGetUserInforListener;
 import com.sang.thirdlibrary.map.LoactionUtils;
 import com.sang.thirdlibrary.map.utils.MapConverUtils;
+import com.sang.thirdlibrary.push.client.Umeng;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
-
-import com.sang.thirdlibrary.chact.ChactHelper;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.Action;
@@ -629,7 +627,7 @@ public class MainActivity extends ModuleBaseActivity implements View.OnClickList
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onReceiveUMeng(final Event.Umeng event) {
+    public void onReceiveUMeng(final Umeng event) {
         String token = SharedPreferencesUtils.getInstance().getString(Param.UMENG);
         if (!TextUtils.isEmpty(token)) {
             BusFactory.getBus().removeStickyEvent(event);

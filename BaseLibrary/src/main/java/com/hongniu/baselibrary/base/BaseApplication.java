@@ -8,7 +8,6 @@ import com.fy.androidlibrary.utils.SharedPreferencesUtils;
 import com.hongniu.baselibrary.R;
 import com.hongniu.baselibrary.config.Param;
 import com.fy.androidlibrary.imgload.ImageLoader;
-import com.sang.thirdlibrary.bug.BugClient;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
@@ -27,8 +26,6 @@ public class BaseApplication extends MultiDexApplication {
         final IWXAPI msgApi = WXAPIFactory.createWXAPI(this, null);
 // 将该app注册到微信
         msgApi.registerApp(Param.weChatAppid);
-
-        BugClient.getInstance().init(this);
 
         ToastUtils.getInstance().init(this);
         SharedPreferencesUtils.getInstance().initSharePreference(this);

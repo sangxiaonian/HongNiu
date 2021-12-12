@@ -1,16 +1,19 @@
-package com.sang.thirdlibrary.push.client;
+package com.sang.thirdlibrary.push.client.umen;
 
 import android.content.Context;
 
 
 import com.fy.androidlibrary.utils.DeviceUtils;
 import com.sang.thirdlibrary.push.NotificationUtils;
+import com.sang.thirdlibrary.push.client.IPush;
 import com.sang.thirdlibrary.push.inter.PlushDealWithMessageListener;
 import com.sang.thirdlibrary.push.inter.PlushRegisterListener;
-import com.umeng.message.IUmengRegisterCallback;
+import com.umeng.commonsdk.UMConfigure;
+import com.umeng.commonsdk.utils.UMUtils;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UTrack;
 import com.umeng.message.UmengMessageHandler;
+import com.umeng.message.api.UPushRegisterCallback;
 import com.umeng.message.entity.UMessage;
 
 
@@ -23,19 +26,36 @@ import com.umeng.message.entity.UMessage;
 public class PushUmeng implements IPush<UMessage> {
 
 
-    private final PushAgent mPushAgent;
+    private  PushAgent mPushAgent;
     private int notifyId;
 
 
 
     private PlushRegisterListener registerListener;
     private PlushDealWithMessageListener<UMessage> dealWithMessageListener;
+    private boolean isAgree;
 
-    public PushUmeng(Context context) {
+
+    public PushUmeng() { }
+
+    private void configUmeng(Context context){
+        UMConfigure.init(context, PushConstants.APP_KEY, PushConstants.CHANNEL,
+                UMConfigure.DEVICE_TYPE_PHONE, PushConstants.MESSAGE_SECRET);
         mPushAgent = PushAgent.getInstance(context);
-        //注册rom渠道
-        registerRomChannel(context);
-        mPushAgent.register(new IUmengRegisterCallback() {
+        //自定义消息处理
+        UmengMessageHandler messageHandler = new UmengMessageHandler() {
+            @Override
+            public void dealWithNotificationMessage(Context context, UMessage msg) {
+                notifyId++;
+                if (dealWithMessageListener != null) {
+                    dealWithMessageListener.dealMessage(context, msg);
+                }else {
+                    NotificationUtils.getInstance().showNotification(context, notifyId, msg);
+                }
+            }
+        };
+        mPushAgent.setMessageHandler(messageHandler);
+        mPushAgent.register(new UPushRegisterCallback() {
 
             @Override
             public void onSuccess(String deviceToken) {
@@ -52,19 +72,37 @@ public class PushUmeng implements IPush<UMessage> {
                 }
             }
         });
-        //自定义消息处理
-        UmengMessageHandler messageHandler = new UmengMessageHandler() {
-            @Override
-            public void dealWithNotificationMessage(Context context, UMessage msg) {
-                notifyId++;
-                if (dealWithMessageListener != null) {
-                    dealWithMessageListener.dealMessage(context, msg);
-                }else {
-                    NotificationUtils.getInstance().showNotification(context, notifyId, msg);
+
+        registerRomChannel(context);
+    }
+
+    public void init(final Context context, boolean isAgreed){
+        UMConfigure.setLogEnabled(true);
+        //预初始化
+        preInit(context);
+        this.isAgree=isAgreed;
+        if (!isAgreed){
+            return;
+        }
+        boolean isMainProcess = UMUtils.isMainProgress(context);
+        if (isMainProcess) {
+            //启动优化：建议在子线程中执行初始化
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    configUmeng(context.getApplicationContext());
                 }
-            }
-        };
-        mPushAgent.setMessageHandler(messageHandler);
+            }).start();
+        } else {
+            //若不是主进程（":channel"结尾的进程），直接初始化sdk，不可在子线程中执行
+            configUmeng(context.getApplicationContext());
+        }
+    }
+
+    private void preInit(Context context){
+        //解决厂商通知点击时乱码等问题
+        PushAgent.setup(context, PushConstants.APP_KEY, PushConstants.MESSAGE_SECRET);
+        UMConfigure.preInit(context, PushConstants.APP_KEY, PushConstants.CHANNEL);
     }
 
     private void registerRomChannel(Context context) {
@@ -124,7 +162,9 @@ public class PushUmeng implements IPush<UMessage> {
 
     @Override
     public void onAppStart(Context context) {
-        PushAgent.getInstance(context).onAppStart();
+        if (isAgree) {
+            PushAgent.getInstance(context).onAppStart();
+        }
     }
 
     /**

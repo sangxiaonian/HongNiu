@@ -1,16 +1,15 @@
 package com.sang.thirdlibrary.chact;
 
-import android.app.Application;
+import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
+
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.text.TextUtils;
 import android.util.LruCache;
 
 import com.fy.androidlibrary.net.rx.BaseObserver;
 import com.fy.androidlibrary.toast.ToastUtils;
-import com.fy.androidlibrary.utils.DeviceUtils;
 import com.fy.androidlibrary.utils.JLog;
 import com.sang.thirdlibrary.chact.control.ChactControl;
 import com.sang.thirdlibrary.chact.control.OnGetUserInforListener;
@@ -18,16 +17,12 @@ import com.sang.thirdlibrary.chact.control.OnGetUserInforListener;
 import java.util.Locale;
 import java.util.Objects;
 
-import io.rong.common.RLog;
 import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.manager.IUnReadMessageObserver;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
-import io.rong.push.RongPushClient;
-
-import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
 
 /**
  * 作者： ${桑小年} on 2018/11/25.
@@ -38,7 +33,9 @@ public class ChactHelper {
     OnGetUserInforListener listener;
     ChactControl.OnReceiveUnReadCountListener unReadCountListener;
     private String ownerID;
-
+    private boolean isAgree;
+    private boolean isInit;
+    private String appKey;
 
     private static class Inner {
         private static ChactHelper helper = new ChactHelper();
@@ -48,22 +45,20 @@ public class ChactHelper {
         return Inner.helper;
     }
 
+    public ChactHelper setIsAgree(boolean isAgree){
+        this.isAgree=isAgree;
+        return this;
+    }
     /**
      * 初始化数据
      *
      * @param application
      */
-    public ChactHelper initHelper(Application application,String key) {
-        String deviceBrand = DeviceUtils.getDeviceBrand();
-        if (application.getApplicationInfo().packageName.equals(getCurProcessName(application))) {
-//            if (deviceBrand.equalsIgnoreCase("Xiaomi")){
-//                //小米推送配置
-//                RongPushClient.registerMiPush(application, "2882303761517871354", "5731787151354");
-//            }else if (deviceBrand.equalsIgnoreCase("huawei")){
-//                //华为配置
-//                RongPushClient.registerHWPush(application);
-//            }
-            RongIM.init(application,key);
+    public ChactHelper initHelper(Context application, String key ) {
+        this.appKey=key;
+        if (isAgree && application.getApplicationInfo().packageName.equals(getCurProcessName(application))) {
+            RongIM.init(application, key);
+            isInit=true;
             RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
                 @Override
                 public UserInfo getUserInfo(final String s) {
@@ -94,49 +89,18 @@ public class ChactHelper {
         return this;
     }
 
-    /**
-     * 连接融云服务器
-     *
-     * @param context
-     * @param token
-     */
-    public void connect(Context context, String token) {
-        connect(context, token, new RongIMClient.ConnectCallback() {
-
-
-            /**
-             * 连接融云成功
-             * @param userid 当前 token 对应的用户 id
-             */
-            @Override
-            public void onSuccess(String userid) {
-                JLog.e("初始化成功" + userid);
-            }
-
-            @Override
-            public void onError(RongIMClient.ConnectionErrorCode connectionErrorCode) {
-                JLog.e("初始化失败");
-                JLog.e("初始错误" + connectionErrorCode.getValue());
-
-            }
-
-            @Override
-            public void onDatabaseOpened(RongIMClient.DatabaseOpenStatus databaseOpenStatus) {
-
-            }
-
-
-        });
-    }
 
     public void connect(final Context context, final String token, final RongIMClient.ConnectCallback callback) {
-
-
+        if (!isAgree){
+            return;
+        }
+        if (!isInit){
+            initHelper(context,appKey);
+        }
         if (context.getApplicationInfo().packageName.equals(getCurProcessName(context.getApplicationContext()))) {
             ownerID = null;
             JLog.e("开始连接服务器");
             RongIM.connect(token, new RongIMClient.ConnectCallback() {
-
 
 
                 /**
@@ -187,9 +151,10 @@ public class ChactHelper {
 
     /**
      * 判断当前是否处于断开连接状态
+     *
      * @return true 断开连接
      */
-    public boolean disConnectState(){
+    public boolean disConnectState() {
         return !RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED);
     }
 
@@ -202,23 +167,23 @@ public class ChactHelper {
      * @param title
      */
     public void startPriver(Context context, String userID, String title) {
-        if (Objects.equals(userID,ownerID) ) {
+        if (Objects.equals(userID, ownerID)) {
             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("您不能和自己对话");
         } else {
-            if (userID!=null){
+            if (userID != null) {
                 startPrivateChat(context, userID, title == null ? "聊天" : title, context.getApplicationInfo().packageName);
 
-            }else {
+            } else {
                 ToastUtils.getInstance().makeToast(ToastUtils.ToastType.CENTER).show("用户ID为空");
             }
         }
 
     }
 
-    public void startPrivateChat(Context context, String targetUserId, String title,String packageName) {
+    public void startPrivateChat(Context context, String targetUserId, String title, String packageName) {
         if (context != null && !TextUtils.isEmpty(targetUserId)) {
             if (RongContext.getInstance() == null) {
-                JLog.e( "startPrivateChat. RongIM SDK not init, please do after init.");
+                JLog.e("startPrivateChat. RongIM SDK not init, please do after init.");
             } else {
                 if (TextUtils.isEmpty(packageName)) {
                     packageName = context.getApplicationInfo().packageName;
@@ -229,11 +194,9 @@ public class ChactHelper {
                 context.startActivity(intent);
             }
         } else {
-            JLog.e(  "startPrivateChat. context or targetUserId can not be empty!!!");
+            JLog.e("startPrivateChat. context or targetUserId can not be empty!!!");
         }
     }
-
-
 
 
     /**
@@ -258,7 +221,7 @@ public class ChactHelper {
      * @param infor
      */
     public void refreshUserInfoCache(String rongID, UserInfor infor) {
-        if (infor==null){
+        if (infor == null) {
             return;
         }
         StringBuilder builder = new StringBuilder();

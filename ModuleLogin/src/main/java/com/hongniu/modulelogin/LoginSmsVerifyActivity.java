@@ -18,11 +18,11 @@ import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.LoginBean;
 import com.hongniu.baselibrary.entity.LoginPersonInfor;
 import com.hongniu.baselibrary.entity.RoleTypeBean;
-import com.hongniu.baselibrary.event.Event;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.modulelogin.net.HttpLoginFactory;
 import com.sang.common.widget.VericationView;
+import com.sang.thirdlibrary.push.client.Umeng;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -181,7 +181,7 @@ public class LoginSmsVerifyActivity extends ModuleBaseActivity implements Verica
                     @Override
                     public void doOnSuccess(String data) {
                         ArouterUtils.getInstance().builder(ArouterParamsApp.activity_main).navigation(mContext);
-                        EventBus.getDefault().postSticky(new Event.Umeng());
+                        EventBus.getDefault().postSticky(new Umeng());
                     }
                 });
 

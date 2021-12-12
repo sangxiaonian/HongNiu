@@ -2,6 +2,7 @@ package com.sang.thirdlibrary.push.client;
 
 import android.content.Context;
 
+import com.sang.thirdlibrary.push.client.umen.PushUmeng;
 import com.sang.thirdlibrary.push.inter.PlushDealWithMessageListener;
 import com.sang.thirdlibrary.push.inter.PlushRegisterListener;
 
@@ -35,7 +36,7 @@ public class PushClient implements IPush {
     }
 
     public void setPlush(Context context) {
-        this.plush = new PushUmeng(context);
+        this.plush = new PushUmeng();
 
     }
 
@@ -93,6 +94,13 @@ public class PushClient implements IPush {
     public void onAppStart(Context context) {
         if (plush != null) {
             plush.onAppStart(context);
+        }
+    }
+
+    @Override
+    public void init(Context context, boolean isAgree) {
+        if (plush != null) {
+            plush.init(context, isAgree);
         }
     }
 
