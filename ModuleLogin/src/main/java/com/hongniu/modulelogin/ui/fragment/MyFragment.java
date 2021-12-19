@@ -17,6 +17,7 @@ import com.fy.androidlibrary.utils.CommonUtils;
 import com.githang.statusbar.StatusBarCompat;
 import com.hongniu.baselibrary.arouter.ArouterParamFestivity;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
+import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterParamsFinance;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.BaseFragment;
@@ -60,6 +61,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     private LinearLayout llWallet;//收款方式
     private LinearLayout llNiu;//收款方式
     private LinearLayout llDriverInfor;//司机认证
+    private LinearLayout llCancel;//注销账号
     private ViewGroup card;//收款方式
     private TextView tvName, tvPhone;
     private ImageView imgHeard;
@@ -75,6 +77,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         llPersonInfor = inflate.findViewById(R.id.ll_person_infor);
         llWallet = inflate.findViewById(R.id.ll_wallet);
         llNiu = inflate.findViewById(R.id.ll_niu);
+        llCancel = inflate.findViewById(R.id.ll_cancel);
         tvName = inflate.findViewById(R.id.tv_name);
         tvPhone = inflate.findViewById(R.id.tv_phone);
         card = inflate.findViewById(R.id.card);
@@ -194,6 +197,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         llAboutUs.setClickable(true);
         llMyCar.setClickable(true);
         llPersonInfor.setClickable(true);
+        llCancel.setClickable(true);
 
 
         llLoginOut.setOnClickListener(this);
@@ -202,6 +206,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         llDriverInfor.setOnClickListener(this);
         llMyCar.setOnClickListener(this);
         llPersonInfor.setOnClickListener(this);
+        llCancel.setOnClickListener(this);
         llWallet.setOnClickListener(this);
         llNiu.setOnClickListener(this);
         card.setOnClickListener(this);
@@ -294,6 +299,12 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             ArouterUtils.getInstance()
                     .builder(ArouterParamLogin.activity_person_infor)
                     .withInt(Param.TYPE, 1)
+                    .navigation(getContext());
+
+
+        }else if (i == R.id.ll_cancel) {//注销账号
+            ArouterUtils.getInstance()
+                    .builder(ArouterParamsApp.activity_cancellation)
                     .navigation(getContext());
 
 

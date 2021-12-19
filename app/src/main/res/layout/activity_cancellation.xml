@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.CancellationActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="你提交的申请注销生效前，我们将进行以下验证以保证你的账号、财产安全\n\n
+1、用户无未完成的有效订单\n\
+      如有未完成的订单，请处理为已完成状态，或者等所有订单状态为已完成或无效状态后再申请，否则会导致不可逆的损失\n\n
+2、保证该账号支付财产结清\n
+    用户账户中如存在余额，请先申请提现，待提现服务完成后方可申请注销"
+        android:textSize="15dp" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:layout_height="0dp"/>
+    <TextView
+        android:id="@+id/bt_sum"
+        style="@style/bt_red"
+        android:text="注销" />
+</LinearLayout>

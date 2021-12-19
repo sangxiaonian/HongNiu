@@ -1,17 +1,17 @@
 package com.hongniu.supply.net;
 
+import com.fy.androidlibrary.net.rx.RxUtils;
 import com.google.gson.JsonObject;
 import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.CompanyInfoBean;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventBean;
 import com.hongniu.freight.entity.LoginInfo;
 import com.hongniu.freight.net.HttpAppFactory;
 import com.hongniu.supply.entity.AppToken;
-import com.hongniu.baselibrary.entity.CompanyInfoBean;
 import com.hongniu.supply.entity.CompanyTokenInfoBean;
 import com.hongniu.supply.entity.HomeADBean;
 import com.hongniu.supply.entity.WayBillBean;
 import com.hongniu.supply.entity.WayBillParams;
-import com.fy.androidlibrary.net.rx.RxUtils;
 
 import java.util.List;
 
@@ -118,10 +118,20 @@ public class HttpMainFactory {
     }
 
     /**
+     * 注销账号
+     */
+    public static Observable<CommonBean<Object>> cancelAccount() {
+        return MainClient.getInstance().getService()
+                .cancelAccount()
+                .compose(RxUtils.getSchedulersObservableTransformer())
+                ;
+    }
+
+    /**
      * 根据运单号查询运单信息
      */
     public static Observable<CommonBean<LoginInfo>> loginWithToken(String token, String mobile) {
-            return HttpAppFactory.loginWithToken(token,mobile);
+        return HttpAppFactory.loginWithToken(token, mobile);
     }
 
 

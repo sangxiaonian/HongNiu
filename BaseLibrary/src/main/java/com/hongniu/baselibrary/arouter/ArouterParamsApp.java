@@ -15,7 +15,7 @@ public class ArouterParamsApp {
      */
     public final static String activity_pdf = "/app/activity_pdf";
     public final static String activity_pdf_order = "/app/activity_pdf_order";
-   /**
+    /**
      * 图片预览
      */
     public final static String activity_img_previce = "/app/activity_img_previce";
@@ -24,6 +24,11 @@ public class ArouterParamsApp {
      * h5 加载页面
      */
     public final static String activity_h5 = "/app/activity_h5";
+
+    /**
+     * 注销页面
+     */
+    public final static String activity_cancellation = "/app/activity_cancellation";
 
     /**
      * 牛人宝 h5 加载页面
@@ -50,7 +55,7 @@ public class ArouterParamsApp {
      * 手动输入运单号
      */
     public final static String activity_way_bill = "/app/activity_way_bill";
-  /**
+    /**
      * 切换网络货运公司
      */
     public final static String activity_switch_company = "/app/activity_switch_company";

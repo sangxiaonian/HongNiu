@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-
+apply plugin: 'kotlin-kapt'
 // 显示的时间格式，形如20171110
 def releaseTime() {
     return new Date().format("MM-dd-HH-mm", TimeZone.getDefault());
@@ -21,6 +21,11 @@ android {
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
             }
         }
         ndk {
@@ -104,6 +109,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
     annotationProcessor 'com.alibaba:arouter-compiler:1.5.2'
+    kapt "com.alibaba:arouter-compiler:1.5.2"
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
     if (!IsBuildMudle.toBoolean()) {
         implementation project(':ModuleLogin')

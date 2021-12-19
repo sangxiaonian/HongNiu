@@ -42,8 +42,8 @@ public interface MainService {
     /**
      * 上传需要统计的点击事件
      *
-     * @return
      * @param eventParams
+     * @return
      */
     @POST("api/account/eventupload")
     Observable<CommonBean<String>> upClickEvent(@Body ClickEventBean eventParams);
@@ -51,26 +51,28 @@ public interface MainService {
     /**
      * 根据运单号查询运单信息
      *
-     * @return
      * @param eventParams
+     * @return
      */
     @POST("api/waybill/show")
-    Observable<CommonBean<List<WayBillBean>>>queryWaybill(@Body WayBillParams eventParams);
-   /**
-     *上传友盟token
+    Observable<CommonBean<List<WayBillBean>>> queryWaybill(@Body WayBillParams eventParams);
+
+    /**
+     * 上传友盟token
      *
+     * @param eventParams
      * @return
-    * @param eventParams
-    */
+     */
     @POST("api/user/updateDevice")
-    Observable<CommonBean<Object>>upToken(@Body AppToken eventParams);
+    Observable<CommonBean<Object>> upToken(@Body AppToken eventParams);
+
     /**
      * 查询所有子平台信息列表
      *
      * @return
      */
     @POST("api/app/getsubinfo")
-    Observable<CommonBean<List<CompanyInfoBean>>> queryCompanyInfo( );
+    Observable<CommonBean<List<CompanyInfoBean>>> queryCompanyInfo();
 
     /**
      * 获取子平台登录token
@@ -79,6 +81,14 @@ public interface MainService {
      */
     @POST("api/app/getsubtoken")
     Observable<CommonBean<CompanyTokenInfoBean>> queryCompanyLoginToken(@Body JsonObject object);
+
+    /**
+     * 注销账号
+     *
+     * @return
+     */
+    @POST("api/user/cancelAccount")
+    Observable<CommonBean<Object>> cancelAccount();
 
     /**
      * 获取子平台登录token

@@ -284,6 +284,26 @@
                 <LinearLayout
                     android:id="@+id/ll_login_out"
 
+                    style="@style/draw_item">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/icon_me_tcdl_32" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/app_gap"
+                        android:text="退出账号"
+                        android:textColor="@color/color_title_dark"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_cancel"
+
                     style="@style/draw_item"
                     android:layout_marginBottom="40dp">
 
@@ -297,7 +317,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/app_gap"
-                        android:text="退出账号"
+                        android:text="注销账号"
                         android:textColor="@color/color_title_dark"
                         android:textSize="15sp" />
                 </LinearLayout>
