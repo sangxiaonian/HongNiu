@@ -1,14 +1,17 @@
 package com.hongniu.supply.ui
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.TextPaint
+import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.fy.androidlibrary.toast.ToastUtils
 import com.fy.companylibrary.net.NetObserver
 import com.fy.companylibrary.ui.CompanyBaseActivity
 import com.fy.companylibrary.widget.ItemTextView
@@ -54,8 +57,9 @@ class AppPolicyActivity : CompanyBaseActivity() {
 
     override fun initData() {
         super.initData()
-        bind.tvPolicy.linksClickable=true
+        bind.tvPolicy.movementMethod = LinkMovementMethod.getInstance()
         bind.tvPolicy.text = getSpannableStringBuilder(this)
+        bind.tvPolicy.highlightColor=Color.TRANSPARENT
     }
 
     fun query() {
@@ -77,7 +81,7 @@ class AppPolicyActivity : CompanyBaseActivity() {
                     policys
                 ) {
                     params.policyType = policys[it]
-                    bind.itemPolicyType.textCenter=policys[it] ?: ""
+                    bind.itemPolicyType.textCenter = policys[it] ?: ""
 
                 }
             }
@@ -90,7 +94,8 @@ class AppPolicyActivity : CompanyBaseActivity() {
                     policys
                 ) {
                     params.loadingMethods = policyInfo?.loadingMethods?.get(it)?.id ?: ""
-                    bind.itemLoadingType.textCenter=policyInfo?.loadingMethods?.get(it)?.displayName ?: ""
+                    bind.itemLoadingType.textCenter =
+                        policyInfo?.loadingMethods?.get(it)?.displayName ?: ""
                 }
             }
         }
@@ -101,7 +106,8 @@ class AppPolicyActivity : CompanyBaseActivity() {
                     policys
                 ) {
                     params.goodTypes = policyInfo?.goodsTypes?.get(it)?.id ?: ""
-                    bind.itemCargoType.textCenter=policyInfo?.goodsTypes?.get(it)?.displayName ?: ""
+                    bind.itemCargoType.textCenter =
+                        policyInfo?.goodsTypes?.get(it)?.displayName ?: ""
                 }
             }
         }
@@ -111,7 +117,8 @@ class AppPolicyActivity : CompanyBaseActivity() {
                     bind.itemPackageType,
                     policys
                 ) {
-                    bind.itemPackageType.textCenter=policyInfo?.packingMethods?.get(it)?.displayName ?: ""
+                    bind.itemPackageType.textCenter =
+                        policyInfo?.packingMethods?.get(it)?.displayName ?: ""
                     params.packingMethods = policyInfo?.packingMethods?.get(it)?.id ?: ""
                 }
             }
@@ -123,7 +130,8 @@ class AppPolicyActivity : CompanyBaseActivity() {
                     policys
                 ) {
                     params.transportMethods = policyInfo?.transportMethods?.get(it)?.id ?: ""
-                    bind.itemTrainType.textCenter=policyInfo?.transportMethods?.get(it)?.displayName ?: ""
+                    bind.itemTrainType.textCenter =
+                        policyInfo?.transportMethods?.get(it)?.displayName ?: ""
                 }
             }
         }
@@ -133,15 +141,55 @@ class AppPolicyActivity : CompanyBaseActivity() {
         }
 
         bind.btSave.setOnClickListener {
-            HttpAppFactory.calculatePolicyInfo(params).subscribe(object : NetObserver<String>(this) {
-                override fun doOnSuccess(data: String?) {
-                    super.doOnSuccess(data)
-                    params.policyPrice = data
-                    finish()
-                }
-            })
+            if (!check()) {
+                return@setOnClickListener
+            }
+            HttpAppFactory.calculatePolicyInfo(params)
+                .subscribe(object : NetObserver<String>(this) {
+                    override fun doOnSuccess(data: String?) {
+                        super.doOnSuccess(data)
+                        params.policyPrice = data
+                        finish()
+                    }
+                })
+        }
+        bind.imgPolicy.setOnClickListener {
+            bind.imgPolicy.isSelected = !bind.imgPolicy.isSelected
+            bind.imgPolicy.setImageResource(if (bind.imgPolicy.isSelected) R.drawable.icon_xz_36 else R.drawable.icon_wxz_36)
+        }
+    }
+
+    private fun check(): Boolean {
+        if (bind.itemPolicyType.textCenter.isNullOrEmpty()) {
+            ToastUtils.getInstance().show(bind.itemPolicyType.textCenterHide)
+            return false
+        }
+        if (bind.itemLoadingType.textCenter.isNullOrEmpty()) {
+            ToastUtils.getInstance().show(bind.itemLoadingType.textCenterHide)
+            return false
+        }
+        if (bind.itemCargoType.textCenter.isNullOrEmpty()) {
+            ToastUtils.getInstance().show(bind.itemCargoType.textCenterHide)
+            return false
+        }
+        if (bind.itemPackageType.textCenter.isNullOrEmpty()) {
+            ToastUtils.getInstance().show(bind.itemPackageType.textCenterHide)
+            return false
+        }
+        if (bind.itemTrainType.textCenter.isNullOrEmpty()) {
+            ToastUtils.getInstance().show(bind.itemTrainType.textCenterHide)
+            return false
+        }
+        if (bind.itemPrice.textCenter.isNullOrEmpty()) {
+            ToastUtils.getInstance().show(bind.itemPrice.textCenterHide)
+            return false
+        }
+        if (!bind.imgPolicy.isSelected) {
+            ToastUtils.getInstance().show("请确认保险信息")
+            return false
         }
 
+        return true
     }
 
     private fun showDialog(
@@ -174,7 +222,6 @@ class AppPolicyActivity : CompanyBaseActivity() {
         builder.append(context.getString(R.string.order_insruance_police))
         val driverClick: ClickableSpan = object : ClickableSpan() {
             override fun onClick(widget: View) {
-
                 ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5)
                     .withSerializable(
                         Param.TRAN, H5Config(
