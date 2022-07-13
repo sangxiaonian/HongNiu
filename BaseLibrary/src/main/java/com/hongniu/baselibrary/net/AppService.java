@@ -9,10 +9,11 @@ import com.hongniu.baselibrary.entity.GrapSingleInforParams;
 import com.hongniu.baselibrary.entity.IDParams;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.OrderIdBean;
-import com.hongniu.baselibrary.entity.PayParam;
 import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
 import com.hongniu.baselibrary.entity.PayInforBeans;
+import com.hongniu.baselibrary.entity.PayParam;
+import com.hongniu.baselibrary.entity.PolicyInfoBean;
 import com.hongniu.baselibrary.entity.QueryOrderParamBean;
 import com.hongniu.baselibrary.entity.QueryOrderStateBean;
 import com.hongniu.baselibrary.entity.QueryPayPassword;
@@ -47,7 +48,8 @@ public interface AppService {
      */
     @POST("api/robOrder/queryRob")
     Observable<CommonBean<GrapSingleInforBean>> queryGrapSingleInfor(@Body GrapSingleInforParams params);
-   /**
+
+    /**
      * 查询接单状态
      *
      * @return
@@ -77,6 +79,7 @@ public interface AppService {
      */
     @POST("api/order/queryOrder")
     Observable<CommonBean<QueryOrderStateBean>> queryOrder(@Body OrderIdBean bean);
+
     /**
      * 查询零担订单状态
      *
@@ -127,6 +130,7 @@ public interface AppService {
      */
     @POST("api/refund/add")
     Observable<CommonBean<String>> addPayWays(@Body PayInforBeans beans);
+
     /**
      * 查询订单详情
      *
@@ -149,16 +153,18 @@ public interface AppService {
     @POST("api/file/uploadFiles")
     Observable<CommonBean<String>> uploadFilesWithParts(@Part("classify") int type, @Part() List<MultipartBody.Part> parts);
 
-//    @Multipart
+    //    @Multipart
     @POST("api/file/uploadFiles")
     Observable<CommonBean<List<UpImgData>>> uploadFilesWithParts(@Body MultipartBody multipartBody);
 
     /**
      * 查询是否开启货车导航
+     *
      * @return
      */
     @POST("api/car/navigationSwitch")
     Observable<CommonBean<TruckGudieSwitchBean>> queryTruckGuide();
+
     /**
      * 获取车辆类型
      *
@@ -236,6 +242,18 @@ public interface AppService {
      */
     @POST("api/account/accountpay")
     Observable<CommonBean<PayBean>> payBalance(@Body PayParam infor);
+
+    /**
+     * @return 查询车辆保险信息
+     */
+    @POST("api/order/getInsuranceData")
+    Observable<CommonBean<PolicyInfoBean>> queryPolicyInfo(@Body Object infor);
+
+    /**
+     * @return 计算保费
+     */
+    @POST("api/order/updategoodprice")
+    Observable<CommonBean<String>> calculatePolicyInfo(@Body Object infor);
 
 }
 

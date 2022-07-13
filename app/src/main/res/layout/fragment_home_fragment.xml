@@ -12,6 +12,7 @@
         android:background="@color/white"
         android:padding="20dp"
         android:text="@string/app_name"
+        android:id="@+id/tv_title"
         android:textColor="@color/color_of_333333"
         android:textSize="36dp"
         android:textStyle="bold" />

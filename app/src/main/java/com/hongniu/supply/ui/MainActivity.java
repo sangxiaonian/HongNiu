@@ -170,12 +170,6 @@ public class MainActivity extends ModuleBaseActivity implements View.OnClickList
     protected void initData() {
         super.initData();
         tv_unread.setVisibility(View.GONE);
-//        messageFragment = new ChactListFragment();
-//        getSupportFragmentManager()
-//                .beginTransaction()
-//                .add(R.id.content, messageFragment)
-//                .commit();
-
         //检查版本更新
         checkVersion();
 

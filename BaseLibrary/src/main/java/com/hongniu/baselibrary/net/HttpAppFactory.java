@@ -19,6 +19,8 @@ import com.hongniu.baselibrary.entity.PageBean;
 import com.hongniu.baselibrary.entity.PagerParambean;
 import com.hongniu.baselibrary.entity.PayInforBeans;
 import com.hongniu.baselibrary.entity.PayParam;
+import com.hongniu.baselibrary.entity.PolicyCaculParam;
+import com.hongniu.baselibrary.entity.PolicyInfoBean;
 import com.hongniu.baselibrary.entity.QueryOrderParamBean;
 import com.hongniu.baselibrary.entity.QueryOrderStateBean;
 import com.hongniu.baselibrary.entity.QueryPayPassword;
@@ -61,6 +63,7 @@ public class HttpAppFactory {
                 .compose(RxUtils.<CommonBean<GrapSingleInforBean>>getSchedulersObservableTransformer());
 
     }
+
     /**
      * 查询车货匹配订单状态
      *
@@ -69,11 +72,12 @@ public class HttpAppFactory {
      */
     public static Observable<CommonBean<IDParams>> queryNewMatch(String orderId) {
         IDParams bean = new IDParams();
-        bean.id=orderId;
+        bean.id = orderId;
         return AppClient.getInstance().getService().queryNewMatch(bean)
                 .compose(RxUtils.<CommonBean<IDParams>>getSchedulersObservableTransformer())
                 ;
     }
+
     /**
      * 获取车辆类型
      */
@@ -386,7 +390,28 @@ public class HttpAppFactory {
                 })
                 .compose(RxUtils.<CommonBean<PageBean<PoiItem>>>getSchedulersObservableTransformer())
                 ;
+    }
 
+    /**
+     * 查询车辆保险信息
+     *
+     * @return
+     */
+    public static Observable<CommonBean<PolicyInfoBean>> queryPolicyInfo() {
+        return AppClient.getInstance().getService().queryPolicyInfo(new Object())
+                .compose(RxUtils.<CommonBean<PolicyInfoBean>>getSchedulersObservableTransformer());
+
+    }
+
+    /**
+     * 计算保费
+     *
+     * @return
+     * @param params
+     */
+    public static Observable<CommonBean<String>> calculatePolicyInfo(PolicyCaculParam params) {
+        return AppClient.getInstance().getService().calculatePolicyInfo(params)
+                .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
 
     }
 

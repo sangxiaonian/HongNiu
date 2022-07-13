@@ -24,6 +24,7 @@ public class ArouterParamsApp {
      * h5 加载页面
      */
     public final static String activity_h5 = "/app/activity_h5";
+    public final static String activity_policy = "/app/activity_policy";
 
     /**
      * 注销页面

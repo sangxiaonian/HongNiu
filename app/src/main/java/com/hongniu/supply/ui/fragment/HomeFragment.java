@@ -2,6 +2,7 @@ package com.hongniu.supply.ui.fragment;
 
 import static com.hongniu.baselibrary.widget.order.OrderDetailItemControl.RoleState.CARGO_OWNER;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -31,9 +32,12 @@ import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventParams;
 import com.hongniu.baselibrary.utils.clickevent.ClickEventUtils;
+import com.hongniu.supply.BuildConfig;
 import com.hongniu.supply.R;
 import com.hongniu.supply.entity.HomeADBean;
 import com.hongniu.supply.net.HttpMainFactory;
+import com.hongniu.supply.ui.AppPolicyActivity;
+import com.hongniu.supply.ui.MainActivity;
 import com.hongniu.supply.ui.holder.HeadImageHolder;
 import com.hongniu.supply.ui.holder.HomeNewHeader;
 import com.sang.common.recycleview.RecycleViewScroll;
@@ -56,14 +60,11 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
 
 
     private RecycleViewScroll rv;
+    private TextView tvTitle;
     List<HomeADBean> ads;
-    //    ColorImageView imgSearch;
     private HomeNewHeader homeNewHeader;
-    //    private View rlTitle;
     private XAdapter<HomeADBean> adapter;
-    //    private View llSearch;
-//    private int currentColor;
-//    private TextView tvSearch;
+
     private DrawableCircle drawable;
     private HeadImageHolder headImageHolder;
 
@@ -72,12 +73,15 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
 
         View inflate = inflater.inflate(R.layout.fragment_home_fragment, null);
         rv = inflate.findViewById(R.id.rv);
-//        llSearch = inflate.findViewById(R.id.ll_search);
-//        rlTitle = inflate.findViewById(R.id.rl_title);
-//        imgSearch = inflate.findViewById(R.id.img_search);
-//        tvSearch = inflate.findViewById(R.id.tv_search);
-
-
+        tvTitle = inflate.findViewById(R.id.tv_title);
+        tvTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (BuildConfig.DEBUG){
+                    startActivity(new Intent(getActivity(), AppPolicyActivity.class));
+                }
+            }
+        });
         return inflate;
     }
 
@@ -133,6 +137,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         adapter.addHeard(homeNewHeader);
         adapter.addHeard(headImageHolder);
         rv.setAdapter(adapter);
+
 
 
     }
