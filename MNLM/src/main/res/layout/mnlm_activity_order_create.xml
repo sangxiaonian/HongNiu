@@ -382,6 +382,7 @@
                     app:centerType="number"
                     app:colorRight="@color/color_of_e50000"
                     app:sizeright="15dp"
+                    app:editable="false"
                     app:textcenterhide="请输入货物价值"
                     app:textleft="货物价值"
                     app:textright="保费 0 元" />

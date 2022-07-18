@@ -1,7 +1,10 @@
 package com.hongniu.freight.control;
 
+import android.os.Parcelable;
+
 import com.fy.androidlibrary.net.listener.TaskControl;
 import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.PolicyCaculParam;
 import com.hongniu.freight.entity.AppAddressListBean;
 import com.hongniu.freight.entity.CargoTypeAndColorBeans;
 import com.hongniu.freight.entity.OrderCrateParams;
@@ -231,6 +234,10 @@ public class OrderCreateControl {
         void saveOwnerInfo(OrderSelectOwnerInfoBean result);
 
         OrderSelectOwnerInfoBean getOwnerInfo();
+
+        PolicyCaculParam getPolicyParam();
+
+        void savePolicyParam(PolicyCaculParam result);
     }
 
     ;
@@ -361,6 +368,10 @@ public class OrderCreateControl {
 
         void saveOwnerInfo(OrderSelectOwnerInfoBean result);
         OrderSelectOwnerInfoBean getOwnerInfo();
+
+        PolicyCaculParam getPolicyParam();
+
+        void setPolicyParam(PolicyCaculParam param);
     }
 
     ;

@@ -4,6 +4,7 @@ import android.text.SpannableStringBuilder;
 
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PayOrderInfor;
+import com.hongniu.baselibrary.entity.PolicyCaculParam;
 import com.hongniu.baselibrary.entity.WalletDetail;
 import com.hongniu.baselibrary.entity.OrderInsuranceInforBean;
 import com.hongniu.moduleorder.entity.OrderInsuranceParam;
@@ -310,6 +311,14 @@ public class OrderPayControl {
          * @param event
          */
         void saveInsurance(OrderInsuranceParam event);
+
+        /**
+         * 获取保险信息
+         * @return
+         */
+        PolicyCaculParam getPolicyInfo();
+
+        void savePloicyInfo(PolicyCaculParam parcelableExtra);
     }
 
     public interface IOrderPayMode {
@@ -534,6 +543,10 @@ public class OrderPayControl {
          * @return
          */
         int getPayRole();
+
+        PolicyCaculParam getPolicyParams();
+
+        void savePloicyInfo(PolicyCaculParam parcelableExtra);
     }
 
 }

@@ -7,6 +7,7 @@ import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.OrderInsuranceInforBean;
 import com.hongniu.baselibrary.entity.PayOrderInfor;
 import com.hongniu.baselibrary.entity.PayParam;
+import com.hongniu.baselibrary.entity.PolicyCaculParam;
 import com.hongniu.baselibrary.entity.WalletDetail;
 import com.hongniu.baselibrary.net.HttpAppFactory;
 import com.hongniu.moduleorder.control.OrderPayControl;
@@ -35,6 +36,7 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
     private int roleType;//1 企业支付 2个人支付
     private int payWay;//付款方式 0 现付（线上支付） 1回付 2到付（线下支付）
     private PayOrderInfor orderInfor = new PayOrderInfor();//订单相关信息
+    private PolicyCaculParam policyParam =new PolicyCaculParam();
 
     /**
      * 储存其他界面传入的参数
@@ -44,6 +46,7 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
     @Override
     public void saveTranDate(PayOrderInfor event) {
         this.orderInfor = event;
+        policyParam.setId(event.orderID);
 
     }
 
@@ -404,6 +407,16 @@ public class OrderPayMode implements OrderPayControl.IOrderPayMode {
     @Override
     public int getPayRole() {
         return roleType;
+    }
+
+    @Override
+    public PolicyCaculParam getPolicyParams() {
+        return policyParam;
+    }
+
+    @Override
+    public void savePloicyInfo(PolicyCaculParam parcelableExtra) {
+        this.policyParam=parcelableExtra;
     }
 
     /**

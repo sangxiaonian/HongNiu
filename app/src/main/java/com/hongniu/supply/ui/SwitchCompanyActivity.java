@@ -137,7 +137,7 @@ public class SwitchCompanyActivity extends RefrushActivity<CompanyInfoBean> {
                 .flatMap(new Function<CommonBean<CompanyTokenInfoBean>, ObservableSource<CommonBean<LoginInfo>>>() {
                     @Override
                     public ObservableSource<CommonBean<LoginInfo>> apply(@NonNull CommonBean<CompanyTokenInfoBean> stringCommonBean) throws Exception {
-
+                        Config.getInstance().init(getApplication(),false);
                         Config.getInstance().setCompanyInfoBean(data);
                         Config.getInstance().intNetClient(data.getApiUrl(), data.getSubAppCode());
                         Config.getInstance().setCurrentPackageName(data.getAndroidPackage());

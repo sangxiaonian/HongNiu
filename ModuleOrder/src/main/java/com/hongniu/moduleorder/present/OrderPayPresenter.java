@@ -1,6 +1,7 @@
 package com.hongniu.moduleorder.present;
 
 import android.content.Context;
+import android.os.Parcelable;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -8,6 +9,8 @@ import android.text.style.ForegroundColorSpan;
 
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.entity.PayOrderInfor;
+import com.hongniu.baselibrary.entity.PolicyCaculParam;
+import com.hongniu.baselibrary.entity.PolicyInfoBean;
 import com.hongniu.baselibrary.entity.WalletDetail;
 import com.hongniu.baselibrary.utils.Utils;
 import com.hongniu.moduleorder.R;
@@ -29,6 +32,7 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
     private Context context;
     private OrderPayControl.IOrderPayMode mode;
     private OrderPayControl.IOrderPayView view;
+
 
     public OrderPayPresenter(Context context, OrderPayControl.IOrderPayView view) {
         this.view = view;
@@ -417,6 +421,34 @@ public class OrderPayPresenter implements OrderPayControl.IOrderPayPresent {
             mode.saveCargoPrice(TextUtils.isEmpty(event.getPrice()) ? "0" : event.getPrice(), TextUtils.isEmpty(event.getInsurancePrice()) ? "0" : event.getInsurancePrice());
             float cargoPrices = Float.parseFloat(event.getPrice());
             float insurancePrice = Float.parseFloat(event.getInsurancePrice());
+            //显示保险金额和货物金额
+            view.showCargoInfor("货物金额" + cargoPrices+"元", "￥" + insurancePrice);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //保费更改之后，切换支付方式显示
+        switchOnlinePay();
+    }
+
+    /**
+     * 获取保险信息
+     *
+     * @return
+     */
+    @Override
+    public PolicyCaculParam getPolicyInfo() {
+        return mode.getPolicyParams();
+    }
+
+    @Override
+    public void savePloicyInfo(PolicyCaculParam parcelableExtra) {
+        mode.savePloicyInfo(parcelableExtra);
+        try {
+            String cargoPrice = parcelableExtra.getGoodPrice();
+            String policyPrice = parcelableExtra.getPolicyPrice();
+            mode.saveCargoPrice(TextUtils.isEmpty(cargoPrice) ? "0" : cargoPrice, TextUtils.isEmpty(policyPrice) ? "0" : policyPrice);
+            float cargoPrices = Float.parseFloat(cargoPrice);
+            float insurancePrice = Float.parseFloat(policyPrice);
             //显示保险金额和货物金额
             view.showCargoInfor("货物金额" + cargoPrices+"元", "￥" + insurancePrice);
         } catch (Exception e) {

@@ -6,6 +6,7 @@ import com.fy.androidlibrary.utils.CollectionUtils;
 import com.fy.androidlibrary.utils.CommonUtils;
 import com.fy.companylibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
+import com.hongniu.baselibrary.entity.PolicyCaculParam;
 import com.hongniu.freight.control.OrderCreateControl;
 import com.hongniu.freight.entity.CargoTypeAndColorBeans;
 import com.hongniu.freight.entity.InsuranceInfoBean;
@@ -47,6 +48,7 @@ public class OrderCreateMode implements OrderCreateControl.IOrderCreateMode {
     private CargoTypeAndColorBeans cargoTypeAndColorBeans;//货物分类
     private OrderSelectOwnerInfoBean ownerInfo;
     private OrderSelectDriverInfoBean driverInfo;
+    private PolicyCaculParam policyParams=new PolicyCaculParam();
 
     public OrderCreateMode() {
         params = new OrderCrateParams();
@@ -68,6 +70,7 @@ public class OrderCreateMode implements OrderCreateControl.IOrderCreateMode {
     @Override
     public void saveInfo(OrderInfoBean orderInfoBean) {
         this.orderInfoBean = orderInfoBean;
+        policyParams.setId(orderInfoBean.getId());
     }
 
     /**
@@ -382,6 +385,16 @@ public class OrderCreateMode implements OrderCreateControl.IOrderCreateMode {
     @Override
     public OrderSelectOwnerInfoBean getOwnerInfo() {
         return ownerInfo;
+    }
+
+    @Override
+    public PolicyCaculParam getPolicyParam() {
+        return policyParams;
+    }
+
+    @Override
+    public void setPolicyParam(PolicyCaculParam param) {
+        this.policyParams=param;
     }
 
 

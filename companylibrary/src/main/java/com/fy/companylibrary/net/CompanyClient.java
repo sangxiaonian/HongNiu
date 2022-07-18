@@ -44,8 +44,6 @@ public class CompanyClient {
 
 
     public <T> T creatService(Class<T> t) {
-
-        JLog.i("登录数据：CompanyClient");
         return httpClient.creatService(t);
     }
 

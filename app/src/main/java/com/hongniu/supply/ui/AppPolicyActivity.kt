@@ -1,6 +1,7 @@
 package com.hongniu.supply.ui
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Spannable
@@ -42,7 +43,9 @@ class AppPolicyActivity : CompanyBaseActivity() {
 
     var policyInfo: PolicyInfoBean? = null
 
-    val params: PolicyCaculParam = PolicyCaculParam()
+    val params by lazy {
+        intent.getParcelableExtra(Param.TRAN)?:PolicyCaculParam()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +63,8 @@ class AppPolicyActivity : CompanyBaseActivity() {
         bind.tvPolicy.movementMethod = LinkMovementMethod.getInstance()
         bind.tvPolicy.text = getSpannableStringBuilder(this)
         bind.tvPolicy.highlightColor=Color.TRANSPARENT
+
+
     }
 
     fun query() {
@@ -68,8 +73,18 @@ class AppPolicyActivity : CompanyBaseActivity() {
                 override fun doOnSuccess(data: PolicyInfoBean?) {
                     super.doOnSuccess(data)
                     policyInfo = data
+                    initInfo(policyInfo)
                 }
             })
+    }
+
+    private fun initInfo(policyInfo: PolicyInfoBean?) {
+        bind.itemPolicyType.textCenter=params.policyType
+        bind.itemLoadingType.textCenter=policyInfo?.loadingMethods?.find { it.id==params.loadingMethods }?.displayName
+        bind.itemCargoType.textCenter=policyInfo?.goodsTypes?.find { it.id==params.goodTypes }?.displayName
+        bind.itemPackageType.textCenter=policyInfo?.packingMethods?.find { it.id==params.packingMethods }?.displayName
+        bind.itemTrainType.textCenter=policyInfo?.transportMethods?.find { it.id==params.transportMethods }?.displayName
+        bind.itemPrice.textCenter=params.goodPrice
     }
 
     override fun initListener() {
@@ -149,6 +164,7 @@ class AppPolicyActivity : CompanyBaseActivity() {
                     override fun doOnSuccess(data: String?) {
                         super.doOnSuccess(data)
                         params.policyPrice = data
+                        setResult(102, Intent().also { it.putExtra(Param.TRAN,params) })
                         finish()
                     }
                 })

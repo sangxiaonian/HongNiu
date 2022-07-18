@@ -63,9 +63,6 @@ public class Config {
                 .addInterceptor(heardInterceptor)
                 .addInterceptor(new LoginOutRespondInterceptor(application))
                 .addInterceptor(OkHttp.getLogInterceptor());//添加log日志
-
-
-
 //        //保活
         FreightClient.getClient().startKeepLive((Application) context, context.getString(R.string.app_name), "正在使用", R.mipmap.ic_launcher);
     }

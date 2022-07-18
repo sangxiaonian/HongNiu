@@ -8,6 +8,7 @@ import com.fy.androidlibrary.net.listener.TaskControl;
 import com.fy.androidlibrary.net.rx.BaseObserver;
 import com.fy.androidlibrary.utils.CollectionUtils;
 import com.fy.companylibrary.net.NetObserver;
+import com.hongniu.baselibrary.entity.PolicyCaculParam;
 import com.hongniu.freight.control.OrderCreateControl;
 import com.hongniu.freight.entity.AppAddressListBean;
 import com.hongniu.freight.entity.CargoTypeAndColorBeans;
@@ -122,12 +123,12 @@ public class OrderCreatePresenter implements OrderCreateControl.IOrderCreatePres
     @Override
     public void saveStartInfo(AppAddressListBean result) {
 
-        TranMapBean bean=new TranMapBean();
+        TranMapBean bean = new TranMapBean();
         bean.setAddressDetail(result.getStartPlaceInfo());
         bean.setAddress(result.getStartPlaceInfo());
         bean.setName(result.getShipperName());
         bean.setPhone(result.getShipperMobile());
-        PoiItem poiItem =new PoiItem("",new LatLonPoint(result.getStartPlaceLat(),result.getStartPlaceLon()),"","");
+        PoiItem poiItem = new PoiItem("", new LatLonPoint(result.getStartPlaceLat(), result.getStartPlaceLon()), "", "");
         bean.setPoiItem(poiItem);
         mode.saveStartInfo(bean);
         view.showStartInfo(bean);
@@ -136,17 +137,16 @@ public class OrderCreatePresenter implements OrderCreateControl.IOrderCreatePres
     }
 
     /**
-     * @param bean 收货地址
      */
     @Override
     public void saveEndInfo(AppAddressListBean result) {
 
-        TranMapBean bean=new TranMapBean();
+        TranMapBean bean = new TranMapBean();
         bean.setAddressDetail(result.getDestinationInfo());
         bean.setAddress(result.getDestinationInfo());
         bean.setName(result.getReceiverName());
         bean.setPhone(result.getReceiverMobile());
-        PoiItem poiItem =new PoiItem("",new LatLonPoint(result.getDestinationLat(),result.getDestinationLon()),"","");
+        PoiItem poiItem = new PoiItem("", new LatLonPoint(result.getDestinationLat(), result.getDestinationLon()), "", "");
         bean.setPoiItem(poiItem);
 
         mode.saveEndInfo(bean);
@@ -361,6 +361,16 @@ public class OrderCreatePresenter implements OrderCreateControl.IOrderCreatePres
     @Override
     public OrderSelectOwnerInfoBean getOwnerInfo() {
         return mode.getOwnerInfo();
+    }
+
+    @Override
+    public PolicyCaculParam getPolicyParam() {
+        return mode.getPolicyParam();
+    }
+
+    @Override
+    public void savePolicyParam(PolicyCaculParam result) {
+        mode.setPolicyParam(result);
     }
 
 }

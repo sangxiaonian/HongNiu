@@ -31,7 +31,9 @@ import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
 import com.fy.companylibrary.widget.ItemTextView;
+import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
+import com.hongniu.baselibrary.entity.PolicyCaculParam;
 import com.hongniu.freight.R;
 import com.hongniu.freight.control.OrderCreateControl;
 import com.hongniu.freight.entity.AppAddressListBean;
@@ -207,14 +209,7 @@ public class OrderCreateActivity extends CompanyBaseActivity implements View.OnC
         item_insurance_name.setOnCenterChangeListener(this);
         item_driver.setOnCenterChangeListener(this);
         item_owner.setOnCenterChangeListener(this);
-
-        item_cargo_price.getEtCenter().addTextChangedListener(new SearchTextWatcher(new SearchTextWatcher.SearchTextChangeListener() {
-            @Override
-            public void onSearchTextChange(String msg) {
-                //查询保费相关信息
-                presenter.searchInsruancePrice(msg);
-            }
-        }));
+        item_cargo_price.setOnClickListener(this);
     }
 
     /**
@@ -281,6 +276,10 @@ public class OrderCreateActivity extends CompanyBaseActivity implements View.OnC
         } else if (R.id.item_owner == v.getId()) {
             Intent intent = new Intent(this, OrderSelectOwnerActivity.class);
             startActivityForResult(intent, 4);
+        }else if (R.id.item_cargo_price == v.getId()) {
+            ArouterUtils.getInstance().builder(ArouterParamsApp.activity_policy)
+                    .withParcelable(com.hongniu.baselibrary.config.Param.TRAN, presenter.getPolicyParam())
+                    .navigation(this, 100);
         }
     }
 
@@ -302,6 +301,12 @@ public class OrderCreateActivity extends CompanyBaseActivity implements View.OnC
             //选择承运人
             OrderSelectOwnerInfoBean result = data.getParcelableExtra(Param.TRAN);
             presenter.saveOwnerInfo(result);
+        }else if (data != null && requestCode == 100) {
+            //保险信息
+            PolicyCaculParam result = data.getParcelableExtra(Param.TRAN);
+            presenter.savePolicyParam(result);
+            showInsurancePrice(String.format("保费%s元", result.getPolicyPrice()));
+            item_cargo_price.setTextCenter(result.getGoodPrice());
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
