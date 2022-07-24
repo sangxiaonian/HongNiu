@@ -276,33 +276,6 @@ public class OrderCreatePresenter implements OrderCreateControl.IOrderCreatePres
     }
 
     /**
-     * 查询保费
-     *
-     * @param msg
-     */
-    @Override
-    public void searchInsruancePrice(String msg) {
-        mode.queryInsurancePrice(msg)
-                .subscribe(new NetObserver<String>(null) {
-                    @Override
-                    public void doOnSuccess(String s) {
-                        super.doOnSuccess(s);
-                        if (s != null && s.startsWith(".")) {
-                            s = "0" + s;
-                        }
-                        view.showInsurancePrice(String.format("保费%s元", s));
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        super.onError(e);
-                        view.showInsurancePrice(String.format("保费%s元", 0));
-                    }
-                });
-
-    }
-
-    /**
      * 显示货物种类弹窗
      *
      * @param listener

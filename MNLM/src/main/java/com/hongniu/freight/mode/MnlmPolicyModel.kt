@@ -1,14 +1,14 @@
-package com.hongniu.supply.ui.model
+package com.hongniu.freight.mode
 
-import android.content.Intent
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.fy.androidlibrary.net.listener.TaskControl
 import com.fy.companylibrary.net.NetObserver
-import com.hongniu.baselibrary.config.Param
+import com.hongniu.baselibrary.entity.CommonBean
 import com.hongniu.baselibrary.entity.PolicyCaculParam
 import com.hongniu.baselibrary.entity.PolicyInfoBean
-import com.hongniu.baselibrary.net.HttpAppFactory
+import com.hongniu.freight.net.HttpAppFactory
+import io.reactivex.Observable
 
 /**
  *@data  2022/7/13$
@@ -17,16 +17,14 @@ import com.hongniu.baselibrary.net.HttpAppFactory
  *
  *
  */
-class AppPolicyModel : ViewModel() {
+class MnlmPolicyModel : ViewModel() {
 
-    private var type = 0
     var policyInfo = MutableLiveData<PolicyInfoBean>()
     var policyResult = MutableLiveData<PolicyCaculParam>()
     var params: PolicyCaculParam? = null
 
-    fun saveInfo(policyCaculParam: PolicyCaculParam?, type: Int) {
+    fun saveInfo(policyCaculParam: PolicyCaculParam?) {
         params = policyCaculParam ?: PolicyCaculParam()
-        this.type = type
     }
 
     fun queryPolicyInfo(listener: TaskControl.OnTaskListener) {
@@ -44,7 +42,7 @@ class AppPolicyModel : ViewModel() {
     /**
      * 开始计算保费
      */
-    fun caculatePolicyInfo(listener: TaskControl.OnTaskListener) {
+    fun caculatePolicyInfo1(listener: TaskControl.OnTaskListener) {
         HttpAppFactory.calculatePolicyInfo(params)
             .subscribe(object : NetObserver<String>(listener) {
                 override fun doOnSuccess(data: String?) {
@@ -53,7 +51,15 @@ class AppPolicyModel : ViewModel() {
                     params?.let {
                         policyResult.postValue(it)
                     }
+
                 }
             })
+    }
+    /**
+     * 开始计算保费
+     */
+    fun caculatePolicyInfo(listener: TaskControl.OnTaskListener): Observable<CommonBean<String>> {
+        return HttpAppFactory.calculatePolicyInfo(params)
+
     }
 }

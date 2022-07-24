@@ -3,6 +3,7 @@ package com.hongniu.freight.net;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.companylibrary.entity.PageBean;
 import com.google.gson.JsonObject;
+import com.hongniu.baselibrary.entity.PolicyInfoBean;
 import com.hongniu.freight.entity.AccountDetailBean;
 import com.hongniu.freight.entity.AccountFlowParams;
 import com.hongniu.freight.entity.AppAddressListBean;
@@ -686,5 +687,17 @@ public interface AppService {
      */
     @POST("api/address/queryAddress")
     Observable<CommonBean<PageBean<AppAddressListBean>>> queryAddressList(@Body AppAddressListParam bean);
+
+    /**
+     * @return 查询车辆保险信息
+     */
+    @POST("api/deliveryOrder/getInsuranceData")
+    Observable<CommonBean<PolicyInfoBean>> queryPolicyInfo(@Body Object infor);
+
+    /**
+     * @return 计算保费
+     */
+    @POST("api/deliveryOrder/premiumCalculateNoId")
+    Observable<CommonBean<String>> calculatePolicyInfo(@Body Object infor);
 
 }

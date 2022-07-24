@@ -10,6 +10,9 @@ import com.hongniu.baselibrary.entity.CommonBean;
 import com.fy.companylibrary.entity.PageBean;
 import com.fy.companylibrary.net.CompanyClient;
 import com.google.gson.JsonObject;
+import com.hongniu.baselibrary.entity.PolicyCaculParam;
+import com.hongniu.baselibrary.entity.PolicyInfoBean;
+import com.hongniu.baselibrary.net.AppClient;
 import com.hongniu.freight.entity.AccountDetailBean;
 import com.hongniu.freight.entity.AccountFlowParams;
 import com.hongniu.freight.entity.AppAddressListBean;
@@ -1151,5 +1154,30 @@ public class HttpAppFactory {
         return CompanyClient.getInstance().creatService(AppService.class)
                 .queryAddressList(params)
                 .compose(RxUtils.<CommonBean<PageBean<AppAddressListBean>>>getSchedulersObservableTransformer());
+    }
+
+    /**
+     * 查询车辆保险信息
+     *
+     * @return
+     */
+    public static Observable<CommonBean<PolicyInfoBean>> queryPolicyInfo() {
+        return CompanyClient.getInstance().creatService(AppService.class)
+                .queryPolicyInfo(new Object())
+                .compose(RxUtils.<CommonBean<PolicyInfoBean>>getSchedulersObservableTransformer());
+
+    }
+
+    /**
+     * 计算保费
+     *
+     * @return
+     * @param params
+     */
+    public static Observable<CommonBean<String>> calculatePolicyInfo(PolicyCaculParam params) {
+        return CompanyClient.getInstance().creatService(AppService.class)
+                .calculatePolicyInfo(params)
+                .compose(RxUtils.<CommonBean<String>>getSchedulersObservableTransformer());
+
     }
 }

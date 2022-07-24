@@ -3,6 +3,8 @@ package com.hongniu.baselibrary.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.versionedparcelable.ParcelField;
+
 /**
  * @data 2022/7/13$
  * @Author PING
@@ -20,6 +22,7 @@ public class PolicyCaculParam implements Parcelable {
 
     public PolicyCaculParam() {
     }
+
 
     protected PolicyCaculParam(Parcel in) {
         id = in.readString();
@@ -108,7 +111,6 @@ public class PolicyCaculParam implements Parcelable {
         this.policyType = policyType;
     }
 
-
     /**
      * Describe the kinds of special objects contained in this Parcelable
      * instance's marshaled representation. For example, if the object will
@@ -142,5 +144,4 @@ public class PolicyCaculParam implements Parcelable {
         dest.writeString(policyType);
         dest.writeString(policyPrice);
     }
-
 }

@@ -1,14 +1,12 @@
 package com.hongniu.freight.control;
 
-import android.os.Parcelable;
-
 import com.fy.androidlibrary.net.listener.TaskControl;
 import com.hongniu.baselibrary.entity.CommonBean;
 import com.hongniu.baselibrary.entity.PolicyCaculParam;
 import com.hongniu.freight.entity.AppAddressListBean;
 import com.hongniu.freight.entity.CargoTypeAndColorBeans;
-import com.hongniu.freight.entity.OrderCrateParams;
 import com.hongniu.freight.entity.InsuranceInfoBean;
+import com.hongniu.freight.entity.OrderCrateParams;
 import com.hongniu.freight.entity.OrderInfoBean;
 import com.hongniu.freight.entity.OrderSelectDriverInfoBean;
 import com.hongniu.freight.entity.OrderSelectOwnerInfoBean;
@@ -114,6 +112,7 @@ public class OrderCreateControl {
 
         /**
          * 显示货物种类
+         *
          * @param cargoType
          */
         void showCargoTypes(List<CargoTypeAndColorBeans> cargoType);
@@ -122,11 +121,14 @@ public class OrderCreateControl {
 
         /**
          * 初始化承运人信息
+         *
          * @param result
          */
         void initOwnerInfo(OrderSelectOwnerInfoBean result);
+
         /**
          * 初始化司机信息
+         *
          * @param result
          */
         void initDriverInfo(OrderSelectDriverInfoBean result);
@@ -210,21 +212,15 @@ public class OrderCreateControl {
 
 
         /**
-         * 查询保费
-         *
-         * @param msg
-         */
-        void searchInsruancePrice(String msg);
-
-
-        /**
          * 显示货物种类弹窗
+         *
          * @param listener
          */
         void showCargoType(TaskControl.OnTaskListener listener);
 
         /**
          * 更新货物代码
+         *
          * @param options1
          */
         void switchCargoType(int options1);
@@ -338,35 +334,31 @@ public class OrderCreateControl {
          */
         Observable<CommonBean<OrderInfoBean>> createOrder();
 
-
         /**
-         * 根据货物价格查询保费
+         * 查询货物种类
          *
-         * @param msg
          * @return
          */
-        Observable<CommonBean<String>> queryInsurancePrice(String msg);
+        ObservableSource<CommonBean<List<CargoTypeAndColorBeans>>> queryCargoType();
 
         /**
          * 查询货物种类
          *
          * @return
          */
-        ObservableSource<CommonBean<List<CargoTypeAndColorBeans>>> queryCargoType();   /**
-         * 查询货物种类
-         *
-         * @return
-         */
-        List<CargoTypeAndColorBeans>  getCargoType();
+        List<CargoTypeAndColorBeans> getCargoType();
 
         /**
          * 更新当前选中的货物代码
+         *
          * @param cargoTypeAndColorBeans
          */
         void switchCargoType(CargoTypeAndColorBeans cargoTypeAndColorBeans);
+
         void saveDriverInfo(OrderSelectDriverInfoBean result);
 
         void saveOwnerInfo(OrderSelectOwnerInfoBean result);
+
         OrderSelectOwnerInfoBean getOwnerInfo();
 
         PolicyCaculParam getPolicyParam();

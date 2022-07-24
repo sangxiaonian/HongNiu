@@ -1,4 +1,4 @@
-package com.hongniu.supply.ui
+package com.hongniu.freight.ui
 
 import android.content.Context
 import android.content.Intent
@@ -6,26 +6,23 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
-import android.text.TextPaint
 import android.text.method.LinkMovementMethod
-import android.text.style.ClickableSpan
-import android.text.style.ForegroundColorSpan
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.fy.androidlibrary.toast.ToastUtils
+import com.fy.androidlibrary.widget.span.XClickableSpan
+import com.fy.companylibrary.config.ArouterParamMNLM
+import com.fy.companylibrary.net.NetObserver
 import com.fy.companylibrary.ui.CompanyBaseActivity
 import com.fy.companylibrary.widget.ItemTextView
-import com.hongniu.baselibrary.arouter.ArouterParamsApp
 import com.hongniu.baselibrary.arouter.ArouterUtils
 import com.hongniu.baselibrary.config.Param
-import com.hongniu.baselibrary.entity.H5Config
-import com.hongniu.baselibrary.entity.PolicyCaculParam
 import com.hongniu.baselibrary.entity.PolicyInfoBean
+import com.hongniu.freight.R
+import com.hongniu.freight.databinding.MnlmActivityAppPolicyBinding
+import com.hongniu.freight.mode.MnlmPolicyModel
 import com.hongniu.freight.utils.PickerDialogUtils
-import com.hongniu.supply.R
-import com.hongniu.supply.databinding.ActivityAppPolicyBinding
-import com.hongniu.supply.ui.model.AppPolicyModel
 
 /**
  * @data  2021/3/24
@@ -34,16 +31,16 @@ import com.hongniu.supply.ui.model.AppPolicyModel
  *
  * 等待开通货运方式
  */
-@Route(path = ArouterParamsApp.activity_policy)
-class AppPolicyActivity : CompanyBaseActivity() {
+@Route(path = ArouterParamMNLM.activity_policy)
+class AppMnlmPolicyActivity : CompanyBaseActivity() {
 
     private val bind by lazy {
-        ActivityAppPolicyBinding.inflate(layoutInflater)
+        MnlmActivityAppPolicyBinding.inflate(layoutInflater)
     }
 
 
     val model by lazy {
-        ViewModelProvider(this).get(AppPolicyModel::class.java)
+        ViewModelProvider(this).get(MnlmPolicyModel::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +49,6 @@ class AppPolicyActivity : CompanyBaseActivity() {
         setWhitToolBar("购买保险")
         model.saveInfo(
             intent.getParcelableExtra(Param.TRAN),
-            intent.getIntExtra(Param.TYPE, 0)
         )
         initView()
         initData()
@@ -86,10 +82,6 @@ class AppPolicyActivity : CompanyBaseActivity() {
 
         model.policyInfo.observe(this) {
             initInfo(it)
-        }
-        model.policyResult.observe(this) {
-            setResult(102, Intent().also { it.putExtra(Param.TRAN, it) })
-            finish()
         }
 
         bind.itemPolicyType.setOnClickListener {
@@ -171,6 +163,20 @@ class AppPolicyActivity : CompanyBaseActivity() {
                 return@setOnClickListener
             }
             model.caculatePolicyInfo(this)
+                .subscribe(object : NetObserver<String>(this) {
+                    override fun doOnSuccess(data: String?) {
+                        super.doOnSuccess(data)
+                        model.params?.let { it ->
+                            it.policyPrice = data
+
+                        }
+                        val intent=Intent()
+                        intent.putExtra(Param.TRAN, model.params)
+                        setResult(100, intent)
+                        finish()
+
+                    }
+                })
 
         }
         bind.imgPolicy.setOnClickListener {
@@ -231,68 +237,54 @@ class AppPolicyActivity : CompanyBaseActivity() {
     }
 
     private fun getSpannableStringBuilder(context: Context): SpannableStringBuilder {
-        val builder =
-            SpannableStringBuilder(context.getString(R.string.order_insruance_police_front))
-        val span = ForegroundColorSpan(context.resources.getColor(R.color.color_content_light))
+        val builder = SpannableStringBuilder("购买即代表同意")
+        var start = builder.length
+        builder.append("《保险条款》")
         var end = builder.length
-        val clickStart = end
-        builder.setSpan(span, 0, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-
-        //点击保险条款
-        builder.append(context.getString(R.string.order_insruance_police))
-        val driverClick: ClickableSpan = object : ClickableSpan() {
+        val xClickableSpan: XClickableSpan = object : XClickableSpan() {
+            /**
+             * Performs the click action associated with this span.
+             *
+             * @param widget
+             */
             override fun onClick(widget: View) {
-                ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5)
-                    .withSerializable(
-                        Param.TRAN, H5Config(
-                            getString(R.string.order_insruance_police),
-                            Param.insurance_polic,
-                            true
-                        )
-                    ).navigation(this@AppPolicyActivity)
-            }
-
-            //去除连接下划线
-            override fun updateDrawState(ds: TextPaint) {
-                ds.color = ds.linkColor
-                ds.isUnderlineText = false
+                val h5Config = com.hongniu.freight.entity.H5Config(
+                    "保险条款",
+                    com.fy.companylibrary.config.Param.h_insurance_polic,
+                    true
+                )
+                ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_h5)
+                    .withSerializable(com.fy.companylibrary.config.Param.TRAN, h5Config)
+                    .navigation(mContext)
             }
         }
-        var start = end
-        end = builder.length
-        builder.setSpan(driverClick, start, end, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+        xClickableSpan.setColor(resources.getColor(R.color.color_of_3d59ae))
+        builder.setSpan(xClickableSpan, start, end, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
         builder.append("、")
         start = builder.length
-        builder.append(context.getString(R.string.order_insruance_notify))
+        builder.append("《投保须知》")
         end = builder.length
-        //点击投保须知
-        val notifyClick: ClickableSpan = object : ClickableSpan() {
+        val xClickableSpan1: XClickableSpan = object : XClickableSpan() {
+            /**
+             * Performs the click action associated with this span.
+             *
+             * @param widget
+             */
             override fun onClick(widget: View) {
-                ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5)
-                    .withSerializable(
-                        Param.TRAN, H5Config(
-                            getString(R.string.order_insruance_notify),
-                            Param.insurance_notify,
-                            true
-                        )
-                    ).navigation(this@AppPolicyActivity)
-
-            }
-
-            //去除连接下划线
-            override fun updateDrawState(ds: TextPaint) {
-                ds.color = ds.linkColor
-                ds.isUnderlineText = false
+                val h5Config = com.hongniu.freight.entity.H5Config(
+                    "投保须知",
+                    com.fy.companylibrary.config.Param.h_insurance_notify,
+                    true
+                )
+                ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_h5)
+                    .withSerializable(com.fy.companylibrary.config.Param.TRAN, h5Config)
+                    .navigation(mContext)
             }
         }
-        builder.setSpan(notifyClick, start, end, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
-        val clickEnd = end
-        val clickSpan = ForegroundColorSpan(context.resources.getColor(R.color.color_title_dark))
-        builder.setSpan(clickSpan, clickStart, clickEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        val spanEnd = ForegroundColorSpan(context.resources.getColor(R.color.color_content_light))
-        start = builder.length
-        builder.append(context.getString(R.string.order_insruance_police_end))
-        builder.setSpan(spanEnd, start, builder.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        xClickableSpan1.setColor(resources.getColor(R.color.color_of_3d59ae))
+        builder.setSpan(xClickableSpan1, start, end, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
         return builder
     }
+
+
 }

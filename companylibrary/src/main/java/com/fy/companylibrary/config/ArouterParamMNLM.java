@@ -200,4 +200,10 @@ public class ArouterParamMNLM {
     public static final String activity_way_bill = "/mnlm/mnlm_activity_way_bill";
     public static final String fragment_hand_input = "/mnlm/mnlm_fragment_hand_input";
 
+    /**
+     * 计算保费
+     */
+    public final static String activity_policy = "/mnlm/mnlm_activity_policy";
+
+
 }

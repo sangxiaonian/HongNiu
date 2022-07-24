@@ -97,7 +97,7 @@ public class Param {
     public static final String AppKey = "c33fbf23b76246bf8ee4a3d00b621e03";
     public static final String AppSecret = "a7735d245d4241ff9f94-a3ecf7b5fedc";
 
-    public static final String TRAN = "tran";
+    public static final String TRAN = "TRAN";
     public static final String TYPE = "TYPE";
     public static final String TITLE = "TITLE";
     public static final String VERTYPE = "VERTYPE";//验证码使用类型

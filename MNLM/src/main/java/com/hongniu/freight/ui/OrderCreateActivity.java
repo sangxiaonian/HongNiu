@@ -238,7 +238,7 @@ public class OrderCreateActivity extends CompanyBaseActivity implements View.OnC
                 @Override
                 public void hasPermission() {
                     Intent intent = new Intent(mContext, AppAddressListActivity.class);
-                    intent.putExtra(Param.TRAN,false);
+                    intent.putExtra(Param.TRAN, false);
                     startActivityForResult(intent, 2);
                 }
 
@@ -276,9 +276,9 @@ public class OrderCreateActivity extends CompanyBaseActivity implements View.OnC
         } else if (R.id.item_owner == v.getId()) {
             Intent intent = new Intent(this, OrderSelectOwnerActivity.class);
             startActivityForResult(intent, 4);
-        }else if (R.id.item_cargo_price == v.getId()) {
-            ArouterUtils.getInstance().builder(ArouterParamsApp.activity_policy)
-                    .withParcelable(com.hongniu.baselibrary.config.Param.TRAN, presenter.getPolicyParam())
+        } else if (R.id.item_cargo_price == v.getId()) {
+            ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_policy)
+                    .withParcelable(Param.TRAN, presenter.getPolicyParam())
                     .navigation(this, 100);
         }
     }
@@ -293,7 +293,7 @@ public class OrderCreateActivity extends CompanyBaseActivity implements View.OnC
             //收货
             AppAddressListBean result = data.getParcelableExtra(Param.TRAN);
             presenter.saveEndInfo(result);
-        }else if (data != null && requestCode == 3) {
+        } else if (data != null && requestCode == 3) {
             //选择司机
             OrderSelectDriverInfoBean result = data.getParcelableExtra(Param.TRAN);
             presenter.saveDriverInfo(result);
@@ -301,7 +301,7 @@ public class OrderCreateActivity extends CompanyBaseActivity implements View.OnC
             //选择承运人
             OrderSelectOwnerInfoBean result = data.getParcelableExtra(Param.TRAN);
             presenter.saveOwnerInfo(result);
-        }else if (data != null && requestCode == 100) {
+        } else if (data != null && resultCode == 100) {
             //保险信息
             PolicyCaculParam result = data.getParcelableExtra(Param.TRAN);
             presenter.savePolicyParam(result);

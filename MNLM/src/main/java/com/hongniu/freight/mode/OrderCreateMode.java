@@ -48,6 +48,8 @@ public class OrderCreateMode implements OrderCreateControl.IOrderCreateMode {
     private CargoTypeAndColorBeans cargoTypeAndColorBeans;//货物分类
     private OrderSelectOwnerInfoBean ownerInfo;
     private OrderSelectDriverInfoBean driverInfo;
+
+    // 保险结果信息
     private PolicyCaculParam policyParams=new PolicyCaculParam();
 
     public OrderCreateMode() {
@@ -302,33 +304,6 @@ public class OrderCreateMode implements OrderCreateControl.IOrderCreateMode {
             //新增订单
             return HttpAppFactory.createOrder(params);
         }
-    }
-
-    /**
-     * 根据货物价格查询保费
-     *
-     * @param msg
-     * @return
-     */
-    @Override
-    public Observable<CommonBean<String>> queryInsurancePrice(String msg) {
-
-        QueryInsurancePriceParams params = new QueryInsurancePriceParams();
-        if (startInfor != null) {
-            LatLonPoint latLonPoint = startInfor.getPoiItem().getLatLonPoint();
-            params.setDestinationLat(latLonPoint.getLatitude());
-            params.setDestinationLon(latLonPoint.getLongitude());
-
-        }
-        if (endInfor != null) {
-            LatLonPoint latLonPoint = endInfor.getPoiItem().getLatLonPoint();
-            params.setDestinationLat(latLonPoint.getLatitude());
-            params.setDestinationLon(latLonPoint.getLongitude());
-        }
-        params.setGoodPrice(msg);
-
-        return HttpAppFactory.queryInstancePrice(params);
-
     }
 
     /**

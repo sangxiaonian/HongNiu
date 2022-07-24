@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".ui.AppWaitingActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <com.fy.companylibrary.widget.ItemTextView
+        android:id="@+id/item_policy_type"
+        style="@style/item_text"
+        app:textcenterhide="请选择险种类型"
+        app:textleft="险种类型" />
+
+    <com.fy.companylibrary.widget.ItemTextView
+        android:id="@+id/item_loading_type"
+        style="@style/item_text"
+        app:textcenterhide="请选择装载方式"
+        app:textleft="装载方式" />
+
+    <com.fy.companylibrary.widget.ItemTextView
+        android:id="@+id/item_cargo_type"
+        style="@style/item_text"
+        app:textcenterhide="请选择货物类型"
+        app:textleft="货物类型" />
+
+    <com.fy.companylibrary.widget.ItemTextView
+        android:id="@+id/item_package_type"
+        style="@style/item_text"
+        app:textcenterhide="请选择打包方式"
+        app:textleft="打包方式" />
+
+    <com.fy.companylibrary.widget.ItemTextView
+        android:id="@+id/item_train_type"
+        style="@style/item_text"
+        app:textcenterhide="请选择运输方式"
+        app:textleft="运输方式" />
+
+    <com.fy.companylibrary.widget.ItemTextView
+        android:id="@+id/item_price"
+        style="@style/item_text"
+        app:centerType="number"
+        app:editable="true"
+        app:srcRight="@null"
+        app:textcenterhide="请填写货物价值"
+        app:textleft="货物价值" />
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/img_policy"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:src="@mipmap/icon_wxz_36" />
+
+        <TextView
+            android:id="@+id/tv_policy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="投保须知" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bt_save"
+        style="@style/bt_sum_red"
+        android:text="提交" />
+</LinearLayout>
