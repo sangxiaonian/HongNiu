@@ -99,7 +99,7 @@ public class OrderCreateControl {
          */
         void finishSuccess(OrderInfoBean o);
 
-        void showInsurancePrice(String insurancePrice);
+        void showInsurancePrice(PolicyCaculParam result);
 
         /**
          * 初始化保险信息

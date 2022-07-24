@@ -37,6 +37,51 @@ public class OrderCrateParams {
     private String carId;//车辆id
     private String carInfo;//车辆类型
     private String carNum;//车牌号
+    private String goodsTypes;    //false	string	货物类型
+    private String loadingMethods; //false	string	装载方式
+    private String transportMethods; //false	string	运输方式
+    private String packingMethods; //false	string	打包方式
+    private String policyType; //false	string	险种类型
+
+    public String getGoodsTypes() {
+        return goodsTypes;
+    }
+
+    public void setGoodsTypes(String goodsTypes) {
+        this.goodsTypes = goodsTypes;
+    }
+
+    public String getLoadingMethods() {
+        return loadingMethods;
+    }
+
+    public void setLoadingMethods(String loadingMethods) {
+        this.loadingMethods = loadingMethods;
+    }
+
+    public String getTransportMethods() {
+        return transportMethods;
+    }
+
+    public void setTransportMethods(String transportMethods) {
+        this.transportMethods = transportMethods;
+    }
+
+    public String getPackingMethods() {
+        return packingMethods;
+    }
+
+    public void setPackingMethods(String packingMethods) {
+        this.packingMethods = packingMethods;
+    }
+
+    public String getPolicyType() {
+        return policyType;
+    }
+
+    public void setPolicyType(String policyType) {
+        this.policyType = policyType;
+    }
 
     public String getCarId() {
         return carId;

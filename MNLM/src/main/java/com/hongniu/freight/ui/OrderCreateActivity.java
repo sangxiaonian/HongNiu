@@ -24,14 +24,12 @@ import com.fy.androidlibrary.utils.CommonUtils;
 import com.fy.androidlibrary.utils.ConvertUtils;
 import com.fy.androidlibrary.utils.DeviceUtils;
 import com.fy.androidlibrary.utils.permission.PermissionUtils;
-import com.fy.androidlibrary.widget.editext.SearchTextWatcher;
 import com.fy.androidlibrary.widget.span.RoundedBackgroundSpan;
 import com.fy.androidlibrary.widget.span.XClickableSpan;
 import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
 import com.fy.companylibrary.ui.CompanyBaseActivity;
 import com.fy.companylibrary.widget.ItemTextView;
-import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.entity.PolicyCaculParam;
 import com.hongniu.freight.R;
@@ -305,8 +303,7 @@ public class OrderCreateActivity extends CompanyBaseActivity implements View.OnC
             //保险信息
             PolicyCaculParam result = data.getParcelableExtra(Param.TRAN);
             presenter.savePolicyParam(result);
-            showInsurancePrice(String.format("保费%s元", result.getPolicyPrice()));
-            item_cargo_price.setTextCenter(result.getGoodPrice());
+            showInsurancePrice(result);
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
@@ -475,9 +472,9 @@ public class OrderCreateActivity extends CompanyBaseActivity implements View.OnC
     }
 
     @Override
-    public void showInsurancePrice(String insurancePrice) {
-        item_cargo_price.setTextRight(insurancePrice);
-
+    public void showInsurancePrice(PolicyCaculParam result) {
+        item_cargo_price.setTextRight(String.format("保费%s元", result.getPolicyPrice()));
+        item_cargo_price.setTextCenter(result.getGoodPrice());
     }
 
     /**

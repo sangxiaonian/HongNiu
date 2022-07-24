@@ -73,6 +73,12 @@ public class OrderCreateMode implements OrderCreateControl.IOrderCreateMode {
     public void saveInfo(OrderInfoBean orderInfoBean) {
         this.orderInfoBean = orderInfoBean;
         policyParams.setId(orderInfoBean.getId());
+        policyParams.setPolicyType(orderInfoBean.getPolicyType());
+        policyParams.setGoodPrice(orderInfoBean.getGoodPrice());
+        policyParams.setGoodTypes(orderInfoBean.getGoodsTypes());
+        policyParams.setLoadingMethods(orderInfoBean.getLoadingMethods());
+        policyParams.setTransportMethods(orderInfoBean.getTransportMethods());
+        policyParams.setPackingMethods(orderInfoBean.getPackingMethods());
     }
 
     /**
@@ -294,6 +300,15 @@ public class OrderCreateMode implements OrderCreateControl.IOrderCreateMode {
             params.setCarId(ownerInfo.getCarid());
             params.setCarInfo(ownerInfo.getVehicleType());
             params.setCarNum(ownerInfo.getCarNumber());
+        }
+
+        if (policyParams!=null){
+            params.setPolicyType(policyParams.getPolicyType());
+            params.setPackingMethods(policyParams.getPackingMethods());
+            params.setLoadingMethods(policyParams.getLoadingMethods());
+            params.setTransportMethods(policyParams.getTransportMethods());
+            params.setGoodsTypes(policyParams.getGoodTypes());
+            params.setGoodPrice(policyParams.getGoodPrice());
         }
 
         if (orderInfoBean != null) {

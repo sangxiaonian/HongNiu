@@ -170,11 +170,10 @@ class AppMnlmPolicyActivity : CompanyBaseActivity() {
                             it.policyPrice = data
 
                         }
-                        val intent=Intent()
+                        val intent = Intent()
                         intent.putExtra(Param.TRAN, model.params)
                         setResult(100, intent)
                         finish()
-
                     }
                 })
 

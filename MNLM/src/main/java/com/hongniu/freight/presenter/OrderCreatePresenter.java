@@ -18,6 +18,7 @@ import com.hongniu.freight.entity.OrderSelectDriverInfoBean;
 import com.hongniu.freight.entity.OrderSelectOwnerInfoBean;
 import com.hongniu.freight.entity.TranMapBean;
 import com.hongniu.freight.mode.OrderCreateMode;
+import com.hongniu.freight.net.HttpAppFactory;
 
 import java.util.List;
 import java.util.Objects;
@@ -78,6 +79,18 @@ public class OrderCreatePresenter implements OrderCreateControl.IOrderCreatePres
                 mode.onChangeInsuranceInfo(0, insuranceInfoBean);
                 //初始化保险信息
                 view.initInsuranceInfo(orderInfoBean.getGoodPrice(), orderInfoBean.getInsureUsername());
+
+                // 查询保险价格
+                HttpAppFactory.calculatePolicyInfo(mode.getPolicyParam())
+                        .subscribe(new NetObserver<String>(null) {
+                            @Override
+                            public void doOnSuccess(String data) {
+                                super.doOnSuccess(data);
+                                mode.getPolicyParam().setPolicyPrice(data);
+                                view.showInsurancePrice(mode.getPolicyParam());
+                            }
+                        });
+
             }
             //发货时间
             mode.saveStartTime(orderInfoBean.getDepartureTime());
@@ -113,7 +126,6 @@ public class OrderCreatePresenter implements OrderCreateControl.IOrderCreatePres
             }
         } else {
             view.switchInsurance(false);
-
         }
     }
 
@@ -137,6 +149,7 @@ public class OrderCreatePresenter implements OrderCreateControl.IOrderCreatePres
     }
 
     /**
+     *
      */
     @Override
     public void saveEndInfo(AppAddressListBean result) {
