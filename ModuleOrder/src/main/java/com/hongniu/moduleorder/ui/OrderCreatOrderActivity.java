@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -139,7 +140,10 @@ public class OrderCreatOrderActivity extends ModuleBaseActivity implements Order
         initView();
         initData();
         initListener();
-        presenter.saveInsuranceInfo((OrderInsuranceParam) getIntent().getParcelableExtra(Param.TRAN));
+        Parcelable extra = getIntent().getParcelableExtra(Param.TRAN);
+        if (extra instanceof OrderInsuranceParam ) {
+            presenter.saveInsuranceInfo((OrderInsuranceParam) extra);
+        }
     }
 
     @Override

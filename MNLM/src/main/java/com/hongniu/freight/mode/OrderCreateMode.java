@@ -1,6 +1,5 @@
 package com.hongniu.freight.mode;
 
-import com.amap.api.services.core.LatLonPoint;
 import com.fy.androidlibrary.net.rx.RxUtils;
 import com.fy.androidlibrary.utils.CollectionUtils;
 import com.fy.androidlibrary.utils.CommonUtils;
@@ -16,7 +15,6 @@ import com.hongniu.freight.entity.OrderSelectDriverInfoBean;
 import com.hongniu.freight.entity.OrderSelectOwnerInfoBean;
 import com.hongniu.freight.entity.TranMapBean;
 import com.hongniu.freight.net.HttpAppFactory;
-import com.hongniu.freight.ui.QueryInsurancePriceParams;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -75,7 +73,7 @@ public class OrderCreateMode implements OrderCreateControl.IOrderCreateMode {
         policyParams.setId(orderInfoBean.getId());
         policyParams.setPolicyType(orderInfoBean.getPolicyType());
         policyParams.setGoodPrice(orderInfoBean.getGoodPrice());
-        policyParams.setGoodTypes(orderInfoBean.getGoodsTypes());
+        policyParams.setGoodsTypes(orderInfoBean.getGoodsTypes());
         policyParams.setLoadingMethods(orderInfoBean.getLoadingMethods());
         policyParams.setTransportMethods(orderInfoBean.getTransportMethods());
         policyParams.setPackingMethods(orderInfoBean.getPackingMethods());
@@ -307,7 +305,7 @@ public class OrderCreateMode implements OrderCreateControl.IOrderCreateMode {
             params.setPackingMethods(policyParams.getPackingMethods());
             params.setLoadingMethods(policyParams.getLoadingMethods());
             params.setTransportMethods(policyParams.getTransportMethods());
-            params.setGoodsTypes(policyParams.getGoodTypes());
+            params.setGoodsTypes(policyParams.getGoodsTypes());
             params.setGoodPrice(policyParams.getGoodPrice());
         }
 

@@ -69,7 +69,7 @@ class AppMnlmPolicyActivity : CompanyBaseActivity() {
         bind.itemLoadingType.textCenter =
             policyInfo.loadingMethods?.find { it.id == model.params?.loadingMethods }?.displayName
         bind.itemCargoType.textCenter =
-            policyInfo.goodsTypes?.find { it.id == model.params?.goodTypes }?.displayName
+            policyInfo.goodsTypes?.find { it.id == model.params?.goodsTypes }?.displayName
         bind.itemPackageType.textCenter =
             policyInfo.packingMethods?.find { it.id == model.params?.packingMethods }?.displayName
         bind.itemTrainType.textCenter =
@@ -118,7 +118,7 @@ class AppMnlmPolicyActivity : CompanyBaseActivity() {
                         bind.itemCargoType,
                         policys
                     ) {
-                        model.params?.goodTypes =
+                        model.params?.goodsTypes =
                             model.policyInfo.value?.goodsTypes?.get(it)?.id ?: ""
                         bind.itemCargoType.textCenter =
                             model.policyInfo.value?.goodsTypes?.get(it)?.displayName ?: ""
@@ -210,7 +210,7 @@ class AppMnlmPolicyActivity : CompanyBaseActivity() {
             return false
         }
         if (!bind.imgPolicy.isSelected) {
-            ToastUtils.getInstance().show("请确认保险信息")
+            ToastUtils.getInstance().show("请先同意保险条款")
             return false
         }
 

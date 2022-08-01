@@ -3,8 +3,6 @@ package com.hongniu.baselibrary.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import androidx.versionedparcelable.ParcelField;
-
 /**
  * @data 2022/7/13$
  * @Author PING
@@ -13,7 +11,7 @@ import androidx.versionedparcelable.ParcelField;
 public class PolicyCaculParam implements Parcelable {
     private String id;//true	number	订单id
     private String goodPrice;//true	number	货物价值，单位元
-    private String goodTypes;//true	string	货物类型
+    private String goodsTypes;//true	string	货物类型
     private String loadingMethods;//true	string	装载方式
     private String transportMethods;//true	string	运输方式
     private String packingMethods;//true	string	打包方式
@@ -27,7 +25,7 @@ public class PolicyCaculParam implements Parcelable {
     protected PolicyCaculParam(Parcel in) {
         id = in.readString();
         goodPrice = in.readString();
-        goodTypes = in.readString();
+        goodsTypes = in.readString();
         loadingMethods = in.readString();
         transportMethods = in.readString();
         packingMethods = in.readString();
@@ -71,12 +69,12 @@ public class PolicyCaculParam implements Parcelable {
         this.goodPrice = goodPrice;
     }
 
-    public String getGoodTypes() {
-        return goodTypes;
+    public String getGoodsTypes() {
+        return goodsTypes;
     }
 
-    public void setGoodTypes(String goodTypes) {
-        this.goodTypes = goodTypes;
+    public void setGoodsTypes(String goodsTypes) {
+        this.goodsTypes = goodsTypes;
     }
 
     public String getLoadingMethods() {
@@ -137,7 +135,7 @@ public class PolicyCaculParam implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(id);
         dest.writeString(goodPrice);
-        dest.writeString(goodTypes);
+        dest.writeString(goodsTypes);
         dest.writeString(loadingMethods);
         dest.writeString(transportMethods);
         dest.writeString(packingMethods);

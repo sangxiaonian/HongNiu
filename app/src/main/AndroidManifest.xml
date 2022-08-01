@@ -75,7 +75,6 @@
 
         <receiver android:name=".ui.receiver.MyPlushBroadcastReceiver" /> <!-- 小米 配置开始 < -->
         <activity android:name=".ui.ImagePreviceActivity" />
-        <activity android:name=".ui.PDFOrderActivity" />
         <activity android:name=".ui.AppPolicyActivity" />
 
         <meta-data

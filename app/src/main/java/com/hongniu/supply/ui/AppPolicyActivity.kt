@@ -16,11 +16,11 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.fy.androidlibrary.toast.ToastUtils
 import com.fy.companylibrary.ui.CompanyBaseActivity
 import com.fy.companylibrary.widget.ItemTextView
+import com.hongniu.baselibrary.arouter.ArouterParamOrder
 import com.hongniu.baselibrary.arouter.ArouterParamsApp
 import com.hongniu.baselibrary.arouter.ArouterUtils
 import com.hongniu.baselibrary.config.Param
 import com.hongniu.baselibrary.entity.H5Config
-import com.hongniu.baselibrary.entity.PolicyCaculParam
 import com.hongniu.baselibrary.entity.PolicyInfoBean
 import com.hongniu.freight.utils.PickerDialogUtils
 import com.hongniu.supply.R
@@ -58,7 +58,6 @@ class AppPolicyActivity : CompanyBaseActivity() {
         initData()
         initListener()
         model.queryPolicyInfo(this)
-
     }
 
     override fun initData() {
@@ -69,27 +68,34 @@ class AppPolicyActivity : CompanyBaseActivity() {
     }
 
     private fun initInfo(policyInfo: PolicyInfoBean) {
+        if (model.params?.goodPrice == null) {
+            return
+        }
         bind.itemPolicyType.textCenter = model.params?.policyType
-        bind.itemLoadingType.textCenter =
-            policyInfo.loadingMethods?.find { it.id == model.params?.loadingMethods }?.displayName
-        bind.itemCargoType.textCenter =
-            policyInfo.goodsTypes?.find { it.id == model.params?.goodTypes }?.displayName
-        bind.itemPackageType.textCenter =
-            policyInfo.packingMethods?.find { it.id == model.params?.packingMethods }?.displayName
-        bind.itemTrainType.textCenter =
-            policyInfo.transportMethods?.find { it.id == model.params?.transportMethods }?.displayName
+        bind.itemLoadingType.textCenter = model.params?.loadingMethods
+        bind.itemCargoType.textCenter =model.params?.goodsTypes
+        bind.itemPackageType.textCenter =model.params?.packingMethods
+        bind.itemTrainType.textCenter =model.params?.transportMethods
         bind.itemPrice.textCenter = model.params?.goodPrice
     }
 
     override fun initListener() {
         super.initListener()
 
+
+        model.type.observe(this) {
+            bind.btSave.text = if (it == 1) {
+                "去下单"
+            } else {
+                "提交"
+            }
+        }
         model.policyInfo.observe(this) {
             initInfo(it)
         }
         model.policyResult.observe(this) {
-            setResult(102, Intent().also { it.putExtra(Param.TRAN, it) })
-            finish()
+            bind.itemPrice.textRight = "保费" + it.policyPrice + "元"
+
         }
 
         bind.itemPolicyType.setOnClickListener {
@@ -113,7 +119,7 @@ class AppPolicyActivity : CompanyBaseActivity() {
                         policys
                     ) {
                         model.params?.loadingMethods =
-                            model.policyInfo.value?.loadingMethods?.get(it)?.id ?: ""
+                            model.policyInfo.value?.loadingMethods?.get(it)?.displayName ?: ""
                         bind.itemLoadingType.textCenter =
                             model.policyInfo.value?.loadingMethods?.get(it)?.displayName ?: ""
                     }
@@ -126,8 +132,8 @@ class AppPolicyActivity : CompanyBaseActivity() {
                         bind.itemCargoType,
                         policys
                     ) {
-                        model.params?.goodTypes =
-                            model.policyInfo.value?.goodsTypes?.get(it)?.id ?: ""
+                        model.params?.goodsTypes =
+                            model.policyInfo.value?.goodsTypes?.get(it)?.displayName ?: ""
                         bind.itemCargoType.textCenter =
                             model.policyInfo.value?.goodsTypes?.get(it)?.displayName ?: ""
                     }
@@ -143,7 +149,7 @@ class AppPolicyActivity : CompanyBaseActivity() {
                         bind.itemPackageType.textCenter =
                             model.policyInfo.value?.packingMethods?.get(it)?.displayName ?: ""
                         model.params?.packingMethods =
-                            model.policyInfo.value?.packingMethods?.get(it)?.id ?: ""
+                            model.policyInfo.value?.packingMethods?.get(it)?.displayName ?: ""
                     }
                 }
         }
@@ -155,7 +161,7 @@ class AppPolicyActivity : CompanyBaseActivity() {
                         policys
                     ) {
                         model.params?.transportMethods =
-                            model.policyInfo.value?.transportMethods?.get(it)?.id ?: ""
+                            model.policyInfo.value?.transportMethods?.get(it)?.displayName ?: ""
                         bind.itemTrainType.textCenter =
                             model.policyInfo.value?.transportMethods?.get(it)?.displayName ?: ""
                     }
@@ -164,13 +170,27 @@ class AppPolicyActivity : CompanyBaseActivity() {
 
         bind.itemPrice.setOnCenterChangeListener {
             model.params?.goodPrice = it
+            if (model.policyInfo.value != null && check()) {
+                model.caculatePolicyInfo(null)
+            }
         }
 
         bind.btSave.setOnClickListener {
             if (!check()) {
                 return@setOnClickListener
             }
-            model.caculatePolicyInfo(this)
+            if (model.type.value == 1) {
+                ArouterUtils.getInstance()
+                    .builder(ArouterParamOrder.activity_order_create)
+                    .withInt(Param.TYPE, 3)
+                    .navigation(this)
+                finish()
+            } else {
+                model.params?.let { bean ->
+                    setResult(102, Intent().also { it.putExtra(Param.TRAN, bean) })
+                    finish()
+                }
+            }
 
         }
         bind.imgPolicy.setOnClickListener {
@@ -205,7 +225,7 @@ class AppPolicyActivity : CompanyBaseActivity() {
             return false
         }
         if (!bind.imgPolicy.isSelected) {
-            ToastUtils.getInstance().show("请确认保险信息")
+            ToastUtils.getInstance().show("请先同意保险条款")
             return false
         }
 
@@ -261,31 +281,31 @@ class AppPolicyActivity : CompanyBaseActivity() {
         var start = end
         end = builder.length
         builder.setSpan(driverClick, start, end, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
-        builder.append("、")
-        start = builder.length
-        builder.append(context.getString(R.string.order_insruance_notify))
-        end = builder.length
-        //点击投保须知
-        val notifyClick: ClickableSpan = object : ClickableSpan() {
-            override fun onClick(widget: View) {
-                ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5)
-                    .withSerializable(
-                        Param.TRAN, H5Config(
-                            getString(R.string.order_insruance_notify),
-                            Param.insurance_notify,
-                            true
-                        )
-                    ).navigation(this@AppPolicyActivity)
-
-            }
-
-            //去除连接下划线
-            override fun updateDrawState(ds: TextPaint) {
-                ds.color = ds.linkColor
-                ds.isUnderlineText = false
-            }
-        }
-        builder.setSpan(notifyClick, start, end, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+//        builder.append("、")
+//        start = builder.length
+//        builder.append(context.getString(R.string.order_insruance_notify))
+//        end = builder.length
+//        //点击投保须知
+//        val notifyClick: ClickableSpan = object : ClickableSpan() {
+//            override fun onClick(widget: View) {
+//                ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5)
+//                    .withSerializable(
+//                        Param.TRAN, H5Config(
+//                            getString(R.string.order_insruance_notify),
+//                            Param.insurance_notify,
+//                            true
+//                        )
+//                    ).navigation(this@AppPolicyActivity)
+//
+//            }
+//
+//            //去除连接下划线
+//            override fun updateDrawState(ds: TextPaint) {
+//                ds.color = ds.linkColor
+//                ds.isUnderlineText = false
+//            }
+//        }
+//        builder.setSpan(notifyClick, start, end, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
         val clickEnd = end
         val clickSpan = ForegroundColorSpan(context.resources.getColor(R.color.color_title_dark))
         builder.setSpan(clickSpan, clickStart, clickEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)

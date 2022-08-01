@@ -1,5 +1,6 @@
 package com.hongniu.freight.ui;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -20,6 +21,7 @@ import com.fy.androidlibrary.utils.CommonUtils;
 import com.fy.androidlibrary.utils.ConvertUtils;
 import com.fy.androidlibrary.widget.span.CenterAlignImageSpan;
 import com.fy.androidlibrary.widget.span.XClickableSpan;
+import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.fy.companylibrary.config.ArouterParamMNLM;
 import com.fy.companylibrary.config.Param;
@@ -365,10 +367,11 @@ public class OrderDetailActivity extends CompanyBaseActivity implements OrderDet
      */
     @Override
     public void checkInsurance(AppInsuranceInfo insurance) {
-        H5Config h5Config = new H5Config("查看保单", insurance.getDownloadUrl(), false);
-        ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_h5)
-                .withSerializable(Param.TRAN, h5Config)
-                .navigation(mContext);
+//        H5Config h5Config = new H5Config("查看保单", insurance.getDownloadUrl(), false);
+//        ArouterUtils.getInstance().builder(ArouterParamsApp.activity_pdf)
+//                .withSerializable(Param.TRAN, insurance.getDownloadUrl())
+//                .navigation(mContext);
+        OrderUtils.scanPDf((Activity) mContext,  insurance.getDownloadUrl());
     }
 
     /**

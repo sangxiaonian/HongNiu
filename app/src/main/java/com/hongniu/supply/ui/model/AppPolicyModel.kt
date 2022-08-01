@@ -1,11 +1,9 @@
 package com.hongniu.supply.ui.model
 
-import android.content.Intent
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.fy.androidlibrary.net.listener.TaskControl
 import com.fy.companylibrary.net.NetObserver
-import com.hongniu.baselibrary.config.Param
 import com.hongniu.baselibrary.entity.PolicyCaculParam
 import com.hongniu.baselibrary.entity.PolicyInfoBean
 import com.hongniu.baselibrary.net.HttpAppFactory
@@ -19,14 +17,15 @@ import com.hongniu.baselibrary.net.HttpAppFactory
  */
 class AppPolicyModel : ViewModel() {
 
-    private var type = 0
+    var type = MutableLiveData<Int>()
     var policyInfo = MutableLiveData<PolicyInfoBean>()
     var policyResult = MutableLiveData<PolicyCaculParam>()
     var params: PolicyCaculParam? = null
 
     fun saveInfo(policyCaculParam: PolicyCaculParam?, type: Int) {
         params = policyCaculParam ?: PolicyCaculParam()
-        this.type = type
+        this.type.value = type
+
     }
 
     fun queryPolicyInfo(listener: TaskControl.OnTaskListener) {
@@ -44,7 +43,7 @@ class AppPolicyModel : ViewModel() {
     /**
      * 开始计算保费
      */
-    fun caculatePolicyInfo(listener: TaskControl.OnTaskListener) {
+    fun caculatePolicyInfo(listener: TaskControl.OnTaskListener?) {
         HttpAppFactory.calculatePolicyInfo(params)
             .subscribe(object : NetObserver<String>(listener) {
                 override fun doOnSuccess(data: String?) {

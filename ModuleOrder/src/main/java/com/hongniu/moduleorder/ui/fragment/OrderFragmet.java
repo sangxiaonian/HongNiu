@@ -24,13 +24,11 @@ import com.fy.androidlibrary.utils.JLog;
 import com.google.gson.Gson;
 import com.hongniu.baselibrary.arouter.ArouterParamLogin;
 import com.hongniu.baselibrary.arouter.ArouterParamOrder;
-import com.hongniu.baselibrary.arouter.ArouterParamsApp;
 import com.hongniu.baselibrary.arouter.ArouterUtils;
 import com.hongniu.baselibrary.base.NetObserver;
 import com.hongniu.baselibrary.base.RefrushFragmet;
 import com.hongniu.baselibrary.config.Param;
 import com.hongniu.baselibrary.entity.CommonBean;
-import com.hongniu.baselibrary.entity.H5Config;
 import com.hongniu.baselibrary.entity.OrderCreatBean;
 import com.hongniu.baselibrary.entity.OrderDetailBean;
 import com.hongniu.baselibrary.entity.PageBean;
@@ -57,6 +55,7 @@ import com.hongniu.moduleorder.entity.QueryReceiveBean;
 import com.hongniu.moduleorder.net.HttpOrderFactory;
 import com.hongniu.moduleorder.ui.OrderScanReceiptActivity;
 import com.hongniu.moduleorder.ui.WaitePayActivity;
+import com.hongniu.moduleorder.utils.OrderUtils;
 import com.sang.common.recycleview.adapter.XAdapter;
 import com.sang.common.recycleview.holder.BaseHolder;
 import com.sang.common.widget.dialog.CenterAlertDialog;
@@ -272,10 +271,7 @@ public class OrderFragmet extends RefrushFragmet<OrderDetailBean> implements Ord
     public void onCheckInsruance(OrderDetailBean orderBean) {
         if (orderBean.getPolicyInfo() != null) {
             OrderCreatBean orderCreatBean = new Gson().fromJson(orderBean.getPolicyInfo(), OrderCreatBean.class);
-            H5Config h5Config = new H5Config("查看保单", orderCreatBean.getDownloadUrl(), false);
-            ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5).withSerializable(Param.TRAN, h5Config).navigation(getActivity());
-
-//            OrderUtils.scanPDf(getActivity(), orderCreatBean.getDownloadUrl());
+            OrderUtils.scanPDf(getActivity(), orderCreatBean.getDownloadUrl());
         } else {
             ToastUtils.getInstance().makeToast(ToastUtils.ToastType.NORMAL).show("暂无保单信息");
 

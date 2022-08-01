@@ -233,7 +233,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
             case R.id.card_insurance:
                 ClickEventUtils.getInstance().onClick(ClickEventParams.首页_牛人保);
                 ArouterUtils.getInstance()
-                        .builder(ArouterParamOrder.activity_order_insurance_calculate)
+                        .builder(ArouterParamsApp.activity_policy)
+                        .withInt(Param.TYPE,1)
                         .navigation(getContext());
                 break;
             case R.id.card_goods_match:

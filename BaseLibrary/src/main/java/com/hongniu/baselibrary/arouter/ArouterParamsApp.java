@@ -14,7 +14,6 @@ public class ArouterParamsApp {
      * Pdf 加载页面
      */
     public final static String activity_pdf = "/app/activity_pdf";
-    public final static String activity_pdf_order = "/app/activity_pdf_order";
     /**
      * 图片预览
      */
