@@ -473,7 +473,7 @@ public class OrderCreateActivity extends CompanyBaseActivity implements View.OnC
 
     @Override
     public void showInsurancePrice(PolicyCaculParam result) {
-        item_cargo_price.setTextRight(String.format("保费%s元", result.getPolicyPrice()));
+        item_cargo_price.setTextRight(String.format("保费%s元", result.getPolicyPrice()==null?"0":result.getPolicyPrice()));
         item_cargo_price.setTextCenter(result.getGoodPrice());
     }
 
