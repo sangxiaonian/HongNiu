@@ -40,7 +40,7 @@
         android:layout_width="wrap_content"
         android:textColor="@color/color_007aff"
         android:textSize="13sp"
-        android:text="人保--牛人保介绍"
+        android:text="牛人保介绍"
         android:layout_marginLeft="24dp"
         android:layout_marginTop="@dimen/app_model_gap"
         android:layout_height="wrap_content" />

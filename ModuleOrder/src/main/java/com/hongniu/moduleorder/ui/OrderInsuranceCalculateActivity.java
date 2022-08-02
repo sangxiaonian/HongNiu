@@ -123,7 +123,7 @@ public class OrderInsuranceCalculateActivity extends ModuleBaseActivity implemen
                 jump();
             }
         }else if (v.getId()==R.id.tv_notice){
-            H5Config h5Config = new H5Config("人保-牛人保介绍", Param.NIURENBAO, false);
+            H5Config h5Config = new H5Config("牛人保介绍", Param.NIURENBAO, false);
             ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5)
                     .withSerializable(Param.TRAN, h5Config).navigation(mContext);
 

@@ -299,7 +299,7 @@ public class OrderCreateActivity extends CompanyBaseActivity implements View.OnC
             //选择承运人
             OrderSelectOwnerInfoBean result = data.getParcelableExtra(Param.TRAN);
             presenter.saveOwnerInfo(result);
-        } else if (data != null && resultCode == 100) {
+        } else if (data != null && requestCode == 100) {
             //保险信息
             PolicyCaculParam result = data.getParcelableExtra(Param.TRAN);
             presenter.savePolicyParam(result);

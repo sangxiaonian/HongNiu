@@ -46,6 +46,7 @@
         style="@style/item_text"
         app:centerType="number"
         app:editable="true"
+        app:colorRight="@color/color_of_ff3a30"
         app:srcRight="@null"
         app:textcenterhide="请填写货物价值"
         app:textleft="货物价值" />

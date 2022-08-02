@@ -21,7 +21,6 @@ import com.hongniu.baselibrary.arouter.ArouterParamsApp
 import com.hongniu.baselibrary.arouter.ArouterUtils
 import com.hongniu.baselibrary.config.Param
 import com.hongniu.baselibrary.entity.H5Config
-import com.hongniu.baselibrary.entity.PolicyInfoBean
 import com.hongniu.freight.utils.PickerDialogUtils
 import com.hongniu.supply.R
 import com.hongniu.supply.databinding.ActivityAppPolicyBinding
@@ -65,18 +64,17 @@ class AppPolicyActivity : CompanyBaseActivity() {
         bind.tvPolicy.movementMethod = LinkMovementMethod.getInstance()
         bind.tvPolicy.text = getSpannableStringBuilder(this)
         bind.tvPolicy.highlightColor = Color.TRANSPARENT
+        initInfo()
     }
 
-    private fun initInfo(policyInfo: PolicyInfoBean) {
-        if (model.params?.goodPrice == null) {
-            return
-        }
+    private fun initInfo() {
         bind.itemPolicyType.textCenter = model.params?.policyType
         bind.itemLoadingType.textCenter = model.params?.loadingMethods
-        bind.itemCargoType.textCenter =model.params?.goodsTypes
-        bind.itemPackageType.textCenter =model.params?.packingMethods
-        bind.itemTrainType.textCenter =model.params?.transportMethods
+        bind.itemCargoType.textCenter = model.params?.goodsTypes
+        bind.itemPackageType.textCenter = model.params?.packingMethods
+        bind.itemTrainType.textCenter = model.params?.transportMethods
         bind.itemPrice.textCenter = model.params?.goodPrice
+        bind.itemPrice.textRight = "保费${model.params?.policyPrice ?: "0.00"}元"
     }
 
     override fun initListener() {
@@ -89,9 +87,6 @@ class AppPolicyActivity : CompanyBaseActivity() {
             } else {
                 "提交"
             }
-        }
-        model.policyInfo.observe(this) {
-            initInfo(it)
         }
         model.policyResult.observe(this) {
             bind.itemPrice.textRight = "保费" + it.policyPrice + "元"

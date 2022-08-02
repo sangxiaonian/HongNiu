@@ -39,7 +39,7 @@ public class Param {
    public static final String  agreement = "https://api.hongniudai.cn/static/wlhydemoagreement.html";
 
   public static final String h_insurance_notify = "https://api.hongniudai.cn/static/wlhydemonotice.html";
-  public static final String h_insurance_polic = "https://api.hongniudai.cn/static/wlhydemopolicy.html";
+  public static final String h_insurance_polic = "https://api.hongniudai.cn/static/html/insurance_2009.html";
 
     //隐私协议
     public static final String  hongniu_privacy = "https://api.hongniudai.cn/static/wlhyprotocol.html";

@@ -46,6 +46,9 @@ public class PolicyCaculParam implements Parcelable {
     };
 
     public String getPolicyPrice() {
+        if (policyPrice != null && policyPrice.startsWith(".")) {
+            return "0"+policyPrice;
+        }
         return policyPrice;
     }
 

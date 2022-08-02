@@ -6,21 +6,22 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
+import android.text.TextPaint
 import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.text.style.ForegroundColorSpan
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.fy.androidlibrary.toast.ToastUtils
-import com.fy.androidlibrary.widget.span.XClickableSpan
 import com.fy.companylibrary.config.ArouterParamMNLM
-import com.fy.companylibrary.net.NetObserver
+import com.fy.companylibrary.config.Param
 import com.fy.companylibrary.ui.CompanyBaseActivity
 import com.fy.companylibrary.widget.ItemTextView
 import com.hongniu.baselibrary.arouter.ArouterUtils
-import com.hongniu.baselibrary.config.Param
-import com.hongniu.baselibrary.entity.PolicyInfoBean
 import com.hongniu.freight.R
 import com.hongniu.freight.databinding.MnlmActivityAppPolicyBinding
+import com.hongniu.freight.entity.H5Config
 import com.hongniu.freight.mode.MnlmPolicyModel
 import com.hongniu.freight.utils.PickerDialogUtils
 
@@ -54,7 +55,6 @@ class AppMnlmPolicyActivity : CompanyBaseActivity() {
         initData()
         initListener()
         model.queryPolicyInfo(this)
-
     }
 
     override fun initData() {
@@ -62,26 +62,27 @@ class AppMnlmPolicyActivity : CompanyBaseActivity() {
         bind.tvPolicy.movementMethod = LinkMovementMethod.getInstance()
         bind.tvPolicy.text = getSpannableStringBuilder(this)
         bind.tvPolicy.highlightColor = Color.TRANSPARENT
+        initInfo()
     }
 
-    private fun initInfo(policyInfo: PolicyInfoBean) {
+    private fun initInfo() {
+        if (model.params?.goodPrice == null) {
+            return
+        }
         bind.itemPolicyType.textCenter = model.params?.policyType
-        bind.itemLoadingType.textCenter =
-            policyInfo.loadingMethods?.find { it.id == model.params?.loadingMethods }?.displayName
-        bind.itemCargoType.textCenter =
-            policyInfo.goodsTypes?.find { it.id == model.params?.goodsTypes }?.displayName
-        bind.itemPackageType.textCenter =
-            policyInfo.packingMethods?.find { it.id == model.params?.packingMethods }?.displayName
-        bind.itemTrainType.textCenter =
-            policyInfo.transportMethods?.find { it.id == model.params?.transportMethods }?.displayName
+        bind.itemLoadingType.textCenter = model.params?.loadingMethods
+        bind.itemCargoType.textCenter = model.params?.goodsTypes
+        bind.itemPackageType.textCenter = model.params?.packingMethods
+        bind.itemTrainType.textCenter = model.params?.transportMethods
         bind.itemPrice.textCenter = model.params?.goodPrice
+        bind.itemPrice.textRight = "保费${model.params?.policyPrice ?: "0.00"}元"
     }
 
     override fun initListener() {
         super.initListener()
 
-        model.policyInfo.observe(this) {
-            initInfo(it)
+        model.policyResult.observe(this) {
+            bind.itemPrice.textRight = "保费" + it.policyPrice + "元"
         }
 
         bind.itemPolicyType.setOnClickListener {
@@ -105,7 +106,7 @@ class AppMnlmPolicyActivity : CompanyBaseActivity() {
                         policys
                     ) {
                         model.params?.loadingMethods =
-                            model.policyInfo.value?.loadingMethods?.get(it)?.id ?: ""
+                            model.policyInfo.value?.loadingMethods?.get(it)?.displayName ?: ""
                         bind.itemLoadingType.textCenter =
                             model.policyInfo.value?.loadingMethods?.get(it)?.displayName ?: ""
                     }
@@ -119,7 +120,7 @@ class AppMnlmPolicyActivity : CompanyBaseActivity() {
                         policys
                     ) {
                         model.params?.goodsTypes =
-                            model.policyInfo.value?.goodsTypes?.get(it)?.id ?: ""
+                            model.policyInfo.value?.goodsTypes?.get(it)?.displayName ?: ""
                         bind.itemCargoType.textCenter =
                             model.policyInfo.value?.goodsTypes?.get(it)?.displayName ?: ""
                     }
@@ -135,7 +136,7 @@ class AppMnlmPolicyActivity : CompanyBaseActivity() {
                         bind.itemPackageType.textCenter =
                             model.policyInfo.value?.packingMethods?.get(it)?.displayName ?: ""
                         model.params?.packingMethods =
-                            model.policyInfo.value?.packingMethods?.get(it)?.id ?: ""
+                            model.policyInfo.value?.packingMethods?.get(it)?.displayName ?: ""
                     }
                 }
         }
@@ -147,7 +148,7 @@ class AppMnlmPolicyActivity : CompanyBaseActivity() {
                         policys
                     ) {
                         model.params?.transportMethods =
-                            model.policyInfo.value?.transportMethods?.get(it)?.id ?: ""
+                            model.policyInfo.value?.transportMethods?.get(it)?.displayName ?: ""
                         bind.itemTrainType.textCenter =
                             model.policyInfo.value?.transportMethods?.get(it)?.displayName ?: ""
                     }
@@ -156,31 +157,23 @@ class AppMnlmPolicyActivity : CompanyBaseActivity() {
 
         bind.itemPrice.setOnCenterChangeListener {
             model.params?.goodPrice = it
+            if (check()) {
+                model.caculatePolicyInfo(null)
+            }
         }
 
         bind.btSave.setOnClickListener {
             if (!check()) {
                 return@setOnClickListener
             }
-            model.caculatePolicyInfo(this)
-                .subscribe(object : NetObserver<String>(this) {
-                    override fun doOnSuccess(data: String?) {
-                        super.doOnSuccess(data)
-                        model.params?.let { it ->
-                            it.policyPrice = data
-
-                        }
-                        val intent = Intent()
-                        intent.putExtra(Param.TRAN, model.params)
-                        setResult(100, intent)
-                        finish()
-                    }
-                })
-
+            model.params?.let { bean ->
+                setResult(102, Intent().also { it.putExtra(Param.TRAN, bean) })
+                finish()
+            }
         }
         bind.imgPolicy.setOnClickListener {
             bind.imgPolicy.isSelected = !bind.imgPolicy.isSelected
-            bind.imgPolicy.setImageResource(if (bind.imgPolicy.isSelected) R.drawable.icon_xz_36 else R.drawable.icon_wxz_36)
+            bind.imgPolicy.setImageResource(if (bind.imgPolicy.isSelected) R.mipmap.icon_xz_36 else R.mipmap.icon_wxz_36)
         }
     }
 
@@ -236,54 +229,43 @@ class AppMnlmPolicyActivity : CompanyBaseActivity() {
     }
 
     private fun getSpannableStringBuilder(context: Context): SpannableStringBuilder {
-        val builder = SpannableStringBuilder("购买即代表同意")
-        var start = builder.length
-        builder.append("《保险条款》")
+        val builder =
+            SpannableStringBuilder(context.getString(R.string.order_insruance_police_front))
+        val span = ForegroundColorSpan(context.resources.getColor(R.color.color_of_333333))
         var end = builder.length
-        val xClickableSpan: XClickableSpan = object : XClickableSpan() {
-            /**
-             * Performs the click action associated with this span.
-             *
-             * @param widget
-             */
+        val clickStart = end
+        builder.setSpan(span, 0, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        //点击保险条款
+        builder.append(context.getString(R.string.order_insruance_police))
+        val driverClick: ClickableSpan = object : ClickableSpan() {
             override fun onClick(widget: View) {
-                val h5Config = com.hongniu.freight.entity.H5Config(
-                    "保险条款",
-                    com.fy.companylibrary.config.Param.h_insurance_polic,
-                    true
-                )
                 ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_h5)
-                    .withSerializable(com.fy.companylibrary.config.Param.TRAN, h5Config)
-                    .navigation(mContext)
+                    .withSerializable(
+                        Param.TRAN, H5Config(
+                            getString(R.string.order_insruance_police),
+                            Param.h_insurance_polic,
+                            true
+                        )
+                    ).navigation(this@AppMnlmPolicyActivity)
+            }
+
+            //去除连接下划线
+            override fun updateDrawState(ds: TextPaint) {
+                ds.color = ds.linkColor
+                ds.isUnderlineText = false
             }
         }
-        xClickableSpan.setColor(resources.getColor(R.color.color_of_3d59ae))
-        builder.setSpan(xClickableSpan, start, end, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
-        builder.append("、")
-        start = builder.length
-        builder.append("《投保须知》")
+        var start = end
         end = builder.length
-        val xClickableSpan1: XClickableSpan = object : XClickableSpan() {
-            /**
-             * Performs the click action associated with this span.
-             *
-             * @param widget
-             */
-            override fun onClick(widget: View) {
-                val h5Config = com.hongniu.freight.entity.H5Config(
-                    "投保须知",
-                    com.fy.companylibrary.config.Param.h_insurance_notify,
-                    true
-                )
-                ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_h5)
-                    .withSerializable(com.fy.companylibrary.config.Param.TRAN, h5Config)
-                    .navigation(mContext)
-            }
-        }
-        xClickableSpan1.setColor(resources.getColor(R.color.color_of_3d59ae))
-        builder.setSpan(xClickableSpan1, start, end, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+        builder.setSpan(driverClick, start, end, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+        val clickEnd = end
+        val clickSpan = ForegroundColorSpan(context.resources.getColor(R.color.color_of_999999))
+        builder.setSpan(clickSpan, clickStart, clickEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        val spanEnd = ForegroundColorSpan(context.resources.getColor(R.color.color_of_333333))
+        start = builder.length
+        builder.append(context.getString(R.string.order_insruance_police_end))
+        builder.setSpan(spanEnd, start, builder.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         return builder
     }
-
-
 }
