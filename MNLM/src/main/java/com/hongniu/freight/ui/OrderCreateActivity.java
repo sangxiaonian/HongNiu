@@ -156,25 +156,6 @@ public class OrderCreateActivity extends CompanyBaseActivity implements View.OnC
         };
         xClickableSpan.setColor(getResources().getColor(R.color.color_of_3d59ae));
         builder.setSpan(xClickableSpan, start, end, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-        builder.append("、");
-        start = builder.length();
-        builder.append("《投保须知》");
-        end = builder.length();
-        XClickableSpan xClickableSpan1 = new XClickableSpan() {
-            /**
-             * Performs the click action associated with this span.
-             *
-             * @param widget
-             */
-            @Override
-            public void onClick(@NonNull View widget) {
-                H5Config h5Config = new H5Config("投保须知", Param.h_insurance_notify, true);
-                ArouterUtils.getInstance().builder(ArouterParamMNLM.activity_h5).withSerializable(Param.TRAN, h5Config).navigation(mContext);
-
-            }
-        };
-        xClickableSpan1.setColor(getResources().getColor(R.color.color_of_3d59ae));
-        builder.setSpan(xClickableSpan1, start, end, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         tv_agreement_insurance.setMovementMethod(LinkMovementMethod.getInstance());
         tv_agreement_insurance.setText(builder);
         ll_insurance.setVisibility(Utils.isShowInsurance() ? View.VISIBLE : View.GONE);
