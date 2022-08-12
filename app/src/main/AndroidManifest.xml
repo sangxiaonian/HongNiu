@@ -37,7 +37,6 @@
             android:exported="true" />
         <activity android:name=".ui.AppWaitingActivity" />
         <activity android:name=".ui.SwitchCompanyActivity" />
-        <activity android:name=".ui.PDFActivity" />
         <activity android:name=".ui.WayBillActivity" />
         <activity android:name=".ui.QRCodeActivity" />
         <activity
