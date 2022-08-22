@@ -137,8 +137,12 @@ public class SplashActivity extends ModuleBaseActivity implements RuleAlertDialo
 
     @Override
     public void onClickReportAlert(boolean isPositive) {
-        PrivacyManger.INSTANCE.setAgreePrivacy(true);
-        ThirdManager.INSTANCE.init(this, BuildConfig.DEBUG);
-        jump2Next();
+        if (isPositive) {
+            PrivacyManger.INSTANCE.setAgreePrivacy(true);
+            ThirdManager.INSTANCE.init(this, BuildConfig.DEBUG);
+            jump2Next();
+        } else {
+            finish();
+        }
     }
 }

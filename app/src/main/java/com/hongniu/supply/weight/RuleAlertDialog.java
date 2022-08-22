@@ -76,7 +76,10 @@ public class RuleAlertDialog extends Dialog {
             public void onClick(View v) {
                 if (typeView == 1) {
                     typeView = 0;
-                    refreshView();
+                    dismiss();
+                    if (callBack != null) {
+                        callBack.onClickReportAlert(false);
+                    }
                 } else {
                     if (callBack != null) {
                         callBack.onClickReportAlert(true);
