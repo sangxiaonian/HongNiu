@@ -11,7 +11,7 @@ android {
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         ndk {
-            abiFilters "armeabi-v7a", "x86"
+            abiFilters "armeabi-v7a", "x86", "x86_64", "arm64-v8a"
         }
     }
 
@@ -61,8 +61,8 @@ dependencies {
     api 'com.amap.api:navi-3dmap:7.5.0_3dmap7.5.0'
     api 'com.amap.api:search:7.3.0'
 //    api 'com.amap.api:location:5.2.0'
-    api ('com.github.LuckSiege.PictureSelector:picture_library:v2.4.6'){
-        exclude group:'com.github.bumptech.glide'
+    api('com.github.LuckSiege.PictureSelector:picture_library:v2.4.6') {
+        exclude group: 'com.github.bumptech.glide'
     }
 
     //省网络或许所需数据
