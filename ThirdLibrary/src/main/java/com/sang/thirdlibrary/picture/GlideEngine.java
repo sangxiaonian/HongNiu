@@ -17,7 +17,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.bumptech.glide.request.target.ImageViewTarget;
 import com.luck.picture.lib.engine.ImageEngine;
-import com.luck.picture.lib.listener.ImageCompleteCallback;
+import com.luck.picture.lib.listener.OnImageCompleteCallback;
 import com.luck.picture.lib.tools.MediaUtils;
 import com.luck.picture.lib.widget.longimage.ImageSource;
 import com.luck.picture.lib.widget.longimage.ImageViewState;
@@ -45,6 +45,7 @@ public class GlideEngine implements ImageEngine {
                 .into(imageView);
     }
 
+
     /**
      * 加载网络图片适配长图方案
      * # 注意：此方法只有加载网络图片才会回调
@@ -58,7 +59,7 @@ public class GlideEngine implements ImageEngine {
     @Override
     public void loadImage(@NonNull Context context, @NonNull String url,
                           @NonNull final ImageView imageView,
-                          final SubsamplingScaleImageView longImageView, final ImageCompleteCallback callback) {
+                          final SubsamplingScaleImageView longImageView, final OnImageCompleteCallback callback) {
         Glide.with(context)
                 .asBitmap()
                 .load(url)

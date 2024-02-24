@@ -163,4 +163,9 @@ public class FaceBackActivity extends BaseImageUpActivity implements SearchTextW
             }
         }
     }
+
+    @Override
+    public void onCancel() {
+
+    }
 }

@@ -32,7 +32,7 @@ import io.reactivex.disposables.Disposable;
  * 作者： PING
  * 日期： 2020/3/29.
  */
-public class ImageInforView extends LinearLayout implements View.OnClickListener, OnResultCallbackListener {
+public class ImageInforView extends LinearLayout implements View.OnClickListener, OnResultCallbackListener<LocalMedia> {
 
     private ImageView img;
     private View bt_img;
@@ -218,6 +218,11 @@ public class ImageInforView extends LinearLayout implements View.OnClickListener
         if (!CollectionUtils.isEmpty(result)) {
             setImageInfo(PicUtils.getPath(result.get(0)), true);
         }
+    }
+
+    @Override
+    public void onCancel() {
+
     }
 
     public interface UpLoadFinishListener{

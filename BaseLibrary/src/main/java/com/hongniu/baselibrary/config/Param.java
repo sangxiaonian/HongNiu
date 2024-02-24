@@ -31,6 +31,7 @@ public class Param {
         } else {
             url = "https://api.hongniudai.cn/hongniu/";
         }
+        url = "https://api.hongniudai.cn/hongniu/";
         hongniu_agreement = "https://api.hongniudai.cn/static/html/service.html";
         insurance_notify = "https://api.hongniudai.cn/static/html/notice.html";
         insurance_polic = "https://api.hongniudai.cn/static/html/insurance_2009.html";

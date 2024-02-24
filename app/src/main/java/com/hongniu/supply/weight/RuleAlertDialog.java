@@ -141,7 +141,7 @@ public class RuleAlertDialog extends Dialog {
         ClickableSpan clickableSpan1 = new ClickableSpan() {
             @Override
             public void onClick(View widget) {
-                H5Config h5Config = new H5Config("隐私权政策", Param.privacy, true);
+                H5Config h5Config = new H5Config("隐私权政策", Param.privacy, false);
                 ArouterUtils.getInstance().builder(ArouterParamsApp.activity_h5).withSerializable(Param.TRAN, h5Config).navigation(getContext());
 
             }

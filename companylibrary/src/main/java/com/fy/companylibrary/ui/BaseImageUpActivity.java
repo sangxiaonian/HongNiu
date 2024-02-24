@@ -36,7 +36,7 @@ import io.reactivex.Observable;
  * <p>
  * 图片上传功能的基础类
  */
-public abstract class BaseImageUpActivity extends CompanyBaseActivity implements RecycleControl.OnItemClickListener<ImageInforBean>, ImageAdapter.DealFailImageListener, ImageAddHolder.OnAddPicturesListener, OnResultCallbackListener {
+public abstract class BaseImageUpActivity extends CompanyBaseActivity implements RecycleControl.OnItemClickListener<ImageInforBean>, ImageAdapter.DealFailImageListener, ImageAddHolder.OnAddPicturesListener, OnResultCallbackListener<LocalMedia> {
 
     protected ImageAdapter adapter;
     protected List<ImageInforBean> datas;

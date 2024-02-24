@@ -166,7 +166,7 @@ public class PersonCenterFragment extends CompanyBaseFragment implements View.On
                 @Override
                 public void hasPermission() {
                     new PictureClient()
-                            .startPhoto(PersonCenterFragment.this, 1, null, new OnResultCallbackListener() {
+                            .startPhoto(PersonCenterFragment.this, 1, null, new OnResultCallbackListener<LocalMedia>() {
                                 @Override
                                 public void onResult(List<LocalMedia> result) {
                                     if (!CollectionUtils.isEmpty(result)) {
@@ -190,6 +190,11 @@ public class PersonCenterFragment extends CompanyBaseFragment implements View.On
                                                     }
                                                 });
                                     }
+                                }
+
+                                @Override
+                                public void onCancel() {
+
                                 }
                             });
                 }

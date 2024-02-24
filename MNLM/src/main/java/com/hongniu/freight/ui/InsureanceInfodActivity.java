@@ -264,7 +264,7 @@ public class InsureanceInfodActivity extends CompanyBaseActivity implements View
 
 
         } else if (i == R.id.img_path) {
-            new PictureClient().startPhoto(this, 1, null, new OnResultCallbackListener() {
+            new PictureClient().startPhoto(this, 1, null, new OnResultCallbackListener<LocalMedia>() {
                 @Override
                 public void onResult(List<LocalMedia> result) {
                     if (!CollectionUtils.isEmpty(result)) {
@@ -272,6 +272,11 @@ public class InsureanceInfodActivity extends CompanyBaseActivity implements View
                         headPath = PicUtils.getPath(media);
                         ImageLoader.getLoader().skipMemoryCache().load(mContext, image, headPath);
                     }
+                }
+
+                @Override
+                public void onCancel() {
+
                 }
             });
         } else if (i == R.id.item_type) {//选择身份

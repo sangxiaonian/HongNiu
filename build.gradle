@@ -5,8 +5,8 @@ ext {
     compileSdkVersion = 29
     minSdkVersion = 21
     targetSdkVersion = 30
-    versionCode = 2150
-    versionName = "2.16.0"
+    versionCode = 2162
+    versionName = "2.16.2"
 
 
     Arouter_Complier = "1.1.4"
@@ -19,12 +19,13 @@ buildscript {
     ext.kotlin_version = '1.4.32'
 
     repositories {
+        maven { url 'https://jitpack.io' }
+        maven { url 'https://maven.aliyun.com/repository/public/' }
         google()
         mavenCentral()
-        maven {url  "http://maven.rongcloud.cn/repository/maven-releases/"}
+        maven { url "http://maven.rongcloud.cn/repository/maven-releases/" }
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
-        maven { url 'https://jitpack.io' }
         maven { url 'https://dl.bintray.com/umsdk/release' }
         maven { url 'https://developer.huawei.com/repo/' }
 
@@ -41,12 +42,13 @@ buildscript {
 
 allprojects {
     repositories {
+        maven { url 'https://jitpack.io' }
+        maven { url 'https://maven.aliyun.com/repository/public/' }
         google()
         mavenCentral()
-        maven {url  "http://maven.rongcloud.cn/repository/maven-releases/"}
+        maven { url "http://maven.rongcloud.cn/repository/maven-releases/" }
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
-        maven { url 'https://jitpack.io' }
         maven { url 'https://dl.bintray.com/umsdk/release' }
         maven { url 'https://developer.huawei.com/repo/' }
     }

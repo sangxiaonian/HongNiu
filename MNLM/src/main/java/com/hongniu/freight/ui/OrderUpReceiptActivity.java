@@ -183,8 +183,8 @@ public class OrderUpReceiptActivity extends BaseImageUpActivity implements View.
     }
 
 
+    @Override
+    public void onCancel() {
 
-
-
-
+    }
 }

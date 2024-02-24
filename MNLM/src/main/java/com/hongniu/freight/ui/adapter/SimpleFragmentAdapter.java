@@ -11,11 +11,9 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import com.fy.androidlibrary.imgload.ImageLoader;
 import com.hongniu.freight.R;
-import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.photoview.PhotoView;
 import com.luck.picture.lib.widget.longimage.SubsamplingScaleImageView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SimpleFragmentAdapter extends PagerAdapter {
@@ -31,8 +29,8 @@ public class SimpleFragmentAdapter extends PagerAdapter {
     private List<String> images;
 
     public SimpleFragmentAdapter(Context mContext, List<String> lists) {
-        images=lists;
-        mCacheView=new SparseArray<>();
+        images = lists;
+        mCacheView = new SparseArray<>();
     }
 
     private void clear() {
@@ -47,7 +45,6 @@ public class SimpleFragmentAdapter extends PagerAdapter {
             mCacheView.removeAt(position);
         }
     }
-
 
 
     @Override
@@ -87,14 +84,9 @@ public class SimpleFragmentAdapter extends PagerAdapter {
             ImageView ivPlay = contentView.findViewById(R.id.iv_play);
             String path = images.get(position);
             if (path != null) {
-
-                boolean isHttp = PictureMimeType.isHttp(path);
                 ivPlay.setVisibility(View.GONE);
-                boolean isGif = false;
-                final boolean eqLongImg = false;
                 imageView.setVisibility(View.VISIBLE);
                 longImageView.setVisibility(View.GONE);
-
                 ImageLoader.getLoader().load(imageView.getContext(), imageView, path);
             }
             mCacheView.put(position, contentView);
